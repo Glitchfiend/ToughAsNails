@@ -20,7 +20,7 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
         
-        if (y >= world.getChunkFromChunkCoords(x >> 4, z >> 4).heightMap[z << 4 | x])
+        if (world.getChunkFromChunkCoords(x >> 4, z >> 4).canBlockSeeTheSky(x & 15, y, z & 15))
         {
         	modifier -= 2F;
         }
