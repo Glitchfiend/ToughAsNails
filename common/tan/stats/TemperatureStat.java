@@ -32,7 +32,7 @@ public class TemperatureStat extends TANStat
         for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
         {
             aimedTemperature += temperatureModifier.modifyTemperature(world, player);
-            rate += MathHelper.clamp_float(temperatureModifier.modifyRate(world, player), 0.1F, 1.0F);
+            rate += temperatureModifier.modifyRate(world, player);
         }
         
         DecimalFormat twoDForm = new DecimalFormat("#.##");   
