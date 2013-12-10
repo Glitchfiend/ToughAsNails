@@ -57,7 +57,7 @@ public class RenderOverlayEventHandler
         {
             GL11.glPushMatrix();
             {
-                String text = temperature + "°C";
+                String text = temperature + "C";
                 
                 GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 6), 0.0F);
                 GL11.glScalef(0.65F, 0.65F, 0.0F);
