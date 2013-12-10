@@ -1,6 +1,7 @@
 package tan.temperaturemodifiers;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tan.api.temperature.ITemperatureModifier;
 
@@ -14,6 +15,19 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
         if (player.isSprinting()) modifier += 2.25F;
         if (player.isWet()) modifier -= 2.5F;
         if (player.isBurning()) modifier += 4F;
+        
+        int x = MathHelper.floor_double(player.posX);
+        int y = MathHelper.floor_double(player.posY);
+        int z = MathHelper.floor_double(player.posZ);
+        
+        if (y >= world.getChunkFromChunkCoords(x >> 4, z >> 4).heightMap[z << 4 | x])
+        {
+        	modifier -= 2F;
+        }
+        else
+        {
+        	modifier += 2F;
+        }
         
         return modifier;
     }
