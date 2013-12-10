@@ -17,4 +17,10 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
         
         return modifier;
     }
+
+    @Override
+    public float modifyRate(World world, EntityPlayerMP player)
+    {
+        return 0F;
+    }
 }

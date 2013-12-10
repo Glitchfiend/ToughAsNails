@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import tan.api.TANStat;
 import tan.api.temperature.ITemperatureModifier;
 import tan.api.temperature.TemperatureRegistry;
@@ -20,15 +21,18 @@ public class TemperatureStat extends TANStat
         float originalTemperature = tanData.getFloat(getStatName());
         float temperature = originalTemperature;
 
-        float[] temperatureRainfall = getEnvironmentTemperatureRainfall(x, y, z);
+        float environmentTemperature = getEnvironmentTemperature(x, y, z);
         
-        float aimedTemperature = temperatureRainfall[0];
+        float aimedTemperature = environmentTemperature;
+        
+        float rate = ((environmentTemperature / 20 / 2) - 0.35F) / 10 /*"Normal" Temperature (0.7, squashed to fit between 0-1)*/;
+        
+        rate = (rate < 0 ? -rate : rate);
         
         for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
         {
-            float modifier = temperatureModifier.modifyTemperature(world, player);
-            
-            aimedTemperature += modifier;
+            aimedTemperature += temperatureModifier.modifyTemperature(world, player);
+            rate += MathHelper.clamp_float(temperatureModifier.modifyRate(world, player), 0.1F, 1.0F);
         }
         
         DecimalFormat twoDForm = new DecimalFormat("#.##");   
@@ -42,7 +46,7 @@ public class TemperatureStat extends TANStat
 
         }
         
-        if (world.rand.nextFloat() <= temperatureRainfall[1])
+        if (world.rand.nextFloat() <= rate)
         {
             if (temperature > aimedTemperature)
             {
@@ -64,7 +68,7 @@ public class TemperatureStat extends TANStat
         }
         
         System.out.println("Aimed Temp " + aimedTemperature);
-        System.out.println("Rain/Speed " + temperatureRainfall[1]);
+        System.out.println("Rate " + rate); 
         System.out.println("Current Temp " + temperature);
 
         if (temperature != originalTemperature)
@@ -75,12 +79,9 @@ public class TemperatureStat extends TANStat
         }
     }
     
-    private float[] getEnvironmentTemperatureRainfall(int x, int y, int z)
+    private float getEnvironmentTemperature(int x, int y, int z)
     {
-        float[] temperatureRainfall = new float[2];
-        
         float averageAimedEnvironmentTemperature = 0F;
-        float rainfall = 0.25F;
 
         int environmentDivider = 0;
 
@@ -96,21 +97,13 @@ public class TemperatureStat extends TANStat
                     BiomeGenBase biome = world.getBiomeGenForCoords(x + ix, z + iz);
 
                     averageAimedEnvironmentTemperature += ((biome.temperature / 2) * 20) + 27;
-                    
-                    if (biome.rainfall != 0F)
-                    {
-                        rainfall = biome.rainfall / 2;
-                    }
 
                     environmentDivider++;
                 }
             }
         }
         
-        temperatureRainfall[0] = averageAimedEnvironmentTemperature / environmentDivider;
-        temperatureRainfall[1] = rainfall;
-
-        return temperatureRainfall;
+        return averageAimedEnvironmentTemperature / environmentDivider;
     }
 
     @Override

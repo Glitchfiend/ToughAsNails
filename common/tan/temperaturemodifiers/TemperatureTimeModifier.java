@@ -14,6 +14,12 @@ public class TemperatureTimeModifier implements ITemperatureModifier
         return 0F;
     }
     
+    @Override
+    public float modifyRate(World world, EntityPlayerMP player)
+    {
+        return 0F;
+    }
+    
     public boolean isDay(World world)
     {
         float celestialAngle = world.getCelestialAngle(0.0F);

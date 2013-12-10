@@ -54,4 +54,10 @@ public class TemperatureSourceModifier implements ITemperatureModifier
             return Collections.min(temperatureModifiers);
         }
     }
+
+    @Override
+    public float modifyRate(World world, EntityPlayerMP player)
+    {
+        return 0F;
+    }
 }
