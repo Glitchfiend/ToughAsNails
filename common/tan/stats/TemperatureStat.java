@@ -27,7 +27,7 @@ public class TemperatureStat extends TANStat
         
         float aimedTemperature = environmentTemperature;
         
-        float rate = ((environmentTemperature / 20 / 2) - 0.35F) / 10 /*"Normal" Temperature (0.7, squashed to fit between 0-1)*/;
+        float rate = ((environmentTemperature / 20 / 2) - 0.35F) / 10 /*0.35 "Normal" Temperature (0.7, squashed to fit between 0-1)*/;
         
         rate = (rate < 0 ? -rate : rate);
         
@@ -69,9 +69,9 @@ public class TemperatureStat extends TANStat
 
         }
         
-        System.out.println("Aimed Temp " + aimedTemperature);
-        System.out.println("Rate " + rate); 
-        System.out.println("Current Temp " + temperature);
+        //System.out.println("Aimed Temp " + aimedTemperature);
+        //System.out.println("Rate " + rate); 
+        //System.out.println("Current Temp " + temperature);
 
         if (temperature != originalTemperature)
         {

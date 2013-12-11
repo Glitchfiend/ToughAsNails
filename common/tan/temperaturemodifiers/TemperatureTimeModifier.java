@@ -27,10 +27,6 @@ public class TemperatureTimeModifier implements ITemperatureModifier
         			return -2F;
         		}
         	}
-        	else
-        	{
-        		return -0.5F;
-        	}
     	}
         else
         {
@@ -40,16 +36,10 @@ public class TemperatureTimeModifier implements ITemperatureModifier
         		{
         			return -1.75F;
         		}
-        		else
-        		{
-        			return -0.5F;
-        		}
-        	}
-        	else
-        	{
-        		return 0F;
         	}
         }
+        
+        return 0F;
     }
     
     @Override

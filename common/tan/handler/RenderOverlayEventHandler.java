@@ -19,33 +19,54 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderOverlayEventHandler
 {
+    public Minecraft minecraft = Minecraft.getMinecraft();
+    public FontRenderer fontRenderer = minecraft.fontRenderer;
+    public ScaledResolution scaledRes;
+    public NBTTagCompound tanData;
+    public float temperature;
+    public int iTemperature;
+    
     public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
+    public ResourceLocation vignetteFreezingLocation = new ResourceLocation("toughasnails:textures/overlay/freezingVignette.png");
+    public ResourceLocation vignetteBurningLocation = new ResourceLocation("toughasnails:textures/overlay/burningVignette.png");
+    
+    public float prevVignetteBrightness = 1.0F;
     
     @ForgeSubscribe
     public void render(RenderGameOverlayEvent.Pre event)
     {
-        ScaledResolution scaledRes = event.resolution;
-        Minecraft minecraft = Minecraft.getMinecraft();
-        FontRenderer fontRenderer = minecraft.fontRenderer;
+        scaledRes = event.resolution;
+        tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
+        temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
+        iTemperature = MathHelper.floor_float(temperature);
         
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         bindTexture(overlayLocation);
         {
-            NBTTagCompound tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
-            
             if (!minecraft.thePlayer.capabilities.isCreativeMode)
             {
-                renderTemperature(scaledRes, minecraft, fontRenderer, tanData);
+                renderTemperature();
             }
         }
         bindTexture(new ResourceLocation("minecraft:textures/gui/icons.png"));
+
+        if (!minecraft.thePlayer.capabilities.isCreativeMode)
+        {
+            if (temperature >= 43F)
+            {
+                renderVignette(vignetteBurningLocation, (47F - temperature) / 5F, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
+            }
+            else if (temperature <= 31F)
+            {
+                renderVignette(vignetteFreezingLocation, -(27F - temperature) / 5F, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
+            }
+        }
     }
     
-    private void renderTemperature(ScaledResolution scaledRes, Minecraft minecraft, FontRenderer fontRenderer, NBTTagCompound tanData)
+    private void renderTemperature()
     {
-        int temperature = MathHelper.floor_float(tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class)));
-        int displayTemperature = temperature;
+        int displayTemperature = iTemperature;
         
         String temperatureSymbol = "C";
         String temperatureType = TANConfigurationTemperature.temperatureType;
@@ -57,12 +78,12 @@ public class RenderOverlayEventHandler
         else if (temperatureType.equals("Farenheit"))
         {
             temperatureSymbol = "F";
-            displayTemperature = 9 * temperature / 5 + 32; 
+            displayTemperature = 9 * iTemperature / 5 + 32; 
         }
         else if (temperatureType.equals("Kelvin"))
         {
             temperatureSymbol = "K";
-            displayTemperature = temperature + 273;
+            displayTemperature = iTemperature + 273;
         }
 
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
@@ -71,7 +92,7 @@ public class RenderOverlayEventHandler
         minecraft.mcProfiler.startSection("temperatureBall");
         {   
             this.drawTexturedModalRect(temperatureXPos, temperatureYPos, 16, 0, 16, 16);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, temperature / 20F - 1.35F);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, iTemperature / 20F - 1.35F);
             this.drawTexturedModalRect(temperatureXPos, temperatureYPos, 0, 0, 16, 16);
         }
         minecraft.mcProfiler.endSection();
@@ -90,6 +111,44 @@ public class RenderOverlayEventHandler
             GL11.glPopMatrix();
         }
         minecraft.mcProfiler.endSection();
+    }
+    
+    private void renderVignette(ResourceLocation texture, float brightness, int width, int height)
+    {
+        GL11.glEnable(GL11.GL_BLEND);
+        
+        brightness = 1.0F - brightness;
+
+        if (brightness < 0.0F)
+        {
+            brightness = 0.0F;
+        }
+
+        if (brightness > 1.0F)
+        {
+            brightness = 1.0F;
+        }
+
+        this.prevVignetteBrightness = (float)((double)this.prevVignetteBrightness + (double)(brightness - this.prevVignetteBrightness) * 0.01D);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthMask(false);
+        GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_COLOR);
+        GL11.glColor4f(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0F);
+        bindTexture(texture);
+        {
+            Tessellator tessellator = Tessellator.instance;
+            tessellator.startDrawingQuads();
+            tessellator.addVertexWithUV(0.0D, (double)height, -90.0D, 0.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, (double)height, -90.0D, 1.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, 0.0D, -90.0D, 1.0D, 0.0D);
+            tessellator.addVertexWithUV(0.0D, 0.0D, -90.0D, 0.0D, 0.0D);
+            tessellator.draw();
+            GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        }
+        bindTexture(new ResourceLocation("minecraft:textures/gui/icons.png"));
     }
 
     public static void bindTexture(ResourceLocation resourceLocation)
