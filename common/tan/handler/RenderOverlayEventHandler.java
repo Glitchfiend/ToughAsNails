@@ -13,6 +13,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import org.lwjgl.opengl.GL11;
 
 import tan.api.PlayerStatRegistry;
+import tan.configuration.TANConfigurationTemperature;
 import tan.stats.TemperatureStat;
 import cpw.mods.fml.client.FMLClientHandler;
 
@@ -41,6 +42,25 @@ public class RenderOverlayEventHandler
     private void renderTemperature(ScaledResolution scaledRes, Minecraft minecraft, FontRenderer fontRenderer, NBTTagCompound tanData)
     {
         int temperature = MathHelper.floor_float(tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class)));
+        int displayTemperature = temperature;
+        
+        String temperatureSymbol = "C";
+        String temperatureType = TANConfigurationTemperature.temperatureType;
+
+        if (temperatureType.equals("Celsius"))
+        {
+            temperatureSymbol = "C";
+        }
+        else if (temperatureType.equals("Farenheit"))
+        {
+            temperatureSymbol = "F";
+            displayTemperature = 9 * temperature / 5 + 32; 
+        }
+        else if (temperatureType.equals("Kelvin"))
+        {
+            temperatureSymbol = "K";
+            displayTemperature = temperature + 273;
+        }
 
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
         int temperatureYPos = scaledRes.getScaledHeight() - 52;
@@ -57,7 +77,7 @@ public class RenderOverlayEventHandler
         {
             GL11.glPushMatrix();
             {
-                String text = temperature + "C";
+                String text = displayTemperature + temperatureSymbol;
                 
                 GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 6), 0.0F);
                 GL11.glScalef(0.65F, 0.65F, 0.0F);

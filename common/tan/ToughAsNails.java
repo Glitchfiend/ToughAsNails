@@ -1,6 +1,8 @@
 package tan;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
+import tan.configuration.TANConfiguration;
 import tan.core.TANPlayerStats;
 import tan.core.TANTemperature;
 import tan.handler.ConnectionHandler;
@@ -29,9 +31,15 @@ public class ToughAsNails
     @SidedProxy(clientSide="tan.ClientProxy", serverSide="tan.CommonProxy")
     public static CommonProxy proxy;
     
+    public static CreativeTabs tabToughAsNails;
+    public static String configPath;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        configPath = event.getModConfigurationDirectory() + "/toughasnails/";
+        TANConfiguration.init(configPath);
+        
         TANPlayerStats.init();
         TANTemperature.init();
     }
