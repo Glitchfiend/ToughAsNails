@@ -24,5 +24,11 @@ public class TANTemperature
     private static void registerTemperatureSources()
     {
         TemperatureRegistry.registerTemperatureSource(Block.fire.blockID, -1, 4F);
+        TemperatureRegistry.registerTemperatureSource(Block.torchWood.blockID, -1, 1F);
+        TemperatureRegistry.registerTemperatureSource(Block.lavaMoving.blockID, -1, 6F);
+        TemperatureRegistry.registerTemperatureSource(Block.lavaStill.blockID, -1, 8F);
+        TemperatureRegistry.registerTemperatureSource(Block.waterMoving.blockID, -1, -1F);
+        TemperatureRegistry.registerTemperatureSource(Block.waterStill.blockID, -1, -1F);
+        TemperatureRegistry.registerTemperatureSource(Block.ice.blockID, 0, -2F);
     }
 }
