@@ -13,7 +13,9 @@ public class TemperatureStat extends TANStat
 { 
     @Override
     public void update()
-    {
+    {    
+        if (player.capabilities.isCreativeMode) return;
+        
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);

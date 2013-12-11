@@ -34,7 +34,10 @@ public class RenderOverlayEventHandler
         {
             NBTTagCompound tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
             
-            renderTemperature(scaledRes, minecraft, fontRenderer, tanData);
+            if (!minecraft.thePlayer.capabilities.isCreativeMode)
+            {
+                renderTemperature(scaledRes, minecraft, fontRenderer, tanData);
+            }
         }
         bindTexture(new ResourceLocation("minecraft:textures/gui/icons.png"));
     }
