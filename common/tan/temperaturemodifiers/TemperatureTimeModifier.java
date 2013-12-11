@@ -16,17 +16,40 @@ public class TemperatureTimeModifier implements ITemperatureModifier
     	
         if (isNight(world)) 
     	{
-        	if (world.getChunkFromChunkCoords(x >> 4, z >> 4).canBlockSeeTheSky(x & 15, y, z & 15))
+        	if (world.getChunkFromChunkCoords(x >> 4, z >> 4).canBlockSeeTheSky(x & 15, y + 1, z & 15))
         	{
-        		return -2F;
+        		if (world.isRaining())
+        		{
+        			return -3.5F;
+        		}
+        		else
+        		{
+        			return -2F;
+        		}
         	}
         	else
         	{
         		return -0.5F;
         	}
     	}
-        
-        return 0F;
+        else
+        {
+        	if (world.getChunkFromChunkCoords(x >> 4, z >> 4).canBlockSeeTheSky(x & 15, y + 1, z & 15))
+        	{
+        		if (world.isRaining())
+        		{
+        			return -1.75F;
+        		}
+        		else
+        		{
+        			return -0.5F;
+        		}
+        	}
+        	else
+        	{
+        		return 0F;
+        	}
+        }
     }
     
     @Override
