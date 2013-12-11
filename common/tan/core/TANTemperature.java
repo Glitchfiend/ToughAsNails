@@ -23,6 +23,6 @@ public class TANTemperature
     
     private static void registerTemperatureSources()
     {
-        TemperatureRegistry.registerTemperatureSource(Block.fire.blockID, -1, 4F);
+        TemperatureRegistry.registerTemperatureSource(Block.fire.blockID, -1, 4F, 0.08F);
     }
 }

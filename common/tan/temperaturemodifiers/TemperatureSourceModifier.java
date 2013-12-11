@@ -58,6 +58,44 @@ public class TemperatureSourceModifier implements ITemperatureModifier
     @Override
     public float modifyRate(World world, EntityPlayerMP player)
     {
-        return 0F;
+        ArrayList<Float> rateModifiers = new ArrayList<Float>();
+        
+        int x = MathHelper.floor_double(player.posX);
+        int y = MathHelper.floor_double(player.posY);
+        int z = MathHelper.floor_double(player.posZ);
+        
+        for (int ix = -2; ix <= 2; ix++)
+        {
+            for (int iy = -1; iy <= 1; iy++)
+            {
+                for (int iz = -2; iz <= 2; iz++)
+                {
+                    int blockID = world.getBlockId(x + ix, y + iy, z + iz);
+                    int metadata = world.getBlockMetadata(x + ix, y + iy, z + iz);
+
+                    float rateModifier = TemperatureRegistry.getTemperatureSourceRate(blockID, metadata);
+
+                    rateModifiers.add(rateModifier);
+                }
+            }
+        }
+        
+        float total = 0F;
+        int divider = 0;
+        
+        for (float rateModifier : rateModifiers)
+        {
+            total += rateModifier;
+            divider++;
+        }
+        
+        if ((total / divider) > 0)
+        {
+            return Collections.max(rateModifiers);
+        }
+        else
+        {
+            return Collections.min(rateModifiers);
+        }
     }
 }

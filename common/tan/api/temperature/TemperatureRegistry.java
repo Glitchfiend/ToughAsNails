@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class TemperatureRegistry
 {
-    public static HashMap<String, Float> temperatureSources = new HashMap<String, Float>();
+    public static HashMap<String, TemperatureSource> temperatureSources = new HashMap<String, TemperatureSource>();
     public static ArrayList<ITemperatureModifier> temperatureModifiers = new ArrayList<ITemperatureModifier>();
     
     public static float getTemperatureSourceModifier(int id, int metadata)
@@ -14,7 +14,7 @@ public class TemperatureRegistry
         
         try
         {
-            modifier = temperatureSources.get(id + ";" + metadata);
+            modifier = temperatureSources.get(id + ";" + metadata).temperature;
         }
         catch (Exception e)
         {
@@ -23,9 +23,19 @@ public class TemperatureRegistry
         return modifier;
     }
     
-    public static float getTemperatureSourceModifier(int id)
+    public static float getTemperatureSourceRate(int id, int metadata)
     {
-        return getTemperatureSourceModifier(id, 0);
+        float rate = 0;
+        
+        try
+        {
+            rate = temperatureSources.get(id + ";" + metadata).rate;
+        }
+        catch (Exception e)
+        {
+            
+        }
+        return rate;
     }
     
     public static void registerTemperatureModifier(ITemperatureModifier temperatureModifier)
@@ -33,23 +43,18 @@ public class TemperatureRegistry
         temperatureModifiers.add(temperatureModifier);
     }
 
-    public static void registerTemperatureSource(int id, int metadata, float modifier)
+    public static void registerTemperatureSource(int id, int metadata, float temperatureModifier, float rate)
     { 
         if (metadata == -1)
         {
             for (int i = 0; i < 16; i++)
             {
-                temperatureSources.put(id + ";" + i, modifier);
+                temperatureSources.put(id + ";" + i, new TemperatureSource(temperatureModifier, rate));
             }
         }
         else
         {   
-            temperatureSources.put(id + ";" + metadata, modifier);
+            temperatureSources.put(id + ";" + metadata, new TemperatureSource(temperatureModifier, rate));
         }
-    }
-    
-    public static void registerTemperatureSource(int id,  float modifier)
-    {
-        registerTemperatureSource(id, 0, modifier);
     }
 }
