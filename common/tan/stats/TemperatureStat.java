@@ -27,7 +27,26 @@ public class TemperatureStat extends TANStat
         
         float aimedTemperature = environmentTemperature;
         
-        float rate = ((environmentTemperature / 20 / 2) - 0.35F) / 10 /*0.35 "Normal" Temperature (0.7, squashed to fit between 0-1)*/;
+        int ratemodifier = 8;
+        
+        if (player.worldObj.difficultySetting == 0)
+        {
+        	ratemodifier = 15;
+        }
+        if (player.worldObj.difficultySetting == 1)
+        {
+        	ratemodifier = 10;
+        }
+        if (player.worldObj.difficultySetting == 2)
+        {
+        	ratemodifier = 8;
+        }
+        if (player.worldObj.difficultySetting == 3)
+        {
+        	ratemodifier = 5;
+        }
+        
+        float rate = ((environmentTemperature / 20 / 2) - 0.35F) / ratemodifier /*0.35 "Normal" Temperature (0.7, squashed to fit between 0-1)*/;
         
         rate = (rate < 0 ? -rate : rate);
         
@@ -69,9 +88,11 @@ public class TemperatureStat extends TANStat
 
         }
         
-        //System.out.println("Aimed Temp " + aimedTemperature);
-        //System.out.println("Rate " + rate); 
-        //System.out.println("Current Temp " + temperature);
+        System.out.println("Aimed Temp " + aimedTemperature);
+        System.out.println("Rate " + rate); 
+        System.out.println("Current Temp " + temperature);
+        
+        System.out.println("Rate Modifier " + ratemodifier);
 
         if (temperature != originalTemperature)
         {
