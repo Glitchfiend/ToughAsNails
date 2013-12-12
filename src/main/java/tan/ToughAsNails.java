@@ -23,7 +23,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "ToughAsNails", name = "Tough As Nails", version="0.0.1")
+@Mod(modid = "ToughAsNails", name = "Tough As Nails", version="0.0.1", dependencies="required-after:Forge@[1.42.666.42.1,)")
 @NetworkMod(channels = { "ToughAsNails" }, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class ToughAsNails
 {
