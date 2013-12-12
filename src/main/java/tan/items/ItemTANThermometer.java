@@ -39,7 +39,7 @@ public class ItemTANThermometer extends Item
             ChatMessageComponent environmentTempMessage = new ChatMessageComponent();
 
             environmentTempMessage.addKey("phrase.tan.environmentTemp");
-            environmentTempMessage.addText(": " + TemperatureStat.getConvertedDisplayTemperature(temperature) + TemperatureStat.getTemperatureSymbol());
+            environmentTempMessage.addText(" " + TemperatureStat.getConvertedDisplayTemperature(temperature) + TemperatureStat.getTemperatureSymbol());
             
             player.sendChatToPlayer(environmentTempMessage);
         }

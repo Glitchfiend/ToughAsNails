@@ -89,11 +89,10 @@ public class TemperatureStat extends TANStat
 
         }
         
-        System.out.println("Aimed Temp " + aimedTemperature);
-        System.out.println("Rate " + rate); 
-        System.out.println("Current Temp " + temperature);
-        
-        System.out.println("Rate Modifier " + ratemodifier);
+        //System.out.println("Aimed Temp " + aimedTemperature);
+        //System.out.println("Rate " + rate); 
+        //System.out.println("Current Temp " + temperature);
+        //System.out.println("Rate Modifier " + ratemodifier);
 
         if (temperature != originalTemperature)
         {
@@ -134,7 +133,7 @@ public class TemperatureStat extends TANStat
     {
         String temperatureType = TANConfigurationTemperature.temperatureType;
 
-        if (temperatureType.equals("Farenheit"))
+        if (temperatureType.equals("Fahrenheit"))
         {
             return "F";
         }
@@ -152,7 +151,7 @@ public class TemperatureStat extends TANStat
     {
         String temperatureType = TANConfigurationTemperature.temperatureType;
 
-        if (temperatureType.equals("Farenheit"))
+        if (temperatureType.equals("Fahrenheit"))
         {
             return 9 * temperature / 5 + 32; 
         }

@@ -22,7 +22,7 @@ public class TANConfigurationTemperature
         {
             config.load();
 
-            temperatureType = config.get("Temperature", "Temperature Type", "Celsius", "The type of temperature to use, supports Celsius, Farenheit & Kelvin (Metrics/Celsius is better - Adubbz :P)").getString();
+            temperatureType = config.get("Temperature", "Temperature Scale", "Celsius", "The temperature scale to use, supports Celsius, Fahrenheit & Kelvin").getString();
 
             FMLCommonHandler.instance().getFMLLogger().log(Level.INFO, "[ToughAsNails] Generated Temperature Config!");
         }
