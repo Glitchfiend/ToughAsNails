@@ -88,8 +88,8 @@ public class RenderOverlayEventHandler
             {
                 String text = displayTemperature + temperatureSymbol;
                 
-                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 6), 0.0F);
-                GL11.glScalef(0.65F, 0.65F, 0.0F);
+                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 7), 0.0F);
+                GL11.glScalef(0.55F, 0.55F, 0.0F);
                 
                 drawStringWithBorder(fontRenderer, text, 0, 0, 0, 16777215);
             }
