@@ -1,7 +1,7 @@
 [{
     "modid": "ToughAsNails",
     "name": "Tough As Nails",
-    "description": "Adds many hardcore aspects to the regular game",
+    "description": "Adds a variety of survival aspects to the regular game",
     "version": "${mod_version}",
     "mcversion": "${minecraft_version}",
     "url": "",
