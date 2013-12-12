@@ -1,6 +1,6 @@
 package tan.temperaturemodifiers;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tan.api.temperature.ITemperatureModifier;
@@ -8,7 +8,7 @@ import tan.api.temperature.ITemperatureModifier;
 public class TemperaturePlayerStateModifier implements ITemperatureModifier
 {
     @Override
-    public float modifyTemperature(World world, EntityPlayerMP player)
+    public float modifyTemperature(World world, EntityPlayer player)
     {
         float modifier = 0F;
         
@@ -24,7 +24,7 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
     }
 
     @Override
-    public float modifyRate(World world, EntityPlayerMP player)
+    public float modifyRate(World world, EntityPlayer player)
     {
         return 0F;
     }

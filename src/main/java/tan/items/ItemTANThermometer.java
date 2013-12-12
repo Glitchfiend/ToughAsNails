@@ -32,14 +32,14 @@ public class ItemTANThermometer extends Item
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
         
-        int temperature = MathHelper.floor_float(TemperatureStat.getEnvironmentTemperature(world, x, y, z));
+        float environmentTemperature = TemperatureStat.getEnvironmentTemperature(world, x, y, z);
 
         if (!world.isRemote)
         {
             ChatMessageComponent environmentTempMessage = new ChatMessageComponent();
 
-            environmentTempMessage.addKey("phrase.tan.environmentTemp");
-            environmentTempMessage.addText(" " + TemperatureStat.getConvertedDisplayTemperature(temperature) + TemperatureStat.getTemperatureSymbol());
+            environmentTempMessage.addKey("phrase.tan.tempThermometer");
+            environmentTempMessage.addText(" " + TemperatureStat.getConvertedDisplayTemperature(MathHelper.floor_float(TemperatureStat.getAimedTemperature(environmentTemperature, world, player))) + TemperatureStat.getTemperatureSymbol());
             
             player.sendChatToPlayer(environmentTempMessage);
         }

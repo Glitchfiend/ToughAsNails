@@ -2,6 +2,8 @@ package tan.stats;
 
 import java.text.DecimalFormat;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -26,7 +28,7 @@ public class TemperatureStat extends TANStat
 
         float environmentTemperature = getEnvironmentTemperature(world, x, y, z);
         
-        float aimedTemperature = environmentTemperature;
+        float aimedTemperature = getAimedTemperature(environmentTemperature, world, player);
         
         int ratemodifier = 8;
         
@@ -53,20 +55,10 @@ public class TemperatureStat extends TANStat
         
         for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
         {
-            aimedTemperature += temperatureModifier.modifyTemperature(world, player);
             rate += temperatureModifier.modifyRate(world, player);
         }
         
-        DecimalFormat twoDForm = new DecimalFormat("#.##");   
-
-        try
-        {
-            aimedTemperature = Float.parseFloat(twoDForm.format(aimedTemperature));
-        }
-        catch (Exception e)
-        {
-
-        }
+        DecimalFormat twoDForm = new DecimalFormat("#.##");  
         
         if (world.rand.nextFloat() <= rate)
         {
@@ -100,6 +92,29 @@ public class TemperatureStat extends TANStat
 
             updatePlayerData(tanData, player);
         }
+    }
+    
+    public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
+    {
+        float aimedTemperature = environmentTemperature;
+        
+        for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
+        {
+            aimedTemperature += temperatureModifier.modifyTemperature(world, player);
+        }
+        
+        DecimalFormat twoDForm = new DecimalFormat("#.##");   
+
+        try
+        {
+            aimedTemperature = Float.parseFloat(twoDForm.format(aimedTemperature));
+        }
+        catch (Exception e)
+        {
+
+        }
+        
+        return aimedTemperature;
     }
     
     public static float getEnvironmentTemperature(World world, int x, int y, int z)

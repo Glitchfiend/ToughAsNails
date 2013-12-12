@@ -3,7 +3,7 @@ package tan.temperaturemodifiers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tan.api.temperature.ITemperatureModifier;
@@ -12,7 +12,7 @@ import tan.api.temperature.TemperatureRegistry;
 public class TemperatureSourceModifier implements ITemperatureModifier
 {
     @Override
-    public float modifyTemperature(World world, EntityPlayerMP player)
+    public float modifyTemperature(World world, EntityPlayer player)
     {
         ArrayList<Float> temperatureModifiers = new ArrayList<Float>();
         
@@ -56,7 +56,7 @@ public class TemperatureSourceModifier implements ITemperatureModifier
     }
 
     @Override
-    public float modifyRate(World world, EntityPlayerMP player)
+    public float modifyRate(World world, EntityPlayer player)
     {
         ArrayList<Float> rateModifiers = new ArrayList<Float>();
         
