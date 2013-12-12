@@ -74,27 +74,6 @@ public class RenderOverlayEventHandler
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
         int temperatureYPos = scaledRes.getScaledHeight() - 52;
         
-        int guiSize = Minecraft.getMinecraft().gameSettings.guiScale;
-        
-        float textScale = 0.75F;
-        
-        if (guiSize == 0)
-        {
-        	textScale = 0.75F;
-        }
-        if (guiSize == 1)
-        {
-        	textScale = 0.45F;
-        }
-        if (guiSize == 2)
-        {
-        	textScale = 0.5F;
-        }
-        if (guiSize == 3)
-        {
-        	textScale = 0.65F;
-        }
-        
         minecraft.mcProfiler.startSection("temperatureBall");
         {   
             this.drawTexturedModalRect(temperatureXPos, temperatureYPos, 16, 0, 16, 16);
@@ -103,13 +82,38 @@ public class RenderOverlayEventHandler
         }
         minecraft.mcProfiler.endSection();
         
+        int guiSize = Minecraft.getMinecraft().gameSettings.guiScale;
+        
+        float textScale = 0.75F;
+        int xOffset = 0;
+        int yOffset = 0;
+        
+        if (guiSize == 0)
+        {
+            xOffset = -1;
+            textScale = 0.75F;
+        }
+        if (guiSize == 1)
+        {
+            textScale = 0.45F;
+        }
+        if (guiSize == 2)
+        {
+            xOffset = 1;
+            textScale = 0.5F;
+        }
+        if (guiSize == 3)
+        {
+            textScale = 0.65F;
+        }
+        
         minecraft.mcProfiler.startSection("temperatureLevel");
         {
             GL11.glPushMatrix();
             {
                 String text = displayTemperature + temperatureSymbol;
                 
-                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 7), 0.0F);
+                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12 + xOffset), (float)(temperatureYPos + 7 + yOffset), 0.0F);
                 GL11.glScalef(textScale, textScale, 0.0F);
                 
                 drawStringWithBorder(fontRenderer, text, 0, 0, 0, 16777215);
