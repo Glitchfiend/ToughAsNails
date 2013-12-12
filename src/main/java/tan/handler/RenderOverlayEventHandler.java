@@ -74,6 +74,27 @@ public class RenderOverlayEventHandler
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
         int temperatureYPos = scaledRes.getScaledHeight() - 52;
         
+        int guiSize = Minecraft.getMinecraft().gameSettings.guiScale;
+        
+        float textScale = 0.75F;
+        
+        if (guiSize == 0)
+        {
+        	textScale = 0.75F;
+        }
+        if (guiSize == 1)
+        {
+        	textScale = 0.45F;
+        }
+        if (guiSize == 2)
+        {
+        	textScale = 0.5F;
+        }
+        if (guiSize == 3)
+        {
+        	textScale = 0.65F;
+        }
+        
         minecraft.mcProfiler.startSection("temperatureBall");
         {   
             this.drawTexturedModalRect(temperatureXPos, temperatureYPos, 16, 0, 16, 16);
@@ -89,7 +110,7 @@ public class RenderOverlayEventHandler
                 String text = displayTemperature + temperatureSymbol;
                 
                 GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12), (float)(temperatureYPos + 7), 0.0F);
-                GL11.glScalef(0.55F, 0.55F, 0.0F);
+                GL11.glScalef(textScale, textScale, 0.0F);
                 
                 drawStringWithBorder(fontRenderer, text, 0, 0, 0, 16777215);
             }
