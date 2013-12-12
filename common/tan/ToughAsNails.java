@@ -3,6 +3,8 @@ package tan;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import tan.configuration.TANConfiguration;
+import tan.core.CreativeTabTAN;
+import tan.core.TANItems;
 import tan.core.TANPlayerStats;
 import tan.core.TANTemperature;
 import tan.handler.ConnectionHandler;
@@ -40,6 +42,9 @@ public class ToughAsNails
         configPath = event.getModConfigurationDirectory() + "/toughasnails/";
         TANConfiguration.init(configPath);
         
+        tabToughAsNails = new CreativeTabTAN(CreativeTabs.getNextID(), "tabToughAsNails");
+        
+        TANItems.init();
         TANPlayerStats.init();
         TANTemperature.init();
     }

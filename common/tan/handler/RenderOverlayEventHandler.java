@@ -66,25 +66,10 @@ public class RenderOverlayEventHandler
     
     private void renderTemperature()
     {
-        int displayTemperature = iTemperature;
+        int displayTemperature = TemperatureStat.getConvertedDisplayTemperature(iTemperature);
         
-        String temperatureSymbol = "C";
+        String temperatureSymbol = TemperatureStat.getTemperatureSymbol();
         String temperatureType = TANConfigurationTemperature.temperatureType;
-
-        if (temperatureType.equals("Celsius"))
-        {
-            temperatureSymbol = "C";
-        }
-        else if (temperatureType.equals("Farenheit"))
-        {
-            temperatureSymbol = "F";
-            displayTemperature = 9 * iTemperature / 5 + 32; 
-        }
-        else if (temperatureType.equals("Kelvin"))
-        {
-            temperatureSymbol = "K";
-            displayTemperature = iTemperature + 273;
-        }
 
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
         int temperatureYPos = scaledRes.getScaledHeight() - 52;

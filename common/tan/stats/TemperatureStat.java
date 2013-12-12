@@ -3,11 +3,12 @@ package tan.stats;
 import java.text.DecimalFormat;
 
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
 import tan.api.TANStat;
 import tan.api.temperature.ITemperatureModifier;
 import tan.api.temperature.TemperatureRegistry;
+import tan.configuration.TANConfigurationTemperature;
 
 public class TemperatureStat extends TANStat
 { 
@@ -23,7 +24,7 @@ public class TemperatureStat extends TANStat
         float originalTemperature = tanData.getFloat(getStatName());
         float temperature = originalTemperature;
 
-        float environmentTemperature = getEnvironmentTemperature(x, y, z);
+        float environmentTemperature = getEnvironmentTemperature(world, x, y, z);
         
         float aimedTemperature = environmentTemperature;
         
@@ -102,7 +103,7 @@ public class TemperatureStat extends TANStat
         }
     }
     
-    private float getEnvironmentTemperature(int x, int y, int z)
+    public static float getEnvironmentTemperature(World world, int x, int y, int z)
     {
         float averageAimedEnvironmentTemperature = 0F;
 
@@ -127,6 +128,43 @@ public class TemperatureStat extends TANStat
         }
         
         return averageAimedEnvironmentTemperature / environmentDivider;
+    }
+    
+    public static String getTemperatureSymbol()
+    {
+        String temperatureType = TANConfigurationTemperature.temperatureType;
+
+        if (temperatureType.equals("Farenheit"))
+        {
+            return "F";
+        }
+        else if (temperatureType.equals("Kelvin"))
+        {
+            return "K";
+        }
+        else
+        {
+            return "C";
+        }
+    }
+    
+    public static int getConvertedDisplayTemperature(int temperature)
+    {
+        String temperatureType = TANConfigurationTemperature.temperatureType;
+
+        if (temperatureType.equals("Farenheit"))
+        {
+            return 9 * temperature / 5 + 32; 
+        }
+        else if (temperatureType.equals("Kelvin"))
+        {
+            return temperature + 273;
+        }
+        else
+        {
+            return temperature;
+        }
+
     }
 
     @Override
