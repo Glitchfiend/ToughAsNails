@@ -11,6 +11,7 @@ public class TANConfigurationIDs
 {
     public static Configuration config;
     
+    public static int canteenID;
     public static int thermometerID;
 
     public static void init(File configFile)
@@ -21,7 +22,8 @@ public class TANConfigurationIDs
         {
             config.load();
 
-            thermometerID = config.get("Item IDs", "Thermometer ID", 7500).getInt();
+            canteenID = config.get("Item IDs", "Canteen ID", 7500).getInt();
+            thermometerID = config.get("Item IDs", "Thermometer ID", 7501).getInt();
 
             FMLCommonHandler.instance().getFMLLogger().log(Level.INFO, "[ToughAsNails] Generated ID Config!");
         }

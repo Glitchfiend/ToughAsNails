@@ -1,13 +1,15 @@
 package tan.core;
 
+import net.minecraft.item.Item;
 import tan.api.ContentRegistry;
 import tan.configuration.TANConfigurationIDs;
+import tan.items.ItemTANCanteen;
 import tan.items.ItemTANThermometer;
-import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TANItems
 {
+	public static Item canteen;
     public static Item thermometer;
     
     public static void init()
@@ -18,11 +20,13 @@ public class TANItems
     
     private static void initializeItems()
     {
+    	canteen = new ItemTANCanteen(TANConfigurationIDs.canteenID).setUnlocalizedName("tan.canteen");
         thermometer = new ItemTANThermometer(TANConfigurationIDs.thermometerID).setUnlocalizedName("tan.thermometer");
     }
     
     private static void registerItems()
     {
+    	registerItem(canteen);
         registerItem(thermometer);
     }
     
