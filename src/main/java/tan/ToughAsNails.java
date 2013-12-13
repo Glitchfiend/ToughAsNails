@@ -59,6 +59,7 @@ public class ToughAsNails
         if (proxy instanceof ClientProxy)
         {
             MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
+            MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
             MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
         }
 
