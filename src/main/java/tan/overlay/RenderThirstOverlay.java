@@ -11,7 +11,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class RenderThirstOverlay extends RenderTANOverlay
 {
     public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
-
+    
     @ForgeSubscribe
     public void render(RenderGameOverlayEvent.Pre event)
     {
@@ -53,7 +53,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                     backgound = 13;
                 }
 
-                if (/*minecraft.thePlayer.getFoodStats().getSaturationLevel() <= 0.0F && */updateCounter % (level * 3 + 1) == 0)
+                if (minecraft.thePlayer.getFoodStats().getSaturationLevel() <= 0.0F && updateCounter % (level * 3 + 1) == 0)
                 {
                     y = top + (rand.nextInt(3) - 1);
                 }

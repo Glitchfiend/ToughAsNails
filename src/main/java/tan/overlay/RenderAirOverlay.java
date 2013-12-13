@@ -12,8 +12,6 @@ public class RenderAirOverlay extends RenderTANOverlay
     @ForgeSubscribe
     public void render(RenderGameOverlayEvent.Pre event)
     {
-        setupRender(event);
-        
         if (event.type == ElementType.AIR)
         {
             GL11.glPushMatrix();
