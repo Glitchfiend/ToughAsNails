@@ -9,10 +9,10 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderAirOverlay extends RenderTANOverlay
 {
-    @Override
-    public void preRender(RenderGameOverlayEvent.Pre event)
+    @ForgeSubscribe
+    public void render(RenderGameOverlayEvent.Pre event)
     {
-        ScaledResolution scaledRes = event.resolution;
+        setupRender(event);
         
         if (event.type == ElementType.AIR)
         {

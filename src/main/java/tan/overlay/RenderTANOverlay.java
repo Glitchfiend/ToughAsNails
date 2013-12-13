@@ -1,6 +1,7 @@
 package tan.overlay;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -8,25 +9,34 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.ForgeSubscribe;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.FMLClientHandler;
 
 public abstract class RenderTANOverlay
 {
     public Minecraft minecraft = Minecraft.getMinecraft();
+    public Random rand = new Random();
+    
     public FontRenderer fontRenderer = minecraft.fontRenderer;
     public ScaledResolution scaledRes;
+    
+    public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
+    
     public NBTTagCompound tanData;
     
-    @ForgeSubscribe
-    public void render(RenderGameOverlayEvent.Pre event)
+    public int updateCounter;
+
+    public void setupRender(RenderGameOverlayEvent.Pre event)
     {
         scaledRes = event.resolution;
         tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
         
-        preRender(event);
+        this.updateCounter++;
+        
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
-
-    abstract void preRender(RenderGameOverlayEvent.Pre event);
     
     public static void bindTexture(ResourceLocation resourceLocation)
     {

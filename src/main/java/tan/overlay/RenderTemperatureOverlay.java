@@ -24,19 +24,18 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
     public float temperature;
     public int iTemperature;
     
-    public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
     public ResourceLocation vignetteFreezingLocation = new ResourceLocation("toughasnails:textures/overlay/freezingVignette.png");
     public ResourceLocation vignetteBurningLocation = new ResourceLocation("toughasnails:textures/overlay/burningVignette.png");
     
     public float prevVignetteBrightness = 1.0F;
     
-    @Override
-    public void preRender(RenderGameOverlayEvent.Pre event)
+    @ForgeSubscribe
+    public void render(RenderGameOverlayEvent.Pre event)
     {
+        setupRender(event);
+        
         temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
         iTemperature = MathHelper.floor_float(temperature);
-        
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         bindTexture(overlayLocation);
         {

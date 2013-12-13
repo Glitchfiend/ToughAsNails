@@ -12,6 +12,7 @@ import tan.handler.TickHandlerServer;
 import tan.network.PacketHandler;
 import tan.overlay.RenderAirOverlay;
 import tan.overlay.RenderTemperatureOverlay;
+import tan.overlay.RenderThirstOverlay;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
