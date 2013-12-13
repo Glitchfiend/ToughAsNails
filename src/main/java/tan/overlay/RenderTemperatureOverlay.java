@@ -1,4 +1,4 @@
-package tan.handler;
+package tan.overlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -7,7 +7,9 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.ForgeSubscribe;
 
 import org.lwjgl.opengl.GL11;
@@ -17,12 +19,8 @@ import tan.configuration.TANConfigurationTemperature;
 import tan.stats.TemperatureStat;
 import cpw.mods.fml.client.FMLClientHandler;
 
-public class RenderOverlayEventHandler
+public class RenderTemperatureOverlay extends RenderTANOverlay
 {
-    public Minecraft minecraft = Minecraft.getMinecraft();
-    public FontRenderer fontRenderer = minecraft.fontRenderer;
-    public ScaledResolution scaledRes;
-    public NBTTagCompound tanData;
     public float temperature;
     public int iTemperature;
     
@@ -32,11 +30,9 @@ public class RenderOverlayEventHandler
     
     public float prevVignetteBrightness = 1.0F;
     
-    @ForgeSubscribe
-    public void render(RenderGameOverlayEvent.Pre event)
+    @Override
+    public void preRender(RenderGameOverlayEvent.Pre event)
     {
-        scaledRes = event.resolution;
-        tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
         temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
         iTemperature = MathHelper.floor_float(temperature);
         
@@ -163,32 +159,5 @@ public class RenderOverlayEventHandler
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         }
         bindTexture(new ResourceLocation("minecraft:textures/gui/icons.png"));
-    }
-
-    public static void bindTexture(ResourceLocation resourceLocation)
-    {
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(resourceLocation);
-    }
-    
-    public void drawStringWithBorder(FontRenderer fontrenderer, String string, int x, int y, int borderColour, int colour)
-    {
-        fontrenderer.drawString(string, x + 1, y, borderColour);
-        fontrenderer.drawString(string, x - 1, y, borderColour);
-        fontrenderer.drawString(string, x, y + 1, borderColour);
-        fontrenderer.drawString(string, x, y - 1, borderColour);
-        fontrenderer.drawString(string, x, y, colour);
-    }
-
-    public void drawTexturedModalRect(int x, int y, int u, int v, int width, int height)
-    {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x + 0, y + height, 0.0, (u + 0) * f, (v + height) * f1);
-        tessellator.addVertexWithUV(x + width, y + height, 0.0, (u + width) * f, (v + height) * f1);
-        tessellator.addVertexWithUV(x + width, y + 0, 0.0, (u + width) * f, (v + 0) * f1);
-        tessellator.addVertexWithUV(x + 0, y + 0, 0.0, (u + 0) * f, (v + 0) * f1);
-        tessellator.draw();
     }
 }

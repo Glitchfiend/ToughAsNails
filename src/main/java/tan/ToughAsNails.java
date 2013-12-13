@@ -8,9 +8,10 @@ import tan.core.TANItems;
 import tan.core.TANPlayerStats;
 import tan.core.TANTemperature;
 import tan.handler.ConnectionHandler;
-import tan.handler.RenderOverlayEventHandler;
 import tan.handler.TickHandlerServer;
 import tan.network.PacketHandler;
+import tan.overlay.RenderAirOverlay;
+import tan.overlay.RenderTemperatureOverlay;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -56,7 +57,8 @@ public class ToughAsNails
         
         if (proxy instanceof ClientProxy)
         {
-            MinecraftForge.EVENT_BUS.register(new RenderOverlayEventHandler());
+            MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
+            MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
         }
 
         NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
