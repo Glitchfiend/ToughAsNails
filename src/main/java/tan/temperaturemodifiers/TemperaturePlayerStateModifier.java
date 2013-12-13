@@ -13,7 +13,7 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
         float modifier = 0F;
         
         if (player.isSprinting()) modifier += 2.25F;
-        if (player.isWet()) modifier -= 2.5F;
+        if (player.isWet()) modifier -= 1.75F;
         if (player.isBurning()) modifier += 4F;
         
         int x = MathHelper.floor_double(player.posX);
