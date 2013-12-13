@@ -33,7 +33,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
         minecraft.mcProfiler.startSection("thirst");
         {
             int left = scaledRes.getScaledWidth() / 2 + 91;
-            int top = scaledRes.getScaledHeight() - 50;
+            int top = scaledRes.getScaledHeight() - 49;
 
             FoodStats stats = minecraft.thePlayer.getFoodStats();
             int level = stats.getFoodLevel();
@@ -53,7 +53,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                     backgound = 13;
                 }
 
-                if (/*minecraft.thePlayer.getFoodStats().getSaturationLevel() <= 0.0F && */updateCounter % (level * 3 + 1) == 0)
+                if (minecraft.thePlayer.getFoodStats().getSaturationLevel() <= 0.0F && updateCounter % (level * 3 + 1) == 0)
                 {
                     y = top + (rand.nextInt(3) - 1);
                 }
