@@ -53,13 +53,13 @@ public class RenderOverlayEventHandler
 
         if (!minecraft.thePlayer.capabilities.isCreativeMode)
         {
-            if (temperature >= 43F)
+            if (temperature >= 44F)
             {
-                renderVignette(vignetteBurningLocation, (47F - temperature) / 5F, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
+                renderVignette(vignetteBurningLocation, ((47F - temperature) / 4F) * 2, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
             }
-            else if (temperature <= 31F)
+            else if (temperature <= 32F)
             {
-                renderVignette(vignetteFreezingLocation, -(27F - temperature) / 5F, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
+                renderVignette(vignetteFreezingLocation, (-(27F - temperature) / 4F) / 2F, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
             }
         }
     }
