@@ -33,7 +33,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
         minecraft.mcProfiler.startSection("thirst");
         {
             int left = scaledRes.getScaledWidth() / 2 + 91;
-            int top = scaledRes.getScaledHeight() - 50;
+            int top = scaledRes.getScaledHeight() - 49;
 
             FoodStats stats = minecraft.thePlayer.getFoodStats();
             int level = stats.getFoodLevel();
