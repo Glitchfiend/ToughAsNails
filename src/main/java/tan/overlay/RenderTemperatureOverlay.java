@@ -29,11 +29,9 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
     
     public float prevVignetteBrightness = 1.0F;
     
-    @ForgeSubscribe
-    public void render(RenderGameOverlayEvent.Pre event)
+    @Override
+    public void preRender(RenderGameOverlayEvent.Pre event)
     {
-        setupRender(event);
-        
         temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
         iTemperature = MathHelper.floor_float(temperature);
 

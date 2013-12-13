@@ -1,22 +1,19 @@
 package tan.overlay;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.ForgeSubscribe;
 
 public class RenderThirstOverlay extends RenderTANOverlay
 {
     public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
     
-    @ForgeSubscribe
-    public void render(RenderGameOverlayEvent.Pre event)
+    @Override
+    public void preRender(RenderGameOverlayEvent.Pre event)
     {
-        setupRender(event);
-        
         bindTexture(overlayLocation);
         {
             if (!minecraft.thePlayer.capabilities.isCreativeMode)

@@ -7,7 +7,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 
 import org.lwjgl.opengl.GL11;
 
-public class RenderAirOverlay extends RenderTANOverlay
+public class RenderAirOverlay
 {
     @ForgeSubscribe
     public void render(RenderGameOverlayEvent.Pre event)

@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.event.ForgeSubscribe;
 
 import org.lwjgl.opengl.GL11;
 
@@ -28,15 +30,26 @@ public abstract class RenderTANOverlay
     
     public int updateCounter;
 
-    public void setupRender(RenderGameOverlayEvent.Pre event)
+    @ForgeSubscribe
+    public void render(RenderGameOverlayEvent.Pre event)
     {
+        //Check for crosshairs since they are always drawn and is before the air bar
+        if (event.type != ElementType.CROSSHAIRS) 
+        {
+            return;
+        }
+        
         scaledRes = event.resolution;
         tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
         
         this.updateCounter++;
         
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        
+        this.preRender(event);
     }
+    
+    abstract void preRender(RenderGameOverlayEvent.Pre event);
     
     public static void bindTexture(ResourceLocation resourceLocation)
     {
