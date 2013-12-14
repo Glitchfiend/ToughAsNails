@@ -12,6 +12,7 @@ import tan.handler.TickHandlerServer;
 import tan.network.PacketHandler;
 import tan.overlay.RenderAirOverlay;
 import tan.overlay.RenderTemperatureOverlay;
+import tan.overlay.RenderTemperatureVignettes;
 import tan.overlay.RenderThirstOverlay;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -59,6 +60,7 @@ public class ToughAsNails
         if (proxy instanceof ClientProxy)
         {
             MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
+            MinecraftForge.EVENT_BUS.register(new RenderTemperatureVignettes());
             MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
             MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
         }

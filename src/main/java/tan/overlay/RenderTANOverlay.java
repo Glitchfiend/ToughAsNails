@@ -33,12 +33,6 @@ public abstract class RenderTANOverlay
     @ForgeSubscribe
     public void render(RenderGameOverlayEvent.Pre event)
     {
-        //Check for crosshairs since they are always drawn and is before the air bar
-        if (event.type != ElementType.CROSSHAIRS) 
-        {
-            return;
-        }
-        
         scaledRes = event.resolution;
         tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
         

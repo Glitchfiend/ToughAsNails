@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import tan.api.PlayerStatRegistry;
 import tan.stats.ThirstStat;
 
@@ -14,6 +15,12 @@ public class RenderThirstOverlay extends RenderTANOverlay
     @Override
     public void preRender(RenderGameOverlayEvent.Pre event)
     {
+        //Check for crosshairs since they are always drawn and is before the air bar
+        if (event.type != ElementType.CROSSHAIRS) 
+        {
+            return;
+        }
+        
         bindTexture(overlayLocation);
         {
             if (!minecraft.thePlayer.capabilities.isCreativeMode)
