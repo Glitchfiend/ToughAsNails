@@ -12,18 +12,44 @@ public abstract class TANStat
 {
     public World world;
     public EntityPlayerMP player;
+    public NBTTagCompound tanData;
         
     public abstract void update();
     
-    public abstract void readNBT(NBTTagCompound tanData);
+    public abstract void setDefaults();
     
-    public abstract void writeNBT(NBTTagCompound tanData);
-
     public abstract String getStatName();
     
     public static void updatePlayerData(NBTTagCompound tanData, EntityPlayerMP player)
     {
         player.getEntityData().setCompoundTag("ToughAsNails", tanData);
         PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(tanData)), (Player)player);
+    }
+    
+    public void setDefaultCompound(String key, NBTTagCompound compound)
+    {
+        if (!tanData.hasKey(key))
+        {
+            tanData.setCompoundTag(key, compound);
+            updatePlayerData(tanData, player);
+        }
+    }
+    
+    public void setDefaultInt(String key, int value)
+    {
+        if (!tanData.hasKey(key)) 
+        {
+            tanData.setInteger(key, value);
+            updatePlayerData(tanData, player);
+        }
+    }
+    
+    public void setDefaultFloat(String key, float value)
+    {
+        if (!tanData.hasKey(key)) 
+        {
+            tanData.setFloat(key, value);
+            updatePlayerData(tanData, player);
+        }
     }
 }
