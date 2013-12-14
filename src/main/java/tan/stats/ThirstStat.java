@@ -52,13 +52,6 @@ public class ThirstStat extends TANStat
         {
             this.thirstTimer = 0;
         }
-        
-        if (world.rand.nextInt(50) == 0)
-        {
-            addExhaustion(3F);
-        }
-        
-        System.out.println(thirstExhaustionLevel + " " + thirstHydrationLevel);
     }
     
     @Override
