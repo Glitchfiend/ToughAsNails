@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -14,6 +15,8 @@ import tan.configuration.TANConfigurationTemperature;
 
 public class TemperatureStat extends TANStat
 { 
+    private float temperature = 37F;
+    
     @Override
     public void update()
     {    
@@ -22,9 +25,6 @@ public class TemperatureStat extends TANStat
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
-        
-        float originalTemperature = tanData.getFloat(getStatName());
-        float temperature = originalTemperature;
 
         float environmentTemperature = getEnvironmentTemperature(world, x, y, z);
         
@@ -85,13 +85,23 @@ public class TemperatureStat extends TANStat
         //System.out.println("Rate " + rate); 
         //System.out.println("Current Temp " + temperature);
         //System.out.println("Rate Modifier " + ratemodifier);
-
-        if (temperature != originalTemperature)
+    }
+    
+    @Override
+    public void readNBT(NBTTagCompound tanData)
+    {
+        if (tanData.hasKey(getStatName()))
         {
-            tanData.setFloat(getStatName(), MathHelper.clamp_float(temperature, 27F, 47F));
-
-            updatePlayerData(tanData, player);
+            temperature = tanData.getFloat(getStatName());
         }
+    }
+
+    @Override
+    public void writeNBT(NBTTagCompound tanData)
+    {
+        tanData.setFloat(getStatName(), MathHelper.clamp_float(temperature, 27F, 47F));
+
+        updatePlayerData(tanData, player);
     }
     
     public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
@@ -180,13 +190,7 @@ public class TemperatureStat extends TANStat
         }
 
     }
-
-    @Override
-    public void setDefaults()
-    {
-        setDefaultFloat(getStatName(), 37F);
-    }
-
+    
     @Override
     public String getStatName()
     {
