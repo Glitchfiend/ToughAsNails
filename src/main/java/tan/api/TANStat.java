@@ -26,6 +26,15 @@ public abstract class TANStat
         PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(tanData)), (Player)player);
     }
     
+    public void setDefaultCompound(String key, NBTTagCompound compound)
+    {
+        if (!tanData.hasKey(key))
+        {
+            tanData.setCompoundTag(key, compound);
+            updatePlayerData(tanData, player);
+        }
+    }
+    
     public void setDefaultInt(String key, int value)
     {
         if (!tanData.hasKey(key)) 
