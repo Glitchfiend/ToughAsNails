@@ -50,7 +50,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                     backgound = 13;
                 }
 
-                if (updateCounter % (level * 3 + 1) == 0)
+                if (thirstCompound.getFloat("thirstHydrationLevel") <= 0.0F && updateCounter % (level * 3 + 1) == 0)
                 {
                     y = top + (rand.nextInt(3) - 1);
                 }

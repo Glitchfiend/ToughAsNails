@@ -8,6 +8,7 @@ public class ThirstStat extends TANStat
 {
     private int thirstLevel;
 
+    private float thirstHydrationLevel;
     private float thirstExhaustionLevel;
 
     private int thirstTimer;
@@ -20,16 +21,21 @@ public class ThirstStat extends TANStat
         NBTTagCompound thirstCompound = tanData.getCompoundTag(getStatName());
         
         thirstLevel = thirstCompound.getInteger("thirstLevel");
+        thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
         thirstExhaustionLevel = thirstCompound.getFloat("thirstExhaustionLevel");
         thirstTimer = thirstCompound.getInteger("thirstTimer");
         
-        int difficulty = player.worldObj.difficultySetting;
+        int i = player.worldObj.difficultySetting;
 
         if (this.thirstExhaustionLevel > 4.0F)
         {
             this.thirstExhaustionLevel -= 4.0F;
 
-            if (difficulty > 0)
+            if (this.thirstHydrationLevel > 0.0F)
+            {
+                this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
+            }
+            else if (i > 0)
             {
                 this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
             }
@@ -41,7 +47,7 @@ public class ThirstStat extends TANStat
 
             if (this.thirstTimer >= 80)
             {
-                if (player.getHealth() > 10.0F || difficulty >= 3 || player.getHealth() > 1.0F && difficulty >= 2)
+                if (player.getHealth() > 10.0F || i >= 3 || player.getHealth() > 1.0F && i >= 2)
                 {
                     player.attackEntityFrom(DamageSource.starve, 1.0F);
                 }
@@ -54,12 +60,8 @@ public class ThirstStat extends TANStat
             this.thirstTimer = 0;
         }
         
-        if (world.rand.nextFloat() <= 0.05F)
-        {
-            addExhaustion(0.1F);
-        }
-        
         thirstCompound.setInteger("thirstLevel", thirstLevel);
+        thirstCompound.setFloat("thirstHydrationLevel", thirstHydrationLevel);
         thirstCompound.setFloat("thirstExhaustionLevel", thirstExhaustionLevel);
         thirstCompound.setInteger("thirstTimer", thirstTimer);
         
@@ -72,6 +74,7 @@ public class ThirstStat extends TANStat
         NBTTagCompound thirstCompound = new NBTTagCompound();
         
         thirstCompound.setInteger("thirstLevel", 20);
+        thirstCompound.setFloat("thirstHydrationLevel", 10F);
         thirstCompound.setFloat("thirstExhaustionLevel", 0F);
         thirstCompound.setInteger("thirstTimer", 0);
         
