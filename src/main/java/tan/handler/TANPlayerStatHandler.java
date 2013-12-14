@@ -17,12 +17,13 @@ public class TANPlayerStatHandler
         
         for (TANStat stat : PlayerStatRegistry.tanStatList)
         {
-            stat.tanData = tanData;
             stat.world = world;
             stat.player = player;
             
-            stat.setDefaults();
+            stat.setDefaults(tanData);
+            stat.readNBT(tanData);
             stat.update();
+            stat.writeNBT(tanData);
         }
     }
 }

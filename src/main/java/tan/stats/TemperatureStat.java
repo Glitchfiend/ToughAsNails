@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -14,6 +15,8 @@ import tan.configuration.TANConfigurationTemperature;
 
 public class TemperatureStat extends TANStat
 { 
+    private float temperature;
+    
     @Override
     public void update()
     {    
@@ -22,9 +25,6 @@ public class TemperatureStat extends TANStat
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
-        
-        float originalTemperature = tanData.getFloat(getStatName());
-        float temperature = originalTemperature;
 
         float environmentTemperature = getEnvironmentTemperature(world, x, y, z);
         
@@ -85,13 +85,26 @@ public class TemperatureStat extends TANStat
         //System.out.println("Rate " + rate); 
         //System.out.println("Current Temp " + temperature);
         //System.out.println("Rate Modifier " + ratemodifier);
+    }
+    
+    @Override
+    public void readNBT(NBTTagCompound tanData)
+    {
+        temperature = tanData.getFloat(getStatName());
+    }
 
-        if (temperature != originalTemperature)
-        {
-            tanData.setFloat(getStatName(), MathHelper.clamp_float(temperature, 27F, 47F));
+    @Override
+    public void writeNBT(NBTTagCompound tanData)
+    {
+        tanData.setFloat(getStatName(), MathHelper.clamp_float(temperature, 27F, 47F));
 
-            updatePlayerData(tanData, player);
-        }
+        updatePlayerData(tanData, player);
+    }
+
+    @Override
+    public void setDefaults(NBTTagCompound tanData)
+    {
+        setDefaultFloat(tanData, getStatName(), 37F);  
     }
     
     public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
@@ -179,12 +192,6 @@ public class TemperatureStat extends TANStat
             return temperature;
         }
 
-    }
-
-    @Override
-    public void setDefaults()
-    {
-        setDefaultFloat(getStatName(), 37F);
     }
 
     @Override

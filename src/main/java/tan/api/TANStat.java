@@ -1,22 +1,25 @@
 package tan.api;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import tan.network.PacketTypeHandler;
 import tan.network.packet.PacketSendStats;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 
 public abstract class TANStat
 {
     public World world;
     public EntityPlayerMP player;
-    public NBTTagCompound tanData;
         
     public abstract void update();
     
-    public abstract void setDefaults();
+    public abstract void readNBT(NBTTagCompound tanData);
+    
+    public abstract void writeNBT(NBTTagCompound tanData);
+    
+    public abstract void setDefaults(NBTTagCompound tanData);
     
     public abstract String getStatName();
     
@@ -26,7 +29,7 @@ public abstract class TANStat
         PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(tanData)), (Player)player);
     }
     
-    public void setDefaultCompound(String key, NBTTagCompound compound)
+    public void setDefaultCompound(NBTTagCompound tanData, String key, NBTTagCompound compound)
     {
         if (!tanData.hasKey(key))
         {
@@ -35,7 +38,7 @@ public abstract class TANStat
         }
     }
     
-    public void setDefaultInt(String key, int value)
+    public void setDefaultInt(NBTTagCompound tanData, String key, int value)
     {
         if (!tanData.hasKey(key)) 
         {
@@ -44,7 +47,7 @@ public abstract class TANStat
         }
     }
     
-    public void setDefaultFloat(String key, float value)
+    public void setDefaultFloat(NBTTagCompound tanData, String key, float value)
     {
         if (!tanData.hasKey(key)) 
         {
