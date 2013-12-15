@@ -48,15 +48,10 @@ public class ThirstStat extends TANStat
         if (this.thirstLevel <= 0)
         {
             ++this.thirstTimer;
-            
-            if (player.getFoodStats().getFoodLevel() == 0)
-            {
-                player.attackEntityFrom(DamageSource.generic, 200F);
-            }
 
             if (this.thirstTimer >= 80)
             {
-                if (player.getHealth() > 10.0F || i >= 3 || player.getHealth() > 1.0F && i >= 2)
+                if (player.getFoodStats().getFoodLevel() == 0 || player.getHealth() > 10.0F || i >= 3 || player.getHealth() > 1.0F && i >= 2)
                 {
                     player.attackEntityFrom(TANDamageSource.dehydration, 1.0F);
                 }
