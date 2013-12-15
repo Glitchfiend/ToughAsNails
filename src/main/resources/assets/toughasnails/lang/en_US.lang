@@ -4,4 +4,6 @@ item.tan.freshWaterBottle.name=Fresh Water Bottle
 
 phrase.tan.tempThermometer=The current temperature is
 
+death.attack.dehydration=%1$s died from dehydration
+
 itemGroup.tabToughAsNails=Tough As Nails
