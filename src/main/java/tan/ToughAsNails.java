@@ -6,6 +6,7 @@ import tan.configuration.TANConfiguration;
 import tan.core.CreativeTabTAN;
 import tan.core.TANItems;
 import tan.core.TANPlayerStats;
+import tan.core.TANPotions;
 import tan.core.TANTemperature;
 import tan.core.TANThirst;
 import tan.handler.ConnectionHandler;
@@ -48,6 +49,7 @@ public class ToughAsNails
         
         tabToughAsNails = new CreativeTabTAN(CreativeTabs.getNextID(), "tabToughAsNails");
         
+        TANPotions.init();
         TANItems.init();
         TANPlayerStats.init();
         TANTemperature.init();

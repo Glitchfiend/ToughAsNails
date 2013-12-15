@@ -2,10 +2,12 @@ item.tan.canteen.name=Canteen
 item.tan.thermometer.name=Thermometer
 item.tan.freshWaterBottle.name=Fresh Water Bottle
 
-phrase.tan.tempThermometer=The current temperature is
-
 death.attack.dehydration=%1$s died from dehydration
 death.attack.hyperthermia=%1$s burnt to death
 death.attack.hypothermia=%1$s froze to death
 
 itemGroup.tabToughAsNails=Tough As Nails
+
+phrase.tan.tempThermometer=The current temperature is
+
+potion.waterPoisoning=Water Poisoning

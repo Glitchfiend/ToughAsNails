@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import tan.api.PlayerStatRegistry;
+import tan.core.TANPotions;
 import tan.stats.ThirstStat;
 
 public class RenderThirstOverlay extends RenderTANOverlay
@@ -51,7 +52,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                 int icon = 16;
                 byte backgound = 0;
 
-                if (minecraft.thePlayer.isPotionActive(Potion.hunger))
+                if (minecraft.thePlayer.isPotionActive(TANPotions.waterPoisoning.id))
                 {
                     icon += 36;
                     backgound = 13;
