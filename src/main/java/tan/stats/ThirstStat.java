@@ -5,6 +5,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
 import tan.api.event.thirst.ThirstEvent;
+import tan.core.TANDamageSources;
 
 public class ThirstStat extends TANStat
 {
@@ -20,7 +21,7 @@ public class ThirstStat extends TANStat
     {
         if (player.capabilities.isCreativeMode) return;
         
-        ThirstEvent thirstEvent = new ThirstEvent(thirstLevel, thirstHydrationLevel, thirstExhaustionLevel, thirstTimer);
+        ThirstEvent thirstEvent = new ThirstEvent(this.player, thirstLevel, thirstHydrationLevel, thirstExhaustionLevel, thirstTimer);
         
         MinecraftForge.EVENT_BUS.post(thirstEvent);
         
@@ -30,9 +31,9 @@ public class ThirstStat extends TANStat
         
         int i = player.worldObj.difficultySetting;
 
-        if (this.thirstExhaustionLevel > 4.0F)
+        if (this.thirstExhaustionLevel > 2.0F)
         {
-            this.thirstExhaustionLevel -= 4.0F;
+            this.thirstExhaustionLevel -= 2.0F;
 
             if (this.thirstHydrationLevel > 0.0F)
             {
@@ -52,7 +53,7 @@ public class ThirstStat extends TANStat
             {
                 if (player.getHealth() > 10.0F || i >= 3 || player.getHealth() > 1.0F && i >= 2)
                 {
-                    player.attackEntityFrom(DamageSource.starve, 1.0F);
+                    player.attackEntityFrom(TANDamageSources.dehydration, 1.0F);
                 }
 
                 this.thirstTimer = 0;
@@ -62,6 +63,8 @@ public class ThirstStat extends TANStat
         {
             this.thirstTimer = 0;
         }
+        
+        System.out.println(thirstExhaustionLevel + " " + thirstHydrationLevel);
     }
     
     @Override
@@ -103,9 +106,9 @@ public class ThirstStat extends TANStat
         setDefaultCompound(tanData, getStatName(), thirstCompound);
     }
     
-    public void addExhaustion(float amount)
+    public static float addExhaustion(float thirstExhaustionLevel, float amount)
     {
-        this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
+        return Math.min(thirstExhaustionLevel + amount, 40.0F);
     }
 
     @Override
