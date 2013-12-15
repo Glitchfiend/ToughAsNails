@@ -3,14 +3,13 @@ package tan.stats;
 import java.text.DecimalFormat;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
-import tan.api.temperature.ITemperatureModifier;
-import tan.api.temperature.TemperatureRegistry;
+import tan.api.event.temperature.TemperatureEvent;
 import tan.configuration.TANConfigurationTemperature;
 
 public class TemperatureStat extends TANStat
@@ -53,10 +52,10 @@ public class TemperatureStat extends TANStat
         
         rate = (rate < 0 ? -rate : rate);
         
-        for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
-        {
-            rate += temperatureModifier.modifyRate(world, player);
-        }
+        TemperatureEvent.Rate rateEvent = new TemperatureEvent.Rate(player, aimedTemperature, rate);
+        
+        MinecraftForge.EVENT_BUS.post(rateEvent);
+        rate = rateEvent.rate;
         
         DecimalFormat twoDForm = new DecimalFormat("#.##");  
         
@@ -111,10 +110,10 @@ public class TemperatureStat extends TANStat
     {
         float aimedTemperature = environmentTemperature;
         
-        for (ITemperatureModifier temperatureModifier : TemperatureRegistry.temperatureModifiers)
-        {
-            aimedTemperature += temperatureModifier.modifyTemperature(world, player);
-        }
+        TemperatureEvent temperatureEvent = new TemperatureEvent(player, aimedTemperature);
+        
+        MinecraftForge.EVENT_BUS.post(temperatureEvent);
+        aimedTemperature = temperatureEvent.temperature;
         
         DecimalFormat twoDForm = new DecimalFormat("#.##");   
 

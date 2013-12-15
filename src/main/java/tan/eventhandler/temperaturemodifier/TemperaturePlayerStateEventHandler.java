@@ -1,15 +1,17 @@
-package tan.temperaturemodifiers;
+package tan.eventhandler.temperaturemodifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import tan.api.temperature.ITemperatureModifier;
+import net.minecraftforge.event.ForgeSubscribe;
+import tan.api.event.temperature.TemperatureEvent;
 
-public class TemperaturePlayerStateModifier implements ITemperatureModifier
+public class TemperaturePlayerStateEventHandler
 {
-    @Override
-    public float modifyTemperature(World world, EntityPlayer player)
+    @ForgeSubscribe
+    public void modifyTemperature(TemperatureEvent event)
     {
+        EntityPlayer player = event.player;
+        
         float modifier = 0F;
         
         if (player.isSprinting()) modifier += 2.25F;
@@ -20,12 +22,6 @@ public class TemperaturePlayerStateModifier implements ITemperatureModifier
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
         
-        return modifier;
-    }
-
-    @Override
-    public float modifyRate(World world, EntityPlayer player)
-    {
-        return 0F;
+        event.temperature += modifier;    
     }
 }

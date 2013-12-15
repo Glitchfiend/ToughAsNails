@@ -6,7 +6,6 @@ import java.util.HashMap;
 public class TemperatureRegistry
 {
     public static HashMap<String, TemperatureSource> temperatureSources = new HashMap<String, TemperatureSource>();
-    public static ArrayList<ITemperatureModifier> temperatureModifiers = new ArrayList<ITemperatureModifier>();
     
     public static float getTemperatureSourceModifier(int id, int metadata)
     {
@@ -36,11 +35,6 @@ public class TemperatureRegistry
             
         }
         return rate;
-    }
-    
-    public static void registerTemperatureModifier(ITemperatureModifier temperatureModifier)
-    {
-        temperatureModifiers.add(temperatureModifier);
     }
 
     public static void registerTemperatureSource(int id, int metadata, float temperatureModifier, float rate)

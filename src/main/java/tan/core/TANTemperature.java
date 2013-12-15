@@ -1,10 +1,11 @@
 package tan.core;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.common.MinecraftForge;
 import tan.api.temperature.TemperatureRegistry;
-import tan.temperaturemodifiers.TemperaturePlayerStateModifier;
-import tan.temperaturemodifiers.TemperatureSourceModifier;
-import tan.temperaturemodifiers.TemperatureTimeModifier;
+import tan.eventhandler.temperaturemodifier.TemperaturePlayerStateEventHandler;
+import tan.eventhandler.temperaturemodifier.TemperatureSourceEventHandler;
+import tan.eventhandler.temperaturemodifier.TemperatureTimeEventHandler;
 
 public class TANTemperature
 {
@@ -16,9 +17,9 @@ public class TANTemperature
     
     private static void registerTemperatureModifiers()
     {
-        TemperatureRegistry.registerTemperatureModifier(new TemperatureSourceModifier());
-        TemperatureRegistry.registerTemperatureModifier(new TemperatureTimeModifier());
-        TemperatureRegistry.registerTemperatureModifier(new TemperaturePlayerStateModifier());
+        MinecraftForge.EVENT_BUS.register(new TemperatureSourceEventHandler());
+        MinecraftForge.EVENT_BUS.register(new TemperaturePlayerStateEventHandler());
+        MinecraftForge.EVENT_BUS.register(new TemperatureTimeEventHandler());
     }
     
     private static void registerTemperatureSources()

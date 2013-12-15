@@ -1,4 +1,4 @@
-package tan.temperaturemodifiers;
+package tan.eventhandler.temperaturemodifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,15 +6,19 @@ import java.util.Collections;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tan.api.temperature.ITemperatureModifier;
+import net.minecraftforge.event.ForgeSubscribe;
+import tan.api.event.temperature.TemperatureEvent;
 import tan.api.temperature.TemperatureRegistry;
 
-public class TemperatureSourceModifier implements ITemperatureModifier
+public class TemperatureSourceEventHandler
 {
-    @Override
-    public float modifyTemperature(World world, EntityPlayer player)
+    @ForgeSubscribe
+    public void modifyTemperature(TemperatureEvent event)
     {
         ArrayList<Float> temperatureModifiers = new ArrayList<Float>();
+        
+        EntityPlayer player = event.player;
+        World world = player.worldObj;
         
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
@@ -47,18 +51,21 @@ public class TemperatureSourceModifier implements ITemperatureModifier
         
         if ((total / divider) > 0)
         {
-            return Collections.max(temperatureModifiers);
+            event.temperature += Collections.max(temperatureModifiers);
         }
         else
         {
-            return Collections.min(temperatureModifiers);
+            event.temperature += Collections.min(temperatureModifiers);
         }
     }
-
-    @Override
-    public float modifyRate(World world, EntityPlayer player)
+    
+    @ForgeSubscribe
+    public void modifyRate(TemperatureEvent.Rate event)
     {
         ArrayList<Float> rateModifiers = new ArrayList<Float>();
+        
+        EntityPlayer player = event.player;
+        World world = player.worldObj;
         
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
@@ -91,11 +98,11 @@ public class TemperatureSourceModifier implements ITemperatureModifier
         
         if ((total / divider) > 0)
         {
-            return Collections.max(rateModifiers);
+            event.rate += Collections.max(rateModifiers);
         }
         else
         {
-            return Collections.min(rateModifiers);
+            event.rate += Collections.min(rateModifiers);
         }
     }
 }
