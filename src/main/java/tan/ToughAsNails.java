@@ -7,6 +7,7 @@ import tan.core.CreativeTabTAN;
 import tan.core.TANItems;
 import tan.core.TANPlayerStats;
 import tan.core.TANTemperature;
+import tan.core.TANThirst;
 import tan.handler.ConnectionHandler;
 import tan.handler.TickHandlerServer;
 import tan.network.PacketHandler;
@@ -50,6 +51,7 @@ public class ToughAsNails
         TANItems.init();
         TANPlayerStats.init();
         TANTemperature.init();
+        TANThirst.init();
     }
     
     @EventHandler

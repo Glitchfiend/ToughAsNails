@@ -2,7 +2,9 @@ package tan.stats;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
+import tan.api.event.thirst.ThirstEvent;
 
 public class ThirstStat extends TANStat
 {
@@ -17,6 +19,14 @@ public class ThirstStat extends TANStat
     public void update()
     {
         if (player.capabilities.isCreativeMode) return;
+        
+        ThirstEvent thirstEvent = new ThirstEvent(thirstLevel, thirstHydrationLevel, thirstExhaustionLevel, thirstTimer);
+        
+        MinecraftForge.EVENT_BUS.post(thirstEvent);
+        
+        thirstLevel = thirstEvent.thirstLevel;
+        thirstHydrationLevel = thirstEvent.thirstHydrationLevel;
+        thirstExhaustionLevel = thirstEvent.thirstExhaustionLevel;
         
         int i = player.worldObj.difficultySetting;
 
