@@ -5,7 +5,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
 import tan.api.event.thirst.ThirstEvent;
-import tan.core.TANDamageSources;
+import tan.core.TANDamageSource;
 
 public class ThirstStat extends TANStat
 {
@@ -53,7 +53,7 @@ public class ThirstStat extends TANStat
             {
                 if (player.getHealth() > 10.0F || i >= 3 || player.getHealth() > 1.0F && i >= 2)
                 {
-                    player.attackEntityFrom(TANDamageSources.dehydration, 1.0F);
+                    player.attackEntityFrom(TANDamageSource.dehydration, 1.0F);
                 }
 
                 this.thirstTimer = 0;
@@ -63,14 +63,12 @@ public class ThirstStat extends TANStat
         {
             this.thirstTimer = 0;
         }
-        
-        System.out.println(thirstExhaustionLevel + " " + thirstHydrationLevel);
     }
     
     @Override
     public void readNBT(NBTTagCompound tanData)
     {
-        NBTTagCompound thirstCompound = tanData.getCompoundTag(getStatName());
+        NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
         
         thirstLevel = thirstCompound.getInteger("thirstLevel");
         thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
@@ -88,7 +86,7 @@ public class ThirstStat extends TANStat
         thirstCompound.setFloat("thirstExhaustionLevel", thirstExhaustionLevel);
         thirstCompound.setInteger("thirstTimer", thirstTimer);
         
-        tanData.setCompoundTag(getStatName(), thirstCompound);
+        tanData.setCompoundTag("thirst", thirstCompound);
         
         updatePlayerData(tanData, player);
     }
@@ -99,21 +97,15 @@ public class ThirstStat extends TANStat
         NBTTagCompound thirstCompound = new NBTTagCompound();
         
         thirstCompound.setInteger("thirstLevel", 20);
-        thirstCompound.setFloat("thirstHydrationLevel", 10F);
+        thirstCompound.setFloat("thirstHydrationLevel", 7F);
         thirstCompound.setFloat("thirstExhaustionLevel", 0F);
         thirstCompound.setInteger("thirstTimer", 0);
         
-        setDefaultCompound(tanData, getStatName(), thirstCompound);
+        setDefaultCompound(tanData, "thirst", thirstCompound);
     }
     
     public static float addExhaustion(float thirstExhaustionLevel, float amount)
     {
         return Math.min(thirstExhaustionLevel + amount, 40.0F);
-    }
-
-    @Override
-    public String getStatName()
-    {
-        return "Thirst";
     }
 }

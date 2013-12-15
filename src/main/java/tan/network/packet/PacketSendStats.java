@@ -15,7 +15,8 @@ import cpw.mods.fml.common.network.Player;
 
 public class PacketSendStats extends PacketTAN
 {
-    private float temperature;
+    private float temperatureLevel;
+    private int temperatureTimer;
     
     private int thirstLevel;
     private float thirstExhaustionLevel;
@@ -27,13 +28,16 @@ public class PacketSendStats extends PacketTAN
         super(PacketTypeHandler.sendStats);
     }
     
-    public PacketSendStats(NBTTagCompound tanCompound)
+    public PacketSendStats(NBTTagCompound tanData)
     {
         super(PacketTypeHandler.sendStats);
         
-        temperature = tanCompound.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
+        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
         
-        NBTTagCompound thirstCompound = tanCompound.getCompoundTag(PlayerStatRegistry.getStatName(ThirstStat.class));
+        temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
+        temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
+        
+        NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
         
         thirstLevel = thirstCompound.getInteger("thirstLevel");
         thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
@@ -44,7 +48,8 @@ public class PacketSendStats extends PacketTAN
     @Override
     public void readData(DataInputStream data) throws IOException 
     {
-        temperature = data.readFloat();
+        temperatureLevel = data.readFloat();
+        temperatureTimer = data.readInt();
         
         thirstLevel = data.readInt();
         thirstHydrationLevel = data.readFloat();
@@ -55,7 +60,8 @@ public class PacketSendStats extends PacketTAN
     @Override
     public void writeData(DataOutputStream data) throws IOException 
     {
-        data.writeFloat(temperature);
+        data.writeFloat(temperatureLevel);
+        data.writeInt(temperatureTimer);
         
         data.writeInt(thirstLevel);
         data.writeFloat(thirstHydrationLevel);
@@ -70,7 +76,10 @@ public class PacketSendStats extends PacketTAN
         
         NBTTagCompound tanCompound = entityPlayer.getEntityData().getCompoundTag("ToughAsNails");
         
-        tanCompound.setFloat(PlayerStatRegistry.getStatName(TemperatureStat.class), temperature);
+        NBTTagCompound temperatureCompound = new NBTTagCompound();
+        
+        temperatureCompound.setFloat("temperatureLevel", temperatureLevel);
+        temperatureCompound.setInteger("temperatureTimer", temperatureTimer);
         
         NBTTagCompound thirstCompound = new NBTTagCompound();
         
@@ -79,7 +88,8 @@ public class PacketSendStats extends PacketTAN
         thirstCompound.setFloat("thirstExhaustionLevel", thirstExhaustionLevel);
         thirstCompound.setInteger("thirstTimer", thirstTimer);
         
-        tanCompound.setCompoundTag(PlayerStatRegistry.getStatName(ThirstStat.class), thirstCompound);
+        tanCompound.setCompoundTag("temperature", temperatureCompound);
+        tanCompound.setCompoundTag("thirst", thirstCompound);
         
         entityPlayer.getEntityData().setCompoundTag("ToughAsNails", tanCompound);
     }

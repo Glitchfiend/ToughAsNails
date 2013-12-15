@@ -21,8 +21,6 @@ public abstract class TANStat
     
     public abstract void setDefaults(NBTTagCompound tanData);
     
-    public abstract String getStatName();
-    
     public static void updatePlayerData(NBTTagCompound tanData, EntityPlayerMP player)
     {
         player.getEntityData().setCompoundTag("ToughAsNails", tanData);

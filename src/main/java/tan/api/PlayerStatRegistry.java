@@ -11,27 +11,4 @@ public class PlayerStatRegistry
     {
         tanStatList.add(stat);
     }
-    
-    public static <Type extends TANStat> String getStatName(Class<Type> clazz)
-    {
-        return getStatObject(clazz).getStatName();
-    }
-    
-    public static <Type extends TANStat> TANStat getStatObject(Class<Type> clazz)
-    {
-        return (TANStat)findObjectOfType(tanStatList, clazz);
-    }
-    
-    public static <Type> Type findObjectOfType(Collection<?> arrayList, Class<Type> clazz)
-    {
-        for (Object object : arrayList)
-        {
-            if (object != null && object.getClass() == clazz)
-            {
-                return clazz.cast(object);
-            }
-        }
-
-        return null;    
-    }
 }

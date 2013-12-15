@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -11,10 +12,13 @@ import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
 import tan.api.event.temperature.TemperatureEvent;
 import tan.configuration.TANConfigurationTemperature;
+import tan.core.TANDamageSource;
 
 public class TemperatureStat extends TANStat
 { 
-    private float temperature;
+    private float temperatureLevel;
+    
+    private int temperatureTimer;
     
     @Override
     public void update()
@@ -29,23 +33,31 @@ public class TemperatureStat extends TANStat
         
         float aimedTemperature = getAimedTemperature(environmentTemperature, world, player);
         
-        int ratemodifier = 8;
+        int difficultySetting = player.worldObj.difficultySetting;
         
-        if (player.worldObj.difficultySetting == 0)
+        int ratemodifier;
+        
+        switch (difficultySetting)
         {
-        	ratemodifier = 15;
-        }
-        if (player.worldObj.difficultySetting == 1)
-        {
-        	ratemodifier = 10;
-        }
-        if (player.worldObj.difficultySetting == 2)
-        {
-        	ratemodifier = 8;
-        }
-        if (player.worldObj.difficultySetting == 3)
-        {
-        	ratemodifier = 5;
+            case 0:
+                ratemodifier = 15;
+                break;
+                
+            case 1:
+                ratemodifier = 10;
+                break;
+                
+            case 2:
+                ratemodifier = 8;
+                break;
+                
+            case 3:
+                ratemodifier = 5;
+                break;
+                
+            default:
+                ratemodifier = 8;
+                break;
         }
         
         float rate = ((environmentTemperature / 20 / 2) - 0.35F) / ratemodifier /*0.35 "Normal" Temperature (0.7, squashed to fit between 0-1)*/;
@@ -61,41 +73,84 @@ public class TemperatureStat extends TANStat
         
         if (world.rand.nextFloat() <= rate)
         {
-            if (temperature > aimedTemperature)
+            if (temperatureLevel > aimedTemperature)
             {
-                temperature -= 0.01F;
+                temperatureLevel -= 0.01F;
             }
-            else if (temperature < aimedTemperature)
+            else if (temperatureLevel < aimedTemperature)
             {
-                temperature += 0.01F;
+                temperatureLevel += 0.01F;
             }
         }
         
         try
         {
-            temperature = Float.parseFloat(twoDForm.format(temperature));
+            temperatureLevel = Float.parseFloat(twoDForm.format(temperatureLevel));
         }
         catch (Exception e)
         {
 
         }
         
+        DamageSource damageSource = null;
+        
+        if (temperatureLevel > 44F)
+        {
+            temperatureTimer++;
+            
+            if (temperatureLevel < 46F && this.temperatureTimer >= 320F || temperatureLevel >= 46F && temperatureLevel < 47F && temperatureTimer >= 120F || temperatureLevel >= 47F && temperatureLevel < 48F && temperatureTimer >= 40F)
+            {
+                damageSource = TANDamageSource.hyperthermia;
+            }
+        }
+        else if (temperatureLevel < 30F)
+        {
+            temperatureTimer++;
+            
+            if (temperatureLevel > 28F && this.temperatureTimer >= 320F || temperatureLevel <= 28F && temperatureLevel > 27 && temperatureTimer >= 120F || temperatureLevel <= 27F && temperatureLevel > 26F && temperatureTimer >= 40F)
+            {
+                damageSource = TANDamageSource.hypothermia;
+            }
+        }
+        else
+        {
+            temperatureTimer = 0;
+        }
+        
+        if (damageSource != null)
+        {
+            if (player.getHealth() > 10.0F || difficultySetting >= 3 || player.getHealth() > 1.0F && difficultySetting >= 2)
+            {
+                player.attackEntityFrom(damageSource, 1.0F);
+            }
+
+            this.temperatureTimer = 0;
+        }
+        
         //System.out.println("Aimed Temp " + aimedTemperature);
         //System.out.println("Rate " + rate); 
-        //System.out.println("Current Temp " + temperature);
+        //System.out.println("Current Temp " + temperatureLevel);
         //System.out.println("Rate Modifier " + ratemodifier);
     }
     
     @Override
     public void readNBT(NBTTagCompound tanData)
     {
-        temperature = tanData.getFloat(getStatName());
+        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        
+        temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
+        temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
     }
 
     @Override
     public void writeNBT(NBTTagCompound tanData)
     {
-        tanData.setFloat(getStatName(), MathHelper.clamp_float(temperature, 27F, 47F));
+        NBTTagCompound temperatureCompound = new NBTTagCompound();
+        
+        temperatureCompound.setFloat("temperatureLevel", MathHelper.clamp_float(temperatureLevel, 27F, 47F));
+        temperatureCompound.setInteger("temperatureTimer", temperatureTimer);
+        
+        tanData.setCompoundTag("temperature", temperatureCompound);
 
         updatePlayerData(tanData, player);
     }
@@ -103,7 +158,12 @@ public class TemperatureStat extends TANStat
     @Override
     public void setDefaults(NBTTagCompound tanData)
     {
-        setDefaultFloat(tanData, getStatName(), 37F);  
+        NBTTagCompound temperatureCompound = new NBTTagCompound();
+        
+        temperatureCompound.setFloat("temperatureLevel", 37F);
+        temperatureCompound.setInteger("temperatureTimer", 0);
+        
+        setDefaultCompound(tanData, "temperature", temperatureCompound);  
     }
     
     public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
@@ -191,11 +251,5 @@ public class TemperatureStat extends TANStat
             return temperature;
         }
 
-    }
-
-    @Override
-    public String getStatName()
-    {
-        return "Temp";
     }
 }

@@ -5,6 +5,8 @@ import org.lwjgl.opengl.GL11;
 import tan.api.PlayerStatRegistry;
 import tan.stats.TemperatureStat;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
@@ -20,19 +22,21 @@ public class RenderTemperatureVignettes extends RenderTANOverlay
     @Override
     void preRender(RenderGameOverlayEvent.Pre event)
     {
-        temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
+        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        
+        temperature = temperatureCompound.getFloat("temperatureLevel");
         
         if (!minecraft.thePlayer.capabilities.isCreativeMode)
         {
             if (temperature > 44F)
             {
-                float brightness = (47F - temperature) / 3F;
+                float brightness = MathHelper.clamp_float((47F - temperature) / 3F, 0F, 1F);
                 
                 renderVignette(vignetteBurningLocation, brightness, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
             }
             else if (temperature < 30F)
             {
-                float brightness = 1.0F - (-(temperature - 30F) / 3);
+                float brightness = MathHelper.clamp_float(1.0F - (-(temperature - 30F) / 3), 0F, 1F);
                 
                 renderVignette(vignetteFreezingLocation, brightness, scaledRes.getScaledWidth(), scaledRes.getScaledHeight());
             }

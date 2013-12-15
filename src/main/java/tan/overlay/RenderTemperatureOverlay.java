@@ -33,7 +33,9 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
             return;
         }
         
-        temperature = tanData.getFloat(PlayerStatRegistry.getStatName(TemperatureStat.class));
+        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        
+        temperature = temperatureCompound.getFloat("temperatureLevel");
         iTemperature = MathHelper.floor_float(temperature);
 
         bindTexture(overlayLocation);

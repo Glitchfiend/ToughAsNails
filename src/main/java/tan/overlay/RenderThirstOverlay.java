@@ -39,7 +39,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
             int left = scaledRes.getScaledWidth() / 2 + 91;
             int top = scaledRes.getScaledHeight() - 49;
 
-            NBTTagCompound thirstCompound = tanData.getCompoundTag(PlayerStatRegistry.getStatName(ThirstStat.class));
+            NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
             
             int level = thirstCompound.getInteger("thirstLevel");
 
