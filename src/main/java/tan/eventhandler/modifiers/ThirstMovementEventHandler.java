@@ -33,11 +33,11 @@ public class ThirstMovementEventHandler
             {
                 if (player.isSprinting())
                 {
-                    thirstStat.addExhaustion(0.0099999994F * 3);
+                    thirstStat.addExhaustion(0.0099999994F * 5);
                 }
                 else
                 {
-                    thirstStat.addExhaustion(0.001F * 3);
+                    thirstStat.addExhaustion(0.001F * 5);
                 }
             }
         }
