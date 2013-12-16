@@ -64,6 +64,11 @@ public class ThirstStat extends TANStat
             this.thirstTimer = 0;
         }
         
+        if (player.isSprinting() && thirstLevel <= 6)
+        {
+            player.setSprinting(false);
+        }
+        
         //System.out.println("Exhaustion Level " + thirstExhaustionLevel);
         //System.out.println("Hydration Level " + thirstHydrationLevel);
         //System.out.println("Thirst Level " + thirstLevel);
