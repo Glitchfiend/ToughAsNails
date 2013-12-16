@@ -1,10 +1,11 @@
 package tan.potions;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANPotions;
+import tan.stats.TemperatureStat;
 import tan.stats.ThirstStat;
 
 public class PotionEventHandler
@@ -18,11 +19,12 @@ public class PotionEventHandler
             
             if (event.entityLiving.isPotionActive(TANPotions.waterPoisoning))
             {
-                int amplifier = player.getActivePotionEffect(TANPotions.waterPoisoning).getAmplifier();       
-                float exhaustionAmount = 0.095F * (float)(amplifier + 1);             
-                float thirstExhaustionLevel = ThirstStat.addExhaustion(player.getEntityData().getCompoundTag("ToughAsNails").getCompoundTag("thirst").getFloat("thirstExhaustionLevel"), exhaustionAmount);
+                ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
                 
-                player.getEntityData().getCompoundTag("ToughAsNails").getCompoundTag("thirst").setFloat("thirstExhaustionLevel", thirstExhaustionLevel);
+                int amplifier = player.getActivePotionEffect(TANPotions.waterPoisoning).getAmplifier();       
+                float exhaustionAmount = 0.095F * (float)(amplifier + 1);     
+                
+                thirstStat.addExhaustion(exhaustionAmount);
             }
         }
     }

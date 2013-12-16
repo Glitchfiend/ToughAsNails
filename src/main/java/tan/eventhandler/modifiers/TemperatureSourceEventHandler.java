@@ -1,4 +1,4 @@
-package tan.eventhandler.temperaturemodifier;
+package tan.eventhandler.modifiers;
 
 import java.util.ArrayList;
 import java.util.Collections;

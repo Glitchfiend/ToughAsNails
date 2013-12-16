@@ -3,9 +3,9 @@ package tan.core;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.temperature.TemperatureRegistry;
-import tan.eventhandler.temperaturemodifier.TemperaturePlayerStateEventHandler;
-import tan.eventhandler.temperaturemodifier.TemperatureSourceEventHandler;
-import tan.eventhandler.temperaturemodifier.TemperatureTimeEventHandler;
+import tan.eventhandler.modifiers.TemperaturePlayerStateEventHandler;
+import tan.eventhandler.modifiers.TemperatureSourceEventHandler;
+import tan.eventhandler.modifiers.TemperatureTimeEventHandler;
 
 public class TANTemperature
 {

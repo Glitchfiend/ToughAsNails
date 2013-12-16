@@ -1,14 +1,15 @@
 package tan.overlay;
 
-import org.lwjgl.opengl.GL11;
-
-import tan.api.PlayerStatRegistry;
-import tan.stats.TemperatureStat;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+
+import org.lwjgl.opengl.GL11;
+
+import tan.api.utils.TANPlayerStatUtils;
+import tan.stats.TemperatureStat;
 
 public class RenderTemperatureVignettes extends RenderTANOverlay
 {
@@ -22,9 +23,9 @@ public class RenderTemperatureVignettes extends RenderTANOverlay
     @Override
     void preRender(RenderGameOverlayEvent.Pre event)
     {
-        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(minecraft.thePlayer, TemperatureStat.class);
         
-        temperature = temperatureCompound.getFloat("temperatureLevel");
+        temperature = temperatureStat.temperatureLevel;
         
         if (!minecraft.thePlayer.capabilities.isCreativeMode)
         {

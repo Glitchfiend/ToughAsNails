@@ -7,7 +7,7 @@ import java.io.IOException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
-import tan.api.PlayerStatRegistry;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.network.PacketTypeHandler;
 import tan.stats.TemperatureStat;
 import tan.stats.ThirstStat;
@@ -28,21 +28,20 @@ public class PacketSendStats extends PacketTAN
         super(PacketTypeHandler.sendStats);
     }
     
-    public PacketSendStats(NBTTagCompound tanData)
+    public PacketSendStats(EntityPlayer player)
     {
         super(PacketTypeHandler.sendStats);
         
-        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(player, TemperatureStat.class);
+        ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
         
-        temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
-        temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
+        temperatureLevel = temperatureStat.temperatureLevel;
+        temperatureTimer = temperatureStat.temperatureTimer;
         
-        NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
-        
-        thirstLevel = thirstCompound.getInteger("thirstLevel");
-        thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
-        thirstExhaustionLevel = thirstCompound.getFloat("thirstExhaustionLevel");
-        thirstTimer = thirstCompound.getInteger("thirstTimer");
+        thirstLevel = thirstStat.thirstLevel;
+        thirstHydrationLevel = thirstStat.thirstHydrationLevel;
+        thirstExhaustionLevel = thirstStat.thirstExhaustionLevel;
+        thirstTimer = thirstStat.thirstTimer;
     }
 
     @Override
@@ -73,24 +72,22 @@ public class PacketSendStats extends PacketTAN
     public void execute(INetworkManager network, Player player) 
     {
         EntityPlayer entityPlayer = (EntityPlayer)player;
-        
-        NBTTagCompound tanCompound = entityPlayer.getEntityData().getCompoundTag("ToughAsNails");
-        
-        NBTTagCompound temperatureCompound = new NBTTagCompound();
-        
-        temperatureCompound.setFloat("temperatureLevel", temperatureLevel);
-        temperatureCompound.setInteger("temperatureTimer", temperatureTimer);
-        
-        NBTTagCompound thirstCompound = new NBTTagCompound();
-        
-        thirstCompound.setInteger("thirstLevel", thirstLevel);
-        thirstCompound.setFloat("thirstHydrationLevel", thirstHydrationLevel);
-        thirstCompound.setFloat("thirstExhaustionLevel", thirstExhaustionLevel);
-        thirstCompound.setInteger("thirstTimer", thirstTimer);
-        
-        tanCompound.setCompoundTag("temperature", temperatureCompound);
-        tanCompound.setCompoundTag("thirst", thirstCompound);
-        
-        entityPlayer.getEntityData().setCompoundTag("ToughAsNails", tanCompound);
+
+        if (entityPlayer.worldObj.isRemote)
+        {
+            TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, TemperatureStat.class);
+            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, ThirstStat.class);
+
+            temperatureStat.temperatureLevel = temperatureLevel;
+            temperatureStat.temperatureTimer = temperatureTimer;
+
+            thirstStat.thirstLevel = thirstLevel;
+            thirstStat.thirstHydrationLevel = thirstHydrationLevel;
+            thirstStat.thirstExhaustionLevel = thirstExhaustionLevel;
+            thirstStat.thirstTimer = thirstTimer;
+
+            TANPlayerStatUtils.setPlayerStat(entityPlayer, temperatureStat);
+            TANPlayerStatUtils.setPlayerStat(entityPlayer, thirstStat);
+        }
     }
 }

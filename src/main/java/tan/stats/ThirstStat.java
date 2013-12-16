@@ -1,33 +1,33 @@
 package tan.stats;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
 import tan.api.event.thirst.ThirstEvent;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANDamageSource;
 
 public class ThirstStat extends TANStat
 {
-    private int thirstLevel;
+    public int thirstLevel = 20;
 
-    private float thirstHydrationLevel;
-    private float thirstExhaustionLevel;
+    public float thirstHydrationLevel = 7F;
+    public float thirstExhaustionLevel = 0F;
 
-    private int thirstTimer;
+    public int thirstTimer = 0;
 
     @Override
-    public void update()
+    public void update(EntityPlayer player)
     {
+        World world = player.worldObj;
+        
         if (player.capabilities.isCreativeMode) return;
         
-        ThirstEvent thirstEvent = new ThirstEvent(this.player, thirstLevel, thirstHydrationLevel, thirstExhaustionLevel, thirstTimer);
+        ThirstEvent thirstEvent = new ThirstEvent(player, this);
         
         MinecraftForge.EVENT_BUS.post(thirstEvent);
-        
-        thirstLevel = thirstEvent.thirstLevel;
-        thirstHydrationLevel = thirstEvent.thirstHydrationLevel;
-        thirstExhaustionLevel = thirstEvent.thirstExhaustionLevel;
         
         int i = player.worldObj.difficultySetting;
 
@@ -63,17 +63,24 @@ public class ThirstStat extends TANStat
         {
             this.thirstTimer = 0;
         }
+        
+        //System.out.println("Exhaustion Level " + thirstExhaustionLevel);
+        //System.out.println("Hydration Level " + thirstHydrationLevel);
+        //System.out.println("Thirst Level " + thirstLevel);
     }
     
     @Override
     public void readNBT(NBTTagCompound tanData)
     {
-        NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
-        
-        thirstLevel = thirstCompound.getInteger("thirstLevel");
-        thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
-        thirstExhaustionLevel = thirstCompound.getFloat("thirstExhaustionLevel");
-        thirstTimer = thirstCompound.getInteger("thirstTimer");
+        if (tanData.hasKey("thirst"))
+        {
+            NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
+
+            thirstLevel = thirstCompound.getInteger("thirstLevel");
+            thirstHydrationLevel = thirstCompound.getFloat("thirstHydrationLevel");
+            thirstExhaustionLevel = thirstCompound.getFloat("thirstExhaustionLevel");
+            thirstTimer = thirstCompound.getInteger("thirstTimer");
+        }
     }
 
     @Override
@@ -87,25 +94,10 @@ public class ThirstStat extends TANStat
         thirstCompound.setInteger("thirstTimer", thirstTimer);
         
         tanData.setCompoundTag("thirst", thirstCompound);
-        
-        updatePlayerData(tanData, player);
-    }
-
-    @Override
-    public void setDefaults(NBTTagCompound tanData)
-    {
-        NBTTagCompound thirstCompound = new NBTTagCompound();
-        
-        thirstCompound.setInteger("thirstLevel", 20);
-        thirstCompound.setFloat("thirstHydrationLevel", 7F);
-        thirstCompound.setFloat("thirstExhaustionLevel", 0F);
-        thirstCompound.setInteger("thirstTimer", 0);
-        
-        setDefaultCompound(tanData, "thirst", thirstCompound);
     }
     
-    public static float addExhaustion(float thirstExhaustionLevel, float amount)
+    public void addExhaustion(float amount)
     {
-        return Math.min(thirstExhaustionLevel + amount, 40.0F);
+        thirstExhaustionLevel = Math.min(thirstExhaustionLevel + amount, 40.0F);
     }
 }

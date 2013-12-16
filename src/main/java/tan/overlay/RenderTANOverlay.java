@@ -34,7 +34,6 @@ public abstract class RenderTANOverlay
     public void render(RenderGameOverlayEvent.Pre event)
     {
         scaledRes = event.resolution;
-        tanData = minecraft.thePlayer.getEntityData().getCompoundTag("ToughAsNails");
         
         this.updateCounter++;
         

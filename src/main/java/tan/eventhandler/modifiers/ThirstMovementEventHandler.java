@@ -1,4 +1,4 @@
-package tan.eventhandler.thirstmodifier;
+package tan.eventhandler.modifiers;
 
 import java.lang.reflect.Field;
 
@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.ForgeSubscribe;
 import tan.api.event.thirst.ThirstEvent;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.stats.ThirstStat;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 
@@ -20,11 +21,11 @@ public class ThirstMovementEventHandler
     {
         EntityPlayer player = event.player;
         
+        ThirstStat thirstStat = event.thirstStat;
+        
         double x = player.posX;
         double y = player.posY;
         double z = player.posZ;
-        
-        float thirstExhaustion = event.thirstExhaustionLevel;
         
         if (player.ridingEntity == null)
         {
@@ -32,15 +33,13 @@ public class ThirstMovementEventHandler
             {
                 if (player.isSprinting())
                 {
-                    thirstExhaustion = ThirstStat.addExhaustion(thirstExhaustion, 0.0099999994F * 3);
+                    thirstStat.addExhaustion(0.0099999994F * 3);
                 }
                 else
                 {
-                    thirstExhaustion = ThirstStat.addExhaustion(thirstExhaustion, 0.001F * 3);
+                    thirstStat.addExhaustion(0.001F * 3);
                 }
             }
         }
-        
-        event.thirstExhaustionLevel = thirstExhaustion;
     }
 }

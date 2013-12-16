@@ -1,4 +1,4 @@
-package tan.eventhandler.temperaturemodifier;
+package tan.eventhandler.modifiers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;

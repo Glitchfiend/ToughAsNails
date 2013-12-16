@@ -8,6 +8,7 @@ import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tan.ToughAsNails;
+import tan.api.utils.TemperatureUtils;
 import tan.stats.TemperatureStat;
 
 public class ItemTANThermometer extends Item
@@ -32,14 +33,14 @@ public class ItemTANThermometer extends Item
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
         
-        float environmentTemperature = TemperatureStat.getEnvironmentTemperature(world, x, y, z);
+        float environmentTemperature = TemperatureUtils.getEnvironmentTemperature(world, x, y, z);
 
         if (!world.isRemote)
         {
             ChatMessageComponent environmentTempMessage = new ChatMessageComponent();
 
             environmentTempMessage.addKey("phrase.tan.tempThermometer");
-            environmentTempMessage.addText(" " + TemperatureStat.getConvertedDisplayTemperature(MathHelper.floor_float(TemperatureStat.getAimedTemperature(environmentTemperature, world, player))) + TemperatureStat.getTemperatureSymbol());
+            environmentTempMessage.addText(" " + TemperatureStat.getConvertedDisplayTemperature(MathHelper.floor_float(TemperatureUtils.getAimedTemperature(environmentTemperature, world, player))) + TemperatureStat.getTemperatureSymbol());
             
             player.sendChatToPlayer(environmentTempMessage);
         }

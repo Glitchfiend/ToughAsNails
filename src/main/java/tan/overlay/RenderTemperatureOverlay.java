@@ -1,23 +1,17 @@
 package tan.overlay;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.event.ForgeSubscribe;
 
 import org.lwjgl.opengl.GL11;
 
-import tan.api.PlayerStatRegistry;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.configuration.TANConfigurationTemperature;
 import tan.stats.TemperatureStat;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderTemperatureOverlay extends RenderTANOverlay
 {
@@ -33,9 +27,9 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
             return;
         }
         
-        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+        TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(minecraft.thePlayer, TemperatureStat.class);
         
-        temperature = temperatureCompound.getFloat("temperatureLevel");
+        temperature = temperatureStat.temperatureLevel;
         iTemperature = MathHelper.floor_float(temperature);
 
         bindTexture(overlayLocation);

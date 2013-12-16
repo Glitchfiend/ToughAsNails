@@ -9,8 +9,8 @@ import tan.core.TANPlayerStats;
 import tan.core.TANPotions;
 import tan.core.TANTemperature;
 import tan.core.TANThirst;
+import tan.eventhandler.StatUpdateEventHandler;
 import tan.handler.ConnectionHandler;
-import tan.handler.TickHandlerServer;
 import tan.network.PacketHandler;
 import tan.overlay.RenderAirOverlay;
 import tan.overlay.RenderTemperatureOverlay;
@@ -54,12 +54,8 @@ public class ToughAsNails
         TANPlayerStats.init();
         TANTemperature.init();
         TANThirst.init();
-    }
-    
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        TickRegistry.registerTickHandler(new TickHandlerServer(), Side.SERVER);
+        
+        MinecraftForge.EVENT_BUS.register(new StatUpdateEventHandler());
         
         if (proxy instanceof ClientProxy)
         {
@@ -68,7 +64,11 @@ public class ToughAsNails
             MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
             MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
         }
-
+    }
+    
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
         NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
     }
     

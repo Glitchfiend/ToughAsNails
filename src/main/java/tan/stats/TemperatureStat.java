@@ -7,31 +7,33 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
 import tan.api.event.temperature.TemperatureEvent;
+import tan.api.utils.TemperatureUtils;
 import tan.configuration.TANConfigurationTemperature;
 import tan.core.TANDamageSource;
 
 public class TemperatureStat extends TANStat
 { 
-    private float temperatureLevel;
+    public float temperatureLevel = 37F;
     
-    private int temperatureTimer;
+    public int temperatureTimer = 0;
     
     @Override
-    public void update()
+    public void update(EntityPlayer player)
     {    
+        World world = player.worldObj;
+        
         if (player.capabilities.isCreativeMode) return;
         
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.posY);
         int z = MathHelper.floor_double(player.posZ);
 
-        float environmentTemperature = getEnvironmentTemperature(world, x, y, z);
+        float environmentTemperature = TemperatureUtils.getEnvironmentTemperature(world, x, y, z);
         
-        float aimedTemperature = getAimedTemperature(environmentTemperature, world, player);
+        float aimedTemperature = TemperatureUtils.getAimedTemperature(environmentTemperature, world, player);
         
         int difficultySetting = player.worldObj.difficultySetting;
         
@@ -136,10 +138,13 @@ public class TemperatureStat extends TANStat
     @Override
     public void readNBT(NBTTagCompound tanData)
     {
-        NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
-        
-        temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
-        temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
+        if (tanData.hasKey("temperature"))
+        {
+            NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+
+            temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
+            temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
+        }
     }
 
     @Override
@@ -151,69 +156,6 @@ public class TemperatureStat extends TANStat
         temperatureCompound.setInteger("temperatureTimer", temperatureTimer);
         
         tanData.setCompoundTag("temperature", temperatureCompound);
-
-        updatePlayerData(tanData, player);
-    }
-
-    @Override
-    public void setDefaults(NBTTagCompound tanData)
-    {
-        NBTTagCompound temperatureCompound = new NBTTagCompound();
-        
-        temperatureCompound.setFloat("temperatureLevel", 37F);
-        temperatureCompound.setInteger("temperatureTimer", 0);
-        
-        setDefaultCompound(tanData, "temperature", temperatureCompound);  
-    }
-    
-    public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
-    {
-        float aimedTemperature = environmentTemperature;
-        
-        TemperatureEvent temperatureEvent = new TemperatureEvent(player, aimedTemperature);
-        
-        MinecraftForge.EVENT_BUS.post(temperatureEvent);
-        aimedTemperature = temperatureEvent.temperature;
-        
-        DecimalFormat twoDForm = new DecimalFormat("#.##");   
-
-        try
-        {
-            aimedTemperature = Float.parseFloat(twoDForm.format(aimedTemperature));
-        }
-        catch (Exception e)
-        {
-
-        }
-        
-        return aimedTemperature;
-    }
-    
-    public static float getEnvironmentTemperature(World world, int x, int y, int z)
-    {
-        float averageAimedEnvironmentTemperature = 0F;
-
-        int environmentDivider = 0;
-
-        for (int ix = -2; ix <= 2; ix++)
-        {
-            for (int iy = -1; iy <= 1; iy++)
-            {
-                for (int iz = -2; iz <= 2; iz++)
-                {
-                    int blockID = world.getBlockId(x + ix, y + iy, z + iz);
-                    int metadata = world.getBlockMetadata(x + ix, y + iy, z + iz);
-                    
-                    BiomeGenBase biome = world.getBiomeGenForCoords(x + ix, z + iz);
-
-                    averageAimedEnvironmentTemperature += ((biome.temperature / 2) * 20) + 27;
-
-                    environmentDivider++;
-                }
-            }
-        }
-        
-        return averageAimedEnvironmentTemperature / environmentDivider;
     }
     
     public static String getTemperatureSymbol()

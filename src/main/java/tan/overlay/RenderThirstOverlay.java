@@ -1,11 +1,9 @@
 package tan.overlay;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import tan.api.PlayerStatRegistry;
+import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANPotions;
 import tan.stats.ThirstStat;
 
@@ -40,9 +38,9 @@ public class RenderThirstOverlay extends RenderTANOverlay
             int left = scaledRes.getScaledWidth() / 2 + 91;
             int top = scaledRes.getScaledHeight() - 49;
 
-            NBTTagCompound thirstCompound = tanData.getCompoundTag("thirst");
+            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(minecraft.thePlayer, ThirstStat.class);
             
-            int level = thirstCompound.getInteger("thirstLevel");
+            int level = thirstStat.thirstLevel;
 
             for (int i = 0; i < 10; ++i)
             {
@@ -58,7 +56,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                     backgound = 13;
                 }
 
-                if (thirstCompound.getFloat("thirstHydrationLevel") <= 0.0F && updateCounter % (level * 3 + 1) == 0)
+                if (thirstStat.thirstHydrationLevel <= 0.0F && updateCounter % (level * 3 + 1) == 0)
                 {
                     y = top + (rand.nextInt(3) - 1);
                 }

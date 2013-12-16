@@ -1,7 +1,7 @@
 package tan.core;
 
 import net.minecraftforge.common.MinecraftForge;
-import tan.eventhandler.thirstmodifier.ThirstMovementEventHandler;
+import tan.eventhandler.modifiers.ThirstMovementEventHandler;
 
 public class TANThirst
 {
