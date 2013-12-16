@@ -101,6 +101,11 @@ public class ThirstStat extends TANStat
         tanData.setCompoundTag("thirst", thirstCompound);
     }
     
+    public void addThirst(int amount)
+    {
+        thirstLevel = Math.min(thirstLevel + this.thirstLevel, 20);
+    }
+    
     public void addExhaustion(float amount)
     {
         thirstExhaustionLevel = Math.min(thirstExhaustionLevel + amount, 40.0F);
