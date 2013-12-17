@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -20,12 +21,15 @@ import tan.stats.ThirstStat;
 
 public class ItemTANCanteen extends ItemFluidContainer
 {
+    public Icon canteenFilledIcon;
+    public Icon canteenEmptyIcon;
+    
     public ItemTANCanteen(int id)
     {
         super(id);
         this.maxStackSize = 1;
-        this.capacity = 200;  /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
-        this.setMaxDamage(4);
+        this.capacity = 250;  /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
+        this.setMaxDamage(5);
         this.setCreativeTab(ToughAsNails.tabToughAsNails);
     }
     
@@ -92,7 +96,7 @@ public class ItemTANCanteen extends ItemFluidContainer
             }
         }
         
-        if (fluid.amount != 0)
+        if (fluid != null && fluid.amount != 0)
         {
             player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         }
@@ -126,6 +130,23 @@ public class ItemTANCanteen extends ItemFluidContainer
     @Override
     public void registerIcons(IconRegister iconRegister)
     {
-        itemIcon = iconRegister.registerIcon("toughasnails:canteenfull");
+        canteenFilledIcon = iconRegister.registerIcon("toughasnails:canteenfull");
+        canteenEmptyIcon = iconRegister.registerIcon("toughasnails:canteenempty");
+    }
+    
+    @Override
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+    
+    @Override
+    public Icon getIcon(ItemStack stack, int renderPass)
+    {
+        FluidStack fluid = getFluid(stack);
+        
+        if (fluid != null && fluid.amount != 0) return canteenFilledIcon;
+        
+        return canteenEmptyIcon;
     }
 }
