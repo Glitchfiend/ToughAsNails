@@ -1,4 +1,4 @@
-package tan.api.event.thirst;
+package tan.api.thirst;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.Event;

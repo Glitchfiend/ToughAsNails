@@ -1,29 +1,30 @@
 package tan.items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.ItemFluidContainer;
 import tan.ToughAsNails;
+import tan.api.thirst.IDrinkable;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.stats.ThirstStat;
 
-public class ItemTANCanteen extends Item
+public class ItemTANCanteen extends ItemFluidContainer
 {
     public ItemTANCanteen(int id)
     {
         super(id);
         this.maxStackSize = 1;
+        this.capacity = 200;  /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
         this.setMaxDamage(4);
         this.setCreativeTab(ToughAsNails.tabToughAsNails);
     }
@@ -39,7 +40,13 @@ public class ItemTANCanteen extends Item
     {
         if (!player.capabilities.isCreativeMode)
         {
+            drain(itemStack, 50, true);
             itemStack.damageItem(1, player);
+        }
+
+        if (itemStack.getItemDamage() >= itemStack.getMaxDamage())
+        {
+            itemStack.setItemDamage(0);
         }
 
         if (!world.isRemote)
@@ -47,6 +54,8 @@ public class ItemTANCanteen extends Item
             ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
             
             thirstStat.addThirst(5);
+            
+            TANPlayerStatUtils.setPlayerStat(player, thirstStat);
         }
 
         return itemStack;
@@ -56,58 +65,36 @@ public class ItemTANCanteen extends Item
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
         MovingObjectPosition pos = this.getMovingObjectPositionFromPlayer(world, player, true);
+
+        FluidStack fluid = getFluid(itemStack);
         
-        if (getType(itemStack).isEmpty())
+        if (fluid == null || fluid.amount != capacity)
         {
-            if (pos == null)
-            {
-                return itemStack;
-            }
-            else
+            if (pos != null)
             {
                 int x = pos.blockX;
                 int y = pos.blockY;
                 int z = pos.blockZ;
 
-                if (world.getBlockId(x, y, z) == Block.waterStill.blockID)
+                Fluid blockFluid = FluidRegistry.lookupFluidForBlock(Block.blocksList[world.getBlockId(x, y, z)]);
+                
+                if (blockFluid != null)
                 {
-                    ArrayList<BiomeDictionary.Type> typeList = new ArrayList<BiomeDictionary.Type>();
-
-                    BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
-
-                    for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
+                    if (blockFluid == FluidRegistry.WATER || blockFluid instanceof IDrinkable)
                     {
-                        typeList.add(type);
+                        this.fill(itemStack, new FluidStack(blockFluid, capacity), true);
+                        itemStack.setItemDamage(0);
+                        world.setBlockToAir(x, y, z);
+                        
+                        return itemStack;
                     }
-
-                    if (biome.biomeName.toLowerCase().contains("ocean") || typeList.contains(BiomeDictionary.Type.BEACH))
-                    {
-                        setType(itemStack, "Salt Water");
-                    }
-                    else if (typeList.contains(BiomeDictionary.Type.SWAMP) || typeList.contains(BiomeDictionary.Type.WASTELAND))
-                    {
-                        setType(itemStack, "Dirty Water");
-                    }
-                    else
-                    {
-                        setType(itemStack, "Impure Water");
-                    }
-
-                    world.setBlockToAir(x, y, z);
                 }
             }
         }
-        else
+        
+        if (fluid.amount != 0)
         {
-            if (itemStack.getItemDamage() == itemStack.getMaxDamage())
-            {
-                setType(itemStack, "");
-                itemStack.setItemDamage(0);
-            }
-            else
-            {
-                player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
-            }
+            player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         }
 
         return itemStack;
@@ -116,11 +103,11 @@ public class ItemTANCanteen extends Item
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, List stringList, boolean showAdvancedInfo) 
     {
-        String type = getType(itemStack);
+        FluidStack fluid = getFluid(itemStack);
         
-        if (!type.isEmpty())
-        {
-            stringList.add(type);
+        if (fluid != null && fluid.amount > 0)
+        {   
+            stringList.add(fluid.getFluid().getLocalizedName());
         }
     }
     
@@ -140,27 +127,5 @@ public class ItemTANCanteen extends Item
     public void registerIcons(IconRegister iconRegister)
     {
         itemIcon = iconRegister.registerIcon("toughasnails:canteenfull");
-    }
-    
-    public void setType(ItemStack stack, String type)
-    {
-        if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
-        
-        NBTTagCompound stackCompound = stack.getTagCompound();
-        
-        if (stackCompound.hasKey("ToughAsNails")) stackCompound.setCompoundTag("ToughAsNails", new NBTTagCompound());
-        
-        stack.getTagCompound().getCompoundTag("ToughAsNails").setString("type", type);
-    }
-
-    public String getType(ItemStack stack)
-    {
-        if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
-        
-        NBTTagCompound stackCompound = stack.getTagCompound();
-        
-        if (!stackCompound.hasKey("ToughAsNails")) stackCompound.setCompoundTag("ToughAsNails", new NBTTagCompound());
-        
-        return stack.getTagCompound().getCompoundTag("ToughAsNails").getString("type");
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.ForgeSubscribe;
-import tan.api.event.thirst.ThirstEvent;
+import tan.api.thirst.ThirstEvent;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.stats.ThirstStat;
 import cpw.mods.fml.relauncher.ReflectionHelper;

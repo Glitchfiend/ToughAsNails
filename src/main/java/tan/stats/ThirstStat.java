@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
-import tan.api.event.thirst.ThirstEvent;
+import tan.api.thirst.ThirstEvent;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANDamageSource;
 
@@ -103,7 +103,7 @@ public class ThirstStat extends TANStat
     
     public void addThirst(int amount)
     {
-        thirstLevel = Math.min(thirstLevel + this.thirstLevel, 20);
+        thirstLevel = Math.min(thirstLevel + amount, 20);
     }
     
     public void addExhaustion(float amount)
