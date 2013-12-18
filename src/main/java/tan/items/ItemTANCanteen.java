@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -15,14 +16,19 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
 import tan.ToughAsNails;
-import tan.api.thirst.IDrinkable;
+import tan.api.thirst.TANDrinkInfo;
 import tan.api.utils.TANPlayerStatUtils;
+import tan.core.TANPotions;
 import tan.stats.ThirstStat;
 
 public class ItemTANCanteen extends ItemFluidContainer
 {
     public Icon canteenFilledIcon;
     public Icon canteenEmptyIcon;
+    
+    private ThirstStat thirstStat;
+    
+    private Fluid canteenFluid;
     
     public ItemTANCanteen(int id)
     {
@@ -55,9 +61,14 @@ public class ItemTANCanteen extends ItemFluidContainer
 
         if (!world.isRemote)
         {
-            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
+            TANDrinkInfo drinkInfo = TANDrinkInfo.getDrinkInfo(canteenFluid.getName());
             
-            thirstStat.addThirst(5);
+            thirstStat.addThirst(drinkInfo.thirstAmount, drinkInfo.hydrationModifier);
+            
+            if (world.rand.nextFloat() < drinkInfo.poisoningChance)
+            {
+                player.addPotionEffect(new PotionEffect(TANPotions.waterPoisoning.id, 15 * 20, 1));
+            }
             
             TANPlayerStatUtils.setPlayerStat(player, thirstStat);
         }
@@ -84,7 +95,7 @@ public class ItemTANCanteen extends ItemFluidContainer
                 
                 if (blockFluid != null)
                 {
-                    if (blockFluid == FluidRegistry.WATER || blockFluid instanceof IDrinkable)
+                    if (blockFluid == FluidRegistry.WATER)
                     {
                         this.fill(itemStack, new FluidStack(blockFluid, capacity), true);
                         itemStack.setItemDamage(0);
@@ -98,7 +109,13 @@ public class ItemTANCanteen extends ItemFluidContainer
         
         if (fluid != null && fluid.amount != 0)
         {
-            player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+            thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
+            canteenFluid = fluid.getFluid();
+            
+            if (thirstStat.thirstLevel < 20)
+            {
+                player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+            }
         }
 
         return itemStack;

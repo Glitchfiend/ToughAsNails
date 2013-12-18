@@ -1,4 +1,4 @@
-package tan.api.event.temperature;
+package tan.api.temperature;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.Event;

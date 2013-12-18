@@ -3,7 +3,7 @@ package tan.eventhandler.modifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.ForgeSubscribe;
-import tan.api.event.temperature.TemperatureEvent;
+import tan.api.temperature.TemperatureEvent;
 
 public class TemperaturePlayerStateEventHandler
 {

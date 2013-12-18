@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
-import tan.api.event.temperature.TemperatureEvent;
+import tan.api.temperature.TemperatureEvent;
 
 public class TemperatureUtils
 {

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeSubscribe;
-import tan.api.event.temperature.TemperatureEvent;
+import tan.api.temperature.TemperatureEvent;
 
 public class TemperatureTimeEventHandler
 {

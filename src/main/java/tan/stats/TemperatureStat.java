@@ -9,7 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
-import tan.api.event.temperature.TemperatureEvent;
+import tan.api.temperature.TemperatureEvent;
 import tan.api.utils.TemperatureUtils;
 import tan.configuration.TANConfigurationTemperature;
 import tan.core.TANDamageSource;
