@@ -1,0 +1,13 @@
+item.tan.canteen.name=Походный мешок
+item.tan.thermometer.name=Термометр
+item.tan.freshWaterBottle.name=Бутылка свежей воды
+
+death.attack.dehydration=%1$s умер от обезвоживания
+death.attack.hyperthermia=%1$s сгорел заживо
+death.attack.hypothermia=%1$s замёрз насмерть
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+phrase.tan.tempThermometer=Текущая температура
+
+potion.waterPoisoning=Отравление водой
