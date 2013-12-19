@@ -7,13 +7,13 @@ public class TemperatureRegistry
 {
     public static HashMap<String, TemperatureSource> temperatureSources = new HashMap<String, TemperatureSource>();
     
-    public static float getTemperatureSourceModifier(int id, int metadata)
+    public static float getTemperatureSourceModifier(String type, int id, int metadata)
     {
         float modifier = 0;
         
         try
         {
-            modifier = temperatureSources.get(id + ";" + metadata).temperature;
+            modifier = temperatureSources.get(type + ";" + id + ";" + metadata).temperature;
         }
         catch (Exception e)
         {
@@ -22,13 +22,13 @@ public class TemperatureRegistry
         return modifier;
     }
     
-    public static float getTemperatureSourceRate(int id, int metadata)
+    public static float getTemperatureSourceRate(String type, int id, int metadata)
     {
         float rate = 0;
         
         try
         {
-            rate = temperatureSources.get(id + ";" + metadata).rate;
+            rate = temperatureSources.get(type + ";" + id + ";" + metadata).rate;
         }
         catch (Exception e)
         {
@@ -37,18 +37,18 @@ public class TemperatureRegistry
         return rate;
     }
 
-    public static void registerTemperatureSource(int id, int metadata, float temperatureModifier, float rate)
+    public static void registerTemperatureSource(String type, int id, int metadata, float temperatureModifier, float rate)
     { 
         if (metadata == -1)
         {
             for (int i = 0; i < 16; i++)
             {
-                temperatureSources.put(id + ";" + i, new TemperatureSource(temperatureModifier, rate));
+                temperatureSources.put(type + ";" + id + ";" + i, new TemperatureSource(temperatureModifier, rate));
             }
         }
         else
         {   
-            temperatureSources.put(id + ";" + metadata, new TemperatureSource(temperatureModifier, rate));
+            temperatureSources.put(type + ";" + id + ";" + metadata, new TemperatureSource(temperatureModifier, rate));
         }
     }
 }

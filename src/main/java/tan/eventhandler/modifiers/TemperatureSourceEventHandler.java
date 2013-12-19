@@ -33,7 +33,7 @@ public class TemperatureSourceEventHandler
                     int blockID = world.getBlockId(x + ix, y + iy, z + iz);
                     int metadata = world.getBlockMetadata(x + ix, y + iy, z + iz);
 
-                    float temperatureModifier = TemperatureRegistry.getTemperatureSourceModifier(blockID, metadata);
+                    float temperatureModifier = TemperatureRegistry.getTemperatureSourceModifier("B", blockID, metadata);
 
                     temperatureModifiers.add(temperatureModifier);
                 }
@@ -80,7 +80,7 @@ public class TemperatureSourceEventHandler
                     int blockID = world.getBlockId(x + ix, y + iy, z + iz);
                     int metadata = world.getBlockMetadata(x + ix, y + iy, z + iz);
 
-                    float rateModifier = TemperatureRegistry.getTemperatureSourceRate(blockID, metadata);
+                    float rateModifier = TemperatureRegistry.getTemperatureSourceRate("B", blockID, metadata);
 
                     rateModifiers.add(rateModifier);
                 }
