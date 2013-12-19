@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import tan.configuration.TANConfiguration;
 import tan.core.CreativeTabTAN;
+import tan.core.TANArmour;
 import tan.core.TANItems;
 import tan.core.TANPlayerStats;
 import tan.core.TANPotions;
@@ -51,6 +52,7 @@ public class ToughAsNails
         
         TANPotions.init();
         TANItems.init();
+        TANArmour.init();
         TANPlayerStats.init();
         TANTemperature.init();
         TANThirst.init();
