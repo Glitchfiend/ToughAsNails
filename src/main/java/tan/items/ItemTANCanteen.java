@@ -67,7 +67,7 @@ public class ItemTANCanteen extends ItemFluidContainer
             
             if (world.rand.nextFloat() < drinkInfo.poisoningChance)
             {
-                player.addPotionEffect(new PotionEffect(TANPotions.waterPoisoning.id, 15 * 20, 1));
+                player.addPotionEffect(new PotionEffect(TANPotions.waterPoisoning.id, 1200, 0));
             }
             
             TANPlayerStatUtils.setPlayerStat(player, thirstStat);

@@ -22,9 +22,10 @@ public class PotionEventHandler
                 ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
                 
                 int amplifier = player.getActivePotionEffect(TANPotions.waterPoisoning).getAmplifier();       
-                float exhaustionAmount = 0.095F * (float)(amplifier + 1);     
+                float exhaustionAmount = 0.015F * (float)(amplifier + 2);     
                 
                 thirstStat.addExhaustion(exhaustionAmount);
+                TANPlayerStatUtils.setPlayerStat(player, thirstStat);
             }
         }
     }

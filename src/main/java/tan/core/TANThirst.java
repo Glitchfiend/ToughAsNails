@@ -15,7 +15,7 @@ public class TANThirst
     
     private static void addDrinkInfo()
     {
-        TANDrinkInfo.addDrinkInfo(FluidRegistry.WATER.getName(), 5, 2F, 0.5F);
+        TANDrinkInfo.addDrinkInfo(FluidRegistry.WATER.getName(), 5, 0.2F, 0.5F);
     }
     
     private static void registerThirstModifiers()
