@@ -22,7 +22,7 @@ public class TANCrafting
     	GameRegistry.addRecipe(new ItemStack(TANItems.canteen, 1, 0), new Object[] {" L ", "L L", "LLL", 'L', new ItemStack(Item.leather, 1, 0)});
     	
     	//Thermometer
-    	GameRegistry.addRecipe(new ItemStack(TANItems.thermometer, 1, 0), new Object[] {" G ", "GQG", " G ", 'G', new ItemStack(Block.glass, 1, 0), 'Q', new ItemStack(Item.netherQuartz, 1, 0)});
+    	GameRegistry.addRecipe(new ItemStack(TANItems.thermometer, 1, 0), new Object[] {" D ", "DQD", " D ", 'D', new ItemStack(Item.diamond, 1, 0), 'Q', new ItemStack(Item.netherQuartz, 1, 0)});
     }
     
     private static void addShapelessRecipes()
