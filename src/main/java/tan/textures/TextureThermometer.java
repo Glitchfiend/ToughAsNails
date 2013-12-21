@@ -35,7 +35,7 @@ public class TextureThermometer extends TextureAtlasSprite
 
                 TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(player, TemperatureStat.class);
 
-                this.frameCounter = (int)(((TemperatureUtils.getAimedTemperature(TemperatureUtils.getEnvironmentTemperature(player.worldObj, x, y, z), world, player) / 20F) - 1.35F) * this.getFrameCount());
+                this.frameCounter = MathHelper.clamp_int((int)(((TemperatureUtils.getAimedTemperature(TemperatureUtils.getEnvironmentTemperature(player.worldObj, x, y, z), world, player) / 20F) - 1.35F) * this.getFrameCount()), 0, this.getFrameCount());
             }
 
             TextureUtil.uploadTextureSub((int[])this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
