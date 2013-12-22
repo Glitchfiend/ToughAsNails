@@ -17,7 +17,7 @@ import tan.ToughAsNails;
 
 public class ItemTANMiscItems extends Item
 {
-	private static String[] items = {"charcoalfilter", "hardenedslime"};
+	private static String[] items = {"charcoalfilter", "jelledslime"};
 	@SideOnly(Side.CLIENT)
 	private Icon[] textures;
 	

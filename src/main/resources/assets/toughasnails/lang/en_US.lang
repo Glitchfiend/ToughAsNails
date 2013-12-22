@@ -16,7 +16,7 @@ item.tan.waterBottle.dirtywaterbottle.name=Dirty Water Bottle
 item.tan.waterBottle.saltwaterbottle.name=Salt Water Bottle
 
 item.tan.miscItems.charcoalfilter.name=Charcoal Filter
-item.tan.miscItems.hardenedslime.name=Hardened Slime
+item.tan.miscItems.jelledslime.name=Jelled Slime
 
 death.attack.dehydration=%1$s died from dehydration
 death.attack.hyperthermia=%1$s burnt to death
