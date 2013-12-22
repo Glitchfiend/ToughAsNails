@@ -65,7 +65,7 @@ public class ItemTANCanteen extends ItemFluidContainer
         {
             TANDrinkInfo drinkInfo = TANDrinkInfo.getDrinkInfo(canteenFluid.getName());
             
-            thirstStat.addThirst(drinkInfo.thirstAmount, drinkInfo.hydrationModifier);
+            thirstStat.addThirst(drinkInfo.thirstAmount / 4, drinkInfo.hydrationModifier / 4);
             
             if (world.rand.nextFloat() < drinkInfo.poisoningChance)
             {

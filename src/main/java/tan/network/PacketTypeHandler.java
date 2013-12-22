@@ -5,12 +5,14 @@ import java.io.DataInputStream;
 
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import tan.network.packet.PacketFinishedDrinking;
 import tan.network.packet.PacketSendStats;
 import tan.network.packet.PacketTAN;
 
 public enum PacketTypeHandler
 {
-    sendStats(PacketSendStats.class);
+    sendStats(PacketSendStats.class),
+    finishedDrinking(PacketFinishedDrinking.class);
 
     private Class<? extends PacketTAN> clazz;
 
