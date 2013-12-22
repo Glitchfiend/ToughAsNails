@@ -1,5 +1,9 @@
 package tan;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.ReloadableResourceManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import tan.configuration.TANConfiguration;
@@ -13,6 +17,7 @@ import tan.core.TANTemperature;
 import tan.core.TANThirst;
 import tan.eventhandler.StatUpdateEventHandler;
 import tan.handler.ConnectionHandler;
+import tan.handler.LocalizationHandler;
 import tan.network.PacketHandler;
 import tan.overlay.RenderAirOverlay;
 import tan.overlay.RenderTemperatureOverlay;
@@ -48,7 +53,7 @@ public class ToughAsNails
         TANConfiguration.init(configPath);
         
         tabToughAsNails = new CreativeTabTAN(CreativeTabs.getNextID(), "tabToughAsNails");
-        
+
         TANPotions.init();
         TANItems.init();
         TANArmour.init();
@@ -61,6 +66,10 @@ public class ToughAsNails
         
         if (proxy instanceof ClientProxy)
         {
+            ReloadableResourceManager resourceManager = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), new String[]{"mcResourceManager"});
+
+            resourceManager.registerReloadListener(new LocalizationHandler());
+
             MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
             MinecraftForge.EVENT_BUS.register(new RenderTemperatureVignettes());
             MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
@@ -77,6 +86,5 @@ public class ToughAsNails
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        
     }
 }

@@ -2,6 +2,7 @@ package tan.items;
 
 import java.util.List;
 
+import com.sun.org.apache.xml.internal.security.utils.I18n;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -127,8 +129,10 @@ public class ItemTANCanteen extends ItemFluidContainer
         FluidStack fluid = getFluid(itemStack);
         
         if (fluid != null && fluid.amount > 0)
-        {   
-            stringList.add(fluid.getFluid().getLocalizedName());
+        {
+            String localizedName = fluid.getFluid().getLocalizedName();
+
+            stringList.add(localizedName);
         }
     }
     

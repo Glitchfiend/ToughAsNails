@@ -14,5 +14,6 @@ death.attack.hypothermia=%1$s froze to death
 itemGroup.tabToughAsNails=Tough As Nails
 
 phrase.tan.tempThermometer=The current temperature is
+phrase.tan.unclean=Unclean
 
 potion.waterPoisoning=Water Poisoning
