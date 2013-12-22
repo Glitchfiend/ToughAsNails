@@ -1,0 +1,26 @@
+item.tan.helmetWool.name=Wollhaube
+item.tan.chestplateWool.name=Wollmantel
+item.tan.leggingsWool.name=Wollhose
+item.tan.bootsWool.name=Wollstiefel
+
+item.tan.helmetHeat.name=Hitzebeständiger Helm
+item.tan.chestplateHeat.name=Hitzebeständiger Brustpanzer
+item.tan.leggingsHeat.name=Hitzebeständige Hose
+item.tan.bootsHeat.name=Hitzebeständige Stiefel
+
+item.tan.canteen.name=Feldflasche
+item.tan.thermometer.name=Thermometer
+item.tan.freshWaterBottle.name=Frischwasserflasche
+item.tan.miscItems.charcoalfilter.name=Holzkohlefilter
+item.tan.miscItems.hardenedslime.name=Gehärteter Schleim
+
+death.attack.dehydration=%1$s starb durch Dehydrierung
+death.attack.hyperthermia=%1$s verbrannte
+death.attack.hypothermia=%1$s fror zu Tode
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+phrase.tan.tempThermometer=Die aktuelle Temperatur ist
+phrase.tan.unclean=Unsauber
+
+potion.waterPoisoning=Wasservergiftung

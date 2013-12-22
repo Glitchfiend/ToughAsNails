@@ -3,16 +3,24 @@ item.tan.chestplateWool.name=Шерстяное пальто
 item.tan.leggingsWool.name=Шерстяные брюки
 item.tan.bootsWool.name=Шерстяные ботинки
 
+item.tan.helmetHeat.name=Теплостойкий шлем
+item.tan.chestplateHeat.name=Теплостойкий нагрудник
+item.tan.leggingsHeat.name=Теплостойкие поножи
+item.tan.bootsHeat.name=Теплостойкие ботинки
+
 item.tan.canteen.name=Походный мешок
 item.tan.thermometer.name=Термометр
 item.tan.freshWaterBottle.name=Бутылка свежей воды
+item.tan.miscItems.charcoalfilter.name=Древесноугольный фильтр
+item.tan.miscItems.hardenedslime.name=Закалённая слизь
 
 death.attack.dehydration=%1$s умер от обезвоживания
 death.attack.hyperthermia=%1$s сгорел заживо
-death.attack.hypothermia=%1$s замёрз насмерть
+death.attack.hypothermia=%1$s замёрз досмерти
 
 itemGroup.tabToughAsNails=Tough As Nails
 
 phrase.tan.tempThermometer=Текущая температура
+phrase.tan.unclean=Грязная
 
 potion.waterPoisoning=Отравление водой
