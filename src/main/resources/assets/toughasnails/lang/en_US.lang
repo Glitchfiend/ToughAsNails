@@ -10,7 +10,11 @@ item.tan.bootsHeat.name=Heat Resistant Boots
 
 item.tan.canteen.name=Canteen
 item.tan.thermometer.name=Thermometer
-item.tan.freshWaterBottle.name=Fresh Water Bottle
+
+item.tan.waterBottle.freshwaterbottle.name=Fresh Water Bottle
+item.tan.waterBottle.dirtywaterbottle.name=Dirty Water Bottle
+item.tan.waterBottle.saltwaterbottle.name=Salt Water Bottle
+
 item.tan.miscItems.charcoalfilter.name=Charcoal Filter
 item.tan.miscItems.hardenedslime.name=Hardened Slime
 

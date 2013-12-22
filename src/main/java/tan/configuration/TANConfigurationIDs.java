@@ -14,7 +14,7 @@ public class TANConfigurationIDs
     
     public static int canteenID;
     public static int thermometerID;
-    public static int freshWaterBottleID;
+    public static int waterBottleID;
     public static int miscItemsID;
     
     public static int helmetWoolID;
@@ -37,7 +37,7 @@ public class TANConfigurationIDs
 
             canteenID = config.get("Item IDs", "Canteen ID", 7500).getInt();
             thermometerID = config.get("Item IDs", "Thermometer ID", 7501).getInt();
-            freshWaterBottleID = config.get("Item IDs", "Fresh Water Bottle ID", 7520).getInt();
+            waterBottleID = config.get("Item IDs", "Water Bottle ID", 7520).getInt();
             miscItemsID = config.get("Item IDs", "Misc Items ID", 7530).getInt();
             
             helmetWoolID = config.get("Item IDs", "Wool Helmet ID", 7550).getInt();

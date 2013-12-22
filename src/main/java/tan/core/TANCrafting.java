@@ -28,13 +28,13 @@ public class TANCrafting
     	
     	//Wool Armor
     	//Hood
-    	GameRegistry.addRecipe(new ItemStack(TANArmour.helmetWool, 1, 0), new Object[] {"CCC", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.helmetWool, 1, 0), new Object[] {"CCC", "C C", 'C', Block.cloth});
     	//Coat
-    	GameRegistry.addRecipe(new ItemStack(TANArmour.chestplateWool, 1, 0), new Object[] {"C C", "CCC", "CCC", 'C', new ItemStack(Block.cloth, 1, 0)});
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.chestplateWool, 1, 0), new Object[] {"C C", "CCC", "CCC", 'C', Block.cloth});
     	//Pants
-    	GameRegistry.addRecipe(new ItemStack(TANArmour.leggingsWool, 1, 0), new Object[] {"CCC", "C C", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.leggingsWool, 1, 0), new Object[] {"CCC", "C C", "C C", 'C', Block.cloth});
     	//Boots
-    	GameRegistry.addRecipe(new ItemStack(TANArmour.bootsWool, 1, 0), new Object[] {"C C", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.bootsWool, 1, 0), new Object[] {"C C", "C C", 'C', Block.cloth});
     	
     	//Heat Resistant Armor
     	//Helmet
@@ -54,7 +54,7 @@ public class TANCrafting
     
 	private static void addSmeltingRecipes()
 	{
-		FurnaceRecipes.smelting().addSmelting(Item.potion.itemID, 0, new ItemStack(TANItems.freshWaterBottle, 1, 0), 0F);
+		FurnaceRecipes.smelting().addSmelting(Item.potion.itemID, 0, new ItemStack(TANItems.waterBottle, 1, 0), 0F);
 		GameRegistry.addSmelting(Item.slimeBall.itemID, new ItemStack(TANItems.miscItems, 1, 1), 0.1F);
 	}
 }

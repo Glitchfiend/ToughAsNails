@@ -4,16 +4,16 @@ import net.minecraft.item.Item;
 import tan.api.ContentRegistry;
 import tan.configuration.TANConfigurationIDs;
 import tan.items.ItemTANCanteen;
-import tan.items.ItemTANFreshWaterBottle;
 import tan.items.ItemTANMiscItems;
 import tan.items.ItemTANThermometer;
+import tan.items.ItemTANWaterBottle;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TANItems
 {
 	public static Item canteen;
     public static Item thermometer;
-    public static Item freshWaterBottle;
+    public static Item waterBottle;
     public static Item miscItems;
     
     public static void init()
@@ -26,7 +26,7 @@ public class TANItems
     {
     	canteen = new ItemTANCanteen(TANConfigurationIDs.canteenID).setUnlocalizedName("tan.canteen");
         thermometer = new ItemTANThermometer(TANConfigurationIDs.thermometerID).setUnlocalizedName("tan.thermometer");
-        freshWaterBottle = new ItemTANFreshWaterBottle(TANConfigurationIDs.freshWaterBottleID).setUnlocalizedName("tan.freshWaterBottle");
+        waterBottle = new ItemTANWaterBottle(TANConfigurationIDs.waterBottleID).setUnlocalizedName("tan.waterBottle");
         miscItems = new ItemTANMiscItems(TANConfigurationIDs.miscItemsID).setUnlocalizedName("tan.miscItems");
     }
     
@@ -34,7 +34,7 @@ public class TANItems
     {
     	registerItem(canteen);
         registerItem(thermometer);
-        registerItem(freshWaterBottle);
+        registerItem(waterBottle);
         registerItem(miscItems);
     }
     
