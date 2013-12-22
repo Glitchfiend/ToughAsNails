@@ -13,6 +13,6 @@ public class CreativeTabTAN extends CreativeTabs
     @Override
     public ItemStack getIconItemStack()
     {
-        return new ItemStack(TANItems.canteen);
+        return new ItemStack(TANItems.thermometer);
     }
 }
