@@ -29,15 +29,22 @@ public class TANCrafting
     	//Wool Armor
     	//Hood
     	GameRegistry.addRecipe(new ItemStack(TANArmour.helmetWool, 1, 0), new Object[] {"CCC", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
-    	
     	//Coat
     	GameRegistry.addRecipe(new ItemStack(TANArmour.chestplateWool, 1, 0), new Object[] {"C C", "CCC", "CCC", 'C', new ItemStack(Block.cloth, 1, 0)});
-    	
     	//Pants
     	GameRegistry.addRecipe(new ItemStack(TANArmour.leggingsWool, 1, 0), new Object[] {"CCC", "C C", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
-    	
     	//Boots
     	GameRegistry.addRecipe(new ItemStack(TANArmour.bootsWool, 1, 0), new Object[] {"C C", "C C", 'C', new ItemStack(Block.cloth, 1, 0)});
+    	
+    	//Heat Resistant Armor
+    	//Helmet
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.helmetHeat, 1, 0), new Object[] {"SSS", "S S", 'S', new ItemStack(TANItems.miscItems, 1, 1)});
+    	//Chestplate
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.chestplateHeat, 1, 0), new Object[] {"S S", "SSS", "SSS", 'S', new ItemStack(TANItems.miscItems, 1, 1)});
+    	//Leggings
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.leggingsHeat, 1, 0), new Object[] {"SSS", "S S", "S S", 'S', new ItemStack(TANItems.miscItems, 1, 1)});
+    	//Boots
+    	GameRegistry.addRecipe(new ItemStack(TANArmour.bootsHeat, 1, 0), new Object[] {"S S", "S S", 'S', new ItemStack(TANItems.miscItems, 1, 1)});
     }
     
     private static void addShapelessRecipes()

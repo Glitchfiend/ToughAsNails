@@ -3,6 +3,11 @@ item.tan.chestplateWool.name=Wool Coat
 item.tan.leggingsWool.name=Wool Pants
 item.tan.bootsWool.name=Wool Boots
 
+item.tan.helmetHeat.name=Heat Resistant Helmet
+item.tan.chestplateHeat.name=Heat Resistant Chestplate
+item.tan.leggingsHeat.name=Heat Resistant Leggings
+item.tan.bootsHeat.name=Heat Resistant Boots
+
 item.tan.canteen.name=Canteen
 item.tan.thermometer.name=Thermometer
 item.tan.freshWaterBottle.name=Fresh Water Bottle

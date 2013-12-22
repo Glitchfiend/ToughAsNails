@@ -45,5 +45,10 @@ public class TANTemperature
         TemperatureRegistry.registerTemperatureSource("A", TANArmour.chestplateWool.itemID, 0, 1.75F, 0.15F);
         TemperatureRegistry.registerTemperatureSource("A", TANArmour.leggingsWool.itemID, 0, 1.25F, 0.1F);
         TemperatureRegistry.registerTemperatureSource("A", TANArmour.bootsWool.itemID, 0, 0.75F, 0.2F);
+        
+        TemperatureRegistry.registerTemperatureSource("A", TANArmour.helmetHeat.itemID, 0, -1.75F, 0.05F);
+        TemperatureRegistry.registerTemperatureSource("A", TANArmour.chestplateHeat.itemID, 0, -1.75F, 0.15F);
+        TemperatureRegistry.registerTemperatureSource("A", TANArmour.leggingsHeat.itemID, 0, -1.25F, 0.1F);
+        TemperatureRegistry.registerTemperatureSource("A", TANArmour.bootsHeat.itemID, 0, -0.75F, 0.2F);
     }
 }

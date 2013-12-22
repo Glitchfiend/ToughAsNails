@@ -21,6 +21,11 @@ public class TANConfigurationIDs
     public static int chestplateWoolID;
     public static int leggingsWoolID;
     public static int bootsWoolID;
+    
+    public static int helmetHeatID;
+    public static int chestplateHeatID;
+    public static int leggingsHeatID;
+    public static int bootsHeatID;
 
     public static void init(File configFile)
     {
@@ -39,6 +44,11 @@ public class TANConfigurationIDs
             chestplateWoolID = config.get("Item IDs", "Wool Chestplate ID", 7551).getInt();
             leggingsWoolID = config.get("Item IDs", "Wool Leggings ID", 7552).getInt();
             bootsWoolID = config.get("Item IDs", "Wool Boots ID", 7553).getInt();
+            
+            helmetHeatID = config.get("Item IDs", "Heat Resistant Helmet ID", 7554).getInt();
+            chestplateHeatID = config.get("Item IDs", "Heat Resistant Chestplate ID", 7555).getInt();
+            leggingsHeatID = config.get("Item IDs", "Heat Resistant Leggings ID", 7556).getInt();
+            bootsHeatID = config.get("Item IDs", "Heat Resistant Boots ID", 7557).getInt();
 
             FMLCommonHandler.instance().getFMLLogger().log(Level.INFO, "[ToughAsNails] Generated ID Config!");
         }
