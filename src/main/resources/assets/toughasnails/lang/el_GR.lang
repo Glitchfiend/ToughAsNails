@@ -1,0 +1,30 @@
+item.tan.helmetWool.name=μαλλί κουκούλα
+item.tan.chestplateWool.name=μάλλινο παλτό
+item.tan.leggingsWool.name=μαλλί παντελόνι
+item.tan.bootsWool.name=μπότες μαλλί
+
+item.tan.helmetHeat.name=ανθεκτικό στη θερμότητα κράνος
+item.tan.chestplateHeat.name=ανθεκτικό στη θερμότητα θώρακα
+item.tan.leggingsHeat.name=κολάν ανθεκτικό στη θερμότητα
+item.tan.bootsHeat.name=Μπότες ανθεκτικές στη θερμότητα
+
+item.tan.canteen.name=καντίνα
+item.tan.thermometer.name=θερμόμετρο
+
+item.tan.waterBottle.freshwaterbottle.name=μπουκάλι φρέσκο ​​νερό
+item.tan.waterBottle.dirtywaterbottle.name=βρώμικο μπουκάλι νερό
+item.tan.waterBottle.saltwaterbottle.name=μπουκάλι θαλασσινό νερό
+
+item.tan.miscItems.charcoalfilter.name=φίλτρο ενεργού άνθρακα
+item.tan.miscItems.jelledslime.name=πηγμένη βλέννες
+
+death.attack.dehydration=%1$s πέθανε από αφυδάτωση
+death.attack.hyperthermia=%1$s κάηκαν
+death.attack.hypothermia=%1$s πάγωσε μέχρι θανάτου
+
+itemGroup.tabToughAsNails=σκληρή ως τα νύχια
+
+phrase.tan.tempThermometer=η τρέχουσα θερμοκρασία είναι
+phrase.tan.unclean=ακάθαρτος
+
+potion.waterPoisoning=δηλητηρίαση του νερού
