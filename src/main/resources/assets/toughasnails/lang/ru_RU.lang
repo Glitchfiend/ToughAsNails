@@ -10,9 +10,13 @@ item.tan.bootsHeat.name=Теплостойкие ботинки
 
 item.tan.canteen.name=Походный мешок
 item.tan.thermometer.name=Термометр
+
 item.tan.freshWaterBottle.name=Бутылка свежей воды
+item.tan.waterBottle.dirtywaterbottle.name=Бутылка грязной воды
+item.tan.waterBottle.saltwaterbottle.name=Бутылка солёной воды
+
 item.tan.miscItems.charcoalfilter.name=Древесноугольный фильтр
-item.tan.miscItems.hardenedslime.name=Закалённая слизь
+item.tan.miscItems.hardenedslime.name=Застывшая слизь
 
 death.attack.dehydration=%1$s умер от обезвоживания
 death.attack.hyperthermia=%1$s сгорел заживо
