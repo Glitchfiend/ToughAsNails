@@ -50,7 +50,7 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
         String temperatureType = TANConfigurationTemperature.temperatureType;
 
         int temperatureXPos = scaledRes.getScaledWidth() / 2 - 8;
-        int temperatureYPos = scaledRes.getScaledHeight() - 52;
+        int temperatureYPos = scaledRes.getScaledHeight() - 51;
         
         minecraft.mcProfiler.startSection("temperatureBall");
         {   
@@ -62,27 +62,29 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
         
         int guiSize = Minecraft.getMinecraft().gameSettings.guiScale;
         
-        float textScale = 0.75F;
+        float textScale = 1F;
         int xOffset = 0;
         int yOffset = 0;
         
         if (guiSize == 0)
         {
-            xOffset = -1;
-            textScale = 0.75F;
+            xOffset = -4;
+            textScale = 1F;
         }
         if (guiSize == 1)
         {
-            textScale = 0.45F;
+        	xOffset = -4;
+            textScale = 1F;
         }
         if (guiSize == 2)
         {
-            xOffset = 1;
-            textScale = 0.5F;
+        	xOffset = -4;
+            textScale = 1F;
         }
         if (guiSize == 3)
         {
-            textScale = 0.65F;
+        	xOffset = -4;
+            textScale = 1F;
         }
         
         minecraft.mcProfiler.startSection("temperatureLevel");
@@ -91,7 +93,7 @@ public class RenderTemperatureOverlay extends RenderTANOverlay
             {
                 String text = displayTemperature + temperatureSymbol;
                 
-                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12 + xOffset), (float)(temperatureYPos + 7 + yOffset), 0.0F);
+                GL11.glTranslatef((float)(temperatureXPos - (fontRenderer.getStringWidth(text) / 2) + 12 + xOffset), (float)(temperatureYPos + 5 + yOffset), 0.0F);
                 GL11.glScalef(textScale, textScale, 0.0F);
                 
                 drawStringWithBorder(fontRenderer, text, 0, 0, 0, 16777215);
