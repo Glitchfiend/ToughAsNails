@@ -22,8 +22,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 public class TemperatureOverlayEventHandler
 {
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/overlay.png");
-    public static final ResourceLocation ICE_VIGNETTE = new ResourceLocation("toughasnails:textures/gui/ice.png");
-    public static final ResourceLocation FIRE_VIGNETTE = new ResourceLocation("toughasnails:textures/gui/fire.png");
+    public static final ResourceLocation ICE_VIGNETTE = new ResourceLocation("toughasnails:textures/gui/ice_vignette.png");
+    public static final ResourceLocation FIRE_VIGNETTE = new ResourceLocation("toughasnails:textures/gui/fire_vignette.png");
     
     private final Random random = new Random();
     private final Minecraft minecraft = Minecraft.getMinecraft();
@@ -66,7 +66,7 @@ public class TemperatureOverlayEventHandler
         int left = width / 2 - 8;
         int top = height - 52; 
         
-        int temperature = 35;
+        int temperature = 0;
         TemperatureRange temperatureRange = TemperatureScale.getTemperatureRange(temperature);
         
         float changeDelta = (float)TemperatureScale.getRelativeScaleDelta(temperature) / (float)temperature;
