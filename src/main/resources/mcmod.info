@@ -1,0 +1,9 @@
+[{
+    "modid": "ToughAsNails",
+    "name": "Tough As Nails",
+    "description": "Adds a variety of survival aspects to the regular game",
+    "version": "${mod_version}",
+    "mcversion": "${minecraft_version}",
+    "authorList": ["Adubbz", "Forstride"],
+    "logoFile": "assets/toughasnails/textures/gui/logo.png"
+}]
