@@ -114,8 +114,6 @@ public class TemperatureOverlayEventHandler
         
         prevTemperatureLevel = temperatureLevel;
         
-        System.out.println(temperatureRange.ordinal() / 2);
-        
         drawTexturedModalRect(left, top, 16 * (temperatureRange.ordinal() / 2 + 6), 0, 16, 16);
         
         if (flashCounter > (long)updateCounter && (flashCounter - (long)updateCounter) / 3L % 2L == 1L)
