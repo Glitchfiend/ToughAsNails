@@ -76,10 +76,12 @@ public class TemperatureOverlayEventHandler
         
         if (temperatureRange == TemperatureRange.ICY || temperatureRange == TemperatureRange.HOT)
         {
+            float shakeDelta = temperatureRange == TemperatureRange.ICY ? 1.0F - changeDelta : changeDelta;
+            
             if ((updateCounter % 1) == 0)
             {
-                top += (random.nextInt(4) - 2);
-                left += (random.nextInt(4) - 2);
+                top += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 3F, 1.0));
+                left += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 1.5F, 1.0));
             }
         }
         else if (changeDelta <= 0.25F || changeDelta >= 0.75F)
