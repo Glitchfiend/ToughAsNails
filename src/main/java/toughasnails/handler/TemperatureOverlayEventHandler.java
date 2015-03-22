@@ -31,6 +31,9 @@ public class TemperatureOverlayEventHandler
     private final Minecraft minecraft = Minecraft.getMinecraft();
     
     private int updateCounter;
+    private FlashType flashType = FlashType.INCREASE;
+    private int flashCounter = -1;
+    private int prevTemperatureLevel = -1;
     
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
@@ -49,7 +52,9 @@ public class TemperatureOverlayEventHandler
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-        TemperatureInfo temperature = ((TemperatureStats)player.getExtendedProperties("temperature")).getTemperature();
+        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+        TemperatureInfo temperature = temperatureStats.getTemperature();
+        TemperatureInfo prevTemperature = temperatureStats.getPrevTemperature();
         
         if (event.type == ElementType.PORTAL)
         {
@@ -61,12 +66,12 @@ public class TemperatureOverlayEventHandler
 
             if (minecraft.playerController.gameIsSurvivalOrAdventure())
             {
-                drawTemperature(width, height, temperature);
+                drawTemperature(width, height, temperature, prevTemperature);
             }
         }
     }
     
-    private void drawTemperature(int width, int height, TemperatureInfo temperature)
+    private void drawTemperature(int width, int height, TemperatureInfo temperature, TemperatureInfo prevTemperature)
     {
         int left = width / 2 - 8;
         int top = height - 52; 
@@ -90,6 +95,34 @@ public class TemperatureOverlayEventHandler
             {
                 top += (random.nextInt(4) - 2);
             }
+        }
+        
+        int temperatureLevel = temperature.getScalePos();
+        
+        if (prevTemperatureLevel == -1) prevTemperatureLevel = temperatureLevel;
+        
+        if (temperatureLevel > prevTemperatureLevel)
+        {
+            flashCounter = updateCounter + 10;
+            flashType = FlashType.INCREASE;
+        }
+        else if (temperatureLevel < prevTemperatureLevel)
+        {
+            flashCounter = updateCounter + 10;
+            flashType = FlashType.DECREASE;
+        }
+        
+        prevTemperatureLevel = temperatureLevel;
+        
+        System.out.println(temperatureRange.ordinal() / 2);
+        
+        drawTexturedModalRect(left, top, 16 * (temperatureRange.ordinal() / 2 + 6), 0, 16, 16);
+        
+        if (flashCounter > (long)updateCounter && (flashCounter - (long)updateCounter) / 3L % 2L == 1L)
+        {
+            int indexShift = flashType.getIndexShift();
+            
+            drawTexturedModalRect(left, top, 16 * (temperatureRange.ordinal() / 2 + indexShift), 0, 16, 16);
         }
         
         drawTexturedModalRect(left, top, 16 * temperatureRange.ordinal(), 0, 16, 16);
@@ -148,5 +181,23 @@ public class TemperatureOverlayEventHandler
         worldrenderer.addVertexWithUV((double)(x + width), (double)(y + 0), 0.0D, (double)((float)(textureX + width) * f), (double)((float)(textureY + 0) * f1));
         worldrenderer.addVertexWithUV((double)(x + 0), (double)(y + 0), 0.0D, (double)((float)(textureX + 0) * f), (double)((float)(textureY + 0) * f1));
         tessellator.draw();
+    }
+    
+    private static enum FlashType
+    {
+        INCREASE(12), 
+        DECREASE(9);
+        
+        private int indexShift;
+        
+        private FlashType(int indexShift)
+        {
+            this.indexShift = indexShift;
+        }
+        
+        public int getIndexShift()
+        {
+            return this.indexShift;
+        }
     }
 }
