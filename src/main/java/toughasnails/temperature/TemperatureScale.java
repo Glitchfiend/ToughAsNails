@@ -48,7 +48,7 @@ public class TemperatureScale
             totalRange += range.getRangeSize();
         }
         
-        return totalRange;
+        return totalRange - 1;
     }
     
     private static int[] generateRangeStarts()

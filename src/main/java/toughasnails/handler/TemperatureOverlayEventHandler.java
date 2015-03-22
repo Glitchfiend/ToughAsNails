@@ -2,23 +2,24 @@ package toughasnails.handler;
 
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
-import toughasnails.temperature.TemperatureInfo;
-import toughasnails.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+
+import org.lwjgl.opengl.GL11;
+
+import toughasnails.temperature.TemperatureInfo;
+import toughasnails.temperature.TemperatureScale.TemperatureRange;
+import toughasnails.temperature.TemperatureStats;
 
 public class TemperatureOverlayEventHandler
 {
@@ -46,8 +47,9 @@ public class TemperatureOverlayEventHandler
         ScaledResolution resolution = event.resolution;
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
-
-        TemperatureInfo temperature = new TemperatureInfo(16);
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        
+        TemperatureInfo temperature = ((TemperatureStats)player.getExtendedProperties("temperature")).getTemperature();
         
         if (event.type == ElementType.PORTAL)
         {
@@ -72,7 +74,7 @@ public class TemperatureOverlayEventHandler
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
         float changeDelta = temperature.getRelativeScaleDelta();
         
-        if (temperatureRange == TemperatureRange.values()[0] || temperatureRange == TemperatureRange.values()[TemperatureRange.values().length - 1])
+        if (temperatureRange == TemperatureRange.ICY || temperatureRange == TemperatureRange.HOT)
         {
             if ((updateCounter % 1) == 0)
             {
@@ -96,33 +98,40 @@ public class TemperatureOverlayEventHandler
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
         float opacityDelta = temperature.getRelativeScaleDelta();
         
-        ResourceLocation vignetteLocation = FIRE_VIGNETTE;
+        ResourceLocation vignetteLocation = null;
         
         if (temperatureRange == TemperatureRange.ICY)
         {
             opacityDelta = 1.0F - opacityDelta;
             vignetteLocation = ICE_VIGNETTE;
         }
+        else if (temperatureRange == TemperatureRange.HOT)
+        {
+            vignetteLocation = FIRE_VIGNETTE;
+        }
 
-        minecraft.getTextureManager().bindTexture(vignetteLocation);
-        
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
-        GlStateManager.disableAlpha();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
-        worldrenderer.addVertexWithUV(0.0D, (double)height, -90.0D, 0.0D, 1.0D);
-        worldrenderer.addVertexWithUV((double)width, (double)height, -90.0D, 1.0D, 1.0D);
-        worldrenderer.addVertexWithUV((double)width, 0.0D, -90.0D, 1.0D, 0.0D);
-        worldrenderer.addVertexWithUV(0.0D, 0.0D, -90.0D, 0.0D, 0.0D);
-        tessellator.draw();
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        if (vignetteLocation != null)
+        {
+            minecraft.getTextureManager().bindTexture(vignetteLocation);
+
+            GlStateManager.disableDepth();
+            GlStateManager.depthMask(false);
+            GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
+            GlStateManager.disableAlpha();
+            Tessellator tessellator = Tessellator.getInstance();
+            WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+            worldrenderer.startDrawingQuads();
+            worldrenderer.addVertexWithUV(0.0D, (double)height, -90.0D, 0.0D, 1.0D);
+            worldrenderer.addVertexWithUV((double)width, (double)height, -90.0D, 1.0D, 1.0D);
+            worldrenderer.addVertexWithUV((double)width, 0.0D, -90.0D, 1.0D, 0.0D);
+            worldrenderer.addVertexWithUV(0.0D, 0.0D, -90.0D, 0.0D, 0.0D);
+            tessellator.draw();
+            GlStateManager.depthMask(true);
+            GlStateManager.enableDepth();
+            GlStateManager.enableAlpha();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        }
     }
     
     public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height)
