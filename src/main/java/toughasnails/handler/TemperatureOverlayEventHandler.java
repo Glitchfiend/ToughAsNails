@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import toughasnails.temperature.TemperatureInfo;
 import toughasnails.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import net.minecraft.client.Minecraft;
@@ -46,9 +47,11 @@ public class TemperatureOverlayEventHandler
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
 
+        TemperatureInfo temperature = new TemperatureInfo(16);
+        
         if (event.type == ElementType.PORTAL)
         {
-            drawTemperatureVignettes(width, height);
+            drawTemperatureVignettes(width, height, temperature);
         }
         else if (event.type == ElementType.EXPERIENCE)
         {
@@ -56,29 +59,30 @@ public class TemperatureOverlayEventHandler
 
             if (minecraft.playerController.gameIsSurvivalOrAdventure())
             {
-                drawTemperature(width, height);
+                drawTemperature(width, height, temperature);
             }
         }
     }
     
-    private void drawTemperature(int width, int height)
+    private void drawTemperature(int width, int height, TemperatureInfo temperature)
     {
         int left = width / 2 - 8;
         int top = height - 52; 
         
-        int temperature = 0;
-        TemperatureRange temperatureRange = TemperatureScale.getTemperatureRange(temperature);
-        
-        float changeDelta = (float)TemperatureScale.getRelativeScaleDelta(temperature) / (float)temperature;
+        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        float changeDelta = temperature.getRelativeScaleDelta();
         
         if (temperatureRange == TemperatureRange.values()[0] || temperatureRange == TemperatureRange.values()[TemperatureRange.values().length - 1])
         {
-            top += (random.nextInt(4) - 2);
-            left += (random.nextInt(4) - 2);
+            if ((updateCounter % 1) == 0)
+            {
+                top += (random.nextInt(4) - 2);
+                left += (random.nextInt(4) - 2);
+            }
         }
         else if (changeDelta <= 0.25F || changeDelta >= 0.75F)
         {
-            if ((updateCounter % 200) == 0)
+            if ((updateCounter % 100) == 0)
             {
                 top += (random.nextInt(4) - 2);
             }
@@ -87,14 +91,25 @@ public class TemperatureOverlayEventHandler
         drawTexturedModalRect(left, top, 16 * temperatureRange.ordinal(), 0, 16, 16);
     }
     
-    private void drawTemperatureVignettes(int width, int height)
+    private void drawTemperatureVignettes(int width, int height, TemperatureInfo temperature)
     {
-        minecraft.getTextureManager().bindTexture(ICE_VIGNETTE);
+        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        float opacityDelta = temperature.getRelativeScaleDelta();
+        
+        ResourceLocation vignetteLocation = FIRE_VIGNETTE;
+        
+        if (temperatureRange == TemperatureRange.ICY)
+        {
+            opacityDelta = 1.0F - opacityDelta;
+            vignetteLocation = ICE_VIGNETTE;
+        }
+
+        minecraft.getTextureManager().bindTexture(vignetteLocation);
         
         GlStateManager.disableDepth();
         GlStateManager.depthMask(false);
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
         GlStateManager.disableAlpha();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();

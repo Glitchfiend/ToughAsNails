@@ -5,9 +5,9 @@ public class TemperatureScale
     private static int scaleTotal = generateTotalScale();
     private static int[] rangeStarts = generateRangeStarts();
     
-    public static TemperatureRange getTemperatureRange(int scaleDelta)
+    public static TemperatureRange getTemperatureRange(int scalePos)
     {
-        if (scaleDelta < 0 || scaleDelta > scaleTotal)
+        if (scalePos < 0 || scalePos > scaleTotal)
         {
             return null;
         }
@@ -18,7 +18,7 @@ public class TemperatureScale
         {
            currentRange = TemperatureRange.values()[index];
             
-            if (scaleDelta <= rangeStarts[currentRange.ordinal()] + currentRange.rangeSize)
+            if (scalePos <= rangeStarts[currentRange.ordinal()] + currentRange.rangeSize)
             {
                 break;
             }
@@ -27,11 +27,11 @@ public class TemperatureScale
         return currentRange;
     }
 
-    public static int getRelativeScaleDelta(int scaleDelta)
+    public static int getRelativeScalePos(int scalePos)
     {
-        TemperatureRange temperatureRange = getTemperatureRange(scaleDelta);
+        TemperatureRange temperatureRange = getTemperatureRange(scalePos);
         
-        return (temperatureRange.rangeSize - 1) - (Math.abs(scaleDelta - (rangeStarts[temperatureRange.ordinal()] + temperatureRange.rangeSize)));
+        return (temperatureRange.rangeSize - 1) - (Math.abs(scalePos - (rangeStarts[temperatureRange.ordinal()] + temperatureRange.rangeSize)));
     }
     
     public static int getScaleTotal()
