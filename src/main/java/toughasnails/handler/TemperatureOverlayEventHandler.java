@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import org.lwjgl.opengl.GL11;
 
 import toughasnails.temperature.TemperatureInfo;
+import toughasnails.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.TemperatureStats;
 
@@ -87,13 +88,6 @@ public class TemperatureOverlayEventHandler
             {
                 top += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 3F, 1.0));
                 left += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 1.5F, 1.0));
-            }
-        }
-        else if (changeDelta <= 0.25F || changeDelta >= 0.75F)
-        {
-            if ((updateCounter % 100) == 0)
-            {
-                top += (random.nextInt(4) - 2);
             }
         }
         
@@ -183,8 +177,8 @@ public class TemperatureOverlayEventHandler
     
     private static enum FlashType
     {
-        INCREASE(12), 
-        DECREASE(9);
+        INCREASE(2), 
+        DECREASE(2);
         
         private int indexShift;
         

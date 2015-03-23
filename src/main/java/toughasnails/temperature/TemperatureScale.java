@@ -18,7 +18,7 @@ public class TemperatureScale
         {
            currentRange = TemperatureRange.values()[index];
             
-            if (scalePos <= rangeStarts[currentRange.ordinal()] + currentRange.rangeSize)
+            if (scalePos <= rangeStarts[currentRange.ordinal()] + currentRange.rangeSize - 1)
             {
                 break;
             }
@@ -32,6 +32,16 @@ public class TemperatureScale
         TemperatureRange temperatureRange = getTemperatureRange(scalePos);
         
         return (temperatureRange.rangeSize - 1) - (Math.abs(scalePos - (rangeStarts[temperatureRange.ordinal()] + temperatureRange.rangeSize)));
+    }
+    
+    public static boolean isScalePosInRange(int scalePos, TemperatureRange startRange, TemperatureRange endRange)
+    {
+        return scalePos >= rangeStarts[startRange.ordinal()] && scalePos < (rangeStarts[endRange.ordinal()] + endRange.rangeSize - 1);
+    }
+    
+    public static boolean isScalePosInRange(int scalePos, TemperatureRange range)
+    {
+        return isScalePosInRange(scalePos, range, range);
     }
     
     public static int getScaleTotal()
@@ -63,7 +73,7 @@ public class TemperatureScale
                 
                 generatedStarts[index] = generatedStarts[previousRange.ordinal()] + previousRange.rangeSize;
             }
-            else generatedStarts[index] = -1;
+            else generatedStarts[index] = 0;
         }
         
         return generatedStarts;
