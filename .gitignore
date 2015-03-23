@@ -5,3 +5,5 @@ bin/*
 
 .project
 .classpath
+/bin/
+/build/
