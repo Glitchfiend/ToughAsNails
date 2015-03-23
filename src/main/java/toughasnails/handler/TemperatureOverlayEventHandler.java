@@ -97,28 +97,45 @@ public class TemperatureOverlayEventHandler
         
         if (temperatureLevel > prevTemperatureLevel)
         {
-            flashCounter = updateCounter + 10;
+            flashCounter = updateCounter + 16;
             flashType = FlashType.INCREASE;
         }
         else if (temperatureLevel < prevTemperatureLevel)
         {
-            flashCounter = updateCounter + 10;
+            flashCounter = updateCounter + 16;
             flashType = FlashType.DECREASE;
         }
         
         prevTemperatureLevel = temperatureLevel;
         
         TemperatureIcon temperatureIcon = getTemperatureIcon(temperatureLevel);
+        int updateDelta = flashCounter - updateCounter;
         
-        if (flashCounter > (long)updateCounter && (flashCounter - (long)updateCounter) / 3L % 2L == 1L)
+        drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex), 0, 16, 16);
+        drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex), 0, 16, 16);
+        
+        if (flashCounter > (long)updateCounter)
         {
-            drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex + flashType.backgroundShift), 0, 16, 16);
-            drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex + flashType.foregroundShift), 0, 16, 16);
-        }
-        else
-        {
-            drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex), 0, 16, 16);
-            drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex), 0, 16, 16);
+            if (updateDelta > 6 && updateDelta / 3L % 2L == 1L)
+            {
+                drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex + flashType.backgroundShift), 0, 16, 16);
+                drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex + flashType.foregroundShift), 0, 16, 16);
+            }
+            
+            GlStateManager.pushMatrix();
+            
+            if (flashType == FlashType.INCREASE)
+            {
+                GL11.glTranslatef(left + 16F, top + 16F, 0F);
+                GL11.glRotatef(180F, 0F, 0F, 1F);
+            }
+            else
+            {
+                GL11.glTranslatef(left, top, 0F);
+            }
+            
+            drawTexturedModalRect(0, 0, 16 * (16 - updateDelta), 16 * 15, 16, 16);
+            GlStateManager.popMatrix();
         }
     }
     
