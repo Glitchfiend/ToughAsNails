@@ -12,7 +12,7 @@ public class TemperatureScale
             return null;
         }
         
-        TemperatureRange currentRange = TemperatureRange.ICY;
+        TemperatureRange currentRange = null;
         
         for (int index = 0; index < TemperatureRange.values().length; index++)
         {
@@ -36,12 +36,17 @@ public class TemperatureScale
     
     public static boolean isScalePosInRange(int scalePos, TemperatureRange startRange, TemperatureRange endRange)
     {
-        return scalePos >= rangeStarts[startRange.ordinal()] && scalePos < (rangeStarts[endRange.ordinal()] + endRange.rangeSize - 1);
+        return scalePos >= rangeStarts[startRange.ordinal()] && scalePos <= (rangeStarts[endRange.ordinal()] + endRange.rangeSize - 1);
     }
     
     public static boolean isScalePosInRange(int scalePos, TemperatureRange range)
     {
         return isScalePosInRange(scalePos, range, range);
+    }
+    
+    public static int getRangeStart(TemperatureRange range)
+    {
+        return rangeStarts[range.ordinal()];
     }
     
     public static int getScaleTotal()

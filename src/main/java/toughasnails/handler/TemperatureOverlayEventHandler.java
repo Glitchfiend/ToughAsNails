@@ -108,16 +108,18 @@ public class TemperatureOverlayEventHandler
         
         prevTemperatureLevel = temperatureLevel;
         
-        drawTexturedModalRect(left, top, 16 * (temperatureRange.ordinal() / 2 + 6), 0, 16, 16);
+        TemperatureIcon temperatureIcon = getTemperatureIcon(temperatureLevel);
         
         if (flashCounter > (long)updateCounter && (flashCounter - (long)updateCounter) / 3L % 2L == 1L)
         {
-            int indexShift = flashType.getIndexShift();
-            
-            drawTexturedModalRect(left, top, 16 * (temperatureRange.ordinal() / 2 + indexShift), 0, 16, 16);
+            drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex + flashType.backgroundShift), 0, 16, 16);
+            drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex + flashType.foregroundShift), 0, 16, 16);
         }
-        
-        drawTexturedModalRect(left, top, 16 * temperatureRange.ordinal(), 0, 16, 16);
+        else
+        {
+            drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex), 0, 16, 16);
+            drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex), 0, 16, 16);
+        }
     }
     
     private void drawTemperatureVignettes(int width, int height, TemperatureInfo temperature)
@@ -175,21 +177,65 @@ public class TemperatureOverlayEventHandler
         tessellator.draw();
     }
     
-    private static enum FlashType
+    private static TemperatureIcon getTemperatureIcon(int scalePos)
     {
-        INCREASE(2), 
-        DECREASE(2);
-        
-        private int indexShift;
-        
-        private FlashType(int indexShift)
+        if (scalePos < 0 || scalePos > TemperatureScale.getScaleTotal())
         {
-            this.indexShift = indexShift;
+            return null;
         }
         
-        public int getIndexShift()
+        TemperatureIcon temperatureIcon = null;
+        
+        for (int index = 0; index < TemperatureIcon.values().length; index++)
         {
-            return this.indexShift;
+            temperatureIcon = TemperatureIcon.values()[index];
+            
+            if (TemperatureScale.isScalePosInRange(scalePos, temperatureIcon.startRange, temperatureIcon.endRange))
+            {
+                break;
+            }
+        }
+        
+        return temperatureIcon;
+    }
+    
+    private static enum TemperatureIcon
+    {
+        SNOWFLAKE(0, 9, TemperatureRange.ICY),
+        BALL(1, 10, TemperatureRange.COOL, TemperatureRange.WARM),
+        FIRE(2, 11, TemperatureRange.HOT);
+        
+        public final int backgroundIndex;
+        public final int foregroundIndex;
+        public final TemperatureRange startRange;
+        public final TemperatureRange endRange;
+        
+        private TemperatureIcon(int backgroundIndex, int foregroundIndex, TemperatureRange startRange, TemperatureRange endRange)
+        {
+            this.backgroundIndex = backgroundIndex;
+            this.foregroundIndex = foregroundIndex;
+            this.startRange = startRange;
+            this.endRange = endRange;
+        }
+        
+        private TemperatureIcon(int backgroundIndex, int foregroundIndex, TemperatureRange range)
+        {
+            this(backgroundIndex, foregroundIndex, range, range);
+        }
+    }
+    
+    private static enum FlashType
+    {
+        INCREASE(3, 3), 
+        DECREASE(3, 3);
+        
+        public final int backgroundShift;
+        public final int foregroundShift;
+        
+        private FlashType(int backgroundShift, int foregroundShift)
+        {
+            this.backgroundShift = backgroundShift;
+            this.foregroundShift = foregroundShift;
         }
     }
 }
