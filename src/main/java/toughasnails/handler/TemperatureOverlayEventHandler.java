@@ -114,12 +114,22 @@ public class TemperatureOverlayEventHandler
         drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex), 0, 16, 16);
         drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex), 0, 16, 16);
         
+        if (temperatureIcon == TemperatureIcon.BALL)
+        {
+            renderColouredBall(left, top, temperature, 0);
+        }
+        
         if (flashCounter > (long)updateCounter)
         {
             if (updateDelta > 6 && updateDelta / 3L % 2L == 1L)
             {
                 drawTexturedModalRect(left, top, 16 * (temperatureIcon.backgroundIndex + flashType.backgroundShift), 0, 16, 16);
                 drawTexturedModalRect(left, top, 16 * (temperatureIcon.foregroundIndex + flashType.foregroundShift), 0, 16, 16);
+                
+                if (temperatureIcon == TemperatureIcon.BALL)
+                {
+                    renderColouredBall(left, top, temperature, 2);
+                }
             }
             
             GlStateManager.pushMatrix();
@@ -135,6 +145,24 @@ public class TemperatureOverlayEventHandler
             }
             
             drawTexturedModalRect(0, 0, 16 * (16 - updateDelta), 16 * 15, 16, 16);
+            GlStateManager.popMatrix();
+        }
+    }
+    
+    private void renderColouredBall(int x, int y, TemperatureInfo temperature, int textureShift)
+    {
+        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        float changeDelta = temperature.getRelativeScaleDelta();
+        
+        if (temperatureRange != TemperatureRange.MILD)
+        {
+            boolean coolBall = temperatureRange == TemperatureRange.COOL;
+            float ballDelta = coolBall ? 1.0F - changeDelta : changeDelta;
+
+            GlStateManager.pushMatrix();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, ballDelta);
+            drawTexturedModalRect(x, y, 16 * ((coolBall ? 8 : 9) + textureShift), 16 * 1, 16, 16);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
         }
     }
