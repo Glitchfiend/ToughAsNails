@@ -13,8 +13,10 @@ public class ModHandlers
         PacketHandler.init();
         
         TemperatureOverlayEventHandler temperatureEventHander = new TemperatureOverlayEventHandler();
+        TemperatureStatHandler temperatureStatHandler = new TemperatureStatHandler();
         
         FMLCommonHandler.instance().bus().register(temperatureEventHander);
+        FMLCommonHandler.instance().bus().register(temperatureStatHandler);
         MinecraftForge.EVENT_BUS.register(temperatureEventHander);
         MinecraftForge.EVENT_BUS.register(new TemperatureStatHandler());
     }

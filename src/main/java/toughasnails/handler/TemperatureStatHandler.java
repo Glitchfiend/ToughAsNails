@@ -10,6 +10,9 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import toughasnails.network.message.MessageUpdateTemperature;
 import toughasnails.temperature.TemperatureStats;
 
@@ -27,14 +30,28 @@ public class TemperatureStatHandler
     }
     
     @SubscribeEvent
-    public void onPlayerUpdate(LivingUpdateEvent event)
+    public void onPlayerLogin(PlayerLoggedInEvent event)
     {
-        EntityLivingBase entity = event.entityLiving;
-        World world = entity.worldObj;
+        EntityPlayer player = event.player;
+        World world = player.worldObj;
         
-        if (entity instanceof EntityPlayer)
+        if (!world.isRemote)
         {
-            EntityPlayer player = (EntityPlayer)entity;
+            TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+            int temperatureLevel = temperatureStats.getTemperature().getScalePos();
+            
+            PacketHandler.instance.sendTo(new MessageUpdateTemperature(temperatureLevel), (EntityPlayerMP)player);
+        }
+    }
+    
+    @SubscribeEvent
+    public void onPlayerTick(PlayerTickEvent event)
+    {
+        EntityPlayer player = event.player;
+        World world = player.worldObj;
+        
+        if (event.phase == Phase.END)
+        {
             TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
             int temperatureLevel = temperatureStats.getTemperature().getScalePos();
             

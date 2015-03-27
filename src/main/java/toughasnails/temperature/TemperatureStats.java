@@ -20,15 +20,15 @@ public class TemperatureStats implements IExtendedEntityProperties
     @Override
     public void saveNBTData(NBTTagCompound compound)
     {
-        compound.setInteger("temperatureLevel", this.temperatureLevel);
+        compound.setInteger("TemperatureLevel", this.temperatureLevel);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound compound)
     {
-       if (compound.hasKey("temperatureLevel"))
+       if (compound.hasKey("TemperatureLevel"))
        {
-           this.temperatureLevel = compound.getInteger("temperatureLevel");
+           this.temperatureLevel = compound.getInteger("TemperatureLevel");
        }
     }
     
