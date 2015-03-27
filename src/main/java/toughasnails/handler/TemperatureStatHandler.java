@@ -55,6 +55,11 @@ public class TemperatureStatHandler
             TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
             int temperatureLevel = temperatureStats.getTemperature().getScalePos();
             
+            if (!world.isRemote)
+            {
+                temperatureStats.update(world, player);
+            }
+            
             if (temperatureStats.getPrevTemperature().getScalePos() != temperatureLevel)
             {
                 temperatureStats.setPrevTemperature(temperatureLevel);

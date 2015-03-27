@@ -1,34 +1,66 @@
 package toughasnails.temperature;
 
+import toughasnails.temperature.modifier.ITemperatureModifier;
+import toughasnails.temperature.modifier.WaterModifier;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 public class TemperatureStats implements IExtendedEntityProperties
 {
+    public static final int BASE_TEMPERATURE_CHANGE_TICKS = 2400;
+    
     private int temperatureLevel;
     private int prevTemperatureLevel;
+    private int temperatureTimer;
+    
+    private ITemperatureModifier waterModifier;
     
     @Override
     public void init(Entity entity, World world)
     {
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
+        
+        this.waterModifier = new WaterModifier();
+    }
+    
+    public void update(World world, EntityPlayer player)
+    {
+        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+        TemperatureInfo temperature = temperatureStats.getTemperature();
+        
+        int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
+        
+        newTempChangeTicks = waterModifier.modifyChangeRate(world, player, newTempChangeTicks);
+        
+        if (++temperatureTimer >= newTempChangeTicks)
+        {
+            TemperatureInfo newTemperature = temperature;
+
+            newTemperature = waterModifier.modifyTemperature(world, player, newTemperature);
+
+            temperatureStats.setTemperature(newTemperature.getScalePos());
+            temperatureTimer = 0;
+        }
     }
     
     @Override
     public void saveNBTData(NBTTagCompound compound)
     {
-        compound.setInteger("TemperatureLevel", this.temperatureLevel);
+        compound.setInteger("temperatureLevel", this.temperatureLevel);
+        compound.setInteger("temperatureTimer", this.temperatureTimer);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound compound)
     {
-       if (compound.hasKey("TemperatureLevel"))
+       if (compound.hasKey("temperatureLevel"))
        {
-           this.temperatureLevel = compound.getInteger("TemperatureLevel");
+           this.temperatureLevel = compound.getInteger("temperatureLevel");
+           this.temperatureTimer = compound.getInteger("temperatureTimer");
        }
     }
     
