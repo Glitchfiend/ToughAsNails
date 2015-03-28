@@ -10,6 +10,7 @@ import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ITemperatureModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
+import toughasnails.temperature.modifier.TimeModifier;
 import toughasnails.temperature.modifier.WeatherModifier;
 
 public class TemperatureStats implements IExtendedEntityProperties
@@ -24,6 +25,7 @@ public class TemperatureStats implements IExtendedEntityProperties
     private ITemperatureModifier playerStateModifier;
     private ITemperatureModifier objectProximityModifier;
     private ITemperatureModifier weatherModifier;
+    private ITemperatureModifier timeModifier;
     
     @Override
     public void init(Entity entity, World world)
@@ -35,6 +37,7 @@ public class TemperatureStats implements IExtendedEntityProperties
         this.playerStateModifier = new PlayerStateModifier();
         this.objectProximityModifier = new ObjectProximityModifier();
         this.weatherModifier = new WeatherModifier();
+        this.timeModifier = new TimeModifier();
     }
     
     public void update(World world, EntityPlayer player)
@@ -58,6 +61,7 @@ public class TemperatureStats implements IExtendedEntityProperties
             targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
+            targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
             
             targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
             
