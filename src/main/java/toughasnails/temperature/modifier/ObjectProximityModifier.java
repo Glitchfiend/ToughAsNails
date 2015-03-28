@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.temperature.TemperatureInfo;
 
 public class ObjectProximityModifier implements ITemperatureModifier
@@ -29,7 +30,7 @@ public class ObjectProximityModifier implements ITemperatureModifier
                     BlockPos pos = playerPos.add(x, y - 1, z);
                     IBlockState state = world.getBlockState(pos);
 
-                    if (isTempSourceBlock(player, state)) tempSourceBlocks++;
+                    if (getBlockTemperature(player, state) != 0.0F) tempSourceBlocks++;
                 }
             }
         }
@@ -44,32 +45,63 @@ public class ObjectProximityModifier implements ITemperatureModifier
     {
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
+        BlockPos playerPos = player.getPosition();
 
         newTemperatureLevel += getNearbyEntityCount(world, player);
+        
+        float blockTemperatureModifier = 0.0F;
+        
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int z = -1; z <= 1; z++)
+                {
+                    BlockPos pos = playerPos.add(x, y - 1, z);
+                    IBlockState state = world.getBlockState(pos);
+
+                    blockTemperatureModifier += getBlockTemperature(player, state);
+                }
+            }
+        }
+        
+        newTemperatureLevel += blockTemperatureModifier;
         
         return new TemperatureInfo(newTemperatureLevel);
     }
 
-    public static boolean isTempSourceBlock(EntityPlayer player, IBlockState state)
+    public static float getBlockTemperature(EntityPlayer player, IBlockState state)
     {
         World world = player.worldObj;
         Material material = state.getBlock().getMaterial();
+        BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         
-        if (material == Material.ice || material == Material.fire || material == Material.lava || 
-                material == Material.craftedSnow || material == Material.snow || material == Material.packedIce)
+        if (material == Material.ice || material == Material.packedIce)
         {
-            return true;
+            return -0.75F;
         }
-        else if (player.worldObj.canBlockSeeSky(player.getPosition()) && material == Material.sand)
+        else if (material == Material.craftedSnow || material == Material.snow)
+        {
+            return -0.5F;
+        }
+        else if (material == Material.fire)
+        {
+            return 0.75F;
+        }
+        else if (material == Material.lava)
+        {
+            return 1.0F;
+        }
+        else if (player.worldObj.canBlockSeeSky(player.getPosition()) && biome.temperature > 1.0F && (world.getWorldTime() % 24000L) < 12000 && material == Material.sand)
         {
             /*If the player is above ground, the biome is hot and it's during the day, sand acts as a temperature source. This is to simulate sand being extremely hot 
              * in deserts during the day, but cold during the night.
              */
             
-            return true;
+            return 0.5F;
         }
         
-        return false;
+        return 0.0F;
     }
     
     private static int getNearbyEntityCount(World world, EntityPlayer player)
