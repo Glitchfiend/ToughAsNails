@@ -15,9 +15,8 @@ public class ObjectProximityModifier implements ITemperatureModifier
     {
         int newChangeRate = changeRate;
         BlockPos playerPos = player.getPosition();
-        AxisAlignedBB entitiesBox = new AxisAlignedBB(playerPos.add(-4, -4, -4), playerPos.add(4, 4, 4));
-        
-        newChangeRate -= (world.getEntitiesWithinAABBExcludingEntity(player, entitiesBox).size() * 2) * 20;
+
+        newChangeRate -= getNearbyEntityCount(world, player) * 20; 
         
         int tempSourceBlocks = 0;
         
@@ -43,7 +42,12 @@ public class ObjectProximityModifier implements ITemperatureModifier
     @Override
     public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
     {
-        return temperature;
+        int temperatureLevel = temperature.getScalePos();
+        int newTemperatureLevel = temperatureLevel;
+
+        newTemperatureLevel += getNearbyEntityCount(world, player);
+        
+        return new TemperatureInfo(newTemperatureLevel);
     }
 
     public static boolean isTempSourceBlock(EntityPlayer player, IBlockState state)
@@ -58,13 +62,22 @@ public class ObjectProximityModifier implements ITemperatureModifier
         }
         else if (player.worldObj.canBlockSeeSky(player.getPosition()) && material == Material.sand)
         {
-            /*If the player is above ground, sand acts as a temperature source. This is to simulate sand being extremely hot 
-             * in deserts during the day, but freezing cold during the night/
+            /*If the player is above ground, the biome is hot and it's during the day, sand acts as a temperature source. This is to simulate sand being extremely hot 
+             * in deserts during the day, but cold during the night.
              */
             
             return true;
         }
         
         return false;
+    }
+    
+    private static int getNearbyEntityCount(World world, EntityPlayer player)
+    {
+        BlockPos playerPos = player.getPosition();
+        
+        AxisAlignedBB entitiesBox = new AxisAlignedBB(playerPos.add(-4, -4, -4), playerPos.add(4, 4, 4));
+        
+        return world.getEntitiesWithinAABBExcludingEntity(player, entitiesBox).size() * 2; 
     }
 }
