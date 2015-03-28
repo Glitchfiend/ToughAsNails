@@ -7,6 +7,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class MessageUpdateTemperature implements IMessage, IMessageHandler<MessageUpdateTemperature, IMessage>
 {
@@ -34,10 +35,13 @@ public class MessageUpdateTemperature implements IMessage, IMessageHandler<Messa
     @Override
     public IMessage onMessage(MessageUpdateTemperature message, MessageContext ctx)
     {
-        EntityPlayerSP player =  Minecraft.getMinecraft().thePlayer;
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
-        
-        temperatureStats.setTemperature(message.temperatureLevel);
+        if (ctx.side == Side.CLIENT)
+        {
+            EntityPlayerSP player =  Minecraft.getMinecraft().thePlayer;
+            TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+
+            temperatureStats.setTemperature(message.temperatureLevel);
+        }
 
         return null;
     }

@@ -8,15 +8,15 @@ import toughasnails.temperature.TemperatureScale.TemperatureRange;
 
 public class WaterModifier implements ITemperatureModifier
 {
-    public static final int CHANGE_RATE_MODIFIER = 200;
-    public static final int MAX_COOL_TEMPERATURE = TemperatureScale.getRangeStart(TemperatureRange.COOL) + TemperatureRange.COOL.getRangeSize() - 1;
+    public static final int WET_RATE_MODIFIER = -200;
+    public static final int WET_TARGET_MODIFIER = -10;
     
     @Override
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
     {
-        if (player.isInWater())
+        if (player.isWet())
         {
-            return Math.max(0, changeRate - CHANGE_RATE_MODIFIER);
+            return changeRate + WET_RATE_MODIFIER;
         }
         
         return changeRate;
@@ -30,9 +30,9 @@ public class WaterModifier implements ITemperatureModifier
         
         if (player.isInWater())
         {
-            newTemperatureLevel -= 10;
+            newTemperatureLevel += WET_TARGET_MODIFIER;
         }
 
-        return new TemperatureInfo(Math.max(0, newTemperatureLevel));
+        return new TemperatureInfo(newTemperatureLevel);
     }
 }
