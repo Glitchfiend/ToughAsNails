@@ -7,5 +7,5 @@ import toughasnails.temperature.TemperatureInfo;
 public interface ITemperatureModifier
 {
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate);
-    public TemperatureInfo modifyTemperature(World world, EntityPlayer player, TemperatureInfo temperature);
+    public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature);
 }

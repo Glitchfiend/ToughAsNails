@@ -23,16 +23,16 @@ public class WaterModifier implements ITemperatureModifier
     }
     
     @Override
-    public TemperatureInfo modifyTemperature(World world, EntityPlayer player, TemperatureInfo temperature)
+    public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
     {
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
         
         if (player.isInWater())
         {
-            newTemperatureLevel--;
+            newTemperatureLevel -= 10;
         }
 
-        return new TemperatureInfo(Math.max(MAX_COOL_TEMPERATURE, newTemperatureLevel));
+        return new TemperatureInfo(Math.max(0, newTemperatureLevel));
     }
 }

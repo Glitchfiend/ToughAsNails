@@ -1,5 +1,6 @@
 package toughasnails.temperature;
 
+import toughasnails.temperature.modifier.BiomeTemperatureModifier;
 import toughasnails.temperature.modifier.ITemperatureModifier;
 import toughasnails.temperature.modifier.WaterModifier;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,7 @@ public class TemperatureStats implements IExtendedEntityProperties
     private int prevTemperatureLevel;
     private int temperatureTimer;
     
+    private ITemperatureModifier biomeTemperatureModifier;
     private ITemperatureModifier waterModifier;
     
     @Override
@@ -24,6 +26,7 @@ public class TemperatureStats implements IExtendedEntityProperties
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
         
+        this.biomeTemperatureModifier = new BiomeTemperatureModifier();
         this.waterModifier = new WaterModifier();
     }
     
@@ -38,11 +41,11 @@ public class TemperatureStats implements IExtendedEntityProperties
         
         if (++temperatureTimer >= newTempChangeTicks)
         {
-            TemperatureInfo newTemperature = temperature;
+            TemperatureInfo targetTemperature = biomeTemperatureModifier.modifyTarget(world, player, temperature);
 
-            newTemperature = waterModifier.modifyTemperature(world, player, newTemperature);
-
-            temperatureStats.setTemperature(newTemperature.getScalePos());
+            targetTemperature = waterModifier.modifyTarget(world, player, targetTemperature);
+            
+            temperatureStats.addTemperature((int)Math.signum(targetTemperature.getScalePos() - temperature.getScalePos()));
             temperatureTimer = 0;
         }
     }

@@ -66,6 +66,8 @@ public class TemperatureStatHandler
                 
                 if (!world.isRemote)
                 {
+                    System.out.println("TEMP UPDATE: " + temperatureStats.getTemperature().getScalePos());
+                    
                     PacketHandler.instance.sendTo(new MessageUpdateTemperature(temperatureLevel), (EntityPlayerMP)player);
                 }
             }
@@ -90,7 +92,5 @@ public class TemperatureStatHandler
         {
             temperatureStats.addTemperature(-1);
         }
-        
-        System.out.println(temperatureStats.getTemperature().getScalePos());
     }
 }
