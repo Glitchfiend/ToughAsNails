@@ -1,6 +1,7 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.temperature.TemperatureInfo;
 
@@ -29,6 +30,12 @@ public class PlayerStateModifier implements ITemperatureModifier
     {
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
+        BlockPos playerPos = player.getPosition();
+        
+        if (!world.canSeeSky(playerPos))
+        {
+            newTemperatureLevel += (world.getLight(playerPos) - 7) / 2;
+        }
         
         if (player.getHealth() <= 10.0F)
         {
@@ -40,7 +47,7 @@ public class PlayerStateModifier implements ITemperatureModifier
             newTemperatureLevel += SPRINTING_TARGET_MODIFIER;
         }
         
-        return temperature;
+        return new TemperatureInfo(newTemperatureLevel);
     }
 
 }
