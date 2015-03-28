@@ -10,7 +10,7 @@ import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ITemperatureModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
-import toughasnails.temperature.modifier.WaterModifier;
+import toughasnails.temperature.modifier.WeatherModifier;
 
 public class TemperatureStats implements IExtendedEntityProperties
 {
@@ -23,7 +23,7 @@ public class TemperatureStats implements IExtendedEntityProperties
     private ITemperatureModifier biomeModifier;
     private ITemperatureModifier playerStateModifier;
     private ITemperatureModifier objectProximityModifier;
-    private ITemperatureModifier waterModifier;
+    private ITemperatureModifier weatherModifier;
     
     @Override
     public void init(Entity entity, World world)
@@ -34,7 +34,7 @@ public class TemperatureStats implements IExtendedEntityProperties
         this.biomeModifier = new BiomeModifier();
         this.playerStateModifier = new PlayerStateModifier();
         this.objectProximityModifier = new ObjectProximityModifier();
-        this.waterModifier = new WaterModifier();
+        this.weatherModifier = new WeatherModifier();
     }
     
     public void update(World world, EntityPlayer player)
@@ -47,7 +47,7 @@ public class TemperatureStats implements IExtendedEntityProperties
         newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
         newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
         newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        newTempChangeTicks = waterModifier.modifyChangeRate(world, player, newTempChangeTicks);
+        newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks);
         
         newTempChangeTicks = Math.max(20, newTempChangeTicks);
         
@@ -57,7 +57,7 @@ public class TemperatureStats implements IExtendedEntityProperties
 
             targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
-            targetTemperature = waterModifier.modifyTarget(world, player, targetTemperature);
+            targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
             
             targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
             

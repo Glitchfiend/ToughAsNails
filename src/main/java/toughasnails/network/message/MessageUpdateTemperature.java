@@ -38,9 +38,13 @@ public class MessageUpdateTemperature implements IMessage, IMessageHandler<Messa
         if (ctx.side == Side.CLIENT)
         {
             EntityPlayerSP player =  Minecraft.getMinecraft().thePlayer;
-            TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
 
-            temperatureStats.setTemperature(message.temperatureLevel);
+            if (player != null)
+            {
+                TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+
+                temperatureStats.setTemperature(message.temperatureLevel);
+            }
         }
 
         return null;
