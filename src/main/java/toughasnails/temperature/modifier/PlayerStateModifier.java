@@ -7,6 +7,7 @@ import toughasnails.temperature.TemperatureInfo;
 public class PlayerStateModifier implements ITemperatureModifier
 {
     public static final int SPRINTING_RATE_MODIFIER = -200;
+    public static final int SPRINTING_TARGET_MODIFIER = 10;
     
     @Override
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
@@ -26,6 +27,19 @@ public class PlayerStateModifier implements ITemperatureModifier
     @Override
     public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
     {
+        int temperatureLevel = temperature.getScalePos();
+        int newTemperatureLevel = temperatureLevel;
+        
+        if (player.getHealth() <= 10.0F)
+        {
+            newTemperatureLevel += Math.abs((player.getHealth() - 20.0F)) / 2;
+        }
+        
+        if (player.isSprinting())
+        {
+            newTemperatureLevel += SPRINTING_TARGET_MODIFIER;
+        }
+        
         return temperature;
     }
 

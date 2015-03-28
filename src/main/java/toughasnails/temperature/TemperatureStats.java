@@ -51,6 +51,7 @@ public class TemperatureStats implements IExtendedEntityProperties
         newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
         newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
         newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks);
+        newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks);
         
         newTempChangeTicks = Math.max(20, newTempChangeTicks);
         
