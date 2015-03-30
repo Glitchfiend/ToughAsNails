@@ -3,9 +3,12 @@ package toughasnails.temperature;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import toughasnails.api.TANPotions;
+import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ITemperatureModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
@@ -67,7 +70,34 @@ public class TemperatureStats implements IExtendedEntityProperties
             targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
             
             temperatureStats.addTemperature((int)Math.signum(targetTemperature.getScalePos() - temperature.getScalePos()));
+            temperature = temperatureStats.getTemperature();
             temperatureTimer = 0;
+        }
+        
+        addPotionEffects(temperatureStats, player);
+    }
+    
+    private void addPotionEffects(TemperatureStats temperatureStats, EntityPlayer player)
+    {
+        int temperatureLevel = temperatureStats.getTemperature().getScalePos();
+        int prevTemperatureLevel = temperatureStats.getPrevTemperature().getScalePos();
+        
+        int icyHalf = (TemperatureRange.ICY.getRangeSize() - 1) / 2;
+        int hotHalf = (TemperatureRange.HOT.getRangeSize() - 1) / 2;
+        
+        if (temperatureLevel <= icyHalf && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
+        {
+            float icyDelta = 1.0F - temperatureLevel * 1.0F / icyHalf;
+
+            player.removePotionEffect(TANPotions.hypothermia.id);
+            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(2400 * icyDelta), (int)(3 * icyDelta)));
+        }
+        else if (temperatureLevel >= TemperatureScale.getRangeStart(TemperatureRange.HOT) + hotHalf && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
+        {
+            float hotDelta = (temperatureLevel - (TemperatureScale.getRangeStart(TemperatureRange.HOT) + hotHalf) - 1) * 1.0F / hotHalf;
+            
+            player.removePotionEffect(TANPotions.hyperthermia.id);
+            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(2400 * hotDelta), (int)(3 * hotDelta)));
         }
     }
     

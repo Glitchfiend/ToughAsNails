@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import toughasnails.init.ModHandlers;
+import toughasnails.init.ModPotions;
 
 @Mod(modid = ToughAsNails.MOD_ID, name = ToughAsNails.MOD_NAME)
 public class ToughAsNails
@@ -18,6 +19,7 @@ public class ToughAsNails
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        ModPotions.init();
         ModHandlers.init();
     }
 }
