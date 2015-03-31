@@ -7,17 +7,26 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import toughasnails.temperature.TemperatureDebugger;
+import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureInfo;
 
-public class ObjectProximityModifier implements ITemperatureModifier
+public class ObjectProximityModifier extends TemperatureModifier
 {
+    public ObjectProximityModifier(TemperatureDebugger debugger)
+    {
+        super(debugger);
+    }
+
     @Override
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
     {
         int newChangeRate = changeRate;
         BlockPos playerPos = player.getPosition();
 
+        debugger.start(Modifier.NEARBY_ENTITIES_RATE, newChangeRate);
         newChangeRate -= getNearbyEntityCount(world, player) * 20; 
+        debugger.end(newChangeRate);
         
         int tempSourceBlocks = 0;
         
@@ -35,7 +44,9 @@ public class ObjectProximityModifier implements ITemperatureModifier
             }
         }
         
+        debugger.start(Modifier.NEARBY_BLOCKS_RATE, newChangeRate);
         newChangeRate -= tempSourceBlocks * 20;
+        debugger.end(newChangeRate);
         
         return newChangeRate;
     }
@@ -47,7 +58,9 @@ public class ObjectProximityModifier implements ITemperatureModifier
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
 
+        debugger.start(Modifier.NEARBY_ENTITIES_TARGET, newTemperatureLevel);
         newTemperatureLevel += getNearbyEntityCount(world, player);
+        debugger.end(newTemperatureLevel);
         
         float blockTemperatureModifier = 0.0F;
         
@@ -65,7 +78,9 @@ public class ObjectProximityModifier implements ITemperatureModifier
             }
         }
         
+        debugger.start(Modifier.NEARBY_BLOCKS_TARGET, newTemperatureLevel);
         newTemperatureLevel += blockTemperatureModifier;
+        debugger.end(newTemperatureLevel);
         
         return new TemperatureInfo(newTemperatureLevel);
     }

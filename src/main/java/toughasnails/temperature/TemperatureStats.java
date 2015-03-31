@@ -2,6 +2,7 @@ package toughasnails.temperature;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
@@ -10,9 +11,9 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 import toughasnails.api.TANPotions;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.modifier.BiomeModifier;
-import toughasnails.temperature.modifier.ITemperatureModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
+import toughasnails.temperature.modifier.TemperatureModifier;
 import toughasnails.temperature.modifier.TimeModifier;
 import toughasnails.temperature.modifier.WeatherModifier;
 
@@ -24,11 +25,13 @@ public class TemperatureStats implements IExtendedEntityProperties
     private int prevTemperatureLevel;
     private int temperatureTimer;
     
-    private ITemperatureModifier biomeModifier;
-    private ITemperatureModifier playerStateModifier;
-    private ITemperatureModifier objectProximityModifier;
-    private ITemperatureModifier weatherModifier;
-    private ITemperatureModifier timeModifier;
+    private TemperatureModifier biomeModifier;
+    private TemperatureModifier playerStateModifier;
+    private TemperatureModifier objectProximityModifier;
+    private TemperatureModifier weatherModifier;
+    private TemperatureModifier timeModifier;
+    
+    public final TemperatureDebugger debugger = new TemperatureDebugger();
     
     @Override
     public void init(Entity entity, World world)
@@ -36,11 +39,11 @@ public class TemperatureStats implements IExtendedEntityProperties
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
         
-        this.biomeModifier = new BiomeModifier();
-        this.playerStateModifier = new PlayerStateModifier();
-        this.objectProximityModifier = new ObjectProximityModifier();
-        this.weatherModifier = new WeatherModifier();
-        this.timeModifier = new TimeModifier();
+        this.biomeModifier = new BiomeModifier(debugger);
+        this.playerStateModifier = new PlayerStateModifier(debugger);
+        this.objectProximityModifier = new ObjectProximityModifier(debugger);
+        this.weatherModifier = new WeatherModifier(debugger);
+        this.timeModifier = new TimeModifier(debugger);
     }
     
     public void update(World world, EntityPlayer player)
@@ -58,7 +61,10 @@ public class TemperatureStats implements IExtendedEntityProperties
         
         newTempChangeTicks = Math.max(20, newTempChangeTicks);
         
-        if (++temperatureTimer >= newTempChangeTicks)
+        boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
+        boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
+        
+        if (incrementTemperature || updateDebug)
         {
             TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, temperature);
 
@@ -69,12 +75,21 @@ public class TemperatureStats implements IExtendedEntityProperties
             
             targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
             
-            temperatureStats.addTemperature((int)Math.signum(targetTemperature.getScalePos() - temperature.getScalePos()));
-            temperature = temperatureStats.getTemperature();
-            temperatureTimer = 0;
+            if (incrementTemperature)
+            {
+                temperatureStats.addTemperature((int)Math.signum(targetTemperature.getScalePos() - temperature.getScalePos()));
+                temperature = temperatureStats.getTemperature();
+                temperatureTimer = 0;
+            }
         }
         
         addPotionEffects(temperatureStats, player);
+        
+        if (updateDebug)
+        {
+            //This works because update is only called if !world.isRemote
+            debugger.finalize((EntityPlayerMP)player);
+        }
     }
     
     private void addPotionEffects(TemperatureStats temperatureStats, EntityPlayer player)

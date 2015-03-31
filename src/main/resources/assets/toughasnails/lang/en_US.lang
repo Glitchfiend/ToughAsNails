@@ -1,2 +1,4 @@
+commands.toughasnails.usage=/toughasnails <tempinfo> [args]
+
 potion.hypothermia=Hypothermia
 potion.hyperthermia=Hyperthermia

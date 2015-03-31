@@ -4,6 +4,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import toughasnails.command.TANCommand;
 import toughasnails.init.ModHandlers;
 import toughasnails.init.ModPotions;
 
@@ -21,5 +23,11 @@ public class ToughAsNails
     {
         ModPotions.init();
         ModHandlers.init();
+    }
+    
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event)
+    {
+        event.registerServerCommand(new TANCommand());
     }
 }

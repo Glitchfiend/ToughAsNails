@@ -1,6 +1,7 @@
 package toughasnails.init;
 
 import toughasnails.handler.PacketHandler;
+import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayEventHandler;
 import toughasnails.handler.TemperatureStatHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,5 +20,6 @@ public class ModHandlers
         FMLCommonHandler.instance().bus().register(temperatureStatHandler);
         MinecraftForge.EVENT_BUS.register(temperatureEventHander);
         MinecraftForge.EVENT_BUS.register(new TemperatureStatHandler());
+        MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
     }
 }
