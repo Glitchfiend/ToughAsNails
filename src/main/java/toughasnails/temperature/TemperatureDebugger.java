@@ -1,16 +1,24 @@
 package toughasnails.temperature;
 
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageTemperatureDebug;
 import toughasnails.network.message.MessageToggleUI;
+import toughasnails.util.MapUtils;
+
+import com.google.common.base.Functions;
+import com.google.common.collect.Ordering;
 
 public class TemperatureDebugger
 {
-    public Map<Modifier, Integer>[] modifiers = new HashMap[ModifierType.values().length];
+    public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
     
     /**
      * Determines whether or not updates about the various modifiers should be sent to the player.
@@ -27,7 +35,7 @@ public class TemperatureDebugger
     {
         for (int i = 0; i < ModifierType.values().length; i++)
         {
-            modifiers[i] = new HashMap();
+            modifiers[i] = new LinkedHashMap();
         }
     }
     
@@ -73,11 +81,19 @@ public class TemperatureDebugger
         
         if (this.showGui)
         {
-            //Sort
+            sortModifiers();
         }
         
         PacketHandler.instance.sendTo(new MessageTemperatureDebug(modifiers), player);
         clearModifiers();
+    }
+    
+    private void sortModifiers()
+    {
+        for (int i = 0; i < modifiers.length; i++)
+        {
+            modifiers[i] = MapUtils.sortMapByValue(modifiers[i]);
+        }
     }
     
     public void clearModifiers()

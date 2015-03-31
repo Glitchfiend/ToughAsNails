@@ -2,7 +2,7 @@ package toughasnails.network.message;
 
 import io.netty.buffer.ByteBuf;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,13 +20,13 @@ import toughasnails.temperature.TemperatureStats;
 
 public class MessageTemperatureDebug implements IMessage, IMessageHandler<MessageTemperatureDebug, IMessage>
 {
-    public Map<Modifier, Integer>[] modifiers = new HashMap[ModifierType.values().length];
+    public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
 
     public MessageTemperatureDebug() 
     {
         for (int i = 0; i < ModifierType.values().length; i++)
         {
-            modifiers[i] = new HashMap();
+            modifiers[i] = new LinkedHashMap();
         }
     }
     
