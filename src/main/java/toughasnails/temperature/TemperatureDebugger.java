@@ -27,6 +27,10 @@ public class TemperatureDebugger
     private boolean showGui = false;
     public int debugTimer;
     
+    public int temperatureTimer;
+    public int changeTicks;
+    public int targetTemperature;
+    
     private boolean currentlyMeasuring = false;
     private Modifier currentModifier;
     private int currentLevel = -1;
@@ -84,7 +88,7 @@ public class TemperatureDebugger
             sortModifiers();
         }
         
-        PacketHandler.instance.sendTo(new MessageTemperatureDebug(modifiers), player);
+        PacketHandler.instance.sendTo(new MessageTemperatureDebug(temperatureTimer, changeTicks, targetTemperature, modifiers), player);
         clearModifiers();
     }
     
@@ -132,6 +136,7 @@ public class TemperatureDebugger
     
     public static enum Modifier
     {
+        BODY_TEMPERATURE_TARGET("Body Temperature", ModifierType.TARGET),
         BIOME_HUMIDITY_RATE("Biome Humidity", ModifierType.RATE),
         BIOME_TEMPERATURE_TARGET("Biome Temperature", ModifierType.TARGET),
         NEARBY_ENTITIES_RATE("Nearby Entities", ModifierType.RATE),

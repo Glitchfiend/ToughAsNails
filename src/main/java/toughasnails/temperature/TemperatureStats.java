@@ -9,6 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import toughasnails.api.TANPotions;
+import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
@@ -51,6 +52,9 @@ public class TemperatureStats implements IExtendedEntityProperties
         TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
         TemperatureInfo temperature = temperatureStats.getTemperature();
         
+        debugger.start(Modifier.BODY_TEMPERATURE_TARGET, 0);
+        debugger.end(temperature.getScalePos());
+        
         int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
         
         newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
@@ -64,14 +68,18 @@ public class TemperatureStats implements IExtendedEntityProperties
         boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
         boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
         
+        debugger.temperatureTimer = temperatureTimer;
+        debugger.changeTicks = newTempChangeTicks;
+        
         if (incrementTemperature || updateDebug)
         {
-            TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, temperature);
-
+            TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, temperature);;
             targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
+            
+            debugger.targetTemperature = targetTemperature.getScalePos();
             
             targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
             

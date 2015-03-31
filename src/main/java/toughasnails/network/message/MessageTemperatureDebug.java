@@ -20,8 +20,12 @@ import toughasnails.temperature.TemperatureStats;
 
 public class MessageTemperatureDebug implements IMessage, IMessageHandler<MessageTemperatureDebug, IMessage>
 {
+    public int temperatureTimer;
+    public int changeTicks;
+    public int targetTemperature;
+    
     public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
-
+    
     public MessageTemperatureDebug() 
     {
         for (int i = 0; i < ModifierType.values().length; i++)
@@ -30,8 +34,11 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
         }
     }
     
-    public MessageTemperatureDebug(Map<Modifier, Integer>[] modifiers)
+    public MessageTemperatureDebug(int temperatureTimer, int changeTicks, int targetTemperature, Map<Modifier, Integer>[] modifiers)
     {
+        this.temperatureTimer = temperatureTimer;
+        this.changeTicks = changeTicks;
+        this.targetTemperature = targetTemperature;
         this.modifiers = modifiers;
     }
     
@@ -39,6 +46,10 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
     public void fromBytes(ByteBuf buf)
     {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
+        
+        this.temperatureTimer = packetBuffer.readInt();
+        this.changeTicks = packetBuffer.readInt();
+        this.targetTemperature = packetBuffer.readInt();
         
         for (int mapIdx = 0; mapIdx < modifiers.length; mapIdx++)
         {
@@ -59,6 +70,10 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
     {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
         
+        packetBuffer.writeInt(this.temperatureTimer);
+        packetBuffer.writeInt(this.changeTicks);
+        packetBuffer.writeInt(this.targetTemperature);
+
         for (Map<Modifier, Integer> modifier : modifiers)
         {
             packetBuffer.writeInt(modifier.size());
@@ -83,6 +98,9 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
                 TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
                 TemperatureDebugger debugger = temperatureStats.debugger;
                 
+                debugger.temperatureTimer = message.temperatureTimer;
+                debugger.changeTicks = message.changeTicks;
+                debugger.targetTemperature = message.targetTemperature;
                 debugger.modifiers = message.modifiers;
             }
         }

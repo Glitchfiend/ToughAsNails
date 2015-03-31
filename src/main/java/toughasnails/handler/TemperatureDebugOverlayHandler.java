@@ -17,6 +17,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.TemperatureInfo;
+import toughasnails.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureStats;
 
 public class TemperatureDebugOverlayHandler
@@ -34,11 +36,11 @@ public class TemperatureDebugOverlayHandler
         
         if (event.type == ElementType.ALL && debugger.isGuiVisible())
         {
-            drawModifierTable(width, height, debugger);
+            drawModifierTable(width, height, temperatureStats.getTemperature(), debugger);
         }
     }
     
-    private void drawModifierTable(int width, int height, TemperatureDebugger debugger)
+    private void drawModifierTable(int width, int height, TemperatureInfo temperature, TemperatureDebugger debugger)
     {
         Map<Modifier, Integer> rateModifiers = debugger.modifiers[0];
         Map<Modifier, Integer> targetModifiers = debugger.modifiers[1];
@@ -50,9 +52,12 @@ public class TemperatureDebugOverlayHandler
             int targetTableHeight = getTableHeight(targetModifiers);
             int totalTableHeight = targetTableHeight + getTableHeight(rateModifiers) + 2;
             int startY = height / 2 - totalTableHeight / 2;
-
-            if (!targetModifiers.isEmpty()) drawTable("Target", 1, startY, targetModifiers);
-            if (!rateModifiers.isEmpty()) drawTable("Rate", 1, startY + targetTableHeight + 2, rateModifiers);
+            
+            String targetProgress = "" + EnumChatFormatting.RED + temperature.getScalePos() + "/" + debugger.targetTemperature + getCappedText(debugger.targetTemperature);
+            String rateProgress = "" + EnumChatFormatting.RED + debugger.temperatureTimer + "/" + debugger.changeTicks;
+            
+            drawTable("Target " + targetProgress, 1, startY, targetModifiers);
+            drawTable("Rate " + rateProgress, 1, startY + targetTableHeight + 2, rateModifiers);
         }
     }
     
@@ -61,7 +66,7 @@ public class TemperatureDebugOverlayHandler
     {
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
         
-        int lineWidth = getLineWidth(contents);
+        int lineWidth = getLineWidth(title, contents);
         int textStart = x + 2;
         int textEnd = textStart + lineWidth;
         
@@ -101,7 +106,7 @@ public class TemperatureDebugOverlayHandler
     }
     
     @SideOnly(Side.CLIENT)
-    private static int getLineWidth(Map<Modifier, Integer> elements)
+    private static int getLineWidth(String title, Map<Modifier, Integer> elements)
     {
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
         int lineWidth = 0;
@@ -113,8 +118,15 @@ public class TemperatureDebugOverlayHandler
             
             lineWidth = Math.max(fontRenderer.getStringWidth(string), lineWidth);
         }
+        
+        lineWidth = Math.max(fontRenderer.getStringWidth(title), lineWidth);
 
         return lineWidth;
+    }
+    
+    private static String getCappedText(int targetTemperature)
+    {
+        return EnumChatFormatting.BLUE + " " + (targetTemperature < 0 ? "(0)" : targetTemperature > TemperatureScale.getScaleTotal() ? "(" + TemperatureScale.getScaleTotal() + ")" : "");
     }
     
     private static String getFormattedInt(int i)
