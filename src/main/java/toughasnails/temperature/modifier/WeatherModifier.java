@@ -32,7 +32,7 @@ public class WeatherModifier extends TemperatureModifier
         
         debugger.end(newChangeRate);
         
-        return changeRate;
+        return newChangeRate;
     }
     
     @Override
