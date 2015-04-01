@@ -1,11 +1,12 @@
 package toughasnails.init;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayEventHandler;
 import toughasnails.handler.TemperatureStatHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import toughasnails.handler.ThirstOverlayHandler;
 
 public class ModHandlers
 {
@@ -21,5 +22,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(temperatureEventHander);
         MinecraftForge.EVENT_BUS.register(new TemperatureStatHandler());
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
+        
+        MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
     }
 }
