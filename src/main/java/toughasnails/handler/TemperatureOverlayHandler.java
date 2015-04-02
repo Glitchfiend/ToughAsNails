@@ -24,7 +24,7 @@ import toughasnails.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.TemperatureStats;
 
-public class TemperatureOverlayEventHandler
+public class TemperatureOverlayHandler
 {
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/overlay.png");
     public static final ResourceLocation ICE_VIGNETTE = new ResourceLocation("toughasnails:textures/gui/ice_vignette.png");

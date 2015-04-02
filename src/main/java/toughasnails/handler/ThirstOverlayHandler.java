@@ -2,12 +2,14 @@ package toughasnails.handler;
 
 import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.thirst.ThirstStats;
 
 public class ThirstOverlayHandler
 {
@@ -31,7 +33,11 @@ public class ThirstOverlayHandler
         ScaledResolution resolution = event.resolution;
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
-       
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        
+        ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+        int thirstLevel = thirstStats.getThirstLevel();
+        
         if (event.type == ElementType.AIR)
         {
             GlStateManager.popMatrix();
@@ -40,16 +46,14 @@ public class ThirstOverlayHandler
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
             
-            drawThirst(width, height);
+            drawThirst(width, height, thirstLevel);
         }
     }
     
-    private void drawThirst(int width, int height)
+    private void drawThirst(int width, int height, int thirstLevel)
     {
         int left = width / 2 + 91;
         int top = height - 49;
-        
-        int thirstLevel = 20;
         
         for (int i = 0; i < 10; i++)
         {
