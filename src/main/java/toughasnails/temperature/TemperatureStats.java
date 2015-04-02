@@ -1,13 +1,11 @@
 package toughasnails.temperature;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IExtendedEntityProperties;
 import toughasnails.api.PlayerStat;
 import toughasnails.api.TANPotions;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -56,11 +54,8 @@ public class TemperatureStats extends PlayerStat
     @Override
     public void update(EntityPlayer player, World world)
     {
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
-        TemperatureInfo temperature = temperatureStats.getTemperature();
-        
         debugger.start(Modifier.BODY_TEMPERATURE_TARGET, 0);
-        debugger.end(temperature.getScalePos());
+        debugger.end(this.temperatureLevel);
         
         int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
         
@@ -80,7 +75,7 @@ public class TemperatureStats extends PlayerStat
         
         if (incrementTemperature || updateDebug)
         {
-            TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, temperature);;
+            TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, this.getTemperature());
             targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
             targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
@@ -92,13 +87,12 @@ public class TemperatureStats extends PlayerStat
             
             if (incrementTemperature)
             {
-                temperatureStats.addTemperature((int)Math.signum(targetTemperature.getScalePos() - temperature.getScalePos()));
-                temperature = temperatureStats.getTemperature();
-                temperatureTimer = 0;
+                this.addTemperature((int)Math.signum(targetTemperature.getScalePos() - this.temperatureLevel));
+                this.temperatureTimer = 0;
             }
         }
         
-        addPotionEffects(temperatureStats, player);
+        addPotionEffects(player);
         
         if (updateDebug)
         {
@@ -107,11 +101,8 @@ public class TemperatureStats extends PlayerStat
         }
     }
     
-    private void addPotionEffects(TemperatureStats temperatureStats, EntityPlayer player)
+    private void addPotionEffects(EntityPlayer player)
     {
-        int temperatureLevel = temperatureStats.temperatureLevel;
-        int prevTemperatureLevel = temperatureStats.prevTemperatureLevel;
-        
         int icyHalf = (TemperatureRange.ICY.getRangeSize() - 1) / 2;
         int hotHalf = (TemperatureRange.HOT.getRangeSize() - 1) / 2;
         
@@ -158,8 +149,6 @@ public class TemperatureStats extends PlayerStat
     public void onSendClientUpdate()
     {
         this.prevTemperatureLevel = this.temperatureLevel;
-        
-        System.out.println("Client update sent");
     }
     
     public void addTemperature(int temperature)
