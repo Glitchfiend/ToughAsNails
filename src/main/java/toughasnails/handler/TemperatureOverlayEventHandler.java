@@ -57,7 +57,6 @@ public class TemperatureOverlayEventHandler
         
         TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
         TemperatureInfo temperature = temperatureStats.getTemperature();
-        TemperatureInfo prevTemperature = temperatureStats.getPrevTemperature();
         
         if (event.type == ElementType.PORTAL)
         {
@@ -69,12 +68,12 @@ public class TemperatureOverlayEventHandler
 
             if (minecraft.playerController.gameIsSurvivalOrAdventure())
             {
-                drawTemperature(width, height, temperature, prevTemperature);
+                drawTemperature(width, height, temperature);
             }
         }
     }
     
-    private void drawTemperature(int width, int height, TemperatureInfo temperature, TemperatureInfo prevTemperature)
+    private void drawTemperature(int width, int height, TemperatureInfo temperature)
     {
         int left = width / 2 - 8;
         int top = height - 52; 

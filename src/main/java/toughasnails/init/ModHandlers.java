@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayEventHandler;
-import toughasnails.handler.TemperatureStatHandler;
+import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.ThirstOverlayHandler;
 
 public class ModHandlers
@@ -15,12 +15,12 @@ public class ModHandlers
         PacketHandler.init();
         
         TemperatureOverlayEventHandler temperatureEventHander = new TemperatureOverlayEventHandler();
-        TemperatureStatHandler temperatureStatHandler = new TemperatureStatHandler();
+        ExtendedStatHandler extendedStatHandler = new ExtendedStatHandler();
         
         FMLCommonHandler.instance().bus().register(temperatureEventHander);
-        FMLCommonHandler.instance().bus().register(temperatureStatHandler);
+        FMLCommonHandler.instance().bus().register(extendedStatHandler);
         MinecraftForge.EVENT_BUS.register(temperatureEventHander);
-        MinecraftForge.EVENT_BUS.register(new TemperatureStatHandler());
+        MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
         
         MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());

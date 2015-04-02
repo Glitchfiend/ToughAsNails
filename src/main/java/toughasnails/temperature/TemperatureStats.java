@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import toughasnails.api.PlayerStat;
 import toughasnails.api.TANPotions;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureScale.TemperatureRange;
@@ -18,7 +19,7 @@ import toughasnails.temperature.modifier.TemperatureModifier;
 import toughasnails.temperature.modifier.TimeModifier;
 import toughasnails.temperature.modifier.WeatherModifier;
 
-public class TemperatureStats implements IExtendedEntityProperties
+public class TemperatureStats extends PlayerStat
 {
     public static final int BASE_TEMPERATURE_CHANGE_TICKS = 1200;
     
@@ -34,8 +35,13 @@ public class TemperatureStats implements IExtendedEntityProperties
     
     public final TemperatureDebugger debugger = new TemperatureDebugger();
     
+    public TemperatureStats(String identifier)
+    {
+        super(identifier);
+    }
+    
     @Override
-    public void init(Entity entity, World world)
+    public void init(EntityPlayer player, World world)
     {
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
@@ -47,7 +53,8 @@ public class TemperatureStats implements IExtendedEntityProperties
         this.timeModifier = new TimeModifier(debugger);
     }
     
-    public void update(World world, EntityPlayer player)
+    @Override
+    public void update(EntityPlayer player, World world)
     {
         TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
         TemperatureInfo temperature = temperatureStats.getTemperature();
@@ -102,8 +109,8 @@ public class TemperatureStats implements IExtendedEntityProperties
     
     private void addPotionEffects(TemperatureStats temperatureStats, EntityPlayer player)
     {
-        int temperatureLevel = temperatureStats.getTemperature().getScalePos();
-        int prevTemperatureLevel = temperatureStats.getPrevTemperature().getScalePos();
+        int temperatureLevel = temperatureStats.temperatureLevel;
+        int prevTemperatureLevel = temperatureStats.prevTemperatureLevel;
         
         int icyHalf = (TemperatureRange.ICY.getRangeSize() - 1) / 2;
         int hotHalf = (TemperatureRange.HOT.getRangeSize() - 1) / 2;
@@ -141,6 +148,20 @@ public class TemperatureStats implements IExtendedEntityProperties
        }
     }
     
+    @Override
+    public boolean shouldUpdateClient()
+    {
+        return this.prevTemperatureLevel != this.temperatureLevel;
+    }
+    
+    @Override
+    public void onSendClientUpdate()
+    {
+        this.prevTemperatureLevel = this.temperatureLevel;
+        
+        System.out.println("Client update sent");
+    }
+    
     public void addTemperature(int temperature)
     {
         this.temperatureLevel = Math.max(Math.min(TemperatureScale.getScaleTotal(), this.temperatureLevel + temperature), 0);
@@ -159,10 +180,5 @@ public class TemperatureStats implements IExtendedEntityProperties
     public TemperatureInfo getTemperature()
     {
         return new TemperatureInfo(this.temperatureLevel);
-    }
-    
-    public TemperatureInfo getPrevTemperature()
-    {
-        return new TemperatureInfo(this.prevTemperatureLevel);
     }
 }
