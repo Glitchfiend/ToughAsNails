@@ -50,7 +50,7 @@ public class PlayerStateModifier extends TemperatureModifier
         
         if (!world.canSeeSky(playerPos))
         {
-            newTemperatureLevel += (world.getLight(playerPos) - 7) / 2;
+            newTemperatureLevel -= (15 - world.getLight(playerPos)) / 3;
         }
         
         debugger.end(newTemperatureLevel);

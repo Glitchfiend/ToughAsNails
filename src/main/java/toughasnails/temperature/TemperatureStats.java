@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import toughasnails.api.PlayerStat;
 import toughasnails.api.TANPotions;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -52,52 +53,55 @@ public class TemperatureStats extends PlayerStat
     }
     
     @Override
-    public void update(EntityPlayer player, World world)
+    public void update(EntityPlayer player, World world, Phase phase)
     {
-        debugger.start(Modifier.BODY_TEMPERATURE_TARGET, 0);
-        debugger.end(this.temperatureLevel);
-        
-        int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
-        
-        newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks);
-        
-        newTempChangeTicks = Math.max(20, newTempChangeTicks);
-        
-        boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
-        boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
-        
-        debugger.temperatureTimer = temperatureTimer;
-        debugger.changeTicks = newTempChangeTicks;
-        
-        if (incrementTemperature || updateDebug)
+        if (phase == Phase.END)
         {
-            TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, this.getTemperature());
-            targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
-            targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
-            targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
-            targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
-            
-            debugger.targetTemperature = targetTemperature.getScalePos();
-            
-            targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
-            
-            if (incrementTemperature)
+            debugger.start(Modifier.BODY_TEMPERATURE_TARGET, 0);
+            debugger.end(this.temperatureLevel);
+
+            int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
+
+            newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
+            newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
+            newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
+            newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks);
+            newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks);
+
+            newTempChangeTicks = Math.max(20, newTempChangeTicks);
+
+            boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
+            boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
+
+            debugger.temperatureTimer = temperatureTimer;
+            debugger.changeTicks = newTempChangeTicks;
+
+            if (incrementTemperature || updateDebug)
             {
-                this.addTemperature((int)Math.signum(targetTemperature.getScalePos() - this.temperatureLevel));
-                this.temperatureTimer = 0;
+                TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, this.getTemperature());
+                targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
+                targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
+                targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
+                targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
+
+                debugger.targetTemperature = targetTemperature.getScalePos();
+
+                targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
+
+                if (incrementTemperature)
+                {
+                    this.addTemperature((int)Math.signum(targetTemperature.getScalePos() - this.temperatureLevel));
+                    this.temperatureTimer = 0;
+                }
             }
-        }
-        
-        addPotionEffects(player);
-        
-        if (updateDebug)
-        {
-            //This works because update is only called if !world.isRemote
-            debugger.finalize((EntityPlayerMP)player);
+
+            addPotionEffects(player);
+
+            if (updateDebug)
+            {
+                //This works because update is only called if !world.isRemote
+                debugger.finalize((EntityPlayerMP)player);
+            }
         }
     }
     

@@ -45,8 +45,11 @@ public class ThirstOverlayHandler
         else if (event.type == ElementType.EXPERIENCE)
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
-            
-            drawThirst(width, height, thirstLevel);
+
+            if (minecraft.playerController.gameIsSurvivalOrAdventure())
+            {
+                drawThirst(width, height, thirstLevel);
+            }
         }
     }
     

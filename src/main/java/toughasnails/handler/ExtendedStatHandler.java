@@ -55,14 +55,14 @@ public class ExtendedStatHandler
 
         if (!world.isRemote)
         {
-            if (event.phase == Phase.END)
+            for (String identifier : PlayerStatRegistry.getStatMap().keySet())
             {
-                for (String identifier : PlayerStatRegistry.getStatMap().keySet())
+                PlayerStat stat = (PlayerStat)player.getExtendedProperties(identifier);
+
+                stat.update(player, world, event.phase);
+
+                if (event.phase == Phase.END)
                 {
-                    PlayerStat stat = (PlayerStat)player.getExtendedProperties(identifier);
-
-                    stat.update(player, world);
-
                     if (stat.shouldUpdateClient())
                     {
                         stat.onSendClientUpdate();

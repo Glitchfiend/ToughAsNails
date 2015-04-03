@@ -7,6 +7,7 @@ import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.ThirstOverlayHandler;
+import toughasnails.handler.ThirstStatHandler;
 
 public class ModHandlers
 {
@@ -26,5 +27,10 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
         
         MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
+        
+        ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
+        
+        FMLCommonHandler.instance().bus().register(thirstStatHandler);
+        MinecraftForge.EVENT_BUS.register(thirstStatHandler);
     }
 }

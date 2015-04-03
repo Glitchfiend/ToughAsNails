@@ -1,12 +1,13 @@
 package toughasnails.api;
 
-import toughasnails.network.message.MessageUpdateStat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import toughasnails.network.message.MessageUpdateStat;
 
 public abstract class PlayerStat implements IExtendedEntityProperties
 {
@@ -24,7 +25,7 @@ public abstract class PlayerStat implements IExtendedEntityProperties
     }
     
     public abstract void init(EntityPlayer player, World world);
-    public abstract void update(EntityPlayer player, World world);
+    public abstract void update(EntityPlayer player, World world, Phase phase);
     public abstract boolean shouldUpdateClient();
     
     public void onSendClientUpdate() {}
