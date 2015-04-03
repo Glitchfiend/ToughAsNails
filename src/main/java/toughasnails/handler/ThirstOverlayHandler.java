@@ -1,6 +1,9 @@
 package toughasnails.handler;
 
 import static toughasnails.util.RenderUtils.drawTexturedModalRect;
+
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
@@ -9,13 +12,27 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import toughasnails.thirst.ThirstStats;
 
 public class ThirstOverlayHandler
 {
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/overlay.png");
     
+    private final Random random = new Random();
     private final Minecraft minecraft = Minecraft.getMinecraft();
+    
+    private int updateCounter;
+    
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (event.phase == Phase.END)
+        {
+            updateCounter++;
+        }
+    }
     
     @SubscribeEvent
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
@@ -37,6 +54,7 @@ public class ThirstOverlayHandler
         
         ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
         int thirstLevel = thirstStats.getThirstLevel();
+        float thirstHydrationLevel = thirstStats.getThirstHydrationLevel();
         
         if (event.type == ElementType.AIR)
         {
@@ -48,12 +66,12 @@ public class ThirstOverlayHandler
 
             if (minecraft.playerController.gameIsSurvivalOrAdventure())
             {
-                drawThirst(width, height, thirstLevel);
+                drawThirst(width, height, thirstLevel, thirstHydrationLevel);
             }
         }
     }
     
-    private void drawThirst(int width, int height, int thirstLevel)
+    private void drawThirst(int width, int height, int thirstLevel, float thirstHydrationLevel)
     {
         int left = width / 2 + 91;
         int top = height - 49;
@@ -64,6 +82,11 @@ public class ThirstOverlayHandler
             int iconIndex = 0;
             int startX = left - i * 8 - 9;
             int startY = top;
+            
+            if (thirstHydrationLevel <= 0.0F && updateCounter % (thirstLevel * 3 + 1) == 0)
+            {
+                startY = top + (random.nextInt(3) - 1);
+            }
             
             drawTexturedModalRect(startX, startY, iconIndex * 8, 16, 9, 9);
             

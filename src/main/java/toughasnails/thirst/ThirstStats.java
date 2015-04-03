@@ -159,4 +159,9 @@ public class ThirstStats extends PlayerStat
     {
         return this.thirstLevel;
     }
+    
+    public float getThirstHydrationLevel()
+    {
+        return this.thirstHydrationLevel;
+    }
 }

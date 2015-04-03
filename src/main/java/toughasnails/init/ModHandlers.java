@@ -26,10 +26,11 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
         
-        MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
-        
+        ThirstOverlayHandler thirstOverlayHandler = new ThirstOverlayHandler();
         ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
         
+        FMLCommonHandler.instance().bus().register(thirstOverlayHandler);
+        MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
         FMLCommonHandler.instance().bus().register(thirstStatHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
     }
