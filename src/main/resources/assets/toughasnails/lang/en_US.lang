@@ -1,4 +1,6 @@
 commands.toughasnails.usage=/toughasnails <tempinfo> [args]
 
+item.canteen.name=Canteen
+
 potion.hypothermia=Hypothermia
 potion.hyperthermia=Hyperthermia

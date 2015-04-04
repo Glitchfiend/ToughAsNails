@@ -32,4 +32,5 @@ archivesBaseName = "ToughAsNails"
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
+    mappings = 'snapshot_20150403'
 }

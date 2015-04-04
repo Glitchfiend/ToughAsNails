@@ -1,15 +1,18 @@
 package toughasnails.core;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import toughasnails.command.TANCommand;
 import toughasnails.init.ModHandlers;
+import toughasnails.init.ModItems;
+import toughasnails.init.ModModels;
 import toughasnails.init.ModPotions;
 import toughasnails.init.ModStats;
 
@@ -27,6 +30,8 @@ public class ToughAsNails
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        ModItems.init();
+        ModModels.init();
         ModStats.init();
         ModPotions.init();
         ModHandlers.init();

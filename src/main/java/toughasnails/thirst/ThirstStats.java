@@ -150,6 +150,12 @@ public class ThirstStats extends PlayerStat
         this.prevThirstLevel = this.thirstLevel;
     }
     
+    public void addStats(int thirst, float hydration)
+    {
+        this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
+        this.thirstHydrationLevel = Math.min(this.thirstHydrationLevel + (float)thirst * hydration * 2.0F, (float)this.thirstLevel);
+    }
+    
     public void addExhaustion(float amount)
     {
         this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
@@ -163,5 +169,10 @@ public class ThirstStats extends PlayerStat
     public float getThirstHydrationLevel()
     {
         return this.thirstHydrationLevel;
+    }
+    
+    public boolean isThirsty()
+    {
+        return this.thirstLevel < 20;
     }
 }
