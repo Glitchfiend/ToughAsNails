@@ -30,11 +30,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         int tempSourceBlocks = 0;
         
-        for (int x = -1; x <= 1; x++)
+        for (int x = -2; x <= 2; x++)
         {
-            for (int y = -1; y <= 1; y++)
+            for (int y = -2; y <= 2; y++)
             {
-                for (int z = -1; z <= 1; z++)
+                for (int z = -2; z <= 2; z++)
                 {
                     BlockPos pos = playerPos.add(x, y - 1, z);
                     IBlockState state = world.getBlockState(pos);
@@ -101,11 +101,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         }
         else if (material == Material.fire)
         {
-            return 0.75F;
+            return 1.0F;
         }
         else if (material == Material.lava)
         {
-            return 1.0F;
+            return 1.5F;
         }
         else if (player.worldObj.canBlockSeeSky(player.getPosition()) && biome.temperature > 1.0F && (world.getWorldTime() % 24000L) < 12000 && material == Material.sand)
         {
