@@ -55,7 +55,7 @@ public class ModelCanteen implements ISmartItemModel
     }
 
     @Override
-    public TextureAtlasSprite getTexture()
+    public TextureAtlasSprite getParticleTexture()
     {
         return null;
     }
