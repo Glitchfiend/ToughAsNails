@@ -1,5 +1,7 @@
 commands.toughasnails.usage=/toughasnails <tempinfo> [args]
 
+itemGroup.tabToughAsNails=Tough As Nails
+
 item.canteen.name=Canteen
 
 potion.hypothermia=Hypothermia
