@@ -115,7 +115,7 @@ public class TemperatureStats extends PlayerStat
         int hypoRangeSize = (int)(TemperatureRange.ICY.getRangeSize() * (4.0F / 6.0F));
         int hypoRangeStart = hypoRangeSize - 1;
         int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * (4.0F / 6.0F));
-        int hyperRangeStart = TemperatureScale.getScaleTotal() - hyperRangeSize;
+        int hyperRangeStart = TemperatureScale.getScaleTotal() - hyperRangeSize + 1;
 
         if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
         {
