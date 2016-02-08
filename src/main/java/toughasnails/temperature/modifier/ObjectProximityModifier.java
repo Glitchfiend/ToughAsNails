@@ -99,14 +99,6 @@ public class ObjectProximityModifier extends TemperatureModifier
         {
             return 1.5F;
         }
-        else if (player.worldObj.canBlockSeeSky(player.getPosition()) && biome.temperature > 1.0F && (world.getWorldTime() % 24000L) < 12000 && material == Material.sand)
-        {
-            /*If the player is above ground, the biome is hot and it's during the day, sand acts as a temperature source. This is to simulate sand being extremely hot 
-             * in deserts during the day, but cold during the night.
-             */
-            
-            return 0.5F;
-        }
         
         return 0.0F;
     }
