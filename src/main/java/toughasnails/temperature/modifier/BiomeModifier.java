@@ -11,7 +11,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class BiomeModifier extends TemperatureModifier
 {
-    public static final int MAX_TEMP_OFFSET = 10;
+    public static final int MAX_TEMP_OFFSET = 5;
     
     public BiomeModifier(TemperatureDebugger debugger)
     {
@@ -36,7 +36,7 @@ public class BiomeModifier extends TemperatureModifier
     public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
-        float normalizedTemp = MathHelper.clamp_float(biome.temperature, 0.0F, 1.5F) / 1.5F;
+        float normalizedTemp = MathHelper.clamp_float(biome.temperature, 0.0F, 1.25F) / 1.25F;
         
         //Denormalize, multiply by the max temp offset, add to the current temp
         int newTemperatureLevel = temperature.getScalePos() + (int)Math.round((normalizedTemp * 2.0F - 1.0F) * MAX_TEMP_OFFSET);

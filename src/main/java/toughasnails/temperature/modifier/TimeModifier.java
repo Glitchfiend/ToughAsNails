@@ -12,12 +12,12 @@ import toughasnails.temperature.TemperatureInfo;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public static final int TIME_TARGET_MODIFIER = 10;
+    public static final int TIME_TARGET_MODIFIER = 5;
     
     /**Multiplies how much should the temperature be increased/decreased by the closer the
      * biome temp is to a extreme hot or cold
      */
-    public static final float EXTREMITY_MULTIPLIER = 2.0F;
+    public static final float EXTREMITY_MULTIPLIER = 1.25F;
     
     private Random dayRandom = new Random();
     
@@ -39,7 +39,7 @@ public class TimeModifier extends TemperatureModifier
         long worldTime = world.getWorldTime();
         
         //The biome temperature on a scale of 0 to 1, 0 freezing and 1 boiling hot
-        float biomeTempNorm = (MathHelper.clamp_float(biome.temperature, -0.5F, 2.0F) + 0.5F) / 2.5F;
+        float biomeTempNorm = MathHelper.clamp_float(biome.temperature, 0.0F, 1.25F) / 1.25F;
         //The biome temperature from 0 to 1, 0 least extreme and 1 most extreme
         float extremityModifier = Math.abs(biomeTempNorm * 2.0F - 1.0F);
         //Reaches the highest point during the middle of the day and at midnight. Normalized to be between -1 and 1
