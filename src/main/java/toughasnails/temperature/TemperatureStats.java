@@ -121,13 +121,13 @@ public class TemperatureStats extends PlayerStat
         {
             multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
             player.removePotionEffect(TANPotions.hypothermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(1800 * multiplier) + 600, (int)(2 * multiplier) + 1));
+            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
         }
         else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
         {
             multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
             player.removePotionEffect(TANPotions.hyperthermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(1800 * multiplier) + 600, (int)(2 * multiplier) + 1));
+            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
         }
     }
     
