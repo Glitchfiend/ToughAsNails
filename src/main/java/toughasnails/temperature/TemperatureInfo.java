@@ -6,15 +6,15 @@ public class TemperatureInfo
 {
     private int scalePos;
     private TemperatureRange temperatureRange;
-    private int relativeScalePos;
-    private float relativeScaleDelta;
+    private int rangeIndex;
+    private float rangeDelta;
     
     private TemperatureInfo()
     {
         this.scalePos = -1;
         this.temperatureRange = null;
-        this.relativeScalePos = -1;
-        this.relativeScaleDelta = -1F;
+        this.rangeIndex = -1;
+        this.rangeDelta = -1F;
     }
     
     public TemperatureInfo(int scalePos)
@@ -37,19 +37,19 @@ public class TemperatureInfo
         return temperatureRange;
     }
     
-    public int getRelativeScalePos()
+    public int getRangeIndex(boolean reverseEnd)
     {
-        if (relativeScalePos == -1)
-            relativeScalePos = TemperatureScale.getRangeIndex(getScalePos(), true);
+        if (rangeIndex == -1)
+            rangeIndex = TemperatureScale.getRangeIndex(getScalePos(), reverseEnd);
         
-        return relativeScalePos;
+        return rangeIndex;
     }
     
-    public float getRelativeScaleDelta()
+    public float getRangeDelta(boolean reverseEnd)
     {
-        if (relativeScaleDelta == -1F)
-            relativeScaleDelta = (float)getRelativeScalePos() / (float)getTemperatureRange().getRangeSize();
+        if (rangeDelta == -1F)
+            rangeDelta = TemperatureScale.getRangeDelta(getScalePos(), reverseEnd);
         
-        return relativeScaleDelta;
+        return rangeDelta;
     }
 }
