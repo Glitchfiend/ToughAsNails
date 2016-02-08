@@ -48,8 +48,6 @@ public class TimeModifier extends TemperatureModifier
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
 
-        System.out.println(extremityModifier);
-        
         debugger.start(Modifier.TIME_TARGET, newTemperatureLevel);
         newTemperatureLevel += TIME_TARGET_MODIFIER * timeNorm * (Math.max(1.0F, extremityModifier * EXTREMITY_MULTIPLIER));
         debugger.end(newTemperatureLevel);
