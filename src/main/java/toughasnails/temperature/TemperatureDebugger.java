@@ -136,7 +136,7 @@ public class TemperatureDebugger
     
     public static enum Modifier
     {
-        BODY_TEMPERATURE_TARGET("Body Temperature", ModifierType.TARGET),
+        EQUILIBRIUM_TARGET("Equilibrium", ModifierType.TARGET),
         BIOME_HUMIDITY_RATE("Biome Humidity", ModifierType.RATE),
         BIOME_TEMPERATURE_TARGET("Biome Temperature", ModifierType.TARGET),
         NEARBY_ENTITIES_RATE("Nearby Entities", ModifierType.RATE),

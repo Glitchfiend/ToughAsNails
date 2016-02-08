@@ -11,7 +11,6 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class BiomeModifier extends TemperatureModifier
 {
-    public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
     public static final int MAX_TEMP_OFFSET = 20;
     
     public BiomeModifier(TemperatureDebugger debugger)
@@ -40,7 +39,7 @@ public class BiomeModifier extends TemperatureModifier
         float normalizedTemp = (MathHelper.clamp_float(biome.temperature, -0.5F, 2.0F) + 0.5F) / 2.5F;
         
         //Denormalize, multiply by the max temp offset, add to the current temp
-        int newTemperatureLevel = TEMPERATURE_SCALE_MIDPOINT + (int)Math.round((normalizedTemp * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
+        int newTemperatureLevel = temperature.getScalePos() + (int)Math.round((normalizedTemp * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
         debugger.end(newTemperatureLevel);

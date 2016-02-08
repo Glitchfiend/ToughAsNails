@@ -20,6 +20,7 @@ import toughasnails.temperature.modifier.WeatherModifier;
 
 public class TemperatureStats extends PlayerStat
 {
+    public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
     public static final int BASE_TEMPERATURE_CHANGE_TICKS = 1200;
     
     private int temperatureLevel;
@@ -57,9 +58,6 @@ public class TemperatureStats extends PlayerStat
     {
         if (phase == Phase.END)
         {
-            debugger.start(Modifier.BODY_TEMPERATURE_TARGET, 0);
-            debugger.end(this.temperatureLevel);
-
             int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
 
             newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
@@ -78,7 +76,10 @@ public class TemperatureStats extends PlayerStat
 
             if (incrementTemperature || updateDebug)
             {
-                TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, this.getTemperature());
+                debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
+                debugger.end(TemperatureScale.getScaleTotal() / 2);
+                
+                TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, new TemperatureInfo(TEMPERATURE_SCALE_MIDPOINT));
                 targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
