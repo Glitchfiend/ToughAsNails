@@ -76,17 +76,14 @@ public class TANCommand extends CommandBase
         TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
         TemperatureInfo playerTemp = temperatureStats.getTemperature();
-        
-        if (newTemp != temperatureStats.getTemperature().getScalePos())
-        {
-            //Remove any existing potion effects for hypo/hyperthermia
-            player.removePotionEffect(TANPotions.hypothermia.id);
-            player.removePotionEffect(TANPotions.hyperthermia.id);
-            
-            temperatureStats.setTemperature(newTemp);
-            
-            sender.addChatMessage(new ChatComponentTranslation("commands.toughasnails.settemp.success", newTemp));
-        }
+
+        //Remove any existing potion effects for hypo/hyperthermia
+        player.removePotionEffect(TANPotions.hypothermia.id);
+        player.removePotionEffect(TANPotions.hyperthermia.id);
+
+        temperatureStats.setTemperature(newTemp);
+
+        sender.addChatMessage(new ChatComponentTranslation("commands.toughasnails.settemp.success", newTemp));
     }
     
     @Override
