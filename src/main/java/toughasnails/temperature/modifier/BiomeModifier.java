@@ -1,6 +1,7 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.temperature.TemperatureDebugger;
@@ -10,6 +11,8 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class BiomeModifier extends TemperatureModifier
 {
+    public static final int MAX_TEMP_OFFSET = 20;
+    
     public BiomeModifier(TemperatureDebugger debugger)
     {
         super(debugger);
@@ -33,8 +36,8 @@ public class BiomeModifier extends TemperatureModifier
     public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
-        float biomeTemperature = biome.temperature;
-        int newTemperatureLevel = temperature.getScalePos() + Math.round((biomeTemperature - 0.6F) * 20.0F);
+        float normalizedTemp = (MathHelper.clamp_float(biome.temperature, -0.5F, 2.0F) + 0.5F) / 2.5F;
+        int newTemperatureLevel = temperature.getScalePos() + (int)Math.round(MathHelper.denormalizeClamp(normalizedTemp, -1.0F, 1.0F) * MAX_TEMP_OFFSET);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
         debugger.end(newTemperatureLevel);
