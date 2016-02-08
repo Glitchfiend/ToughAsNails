@@ -111,15 +111,22 @@ public class TemperatureStats extends PlayerStat
         TemperatureRange range = TemperatureScale.getTemperatureRange(this.temperatureLevel);
         float multiplier = 1.0F;
         
-        if (range == TemperatureRange.ICY && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
+        //Start the hypo/hyperthermia slightly after the real ranges start
+        int hypoRangeSize = (int)(TemperatureRange.ICY.getRangeSize() * (4.0F / 6.0F));
+        int hypoRangeStart = hypoRangeSize - 1;
+        int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * (4.0F / 6.0F));
+        int hyperRangeStart = TemperatureScale.getScaleTotal() - hyperRangeSize;
+
+        if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
         {
-            multiplier = TemperatureScale.getRangeDelta(this.temperatureLevel, true);
+            multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
+            
             player.removePotionEffect(TANPotions.hypothermia.id);
             player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(2400 * multiplier), (int)(3 * multiplier)));
         }
-        else if (range == TemperatureRange.HOT && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
+        else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
         {
-            multiplier = TemperatureScale.getRangeDelta(this.temperatureLevel, false);
+            multiplier = (float)(this.temperatureLevel - hyperRangeStart + 1) / hyperRangeSize;
             player.removePotionEffect(TANPotions.hyperthermia.id);
             player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(2400 * multiplier), (int)(3 * multiplier)));
         }

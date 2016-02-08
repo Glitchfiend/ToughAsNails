@@ -147,7 +147,6 @@ public class TemperatureDebugger
         HEALTH_TARGET("Health", ModifierType.TARGET),
         SPRINTING_TARGET("Sprinting", ModifierType.TARGET),
         TIME_TARGET("Time", ModifierType.TARGET),
-        DAY_RANDOM_TARGET("Day Random", ModifierType.TARGET),
         WET_RATE("Wet", ModifierType.RATE),
         WET_TARGET("Wet", ModifierType.TARGET),
         SNOW_TARGET("Snow", ModifierType.TARGET);

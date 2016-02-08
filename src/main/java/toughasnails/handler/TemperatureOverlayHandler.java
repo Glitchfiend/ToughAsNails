@@ -80,11 +80,10 @@ public class TemperatureOverlayHandler
         int top = height - 52; 
         
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
-        float changeDelta = temperature.getRangeDelta(true);
-        
+
         if (temperatureRange == TemperatureRange.ICY || temperatureRange == TemperatureRange.HOT)
         {
-            float shakeDelta = temperatureRange == TemperatureRange.ICY ? 1.0F - changeDelta : changeDelta;
+            float shakeDelta = temperatureRange == TemperatureRange.ICY ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
             
             if ((updateCounter % 1) == 0)
             {
@@ -154,7 +153,7 @@ public class TemperatureOverlayHandler
     private void renderColouredBall(int x, int y, TemperatureInfo temperature, int textureShift)
     {
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
-        float changeDelta = temperature.getRangeDelta(true);
+        float changeDelta = temperatureRange == TemperatureRange.COOL ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
         
         if (temperatureRange != TemperatureRange.MILD)
         {
@@ -172,23 +171,16 @@ public class TemperatureOverlayHandler
     private void drawTemperatureVignettes(int width, int height, TemperatureInfo temperature)
     {
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
-        float opacityDelta = 1.0F;
-        ResourceLocation vignetteLocation = null;
-
-        //Start the vignettes a bit before the real ranges start
-        int icySize = TemperatureRange.ICY.getRangeSize() * 2;
-        int icyStartValue = icySize - 1;
-        int hotSize = TemperatureRange.ICY.getRangeSize() * 2;
-        int hotStartValue = TemperatureScale.getScaleTotal() - hotSize;
+        float opacityDelta = temperature.getRangeDelta(false);
         
-        if (temperature.getScalePos() <= icyStartValue)
+        ResourceLocation vignetteLocation = null;
+        
+        if (temperatureRange == TemperatureRange.ICY)
         {
-            opacityDelta = 1.0F - ((float)(temperature.getScalePos() + 1) / (float)icySize);
             vignetteLocation = ICE_VIGNETTE;
         }
-        else if (temperature.getScalePos() >= hotStartValue)
+        else if (temperatureRange == TemperatureRange.HOT)
         {
-            opacityDelta = (float)(temperature.getScalePos() - hotStartValue + 1) / hotSize;
             vignetteLocation = FIRE_VIGNETTE;
         }
 
