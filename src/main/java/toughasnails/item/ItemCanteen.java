@@ -42,7 +42,7 @@ public class ItemCanteen extends ItemFluidContainer
         {
             ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
         
-            thirstStats.addStats(20, 0.8F);
+            thirstStats.addStats(8, 0.8F);
         }
 
         return stack;
