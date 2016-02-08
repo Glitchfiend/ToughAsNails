@@ -10,8 +10,6 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class BiomeModifier extends TemperatureModifier
 {
-    public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
-    
     public BiomeModifier(TemperatureDebugger debugger)
     {
         super(debugger);
@@ -36,7 +34,7 @@ public class BiomeModifier extends TemperatureModifier
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         float biomeTemperature = biome.temperature;
-        int newTemperatureLevel = TEMPERATURE_SCALE_MIDPOINT + (int)((biomeTemperature - 0.5F) * 5.0F);
+        int newTemperatureLevel = temperature.getScalePos() + Math.round((biomeTemperature - 0.5F) * 5.0F);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
         debugger.end(newTemperatureLevel);
