@@ -34,7 +34,7 @@ public class BiomeModifier extends TemperatureModifier
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         float biomeTemperature = biome.temperature;
-        int newTemperatureLevel = temperature.getScalePos() + Math.round((biomeTemperature - 0.6F) * 10.0F);
+        int newTemperatureLevel = temperature.getScalePos() + Math.round((biomeTemperature - 0.6F) * 20.0F);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
         debugger.end(newTemperatureLevel);
