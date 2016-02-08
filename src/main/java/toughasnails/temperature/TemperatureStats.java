@@ -178,6 +178,11 @@ public class TemperatureStats extends PlayerStat
         this.prevTemperatureLevel = temperature;
     }
     
+    public void setChangeTimer(int ticks)
+    {
+        this.temperatureTimer = ticks;
+    }
+    
     public TemperatureInfo getTemperature()
     {
         return new TemperatureInfo(this.temperatureLevel);

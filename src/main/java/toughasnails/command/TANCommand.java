@@ -81,6 +81,9 @@ public class TANCommand extends CommandBase
         player.removePotionEffect(TANPotions.hypothermia.id);
         player.removePotionEffect(TANPotions.hyperthermia.id);
 
+        //Reset the change timer to 0
+        temperatureStats.setChangeTimer(0);
+        //Set to the new temperature
         temperatureStats.setTemperature(newTemp);
 
         sender.addChatMessage(new ChatComponentTranslation("commands.toughasnails.settemp.success", newTemp));
