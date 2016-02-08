@@ -23,10 +23,6 @@ public class ObjectProximityModifier extends TemperatureModifier
     {
         int newChangeRate = changeRate;
         BlockPos playerPos = player.getPosition();
-
-        debugger.start(Modifier.NEARBY_ENTITIES_RATE, newChangeRate);
-        newChangeRate -= getNearbyEntityCount(world, player) * 20; 
-        debugger.end(newChangeRate);
         
         int tempSourceBlocks = 0;
         
@@ -57,10 +53,6 @@ public class ObjectProximityModifier extends TemperatureModifier
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
-
-        debugger.start(Modifier.NEARBY_ENTITIES_TARGET, newTemperatureLevel);
-        newTemperatureLevel += getNearbyEntityCount(world, player);
-        debugger.end(newTemperatureLevel);
         
         float blockTemperatureModifier = 0.0F;
         
@@ -117,14 +109,5 @@ public class ObjectProximityModifier extends TemperatureModifier
         }
         
         return 0.0F;
-    }
-    
-    private static int getNearbyEntityCount(World world, EntityPlayer player)
-    {
-        BlockPos playerPos = player.getPosition();
-        
-        AxisAlignedBB entitiesBox = new AxisAlignedBB(playerPos.add(-4, -4, -4), playerPos.add(4, 4, 4));
-        
-        return world.getEntitiesWithinAABBExcludingEntity(player, entitiesBox).size() * 2; 
     }
 }

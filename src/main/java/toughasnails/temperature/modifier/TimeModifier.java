@@ -10,7 +10,7 @@ import toughasnails.temperature.TemperatureInfo;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public static final int TIME_TARGET_MODIFIER = 5;
+    public static final int TIME_TARGET_MODIFIER = 8;
     
     private Random dayRandom = new Random();
     
@@ -31,6 +31,8 @@ public class TimeModifier extends TemperatureModifier
         int temperatureLevel = temperature.getScalePos();
         int newTemperatureLevel = temperatureLevel;
         long worldTime = world.getWorldTime();
+        
+        //Reaches the highest point during the middle of the day and at midnight. Normalized to be between -1 and 1
         float timeMultiplier = (-Math.abs(((worldTime + 6000) % 24000.0F) - 12000.0F) + 6000.0F) / 6000.0F;
         
         debugger.start(Modifier.TIME_TARGET, newTemperatureLevel);
