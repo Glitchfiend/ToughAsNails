@@ -153,7 +153,7 @@ public class TemperatureOverlayHandler
     private void renderColouredBall(int x, int y, TemperatureInfo temperature, int textureShift)
     {
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
-        float changeDelta = temperatureRange == TemperatureRange.COOL ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
+        float changeDelta = temperature.getRangeDelta(false);
         
         if (temperatureRange != TemperatureRange.MILD)
         {
