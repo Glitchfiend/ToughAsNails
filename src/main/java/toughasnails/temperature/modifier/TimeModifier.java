@@ -10,13 +10,13 @@ import toughasnails.util.BiomeUtils;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public static final int TIME_TARGET_MODIFIER = 5;
+    public static final int TIME_TARGET_MODIFIER = 7;
     
     /**
      * Multiplies how much should the temperature be increased/decreased by the closer the
      * biome temp is to a extreme hot or cold
      */
-    public static final float EXTREMITY_MULTIPLIER = 2.0F;
+    public static final float EXTREMITY_MULTIPLIER = 1.25F;
     
     public TimeModifier(TemperatureDebugger debugger)
     {

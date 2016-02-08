@@ -12,7 +12,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class BiomeModifier extends TemperatureModifier
 {
-    public static final int MAX_TEMP_OFFSET = 5;
+    public static final int MAX_TEMP_OFFSET = 10;
     
     public BiomeModifier(TemperatureDebugger debugger)
     {
