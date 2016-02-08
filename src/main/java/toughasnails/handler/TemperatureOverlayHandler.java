@@ -177,13 +177,14 @@ public class TemperatureOverlayHandler
         
         if (temperatureRange == TemperatureRange.ICY)
         {
+            opacityDelta = 1.0F - temperature.getRangeDelta(true);
             vignetteLocation = ICE_VIGNETTE;
         }
         else if (temperatureRange == TemperatureRange.HOT)
         {
             vignetteLocation = FIRE_VIGNETTE;
         }
-
+        
         if (vignetteLocation != null)
         {
             minecraft.getTextureManager().bindTexture(vignetteLocation);
