@@ -52,6 +52,7 @@ public class TemperatureScale
         return isScalePosInRange(scalePos, range, range);
     }
     
+    /**Returns the position in the overall temperature scale of this range*/
     public static int getRangeStart(TemperatureRange range)
     {
         return rangeStarts[range.ordinal()];
