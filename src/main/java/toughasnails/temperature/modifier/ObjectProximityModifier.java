@@ -83,15 +83,7 @@ public class ObjectProximityModifier extends TemperatureModifier
         Material material = state.getBlock().getMaterial();
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         
-        if (material == Material.ice || material == Material.packedIce)
-        {
-            return -0.75F;
-        }
-        else if (material == Material.craftedSnow || material == Material.snow)
-        {
-            return -0.5F;
-        }
-        else if (material == Material.fire)
+        if (material == Material.fire)
         {
             return 1.0F;
         }

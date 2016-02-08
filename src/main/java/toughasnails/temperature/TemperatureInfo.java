@@ -40,7 +40,7 @@ public class TemperatureInfo
     public int getRelativeScalePos()
     {
         if (relativeScalePos == -1)
-            relativeScalePos = TemperatureScale.getRelativeScalePos(getScalePos());
+            relativeScalePos = TemperatureScale.getRangeIndex(getScalePos(), true);
         
         return relativeScalePos;
     }

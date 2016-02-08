@@ -5,33 +5,41 @@ public class TemperatureScale
     private static int scaleTotal = generateTotalScale();
     private static int[] rangeStarts = generateRangeStarts();
     
+    /**Get the temperature range this position in the overall temperature scale is
+     * located within*/
     public static TemperatureRange getTemperatureRange(int scalePos)
     {
+        //Ensure the scale position is within the allowed values
         if (scalePos < 0 || scalePos > scaleTotal)
         {
             return null;
         }
         
-        TemperatureRange currentRange = null;
-        
-        for (int index = 0; index < TemperatureRange.values().length; index++)
+        for (TemperatureRange range : TemperatureRange.values())
         {
-           currentRange = TemperatureRange.values()[index];
-            
-            if (scalePos <= rangeStarts[currentRange.ordinal()] + currentRange.rangeSize - 1)
+            if (scalePos <= rangeStarts[range.ordinal()] + range.rangeSize - 1)
             {
-                break;
+                return range;
             }
         }
-        
-        return currentRange;
+
+        throw new RuntimeException("Could not find range for value " + scalePos + ". This should never happen!");
     }
 
-    public static int getRelativeScalePos(int scalePos)
+    /**Returns an index within a range, given a position in the overall temperature scale.
+     * When reversed, 1.0 values are when the input position is closer to 0 in the overall temperature scale*/
+    public static int getRangeIndex(int scalePos, boolean reverseEnd)
     {
         TemperatureRange temperatureRange = getTemperatureRange(scalePos);
-        
-        return (temperatureRange.rangeSize - 1) - (Math.abs(scalePos - (rangeStarts[temperatureRange.ordinal()] + temperatureRange.rangeSize)));
+
+        return Math.abs((reverseEnd ? (temperatureRange.getRangeSize() - 1) : 0) - (scalePos - rangeStarts[temperatureRange.ordinal()]));
+    }
+    
+    /**Returns on a scale of 0.0F to 1.0F the location of a temperature within the current range
+     * When reversed, 1.0 values are when the input position is closer to 0 in the overall temperature scale*/
+    public static float getRangeDelta(int scalePos, boolean reverseEnd)
+    {
+        return (float)(getRangeIndex(scalePos, reverseEnd) + 1) / (float)getTemperatureRange(scalePos).getRangeSize();
     }
     
     public static boolean isScalePosInRange(int scalePos, TemperatureRange startRange, TemperatureRange endRange)
@@ -86,11 +94,11 @@ public class TemperatureScale
     
     public static enum TemperatureRange
     {
-        ICY(16),
-        COOL(8),
+        ICY(4),
+        COOL(7),
         MILD(4),
-        WARM(8),
-        HOT(16);
+        WARM(7),
+        HOT(4);
         
         private int rangeSize;
         

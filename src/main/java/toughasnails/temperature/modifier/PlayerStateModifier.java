@@ -10,7 +10,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 public class PlayerStateModifier extends TemperatureModifier
 {
     public static final int SPRINTING_RATE_MODIFIER = -200;
-    public static final int SPRINTING_TARGET_MODIFIER = 10;
+    public static final int SPRINTING_TARGET_MODIFIER = 3;
     
     public PlayerStateModifier(TemperatureDebugger debugger)
     {

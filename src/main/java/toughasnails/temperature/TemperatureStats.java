@@ -108,22 +108,20 @@ public class TemperatureStats extends PlayerStat
     
     private void addPotionEffects(EntityPlayer player)
     {
-        int icyHalf = (TemperatureRange.ICY.getRangeSize() - 1) / 2;
-        int hotHalf = (TemperatureRange.HOT.getRangeSize() - 1) / 2;
+        TemperatureRange range = TemperatureScale.getTemperatureRange(this.temperatureLevel);
+        float multiplier = 1.0F;
         
-        if (temperatureLevel <= icyHalf && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
+        if (range == TemperatureRange.ICY && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
         {
-            float icyDelta = 1.0F - temperatureLevel * 1.0F / icyHalf;
-
+            multiplier = TemperatureScale.getRangeDelta(this.temperatureLevel, true);
             player.removePotionEffect(TANPotions.hypothermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(2400 * icyDelta), (int)(3 * icyDelta)));
+            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(2400 * multiplier), (int)(3 * multiplier)));
         }
-        else if (temperatureLevel >= TemperatureScale.getRangeStart(TemperatureRange.HOT) + hotHalf && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
+        else if (range == TemperatureRange.HOT && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
         {
-            float hotDelta = (temperatureLevel - (TemperatureScale.getRangeStart(TemperatureRange.HOT) + hotHalf) - 1) * 1.0F / hotHalf;
-            
+            multiplier = TemperatureScale.getRangeDelta(this.temperatureLevel, false);
             player.removePotionEffect(TANPotions.hyperthermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(2400 * hotDelta), (int)(3 * hotDelta)));
+            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(2400 * multiplier), (int)(3 * multiplier)));
         }
     }
     
