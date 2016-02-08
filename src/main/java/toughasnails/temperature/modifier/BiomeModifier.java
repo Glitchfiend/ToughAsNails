@@ -37,7 +37,9 @@ public class BiomeModifier extends TemperatureModifier
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         float normalizedTemp = (MathHelper.clamp_float(biome.temperature, -0.5F, 2.0F) + 0.5F) / 2.5F;
-        int newTemperatureLevel = temperature.getScalePos() + (int)Math.round(MathHelper.denormalizeClamp(normalizedTemp, -1.0F, 1.0F) * MAX_TEMP_OFFSET);
+        
+        //Denormalize, multiply by the max temp offset, add to the current temp
+        int newTemperatureLevel = temperature.getScalePos() + (int)Math.round((normalizedTemp * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
         debugger.end(newTemperatureLevel);
