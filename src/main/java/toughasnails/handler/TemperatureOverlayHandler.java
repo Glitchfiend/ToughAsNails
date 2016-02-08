@@ -153,16 +153,13 @@ public class TemperatureOverlayHandler
     private void renderColouredBall(int x, int y, TemperatureInfo temperature, int textureShift)
     {
         TemperatureRange temperatureRange = temperature.getTemperatureRange();
-        float changeDelta = temperature.getRangeDelta(false);
+        float changeDelta = temperatureRange == TemperatureRange.COOL ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
         
         if (temperatureRange != TemperatureRange.MILD)
         {
-            boolean coolBall = temperatureRange == TemperatureRange.COOL;
-            float ballDelta = coolBall ? 1.0F - changeDelta : changeDelta;
-
             GlStateManager.pushMatrix();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, ballDelta);
-            drawTexturedModalRect(x, y, 16 * ((coolBall ? 8 : 9) + textureShift), 16 * 1, 16, 16);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, changeDelta);
+            drawTexturedModalRect(x, y, 16 * ((temperatureRange == TemperatureRange.COOL ? 8 : 9) + textureShift), 16 * 1, 16, 16);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
         }
