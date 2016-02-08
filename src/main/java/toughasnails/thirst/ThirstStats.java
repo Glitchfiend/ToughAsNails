@@ -19,6 +19,8 @@ public class ThirstStats extends PlayerStat
     private int prevThirstLevel;
     private float thirstHydrationLevel;
     private float thirstExhaustionLevel;
+    
+    /**Used to time the seconds passed since thirst damage was last dealt to the player*/
     private int thirstTimer;
     
     private Vector3d movementVec;
@@ -42,8 +44,9 @@ public class ThirstStats extends PlayerStat
         {
             if (movementVec != null)
             {
-                movementVec.sub(new Vector3d(player.posX, player.posY, player.posZ));
-                int distance = (int)Math.round(movementVec.length() * 100.0F);
+                Vector3d movement = new Vector3d(player.posX, player.posY, player.posZ);
+                movement.sub(movementVec); movement.absolute();
+                int distance = (int)Math.round(movement.length() * 100.0F);
                 
                 if (distance > 0) applyMovementExhaustion(player, distance);
             }
@@ -54,6 +57,8 @@ public class ThirstStats extends PlayerStat
             
             EnumDifficulty enumdifficulty = world.getDifficulty();
 
+            //System.out.println(thirstExhaustionLevel);
+            
             if (this.thirstExhaustionLevel > 4.0F)
             {
                 this.thirstExhaustionLevel -= 4.0F;
@@ -72,6 +77,7 @@ public class ThirstStats extends PlayerStat
             {
                 ++this.thirstTimer;
 
+                //Inflict thirst damage every 4 seconds
                 if (this.thirstTimer >= 80)
                 {
                     if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
@@ -87,6 +93,7 @@ public class ThirstStats extends PlayerStat
                 this.thirstTimer = 0;
             }
             
+            //If thirst is too low, prevent the player from sprinting
             if (player.isSprinting() && thirstLevel <= 6)
             {
                 player.setSprinting(false);
