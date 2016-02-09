@@ -4,6 +4,8 @@ commands.toughasnails.settemp.success=Set player temperature to %s
 itemGroup.tabToughAsNails=Tough As Nails
 
 item.canteen.name=Canteen
+item.charcoal_filter.name=Charcoal Filter
+item.jelled_slime.name=Jelled Slime
 item.tan_icon.name=TAN Icon
 
 potion.hypothermia=Hypothermia
