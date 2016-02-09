@@ -15,7 +15,7 @@ public class PotionHyperthermia extends Potion
     
     public PotionHyperthermia(int id)
     {
-        super(id, new ResourceLocation("hyperthermia"), true, 7842303);
+        super(id, new ResourceLocation("hyperthermia"), true, 0xFFA300);
     
         this.setIconIndex(3, 0);
     }
