@@ -6,7 +6,15 @@ itemGroup.tabToughAsNails=Tough As Nails
 item.canteen.name=Canteen
 item.charcoal_filter.name=Charcoal Filter
 item.jelled_slime.name=Jelled Slime
+item.jelled_slime_helmet.name=Jelled Slime Helmet
+item.jelled_slime_chestplate.name=Jelled Slime Chestplate
+item.jelled_slime_leggings.name=Jelled Slime Leggings
+item.jelled_slime_boots.name=Jelled Slime Boots
 item.tan_icon.name=TAN Icon
+item.wool_helmet.name=Wool Hood
+item.wool_chestplate.name=Wool Jacket
+item.wool_leggings.name=Wool Pants
+item.wool_boots.name=Wool Boots
 
 potion.hypothermia=Hypothermia
 potion.hyperthermia=Hyperthermia
