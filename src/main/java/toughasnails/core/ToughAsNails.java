@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import toughasnails.command.TANCommand;
+import toughasnails.init.ModCrafting;
 import toughasnails.init.ModHandlers;
 import toughasnails.init.ModItems;
 import toughasnails.init.ModModels;
@@ -35,6 +36,8 @@ public class ToughAsNails
         ModStats.init();
         ModPotions.init();
         ModHandlers.init();
+        
+        ModCrafting.init();
     }
     
     @EventHandler
