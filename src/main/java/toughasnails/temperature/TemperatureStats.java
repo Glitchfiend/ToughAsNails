@@ -111,17 +111,20 @@ public class TemperatureStats extends PlayerStat
         TemperatureRange range = TemperatureScale.getTemperatureRange(this.temperatureLevel);
         float multiplier = 1.0F;
         
+        //The point from 0 to 1 at which potion effects begin in an extremity range
+        float extremityDelta = (3.0F / 6.0F);
+        
         //Start the hypo/hyperthermia slightly after the real ranges start
-        int hypoRangeSize = (int)(TemperatureRange.ICY.getRangeSize() * (3.0F / 6.0F));
+        int hypoRangeSize = (int)(TemperatureRange.ICY.getRangeSize() * extremityDelta);
         int hypoRangeStart = hypoRangeSize - 1;
-        int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * (3.0F / 6.0F));
+        int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * extremityDelta);
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
         if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
         {
             multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
             player.removePotionEffect(TANPotions.hypothermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
+            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
         }
         else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
         {
@@ -173,6 +176,11 @@ public class TemperatureStats extends PlayerStat
     public void setPrevTemperature(int temperature)
     {
         this.prevTemperatureLevel = temperature;
+    }
+    
+    public void setChangeTimer(int ticks)
+    {
+        this.temperatureTimer = ticks;
     }
     
     public TemperatureInfo getTemperature()
