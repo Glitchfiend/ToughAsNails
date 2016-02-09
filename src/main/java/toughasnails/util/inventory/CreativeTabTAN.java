@@ -16,6 +16,6 @@ public class CreativeTabTAN extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return TANItems.canteen;
+        return TANItems.tan_icon;
     }
 }
