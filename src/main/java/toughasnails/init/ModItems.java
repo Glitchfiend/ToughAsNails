@@ -40,7 +40,7 @@ public class ModItems
         
         //Armor
         wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5);
-        wool_armor_material.customCraftingMaterial = new ItemStack(Blocks.wool, 1).getItem();
+        wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.wool);
         
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11);
         jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
