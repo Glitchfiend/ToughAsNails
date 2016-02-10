@@ -3,10 +3,10 @@ package toughasnails.temperature.modifier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import toughasnails.api.TANBlocks;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureInfo;
@@ -82,6 +82,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         World world = player.worldObj;
         Material material = state.getBlock().getMaterial();
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
+        
+        if (state.getBlock() == TANBlocks.campfire)
+        {
+        	return 10.0F;
+        }
         
         if (material == Material.fire)
         {
