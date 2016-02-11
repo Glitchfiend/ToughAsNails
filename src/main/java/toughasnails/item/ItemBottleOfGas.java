@@ -3,21 +3,27 @@ package toughasnails.item;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.api.ITANBlock;
-import toughasnails.util.BlockStateUtils;
-
-import com.google.common.collect.ImmutableSet;
+import toughasnails.api.TANBlocks;
 
 public class ItemBottleOfGas extends Item
 {
+	private Block block;
     
     public enum BottleContents implements IStringSerializable
     {
@@ -40,6 +46,8 @@ public class ItemBottleOfGas extends Item
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setMaxStackSize(1);
+        
+        this.block = TANBlocks.gas;
     }
     
     // add all the contents types as separate items in the creative tab
@@ -76,5 +84,53 @@ public class ItemBottleOfGas extends Item
     public String getUnlocalizedName(ItemStack stack)
     {
         return  "item.bottle_of_" + this.getContentsType(stack).getName();
+    }
+    
+    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        Block block = iblockstate.getBlock();
+
+        if (block == Blocks.snow_layer && ((Integer)iblockstate.getValue(BlockSnow.LAYERS)).intValue() < 1)
+        {
+            side = EnumFacing.UP;
+        }
+        else if (!block.isReplaceable(worldIn, pos))
+        {
+            pos = pos.offset(side);
+        }
+
+        if (!playerIn.canPlayerEdit(pos, side, stack))
+        {
+            return false;
+        }
+        else if (stack.stackSize == 0)
+        {
+            return false;
+        }
+        else
+        {
+            if (worldIn.canBlockBePlaced(this.block, pos, false, side, (Entity)null, stack))
+            {
+                IBlockState iblockstate1 = this.block.onBlockPlaced(worldIn, pos, side, hitX, hitY, hitZ, this.getMetadata(stack), playerIn);
+
+                if (worldIn.setBlockState(pos, iblockstate1, 3))
+                {
+                    iblockstate1 = worldIn.getBlockState(pos);
+
+                    if (iblockstate1.getBlock() == this.block)
+                    {
+                        ItemBlock.setTileEntityNBT(worldIn, playerIn, pos, stack);
+                        iblockstate1.getBlock().onBlockPlacedBy(worldIn, pos, iblockstate1, playerIn, stack);
+                    }
+
+                    stack.setItem(Items.glass_bottle);
+                    stack.setItemDamage(0);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
