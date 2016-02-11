@@ -1,7 +1,7 @@
 package toughasnails.init;
 
-import static toughasnails.api.TANBlocks.*;
-
+import static toughasnails.api.TANBlocks.campfire;
+import static toughasnails.api.TANBlocks.gas;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
-import toughasnails.api.TANBlocks;
 import toughasnails.block.BlockTANCampfire;
+import toughasnails.block.BlockTANGas;
 import toughasnails.core.ToughAsNails;
 import toughasnails.util.BlockStateUtils;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -23,6 +23,8 @@ public class ModBlocks
     public static void init()
     {
         campfire = registerBlock( new BlockTANCampfire(), "campfire" );
+        gas = registerBlock( new BlockTANGas(), "gas" );
+        gas.setCreativeTab(null);
     }
     
     
