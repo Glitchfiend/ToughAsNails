@@ -31,8 +31,7 @@ public class ModCrafting
         
         
     	// Canteen
-    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {"SL ", "L L", "LLL", 'S', Items.string, 'L', Items.leather});
-    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" LS", "L L", "LLL", 'S', Items.string, 'L', Items.leather});
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" L ", "L L", "LLL", 'L', Items.leather});
     	
     	//Charcoal Filter
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.charcoal_filter, 1), new Object[] {"PPP", "CCC", "PPP", 'P', Items.paper, 'C', new ItemStack(Items.coal, 1, 1)});
