@@ -86,6 +86,7 @@ public class ItemBottleOfGas extends Item
         return  "item.bottle_of_" + this.getContentsType(stack).getName();
     }
     
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);

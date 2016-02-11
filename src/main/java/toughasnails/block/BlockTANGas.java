@@ -205,6 +205,7 @@ public class BlockTANGas extends Block implements ITANBlock
         }
     }
     
+    @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         switch ((GasType) state.getValue(VARIANT))
@@ -212,7 +213,11 @@ public class BlockTANGas extends Block implements ITANBlock
             // suffer wither effect if you walk on deathbloom
             case WHITEDAMP:
                 if (entityIn instanceof EntityLivingBase) {
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.poison.id, 200));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.weakness.id, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.hunger.id, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.confusion.id, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 500));
                 }
                 break;
             case STINKDAMP:

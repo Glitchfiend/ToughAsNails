@@ -7,6 +7,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.TANBlocks;
+import toughasnails.block.BlockTANCampfire;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureInfo;
@@ -85,7 +86,14 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         if (state.getBlock() == TANBlocks.campfire)
         {
-        	return 10.0F;
+        	if (state.getValue(BlockTANCampfire.BURNING) == true)
+        	{
+        		return 10.0F;
+        	}
+        	else
+        	{
+        		return 0.0F;
+        	}
         }
         
         if (material == Material.fire)

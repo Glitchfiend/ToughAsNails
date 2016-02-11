@@ -1,5 +1,36 @@
 {
     "variants": {
-        "normal": { "model": "toughasnails:campfire" }
+		"age=0,burning=true": { "model": "toughasnails:campfire" },
+		"age=1,burning=true": { "model": "toughasnails:campfire" },
+		"age=2,burning=true": { "model": "toughasnails:campfire" },
+		"age=3,burning=true": { "model": "toughasnails:campfire" },
+		"age=4,burning=true": { "model": "toughasnails:campfire" },
+		"age=5,burning=true": { "model": "toughasnails:campfire" },
+		"age=6,burning=true": { "model": "toughasnails:campfire" },
+		"age=7,burning=true": { "model": "toughasnails:campfire" },
+		"age=8,burning=true": { "model": "toughasnails:campfire" },
+		"age=9,burning=true": { "model": "toughasnails:campfire" },
+		"age=10,burning=true": { "model": "toughasnails:campfire" },
+		"age=11,burning=true": { "model": "toughasnails:campfire" },
+		"age=12,burning=true": { "model": "toughasnails:campfire" },
+		"age=13,burning=true": { "model": "toughasnails:campfire" },
+		"age=14,burning=true": { "model": "toughasnails:campfire" },
+		"age=15,burning=true": { "model": "toughasnails:campfire" },
+		"age=0,burning=false": { "model": "toughasnails:campfire" },
+		"age=1,burning=false": { "model": "toughasnails:campfire" },
+		"age=2,burning=false": { "model": "toughasnails:campfire" },
+		"age=3,burning=false": { "model": "toughasnails:campfire" },
+		"age=4,burning=false": { "model": "toughasnails:campfire" },
+		"age=5,burning=false": { "model": "toughasnails:campfire" },
+		"age=6,burning=false": { "model": "toughasnails:campfire" },
+		"age=7,burning=false": { "model": "toughasnails:campfire" },
+		"age=8,burning=false": { "model": "toughasnails:campfire" },
+		"age=9,burning=false": { "model": "toughasnails:campfire" },
+		"age=10,burning=false": { "model": "toughasnails:campfire" },
+		"age=11,burning=false": { "model": "toughasnails:campfire" },
+		"age=12,burning=false": { "model": "toughasnails:campfire" },
+		"age=13,burning=false": { "model": "toughasnails:campfire" },
+		"age=14,burning=false": { "model": "toughasnails:campfire" },
+		"age=15,burning=false": { "model": "toughasnails:campfire" }
     }
 }
