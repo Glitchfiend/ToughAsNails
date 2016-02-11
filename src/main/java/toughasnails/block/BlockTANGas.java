@@ -7,6 +7,8 @@ import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -14,6 +16,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -24,6 +27,24 @@ import toughasnails.item.ItemTANBlock;
 
 public class BlockTANGas extends Block implements ITANBlock
 {
+    // add properties
+    public static enum GasType implements IStringSerializable
+    {
+        BLACKDAMP, WHITEDAMP, FIREDAMP, STINKDAMP;
+        @Override
+        public String getName()
+        {
+            return this.name().toLowerCase();
+        }
+        @Override
+        public String toString()
+        {
+            return this.getName();
+        }
+    };
+    public static final PropertyEnum VARIANT = PropertyEnum.create("variant", GasType.class);
+    @Override
+    protected BlockState createBlockState() {return new BlockState(this, new IProperty[] { VARIANT });}
     
     // implement IBOPBlock
     @Override
@@ -31,24 +52,34 @@ public class BlockTANGas extends Block implements ITANBlock
     @Override
     public int getItemRenderColor(IBlockState state, int tintIndex) { return this.getRenderColor(state); }
     @Override
-    public IProperty[] getPresetProperties() { return new IProperty[] {}; }
+    public IProperty[] getPresetProperties() { return new IProperty[] {VARIANT}; }
     @Override
     public IProperty[] getNonRenderingProperties() { return null; }
     @Override
-    public String getStateName(IBlockState state) {return "";}
-
-    
-    public BlockTANGas() {
-        // use rock as default material
-        this(Material.air);
-    }
-    
-    public BlockTANGas(Material material)
+    public String getStateName(IBlockState state)
     {
-        super(material);
+        return ((GasType) state.getValue(VARIANT)).getName() + "_block";
+    }
+
+
+    public BlockTANGas()
+    {
+        super(Material.air);
         // set some defaults
         this.setHardness(0.0F);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+        this.setDefaultState( this.blockState.getBaseState().withProperty(VARIANT, GasType.BLACKDAMP) );
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(VARIANT, GasType.values()[meta]);
+    }
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((GasType) state.getValue(VARIANT)).ordinal();
     }
     
     @Override

@@ -7,6 +7,10 @@ tile.campfire.name=Campfire
 
 item.air_filter.name=Air Filter
 item.backpack.name=Backpack
+item.bottle_of_blackdamp.name=Bottle of Blackdamp
+item.bottle_of_whitedamp.name=Bottle of Whitedamp
+item.bottle_of_firedamp.name=Bottle of Firedamp
+item.bottle_of_stinkdamp.name=Bottle of Stinkdamp
 item.canteen.name=Canteen
 item.charcoal_filter.name=Charcoal Filter
 item.ice_cube.name=Ice Cube

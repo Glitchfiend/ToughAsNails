@@ -10,6 +10,8 @@ public class TANItems
 	
     public static Item canteen;
     
+    public static Item bottle_of_gas;
+    
     public static Item backpack;
     public static Item respirator;
     
