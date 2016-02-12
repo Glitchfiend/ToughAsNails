@@ -88,7 +88,7 @@ public class ObjectProximityModifier extends TemperatureModifier
         {
         	if (state.getValue(BlockTANCampfire.BURNING) == true)
         	{
-        		return 10.0F;
+        		return 12.0F;
         	}
         	else
         	{
