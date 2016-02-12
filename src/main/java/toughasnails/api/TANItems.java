@@ -26,6 +26,7 @@ public class TANItems
     
     public static Item jelled_slime;
     public static Item ice_cube;
+    public static Item ice_charge;
     public static Item charcoal_filter;
     public static Item air_filter;
     
