@@ -67,6 +67,8 @@ public class ModItems
         
         //Materials
         jelled_slime = registerItem(new Item(), "jelled_slime");
+        freeze_rod = registerItem(new Item(), "freeze_rod");
+        freeze_powder = registerItem(new Item(), "freeze_powder");
         ice_cube = registerItem(new Item(), "ice_cube");
         ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
