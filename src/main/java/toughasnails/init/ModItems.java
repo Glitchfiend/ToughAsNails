@@ -22,6 +22,7 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemBackpack;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
+import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemRespirator;
 import toughasnails.util.inventory.CreativeTabTAN;
 
@@ -66,7 +67,7 @@ public class ModItems
         //Materials
         jelled_slime = registerItem(new Item(), "jelled_slime");
         ice_cube = registerItem(new Item(), "ice_cube");
-        ice_charge = registerItem(new Item(), "ice_charge");
+        ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
         air_filter = registerItem(new Item(), "air_filter");
     }
