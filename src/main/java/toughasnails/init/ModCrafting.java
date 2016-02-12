@@ -1,8 +1,14 @@
 package toughasnails.init;
 
+import java.util.Iterator;
+import java.util.List;
+
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
@@ -15,6 +21,7 @@ public class ModCrafting
         addOreRegistration();
         addCraftingRecipies();
         addSmeltingRecipes();
+        removeCraftingRecipes();
     }
     
     private static void addCraftingRecipies()
@@ -30,7 +37,7 @@ public class ModCrafting
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.jelled_slime_chestplate), new Object [] {"# #", "###", "###", '#', TANItems.jelled_slime});
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.jelled_slime_leggings), new Object [] {"###", "# #", "# #", '#', TANItems.jelled_slime});
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.jelled_slime_boots), new Object [] {"# #", "# #", '#', TANItems.jelled_slime});
-
+        
         // Campfire
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.campfire), new Object [] {" L ", "LLL", "CCC", 'C', Blocks.cobblestone, 'L', "logWood"}));
         
@@ -64,5 +71,21 @@ public class ModCrafting
     private static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
+    }
+    
+    private static void removeCraftingRecipes()
+    {
+    	List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+    	
+    	Iterator<IRecipe> remover = recipes.iterator();
+    	
+    	while (remover.hasNext())
+    	{
+    		ItemStack itemstack = remover.next().getRecipeOutput();
+    		if (itemstack != null && Block.getBlockFromItem(itemstack.getItem()) == Blocks.torch)
+    		{
+    			remover.remove();
+    		}
+    	}
     }
 }

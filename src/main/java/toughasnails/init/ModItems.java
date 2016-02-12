@@ -50,6 +50,7 @@ public class ModItems
         
         //Main Items
         canteen = registerItem(new ItemCanteen(), "canteen");
+        thermometer = registerItem(new Item(), "thermometer");
         bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
         
         //Wearables
