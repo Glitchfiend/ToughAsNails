@@ -76,7 +76,7 @@ public class ModCrafting
     	//Registration in Ore Dictionary
     }
     
-    private static void removeCraftingRecipes()
+    /*private static void removeCraftingRecipes()
     {
     	List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
     	
@@ -90,5 +90,5 @@ public class ModCrafting
     			remover.remove();
     		}
     	}
-    }
+    }*/
 }
