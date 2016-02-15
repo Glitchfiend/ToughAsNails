@@ -21,7 +21,7 @@ public class ModCrafting
         addOreRegistration();
         addCraftingRecipies();
         addSmeltingRecipes();
-        removeCraftingRecipes();
+        //removeCraftingRecipes();
     }
     
     private static void addCraftingRecipies()
