@@ -24,7 +24,8 @@ public class ExtendedStatHandler
             
             for (String identifier : PlayerStatRegistry.getStatMap().keySet())
             {
-                player.registerExtendedProperties(identifier, PlayerStatRegistry.createStat(identifier));
+                if (player.getExtendedProperties(identifier) == null)
+                    player.registerExtendedProperties(identifier, PlayerStatRegistry.createStat(identifier));
             }
         }
     }
