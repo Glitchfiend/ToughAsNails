@@ -2,6 +2,8 @@ package toughasnails.handler;
 
 import java.util.UUID;
 
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -12,16 +14,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import toughasnails.thirst.ThirstStats;
 
 public class ThirstStatHandler
@@ -145,6 +144,36 @@ public class ThirstStatHandler
                 
                 thirstStats.addExhaustion(0.025F);
             }
+        }
+    }
+    
+    @SubscribeEvent
+    public void onPlayerRightClickWater(PlayerInteractEvent event)
+    {
+    	World world = event.world;
+        BlockPos pos = event.pos;
+        EntityPlayer player = event.entityPlayer;
+
+        if (!world.isRemote && !player.capabilities.isCreativeMode)
+        {
+        	if (event.action == event.action.RIGHT_CLICK_BLOCK)
+        	{
+                IBlockState state = world.getBlockState(pos);
+                
+	        	if (state.getBlock().getMaterial() == Material.water && ((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
+	        	{
+			        if (event.entity instanceof EntityPlayer)
+			        {
+			        	if (player.isSneaking())
+			        	{
+		                    ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+				            
+		                    thirstStats.addStats(1, 0.5F);
+		                    world.playSoundAtEntity(player, "random.drink", 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+			        	}
+			        }
+                }
+        	}
         }
     }
 }
