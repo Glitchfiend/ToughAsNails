@@ -236,7 +236,10 @@ public class EntityTANArrow extends Entity implements IProjectile
             	{
             		if (!this.worldObj.isRemote)
             		{
-            			this.worldObj.setBlockState(blockpos.up(), Blocks.fire.getDefaultState());
+            			if (worldObj.isAirBlock(blockpos.up()))
+            			{
+            				this.worldObj.setBlockState(blockpos.up(), Blocks.fire.getDefaultState());
+            			}
             		}
             	}
             	if (arrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
@@ -459,14 +462,37 @@ public class EntityTANArrow extends Entity implements IProjectile
                     }
                 }
             }
+            
+            ItemTANArrow.ArrowType arrowType = this.getArrowType();
+            if (arrowType == ItemTANArrow.ArrowType.FIRE_ARROW)
+            {
+            	for (int k = 0; k < 8; ++k)
+                {
+            		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+                }
+            }
+            if (arrowType == ItemTANArrow.ArrowType.LIGHTNING_ARROW)
+            {
+            	for (int k = 0; k < 8; ++k)
+                {
+            		this.worldObj.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+                }
+            }
+            if (arrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
+            {
+            	for (int k = 0; k < 8; ++k)
+                {
+            		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+                }
+            }
 
-            if (this.getIsCritical())
+            /*if (this.getIsCritical())
             {
                 for (int k = 0; k < 4; ++k)
                 {
                     this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * (double)k / 4.0D, this.posY + this.motionY * (double)k / 4.0D, this.posZ + this.motionZ * (double)k / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
                 }
-            }
+            }*/
 
             this.posX += this.motionX;
             this.posY += this.motionY;

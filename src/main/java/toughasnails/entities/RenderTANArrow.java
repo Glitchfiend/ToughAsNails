@@ -28,7 +28,7 @@ public class RenderTANArrow extends Render<EntityTANArrow>
         this.textures = new ResourceLocation[n];
         for (int i = 0; i < n; ++i)
         {
-            this.textures[i] = new ResourceLocation("toughasnails:textures/entity/" + ItemTANArrow.ArrowType.values()[i].getName() + ".png");
+            this.textures[i] = new ResourceLocation("toughasnails:textures/entity/projectile/" + ItemTANArrow.ArrowType.values()[i].getName() + ".png");
         }
     }
 

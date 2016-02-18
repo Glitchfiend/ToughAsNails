@@ -105,7 +105,7 @@ public class ArrowEventHandler
 			
 			            itemstack.damageItem(1, player);
 			            world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (world.rand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-			
+			            
 			            if (flag)
 			            {
 			                entitytanarrow.canBePickedUp = 2;
@@ -118,6 +118,15 @@ public class ArrowEventHandler
 			            //player.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
 			
 			            world.spawnEntityInWorld(entitytanarrow);
+			            
+			            if (bestAvailableArrowType == ItemTANArrow.ArrowType.FIRE_ARROW)
+			            {
+			            	world.playSoundAtEntity(entitytanarrow, "fire.ignite", 1.0F, world.rand.nextFloat() * 0.4F + 0.8F);
+			            }
+			            if (bestAvailableArrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
+			            {
+			            	world.playSoundAtEntity(entitytanarrow, "game.tnt.primed", 1.0F, 1.0F);
+			            }
 		            
 			            event.setCanceled(true);
 		            }
