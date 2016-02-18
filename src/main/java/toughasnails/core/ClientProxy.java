@@ -1,38 +1,34 @@
 package toughasnails.core;
 
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.AbstractResourcePack;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import toughasnails.api.ITANBlock;
+import toughasnails.entities.EntityTANArrow;
+import toughasnails.entities.RenderTANArrow;
 
 public class ClientProxy extends CommonProxy
 {
+    @Override
+    public void registerRenderers()
+    {
+        //Entity rendering and other stuff will go here in future
+        registerEntityRenderer(EntityTANArrow.class, RenderTANArrow.class);
+    }
+	
     @Override
     public void registerItemVariantModel(Item item, String name, int metadata) 
     {

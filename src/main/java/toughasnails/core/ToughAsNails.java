@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import toughasnails.command.TANCommand;
 import toughasnails.init.ModBlocks;
 import toughasnails.init.ModCrafting;
+import toughasnails.init.ModEntities;
 import toughasnails.init.ModHandlers;
 import toughasnails.init.ModItems;
 import toughasnails.init.ModModels;
@@ -37,6 +38,7 @@ public class ToughAsNails
     public void preInit(FMLPreInitializationEvent event)
     {
     	ModBlocks.init();
+    	ModEntities.init();
         ModItems.init();
         ModModels.init();
         ModStats.init();

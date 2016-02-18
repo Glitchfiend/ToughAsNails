@@ -2,6 +2,7 @@ package toughasnails.init;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import toughasnails.handler.ArrowEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.ModelBakeHandler;
 import toughasnails.handler.PacketHandler;
@@ -36,5 +37,10 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
         FMLCommonHandler.instance().bus().register(thirstStatHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
+        
+        ArrowEventHandler arrowEventHandler = new ArrowEventHandler();
+        
+        FMLCommonHandler.instance().bus().register(arrowEventHandler);
+        MinecraftForge.EVENT_BUS.register(arrowEventHandler);
     }
 }
