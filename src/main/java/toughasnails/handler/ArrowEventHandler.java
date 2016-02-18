@@ -88,6 +88,20 @@ public class ArrowEventHandler
 			            {
 			                entitytanarrow.setIsCritical(true);
 			            }
+			            
+			            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
+
+			            if (j > 0)
+			            {
+			                entitytanarrow.setDamage(entitytanarrow.getDamage() + (double)j * 0.5D + 0.5D);
+			            }
+
+			            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
+
+			            if (k > 0)
+			            {
+			                entitytanarrow.setKnockbackStrength(k);
+			            }
 			
 			            itemstack.damageItem(1, player);
 			            world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (world.rand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
