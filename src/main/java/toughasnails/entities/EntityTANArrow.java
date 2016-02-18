@@ -75,7 +75,7 @@ public class EntityTANArrow extends EntityArrow
     	{
     		if (!this.worldObj.isRemote)
             {	
-                float f = 2.0F;
+                float f = 1.0F;
                 this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
             }
     	}
