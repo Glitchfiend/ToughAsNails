@@ -589,7 +589,7 @@ public class EntityTANArrow extends Entity implements IProjectile
         {
             boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && entityIn.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(TANItems.arrow, this.getArrowType().ordinal())))
+            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(TANItems.arrow, 1, this.getArrowType().ordinal())))
             {
                 flag = false;
             }

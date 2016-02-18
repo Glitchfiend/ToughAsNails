@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.TANItems;
+import toughasnails.item.ItemTANArrow;
 
 public class ModCrafting
 {
@@ -43,6 +44,12 @@ public class ModCrafting
         
     	// Canteen
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" L ", "L L", "LLL", 'L', Items.leather});
+    	
+    	//Arrows
+    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.FIRE_ARROW.ordinal()), new Object[] {Items.blaze_powder, Items.arrow});
+    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.ICE_ARROW.ordinal()), new Object[] {TANItems.freeze_powder, Items.arrow});
+    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.LIGHTNING_ARROW.ordinal()), new Object[] {Items.nether_star, Items.arrow});
+    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.BOMB_ARROW.ordinal()), new Object[] {Items.gunpowder, Items.arrow});
     	
     	//Freeze Powder
     	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.freeze_powder, 2), new Object[] {TANItems.freeze_rod});
