@@ -15,7 +15,7 @@ public class ItemTANArrow extends Item
     
     public static enum ArrowType implements IStringSerializable
     {
-        FIRE_ARROW, ICE_ARROW, BOMB_ARROW;
+        FIRE_ARROW, ICE_ARROW, LIGHTNING_ARROW, BOMB_ARROW;
         @Override
         public String getName()
         {

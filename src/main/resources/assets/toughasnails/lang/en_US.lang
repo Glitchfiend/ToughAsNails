@@ -25,6 +25,7 @@ item.jelled_slime_helmet.name=Jelled Slime Helmet
 item.jelled_slime_chestplate.name=Jelled Slime Chestplate
 item.jelled_slime_leggings.name=Jelled Slime Leggings
 item.jelled_slime_boots.name=Jelled Slime Boots
+item.lightning_arrow.name=Lightning Arrow
 item.respirator.name=Respirator
 item.tan_icon.name=TAN Icon
 item.thermometer.name=Thermometer
@@ -32,6 +33,8 @@ item.wool_helmet.name=Wool Hood
 item.wool_chestplate.name=Wool Jacket
 item.wool_leggings.name=Wool Pants
 item.wool_boots.name=Wool Boots
+
+wntity.ToughAsNails.arrow.name=Arrow
 
 potion.hypothermia=Hypothermia
 potion.hyperthermia=Hyperthermia
