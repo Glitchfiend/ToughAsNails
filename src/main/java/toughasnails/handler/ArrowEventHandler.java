@@ -47,22 +47,19 @@ public class ArrowEventHandler
 	        	if (!world.isRemote)
 	        	{
 	        		int bestArrowSlot = -1;
-		            ItemTANArrow.ArrowType bestAvailableArrowType = ItemTANArrow.ArrowType.FIRE_ARROW;
+		            ItemTANArrow.ArrowType bestAvailableArrowType = null;
 		            for (int k = 0; k < player.inventory.mainInventory.length; ++k)
 		            {
 		                ItemStack current = player.inventory.mainInventory[k];
-		                if (current != null && current.getItem()==TANItems.arrow)
+		                if (current != null && current.getItem() == TANItems.arrow)
 		                {
-		                    ItemTANArrow.ArrowType currentArrowType = ItemTANArrow.ArrowType.fromMeta(current.getMetadata());
-		                    if (currentArrowType.ordinal() >= bestAvailableArrowType.ordinal())
-		                    {
-		                        bestAvailableArrowType = currentArrowType;
-		                        bestArrowSlot = k;
-		                    }
+	                		bestAvailableArrowType = ItemTANArrow.ArrowType.fromMeta(current.getMetadata());
+	                        bestArrowSlot = k;
+	                        break;
 		                }
 		            }
 	        	
-		            if (bestArrowSlot > -1)
+		            if (bestArrowSlot > -1 && bestAvailableArrowType != null)
 		            {
 			            int i = item.getMaxItemUseDuration(itemstack) - duration;
 			            net.minecraftforge.event.entity.player.ArrowLooseEvent looseevent = new net.minecraftforge.event.entity.player.ArrowLooseEvent(player, itemstack, i);
