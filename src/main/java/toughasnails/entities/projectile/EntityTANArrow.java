@@ -269,7 +269,7 @@ public class EntityTANArrow extends Entity implements IProjectile
             	{
             		if (!this.worldObj.isRemote)
                     {	
-                        float f = 1.5F;
+                        float f = 2.0F;
                         this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
                     }
             	}
@@ -415,7 +415,7 @@ public class EntityTANArrow extends Entity implements IProjectile
                 	{
                 		if (!this.worldObj.isRemote)
                         {	
-                            float f = 1.5F;
+                            float f = 2.0F;
                             this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
                             this.setDead();
                         }
