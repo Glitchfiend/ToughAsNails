@@ -25,7 +25,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANItems;
@@ -316,6 +320,28 @@ public class EntityTANArrow extends Entity implements IProjectile
             {
                 movingobjectposition = new MovingObjectPosition(entity);
             }
+            
+            if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK)
+            {
+            	ItemTANArrow.ArrowType arrowType = this.getArrowType();
+            	if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
+            	{
+	                BlockPos pos = movingobjectposition.getBlockPos();
+	                IBlockState state = this.worldObj.getBlockState(pos);
+	                Fluid fluid = FluidRegistry.lookupFluidForBlock(state.getBlock());
+	
+	                if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
+	                {
+	                	this.worldObj.setBlockState(pos, Blocks.ice.getDefaultState());
+	                    this.setDead();
+	                }
+	                if (fluid != null && fluid == FluidRegistry.LAVA) //Temporary, until a registry is created
+	                {
+	                	this.worldObj.setBlockState(pos, Blocks.obsidian.getDefaultState());
+	                    this.setDead();
+	                }
+            	}
+            }
 
             if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer)
             {
@@ -468,21 +494,21 @@ public class EntityTANArrow extends Entity implements IProjectile
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
                 }
             }
             if (arrowType == ItemTANArrow.ArrowType.LIGHTNING_ARROW)
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
                 }
             }
             if (arrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
                 }
             }
 
