@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.TANItems;
+import toughasnails.item.ItemArrowTopper;
 import toughasnails.item.ItemTANArrow;
 
 public class ModCrafting
@@ -29,7 +30,7 @@ public class ModCrafting
     {
     	// Register crafting recipes
     	
-    	//Armor
+    	// Armor
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_helmet), new Object [] {"###", "# #", '#', Blocks.wool});
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_chestplate), new Object [] {"# #", "###", "###", '#', Blocks.wool});
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_leggings), new Object [] {"###", "# #", "# #", '#', Blocks.wool});
@@ -45,13 +46,19 @@ public class ModCrafting
     	// Canteen
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" L ", "L L", "LLL", 'L', Items.leather});
     	
-    	//Arrows
-    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.FIRE_ARROW.ordinal()), new Object[] {Items.blaze_powder, Items.arrow});
-    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.ICE_ARROW.ordinal()), new Object[] {TANItems.freeze_powder, Items.arrow});
-    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.LIGHTNING_ARROW.ordinal()), new Object[] {Items.nether_star, Items.arrow});
-    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.BOMB_ARROW.ordinal()), new Object[] {Items.gunpowder, Items.arrow});
+    	// Arrows
+    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANItems.arrow, 4, ItemTANArrow.ArrowType.FIRE_ARROW.ordinal()), new Object [] {"T", "S", "F", 'T', new ItemStack(TANItems.arrow_topper, 1, ItemArrowTopper.TopperType.FIRE_ARROW_TOPPER.ordinal()), 'S', "stickWood", 'F', Items.feather}));
+    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANItems.arrow, 4, ItemTANArrow.ArrowType.ICE_ARROW.ordinal()), new Object [] {"T", "S", "F", 'T', new ItemStack(TANItems.arrow_topper, 1, ItemArrowTopper.TopperType.ICE_ARROW_TOPPER.ordinal()), 'S', "stickWood", 'F', Items.feather}));
+    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANItems.arrow, 4, ItemTANArrow.ArrowType.LIGHTNING_ARROW.ordinal()), new Object [] {"T", "S", "F", 'T', new ItemStack(TANItems.arrow_topper, 1, ItemArrowTopper.TopperType.LIGHTNING_ARROW_TOPPER.ordinal()), 'S', "stickWood", 'F', Items.feather}));
+    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANItems.arrow, 4, ItemTANArrow.ArrowType.BOMB_ARROW.ordinal()), new Object [] {"T", "S", "F", 'T', new ItemStack(TANItems.arrow_topper, 1, ItemArrowTopper.TopperType.BOMB_ARROW_TOPPER.ordinal()), 'S', "stickWood", 'F', Items.feather}));
     	
-    	//Freeze Powder
+    	// Arrow Toppers
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.arrow_topper, 2, ItemArrowTopper.TopperType.FIRE_ARROW_TOPPER.ordinal()), new Object [] {" B ", "BCB", " B ", 'B', Items.blaze_powder, 'C', Items.coal});
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.arrow_topper, 2, ItemArrowTopper.TopperType.ICE_ARROW_TOPPER.ordinal()), new Object [] {" F ", "FIF", " F ", 'F', TANItems.freeze_powder, 'I', TANItems.ice_cube});
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.arrow_topper, 2, ItemArrowTopper.TopperType.LIGHTNING_ARROW_TOPPER.ordinal()), new Object [] {" P ", "PNP", " P ", 'P', Items.prismarine_crystals, 'N', Items.nether_star});
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.arrow_topper, 2, ItemArrowTopper.TopperType.BOMB_ARROW_TOPPER.ordinal()), new Object [] {" C ", "CGC", " C ", 'C', Items.clay_ball, 'G', Items.gunpowder});
+    	
+    	// Freeze Powder
     	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.freeze_powder, 2), new Object[] {TANItems.freeze_rod});
     	
     	// Ice Charge
@@ -60,13 +67,13 @@ public class ModCrafting
     	//Charcoal Filter
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.charcoal_filter, 1), new Object[] {"PPP", "CCC", "PPP", 'P', Items.paper, 'C', new ItemStack(Items.coal, 1, 1)});
     	
-    	//Air Filter
+    	// Air Filter
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.air_filter, 1), new Object[] {"LLL", "LCL", "LLL", 'L', Items.leather, 'C', TANItems.charcoal_filter});
     	
-    	//Backpack
+    	// Backpack
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.backpack, 1), new Object[] {"LLL", "SLS", "LLL", 'L', Items.leather, 'S', Items.string});
     	
-    	//Respirator
+    	// Respirator
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.string, 'I', Items.iron_ingot, 'A', TANItems.air_filter});
     }
     

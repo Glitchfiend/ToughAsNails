@@ -17,6 +17,7 @@ public class TANItems
     public static Item respirator;
     
     public static Item arrow;
+    public static Item arrow_topper;
     
     public static Item wool_helmet;
     public static Item wool_chestplate;
