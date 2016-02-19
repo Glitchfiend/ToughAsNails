@@ -35,6 +35,8 @@ public class TANItems
     public static Item charcoal_filter;
     public static Item air_filter;
     
+    public static Item spawn_egg;
+    
     public static ArmorMaterial wool_armor_material;
     public static ArmorMaterial jelled_slime_armor_material;
     public static ArmorMaterial backpack_material;

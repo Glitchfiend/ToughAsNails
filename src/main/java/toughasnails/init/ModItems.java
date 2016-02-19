@@ -1,31 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.TANItems.air_filter;
-import static toughasnails.api.TANItems.arrow;
-import static toughasnails.api.TANItems.backpack;
-import static toughasnails.api.TANItems.backpack_material;
-import static toughasnails.api.TANItems.bottle_of_gas;
-import static toughasnails.api.TANItems.canteen;
-import static toughasnails.api.TANItems.charcoal_filter;
-import static toughasnails.api.TANItems.freeze_powder;
-import static toughasnails.api.TANItems.freeze_rod;
-import static toughasnails.api.TANItems.ice_charge;
-import static toughasnails.api.TANItems.ice_cube;
-import static toughasnails.api.TANItems.jelled_slime;
-import static toughasnails.api.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.TANItems.jelled_slime_boots;
-import static toughasnails.api.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.TANItems.jelled_slime_helmet;
-import static toughasnails.api.TANItems.jelled_slime_leggings;
-import static toughasnails.api.TANItems.respirator;
-import static toughasnails.api.TANItems.respirator_material;
-import static toughasnails.api.TANItems.tan_icon;
-import static toughasnails.api.TANItems.thermometer;
-import static toughasnails.api.TANItems.wool_armor_material;
-import static toughasnails.api.TANItems.wool_boots;
-import static toughasnails.api.TANItems.wool_chestplate;
-import static toughasnails.api.TANItems.wool_helmet;
-import static toughasnails.api.TANItems.wool_leggings;
+import static toughasnails.api.TANItems.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +25,7 @@ import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemRespirator;
 import toughasnails.item.ItemTANArrow;
+import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.util.inventory.CreativeTabTAN;
 
 public class ModItems
@@ -100,6 +76,8 @@ public class ModItems
         ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
         air_filter = registerItem(new Item(), "air_filter");
+        
+        spawn_egg = registerItem(new ItemTANSpawnEgg(), "spawn_egg");
     }
     
     public static Item registerItem(Item item, String name)
