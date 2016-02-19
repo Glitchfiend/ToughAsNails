@@ -19,6 +19,7 @@ import toughasnails.init.ModItems;
 import toughasnails.init.ModModels;
 import toughasnails.init.ModPotions;
 import toughasnails.init.ModStats;
+import toughasnails.init.ModVanillaCompat;
 
 @Mod(modid = ToughAsNails.MOD_ID, name = ToughAsNails.MOD_NAME)
 public class ToughAsNails
@@ -43,6 +44,7 @@ public class ToughAsNails
         ModModels.init();
         ModStats.init();
         ModPotions.init();
+        ModVanillaCompat.init();
         ModHandlers.init();
         
         ModCrafting.init();

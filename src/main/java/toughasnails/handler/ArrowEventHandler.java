@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.TANItems;
-import toughasnails.entities.EntityTANArrow;
+import toughasnails.entities.projectile.EntityTANArrow;
 import toughasnails.item.ItemTANArrow;
 
 public class ArrowEventHandler
@@ -103,11 +103,7 @@ public class ArrowEventHandler
 			            itemstack.damageItem(1, player);
 			            world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (world.rand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 			            
-			            if (flag)
-			            {
-			                entitytanarrow.canBePickedUp = 2;
-			            }
-			            else
+			            if (!flag)
 			            {
 			            	player.inventory.decrStackSize(bestArrowSlot, 1);
 			            }

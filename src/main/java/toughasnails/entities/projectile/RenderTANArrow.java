@@ -1,4 +1,4 @@
-package toughasnails.entities;
+package toughasnails.entities.projectile;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

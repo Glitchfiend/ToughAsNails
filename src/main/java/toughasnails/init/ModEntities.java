@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 import toughasnails.core.ToughAsNails;
-import toughasnails.entities.EntityTANArrow;
+import toughasnails.entities.projectile.EntityTANArrow;
 
 import com.google.common.collect.Maps;
 

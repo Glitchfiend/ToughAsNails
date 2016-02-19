@@ -17,8 +17,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import toughasnails.api.ITANBlock;
-import toughasnails.entities.EntityTANArrow;
-import toughasnails.entities.RenderTANArrow;
+import toughasnails.entities.projectile.EntityTANArrow;
+import toughasnails.entities.projectile.RenderTANArrow;
 
 public class ClientProxy extends CommonProxy
 {

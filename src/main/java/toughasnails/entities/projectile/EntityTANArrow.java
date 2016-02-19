@@ -1,4 +1,4 @@
-package toughasnails.entities;
+package toughasnails.entities.projectile;
 
 import java.util.List;
 
@@ -494,21 +494,21 @@ public class EntityTANArrow extends Entity implements IProjectile
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, 0.0D, 0.0D, 0.0D, new int[0]);
                 }
             }
             if (arrowType == ItemTANArrow.ArrowType.LIGHTNING_ARROW)
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, 0.0D, 0.0D, 0.0D, new int[0]);
                 }
             }
             if (arrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
             {
             	for (int k = 0; k < 8; ++k)
                 {
-            		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, -this.motionX, -this.motionY, -this.motionZ, new int[0]);
+            		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, 0.0D, 0.0D, 0.0D, new int[0]);
                 }
             }
 
