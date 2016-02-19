@@ -23,17 +23,18 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANItems;
+import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemTANArrow;
+import toughasnails.particle.TANParticleTypes;
 
 public class EntityTANArrow extends Entity implements IProjectile
 {
@@ -231,6 +232,36 @@ public class EntityTANArrow extends Entity implements IProjectile
             			if (worldObj.isAirBlock(blockpos.up()))
             			{
             				this.worldObj.setBlockState(blockpos.up(), Blocks.fire.getDefaultState());
+            			}
+            			if (worldObj.getBlockState(blockpos) == Blocks.ice.getDefaultState())
+            			{
+            				this.worldObj.setBlockState(blockpos, Blocks.water.getDefaultState());
+            			}
+            			if (worldObj.getBlockState(blockpos) == Blocks.snow_layer.getDefaultState())
+            			{
+            				this.worldObj.setBlockState(blockpos, Blocks.air.getDefaultState());
+            			}
+            			if (worldObj.getBlockState(blockpos) == Blocks.snow.getDefaultState())
+            			{
+            				this.worldObj.setBlockState(blockpos, Blocks.air.getDefaultState());
+            			}
+            			if (worldObj.getBlockState(blockpos) == Blocks.packed_ice.getDefaultState())
+            			{
+            				this.worldObj.setBlockState(blockpos, Blocks.ice.getDefaultState());
+            			}
+            		}
+            	}
+            	if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
+            	{
+            		if (!this.worldObj.isRemote)
+            		{
+            			if (worldObj.getBlockState(blockpos) == Blocks.ice.getDefaultState())
+            			{
+            				this.worldObj.setBlockState(blockpos, Blocks.packed_ice.getDefaultState());
+            			}
+            			if (worldObj.isAirBlock(blockpos.up()))
+            			{
+            				this.worldObj.setBlockState(blockpos.up(), Blocks.snow_layer.getDefaultState());
             			}
             		}
             	}
@@ -482,6 +513,13 @@ public class EntityTANArrow extends Entity implements IProjectile
             	for (int k = 0; k < 8; ++k)
                 {
             		this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, 0.0D, 0.0D, 0.0D, new int[0]);
+                }
+            }
+            if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
+            {
+            	for (int k = 0; k < 8; ++k)
+                {
+            		ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, this.posX + this.motionX * (double)k / 8.0D, this.posY + this.motionY * (double)k / 8.0D, this.posZ + this.motionZ * (double)k / 8.0D, 0.0D, 0.0D, 0.0D, new int[0]);
                 }
             }
             if (arrowType == ItemTANArrow.ArrowType.LIGHTNING_ARROW)

@@ -3,6 +3,8 @@ package toughasnails.core;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -12,6 +14,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -19,9 +22,13 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import toughasnails.api.ITANBlock;
 import toughasnails.entities.projectile.EntityTANArrow;
 import toughasnails.entities.projectile.RenderTANArrow;
+import toughasnails.particle.EntitySnowflakeFX;
+import toughasnails.particle.TANParticleTypes;
 
 public class ClientProxy extends CommonProxy
 {
+	public static ResourceLocation particleTexturesLocation = new ResourceLocation("toughasnails:textures/particles/particles.png");
+	
     @Override
     public void registerRenderers()
     {
@@ -70,6 +77,23 @@ public class ClientProxy extends CommonProxy
                 return fluidLocation;
             }
         });
+    }
+    
+    @Override
+    public void spawnParticle(TANParticleTypes type, double x, double y, double z, Object... info)
+    {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        EntityFX entityFx = null;
+        switch (type)
+        {
+        case SNOWFLAKE:
+            entityFx = new EntitySnowflakeFX(minecraft.theWorld, x, y, z, MathHelper.getRandomDoubleInRange(minecraft.theWorld.rand, -0.03, 0.03), -0.02D, MathHelper.getRandomDoubleInRange(minecraft.theWorld.rand, -0.03, 0.03));
+            break;
+        default:
+            break;
+        }
+
+        if (entityFx != null) {minecraft.effectRenderer.addEffect(entityFx);}
     }
     
     // 
