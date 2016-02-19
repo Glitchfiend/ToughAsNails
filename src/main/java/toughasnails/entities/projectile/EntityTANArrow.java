@@ -209,18 +209,6 @@ public class EntityTANArrow extends Entity implements IProjectile
             {
                 this.inGround = true;
             }
-            
-            ItemTANArrow.ArrowType arrowType = this.getArrowType();
-        	if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
-        	{
-        		if (!this.worldObj.isRemote)
-        		{
-        			if (block.getMaterial() == Material.water)
-        			{
-        				this.worldObj.setBlockState(blockpos, Blocks.ice.getDefaultState());
-        			}
-        		}
-        	}
         }
 
         if (this.arrowShake > 0)
@@ -321,12 +309,14 @@ public class EntityTANArrow extends Entity implements IProjectile
                 movingobjectposition = new MovingObjectPosition(entity);
             }
             
-            if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK)
-            {
-            	ItemTANArrow.ArrowType arrowType = this.getArrowType();
-            	if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
-            	{
-	                BlockPos pos = movingobjectposition.getBlockPos();
+            //Ice Arrow Effect
+        	ItemTANArrow.ArrowType arrowType = this.getArrowType();
+        	if (arrowType == ItemTANArrow.ArrowType.ICE_ARROW)
+        	{
+	            MovingObjectPosition watercollisionpos = this.worldObj.rayTraceBlocks(vec31, vec3, true, false, false);
+	            if (watercollisionpos != null && watercollisionpos.typeOfHit == MovingObjectType.BLOCK)
+	            {
+	                BlockPos pos = watercollisionpos.getBlockPos();
 	                IBlockState state = this.worldObj.getBlockState(pos);
 	                Fluid fluid = FluidRegistry.lookupFluidForBlock(state.getBlock());
 	
@@ -380,10 +370,8 @@ public class EntityTANArrow extends Entity implements IProjectile
                     {
                         movingobjectposition.entityHit.setFire(5);
                     }
-                    
-                    //Arrow Effects
-                    ItemTANArrow.ArrowType arrowType = this.getArrowType();
 
+                    //Arrow Effects
                     if (arrowType == ItemTANArrow.ArrowType.FIRE_ARROW)
                     {
                         if (movingobjectposition.entityHit instanceof EntityLivingBase)
@@ -489,7 +477,6 @@ public class EntityTANArrow extends Entity implements IProjectile
                 }
             }
             
-            ItemTANArrow.ArrowType arrowType = this.getArrowType();
             if (arrowType == ItemTANArrow.ArrowType.FIRE_ARROW)
             {
             	for (int k = 0; k < 8; ++k)
