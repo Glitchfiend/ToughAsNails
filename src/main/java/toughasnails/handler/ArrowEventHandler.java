@@ -114,7 +114,7 @@ public class ArrowEventHandler
 			            
 			            if (bestAvailableArrowType == ItemTANArrow.ArrowType.FIRE_ARROW)
 			            {
-			            	world.playSoundAtEntity(entitytanarrow, "fire.ignite", 1.0F, world.rand.nextFloat() * 0.4F + 0.8F);
+			            	world.playSoundAtEntity(entitytanarrow, "item.fireCharge.use", 1.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
 			            }
 			            if (bestAvailableArrowType == ItemTANArrow.ArrowType.BOMB_ARROW)
 			            {
