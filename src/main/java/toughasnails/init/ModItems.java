@@ -1,8 +1,6 @@
 package toughasnails.init;
 
 import static toughasnails.api.TANItems.air_filter;
-import static toughasnails.api.TANItems.arrow;
-import static toughasnails.api.TANItems.arrow_topper;
 import static toughasnails.api.TANItems.backpack;
 import static toughasnails.api.TANItems.backpack_material;
 import static toughasnails.api.TANItems.bottle_of_gas;
@@ -46,13 +44,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.ItemArrowTopper;
 import toughasnails.item.ItemBackpack;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemRespirator;
-import toughasnails.item.ItemTANArrow;
 import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.util.inventory.CreativeTabTAN;
 
@@ -82,8 +78,6 @@ public class ModItems
         canteen = registerItem(new ItemCanteen(), "canteen");
         thermometer = registerItem(new Item(), "thermometer");
         bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
-        arrow = registerItem(new ItemTANArrow(), "arrow");
-        arrow_topper = registerItem(new ItemArrowTopper(), "arrow_topper");
         
         //Wearables
         backpack = registerItem(new ItemBackpack(backpack_material, 0), "backpack");

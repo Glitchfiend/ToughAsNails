@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 import toughasnails.core.ToughAsNails;
 import toughasnails.entities.EntityFreeze;
 import toughasnails.entities.projectile.EntityIceball;
-import toughasnails.entities.projectile.EntityTANArrow;
 
 import com.google.common.collect.Maps;
 
@@ -27,7 +26,6 @@ public class ModEntities
     public static void init()
     {
         // projectiles
-        registerTANEntity(EntityTANArrow.class, "arrow", 80, 3, true);
         registerTANEntity(EntityIceball.class, "iceball", 80, 3, true);
         
         // mobs

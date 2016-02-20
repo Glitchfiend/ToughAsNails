@@ -1,24 +1,15 @@
 package toughasnails.init;
 
-import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import toughasnails.api.TANItems;
-import toughasnails.entities.projectile.DispenserBehaviorTANArrow;
-import toughasnails.item.ItemTANArrow;
 
 public class ModVanillaCompat
 {
     public static void init()
     {
-    	registerDispenserBehaviors();
     	addDungeonLoot();
-    }
-    
-    private static void registerDispenserBehaviors()
-    {
-    	BlockDispenser.dispenseBehaviorRegistry.putObject(TANItems.arrow, new DispenserBehaviorTANArrow());
     }
     
 	private static void addDungeonLoot()
@@ -46,10 +37,5 @@ public class ModVanillaCompat
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_helmet), 1, 1, 5));
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_chestplate), 1, 1, 5));
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_leggings), 1, 1, 5));
-		
-		dungeon.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.FIRE_ARROW.ordinal()), 1, 4, 5));
-		dungeon.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.ICE_ARROW.ordinal()), 1, 4, 7));
-		dungeon.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.BOMB_ARROW.ordinal()), 1, 4, 3));
-		dungeon.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.arrow, 1, ItemTANArrow.ArrowType.LIGHTNING_ARROW.ordinal()), 1, 4, 1));
 	}
 }

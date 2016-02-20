@@ -23,9 +23,7 @@ import toughasnails.api.ITANBlock;
 import toughasnails.entities.EntityFreeze;
 import toughasnails.entities.RenderFreeze;
 import toughasnails.entities.projectile.EntityIceball;
-import toughasnails.entities.projectile.EntityTANArrow;
 import toughasnails.entities.projectile.RenderIceball;
-import toughasnails.entities.projectile.RenderTANArrow;
 import toughasnails.particle.EntitySnowflakeFX;
 import toughasnails.particle.TANParticleTypes;
 
@@ -37,7 +35,6 @@ public class ClientProxy extends CommonProxy
     public void registerRenderers()
     {
         //Entity rendering and other stuff will go here in future
-        registerEntityRenderer(EntityTANArrow.class, RenderTANArrow.class);
         registerEntityRenderer(EntityIceball.class, RenderIceball.class);
         registerEntityRenderer(EntityFreeze.class, RenderFreeze.class);
     }
