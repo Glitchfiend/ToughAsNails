@@ -1,6 +1,6 @@
-<p align="center"><img src="http://i.imgur.com/h3ZeY6V.png"></p>
+<p align="center"><img src="http://i.imgur.com/iiNg5tb.png"></p>
 
-**Bullseye** is a **Minecraft mod** that adds **new arrows,** including **fire arrows, bomb arrows, and more!**
+**Tough As Nails** is a **Minecraft mod** that adds **survival features** to increase **difficulty and realism**, including **thirst, body temperature, and more!**
 
 -----------------
 
