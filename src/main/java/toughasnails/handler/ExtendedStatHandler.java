@@ -27,8 +27,11 @@ public class ExtendedStatHandler
             
             for (String identifier : PlayerStatRegistry.getCapabilityMap().keySet())
             {
+                ResourceLocation loc = new ResourceLocation(ToughAsNails.MOD_ID, identifier);
+                
                 //Each player should have their own instance for each stat, as associated values may vary
-                event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, identifier), PlayerStatRegistry.createCapabilityProvider(identifier));
+                if (!event.getCapabilities().containsKey(loc))
+                    event.addCapability(loc, PlayerStatRegistry.createCapabilityProvider(identifier));
             }
         }
     }

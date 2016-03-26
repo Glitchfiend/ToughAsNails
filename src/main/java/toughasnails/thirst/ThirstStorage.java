@@ -34,7 +34,7 @@ public class ThirstStorage implements IStorage<IThirst>
     @Override
     public void readNBT(Capability<IThirst> capability, IThirst instance, EnumFacing side, NBTBase nbt) 
     {
-        if (nbt instanceof NBTTagCompound) throw new IllegalArgumentException("Thirst must be read from an NBTTagCompound!");
+        if (!(nbt instanceof NBTTagCompound)) throw new IllegalArgumentException("Thirst must be read from an NBTTagCompound!");
         
         NBTTagCompound compound = (NBTTagCompound)nbt;
         

@@ -22,6 +22,8 @@ public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdat
     
     public MessageUpdateStat(Capability<?> capability, NBTTagCompound data)
     {
+        if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+        
         this.identifier = capability.getName();
         this.data = data;
     }

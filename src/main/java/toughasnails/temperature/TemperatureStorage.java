@@ -31,7 +31,7 @@ public class TemperatureStorage implements IStorage<ITemperature>
     @Override
     public void readNBT(Capability<ITemperature> capability, ITemperature instance, EnumFacing side, NBTBase nbt) 
     {
-        if (nbt instanceof NBTTagCompound) throw new IllegalArgumentException("Temperature must be read from an NBTTagCompound!");
+        if (!(nbt instanceof NBTTagCompound)) throw new IllegalArgumentException("Temperature must be read from an NBTTagCompound!");
         
         NBTTagCompound compound = (NBTTagCompound)nbt;
         
