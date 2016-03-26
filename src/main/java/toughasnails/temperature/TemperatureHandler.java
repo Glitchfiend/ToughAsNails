@@ -4,13 +4,21 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import toughasnails.api.PlayerStat;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.stat.StatHandlerBase;
+import toughasnails.api.stat.capability.CapabilityProvider;
+import toughasnails.api.stat.capability.ITemperature;
+import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
+import toughasnails.network.message.MessageUpdateStat;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
@@ -18,7 +26,7 @@ import toughasnails.temperature.modifier.TemperatureModifier;
 import toughasnails.temperature.modifier.TimeModifier;
 import toughasnails.temperature.modifier.WeatherModifier;
 
-public class TemperatureStats extends PlayerStat
+public class TemperatureHandler extends StatHandlerBase implements ITemperature
 {
     public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
     public static final int BASE_TEMPERATURE_CHANGE_TICKS = 1200;
@@ -35,13 +43,7 @@ public class TemperatureStats extends PlayerStat
     
     public final TemperatureDebugger debugger = new TemperatureDebugger();
     
-    public TemperatureStats(String identifier)
-    {
-        super(identifier);
-    }
-    
-    @Override
-    public void init(EntityPlayer player, World world)
+    public TemperatureHandler()
     {
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
@@ -79,19 +81,19 @@ public class TemperatureStats extends PlayerStat
                 debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
                 debugger.end(TemperatureScale.getScaleTotal() / 2);
                 
-                TemperatureInfo targetTemperature = biomeModifier.modifyTarget(world, player, new TemperatureInfo(TEMPERATURE_SCALE_MIDPOINT));
+                Temperature targetTemperature = biomeModifier.modifyTarget(world, player, new Temperature(TEMPERATURE_SCALE_MIDPOINT));
                 targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
 
-                debugger.targetTemperature = targetTemperature.getScalePos();
+                debugger.targetTemperature = targetTemperature.getRawValue();
 
-                targetTemperature = new TemperatureInfo(MathHelper.clamp_int(targetTemperature.getScalePos(), 0, TemperatureScale.getScaleTotal()));
+                targetTemperature = new Temperature(MathHelper.clamp_int(targetTemperature.getRawValue(), 0, TemperatureScale.getScaleTotal()));
 
                 if (incrementTemperature)
                 {
-                    this.addTemperature((int)Math.signum(targetTemperature.getScalePos() - this.temperatureLevel));
+                    this.addTemperature(new Temperature((int)Math.signum(targetTemperature.getRawValue() - this.temperatureLevel)));
                     this.temperatureTimer = 0;
                 }
             }
@@ -120,35 +122,18 @@ public class TemperatureStats extends PlayerStat
         int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * extremityDelta);
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
-        if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia.id)))
+        if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
         {
             multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
-            player.removePotionEffect(TANPotions.hypothermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
+            player.removePotionEffect(TANPotions.hypothermia);
+            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
         }
-        else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia.id)))
+        else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
         {
             multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
-            player.removePotionEffect(TANPotions.hyperthermia.id);
-            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia.id, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
+            player.removePotionEffect(TANPotions.hyperthermia);
+            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
         }
-    }
-    
-    @Override
-    public void saveNBTData(NBTTagCompound compound)
-    {
-        compound.setInteger("temperatureLevel", this.temperatureLevel);
-        compound.setInteger("temperatureTimer", this.temperatureTimer);
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound compound)
-    {
-       if (compound.hasKey("temperatureLevel"))
-       {
-           this.temperatureLevel = compound.getInteger("temperatureLevel");
-           this.temperatureTimer = compound.getInteger("temperatureTimer");
-       }
     }
     
     @Override
@@ -163,28 +148,40 @@ public class TemperatureStats extends PlayerStat
         this.prevTemperatureLevel = this.temperatureLevel;
     }
     
-    public void addTemperature(int temperature)
+    @Override
+    public IMessage createUpdateMessage()
     {
-        this.temperatureLevel = Math.max(Math.min(TemperatureScale.getScaleTotal(), this.temperatureLevel + temperature), 0);
+        NBTTagCompound data = (NBTTagCompound)TANCapabilities.TEMPERATURE.getStorage().writeNBT(TANCapabilities.TEMPERATURE, this, null);
+        return new MessageUpdateStat(TANCapabilities.TEMPERATURE, data);
     }
     
-    public void setTemperature(int temperature)
-    {
-        this.temperatureLevel = temperature;
-    }
-    
-    public void setPrevTemperature(int temperature)
-    {
-        this.prevTemperatureLevel = temperature;
-    }
-    
-    public void setChangeTimer(int ticks)
+    @Override
+    public void setChangeTime(int ticks)
     {
         this.temperatureTimer = ticks;
     }
     
-    public TemperatureInfo getTemperature()
+    @Override
+    public int getChangeTime()
     {
-        return new TemperatureInfo(this.temperatureLevel);
+        return this.temperatureTimer;
+    }
+    
+    @Override
+    public void setTemperature(Temperature temperature)
+    {
+        this.temperatureLevel = temperature.getRawValue();
+    }
+    
+    @Override
+    public void addTemperature(Temperature difference)
+    {
+        this.temperatureLevel = Math.max(Math.min(TemperatureScale.getScaleTotal(), this.temperatureLevel + difference.getRawValue()), 0);
+    }
+    
+    @Override
+    public Temperature getTemperature()
+    {
+        return new Temperature(this.temperatureLevel);
     }
 }

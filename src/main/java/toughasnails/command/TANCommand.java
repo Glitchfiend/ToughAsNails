@@ -2,12 +2,6 @@ package toughasnails.command;
 
 import java.util.List;
 
-import toughasnails.api.TANPotions;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureInfo;
-import toughasnails.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureStats;
-
 import com.google.common.collect.Lists;
 
 import net.minecraft.command.CommandBase;
@@ -15,8 +9,15 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.TANPotions;
+import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.temperature.TemperatureDebugger;
+import toughasnails.temperature.TemperatureHandler;
 
 public class TANCommand extends CommandBase
 {
@@ -45,7 +46,7 @@ public class TANCommand extends CommandBase
     }
     
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 1)
         {
@@ -64,7 +65,7 @@ public class TANCommand extends CommandBase
     private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
     {
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         TemperatureDebugger debugger = temperatureStats.debugger;
         
         debugger.setGuiVisible(!debugger.isGuiVisible(), player);
@@ -73,24 +74,24 @@ public class TANCommand extends CommandBase
     private void setTemperature(ICommandSender sender, String[] args) throws CommandException
     {
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
-        TemperatureInfo playerTemp = temperatureStats.getTemperature();
+        Temperature playerTemp = temperatureStats.getTemperature();
 
         //Remove any existing potion effects for hypo/hyperthermia
-        player.removePotionEffect(TANPotions.hypothermia.id);
-        player.removePotionEffect(TANPotions.hyperthermia.id);
+        player.removePotionEffect(TANPotions.hypothermia);
+        player.removePotionEffect(TANPotions.hyperthermia);
 
         //Reset the change timer to 0
-        temperatureStats.setChangeTimer(0);
+        temperatureStats.setChangeTime(0);
         //Set to the new temperature
-        temperatureStats.setTemperature(newTemp);
+        temperatureStats.setTemperature(new Temperature(newTemp));
 
-        sender.addChatMessage(new ChatComponentTranslation("commands.toughasnails.settemp.success", newTemp));
+        sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
     }
     
     @Override
-    public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

@@ -2,9 +2,9 @@ package toughasnails.particle;
 
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import toughasnails.core.ClientProxy;
@@ -24,12 +24,12 @@ public class EntitySnowflakeFX extends EntityFX
         this.particleTextureIndexX = 7;
         this.particleTextureIndexY = 0;
         
-        this.motionX *= 0.10000000149011612D;
-        this.motionY *= 0.10000000149011612D;
-        this.motionZ *= 0.10000000149011612D;
-        this.motionX += xSpeedIn;
-        this.motionY += ySpeedIn;
-        this.motionZ += zSpeedIn;
+        this.xSpeed *= 0.10000000149011612D;
+        this.ySpeed *= 0.10000000149011612D;
+        this.zSpeed *= 0.10000000149011612D;
+        this.xSpeed += xSpeedIn;
+        this.ySpeed += ySpeedIn;
+        this.zSpeed += zSpeedIn;
         this.particleScale *= 0.75F;
         this.particleScale *= par14;
         this.particleMaxAge = (int)((8.0D / (Math.random() * 0.8D + 0.2D)) * 8);
@@ -37,7 +37,6 @@ public class EntitySnowflakeFX extends EntityFX
         this.particleAge = world.rand.nextInt(2);
         this.particleAlpha = 1.0F;
         this.particleGravity = 0.02F;
-        this.noClip = false;
     }
     
     @Override
@@ -47,7 +46,7 @@ public class EntitySnowflakeFX extends EntityFX
     }
     
     @Override
-    public void renderParticle(WorldRenderer renderer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
+    public void renderParticle(VertexBuffer renderer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
     {
         
         // EffectRenderer will by default bind the vanilla particles texture, override with our own
@@ -77,26 +76,26 @@ public class EntitySnowflakeFX extends EntityFX
 
         if (particleAge++ >= particleMaxAge)
         {
-            this.setDead();
+            this.setExpired();
         }
 
         this.particleTextureIndexX = 7 - particleAge * 8 / particleMaxAge;
-        this.moveEntity(motionX, motionY, motionZ);
+        this.moveEntity(xSpeed, ySpeed, zSpeed);
 
         if (posY == prevPosY)
         {
-            motionX *= 1.1D;
-            motionZ *= 1.1D;
+            xSpeed *= 1.1D;
+            zSpeed *= 1.1D;
         }
 
-        motionX *= 0.9599999785423279D;
-        motionY *= 0.9599999785423279D;
-        motionZ *= 0.9599999785423279D;
+        xSpeed *= 0.9599999785423279D;
+        ySpeed *= 0.9599999785423279D;
+        zSpeed *= 0.9599999785423279D;
 
-        if (onGround)
+        if (isCollided)
         {
-            motionX *= 0.699999988079071D;
-            motionZ *= 0.699999988079071D;
+            xSpeed *= 0.699999988079071D;
+            zSpeed *= 0.699999988079071D;
         }
     }
     

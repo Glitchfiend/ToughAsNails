@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
-import toughasnails.api.TANItems;
+import toughasnails.api.item.TANItems;
 
 public class ModCrafting
 {

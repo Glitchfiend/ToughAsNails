@@ -11,9 +11,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -21,7 +25,8 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import toughasnails.thirst.ThirstStats;
+import toughasnails.api.TANCapabilities;
+import toughasnails.thirst.ThirstHandler;
 
 public class ThirstStatHandler
 {
@@ -34,14 +39,14 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerJump(LivingJumpEvent event)
     {
-        World world = event.entity.worldObj;
+        World world = event.getEntity().worldObj;
 
         if (!world.isRemote)
         {
-            if (event.entity instanceof EntityPlayer)
+            if (event.getEntity() instanceof EntityPlayer)
             {
-                EntityPlayer player = (EntityPlayer)event.entity;
-                ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+                EntityPlayer player = (EntityPlayer)event.getEntity();
+                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
 
                 if (player.isSprinting())
                 {
@@ -58,17 +63,17 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerHurt(LivingHurtEvent event)
     {
-        World world = event.entity.worldObj;
+        World world = event.getEntity().worldObj;
 
-        if (!world.isRemote && event.ammount != 0.0F)
+        if (!world.isRemote && event.getAmount() != 0.0F)
         {
-            if (event.entity instanceof EntityPlayer)
+            if (event.getEntity() instanceof EntityPlayer)
             {
-                EntityPlayer player = (EntityPlayer)event.entity;
-                ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+                EntityPlayer player = (EntityPlayer)event.getEntity();
+                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
                 
                 //Uses hunger values for now, may change in the future
-                thirstStats.addExhaustion(event.source.getHungerDamage());
+                thirstStats.addExhaustion(event.getSource().getHungerDamage());
             }
         }
     }
@@ -76,32 +81,32 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerAttackEntity(AttackEntityEvent event)
     {
-        World world = event.entity.worldObj;
-        Entity target = event.target;
+        World world = event.getEntity().worldObj;
+        Entity target = event.getTarget();
         
         if (!world.isRemote)
         {
-            EntityPlayer player = event.entityPlayer;
+            EntityPlayer player = event.getEntityPlayer();
             
             if (target.canAttackWithItem())
             {
                 if (!target.hitByEntity(player))
                 {
-                    float attackDamage = (float)player.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+                    float attackDamage = (float)player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
                     float weaponAttackDamage = 0.0F;
                     
                     if (target instanceof EntityLivingBase)
                     {
-                        weaponAttackDamage = EnchantmentHelper.func_152377_a(player.getHeldItem(), ((EntityLivingBase)target).getCreatureAttribute());
+                        weaponAttackDamage = EnchantmentHelper.getModifierForCreature(player.getHeldItem(EnumHand.MAIN_HAND), ((EntityLivingBase)target).getCreatureAttribute());
                     }
                     else
                     {
-                        weaponAttackDamage = EnchantmentHelper.func_152377_a(player.getHeldItem(), EnumCreatureAttribute.UNDEFINED);
+                        weaponAttackDamage = EnchantmentHelper.getModifierForCreature(player.getHeldItem(EnumHand.MAIN_HAND), EnumCreatureAttribute.UNDEFINED);
                     }
                     
                     if (attackDamage > 0.0F || weaponAttackDamage > 0.0F)
                     {
-                        boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null && target instanceof EntityLivingBase;
+                        boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.blindness) && player.getRidingEntity() == null && target instanceof EntityLivingBase;
 
                         if (flag && attackDamage > 0.0F)
                         {
@@ -115,7 +120,7 @@ public class ThirstStatHandler
                         if (canAttack)
                         {
                             //The only part of this method that is new - the rest is recreating the surrounding circumstances in attackTargetEntityWithCurrentItem
-                            ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+                            ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
                             
                             thirstStats.addExhaustion(0.3F);
                         }
@@ -128,10 +133,10 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event)
     {
-        World world = event.world;
+        World world = event.getWorld();
         EntityPlayer player = event.getPlayer();
-        BlockPos pos = event.pos;
-        IBlockState state = event.state;
+        BlockPos pos = event.getPos();
+        IBlockState state = event.getState();
         
         if (!world.isRemote && !player.capabilities.isCreativeMode)
         {
@@ -140,7 +145,7 @@ public class ThirstStatHandler
             if (canHarvestBlock)
             {
                 //The only part of this method that is new - the rest is recreating the surrounding circumstances in func_180237_b
-                ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
                 
                 thirstStats.addExhaustion(0.025F);
             }
@@ -150,26 +155,26 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerRightClickWater(PlayerInteractEvent event)
     {
-    	World world = event.world;
-        BlockPos pos = event.pos;
-        EntityPlayer player = event.entityPlayer;
+    	World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        EntityPlayer player = event.getEntityPlayer();
 
         if (!world.isRemote && !player.capabilities.isCreativeMode)
         {
-        	if (event.action == event.action.RIGHT_CLICK_BLOCK)
+        	if (event.getAction() == event.getAction().RIGHT_CLICK_BLOCK)
         	{
                 IBlockState state = world.getBlockState(pos);
                 
-	        	if (state.getBlock().getMaterial() == Material.water && ((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
+	        	if (state.getMaterial() == Material.water && ((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
 	        	{
-			        if (event.entity instanceof EntityPlayer)
+			        if (event.getEntity() instanceof EntityPlayer)
 			        {
 			        	if (player.isSneaking())
 			        	{
-		                    ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
+			                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
 				            
 		                    thirstStats.addStats(1, 0.5F);
-		                    world.playSoundAtEntity(player, "random.drink", 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+		                    world.playSound(player, player.getPosition(), SoundEvents.entity_generic_drink, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
 			        	}
 			        }
                 }

@@ -1,14 +1,12 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureInfo;
-import toughasnails.temperature.TemperatureScale;
-import toughasnails.util.BiomeUtils;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.util.BiomeUtils;
 
 public class BiomeModifier extends TemperatureModifier
 {
@@ -23,7 +21,7 @@ public class BiomeModifier extends TemperatureModifier
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
-        float humidity = biome.rainfall;
+        float humidity = biome.getRainfall();
         float humidityMultiplier = 2.0F * Math.abs((humidity % 1.0F) - 0.5F);
         int newChangeRate = changeRate - (int)((10 * humidityMultiplier) * 20);
         
@@ -34,16 +32,16 @@ public class BiomeModifier extends TemperatureModifier
     }
 
     @Override
-    public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
+    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         
         //Denormalize, multiply by the max temp offset, add to the current temp
-        int newTemperatureLevel = temperature.getScalePos() + (int)Math.round((BiomeUtils.getBiomeTempNorm(biome) * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
+        int newTemperatureLevel = temperature.getRawValue() + (int)Math.round((BiomeUtils.getBiomeTempNorm(biome) * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
         
-        debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getScalePos());
+        debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getRawValue());
         debugger.end(newTemperatureLevel);
         
-        return new TemperatureInfo(newTemperatureLevel);
+        return new Temperature(newTemperatureLevel);
     }
 }

@@ -1,19 +1,22 @@
 package toughasnails.thirst;
 
 import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import toughasnails.api.PlayerStat;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.stat.StatHandlerBase;
+import toughasnails.api.stat.capability.CapabilityProvider;
+import toughasnails.api.stat.capability.IThirst;
+import toughasnails.network.message.MessageUpdateStat;
 
-public class ThirstStats extends PlayerStat
+public class ThirstHandler extends StatHandlerBase implements IThirst
 {
     private int thirstLevel;
     private int prevThirstLevel;
@@ -24,14 +27,8 @@ public class ThirstStats extends PlayerStat
     private int thirstTimer;
     
     private Vector3d movementVec;
-    
-    public ThirstStats(String identifier)
-    {
-        super(identifier);
-    }
 
-    @Override
-    public void init(EntityPlayer player, World world)
+    public ThirstHandler()
     {
         this.thirstLevel = 20;
         this.thirstHydrationLevel = 5.0F;
@@ -123,27 +120,6 @@ public class ThirstStats extends PlayerStat
             }
         }
     }
-    
-    @Override
-    public void saveNBTData(NBTTagCompound compound)
-    {
-        compound.setInteger("thirstLevel", this.thirstLevel);
-        compound.setInteger("thirstTimer", this.thirstTimer);
-        compound.setFloat("thirstHydrationLevel", this.thirstHydrationLevel);
-        compound.setFloat("thirstExhaustionLevel", this.thirstExhaustionLevel);
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound compound)
-    { 
-        if (compound.hasKey("thirstLevel"))
-        {
-            this.thirstLevel = compound.getInteger("thirstLevel");
-            this.thirstHydrationLevel = compound.getFloat("thirstHydrationLevel");
-            this.thirstExhaustionLevel = compound.getFloat("thirstExhaustionLevel");
-            this.thirstTimer = compound.getInteger("thirstTimer");
-        }
-    }
 
     @Override
     public boolean shouldUpdateClient()
@@ -157,6 +133,61 @@ public class ThirstStats extends PlayerStat
         this.prevThirstLevel = this.thirstLevel;
     }
     
+    @Override
+    public IMessage createUpdateMessage()
+    {
+        NBTTagCompound data = (NBTTagCompound)TANCapabilities.THIRST.getStorage().writeNBT(TANCapabilities.THIRST, this, null);
+        return new MessageUpdateStat(TANCapabilities.THIRST, data);
+    }
+    
+    @Override
+    public void setThirst(int thirst)
+    {
+        this.thirstLevel = thirst;
+    }
+    
+    @Override
+    public void setHydration(float hydration)
+    {
+        this.thirstHydrationLevel = hydration;
+    }
+    
+    @Override
+    public void setExhaustion(float exhaustion)
+    {
+        this.thirstExhaustionLevel = exhaustion;
+    }
+    
+    @Override
+    public int getThirst()
+    {
+        return this.thirstLevel;
+    }
+    
+    @Override
+    public float getHydration()
+    {
+        return this.thirstHydrationLevel;
+    }
+    
+    @Override
+    public float getExhaustion()
+    {
+        return this.thirstExhaustionLevel;
+    }
+
+    @Override
+    public void setChangeTime(int ticks)
+    {
+        this.thirstTimer = ticks;
+    }
+    
+    @Override
+    public int getChangeTime()
+    {
+        return this.thirstTimer;
+    }
+    
     public void addStats(int thirst, float hydration)
     {
         this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
@@ -166,16 +197,6 @@ public class ThirstStats extends PlayerStat
     public void addExhaustion(float amount)
     {
         this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
-    }
-    
-    public int getThirstLevel()
-    {
-        return this.thirstLevel;
-    }
-    
-    public float getThirstHydrationLevel()
-    {
-        return this.thirstHydrationLevel;
     }
     
     public boolean isThirsty()

@@ -1,8 +1,8 @@
 package toughasnails.util.inventory;
 
-import toughasnails.api.TANItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import toughasnails.api.item.TANItems;
 
 public class CreativeTabTAN extends CreativeTabs
 {

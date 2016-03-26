@@ -1,48 +1,51 @@
 package toughasnails.init;
 
-import static toughasnails.api.TANItems.air_filter;
-import static toughasnails.api.TANItems.backpack;
-import static toughasnails.api.TANItems.backpack_material;
-import static toughasnails.api.TANItems.bottle_of_gas;
-import static toughasnails.api.TANItems.canteen;
-import static toughasnails.api.TANItems.charcoal_filter;
-import static toughasnails.api.TANItems.freeze_powder;
-import static toughasnails.api.TANItems.freeze_rod;
-import static toughasnails.api.TANItems.ice_charge;
-import static toughasnails.api.TANItems.ice_cube;
-import static toughasnails.api.TANItems.jelled_slime;
-import static toughasnails.api.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.TANItems.jelled_slime_boots;
-import static toughasnails.api.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.TANItems.jelled_slime_helmet;
-import static toughasnails.api.TANItems.jelled_slime_leggings;
-import static toughasnails.api.TANItems.respirator;
-import static toughasnails.api.TANItems.respirator_material;
-import static toughasnails.api.TANItems.spawn_egg;
-import static toughasnails.api.TANItems.tan_icon;
-import static toughasnails.api.TANItems.thermometer;
-import static toughasnails.api.TANItems.wool_armor_material;
-import static toughasnails.api.TANItems.wool_boots;
-import static toughasnails.api.TANItems.wool_chestplate;
-import static toughasnails.api.TANItems.wool_helmet;
-import static toughasnails.api.TANItems.wool_leggings;
+import static toughasnails.api.item.TANItems.air_filter;
+import static toughasnails.api.item.TANItems.backpack;
+import static toughasnails.api.item.TANItems.backpack_material;
+import static toughasnails.api.item.TANItems.bottle_of_gas;
+import static toughasnails.api.item.TANItems.canteen;
+import static toughasnails.api.item.TANItems.charcoal_filter;
+import static toughasnails.api.item.TANItems.freeze_powder;
+import static toughasnails.api.item.TANItems.freeze_rod;
+import static toughasnails.api.item.TANItems.ice_charge;
+import static toughasnails.api.item.TANItems.ice_cube;
+import static toughasnails.api.item.TANItems.jelled_slime;
+import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
+import static toughasnails.api.item.TANItems.jelled_slime_boots;
+import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
+import static toughasnails.api.item.TANItems.jelled_slime_helmet;
+import static toughasnails.api.item.TANItems.jelled_slime_leggings;
+import static toughasnails.api.item.TANItems.respirator;
+import static toughasnails.api.item.TANItems.respirator_material;
+import static toughasnails.api.item.TANItems.spawn_egg;
+import static toughasnails.api.item.TANItems.tan_icon;
+import static toughasnails.api.item.TANItems.thermometer;
+import static toughasnails.api.item.TANItems.wool_armor_material;
+import static toughasnails.api.item.TANItems.wool_boots;
+import static toughasnails.api.item.TANItems.wool_chestplate;
+import static toughasnails.api.item.TANItems.wool_helmet;
+import static toughasnails.api.item.TANItems.wool_leggings;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import toughasnails.api.TANItems;
+import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemBackpack;
 import toughasnails.item.ItemBottleOfGas;
@@ -67,12 +70,12 @@ public class ModItems
         tan_icon.setCreativeTab(null);
         
         //Armor Materials
-        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5);
+        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.item_armor_equip_generic);
         wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.wool);
-        jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11);
+        jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.item_armor_equip_generic);
         jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
-        backpack_material = EnumHelper.addArmorMaterial("BACKPACK", "toughasnails:backpack", -1, new int[]{0,0,0,0}, 0);
-        respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0);
+        backpack_material = EnumHelper.addArmorMaterial("BACKPACK", "toughasnails:backpack", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
+        respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
         
         //Main Items
         canteen = registerItem(new ItemCanteen(), "canteen");
@@ -82,14 +85,14 @@ public class ModItems
         //Wearables
         backpack = registerItem(new ItemBackpack(backpack_material, 0), "backpack");
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator");
-        wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, 0), "wool_helmet");
-        wool_chestplate = registerItem(new ItemArmor(wool_armor_material, 0, 1), "wool_chestplate");
-        wool_leggings = registerItem(new ItemArmor(wool_armor_material, 0, 2), "wool_leggings");
-        wool_boots = registerItem(new ItemArmor(wool_armor_material, 0, 3), "wool_boots");
-        jelled_slime_helmet = registerItem(new ItemArmor(jelled_slime_armor_material, 0, 0), "jelled_slime_helmet");
-        jelled_slime_chestplate = registerItem(new ItemArmor(jelled_slime_armor_material, 0, 1), "jelled_slime_chestplate");
-        jelled_slime_leggings = registerItem(new ItemArmor(jelled_slime_armor_material, 0, 2), "jelled_slime_leggings");
-        jelled_slime_boots = registerItem(new ItemArmor(jelled_slime_armor_material, 0, 3), "jelled_slime_boots");
+        wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");
+        wool_chestplate = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.CHEST), "wool_chestplate");
+        wool_leggings = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.LEGS), "wool_leggings");
+        wool_boots = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.FEET), "wool_boots");
+        jelled_slime_helmet = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.HEAD), "jelled_slime_helmet");
+        jelled_slime_chestplate = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.CHEST), "jelled_slime_chestplate");
+        jelled_slime_leggings = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.LEGS), "jelled_slime_leggings");
+        jelled_slime_boots = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.FEET), "jelled_slime_boots");
         
         //Materials
         jelled_slime = registerItem(new Item(), "jelled_slime");
@@ -130,7 +133,7 @@ public class ModItems
                     String subItemName = item.getUnlocalizedName(subItem);
                     subItemName =  subItemName.substring(subItemName.indexOf(".") + 1); // remove 'item.' from the front
 
-                    ModelBakery.addVariantName(item, ToughAsNails.MOD_ID + ":" + subItemName);
+                    ModelBakery.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
                     ModelLoader.setCustomModelResourceLocation(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
                 }
             }

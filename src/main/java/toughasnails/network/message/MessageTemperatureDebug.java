@@ -1,11 +1,10 @@
 package toughasnails.network.message;
 
-import io.netty.buffer.ByteBuf;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.network.PacketBuffer;
@@ -13,10 +12,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import toughasnails.api.TANCapabilities;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureDebugger.ModifierType;
-import toughasnails.temperature.TemperatureStats;
+import toughasnails.temperature.TemperatureHandler;
 
 public class MessageTemperatureDebug implements IMessage, IMessageHandler<MessageTemperatureDebug, IMessage>
 {
@@ -95,7 +95,7 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
 
             if (player != null)
             {
-                TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+                TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
                 TemperatureDebugger debugger = temperatureStats.debugger;
                 
                 debugger.temperatureTimer = message.temperatureTimer;

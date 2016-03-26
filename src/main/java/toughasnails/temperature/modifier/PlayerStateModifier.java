@@ -1,10 +1,10 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureInfo;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class PlayerStateModifier extends TemperatureModifier
@@ -40,9 +40,9 @@ public class PlayerStateModifier extends TemperatureModifier
     }
 
     @Override
-    public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
+    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        int temperatureLevel = temperature.getScalePos();
+        int temperatureLevel = temperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
         
@@ -71,7 +71,7 @@ public class PlayerStateModifier extends TemperatureModifier
         
         debugger.end(newTemperatureLevel);
         
-        return new TemperatureInfo(newTemperatureLevel);
+        return new Temperature(newTemperatureLevel);
     }
 
 }

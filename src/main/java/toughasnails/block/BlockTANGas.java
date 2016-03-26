@@ -6,21 +6,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.EntityExplodeFX;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -49,13 +49,11 @@ public class BlockTANGas extends Block implements ITANBlock
     };
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", GasType.class);
     @Override
-    protected BlockState createBlockState() {return new BlockState(this, new IProperty[] { VARIANT });}
+    protected BlockStateContainer createBlockState() {return new BlockStateContainer(this, new IProperty[] { VARIANT });}
     
     // implement IBOPBlock
     @Override
     public Class<? extends ItemBlock> getItemClass() { return ItemTANBlock.class; }
-    @Override
-    public int getItemRenderColor(IBlockState state, int tintIndex) { return this.getRenderColor(state); }
     @Override
     public IProperty[] getPresetProperties() { return new IProperty[] {VARIANT}; }
     @Override
@@ -72,7 +70,6 @@ public class BlockTANGas extends Block implements ITANBlock
         super(Material.air);
         // set some defaults
         this.setHardness(0.0F);
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
         this.setDefaultState( this.blockState.getBaseState().withProperty(VARIANT, GasType.BLACKDAMP) );
     }
     
@@ -89,9 +86,10 @@ public class BlockTANGas extends Block implements ITANBlock
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand)
+    {
         // randomly throw up some particles so it looks like the flesh is bubbling
-        super.randomDisplayTick(worldIn, pos, state, rand);
+        super.randomDisplayTick(state, worldIn, pos, rand);
         
         switch ((GasType) state.getValue(VARIANT))
         {
@@ -122,19 +120,20 @@ public class BlockTANGas extends Block implements ITANBlock
     }
     
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return -1;
+        return EnumBlockRenderType.INVISIBLE;
     }
     
+    // no collision box - you can walk straight through them
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
     {
-        return null;
+        return NULL_AABB;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
@@ -151,7 +150,7 @@ public class BlockTANGas extends Block implements ITANBlock
     }
 
     @Override
-    public boolean isReplaceable(World worldIn, BlockPos pos)
+    public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
     {
         return true;
     }
@@ -213,11 +212,11 @@ public class BlockTANGas extends Block implements ITANBlock
             // suffer wither effect if you walk on deathbloom
             case WHITEDAMP:
                 if (entityIn instanceof EntityLivingBase) {
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.weakness.id, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.hunger.id, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.confusion.id, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.weakness, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.hunger, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.confusion, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.digSlowdown, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.moveSlowdown, 500));
                 }
                 break;
             case STINKDAMP:

@@ -2,8 +2,7 @@ package toughasnails.init;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
-import toughasnails.api.TANItems;
+import toughasnails.api.item.TANItems;
 
 public class ModVanillaCompat
 {
@@ -14,7 +13,8 @@ public class ModVanillaCompat
     
 	private static void addDungeonLoot()
 	{
-		ChestGenHooks desertTemple = ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST);
+	    //Requires loot hooks which haven't yet been added
+		/*TODO: 1.9 ChestGenHooks desertTemple = ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST);
 		ChestGenHooks dungeon = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
 		ChestGenHooks jungleTemple = ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST);
 		ChestGenHooks mineshaft = ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR);
@@ -36,6 +36,6 @@ public class ModVanillaCompat
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_boots), 1, 1, 5));
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_helmet), 1, 1, 5));
 		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_chestplate), 1, 1, 5));
-		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_leggings), 1, 1, 5));
+		village.addItem(new WeightedRandomChestContent(new ItemStack(TANItems.wool_leggings), 1, 1, 5));*/
 	}
 }

@@ -3,14 +3,14 @@ package toughasnails.temperature.modifier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.TANBlocks;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureInfo;
 
 public class ObjectProximityModifier extends TemperatureModifier
 {
@@ -49,9 +49,9 @@ public class ObjectProximityModifier extends TemperatureModifier
     }
 
     @Override
-    public TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature)
+    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        int temperatureLevel = temperature.getScalePos();
+        int temperatureLevel = temperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
         
@@ -75,13 +75,13 @@ public class ObjectProximityModifier extends TemperatureModifier
         newTemperatureLevel += blockTemperatureModifier;
         debugger.end(newTemperatureLevel);
         
-        return new TemperatureInfo(newTemperatureLevel);
+        return new Temperature(newTemperatureLevel);
     }
 
     public static float getBlockTemperature(EntityPlayer player, IBlockState state)
     {
         World world = player.worldObj;
-        Material material = state.getBlock().getMaterial();
+        Material material = state.getMaterial();
         BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
         
         if (state.getBlock() == TANBlocks.campfire)

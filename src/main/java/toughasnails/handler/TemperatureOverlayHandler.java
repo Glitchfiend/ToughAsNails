@@ -4,12 +4,14 @@ import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -17,13 +19,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-
-import org.lwjgl.opengl.GL11;
-
-import toughasnails.temperature.TemperatureInfo;
-import toughasnails.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureScale.TemperatureRange;
-import toughasnails.temperature.TemperatureStats;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
+import toughasnails.temperature.TemperatureHandler;
 
 public class TemperatureOverlayHandler
 {
@@ -51,19 +51,19 @@ public class TemperatureOverlayHandler
     @SubscribeEvent
     public void onPostRenderOverlay(RenderGameOverlayEvent.Post event)
     {
-        ScaledResolution resolution = event.resolution;
+        ScaledResolution resolution = event.getResolution();
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
-        TemperatureInfo temperature = temperatureStats.getTemperature();
+        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
+        Temperature temperature = temperatureStats.getTemperature();
         
-        if (event.type == ElementType.PORTAL)
+        if (event.getType() == ElementType.PORTAL)
         {
             drawTemperatureVignettes(width, height, temperature);
         }
-        else if (event.type == ElementType.EXPERIENCE)
+        else if (event.getType() == ElementType.EXPERIENCE)
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 
@@ -74,12 +74,12 @@ public class TemperatureOverlayHandler
         }
     }
     
-    private void drawTemperature(int width, int height, TemperatureInfo temperature)
+    private void drawTemperature(int width, int height, Temperature temperature)
     {
         int left = width / 2 - 8;
         int top = height - 52; 
         
-        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        TemperatureRange temperatureRange = temperature.getRange();
 
         if (temperatureRange == TemperatureRange.ICY || temperatureRange == TemperatureRange.HOT)
         {
@@ -92,7 +92,7 @@ public class TemperatureOverlayHandler
             }
         }
         
-        int temperatureLevel = temperature.getScalePos();
+        int temperatureLevel = temperature.getRawValue();
         
         if (prevTemperatureLevel == -1) prevTemperatureLevel = temperatureLevel;
         
@@ -150,9 +150,9 @@ public class TemperatureOverlayHandler
         }
     }
     
-    private void renderColouredBall(int x, int y, TemperatureInfo temperature, int textureShift)
+    private void renderColouredBall(int x, int y, Temperature temperature, int textureShift)
     {
-        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        TemperatureRange temperatureRange = temperature.getRange();
         float changeDelta = temperatureRange == TemperatureRange.COOL ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
         
         if (temperatureRange != TemperatureRange.MILD)
@@ -165,9 +165,9 @@ public class TemperatureOverlayHandler
         }
     }
     
-    private void drawTemperatureVignettes(int width, int height, TemperatureInfo temperature)
+    private void drawTemperatureVignettes(int width, int height, Temperature temperature)
     {
-        TemperatureRange temperatureRange = temperature.getTemperatureRange();
+        TemperatureRange temperatureRange = temperature.getRange();
         float opacityDelta = temperature.getRangeDelta(false);
         
         ResourceLocation vignetteLocation = null;
@@ -192,7 +192,7 @@ public class TemperatureOverlayHandler
             GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
             GlStateManager.disableAlpha();
             Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer renderer = tessellator.getWorldRenderer();
+            VertexBuffer renderer = tessellator.getBuffer();
             renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
             renderer.pos(0.0D, height, -90.0D).tex(0.0D, 1.0D).endVertex();
             renderer.pos(width, height, -90.0D).tex(1.0D, 1.0D).endVertex();

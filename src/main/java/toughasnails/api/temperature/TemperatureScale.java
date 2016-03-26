@@ -1,4 +1,4 @@
-package toughasnails.temperature;
+package toughasnails.api.temperature;
 
 public class TemperatureScale
 {

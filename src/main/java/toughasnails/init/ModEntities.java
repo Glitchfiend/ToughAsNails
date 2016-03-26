@@ -2,6 +2,8 @@ package toughasnails.init;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
@@ -13,8 +15,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 import toughasnails.core.ToughAsNails;
 import toughasnails.entities.EntityFreeze;
 import toughasnails.entities.projectile.EntityIceball;
-
-import com.google.common.collect.Maps;
 
 public class ModEntities
 {
@@ -46,7 +46,7 @@ public class ModEntities
     public static int registerTANEntityWithSpawnEgg(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
-        entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(tanEntityId, eggBackgroundColor, eggForegroundColor));
+        entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(entityName, eggBackgroundColor, eggForegroundColor));
         return tanEntityId;
     }
     

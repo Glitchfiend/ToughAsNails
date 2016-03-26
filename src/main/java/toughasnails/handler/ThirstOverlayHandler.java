@@ -14,7 +14,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import toughasnails.thirst.ThirstStats;
+import toughasnails.api.TANCapabilities;
+import toughasnails.thirst.ThirstHandler;
 
 public class ThirstOverlayHandler
 {
@@ -37,7 +38,7 @@ public class ThirstOverlayHandler
     @SubscribeEvent
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
-        if (event.type == ElementType.AIR)
+        if (event.getType() == ElementType.AIR)
         {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, -10.0F, 0.0F);
@@ -47,20 +48,20 @@ public class ThirstOverlayHandler
     @SubscribeEvent
     public void onPostRenderOverlay(RenderGameOverlayEvent.Post event)
     {
-        ScaledResolution resolution = event.resolution;
+        ScaledResolution resolution = event.getResolution();
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-        ThirstStats thirstStats = (ThirstStats)player.getExtendedProperties("thirst");
-        int thirstLevel = thirstStats.getThirstLevel();
-        float thirstHydrationLevel = thirstStats.getThirstHydrationLevel();
+        ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
+        int thirstLevel = thirstStats.getThirst();
+        float thirstHydrationLevel = thirstStats.getHydration();
         
-        if (event.type == ElementType.AIR)
+        if (event.getType() == ElementType.AIR)
         {
             GlStateManager.popMatrix();
         }
-        else if (event.type == ElementType.EXPERIENCE)
+        else if (event.getType() == ElementType.EXPERIENCE)
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 

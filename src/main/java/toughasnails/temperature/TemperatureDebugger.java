@@ -1,20 +1,13 @@
 package toughasnails.temperature;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageTemperatureDebug;
 import toughasnails.network.message.MessageToggleUI;
 import toughasnails.util.MapUtils;
-
-import com.google.common.base.Functions;
-import com.google.common.collect.Ordering;
 
 public class TemperatureDebugger
 {

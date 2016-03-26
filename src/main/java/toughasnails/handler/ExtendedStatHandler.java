@@ -1,31 +1,34 @@
 package toughasnails.handler;
 
-import java.util.Map.Entry;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import toughasnails.api.PlayerStat;
-import toughasnails.api.PlayerStatRegistry;
+import toughasnails.api.stat.PlayerStatRegistry;
+import toughasnails.api.stat.StatHandlerBase;
+import toughasnails.api.stat.capability.CapabilityProvider;
+import toughasnails.core.ToughAsNails;
 
 public class ExtendedStatHandler
 {
     @SubscribeEvent
-    public void onPlayerConstructing(EntityConstructing event)
+    public void onAttachCapabilities(AttachCapabilitiesEvent.Entity event)
     {
-        if (event.entity instanceof EntityPlayer)
+        if (event.getEntity() instanceof EntityPlayer)
         {
-            EntityPlayer player = (EntityPlayer)event.entity;
+            EntityPlayer player = (EntityPlayer)event.getEntity();
             
-            for (String identifier : PlayerStatRegistry.getStatMap().keySet())
+            for (String identifier : PlayerStatRegistry.getCapabilityMap().keySet())
             {
-                if (player.getExtendedProperties(identifier) == null)
-                    player.registerExtendedProperties(identifier, PlayerStatRegistry.createStat(identifier));
+                //Each player should have their own instance for each stat, as associated values may vary
+                event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, identifier), PlayerStatRegistry.createCapabilityProvider(identifier));
             }
         }
     }
@@ -38,9 +41,9 @@ public class ExtendedStatHandler
         
         if (!world.isRemote)
         {
-            for (String identifier : PlayerStatRegistry.getStatMap().keySet())
+            for (Capability<?> capability : PlayerStatRegistry.getCapabilityMap().values())
             {
-                PlayerStat stat = (PlayerStat)player.getExtendedProperties(identifier);
+                StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
                 
                 stat.onSendClientUpdate();
                 PacketHandler.instance.sendTo(stat.createUpdateMessage(), (EntityPlayerMP)player);
@@ -56,9 +59,9 @@ public class ExtendedStatHandler
 
         if (!world.isRemote)
         {
-            for (String identifier : PlayerStatRegistry.getStatMap().keySet())
+            for (Capability<?> capability : PlayerStatRegistry.getCapabilityMap().values())
             {
-                PlayerStat stat = (PlayerStat)player.getExtendedProperties(identifier);
+                StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
 
                 stat.update(player, world, event.phase);
 

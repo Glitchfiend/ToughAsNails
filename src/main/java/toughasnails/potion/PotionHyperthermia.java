@@ -1,7 +1,6 @@
 package toughasnails.potion;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
@@ -15,7 +14,7 @@ public class PotionHyperthermia extends Potion
     
     public PotionHyperthermia(int id)
     {
-        super(id, new ResourceLocation("hyperthermia"), true, 0xFFA300);
+        super(true, 0xFFA300);
     
         this.setIconIndex(3, 0);
     }

@@ -2,6 +2,8 @@ package toughasnails.item;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,8 +14,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.util.BlockStateUtils;
-
-import com.google.common.collect.ImmutableSet;
 
 public class ItemTANBlock extends ItemBlock
 {
@@ -51,14 +51,6 @@ public class ItemTANBlock extends ItemBlock
                 subItems.add(new ItemStack(this.block, 1, this.block.getMetaFromState(state)));
             }
         }
-    }
-    
-    // TODO: renderPass is actually tintIndex - use for berries etc?
-    @SideOnly(Side.CLIENT)
-    @Override
-    public int getColorFromItemStack(ItemStack stack, int tintIndex)
-    {
-        return this.tanBlock.getItemRenderColor(this.block.getStateFromMeta(stack.getMetadata()), tintIndex);
     }
 
     @Override

@@ -9,38 +9,39 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureInfo;
-import toughasnails.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureStats;
+import toughasnails.temperature.TemperatureHandler;
 
 public class TemperatureDebugOverlayHandler
 {
     @SubscribeEvent
     public void onPostRenderOverlay(RenderGameOverlayEvent.Post event)
     {
-        ScaledResolution resolution = event.resolution;
+        ScaledResolution resolution = event.getResolution();
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-        TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         TemperatureDebugger debugger = temperatureStats.debugger;
         
-        if (event.type == ElementType.ALL && debugger.isGuiVisible())
+        if (event.getType() == ElementType.ALL && debugger.isGuiVisible())
         {
             drawModifierTable(width, height, temperatureStats.getTemperature(), debugger);
         }
     }
     
-    private void drawModifierTable(int width, int height, TemperatureInfo temperature, TemperatureDebugger debugger)
+    private void drawModifierTable(int width, int height, Temperature temperature, TemperatureDebugger debugger)
     {
         Map<Modifier, Integer> rateModifiers = debugger.modifiers[0];
         Map<Modifier, Integer> targetModifiers = debugger.modifiers[1];
@@ -53,8 +54,8 @@ public class TemperatureDebugOverlayHandler
             int totalTableHeight = targetTableHeight + getTableHeight(rateModifiers) + 2;
             int startY = height / 2 - totalTableHeight / 2;
             
-            String targetProgress = "" + EnumChatFormatting.RED + temperature.getScalePos() + "/" + debugger.targetTemperature + getCappedText(debugger.targetTemperature);
-            String rateProgress = "" + EnumChatFormatting.RED + debugger.temperatureTimer + "/" + debugger.changeTicks;
+            String targetProgress = "" + TextFormatting.RED + temperature.getRawValue() + "/" + debugger.targetTemperature + getCappedText(debugger.targetTemperature);
+            String rateProgress = "" + TextFormatting.RED + debugger.temperatureTimer + "/" + debugger.changeTicks;
             
             drawTable("Target " + targetProgress, 1, startY, targetModifiers);
             drawTable("Rate " + rateProgress, 1, startY + targetTableHeight + 2, rateModifiers);
@@ -126,12 +127,12 @@ public class TemperatureDebugOverlayHandler
     
     private static String getCappedText(int targetTemperature)
     {
-        return EnumChatFormatting.BLUE + " " + (targetTemperature < 0 ? "(0)" : targetTemperature > TemperatureScale.getScaleTotal() ? "(" + TemperatureScale.getScaleTotal() + ")" : "");
+        return TextFormatting.BLUE + " " + (targetTemperature < 0 ? "(0)" : targetTemperature > TemperatureScale.getScaleTotal() ? "(" + TemperatureScale.getScaleTotal() + ")" : "");
     }
     
     private static String getFormattedInt(int i)
     {
-        EnumChatFormatting format = i > 0 ? EnumChatFormatting.RED : i < 0 ? EnumChatFormatting.BLUE : EnumChatFormatting.RESET;
+        TextFormatting format = i > 0 ? TextFormatting.RED : i < 0 ? TextFormatting.BLUE : TextFormatting.RESET;
         
         return "" + format + getNumberSign(i) + i;
     }

@@ -3,7 +3,6 @@ package toughasnails.init;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import toughasnails.handler.ExtendedStatHandler;
-import toughasnails.handler.ModelBakeHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
@@ -15,9 +14,7 @@ public class ModHandlers
     public static void init()
     {
         PacketHandler.init();
-        
-        MinecraftForge.EVENT_BUS.register(new ModelBakeHandler());
-        
+
         ExtendedStatHandler extendedStatHandler = new ExtendedStatHandler();
         
         FMLCommonHandler.instance().bus().register(extendedStatHandler);

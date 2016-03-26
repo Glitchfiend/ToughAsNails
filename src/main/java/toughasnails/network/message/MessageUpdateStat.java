@@ -4,11 +4,14 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import toughasnails.api.PlayerStat;
+import toughasnails.api.stat.IPlayerStat;
+import toughasnails.api.stat.PlayerStatRegistry;
+import toughasnails.api.stat.StatHandlerBase;
 
 public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdateStat, IMessage>
 {
@@ -17,9 +20,9 @@ public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdat
     
     public MessageUpdateStat() {}
     
-    public MessageUpdateStat(String identifier, NBTTagCompound data)
+    public MessageUpdateStat(Capability<?> capability, NBTTagCompound data)
     {
-        this.identifier = identifier;
+        this.identifier = capability.getName();
         this.data = data;
     }
 
@@ -44,9 +47,10 @@ public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdat
         
         if (player != null)
         {
-            PlayerStat stat = (PlayerStat)player.getExtendedProperties(message.identifier);
+            Capability<IPlayerStat> capability = (Capability<IPlayerStat>)PlayerStatRegistry.getCapability(message.identifier);
+            StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
             
-            stat.loadNBTData(message.data);
+            capability.getStorage().readNBT(capability, stat, null, message.data);
         }
         
         return null;

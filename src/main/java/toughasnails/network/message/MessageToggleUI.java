@@ -1,7 +1,5 @@
 package toughasnails.network.message;
 
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureStats;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -9,6 +7,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import toughasnails.api.TANCapabilities;
+import toughasnails.temperature.TemperatureDebugger;
+import toughasnails.temperature.TemperatureHandler;
 
 public class MessageToggleUI implements IMessage, IMessageHandler<MessageToggleUI, IMessage>
 {
@@ -42,7 +43,7 @@ public class MessageToggleUI implements IMessage, IMessageHandler<MessageToggleU
 
             if (player != null)
             {
-                TemperatureStats temperatureStats = (TemperatureStats)player.getExtendedProperties("temperature");
+                TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
                 TemperatureDebugger debugger = temperatureStats.debugger;
                 
                 debugger.setGuiVisible(message.showDebugGUI);

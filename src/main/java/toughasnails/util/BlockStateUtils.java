@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import toughasnails.api.ITANBlock;
-
-import com.google.common.collect.ImmutableSet;
 
 public class BlockStateUtils
 {
@@ -98,42 +98,9 @@ public class BlockStateUtils
         return outState;
     }
     
-    /*  no use for this yet - but left here because it might be useful later
-     * 
-    public static Map<String,IBlockState> getStatesSetNamed(IBlockState baseState, IProperty... properties)
-    {        
-        Stack<IProperty> propStack = new Stack<IProperty>();
-        Map<String,IBlockState> states = new HashMap<String, IBlockState>();
-        for (IProperty prop : properties) {propStack.push(prop);}
-        AddStatesToMap(baseState, states, propStack);
-        return states;
-    }
-    
-    private static void AddStatesToMap(IBlockState state, Map<String, IBlockState> map, Stack<IProperty> stack)
-    {    
-        if (stack.empty())
-        {
-            map.put(state.getBlock().getStateName(state), state);
-            return;
-        }
-        else
-        {
-            IProperty prop = stack.pop();        
-            for (Object value : prop.getAllowedValues())
-            {
-                AddStatesToMap(state.withProperty(prop, (Comparable)value), map, stack);
-            }
-            stack.push(prop);
-        }
-    }
-    */
-    
-    
-    
-    
     public static IProperty getPropertyByName(IBlockState blockState, String propertyName)
     {
-        for (IProperty property : (ImmutableSet<IProperty>) blockState.getProperties().keySet())
+        for (IProperty property : (ImmutableSet<IProperty<?>>) blockState.getProperties().keySet())
         {
             if (property.getName().equals(propertyName))
                 return property;

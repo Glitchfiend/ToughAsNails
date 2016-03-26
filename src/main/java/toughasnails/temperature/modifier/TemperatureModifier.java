@@ -2,8 +2,8 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureInfo;
 
 public abstract class TemperatureModifier
 {
@@ -15,5 +15,5 @@ public abstract class TemperatureModifier
     }
     
     public abstract int modifyChangeRate(World world, EntityPlayer player, int changeRate);
-    public abstract TemperatureInfo modifyTarget(World world, EntityPlayer player, TemperatureInfo temperature);
+    public abstract Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature);
 }

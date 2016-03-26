@@ -2,6 +2,9 @@ package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
 import static toughasnails.api.TANBlocks.gas;
+
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,8 +17,6 @@ import toughasnails.block.BlockTANGas;
 import toughasnails.core.ToughAsNails;
 import toughasnails.util.BlockStateUtils;
 import toughasnails.util.inventory.CreativeTabTAN;
-
-import com.google.common.collect.ImmutableSet;
 
 public class ModBlocks
 {
