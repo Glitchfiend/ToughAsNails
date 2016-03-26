@@ -24,7 +24,7 @@ public class TemperatureStorage implements IStorage<ITemperature>
         
         compound.setInteger("temperatureLevel", instance.getTemperature().getRawValue());
         compound.setInteger("temperatureTimer", instance.getChangeTime());
-
+        
         return compound;
     }
 

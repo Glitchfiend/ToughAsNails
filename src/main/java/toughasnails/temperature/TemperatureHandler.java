@@ -137,7 +137,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     }
     
     @Override
-    public boolean shouldUpdateClient()
+    public boolean hasChanged()
     {
         return this.prevTemperatureLevel != this.temperatureLevel;
     }

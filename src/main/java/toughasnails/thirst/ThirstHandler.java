@@ -122,7 +122,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     }
 
     @Override
-    public boolean shouldUpdateClient()
+    public boolean hasChanged()
     {
         return this.prevThirstLevel != this.thirstLevel;
     }

@@ -16,7 +16,7 @@ public interface IPlayerStat
 {
     public void update(EntityPlayer player, World world, Phase phase);
     
-    public boolean shouldUpdateClient();
+    public boolean hasChanged();
     public void onSendClientUpdate();
     
     public IMessage createUpdateMessage();

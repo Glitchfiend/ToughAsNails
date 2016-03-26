@@ -11,10 +11,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import toughasnails.api.stat.IPlayerStat;
 import toughasnails.api.stat.PlayerStatRegistry;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.CapabilityProvider;
 import toughasnails.core.ToughAsNails;
+import toughasnails.temperature.TemperatureHandler;
 
 public class ExtendedStatHandler
 {
@@ -44,10 +46,11 @@ public class ExtendedStatHandler
         
         if (!world.isRemote)
         {
-            for (Capability<?> capability : PlayerStatRegistry.getCapabilityMap().values())
+            for (Capability capability : PlayerStatRegistry.getCapabilityMap().values())
             {
                 StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
                 
+                capability.getStorage().readNBT(capability, stat, null, player.getEntityData().getCompoundTag(capability.getName()));
                 stat.onSendClientUpdate();
                 PacketHandler.instance.sendTo(stat.createUpdateMessage(), (EntityPlayerMP)player);
             }
@@ -62,16 +65,17 @@ public class ExtendedStatHandler
 
         if (!world.isRemote)
         {
-            for (Capability<?> capability : PlayerStatRegistry.getCapabilityMap().values())
+            for (Capability capability : PlayerStatRegistry.getCapabilityMap().values())
             {
-                StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
+                IPlayerStat stat = (IPlayerStat)player.getCapability(capability, null);
 
                 stat.update(player, world, event.phase);
 
                 if (event.phase == Phase.END)
                 {
-                    if (stat.shouldUpdateClient())
+                    if (stat.hasChanged())
                     {
+                        player.getEntityData().setTag(capability.getName(), capability.getStorage().writeNBT(capability, stat, null));
                         stat.onSendClientUpdate();
                         PacketHandler.instance.sendTo(stat.createUpdateMessage(), (EntityPlayerMP)player);
                     }
