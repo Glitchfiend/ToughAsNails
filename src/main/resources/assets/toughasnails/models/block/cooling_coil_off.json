@@ -1,0 +1,179 @@
+{
+	"parent": "block/block",
+    "textures": {
+		"particle": "blocks/furnace_top",
+        "0": "toughasnails:blocks/cooling_coil_off",
+        "1": "blocks/furnace_top"
+    },
+    "elements": [
+	    {
+            "name": "Base",
+            "from": [ 0.0, 0.0, 0.0 ], 
+            "to": [ 16.0, 2.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod",
+            "from": [ 2.0, 2.0, 2.0 ], 
+            "to": [ 14.0, 4.0, 4.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod",
+            "from": [ 2.0, 2.0, 12.0 ], 
+            "to": [ 14.0, 4.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod",
+            "from": [ 2.0, 2.0, 4.0 ], 
+            "to": [ 4.0, 4.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod",
+            "from": [ 12.0, 2.0, 4.0 ], 
+            "to": [ 14.0, 4.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod 2",
+            "from": [ 2.0, 6.0, 2.0 ], 
+            "to": [ 14.0, 8.0, 4.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod 2",
+            "from": [ 2.0, 6.0, 12.0 ], 
+            "to": [ 14.0, 8.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod 2",
+            "from": [ 2.0, 6.0, 4.0 ], 
+            "to": [ 4.0, 8.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod 2",
+            "from": [ 12.0, 6.0, 4.0 ], 
+            "to": [ 14.0, 8.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod 3",
+            "from": [ 2.0, 10.0, 2.0 ], 
+            "to": [ 14.0, 12.0, 4.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod 3",
+            "from": [ 2.0, 10.0, 12.0 ], 
+            "to": [ 14.0, 12.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "east": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 7.0, 14.0, 9.0, 2.0 ], "rotation": 90 },
+                "west": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#0", "uv": [ 7.0, 2.0, 9.0, 14.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Coil Rod 3",
+            "from": [ 2.0, 10.0, 4.0 ], 
+            "to": [ 4.0, 12.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] }
+            }
+        },
+        {
+            "name": "Coil Rod 3",
+            "from": [ 12.0, 10.0, 4.0 ], 
+            "to": [ 14.0, 12.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "south": { "texture": "#0", "uv": [ 7.0, 0.0, 9.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ], "rotation": 90 },
+                "up": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 11.0 ] },
+                "down": { "texture": "#0", "uv": [ 7.0, 3.0, 9.0, 15.0 ] }
+            }
+        }
+    ]
+}
