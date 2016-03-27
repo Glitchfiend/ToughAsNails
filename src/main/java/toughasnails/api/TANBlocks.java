@@ -6,4 +6,5 @@ public class TANBlocks
 {
     public static Block campfire;
     public static Block gas;
+    public static Block heat;
 }
