@@ -40,10 +40,18 @@ public class BlockTANHeat extends Block implements ITileEntityProvider
 
         TileEntity te = worldIn.getTileEntity(pos);
         
-        if (flag && !worldIn.isRemote && te != null)
+        if (!worldIn.isRemote && te != null)
         {
             TileEntityTemperatureFill tempFill = (TileEntityTemperatureFill)te;
+            
+            if (flag)
+            {
             tempFill.fill();
+            }
+            else
+            {
+                tempFill.reset();
+            }
         }
     }
 

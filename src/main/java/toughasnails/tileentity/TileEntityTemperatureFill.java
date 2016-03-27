@@ -70,7 +70,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             }
     }
 
-    private void reset()
+    public void reset()
     {
         //TODO: Testing only, Remove this
         //Remove any existing glass block indicators
@@ -80,6 +80,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             {
                 BlockPos pos = trackedPosition.pos;
 
+                //This breaks things
                 //this.getWorld().setBlockToAir(pos);
             }
         }
