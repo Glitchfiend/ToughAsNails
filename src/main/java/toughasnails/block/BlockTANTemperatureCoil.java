@@ -34,6 +34,22 @@ public class BlockTANTemperatureCoil extends Block implements ITileEntityProvide
     }
     
     @Override
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+        if (TileEntityTemperatureSpread.ENABLE_DEBUG)
+        {
+            TileEntity te = world.getTileEntity(pos);
+            
+            if (!world.isRemote && te != null)
+            {
+                TileEntityTemperatureSpread tempFill = (TileEntityTemperatureSpread)te;
+                
+                tempFill.reset();
+            }
+        }
+    }
+    
+    @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());

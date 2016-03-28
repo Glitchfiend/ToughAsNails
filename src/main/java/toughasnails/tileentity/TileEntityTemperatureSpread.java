@@ -9,16 +9,17 @@ package toughasnails.tileentity;
 
 import java.util.Set;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntitySmallFireball;
-import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,13 +32,12 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     private int updateTicks;
     private int maxSpreadDistance;
     
-    private static final boolean ENABLE_DEBUG = true;
-    
+    public static final boolean ENABLE_DEBUG = true;
     private Set<Entity> spawnedEntities;
     
     public TileEntityTemperatureSpread()
     {
-        this.maxSpreadDistance = 50;
+        this.maxSpreadDistance = ENABLE_DEBUG ? 10 : 50;
         
         //Initialize sets for all strengths
         this.filledPositions = new Set[this.maxSpreadDistance + 1];
@@ -65,6 +65,37 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
             {
                 //Refill again
                 fill();
+            }
+            
+            if (ENABLE_DEBUG)
+            {
+                //There is a mismatch between the filled positions and the spawned entities, repopulate spawned entities
+                //If this is active, there should at least be a position in the set for the max spread distance
+                if (!world.isRemote && spawnedEntities.isEmpty() && !this.filledPositions[this.maxSpreadDistance].isEmpty())
+                {
+                    for (int strength = 0; strength <= this.maxSpreadDistance; strength++)
+                    {
+                        for (BlockPos pos : this.filledPositions[strength])
+                        {
+                            final AxisAlignedBB boundingBox = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D);
+
+                            Predicate<EntitySmallFireball> predicate = new Predicate<EntitySmallFireball>()
+                            {
+                                @Override
+                                public boolean apply(EntitySmallFireball input) 
+                                {
+                                    //Check intersections with this entity a little bit over 1x1x1, because it seemed the outer layer of fireballs wasn't
+                                    //included otherwise
+                                    BlockPos pos = input.getPosition();
+                                    return boundingBox.intersects(pos.getX() - 0.1D, pos.getY() - 0.1D, pos.getZ() - 0.1D, pos.getX() + 1.1D, pos.getY() + 1.1D, pos.getZ() + 1.1D);
+                                }
+                            };
+                            
+                            //Fireballs don't have a bounding box so we can't use getEntitiesWithinAABB (which really stinks!)
+                            spawnedEntities.addAll(this.getWorld().getEntities(EntitySmallFireball.class, predicate));
+                        }
+                    }
+                }
             }
         }
     }
@@ -192,5 +223,78 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         }
 
         return true;
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        
+        if (compound.hasKey("FilledPositions"))
+        {
+            NBTTagCompound filledCompound = compound.getCompoundTag("FilledPositions");
+            
+            for (int strength = 0; strength <= this.maxSpreadDistance; strength++)
+            {
+                if (!filledCompound.hasKey("Strength" + strength)) throw new IllegalArgumentException("Compound missing strength sub-compound Strength" + strength + "!");
+                
+                NBTTagCompound strengthCompound = filledCompound.getCompoundTag("Strength" + strength);
+                this.filledPositions[strength] = readPosSet(strengthCompound);
+            }
+            this.spawnedEntities.clear(); //Clear spawned entities and repopulate later
+            
+            NBTTagCompound obstructedCompound = compound.getCompoundTag("ObstructedPositions");
+            this.obstructedPositions = readPosSet(obstructedCompound);
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        
+        NBTTagCompound filledCompound = new NBTTagCompound();
+        
+        for (int i = 0; i <= this.maxSpreadDistance; i++)
+        {
+            NBTTagCompound strengthCompound = new NBTTagCompound();
+            writePosSet(strengthCompound, this.filledPositions[i]);
+            filledCompound.setTag("Strength" + i, strengthCompound);
+        }
+        compound.setTag("FilledPositions", filledCompound);
+        
+        NBTTagCompound obstructedCompound = new NBTTagCompound();
+        writePosSet(obstructedCompound, this.obstructedPositions);
+        compound.setTag("ObstructedPositions", obstructedCompound);
+        
+        readFromNBT(compound);
+    }
+    
+    private void writePosSet(NBTTagCompound compound, Set<BlockPos> posSet)
+    {
+        compound.setInteger("Count", posSet.size());
+        
+        int index = 0;
+        
+        for (BlockPos pos : posSet)
+        {
+            compound.setTag("Pos" + index, NBTUtil.createPosTag(pos));
+            index++;
+        }
+    }
+    
+    private Set<BlockPos> readPosSet(NBTTagCompound compound)
+    {
+        if (!compound.hasKey("Count")) throw new IllegalArgumentException("Compound is not a valid pos set");
+        
+        int count = compound.getInteger("Count");
+        Set<BlockPos> posSet = Sets.newConcurrentHashSet();
+        
+        for (int i = 0; i < count; i++)
+        {
+            posSet.add(NBTUtil.getPosFromTag(compound.getCompoundTag("Pos" + i)));
+        }
+        
+        return posSet;
     }
 }
