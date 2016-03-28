@@ -27,7 +27,9 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
     //TODO: Track obstructions seperately, prevents unnecessarily checking adjacents and only checks obstructions that matter
     //TODO: Slower verification intervals the further away from the base position
     
-    private Set<BlockPos>[] currentTrackedPositions;
+    private Set<BlockPos>[] filledPositions;
+    private Set<BlockPos> obstructedPositions;
+    
     //TODO: Remove this
     private Set<Entity> spawnedEntities;
     
@@ -41,11 +43,12 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         this.maxSpreadDistance = 10;
         
         //Initialize sets for all strengths
-        this.currentTrackedPositions = new Set[this.maxSpreadDistance + 1];
+        this.filledPositions = new Set[this.maxSpreadDistance + 1];
         for (int i = 0; i < this.maxSpreadDistance + 1; i++)
         {
-            this.currentTrackedPositions[i] = Sets.newHashSet();
+            this.filledPositions[i] = Sets.newConcurrentHashSet();
         }
+        this.obstructedPositions = Sets.newConcurrentHashSet();
         
         //TODO: Remove this
         this.spawnedEntities = Sets.newHashSet();
@@ -57,7 +60,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         World world = this.getWorld();
 
         //Verify every 2 seconds
-        /*if (++updateTicks % 20 == 0)
+        if (++updateTicks % 20 == 0)
         {
             // Ensure there has been no changes since last time
             if (!verify())
@@ -65,12 +68,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
                 //Refill again
                 fill();
             }
-        }*/
-        
-        //TODO: Testing only, Remove this
-        //Set all tracked positions to glass, only do this when filled
-        
-
+        }
     }
 
     public void reset()
@@ -83,10 +81,11 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         this.spawnedEntities.clear();
         
         //Clear set of current positions
-        for (Set<BlockPos> set : this.currentTrackedPositions)
+        for (Set<BlockPos> set : this.filledPositions)
         {
             set.clear();
         }
+        this.obstructedPositions.clear();
     }
     
     public void fill()
@@ -101,15 +100,15 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             //Only attempt to update tracking for this position if there is air here.
             //Even positions already being tracked should be filled with air.
             if (this.getWorld().isAirBlock(offsetPos))
-                this.currentTrackedPositions[this.maxSpreadDistance].add(offsetPos);
+                this.filledPositions[this.maxSpreadDistance].add(offsetPos);
         }
         
         runStage(this.maxSpreadDistance - 1);
         
         //TODO: Remove this
-        for (Set<BlockPos> trackedPositions : this.currentTrackedPositions)
+        for (Set<BlockPos> trackedPositions : this.filledPositions)
         {
-            for (BlockPos trackedPosition : Lists.newArrayList(trackedPositions))
+            for (BlockPos trackedPosition : trackedPositions)
             {
                 if (trackedPosition != null)
                 {
@@ -129,7 +128,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         if (strength > 0)
         {
             //Populate queue for next stage
-            for (BlockPos trackedPosition : this.currentTrackedPositions[strength + 1])
+            for (BlockPos trackedPosition : this.filledPositions[strength + 1])
             {      
                 BlockPos pos = trackedPosition;
                 spreadAroundPos(pos, strength);
@@ -145,9 +144,14 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
     {
         //Only attempt to update tracking for this position if there is air here.
         //Even positions already being tracked should be filled with air.
-        if (!(this.getWorld().isAirBlock(pos))) return;
-        
-        this.currentTrackedPositions[strength].add(pos);
+        if (this.getWorld().isAirBlock(pos))
+        {
+            this.filledPositions[strength].add(pos);
+        }
+        else
+        {
+            this.obstructedPositions.add(pos);
+        }
     }
     
     /**Strength is the strength of the initial pos, 
@@ -159,7 +163,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             BlockPos offsetPos = pos.offset(facing);
 
             //Don't set if the tracked positions already contains this position
-            if (this.currentTrackedPositions[strength + 1].contains(offsetPos))
+            if (this.filledPositions[strength + 1].contains(offsetPos))
             {
                 continue;
             }
@@ -170,77 +174,22 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
     }
 
     /** Returns true if verified, false if regen is required */
-    /*public boolean verify()
+    public boolean verify()
     {
-        for (TrackedPosition trackedPosition : this.trackedPositions)
+        for (Set<BlockPos> trackedPositions : this.filledPositions)
         {
-            if (trackedPosition != null)
+            for (BlockPos pos : trackedPositions)
             {
-                UpdateType updateType = trackedPosition.checkForUpdate();
-
-                switch (updateType)
-                {
-                case REMOVE:
-                    trackedPositions[getIndexForPos(trackedPosition.pos)] = null;
-                    break;
-
-                case REGEN:
-                    return false;
-
-                default:
-                    continue;
-                }
+                if (!this.getWorld().isAirBlock(pos)) return false;
             }
+        }
+        
+        for (BlockPos pos : this.obstructedPositions)
+        {
+            if (this.getWorld().isAirBlock(pos)) return false;
         }
 
         return true;
-    }*/
-    
-    private class TrackedPosition
-    {
-        public final BlockPos pos;
-        
-        public TrackedPosition(BlockPos pos)
-        {
-            this.pos = pos;
-            
-            //Only check adjacents if this position can spread (i.e. its strength is > 0)
-            /*if (!this.end)
-            {
-                for (EnumFacing facing : EnumFacing.values())
-                {
-                    adjacentStates[facing.ordinal()] = TileEntityTemperatureFill.this.getWorld().getBlockState(pos.offset(facing));
-                }
-            }*/
-        }
-        
-        /*public UpdateType checkForUpdate()
-        {
-            World world = TileEntityTemperatureFill.this.getWorld();
-
-            //Tracked positions should only ever be associated with air
-            if (!(world.isAirBlock(pos) || world.getBlockState(pos) == Blocks.glass.getDefaultState()))
-            {
-                //If this position is the end, remove it from tracking. If not, a full regen is required
-                return end ? UpdateType.REMOVE : UpdateType.REGEN;
-            }
-            
-            //End positions don't care about their neighbours
-            if (!end)
-            {
-                for (EnumFacing facing : EnumFacing.values())
-                {
-                    IBlockState state = world.getBlockState(this.pos.offset(facing));
-                    
-                    if (state != adjacentStates[facing.ordinal()])
-                    {
-                        return UpdateType.REGEN;
-                    }
-                }
-            }
-            
-            return UpdateType.NONE;
-        }*/
     }
     
     private static enum UpdateType
