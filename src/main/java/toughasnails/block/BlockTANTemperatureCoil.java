@@ -34,7 +34,7 @@ public class BlockTANTemperatureCoil extends Block implements ITileEntityProvide
     }
     
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         if (TileEntityTemperatureSpread.ENABLE_DEBUG)
         {
@@ -47,6 +47,8 @@ public class BlockTANTemperatureCoil extends Block implements ITileEntityProvide
                 tempFill.reset();
             }
         }
+        
+        super.breakBlock(world, pos, state);
     }
     
     @Override
