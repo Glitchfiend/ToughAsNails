@@ -24,12 +24,11 @@ import net.minecraft.world.World;
 
 public class TileEntityTemperatureFill extends TileEntity implements ITickable
 {
-    //TODO: Queue is unnecessary, set prevents duplicates anyway
     //TODO: Track obstructions seperately, prevents unnecessarily checking adjacents and only checks obstructions that matter
     //TODO: Slower verification intervals the further away from the base position
     
     private Set<BlockPos>[] currentTrackedPositions;
-    private Set<BlockPos> queuedTrackedPositions;
+    //TODO: Remove this
     private Set<Entity> spawnedEntities;
     
     private int updateTicks;
@@ -48,7 +47,6 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             this.currentTrackedPositions[i] = Sets.newHashSet();
         }
         
-        this.queuedTrackedPositions = Sets.newHashSet();
         //TODO: Remove this
         this.spawnedEntities = Sets.newHashSet();
     }
@@ -89,7 +87,6 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         {
             set.clear();
         }
-        this.queuedTrackedPositions.clear();
     }
     
     public void fill()
@@ -104,10 +101,10 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             //Only attempt to update tracking for this position if there is air here.
             //Even positions already being tracked should be filled with air.
             if (this.getWorld().isAirBlock(offsetPos))
-                this.queuedTrackedPositions.add(offsetPos);
+                this.currentTrackedPositions[this.maxSpreadDistance].add(offsetPos);
         }
         
-        runStage(this.maxSpreadDistance);
+        runStage(this.maxSpreadDistance - 1);
         
         //TODO: Remove this
         for (Set<BlockPos> trackedPositions : this.currentTrackedPositions)
@@ -128,15 +125,11 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
     
     private void runStage(int strength)
     {
-        //Add queued to current, clear queue
-        this.currentTrackedPositions[strength].addAll(this.queuedTrackedPositions);
-        this.queuedTrackedPositions.clear();
-        
         //Don't spread if strength is 0 (or somehow less)
         if (strength > 0)
         {
             //Populate queue for next stage
-            for (BlockPos trackedPosition : this.currentTrackedPositions[strength])
+            for (BlockPos trackedPosition : this.currentTrackedPositions[strength + 1])
             {      
                 BlockPos pos = trackedPosition;
                 spreadAroundPos(pos, strength);
@@ -154,7 +147,7 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         //Even positions already being tracked should be filled with air.
         if (!(this.getWorld().isAirBlock(pos))) return;
         
-        this.queuedTrackedPositions.add(pos);
+        this.currentTrackedPositions[strength].add(pos);
     }
     
     /**Strength is the strength of the initial pos, 
@@ -166,13 +159,13 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
             BlockPos offsetPos = pos.offset(facing);
 
             //Don't set if the tracked positions already contains this position
-            if (this.currentTrackedPositions[strength].contains(offsetPos))
+            if (this.currentTrackedPositions[strength + 1].contains(offsetPos))
             {
                 continue;
             }
             
             //Set suitable adjacent positions as tracked
-            setTrackedStrength(offsetPos, strength - 1);
+            setTrackedStrength(offsetPos, strength);
         }
     }
 
