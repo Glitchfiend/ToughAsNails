@@ -46,10 +46,11 @@ public class BlockTANHeat extends Block implements ITileEntityProvider
             
             if (flag)
             {
-            tempFill.fill();
+                tempFill.fill();
             }
             else
             {
+                System.out.println("RESET");
                 tempFill.reset();
             }
         }
