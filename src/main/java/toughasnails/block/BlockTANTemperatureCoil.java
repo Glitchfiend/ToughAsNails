@@ -18,11 +18,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import toughasnails.tileentity.TileEntityTemperatureFill;
+import toughasnails.tileentity.TileEntityTemperatureSpread;
 
-public class BlockTANHeat extends Block implements ITileEntityProvider
+public class BlockTANTemperatureCoil extends Block implements ITileEntityProvider
 {
-    public BlockTANHeat() 
+    public BlockTANTemperatureCoil() 
     {
         super(Material.rock);
     }
@@ -30,7 +30,7 @@ public class BlockTANHeat extends Block implements ITileEntityProvider
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) 
     {
-        return new TileEntityTemperatureFill();
+        return new TileEntityTemperatureSpread();
     }
     
     @Override
@@ -42,7 +42,7 @@ public class BlockTANHeat extends Block implements ITileEntityProvider
         
         if (!worldIn.isRemote && te != null)
         {
-            TileEntityTemperatureFill tempFill = (TileEntityTemperatureFill)te;
+            TileEntityTemperatureSpread tempFill = (TileEntityTemperatureSpread)te;
             
             if (flag)
             {
@@ -50,7 +50,6 @@ public class BlockTANHeat extends Block implements ITileEntityProvider
             }
             else
             {
-                System.out.println("RESET");
                 tempFill.reset();
             }
         }

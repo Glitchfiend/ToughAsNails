@@ -22,25 +22,22 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityTemperatureFill extends TileEntity implements ITickable
+//TODO: Don't spread unless the sky can't be seen
+public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 {
-    //TODO: Track obstructions seperately, prevents unnecessarily checking adjacents and only checks obstructions that matter
-    //TODO: Slower verification intervals the further away from the base position
-    
     private Set<BlockPos>[] filledPositions;
     private Set<BlockPos> obstructedPositions;
     
-    //TODO: Remove this
-    private Set<Entity> spawnedEntities;
-    
     private int updateTicks;
-    
     private int maxSpreadDistance;
     
-    public TileEntityTemperatureFill()
+    private static final boolean ENABLE_DEBUG = true;
+    
+    private Set<Entity> spawnedEntities;
+    
+    public TileEntityTemperatureSpread()
     {
-        //TODO: This may change, 10 for now
-        this.maxSpreadDistance = 10;
+        this.maxSpreadDistance = 50;
         
         //Initialize sets for all strengths
         this.filledPositions = new Set[this.maxSpreadDistance + 1];
@@ -50,10 +47,11 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         }
         this.obstructedPositions = Sets.newConcurrentHashSet();
         
-        //TODO: Remove this
-        this.spawnedEntities = Sets.newHashSet();
+        if (ENABLE_DEBUG) this.spawnedEntities = Sets.newHashSet();
     }
     
+    //TODO: Stagger updates if necessary, so verification occurs slower away from the base position
+    //Doesn't really seem necessary at the moment, it appears to be fast enough
     @Override
     public void update() 
     {
@@ -73,12 +71,14 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
 
     public void reset()
     {
-        //TODO: Remove this
-        for (Entity entity : this.spawnedEntities)
+        if (ENABLE_DEBUG)
         {
-            entity.setDead();
+            for (Entity entity : this.spawnedEntities)
+            {
+                entity.setDead();
+            }
+            this.spawnedEntities.clear();
         }
-        this.spawnedEntities.clear();
         
         //Clear set of current positions
         for (Set<BlockPos> set : this.filledPositions)
@@ -105,18 +105,20 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         
         runStage(this.maxSpreadDistance - 1);
         
-        //TODO: Remove this
-        for (Set<BlockPos> trackedPositions : this.filledPositions)
+        if (ENABLE_DEBUG)
         {
-            for (BlockPos trackedPosition : trackedPositions)
+            for (Set<BlockPos> trackedPositions : this.filledPositions)
             {
-                if (trackedPosition != null)
+                for (BlockPos trackedPosition : trackedPositions)
                 {
-                    BlockPos pos = trackedPosition;
-                    
-                    EntitySmallFireball fireball = new EntitySmallFireball(getWorld(), (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-                    this.spawnedEntities.add(fireball);
-                    this.getWorld().spawnEntityInWorld(fireball);
+                    if (trackedPosition != null)
+                    {
+                        BlockPos pos = trackedPosition;
+
+                        EntitySmallFireball fireball = new EntitySmallFireball(getWorld(), (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+                        this.spawnedEntities.add(fireball);
+                        this.getWorld().spawnEntityInWorld(fireball);
+                    }
                 }
             }
         }
@@ -190,10 +192,5 @@ public class TileEntityTemperatureFill extends TileEntity implements ITickable
         }
 
         return true;
-    }
-    
-    private static enum UpdateType
-    {
-        NONE, REMOVE, REGEN;
     }
 }
