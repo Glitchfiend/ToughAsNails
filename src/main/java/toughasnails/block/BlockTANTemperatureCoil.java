@@ -64,6 +64,12 @@ public class BlockTANTemperatureCoil extends Block implements ITANBlock, ITileEn
     }
 
     @Override
+    public int getLightValue(IBlockState state)
+    {
+        return (Boolean)state.getValue(POWERED) ? 7 : 0;
+    }
+    
+    @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         IBlockState state = this.getStateFromMeta(meta);
