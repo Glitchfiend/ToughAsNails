@@ -23,7 +23,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-//TODO: Don't spread unless the sky can't be seen
 public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 {
     private Set<BlockPos>[] filledPositions;
@@ -130,7 +129,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
             
             //Only attempt to update tracking for this position if there is air here.
             //Even positions already being tracked should be filled with air.
-            if (this.getWorld().isAirBlock(offsetPos))
+            if (this.canFill(offsetPos))
                 this.filledPositions[this.maxSpreadDistance].add(offsetPos);
         }
         
@@ -177,7 +176,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     {
         //Only attempt to update tracking for this position if there is air here.
         //Even positions already being tracked should be filled with air.
-        if (this.getWorld().isAirBlock(pos))
+        if (this.canFill(pos))
         {
             this.filledPositions[strength].add(pos);
         }
@@ -213,16 +212,22 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         {
             for (BlockPos pos : trackedPositions)
             {
-                if (!this.getWorld().isAirBlock(pos)) return false;
+                if (!this.canFill(pos)) return false;
             }
         }
         
         for (BlockPos pos : this.obstructedPositions)
         {
-            if (this.getWorld().isAirBlock(pos)) return false;
+            if (this.canFill(pos)) return false;
         }
 
         return true;
+    }
+    
+    private boolean canFill(BlockPos pos)
+    {
+        //Only spread within enclosed areas, significantly reduces the impact on performance and suits the purpose of coils
+        return this.getWorld().isAirBlock(pos) && !this.getWorld().canSeeSky(pos);
     }
     
     @Override
