@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"powered=false,variant=cooling": { "model": "toughasnails:cooling_coil_off" },
+		"powered=true,variant=cooling": { "model": "toughasnails:cooling_coil_on" },
+		"powered=false,variant=heating": { "model": "toughasnails:heating_coil_off" },
+		"powered=true,variant=heating": { "model": "toughasnails:heating_coil_on" }
+    }
+}

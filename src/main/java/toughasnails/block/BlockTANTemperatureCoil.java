@@ -10,27 +10,73 @@ package toughasnails.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.ITANBlock;
+import toughasnails.item.ItemTANBlock;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
+import toughasnails.util.BlockStateUtils;
 
-public class BlockTANTemperatureCoil extends Block implements ITileEntityProvider
+public class BlockTANTemperatureCoil extends Block implements ITANBlock, ITileEntityProvider
 {
+    public static final PropertyEnum<CoilType> VARIANT = PropertyEnum.create("variant", CoilType.class);
+    public static final PropertyBool POWERED = PropertyBool.create("powered");
+    
+    // implement ITANBlock
+    @Override
+    public Class<? extends ItemBlock> getItemClass() { return ItemTANBlock.class; }
+    @Override
+    public IProperty[] getPresetProperties() { return new IProperty[] {VARIANT}; }
+    @Override
+    public IProperty[] getNonRenderingProperties() { return null; }
+    @Override
+    public String getStateName(IBlockState state)
+    {
+        return ((CoilType) state.getValue(VARIANT)).getName() + "_coil";
+    }
+    
     public BlockTANTemperatureCoil() 
     {
         super(Material.rock);
+        
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, CoilType.COOLING).withProperty(POWERED, Boolean.valueOf(false)));
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(VARIANT, CoilType.values()[meta & 1]).withProperty(POWERED, Boolean.valueOf((meta & 8) > 0));
+    }
+    
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        int baseMeta = ((CoilType) state.getValue(VARIANT)).ordinal();
+        return baseMeta | (state.getValue(POWERED) ? 8 : 0);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) 
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TileEntityTemperatureSpread(15);
+        IBlockState state = this.getStateFromMeta(meta);
+        switch (state.getValue(VARIANT))
+        {
+        case COOLING:
+            return new TileEntityTemperatureSpread(-10);
+            
+        case HEATING:
+            return new TileEntityTemperatureSpread(10);
+        }
+        
+        return null;
     }
     
     @Override
@@ -52,25 +98,59 @@ public class BlockTANTemperatureCoil extends Block implements ITileEntityProvide
     }
     
     @Override
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
+        boolean flag = world.isBlockPowered(pos) || world.isBlockPowered(pos.up());
 
-        TileEntity te = worldIn.getTileEntity(pos);
+        TileEntity te = world.getTileEntity(pos);
         
-        if (!worldIn.isRemote && te != null)
+        if (!world.isRemote && te != null)
         {
             TileEntityTemperatureSpread tempFill = (TileEntityTemperatureSpread)te;
             
             if (flag)
             {
                 tempFill.fill();
+                world.setBlockState(pos, state.withProperty(POWERED, Boolean.valueOf(true)));
             }
             else
             {
                 tempFill.reset();
+                world.setBlockState(pos, state.withProperty(POWERED, Boolean.valueOf(false)));
             }
         }
     }
+    
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
+    @Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+    
+    @Override
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {VARIANT, POWERED});
+    }
+
+    public static enum CoilType implements IStringSerializable
+    {
+        COOLING, HEATING;
+        @Override
+        public String getName()
+        {
+            return this.name().toLowerCase();
+        }
+        @Override
+        public String toString()
+        {
+            return this.getName();
+        }
+    };
 }
