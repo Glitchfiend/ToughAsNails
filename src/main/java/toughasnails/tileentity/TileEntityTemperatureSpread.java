@@ -12,12 +12,12 @@ import java.util.Set;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -330,6 +330,13 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         NBTTagCompound obstructedCompound = new NBTTagCompound();
         writePosSet(obstructedCompound, this.obstructedPositions);
         compound.setTag("ObstructedPositions", obstructedCompound);
+    }
+    
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+    {
+        //This should function as it does in Vanilla, using Forges setup appears to break fireball spawning when the state is changed
+        return oldState.getBlock() != newSate.getBlock();
     }
     
     private void writePosSet(NBTTagCompound compound, Set<BlockPos> posSet)
