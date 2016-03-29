@@ -36,7 +36,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     
     public TileEntityTemperatureSpread()
     {
-        this.maxSpreadDistance = ENABLE_DEBUG ? 10 : 50;
+        this.maxSpreadDistance = 50;
         
         //Initialize sets for all strengths
         this.filledPositions = new Set[this.maxSpreadDistance + 1];
