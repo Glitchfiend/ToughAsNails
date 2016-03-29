@@ -227,7 +227,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     private boolean canFill(BlockPos pos)
     {
         //Only spread within enclosed areas, significantly reduces the impact on performance and suits the purpose of coils
-        return this.getWorld().isAirBlock(pos) && !this.getWorld().canSeeSky(pos);
+        return !this.getWorld().isSideSolid(pos, EnumFacing.UP, false) && !this.getWorld().canSeeSky(pos);
     }
     
     @Override
