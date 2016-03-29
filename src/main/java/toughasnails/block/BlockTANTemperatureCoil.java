@@ -30,7 +30,7 @@ public class BlockTANTemperatureCoil extends Block implements ITileEntityProvide
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) 
     {
-        return new TileEntityTemperatureSpread();
+        return new TileEntityTemperatureSpread(15);
     }
     
     @Override

@@ -7,13 +7,22 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
+import net.minecraftforge.common.util.Constants;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.temperature.modifier.TemperatureModifier.ExternalModifier;
 
 public class TemperatureStorage implements IStorage<ITemperature>
 {
@@ -24,6 +33,13 @@ public class TemperatureStorage implements IStorage<ITemperature>
         
         compound.setInteger("temperatureLevel", instance.getTemperature().getRawValue());
         compound.setInteger("temperatureTimer", instance.getChangeTime());
+        
+        NBTTagList externalModifierList = new NBTTagList();
+        for (ExternalModifier modifier : instance.getExternalModifiers().values())
+        {
+            externalModifierList.appendTag(modifier.serializeNBT());
+        }  
+        compound.setTag("ExternalModifiers", externalModifierList);
         
         return compound;
     }
@@ -39,6 +55,17 @@ public class TemperatureStorage implements IStorage<ITemperature>
         {
             instance.setTemperature(new Temperature(compound.getInteger("temperatureLevel")));
             instance.setChangeTime(compound.getInteger("temperatureTimer"));
+            
+            NBTTagList externalModifierTagList = compound.getTagList("ExternalModifiers", Constants.NBT.TAG_COMPOUND);
+            Map<String, ExternalModifier> externalModifierList = Maps.newHashMap();
+            for (int i = 0; i < externalModifierTagList.tagCount(); i++)
+            {
+                NBTTagCompound externalModifierCompound = externalModifierTagList.getCompoundTagAt(i);
+                ExternalModifier modifier = new ExternalModifier();
+                modifier.deserializeNBT(externalModifierCompound);
+                externalModifierList.put(modifier.getName(), modifier);
+            }
+            instance.setExternalModifiers(externalModifierList);
         }
     }
 }

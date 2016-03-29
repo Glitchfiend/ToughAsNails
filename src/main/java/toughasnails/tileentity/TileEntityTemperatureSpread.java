@@ -13,40 +13,54 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.stat.capability.ITemperature;
 
 public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 {
+    public static final int MAX_SPREAD_DISTANCE = 50;
+    public static final int RATE_MODIFIER = -500;
+    public static final boolean ENABLE_DEBUG = true;
+    
+    private Set<Entity> spawnedEntities;
+    
     private Set<BlockPos>[] filledPositions;
     private Set<BlockPos> obstructedPositions;
     
     private int updateTicks;
-    private int maxSpreadDistance;
+    private int temperatureModifier;
+
+    private AxisAlignedBB maxSpreadBox;
     
-    public static final boolean ENABLE_DEBUG = true;
-    private Set<Entity> spawnedEntities;
-    
-    public TileEntityTemperatureSpread()
+    public TileEntityTemperatureSpread() 
     {
-        this.maxSpreadDistance = 50;
-        
         //Initialize sets for all strengths
-        this.filledPositions = new Set[this.maxSpreadDistance + 1];
-        for (int i = 0; i < this.maxSpreadDistance + 1; i++)
+        this.filledPositions = new Set[MAX_SPREAD_DISTANCE + 1];
+        for (int i = 0; i < MAX_SPREAD_DISTANCE + 1; i++)
         {
             this.filledPositions[i] = Sets.newConcurrentHashSet();
         }
         this.obstructedPositions = Sets.newConcurrentHashSet();
         
         if (ENABLE_DEBUG) this.spawnedEntities = Sets.newHashSet();
+    }
+    
+    public TileEntityTemperatureSpread(int temperatureModifier)
+    {
+        this();
+        
+        this.temperatureModifier = temperatureModifier;
     }
     
     //TODO: Stagger updates if necessary, so verification occurs slower away from the base position
@@ -56,7 +70,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     {
         World world = this.getWorld();
 
-        //Verify every 2 seconds
+        //Verify every second
         if (++updateTicks % 20 == 0)
         {
             // Ensure there has been no changes since last time
@@ -66,13 +80,52 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
                 fill();
             }
             
+            //When first placed, this may be null because it hasn't been created when read from NBT
+            if (this.maxSpreadBox == null)
+            {
+                this.maxSpreadBox = new AxisAlignedBB(this.pos.getX() - MAX_SPREAD_DISTANCE, this.pos.getY() - MAX_SPREAD_DISTANCE, this.pos.getZ() - MAX_SPREAD_DISTANCE, this.pos.getX() + MAX_SPREAD_DISTANCE, this.pos.getY() + MAX_SPREAD_DISTANCE, this.pos.getZ() + MAX_SPREAD_DISTANCE);
+            }
+            
+            //Iterate over all nearby players
+            for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, this.maxSpreadBox))
+            {
+                BlockPos delta = player.getPosition().subtract(this.getPos());
+                int distance = Math.abs(delta.getX()) + Math.abs(delta.getY()) + Math.abs(delta.getZ());
+                boolean collided = false;
+                
+                //Check if the player collides with any of the filled positions.
+                //Player must be in a strength equal to or less than the distance they are away from the coil
+                outer:
+                for (int i = MAX_SPREAD_DISTANCE - distance; i >= 0; i--)
+                {
+                    for (BlockPos pos : this.filledPositions[i])
+                    {
+                        //If a collision is found, stop looking
+                        if (player.getEntityBoundingBox().intersects(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1D, pos.getY() + 1D, pos.getZ() + 1D))
+                        {
+                            collided = true;
+                            break outer;
+                        }
+                    }
+                }
+                
+                //Apply temperature modifier if collided
+                if (collided)
+                {
+                    ITemperature temperature = player.getCapability(TANCapabilities.TEMPERATURE, null);
+                    
+                    //Apply modifier for 5 seconds
+                    temperature.applyModifier("Climatisation", this.temperatureModifier, RATE_MODIFIER, 5 * 20);
+                }
+            }
+
             if (ENABLE_DEBUG)
             {
                 //There is a mismatch between the filled positions and the spawned entities, repopulate spawned entities
                 //If this is active, there should at least be a position in the set for the max spread distance
-                if (!world.isRemote && spawnedEntities.isEmpty() && !this.filledPositions[this.maxSpreadDistance].isEmpty())
+                if (!world.isRemote && spawnedEntities.isEmpty() && !this.filledPositions[MAX_SPREAD_DISTANCE].isEmpty())
                 {
-                    for (int strength = 0; strength <= this.maxSpreadDistance; strength++)
+                    for (int strength = 0; strength <= MAX_SPREAD_DISTANCE; strength++)
                     {
                         for (BlockPos pos : this.filledPositions[strength])
                         {
@@ -130,10 +183,10 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
             //Only attempt to update tracking for this position if there is air here.
             //Even positions already being tracked should be filled with air.
             if (this.canFill(offsetPos))
-                this.filledPositions[this.maxSpreadDistance].add(offsetPos);
+                this.filledPositions[MAX_SPREAD_DISTANCE].add(offsetPos);
         }
         
-        runStage(this.maxSpreadDistance - 1);
+        runStage(MAX_SPREAD_DISTANCE - 1);
         
         if (ENABLE_DEBUG)
         {
@@ -224,6 +277,11 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         return true;
     }
     
+    public boolean isActivated()
+    {
+        return !this.filledPositions[MAX_SPREAD_DISTANCE].isEmpty();
+    }
+    
     private boolean canFill(BlockPos pos)
     {
         //Only spread within enclosed areas, significantly reduces the impact on performance and suits the purpose of coils
@@ -235,11 +293,16 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     {
         super.readFromNBT(compound);
         
+        //After pos has been read
+        this.maxSpreadBox = new AxisAlignedBB(this.pos.getX() - MAX_SPREAD_DISTANCE, this.pos.getY() - MAX_SPREAD_DISTANCE, this.pos.getZ() - MAX_SPREAD_DISTANCE, this.pos.getX() + MAX_SPREAD_DISTANCE, this.pos.getY() + MAX_SPREAD_DISTANCE, this.pos.getZ() + MAX_SPREAD_DISTANCE);
+        
         if (compound.hasKey("FilledPositions"))
         {
+            this.temperatureModifier = compound.getInteger("TemperatureModifier");
+            
             NBTTagCompound filledCompound = compound.getCompoundTag("FilledPositions");
             
-            for (int strength = 0; strength <= this.maxSpreadDistance; strength++)
+            for (int strength = 0; strength <= MAX_SPREAD_DISTANCE; strength++)
             {
                 if (!filledCompound.hasKey("Strength" + strength)) throw new IllegalArgumentException("Compound missing strength sub-compound Strength" + strength + "!");
                 
@@ -260,7 +323,9 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         
         NBTTagCompound filledCompound = new NBTTagCompound();
         
-        for (int i = 0; i <= this.maxSpreadDistance; i++)
+        compound.setInteger("TemperatureModifier", this.temperatureModifier);
+        
+        for (int i = 0; i <= MAX_SPREAD_DISTANCE; i++)
         {
             NBTTagCompound strengthCompound = new NBTTagCompound();
             writePosSet(strengthCompound, this.filledPositions[i]);
@@ -271,8 +336,6 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         NBTTagCompound obstructedCompound = new NBTTagCompound();
         writePosSet(obstructedCompound, this.obstructedPositions);
         compound.setTag("ObstructedPositions", obstructedCompound);
-        
-        readFromNBT(compound);
     }
     
     private void writePosSet(NBTTagCompound compound, Set<BlockPos> posSet)
@@ -297,7 +360,8 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         
         for (int i = 0; i < count; i++)
         {
-            posSet.add(NBTUtil.getPosFromTag(compound.getCompoundTag("Pos" + i)));
+            BlockPos pos = NBTUtil.getPosFromTag(compound.getCompoundTag("Pos" + i));
+            if (pos != null) posSet.add(pos);
         }
         
         return posSet;
