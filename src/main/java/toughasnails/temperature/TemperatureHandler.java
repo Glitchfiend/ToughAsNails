@@ -76,11 +76,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         if (phase == Phase.END)
         {
             int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
-            boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
-            boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
-            
-            debugger.temperatureTimer = temperatureTimer;
-            
+
             newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
             newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
             newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
@@ -106,6 +102,11 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             debugger.end(newTempChangeTicks);
             
             newTempChangeTicks = Math.max(20, newTempChangeTicks);
+
+            boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
+            boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
+
+            debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = newTempChangeTicks;
 
             if (incrementTemperature)
