@@ -32,9 +32,6 @@ public class SeasonHandler
 {
     public static final int MIDNIGHT_TIME = 18000;
 
-    /**Stores the saved data for each dimension**/
-    private HashMap<Integer, SeasonSavedData> seasonsSavedData = Maps.newHashMap();
-
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {
@@ -54,11 +51,8 @@ public class SeasonHandler
             mapStorage.setData(SeasonSavedData.DATA_IDENTIFIER, savedData);
             savedData.markDirty(); //Mark for saving
         }
-
-        //Cache saved data object
-        this.seasonsSavedData.put(dimensionId, savedData);
     }
-
+    
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
@@ -66,17 +60,16 @@ public class SeasonHandler
 
         if (event.phase == TickEvent.Phase.END && world.provider.getDimension() == 0)
         {
-            SeasonSavedData savedData = this.seasonsSavedData.get(world.provider.getDimension());
+            MapStorage mapStorage = world.getPerWorldStorage();
+            SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
             Calendar calendar = new Calendar(savedData);
-
-            //System.out.println(savedData.seasonCycleTicks);
-            System.out.println(calendar.getSubSeason());
 
             if (savedData.seasonCycleTicks++ > Calendar.TOTAL_CYCLE_TICKS)
             {
                 savedData.seasonCycleTicks = 0;
             }
+
             savedData.markDirty();
         }
     }
@@ -91,7 +84,8 @@ public class SeasonHandler
         //Update colours at midnight if suitable
         if (event.phase == TickEvent.Phase.END && world != null && world.provider.getDimension() == 0) 
         {
-            SeasonSavedData savedData = this.seasonsSavedData.get(world.provider.getDimension());
+            MapStorage mapStorage = world.getPerWorldStorage();
+            SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
             Calendar calendar = new Calendar(savedData);
 
@@ -103,11 +97,14 @@ public class SeasonHandler
         }
     }
 
+    //TODO: We need to use actual positions for these, not just the origin
+    
     @SubscribeEvent
     public void onGrassColourChange(BiomeEvent.GetGrassColor event)
     {
         WorldClient world = Minecraft.getMinecraft().theWorld;
-        SeasonSavedData savedData = this.seasonsSavedData.get(world.provider.getDimension());
+        MapStorage mapStorage = world.getPerWorldStorage();
+        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
         Calendar calendar = new Calendar(savedData);
 
@@ -120,7 +117,8 @@ public class SeasonHandler
     public void onGrassColourChange(BiomeEvent.GetFoliageColor event)
     {
         WorldClient world = Minecraft.getMinecraft().theWorld;
-        SeasonSavedData savedData = this.seasonsSavedData.get(world.provider.getDimension());
+        MapStorage mapStorage = world.getPerWorldStorage();
+        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
         Calendar calendar = new Calendar(savedData);
 
