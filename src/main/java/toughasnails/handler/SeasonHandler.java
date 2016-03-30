@@ -37,35 +37,13 @@ public class SeasonHandler
     public static final int MIDNIGHT_TIME = 18000;
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event)
-    {
-        World world = event.getWorld();
-        int dimensionId = world.provider.getDimension();
-
-        //For now, we only want seasons in the overworld, and they should only be saved serverside
-        if (dimensionId != 0 || !world.isRemote) return;
-
-        MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
-
-        //If the saved data file hasn't been created before, create it
-        if (savedData == null)
-        {
-            savedData = new SeasonSavedData(SeasonSavedData.DATA_IDENTIFIER);
-            mapStorage.setData(SeasonSavedData.DATA_IDENTIFIER, savedData);
-            savedData.markDirty(); //Mark for saving
-        }
-    }
-    
-    @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
         World world = event.world;
 
         if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0)
         {
-            MapStorage mapStorage = world.getPerWorldStorage();
-            SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+            SeasonSavedData savedData = getSeasonSavedData(world);
 
             if (savedData.seasonCycleTicks++ > Calendar.TOTAL_CYCLE_TICKS)
             {
@@ -89,8 +67,7 @@ public class SeasonHandler
         
         if (!world.isRemote)
         {
-            MapStorage mapStorage = world.getPerWorldStorage();
-            SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+            SeasonSavedData savedData = getSeasonSavedData(world);
             PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
         }
     }
@@ -105,8 +82,6 @@ public class SeasonHandler
 
         if (event.phase == TickEvent.Phase.END && world != null && world.provider.getDimension() == 0) 
         {
-            MapStorage mapStorage = world.getPerWorldStorage();
-
             //Keep ticking as we're synchronized with the server only every second
             if (clientSeasonCycleTicks++ > Calendar.TOTAL_CYCLE_TICKS)
             {
@@ -135,9 +110,6 @@ public class SeasonHandler
     public void onGrassColourChange(BiomeEvent.GetGrassColor event)
     {
         WorldClient world = Minecraft.getMinecraft().theWorld;
-        MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
-
         Calendar calendar = new Calendar(clientSeasonCycleTicks);
         
         double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
@@ -149,13 +121,26 @@ public class SeasonHandler
     public void onGrassColourChange(BiomeEvent.GetFoliageColor event)
     {
         WorldClient world = Minecraft.getMinecraft().theWorld;
-        MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
-
         Calendar calendar = new Calendar(clientSeasonCycleTicks);
 
         double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
         double rainfall = (double)MathHelper.clamp_float(event.getBiome().getRainfall(), 0.0F, 1.0F);
         event.setNewColor(SeasonColors.getFoliageColorForSeason(calendar.getSubSeason(), temperature, rainfall));
+    }
+    
+    private static SeasonSavedData getSeasonSavedData(World world)
+    {
+        MapStorage mapStorage = world.getPerWorldStorage();
+        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+
+        //If the saved data file hasn't been created before, create it
+        if (savedData == null)
+        {
+            savedData = new SeasonSavedData(SeasonSavedData.DATA_IDENTIFIER);
+            mapStorage.setData(SeasonSavedData.DATA_IDENTIFIER, savedData);
+            savedData.markDirty(); //Mark for saving
+        }
+        
+        return savedData;
     }
 }
