@@ -9,6 +9,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.block.BlockTANCampfire;
+import toughasnails.season.Calendar;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
@@ -26,6 +27,8 @@ public class ObjectProximityModifier extends TemperatureModifier
         BlockPos playerPos = player.getPosition();
         
         int tempSourceBlocks = 0;
+        
+        //System.out.println(new Calendar(world).getSubSeason());
         
         for (int x = -2; x <= 2; x++)
         {

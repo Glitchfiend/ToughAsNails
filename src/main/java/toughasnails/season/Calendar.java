@@ -14,21 +14,21 @@ import toughasnails.api.season.Season.SubSeason;
 public final class Calendar 
 {
     /** Not configurable, the duration of a single day*/
-    private static final int DAY_DURATION = 24000;
-    
-    /** The duration of a sub in days*/
+    private static final int DAY_TICKS = /*24000*/20;
+    /** The duration of a sub season in days*/
     public static final int SUB_SEASON_DURATION = 5;
+    public static final int TOTAL_CYCLE_TICKS = (DAY_TICKS * SUB_SEASON_DURATION) * SubSeason.values().length;
     
-    public World world;
+    public final SeasonSavedData data;
     
-    public Calendar(World world)
+    public Calendar(SeasonSavedData data)
     {
-        this.world = world;
+        this.data = data;
     }
     
     public int getDay()
     {
-        return (int)(this.world.getTotalWorldTime() / DAY_DURATION);
+        return (int)(this.data.seasonCycleTicks / DAY_TICKS);
     }
     
     public SubSeason getSubSeason()

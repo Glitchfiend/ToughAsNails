@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
+import toughasnails.handler.SeasonHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
 import toughasnails.handler.ThirstOverlayHandler;
@@ -33,5 +34,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
         FMLCommonHandler.instance().bus().register(thirstStatHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
+        
+        MinecraftForge.EVENT_BUS.register(new SeasonHandler());
     }
 }
