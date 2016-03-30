@@ -19,16 +19,16 @@ public final class Calendar
     public static final int SUB_SEASON_DURATION = 5;
     public static final int TOTAL_CYCLE_TICKS = (DAY_TICKS * SUB_SEASON_DURATION) * SubSeason.values().length;
     
-    public final SeasonSavedData data;
+    public final int time;
     
-    public Calendar(SeasonSavedData data)
+    public Calendar(int time)
     {
-        this.data = data;
+        this.time = time;
     }
     
     public int getDay()
     {
-        return (int)(this.data.seasonCycleTicks / DAY_TICKS);
+        return (int)(this.time / DAY_TICKS);
     }
     
     public SubSeason getSubSeason()
