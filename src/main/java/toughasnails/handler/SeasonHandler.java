@@ -13,6 +13,8 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
@@ -23,6 +25,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.season.Calendar;
+import toughasnails.season.SeasonColors;
 import toughasnails.season.SeasonSavedData;
 
 public class SeasonHandler 
@@ -108,44 +111,21 @@ public class SeasonHandler
 
         Calendar calendar = new Calendar(savedData);
 
-        switch (calendar.getSubSeason())
-        {
-        case EARLY_SPRING:
-            event.setNewColor(0xFF0000);
-            break;
-        case MID_SPRING:
-            event.setNewColor(0xFF6A00);
-            break;
-        case LATE_SPRING:
-            event.setNewColor(0xFFD800);
-            break;
-        case EARLY_SUMMER:
-            event.setNewColor(0xB6FF00);
-            break;
-        case MID_SUMMER:
-            event.setNewColor(0x00FF21);
-            break;
-        case LATE_SUMMER:
-            event.setNewColor(0x00FF90);
-            break;
-        case EARLY_AUTUMN:
-            event.setNewColor(0x00FFFF);
-            break;
-        case MID_AUTUMN:
-            event.setNewColor(0x0094FF);
-            break;
-        case LATE_AUTUMN:
-            event.setNewColor(0x0026FF);
-            break;
-        case EARLY_WINTER:
-            event.setNewColor(0x4800FF);
-            break;
-        case MID_WINTER:
-            event.setNewColor(0xB200FF);
-            break;
-        case LATE_WINTER:
-            event.setNewColor(0xFF00DC);
-            break;
-        }
+        double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
+        double rainfall = (double)MathHelper.clamp_float(event.getBiome().getRainfall(), 0.0F, 1.0F);
+        event.setNewColor(SeasonColors.getGrassColorForSeason(calendar.getSubSeason(), temperature, rainfall));
+    }
+    
+    @SubscribeEvent
+    public void onGrassColourChange(BiomeEvent.GetFoliageColor event)
+    {
+        WorldClient world = Minecraft.getMinecraft().theWorld;
+        SeasonSavedData savedData = this.seasonsSavedData.get(world.provider.getDimension());
+
+        Calendar calendar = new Calendar(savedData);
+
+        double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
+        double rainfall = (double)MathHelper.clamp_float(event.getBiome().getRainfall(), 0.0F, 1.0F);
+        event.setNewColor(SeasonColors.getFoliageColorForSeason(calendar.getSubSeason(), temperature, rainfall));
     }
 }

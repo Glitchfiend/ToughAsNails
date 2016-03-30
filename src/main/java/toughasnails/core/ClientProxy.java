@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -26,6 +27,7 @@ import toughasnails.entities.projectile.EntityIceball;
 import toughasnails.entities.projectile.RenderIceball;
 import toughasnails.particle.EntitySnowflakeFX;
 import toughasnails.particle.TANParticleTypes;
+import toughasnails.season.SeasonColorReloadListener;
 
 public class ClientProxy extends CommonProxy
 {
@@ -37,6 +39,8 @@ public class ClientProxy extends CommonProxy
         //Entity rendering and other stuff will go here in future
         registerEntityRenderer(EntityIceball.class, RenderIceball.class);
         registerEntityRenderer(EntityFreeze.class, RenderFreeze.class);
+        
+        ((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(new SeasonColorReloadListener());
     }
 	
     @Override
