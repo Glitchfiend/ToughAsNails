@@ -24,7 +24,7 @@ import toughasnails.api.season.Season.SubSeason;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.Calendar;
 import toughasnails.season.SeasonSavedData;
-import toughasnails.util.ColourUtil;
+import toughasnails.util.SeasonColourUtil;
 
 public class SeasonHandler 
 {
@@ -85,7 +85,7 @@ public class SeasonHandler
             Calendar calendar = new Calendar(clientSeasonCycleTicks);
             
             //DEBUG
-            if (clientSeasonCycleTicks % 100 == 0)
+            if (clientSeasonCycleTicks % 60 == 0)
             {
                 System.out.println(calendar.getSubSeason());
             }

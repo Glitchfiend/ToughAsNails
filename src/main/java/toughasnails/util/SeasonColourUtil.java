@@ -9,7 +9,9 @@ package toughasnails.util;
 
 import java.awt.Color;
 
-public class ColourUtil 
+import toughasnails.api.season.Season.SubSeason;
+
+public class SeasonColourUtil 
 {
     public static int multiplyColours(int colour1, int colour2)
     {
@@ -39,5 +41,29 @@ public class ColourUtil
         Color colour2 = new Color(overColour);
         
         return new Color(overlayBlendChannel(colour1.getRed(), colour2.getRed()), overlayBlendChannel(colour1.getGreen(), colour2.getGreen()), overlayBlendChannel(colour1.getBlue(), colour2.getBlue())).getRGB();
+    }
+    
+    public static int saturateColour(int colour, int saturation)
+    {
+        float[] hsb = new float[3];
+        Color.RGBtoHSB((colour >> 16) & 255, (colour >> 8) & 255, colour & 255, hsb);
+        hsb[1] = saturation;
+        return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+    }
+    
+    public static int applySeasonalGrassColouring(SubSeason season, int originalColour)
+    {
+        int overlay = season.getGrassOverlay();
+        int saturation = season.getGrassSaturation();
+        int newColour = overlay == 0xFFFFFF ? originalColour : overlayBlend(originalColour, overlay);
+        return saturation != -1 ? saturateColour(newColour, saturation) : newColour;
+    }
+    
+    public static int applySeasonalFoliageColouring(SubSeason season, int originalColour)
+    {
+        int overlay = season.getFoliageOverlay();
+        int saturation = season.getFoliageSaturation();
+        int newColour = overlay == 0xFFFFFF ? originalColour : overlayBlend(originalColour, overlay);
+        return saturation != -1 ? saturateColour(newColour, saturation) : newColour;
     }
 }

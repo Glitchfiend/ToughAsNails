@@ -13,7 +13,7 @@ public enum Season
     
     public static enum SubSeason
     {
-        EARLY_SPRING(SPRING, 0x778087, 0x6F818F),
+        EARLY_SPRING(SPRING, 0x778087, 85, 0x6F818F, 85),
         MID_SPRING(SPRING, 0x6F818F, 0x5F849F),
         LATE_SPRING(SPRING, 0x678297, 0x3F89BF),
         EARLY_SUMMER(SUMMER, 0x73808B, 0x5F849F),
@@ -21,20 +21,29 @@ public enum Season
         LATE_SUMMER(SUMMER, 0x877777, 0x9F5F5F),
         EARLY_AUTUMN(AUTUMN, 0x8F6F6F, 0xB74747),
         MID_AUTUMN(AUTUMN, 0x9F5F5F, 0xCF2F2F),
-        LATE_AUTUMN(AUTUMN, 0xAF4F4F, 0xBF3F3F),
-        EARLY_WINTER(WINTER, 0x9F5F5F, 0xA75757),
-        MID_WINTER(WINTER, 0x8F6F6F, 0x9F5F5F),
-        LATE_WINTER(WINTER, 0xFFFFFF, 0x8F6F6F);
+        LATE_AUTUMN(AUTUMN, 0xAF4F4F, 85, 0xBF3F3F, 85),
+        EARLY_WINTER(WINTER, 0x9F5F5F, 60, 0xA75757, 60),
+        MID_WINTER(WINTER, 0x8F6F6F, 45, 0x9F5F5F, 45),
+        LATE_WINTER(WINTER, 0xFFFFFF, 60, 0x8F6F6F, 60);
         
         private Season season;
-        private int grassColour;
-        private int foliageColour;
+        private int grassOverlay;
+        private int grassSaturation;
+        private int foliageOverlay;
+        private int foliageSaturation;
+        
+        private SubSeason(Season season, int grassColour, int grassSaturation, int foliageColour, int foliageSaturation)
+        {
+            this.season = season;
+            this.grassOverlay = grassColour;
+            this.grassSaturation = grassSaturation;
+            this.foliageOverlay = foliageColour;
+            this.foliageSaturation = foliageSaturation; 
+        }
         
         private SubSeason(Season season, int grassColour, int foliageColour)
         {
-            this.season = season;
-            this.grassColour = grassColour;
-            this.foliageColour = foliageColour;
+            this(season, grassColour, -1, foliageColour, -1);
         }
         
         public Season getSeason()
@@ -42,14 +51,24 @@ public enum Season
             return this.season;
         }
         
-        public int getGrassColour()
+        public int getGrassOverlay()
         {
-            return this.grassColour;
+            return this.grassOverlay;
         }
         
-        public int getFoliageColour()
+        public int getGrassSaturation()
         {
-            return this.foliageColour;
+            return this.grassSaturation;
+        }
+        
+        public int getFoliageOverlay()
+        {
+            return this.foliageOverlay;
+        }
+        
+        public int getFoliageSaturation()
+        {
+            return this.foliageSaturation;
         }
     }
 }
