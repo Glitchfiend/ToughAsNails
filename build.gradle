@@ -1,20 +1,31 @@
 buildscript {
     repositories {
         jcenter()
+		mavenLocal()
+        mavenCentral()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+		maven {
+            name = 'sponge'
+            url = 'http://repo.spongepowered.org/maven'
+        }
     }
-    dependencies {
+	dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.3-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'maven'
 
-ext.configFile = file "build.properties"
+ext {
+    packaging = 'jar'
+	configFile = file "build.properties"
+}
 
 configFile.withReader {
     def prop = new Properties()
@@ -22,11 +33,44 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
+
 group = "glitchfiend.toughasnails"
 version = config.mod_version
 archivesBaseName = "ToughAsNails"
 
+repositories {
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/maven/'
+    }
+}
+
+dependencies {
+    compile('org.spongepowered:mixin:0.5.3-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+        exclude module: 'guava'
+    }
+}
+
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 	mappings = project.config.mappings_version
+}
+
+jar {
+	manifest {
+		attributes (
+			"TweakClass": "toughasnails.launch.TANLaunchTweaker",
+			"TweakOrder": 0,
+			"MixinConfigs": "mixins.toughasnails.json",
+			"FMLCorePluginContainsFMLMod": "true",
+			"ForceLoadAsMod": true
+		)
+	}
+}
+
+reobf {
+    jar {
+        extraFiles 'extraSrg.srg'
+    }
 }

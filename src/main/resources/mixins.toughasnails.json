@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "minVersion": "0.5.3",
+    "package": "toughasnails.mixin",
+    "refmap": "mixins.toughasnails.refmap.json",
+    "mixins": [
+        "world.biome.MixinBiomeGenBase"
+    ],
+    "client": [
+    ]
+}

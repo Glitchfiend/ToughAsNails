@@ -103,30 +103,6 @@ public class SeasonHandler
             }
         }
     }
-
-    //TODO: We need to use actual positions for these, not just the origin
-    
-    @SubscribeEvent
-    public void onGrassColourChange(BiomeEvent.GetGrassColor event)
-    {
-        WorldClient world = Minecraft.getMinecraft().theWorld;
-        Calendar calendar = new Calendar(clientSeasonCycleTicks);
-        
-        double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
-        double rainfall = (double)MathHelper.clamp_float(event.getBiome().getRainfall(), 0.0F, 1.0F);
-        event.setNewColor(SeasonColors.getGrassColorForSeason(calendar.getSubSeason(), temperature, rainfall));
-    }
-    
-    @SubscribeEvent
-    public void onGrassColourChange(BiomeEvent.GetFoliageColor event)
-    {
-        WorldClient world = Minecraft.getMinecraft().theWorld;
-        Calendar calendar = new Calendar(clientSeasonCycleTicks);
-
-        double temperature = (double)MathHelper.clamp_float(event.getBiome().getFloatTemperature(BlockPos.ORIGIN), 0.0F, 1.0F);
-        double rainfall = (double)MathHelper.clamp_float(event.getBiome().getRainfall(), 0.0F, 1.0F);
-        event.setNewColor(SeasonColors.getFoliageColorForSeason(calendar.getSubSeason(), temperature, rainfall));
-    }
     
     private static SeasonSavedData getSeasonSavedData(World world)
     {
