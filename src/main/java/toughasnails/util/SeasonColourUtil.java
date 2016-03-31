@@ -7,7 +7,8 @@
  ******************************************************************************/
 package toughasnails.util;
 
-import java.awt.Color;
+
+import org.lwjgl.util.Color;
 
 import net.minecraft.util.math.MathHelper;
 import toughasnails.api.season.Season.SubSeason;
@@ -38,20 +39,20 @@ public class SeasonColourUtil
     
     public static int overlayBlend(int underColour, int overColour)
     {
-        Color colour1 = new Color(underColour);
-        Color colour2 = new Color(overColour);
-        int r = overlayBlendChannel(colour1.getRed(), colour2.getRed());
-        int g = overlayBlendChannel(colour1.getGreen(), colour2.getGreen());
-        int b = overlayBlendChannel(colour1.getBlue(), colour2.getBlue());
+        int r = overlayBlendChannel((underColour >> 16) & 255, (underColour >> 16) & 255);
+        int g = overlayBlendChannel((underColour >> 8) & 255, (underColour >> 8) & 255);
+        int b = overlayBlendChannel(underColour & 255, underColour & 255);
         
-        return r << 16 | g << 8 | b;
+        return (r & 255) << 16 | (g & 255) << 8 | (b & 255);
     }
     
     public static int saturateColour(int colour, float saturationMultiplier)
     {
-        float[] hsb = Color.RGBtoHSB(colour >> 16, colour >> 8, colour, null);
-        hsb[1] = MathHelper.clamp_int((int)(colour * saturationMultiplier), 0, 100);
-        return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        Color newColour = getColourFromInt(colour);
+        float[] hsb = newColour.toHSB(null);
+        hsb[1] *= saturationMultiplier;
+        newColour.fromHSB(hsb[0], hsb[1], hsb[2]);
+        return getIntFromColour(newColour);
     }
     
     public static int applySeasonalGrassColouring(SubSeason season, int originalColour)
@@ -68,5 +69,15 @@ public class SeasonColourUtil
         float saturationMultiplier = season.getFoliageSaturationMultiplier();
         int newColour = overlay == 0xFFFFFF ? originalColour : overlayBlend(originalColour, overlay);
         return saturationMultiplier != -1 ? saturateColour(newColour, saturationMultiplier) : newColour;
+    }
+    
+    private static Color getColourFromInt(int colour)
+    {
+        return new Color((colour >> 16) & 255, (colour >> 8) & 255, colour & 255);
+    }
+    
+    private static int getIntFromColour(Color colour)
+    {
+        return (colour.getRed() & 255) << 16 | (colour.getGreen() & 255) << 8 | colour.getBlue() & 255;
     }
 }
