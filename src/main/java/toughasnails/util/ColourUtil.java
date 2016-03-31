@@ -11,19 +11,11 @@ import java.awt.Color;
 
 public class ColourUtil 
 {
-    public static int scaleMult(int a, int b)
+    public static int multiplyColours(int colour1, int colour2)
     {
-        return (a * b) + 128;
-    }
-
-    public static int scaleDiv(int r)
-    {
-        return ((r >> 8) + r) >> 8;
-    }
-
-    public static int scale(int a, int b)
-    {
-        return scaleDiv(scaleMult(a, b));
+        //Convert each colour to a scale between 0 and 1 and multiply them
+        //Multiply by 255 to bring back between 0 and 255
+        return (int)((colour1 / 255.0F) * (colour2 / 255.0F) * 255.0F);
     }
 
     public static int overlayBlendChannel(int underColour, int overColour)
@@ -31,11 +23,11 @@ public class ColourUtil
         int retVal;
         if (underColour < 128)
         {
-            retVal = scale(2 * underColour, overColour);
+            retVal = multiplyColours(2 * underColour, overColour);
         }
         else
         {
-            retVal = scale(2 * (255 - underColour), 255 - overColour);
+            retVal = multiplyColours(2 * (255 - underColour), 255 - overColour);
             retVal = 255 - retVal;
         }
         return retVal;

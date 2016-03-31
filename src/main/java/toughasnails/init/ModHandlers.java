@@ -72,7 +72,7 @@ public class ModHandlers
             {
                 Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
                 int foliage = biome.getFoliageColorAtPos(blockPosition);
-                int overlay = calendar.getSubSeason().getGrassColour();
+                int overlay = calendar.getSubSeason().getFoliageColour();
                 return overlay == 0xFFFFFF ? foliage : ColourUtil.overlayBlend(foliage, overlay);
             }
         };
