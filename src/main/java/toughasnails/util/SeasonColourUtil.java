@@ -39,31 +39,33 @@ public class SeasonColourUtil
     {
         Color colour1 = new Color(underColour);
         Color colour2 = new Color(overColour);
+        int r = overlayBlendChannel(colour1.getRed(), colour2.getRed());
+        int g = overlayBlendChannel(colour1.getGreen(), colour2.getGreen());
+        int b = overlayBlendChannel(colour1.getBlue(), colour2.getBlue());
         
-        return new Color(overlayBlendChannel(colour1.getRed(), colour2.getRed()), overlayBlendChannel(colour1.getGreen(), colour2.getGreen()), overlayBlendChannel(colour1.getBlue(), colour2.getBlue())).getRGB();
+        return new Color(r, g, b).getRGB();
     }
     
-    public static int saturateColour(int colour, int saturation)
+    public static int saturateColour(int colour, float saturationMultiplier)
     {
-        float[] hsb = new float[3];
-        Color.RGBtoHSB((colour >> 16) & 255, (colour >> 8) & 255, colour & 255, hsb);
-        hsb[1] = saturation;
-        return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        float[] hsb = Color.RGBtoHSB((colour >> 16) & 255, (colour >> 8) & 255, colour & 255, null);
+        hsb[1] = Math.min((int)(saturationMultiplier * saturationMultiplier), 100);
+        return /*Color.HSBtoRGB(hsb[0], hsb[1], hsb[2])*/colour;
     }
     
     public static int applySeasonalGrassColouring(SubSeason season, int originalColour)
     {
         int overlay = season.getGrassOverlay();
-        int saturation = season.getGrassSaturation();
+        float saturationMultiplier = season.getGrassSaturationMultiplier();
         int newColour = overlay == 0xFFFFFF ? originalColour : overlayBlend(originalColour, overlay);
-        return saturation != -1 ? saturateColour(newColour, saturation) : newColour;
+        return saturationMultiplier != -1 ? saturateColour(newColour, saturationMultiplier) : newColour;
     }
     
     public static int applySeasonalFoliageColouring(SubSeason season, int originalColour)
     {
         int overlay = season.getFoliageOverlay();
-        int saturation = season.getFoliageSaturation();
+        float saturationMultiplier = season.getFoliageSaturationMultiplier();
         int newColour = overlay == 0xFFFFFF ? originalColour : overlayBlend(originalColour, overlay);
-        return saturation != -1 ? saturateColour(newColour, saturation) : newColour;
+        return saturationMultiplier != -1 ? saturateColour(newColour, saturationMultiplier) : newColour;
     }
 }
