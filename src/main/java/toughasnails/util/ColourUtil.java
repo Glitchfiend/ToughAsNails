@@ -13,7 +13,7 @@ public class ColourUtil
 {
     public static int scaleMult(int a, int b)
     {
-        return a * (b + 128);
+        return (a * b) + 128;
     }
 
     public static int scaleDiv(int r)
@@ -46,6 +46,6 @@ public class ColourUtil
         Color colour1 = new Color(underColour);
         Color colour2 = new Color(overColour);
         
-        return overlayBlendChannel(colour1.getRed(), colour2.getRed()) << 16 | overlayBlendChannel(colour1.getGreen(), colour2.getGreen()) << 8 | overlayBlendChannel(colour1.getBlue(), colour2.getBlue());
+        return new Color(overlayBlendChannel(colour1.getRed(), colour2.getRed()), overlayBlendChannel(colour1.getGreen(), colour2.getGreen()), overlayBlendChannel(colour1.getBlue(), colour2.getBlue())).getRGB();
     }
 }
