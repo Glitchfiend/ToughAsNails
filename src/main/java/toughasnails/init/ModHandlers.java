@@ -59,7 +59,9 @@ public class ModHandlers
             public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
             {
                 Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
-                return ColourUtil.overlayBlend(biome.getGrassColorAtPos(blockPosition), calendar.getSubSeason().getGrassColour());
+                int grass = biome.getGrassColorAtPos(blockPosition);
+                int overlay = calendar.getSubSeason().getGrassColour();
+                return overlay == 0xFFFFFF ? grass : ColourUtil.overlayBlend(grass, overlay);
             }
         };
         
@@ -69,7 +71,9 @@ public class ModHandlers
             public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
             {
                 Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
-                return ColourUtil.overlayBlend(biome.getFoliageColorAtPos(blockPosition), calendar.getSubSeason().getFoliageColour());
+                int foliage = biome.getFoliageColorAtPos(blockPosition);
+                int overlay = calendar.getSubSeason().getGrassColour();
+                return overlay == 0xFFFFFF ? foliage : ColourUtil.overlayBlend(foliage, overlay);
             }
         };
     }
