@@ -85,10 +85,10 @@ public class SeasonHandler
             Calendar calendar = new Calendar(clientSeasonCycleTicks);
             
             //DEBUG
-            if (clientSeasonCycleTicks % 100 == 0)
-            {
+            //if (clientSeasonCycleTicks % 20 == 0)
+            //{
                 System.out.println(calendar.getSubSeason());
-            }
+            //}
             
             if (world != null && calendar.getSubSeason() != lastSeason)
             {

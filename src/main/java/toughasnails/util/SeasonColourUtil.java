@@ -39,9 +39,9 @@ public class SeasonColourUtil
     
     public static int overlayBlend(int underColour, int overColour)
     {
-        int r = overlayBlendChannel((underColour >> 16) & 255, (underColour >> 16) & 255);
-        int g = overlayBlendChannel((underColour >> 8) & 255, (underColour >> 8) & 255);
-        int b = overlayBlendChannel(underColour & 255, underColour & 255);
+        int r = overlayBlendChannel((underColour >> 16) & 255, (overColour >> 16) & 255);
+        int g = overlayBlendChannel((underColour >> 8) & 255, (overColour >> 8) & 255);
+        int b = overlayBlendChannel(underColour & 255, overColour & 255);
         
         return (r & 255) << 16 | (g & 255) << 8 | (b & 255);
     }
