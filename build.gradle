@@ -64,7 +64,8 @@ jar {
 			"TweakOrder": 0,
 			"MixinConfigs": "mixins.toughasnails.json",
 			"FMLCorePluginContainsFMLMod": "true",
-			"ForceLoadAsMod": true
+			"ForceLoadAsMod": true,
+			"FMLAT": "toughasnails_at.cfg"
 		)
 	}
 }

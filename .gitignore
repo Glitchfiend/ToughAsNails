@@ -7,3 +7,4 @@ bin/*
 .classpath
 /bin/
 /build/
+src/main/resources/META-INF/biomesoplenty_at.cfg

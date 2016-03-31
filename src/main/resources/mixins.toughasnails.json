@@ -4,7 +4,6 @@
     "package": "toughasnails.mixin",
     "refmap": "mixins.toughasnails.refmap.json",
     "mixins": [
-        "world.biome.MixinBiomeGenBase"
     ],
     "client": [
     ]

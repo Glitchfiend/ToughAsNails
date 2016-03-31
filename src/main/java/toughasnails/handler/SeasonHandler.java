@@ -7,35 +7,29 @@
  ******************************************************************************/
 package toughasnails.handler;
 
-import java.util.HashMap;
-
-import com.google.common.collect.Maps;
+import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.storage.MapStorage;
-import net.minecraftforge.event.terraingen.BiomeEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import toughasnails.api.season.Season;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.network.message.MessageSyncSeasonCycle;
-import toughasnails.network.message.MessageToggleUI;
 import toughasnails.season.Calendar;
-import toughasnails.season.SeasonColors;
 import toughasnails.season.SeasonSavedData;
+import toughasnails.util.ColourUtil;
 
 public class SeasonHandler 
 {
     public static final int MIDNIGHT_TIME = 18000;
-
+    
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {

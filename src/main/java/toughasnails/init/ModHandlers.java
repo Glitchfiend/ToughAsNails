@@ -1,7 +1,12 @@
 package toughasnails.init;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.SeasonHandler;
@@ -9,6 +14,8 @@ import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
 import toughasnails.handler.ThirstOverlayHandler;
 import toughasnails.handler.ThirstStatHandler;
+import toughasnails.season.Calendar;
+import toughasnails.util.ColourUtil;
 
 public class ModHandlers
 {
@@ -36,5 +43,34 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
+    
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+        {
+            registerSeasonColourHandlers();
+        }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    private static void registerSeasonColourHandlers()
+    {
+        BiomeColorHelper.GRASS_COLOR = new BiomeColorHelper.ColorResolver()
+        {
+            @Override
+            public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
+            {
+                Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
+                return ColourUtil.overlayBlend(biome.getGrassColorAtPos(blockPosition), calendar.getSubSeason().getGrassColour());
+            }
+        };
+        
+        BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
+        {
+            @Override
+            public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
+            {
+                Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
+                return ColourUtil.overlayBlend(biome.getFoliageColorAtPos(blockPosition), calendar.getSubSeason().getFoliageColour());
+            }
+        };
     }
 }
