@@ -7,14 +7,13 @@
  ******************************************************************************/
 package toughasnails.season;
 
-import net.minecraft.world.World;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
 
 public final class Calendar 
 {
     /** Not configurable, the duration of a single day*/
-    private static final int DAY_TICKS = 24000;
+    public static final int DAY_TICKS = 24000;
     /** The duration of a sub season in days*/
     public static final int SUB_SEASON_DURATION = 5;
     public static final int TOTAL_CYCLE_TICKS = (DAY_TICKS * SUB_SEASON_DURATION) * SubSeason.values().length;

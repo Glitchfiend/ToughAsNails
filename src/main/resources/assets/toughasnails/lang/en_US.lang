@@ -1,5 +1,7 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s
+commands.toughasnails.setseason.success=Set season to %s
+commands.toughasnails.setseason.fail=Invalid season %s
 
 itemGroup.tabToughAsNails=Tough As Nails
 

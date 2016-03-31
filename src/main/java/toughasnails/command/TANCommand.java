@@ -14,8 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.handler.SeasonHandler;
+import toughasnails.season.Calendar;
+import toughasnails.season.SeasonSavedData;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
 
@@ -60,6 +64,10 @@ public class TANCommand extends CommandBase
         {
             setTemperature(sender, args);
         }
+        else if ("setseason".equals(args[0]))
+        {
+            setSeason(sender, args);
+        }
     }
     
     private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
@@ -88,6 +96,33 @@ public class TANCommand extends CommandBase
         temperatureStats.setTemperature(new Temperature(newTemp));
 
         sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
+    }
+    
+    private void setSeason(ICommandSender sender, String[] args) throws CommandException
+    {
+        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+        SubSeason newSeason = null;
+        
+        for (SubSeason season : SubSeason.values())
+        {
+            if (season.toString().toLowerCase().equals(args[1].toLowerCase()))
+            {
+                newSeason = season;
+                break;
+            }
+        }
+        
+        if (newSeason != null)
+        {
+            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
+            seasonData.seasonCycleTicks = Calendar.DAY_TICKS * Calendar.SUB_SEASON_DURATION * newSeason.ordinal();
+            SeasonHandler.sendSeasonUpdate(player.worldObj);
+            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
+        }
+        else
+        {
+            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
+        }
     }
     
     @Override

@@ -46,7 +46,7 @@ public class SeasonHandler
             
             if (savedData.seasonCycleTicks % 20 == 0)
             {
-                PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));
+                sendSeasonUpdate(world);
             }
 
             savedData.markDirty();
@@ -59,11 +59,7 @@ public class SeasonHandler
         EntityPlayer player = event.player;
         World world = player.worldObj;
         
-        if (!world.isRemote)
-        {
-            SeasonSavedData savedData = getSeasonSavedData(world);
-            PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
-        }
+        sendSeasonUpdate(world);
     }
 
     private SubSeason lastSeason = null;
@@ -98,7 +94,16 @@ public class SeasonHandler
         }
     }
     
-    private static SeasonSavedData getSeasonSavedData(World world)
+    public static void sendSeasonUpdate(World world)
+    {
+        if (!world.isRemote)
+        {
+            SeasonSavedData savedData = getSeasonSavedData(world);
+            PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
+        }
+    }
+    
+    public static SeasonSavedData getSeasonSavedData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
         SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
