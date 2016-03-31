@@ -9,6 +9,7 @@ package toughasnails.util;
 
 import java.awt.Color;
 
+import net.minecraft.util.math.MathHelper;
 import toughasnails.api.season.Season.SubSeason;
 
 public class SeasonColourUtil 
@@ -43,14 +44,14 @@ public class SeasonColourUtil
         int g = overlayBlendChannel(colour1.getGreen(), colour2.getGreen());
         int b = overlayBlendChannel(colour1.getBlue(), colour2.getBlue());
         
-        return new Color(r, g, b).getRGB();
+        return r << 16 | g << 8 | b;
     }
     
     public static int saturateColour(int colour, float saturationMultiplier)
     {
-        float[] hsb = Color.RGBtoHSB((colour >> 16) & 255, (colour >> 8) & 255, colour & 255, null);
-        hsb[1] = Math.min((int)(saturationMultiplier * saturationMultiplier), 100);
-        return /*Color.HSBtoRGB(hsb[0], hsb[1], hsb[2])*/colour;
+        float[] hsb = Color.RGBtoHSB(colour >> 16, colour >> 8, colour, null);
+        hsb[1] = MathHelper.clamp_int((int)(colour * saturationMultiplier), 0, 100);
+        return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
     }
     
     public static int applySeasonalGrassColouring(SubSeason season, int originalColour)
