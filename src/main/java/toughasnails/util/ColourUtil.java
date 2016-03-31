@@ -46,6 +46,6 @@ public class ColourUtil
         Color colour1 = new Color(underColour);
         Color colour2 = new Color(overColour);
         
-        return new Color(overlayBlendChannel(colour1.getRed(), colour2.getRed()), overlayBlendChannel(colour1.getGreen(), colour2.getGreen()), overlayBlendChannel(colour1.getBlue(), colour2.getBlue())).getRGB();
+        return overlayBlendChannel(colour1.getRed(), colour2.getRed()) << 16 | overlayBlendChannel(colour1.getGreen(), colour2.getGreen()) << 8 | overlayBlendChannel(colour1.getBlue(), colour2.getBlue());
     }
 }
