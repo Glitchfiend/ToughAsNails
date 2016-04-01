@@ -10,7 +10,7 @@ package toughasnails.season;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
 
-public final class Calendar 
+public final class SeasonTime 
 {
     /** Not configurable, the duration of a single day*/
     public static final int DAY_TICKS = 24000;
@@ -20,7 +20,7 @@ public final class Calendar
     
     public final int time;
     
-    public Calendar(int time)
+    public SeasonTime(int time)
     {
         this.time = time;
     }

@@ -18,8 +18,8 @@ import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.handler.SeasonHandler;
-import toughasnails.season.Calendar;
 import toughasnails.season.SeasonSavedData;
+import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
 
@@ -114,8 +114,8 @@ public class TANCommand extends CommandBase
         
         if (newSeason != null)
         {
-            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
-            seasonData.seasonCycleTicks = Calendar.DAY_TICKS * Calendar.SUB_SEASON_DURATION * newSeason.ordinal();
+            SeasonSavedData seasonData = SeasonHandler.getSeasonData(player.worldObj);
+            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
             SeasonHandler.sendSeasonUpdate(player.worldObj);
             sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
         }

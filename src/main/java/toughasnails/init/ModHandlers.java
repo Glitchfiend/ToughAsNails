@@ -14,7 +14,7 @@ import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
 import toughasnails.handler.ThirstOverlayHandler;
 import toughasnails.handler.ThirstStatHandler;
-import toughasnails.season.Calendar;
+import toughasnails.season.SeasonTime;
 import toughasnails.util.SeasonColourUtil;
 
 public class ModHandlers
@@ -58,7 +58,7 @@ public class ModHandlers
             @Override
             public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
             {
-                Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
+                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
                 return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
             }
         };
@@ -68,7 +68,7 @@ public class ModHandlers
             @Override
             public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
             {
-                Calendar calendar = new Calendar(SeasonHandler.clientSeasonCycleTicks);
+                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
                 return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));
             }
         };

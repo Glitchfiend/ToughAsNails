@@ -22,8 +22,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.network.message.MessageSyncSeasonCycle;
-import toughasnails.season.Calendar;
 import toughasnails.season.SeasonSavedData;
+import toughasnails.season.SeasonTime;
 import toughasnails.util.SeasonColourUtil;
 
 public class SeasonHandler 
@@ -37,9 +37,9 @@ public class SeasonHandler
 
         if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0)
         {
-            SeasonSavedData savedData = getSeasonSavedData(world);
+            SeasonSavedData savedData = getSeasonData(world);
 
-            if (savedData.seasonCycleTicks++ > Calendar.TOTAL_CYCLE_TICKS)
+            if (savedData.seasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
             {
                 savedData.seasonCycleTicks = 0;
             }
@@ -73,12 +73,12 @@ public class SeasonHandler
         if (event.phase == TickEvent.Phase.END && world != null && world.provider.getDimension() == 0) 
         {
             //Keep ticking as we're synchronized with the server only every second
-            if (clientSeasonCycleTicks++ > Calendar.TOTAL_CYCLE_TICKS)
+            if (clientSeasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
             {
                 clientSeasonCycleTicks = 0;
             }
             
-            Calendar calendar = new Calendar(clientSeasonCycleTicks);
+            SeasonTime calendar = new SeasonTime(clientSeasonCycleTicks);
             
             //DEBUG
             if (clientSeasonCycleTicks % 100 == 0)
@@ -98,12 +98,12 @@ public class SeasonHandler
     {
         if (!world.isRemote)
         {
-            SeasonSavedData savedData = getSeasonSavedData(world);
+            SeasonSavedData savedData = getSeasonData(world);
             PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
         }
     }
     
-    public static SeasonSavedData getSeasonSavedData(World world)
+    public static SeasonSavedData getSeasonData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
         SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);

@@ -9,7 +9,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.block.BlockTANCampfire;
-import toughasnails.season.Calendar;
+import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 

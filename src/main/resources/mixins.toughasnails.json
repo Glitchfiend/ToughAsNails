@@ -4,6 +4,7 @@
     "package": "toughasnails.mixin",
     "refmap": "mixins.toughasnails.refmap.json",
     "mixins": [
+        "block.MixinBlockCrops"
     ],
     "client": [
     ]
