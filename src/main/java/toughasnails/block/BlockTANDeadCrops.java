@@ -7,10 +7,13 @@
  ******************************************************************************/
 package toughasnails.block;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -23,12 +26,25 @@ public class BlockTANDeadCrops extends BlockBush
     {
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
+        this.setCreativeTab((CreativeTabs)null);
         this.disableStats();
+    }
+    
+    @Override
+    protected boolean canSustainBush(IBlockState state)
+    {
+        return state.getBlock() == Blocks.farmland;
     }
     
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return BOUNDING_BOX;
+    }
+    
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
     }
 }
