@@ -46,14 +46,6 @@ public class PlayerStateModifier extends TemperatureModifier
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
         
-        debugger.start(Modifier.LIGHT_LEVEL_TARGET, newTemperatureLevel);
-        
-        if (!world.canSeeSky(playerPos))
-        {
-            newTemperatureLevel -= (15 - world.getLight(playerPos)) / 3;
-        }
-        
-        debugger.end(newTemperatureLevel);
         debugger.start(Modifier.HEALTH_TARGET, newTemperatureLevel);
         
         if (player.getHealth() <= 10.0F)

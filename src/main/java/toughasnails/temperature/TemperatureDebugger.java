@@ -136,7 +136,6 @@ public class TemperatureDebugger
         NEARBY_BLOCKS_TARGET("Nearby Blocks", ModifierType.TARGET),
         SPRINTING_RATE("Sprinting", ModifierType.RATE),
         HEALTH_RATE("Health", ModifierType.RATE),
-        LIGHT_LEVEL_TARGET("Light Level", ModifierType.TARGET),
         HEALTH_TARGET("Health", ModifierType.TARGET),
         SPRINTING_TARGET("Sprinting", ModifierType.TARGET),
         TIME_TARGET("Time", ModifierType.TARGET),
