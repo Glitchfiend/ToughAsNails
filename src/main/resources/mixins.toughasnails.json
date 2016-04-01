@@ -4,8 +4,10 @@
     "package": "toughasnails.mixin",
     "refmap": "mixins.toughasnails.refmap.json",
     "mixins": [
-        "block.MixinBlockCrops"
+        "block.MixinBlockCrops",
+        "world.MixinWorld"
     ],
     "client": [
+        "client.renderer.MixinEntityRenderer"
     ]
 }
