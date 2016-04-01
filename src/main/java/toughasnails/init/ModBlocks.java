@@ -1,8 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.TANBlocks.campfire;
-import static toughasnails.api.TANBlocks.gas;
-import static toughasnails.api.TANBlocks.temperature_coil;
+import static toughasnails.api.TANBlocks.*;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -14,6 +12,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
 import toughasnails.block.BlockTANCampfire;
+import toughasnails.block.BlockTANDeadCrops;
 import toughasnails.block.BlockTANGas;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.core.ToughAsNails;
@@ -30,6 +29,7 @@ public class ModBlocks
         gas = registerBlock( new BlockTANGas(), "gas" );
         gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
+        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops");
         
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
     }

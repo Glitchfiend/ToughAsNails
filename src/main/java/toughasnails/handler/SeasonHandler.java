@@ -80,12 +80,6 @@ public class SeasonHandler
             
             SeasonTime calendar = new SeasonTime(clientSeasonCycleTicks);
             
-            //DEBUG
-            if (clientSeasonCycleTicks % 100 == 0)
-            {
-                System.out.println(calendar.getSubSeason());
-            }
-            
             if (world != null && calendar.getSubSeason() != lastSeason)
             {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();

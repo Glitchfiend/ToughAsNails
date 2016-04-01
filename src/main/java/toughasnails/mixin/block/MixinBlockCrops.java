@@ -20,6 +20,10 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.TANBlocks;
+import toughasnails.api.season.IDecayableCrop;
+import toughasnails.api.season.Season;
+import toughasnails.api.season.SeasonHelper;
 
 @Mixin(BlockCrops.class)
 public abstract class MixinBlockCrops extends BlockBush implements IGrowable
@@ -27,6 +31,11 @@ public abstract class MixinBlockCrops extends BlockBush implements IGrowable
     @Inject(method = "updateTick", at = @At("RETURN"))
     public void onUpdateTick(World world, BlockPos pos, IBlockState state, Random rand, CallbackInfo ci) 
     {
-        System.out.println(this.delegate.getResourceName().getResourceDomain());
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        
+        if (season == Season.WINTER && (this.delegate.getResourceName().getResourceDomain().equals("minecraft") || this instanceof IDecayableCrop))
+        {
+            world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
+        }
     }
 }
