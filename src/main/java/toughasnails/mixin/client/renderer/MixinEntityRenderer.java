@@ -22,10 +22,13 @@ import toughasnails.season.SeasonTime;
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer implements IResourceManagerReloadListener
 {
-    //Redirect calls to getFloatTemperature here on the client only. This allows us to return 0 causing
-    //snow to render
+    //
+    // Redirect calls to getFloatTemperature here on the client only.
+    //
+    
+    //Render snow instead of rain
     @Redirect(method = "renderRainSnow(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/BiomeGenBase;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
-    private float onGetFloatTemperature(BiomeGenBase this$0, BlockPos pos) 
+    private float onGetFloatTemperature1(BiomeGenBase this$0, BlockPos pos) 
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
@@ -38,4 +41,21 @@ public abstract class MixinEntityRenderer implements IResourceManagerReloadListe
             return this$0.getFloatTemperature(pos);
         }
     }
+    
+    //Prevent adding rain particles
+    @Redirect(method = "addRainParticles()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/BiomeGenBase;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
+    private float onGetFloatTemperature2(BiomeGenBase this$0, BlockPos pos) 
+    {
+        Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
+        
+        if (season == Season.WINTER)
+        {
+            return 0.0F;
+        }
+        else
+        {
+            return this$0.getFloatTemperature(pos);
+        }
+    }
+    
 }
