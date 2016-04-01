@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
+import toughasnails.handler.ProviderIceHandler;
 import toughasnails.handler.SeasonHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
@@ -43,6 +44,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
+        MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
     
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {

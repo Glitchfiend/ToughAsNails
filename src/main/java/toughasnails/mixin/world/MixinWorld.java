@@ -22,9 +22,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.season.ISeasonedWorld;
 
 @Mixin(World.class)
-public abstract class MixinWorld implements IBlockAccess
+public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
 {
     @Shadow
     public abstract int getLightFor(EnumSkyBlock type, BlockPos pos);
@@ -36,9 +37,22 @@ public abstract class MixinWorld implements IBlockAccess
     @Overwrite
     public boolean canSnowAtBody(BlockPos pos, boolean checkLight)
     {
+        Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
+        return canSnowAtInSeason(pos, checkLight, season);
+    }
+    
+    @Overwrite
+    public boolean canBlockFreezeBody(BlockPos pos, boolean noWaterAdj)
+    {
+        Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
+        return canBlockFreezeInSeason(pos, noWaterAdj, season);
+    }
+    
+    @Override
+    public boolean canSnowAtInSeason(BlockPos pos, boolean checkLight, Season season)
+    {
         BiomeGenBase biome = this.getBiomeGenForCoords(pos);
         float temperature = biome.getFloatTemperature(pos);
-        Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (temperature > 0.15F && !(season == Season.WINTER && temperature <= 0.7F))
@@ -63,12 +77,12 @@ public abstract class MixinWorld implements IBlockAccess
         return true;
     }
     
-    @Overwrite
-    public boolean canBlockFreezeBody(BlockPos pos, boolean noWaterAdj)
+    @Override
+    public boolean canBlockFreezeInSeason(BlockPos pos, boolean noWaterAdj, Season season)
     {
         BiomeGenBase biomegenbase = this.getBiomeGenForCoords(pos);
         float temperature = biomegenbase.getFloatTemperature(pos);
-        Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
+
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (temperature > 0.15F && !(season == Season.WINTER && temperature <= 0.7F))
