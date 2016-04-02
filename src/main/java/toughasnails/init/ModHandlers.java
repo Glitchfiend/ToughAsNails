@@ -17,6 +17,7 @@ import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
+import toughasnails.handler.season.StopSpawnHandler;
 import toughasnails.season.SeasonTime;
 import toughasnails.util.SeasonColourUtil;
 
@@ -49,6 +50,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
         MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonSleepHandler());
+        MinecraftForge.EVENT_BUS.register(new StopSpawnHandler());
     
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
