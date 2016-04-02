@@ -17,6 +17,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 
@@ -26,7 +27,7 @@ public class RandomUpdateHandler
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == Phase.END && !event.world.isRemote)
+        if (event.phase == Phase.END && event.side == Side.SERVER)
         {
             WorldServer world = (WorldServer)event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
