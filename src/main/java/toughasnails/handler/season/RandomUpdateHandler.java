@@ -31,8 +31,8 @@ public class RandomUpdateHandler
             WorldServer world = (WorldServer)event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
             
-            //Only melt when it isn't winter and it isn't raining
-            if (season != Season.WINTER && !world.isRaining())
+            //Only melt when it isn't winter
+            if (season != Season.WINTER)
             {
                 for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkManager().getChunkIterator()); iterator.hasNext();)
                 {
