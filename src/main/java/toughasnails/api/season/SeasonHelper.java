@@ -23,11 +23,11 @@ public class SeasonHelper
         {
             if (!world.isRemote)
             {
-                data = (ISeasonData)Class.forName("toughasnails.handler.SeasonHandler").getMethod("getServerSeasonData", World.class).invoke(null, world);
+                data = (ISeasonData)Class.forName("toughasnails.handler.season.SeasonHandler").getMethod("getServerSeasonData", World.class).invoke(null, world);
             }
             else
             {
-                data = (ISeasonData)Class.forName("toughasnails.handler.SeasonHandler").getMethod("getClientSeasonData").invoke(null);
+                data = (ISeasonData)Class.forName("toughasnails.handler.season.SeasonHandler").getMethod("getClientSeasonData").invoke(null);
             }
         }
         catch (Exception e)
@@ -36,5 +36,11 @@ public class SeasonHelper
         }
 
         return data;
+    }
+    
+    public static boolean canSnowAtTempInSeason(Season season, float temperature)
+    {
+        //If we're in winter, the temperature can be anything equal to or below 0.7
+        return temperature < 0.15F || (season == Season.WINTER && temperature <= 0.7F);
     }
 }

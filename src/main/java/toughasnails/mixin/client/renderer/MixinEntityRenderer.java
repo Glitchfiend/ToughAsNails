@@ -16,7 +16,7 @@ import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
 import toughasnails.api.season.Season;
-import toughasnails.handler.SeasonHandler;
+import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonTime;
 
 @Mixin(EntityRenderer.class)

@@ -5,7 +5,7 @@
  * 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.handler;
+package toughasnails.handler.season;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

@@ -17,7 +17,7 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.handler.SeasonHandler;
+import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;

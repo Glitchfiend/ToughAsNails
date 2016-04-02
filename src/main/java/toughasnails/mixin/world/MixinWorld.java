@@ -70,7 +70,7 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
         float temperature = biome.getFloatTemperature(pos);
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
-        if (temperature > 0.15F && !(season == Season.WINTER && temperature <= 0.7F))
+        if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
         {
             return false;
         }
@@ -97,10 +97,9 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
     {
         BiomeGenBase biomegenbase = this.getBiomeGenForCoords(pos);
         float temperature = biomegenbase.getFloatTemperature(pos);
-
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
-        if (temperature > 0.15F && !(season == Season.WINTER && temperature <= 0.7F))
+        if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
         {
             return false;
         }

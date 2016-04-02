@@ -5,7 +5,7 @@
  * 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.handler;
+package toughasnails.handler.season;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season.SubSeason;
+import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;

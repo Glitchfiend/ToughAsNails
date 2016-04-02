@@ -25,6 +25,7 @@ import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 
+//TODO: Change this over to using WorldTickEvent (see RandomUpdateHandler)
 @Mixin(BlockCrops.class)
 public abstract class MixinBlockCrops extends BlockBush implements IGrowable
 {
