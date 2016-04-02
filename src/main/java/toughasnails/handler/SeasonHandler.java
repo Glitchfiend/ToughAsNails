@@ -23,8 +23,6 @@ import toughasnails.season.SeasonTime;
 
 public class SeasonHandler 
 {
-    public static final int MIDNIGHT_TIME = 18000;
-    
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
@@ -63,9 +61,9 @@ public class SeasonHandler
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) 
     {
-        WorldClient world = Minecraft.getMinecraft().theWorld;
+        int dimension = Minecraft.getMinecraft().thePlayer.dimension;
 
-        if (event.phase == TickEvent.Phase.END && world != null && world.provider.getDimension() == 0) 
+        if (event.phase == TickEvent.Phase.END && dimension == 0) 
         {
             //Keep ticking as we're synchronized with the server only every second
             if (clientSeasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
@@ -75,7 +73,7 @@ public class SeasonHandler
             
             SeasonTime calendar = new SeasonTime(clientSeasonCycleTicks);
             
-            if (world != null && calendar.getSubSeason() != lastSeason)
+            if (calendar.getSubSeason() != lastSeason)
             {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
                 lastSeason = calendar.getSubSeason();
