@@ -61,6 +61,9 @@ public class SeasonHandler
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) 
     {
+        //Only do this when in the world
+        if (Minecraft.getMinecraft().thePlayer == null) return;
+        
         int dimension = Minecraft.getMinecraft().thePlayer.dimension;
 
         if (event.phase == TickEvent.Phase.END && dimension == 0) 
