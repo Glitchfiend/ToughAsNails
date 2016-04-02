@@ -143,7 +143,8 @@ public class TemperatureDebugger
         WET_TARGET("Wet", ModifierType.TARGET),
         SNOW_TARGET("Snow", ModifierType.TARGET),
         CLIMATISATION_TARGET("Climatisation", ModifierType.TARGET),
-        CLIMATISATION_RATE("Climatisation", ModifierType.RATE);
+        CLIMATISATION_RATE("Climatisation", ModifierType.RATE),
+        SEASON_TARGET("Season", ModifierType.TARGET);
         
         public final String name;
         public final ModifierType modifierType;

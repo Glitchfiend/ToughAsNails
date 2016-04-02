@@ -32,6 +32,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
+import toughasnails.temperature.modifier.SeasonModifier;
 import toughasnails.temperature.modifier.TemperatureModifier;
 import toughasnails.temperature.modifier.TemperatureModifier.ExternalModifier;
 import toughasnails.temperature.modifier.TimeModifier;
@@ -51,6 +52,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     private TemperatureModifier objectProximityModifier;
     private TemperatureModifier weatherModifier;
     private TemperatureModifier timeModifier;
+    private TemperatureModifier seasonModifier;
     
     private Map<String, TemperatureModifier.ExternalModifier> externalModifiers;
     
@@ -66,6 +68,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         this.objectProximityModifier = new ObjectProximityModifier(debugger);
         this.weatherModifier = new WeatherModifier(debugger);
         this.timeModifier = new TimeModifier(debugger);
+        this.seasonModifier = new SeasonModifier(debugger);
         
         this.externalModifiers = Maps.newHashMap();
     }
@@ -127,6 +130,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
+                targetTemperature = seasonModifier.modifyTarget(world, player, targetTemperature);
                 
                 debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature.getRawValue());
                 for (TemperatureModifier.ExternalModifier modifier : this.externalModifiers.values())
