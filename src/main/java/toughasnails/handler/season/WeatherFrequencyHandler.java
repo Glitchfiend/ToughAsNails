@@ -30,12 +30,12 @@ public class WeatherFrequencyHandler
             //their duration.
             if (season == Season.WINTER)
             {
-                if (!world.isThundering() && world.getWorldInfo().getThunderTime() <= 36000)
+                if (!world.isThundering() && world.getWorldInfo().getThunderTime() > 36000)
                 {
                     world.getWorldInfo().setThunderTime(world.rand.nextInt(24000) + 12000);
                 }
 
-                if (!world.isRaining() && world.getWorldInfo().getRainTime() <= 36000)
+                if (!world.isRaining() && world.getWorldInfo().getRainTime() > 36000)
                 {
                     world.getWorldInfo().setRainTime(world.rand.nextInt(24000) + 12000);
                 }
