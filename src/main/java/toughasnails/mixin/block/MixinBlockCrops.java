@@ -24,17 +24,19 @@ import toughasnails.api.TANBlocks;
 import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureHelper;
 
 //TODO: Change this over to using WorldTickEvent (see RandomUpdateHandler)
 @Mixin(BlockCrops.class)
-public abstract class MixinBlockCrops extends BlockBush implements IGrowable
+public abstract class MixinBlockCrops extends BlockBush implements IGrowable, IDecayableCrop
 {
     @Inject(method = "updateTick", at = @At("RETURN"))
     public void onUpdateTick(World world, BlockPos pos, IBlockState state, Random rand, CallbackInfo ci) 
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && (this.delegate.getResourceName().getResourceDomain().equals("minecraft") || this instanceof IDecayableCrop))
+        if (season == Season.WINTER && this instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)))
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }

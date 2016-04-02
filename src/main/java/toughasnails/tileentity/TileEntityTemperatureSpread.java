@@ -25,9 +25,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.stat.capability.ITemperature;
+import toughasnails.api.temperature.ITemperatureRegulator;
+import toughasnails.api.temperature.Temperature;
 
-public class TileEntityTemperatureSpread extends TileEntity implements ITickable
+public class TileEntityTemperatureSpread extends TileEntity implements ITickable, ITemperatureRegulator
 {
     public static final int MAX_SPREAD_DISTANCE = 50;
     public static final int RATE_MODIFIER = -500;
@@ -279,7 +282,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     private boolean canFill(BlockPos pos)
     {
         //Only spread within enclosed areas, significantly reduces the impact on performance and suits the purpose of coils
-        return !this.getWorld().isBlockFullCube(pos) && !this.getWorld().canSeeSky(pos);
+        return !this.getWorld().isBlockFullCube(pos) && (!this.getWorld().canSeeSky(pos) || this.getWorld().getBlockState(pos).getBlock() instanceof IDecayableCrop);
     }
     
     @Override
@@ -366,5 +369,23 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         }
         
         return posSet;
+    }
+
+    @Override
+    public Temperature getRegulatedTemperature() 
+    {
+        return new Temperature(this.temperatureModifier);
+    }
+
+    @Override
+    public boolean isPosRegulated(BlockPos pos) 
+    {
+        for (int i = 0; i < MAX_SPREAD_DISTANCE; i++)
+        {
+            Set<BlockPos> regulatedPositions = this.filledPositions[i];
+            if (regulatedPositions.contains(pos)) return true;
+        }
+        
+        return false;
     }
 }

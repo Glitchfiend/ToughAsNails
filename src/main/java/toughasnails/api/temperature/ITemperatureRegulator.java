@@ -5,12 +5,12 @@
  * 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.api.season;
+package toughasnails.api.temperature;
 
-/** 
- * A marker interface which should be implemented by crops which decay
- * in the winter in the absence of proper heating.
- */
-public interface IDecayableCrop {
+import net.minecraft.util.math.BlockPos;
 
+public interface ITemperatureRegulator 
+{
+    public Temperature getRegulatedTemperature();
+    public boolean isPosRegulated(BlockPos pos);
 }
