@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 public class SeasonHelper 
 {
     /** 
-     * Obtains data about the state of the season cycle in the world. This will only work
-     * server-side.
+     * Obtains data about the state of the season cycle in the world. This works both on
+     * the client and the server
      */
     public static ISeasonData getSeasonData(World world)
     {
@@ -21,13 +21,20 @@ public class SeasonHelper
         
         try
         {
-            data = (ISeasonData)Class.forName("toughasnails.handler.SeasonHandler").getMethod("getSeasonData", World.class).invoke(null, world);
+            if (!world.isRemote)
+            {
+                data = (ISeasonData)Class.forName("toughasnails.handler.SeasonHandler").getMethod("getServerSeasonData", World.class).invoke(null, world);
+            }
+            else
+            {
+                data = (ISeasonData)Class.forName("toughasnails.handler.SeasonHandler").getMethod("getClientSeasonData").invoke(null);
+            }
         }
         catch (Exception e)
         {
             throw new RuntimeException("An error occurred obtaining season data", e);
         }
-        
+
         return data;
     }
 }

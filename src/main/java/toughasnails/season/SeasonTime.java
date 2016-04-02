@@ -7,10 +7,11 @@
  ******************************************************************************/
 package toughasnails.season;
 
+import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
 
-public final class SeasonTime 
+public final class SeasonTime implements ISeasonData
 {
     /** Not configurable, the duration of a single day*/
     public static final int DAY_TICKS = 24000;
@@ -30,6 +31,13 @@ public final class SeasonTime
         return (int)(this.time / DAY_TICKS);
     }
     
+    @Override
+    public int getSeasonCycleTicks() 
+    {
+        return this.time;
+    }
+    
+    @Override
     public SubSeason getSubSeason()
     {
         int index = (getDay() / SUB_SEASON_DURATION) % SubSeason.values().length;

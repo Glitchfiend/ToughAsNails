@@ -32,7 +32,7 @@ public abstract class MixinEntityRenderer implements IResourceManagerReloadListe
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
-        if (season == Season.WINTER)
+        if (this$0.getTemperature() <= 0.7F && season == Season.WINTER)
         {
             return 0.0F;
         }
@@ -48,7 +48,7 @@ public abstract class MixinEntityRenderer implements IResourceManagerReloadListe
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
-        if (season == Season.WINTER)
+        if (this$0.getTemperature() <= 0.7F && season == Season.WINTER)
         {
             return 0.0F;
         }

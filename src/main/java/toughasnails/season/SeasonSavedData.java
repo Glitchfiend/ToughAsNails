@@ -9,10 +9,8 @@ package toughasnails.season;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldSavedData;
-import toughasnails.api.season.ISeasonData;
-import toughasnails.api.season.Season.SubSeason;
 
-public class SeasonSavedData extends WorldSavedData implements ISeasonData
+public class SeasonSavedData extends WorldSavedData
 {
     public static final String DATA_IDENTIFIER = "seasons";
     
@@ -39,19 +37,5 @@ public class SeasonSavedData extends WorldSavedData implements ISeasonData
     public void writeToNBT(NBTTagCompound nbt) 
     {
         nbt.setInteger("SeasonCycleTicks", this.seasonCycleTicks);
-    }
-
-    @Override
-    public int getSeasonCycleTicks() 
-    {
-        return this.seasonCycleTicks;
-    }
-
-    //A convenience method to implement ISeasonData, prevents the need to include SeasonTime in
-    //the api (potentially enabling stuff to be broken)
-    @Override
-    public SubSeason getSubSeason() 
-    {
-        return new SeasonTime(seasonCycleTicks).getSubSeason();
     }
 }

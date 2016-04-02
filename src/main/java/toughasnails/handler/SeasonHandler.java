@@ -7,24 +7,19 @@
  ******************************************************************************/
 package toughasnails.handler;
 
-import org.spongepowered.asm.mixin.MixinEnvironment.Side;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
-import toughasnails.util.SeasonColourUtil;
 
 public class SeasonHandler 
 {
@@ -37,7 +32,7 @@ public class SeasonHandler
 
         if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0)
         {
-            SeasonSavedData savedData = getSeasonData(world);
+            SeasonSavedData savedData = getSeasonSavedData(world);
 
             if (savedData.seasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
             {
@@ -92,12 +87,12 @@ public class SeasonHandler
     {
         if (!world.isRemote)
         {
-            SeasonSavedData savedData = getSeasonData(world);
+            SeasonSavedData savedData = getSeasonSavedData(world);
             PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
         }
     }
     
-    public static SeasonSavedData getSeasonData(World world)
+    public static SeasonSavedData getSeasonSavedData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
         SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
@@ -111,5 +106,20 @@ public class SeasonHandler
         }
         
         return savedData;
+    }
+    
+    //
+    // Used to implement getSeasonData in the API
+    //
+    
+    public static ISeasonData getServerSeasonData(World world)
+    {
+        SeasonSavedData savedData = getSeasonSavedData(world);
+        return new SeasonTime(savedData.seasonCycleTicks);
+    }
+    
+    public static ISeasonData getClientSeasonData()
+    {
+        return new SeasonTime(clientSeasonCycleTicks);
     }
 }

@@ -10,6 +10,10 @@ package toughasnails.mixin.world;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -27,6 +31,9 @@ import toughasnails.season.ISeasonedWorld;
 @Mixin(World.class)
 public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
 {
+    @Shadow
+    public abstract boolean canSnowAt(BlockPos pos, boolean checkLight);
+    
     @Shadow
     public abstract int getLightFor(EnumSkyBlock type, BlockPos pos);
 
@@ -46,6 +53,14 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
     {
         Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
         return canBlockFreezeInSeason(pos, noWaterAdj, season);
+    }
+    
+    @Inject(method = "isRainingAt(Lnet/minecraft/util/math/BlockPos;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBiomeGenForCoords(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/biome/BiomeGenBase;"), cancellable = true)
+    public void onIsRainingAt(BlockPos pos, CallbackInfoReturnable<Boolean> ci) 
+    {
+        Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
+        BiomeGenBase biome = this.getBiomeGenForCoords(pos);
+        ci.setReturnValue(biome.getEnableSnow() && season != Season.WINTER ? false : (this.canSnowAt(pos, false) ? false : biome.canRain()));
     }
     
     @Override
