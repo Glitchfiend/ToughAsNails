@@ -8,8 +8,10 @@
 package toughasnails.handler.season;
 
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.season.Season;
@@ -24,6 +26,19 @@ public class StopSpawnHandler
         Season season = SeasonHelper.getSeasonData(event.getWorld()).getSubSeason().getSeason();
         
         if (season == Season.WINTER && event.getEntity() instanceof EntityAnimal)
+        {
+            event.setResult(Result.DENY);
+        }
+    }
+    
+    @SubscribeEvent
+    public void onChunkPopulate(PopulateChunkEvent.Populate event)
+    {
+        World world = event.getWorld();
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        
+        //Prevent animals from spawning in new chunks during the winter
+        if (event.getType() == EventType.ANIMALS && season == Season.WINTER)
         {
             event.setResult(Result.DENY);
         }

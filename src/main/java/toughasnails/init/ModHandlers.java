@@ -52,7 +52,9 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
         MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonSleepHandler());
-        MinecraftForge.EVENT_BUS.register(new StopSpawnHandler());
+        StopSpawnHandler stopSpawnHandler = new StopSpawnHandler();
+        MinecraftForge.EVENT_BUS.register(stopSpawnHandler);
+        MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
         MinecraftForge.EVENT_BUS.register(new WeatherFrequencyHandler());
         
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
