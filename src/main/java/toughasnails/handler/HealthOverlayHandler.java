@@ -30,7 +30,7 @@ public class HealthOverlayHandler
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-       if (event.getType() == ElementType.HEALTH)
+        if (event.getType() == ElementType.HEALTH)
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 
@@ -43,7 +43,7 @@ public class HealthOverlayHandler
     
     private void drawInactiveHearts(int width, int height, int inactiveHearts)
     {
-        GlStateManager.enableDepth();
+        GlStateManager.disableDepth();
         int left = width / 2 - 91;
         int top = height - 39;
         
@@ -56,7 +56,7 @@ public class HealthOverlayHandler
             drawTexturedModalRect(startX, startY, 0, 43, 9, 9);
         }
         
-        GlStateManager.disableDepth();
         minecraft.getTextureManager().bindTexture(Gui.icons);
+        GlStateManager.enableDepth();
     }
 }
