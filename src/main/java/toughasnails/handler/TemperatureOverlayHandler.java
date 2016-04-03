@@ -61,7 +61,7 @@ public class TemperatureOverlayHandler
         
         if (event.getType() == ElementType.PORTAL)
         {
-            drawTemperatureVignettes(width, height, temperature);
+            if (!player.capabilities.isCreativeMode) drawTemperatureVignettes(width, height, temperature);
         }
         else if (event.getType() == ElementType.EXPERIENCE)
         {

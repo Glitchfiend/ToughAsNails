@@ -174,17 +174,21 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         int hyperRangeSize = (int)(TemperatureRange.HOT.getRangeSize() * extremityDelta);
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
-        if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
+        //Don't apply any negative effects whilst in creative mode
+        if (!player.capabilities.isCreativeMode)
         {
-            multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
-            player.removePotionEffect(TANPotions.hypothermia);
-            player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
-        }
-        else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
-        {
-            multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
-            player.removePotionEffect(TANPotions.hyperthermia);
-            player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
+            if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
+            {
+                multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
+                player.removePotionEffect(TANPotions.hypothermia);
+                player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
+            }
+            else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
+            {
+                multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
+                player.removePotionEffect(TANPotions.hyperthermia);
+                player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
+            }
         }
     }
     

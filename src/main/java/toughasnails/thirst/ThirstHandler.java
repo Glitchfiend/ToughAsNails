@@ -91,7 +91,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
             }
             
             //If thirst is too low, prevent the player from sprinting
-            if (player.isSprinting() && thirstLevel <= 6)
+            if (!player.capabilities.isCreativeMode && player.isSprinting() && thirstLevel <= 6)
             {
                 player.setSprinting(false);
             }
