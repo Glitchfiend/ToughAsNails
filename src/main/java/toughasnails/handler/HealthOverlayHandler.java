@@ -44,6 +44,7 @@ public class HealthOverlayHandler
     private void drawInactiveHearts(int width, int height, int inactiveHearts)
     {
         GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
         int left = width / 2 - 91;
         int top = height - 39;
         
@@ -57,6 +58,7 @@ public class HealthOverlayHandler
         }
         
         minecraft.getTextureManager().bindTexture(Gui.icons);
+        GlStateManager.disableBlend();
         GlStateManager.enableDepth();
     }
 }
