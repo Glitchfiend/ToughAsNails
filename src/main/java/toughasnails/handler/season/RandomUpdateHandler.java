@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.season.Season;
+import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
 
 public class RandomUpdateHandler 
@@ -31,17 +32,35 @@ public class RandomUpdateHandler
         {
             WorldServer world = (WorldServer)event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+            SubSeason subSeason = SeasonHelper.getSeasonData(world).getSubSeason();
             
             //Only melt when it isn't winter
-            if (season != Season.WINTER)
+            if (subSeason != SubSeason.EARLY_WINTER && subSeason != SubSeason.MID_WINTER && subSeason != SubSeason.LATE_WINTER)
             {
                 for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkManager().getChunkIterator()); iterator.hasNext();)
                 {
                     Chunk chunk = (Chunk)iterator.next();
                     int x = chunk.xPosition * 16;
                     int z = chunk.zPosition * 16;
+                    
+                    int rand;
+                    switch (subSeason)
+                    {
+	                    case EARLY_SPRING:
+	                    	rand = 16;
+	                    	break;
+	                    case MID_SPRING:
+	                    	rand = 12;
+	                    	break;
+	                    case LATE_SPRING:
+	                    	rand = 8;
+	                    	break;
+	                    default:
+	                    	rand = 4;
+	                    	break;
+                    }
 
-                    if (world.rand.nextInt(season == Season.SUMMER ? 8 : 16) == 0)
+                    if (world.rand.nextInt(rand) == 0)
                     {
                         world.updateLCG = world.updateLCG * 3 + 1013904223;
                         int randOffset = world.updateLCG >> 2;
