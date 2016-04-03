@@ -118,7 +118,7 @@ public class ModItems
         {
             item.setCreativeTab(CreativeTabTAN.instance);
         }
-        GameRegistry.registerItem(item,name);
+        GameRegistry.register(item, new ResourceLocation(ToughAsNails.MOD_ID, name));
         //TANCommand.itemCount++;
         
         // register sub types if there are any

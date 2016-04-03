@@ -31,21 +31,21 @@ public class ModHandlers
 
         ExtendedStatHandler extendedStatHandler = new ExtendedStatHandler();
         
-        FMLCommonHandler.instance().bus().register(extendedStatHandler);
+        MinecraftForge.EVENT_BUS.register(extendedStatHandler);
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         
         TemperatureOverlayHandler temperatureOverlayHandler = new TemperatureOverlayHandler();
 
-        FMLCommonHandler.instance().bus().register(temperatureOverlayHandler);
+        MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
         MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
         
         ThirstOverlayHandler thirstOverlayHandler = new ThirstOverlayHandler();
         ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
         
-        FMLCommonHandler.instance().bus().register(thirstOverlayHandler);
         MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
-        FMLCommonHandler.instance().bus().register(thirstStatHandler);
+        MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
+        MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
