@@ -20,9 +20,11 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -43,6 +45,25 @@ public class MaxHealthHandler
         if (!world.isRemote)
         {
             updateStartingHealthModifier(world.getDifficulty(), player, false);
+        }
+    }
+    
+    @SubscribeEvent
+    public void onPlayerClone(PlayerEvent.Clone event)
+    {
+        IAttributeInstance oldMaxHealthInstance = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+        AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+        
+        //Copy the modifier from the 'old' player
+        if (modifier != null)
+        { 
+            Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
+            event.getEntityPlayer().getAttributeMap().applyAttributeModifiers(multimap);
+        }
+        else
+        {
+            updateStartingHealthModifier(event.getEntityPlayer().worldObj.getDifficulty(), event.getEntityPlayer(), false);
         }
     }
     

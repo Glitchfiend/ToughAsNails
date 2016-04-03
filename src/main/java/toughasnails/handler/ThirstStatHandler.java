@@ -30,12 +30,6 @@ import toughasnails.thirst.ThirstHandler;
 
 public class ThirstStatHandler
 {
-    private UUID playerID;
-    private double startX;
-    private double startY;
-    private double startZ;
-    private float exhaustion;
-    
     @SubscribeEvent
     public void onPlayerJump(LivingJumpEvent event)
     {

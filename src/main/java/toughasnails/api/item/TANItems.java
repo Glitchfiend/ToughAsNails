@@ -32,6 +32,8 @@ public class TANItems
     public static Item charcoal_filter;
     public static Item air_filter;
     
+    public static Item lifeblood_crystal;
+    
     public static Item spawn_egg;
     
     public static ArmorMaterial wool_armor_material;

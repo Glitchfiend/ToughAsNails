@@ -16,6 +16,7 @@ import static toughasnails.api.item.TANItems.jelled_slime_boots;
 import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
 import static toughasnails.api.item.TANItems.jelled_slime_helmet;
 import static toughasnails.api.item.TANItems.jelled_slime_leggings;
+import static toughasnails.api.item.TANItems.lifeblood_crystal;
 import static toughasnails.api.item.TANItems.respirator;
 import static toughasnails.api.item.TANItems.respirator_material;
 import static toughasnails.api.item.TANItems.spawn_egg;
@@ -51,6 +52,7 @@ import toughasnails.item.ItemBackpack;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemIceCharge;
+import toughasnails.item.ItemLifebloodCrystal;
 import toughasnails.item.ItemRespirator;
 import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -102,6 +104,8 @@ public class ModItems
         ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
         air_filter = registerItem(new Item(), "air_filter");
+        
+        lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
         
         spawn_egg = registerItem(new ItemTANSpawnEgg(), "spawn_egg");
     }
