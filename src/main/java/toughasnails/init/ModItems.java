@@ -1,32 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.air_filter;
-import static toughasnails.api.item.TANItems.backpack;
-import static toughasnails.api.item.TANItems.backpack_material;
-import static toughasnails.api.item.TANItems.bottle_of_gas;
-import static toughasnails.api.item.TANItems.canteen;
-import static toughasnails.api.item.TANItems.charcoal_filter;
-import static toughasnails.api.item.TANItems.freeze_powder;
-import static toughasnails.api.item.TANItems.freeze_rod;
-import static toughasnails.api.item.TANItems.ice_charge;
-import static toughasnails.api.item.TANItems.ice_cube;
-import static toughasnails.api.item.TANItems.jelled_slime;
-import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.item.TANItems.jelled_slime_boots;
-import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.item.TANItems.jelled_slime_helmet;
-import static toughasnails.api.item.TANItems.jelled_slime_leggings;
-import static toughasnails.api.item.TANItems.lifeblood_crystal;
-import static toughasnails.api.item.TANItems.respirator;
-import static toughasnails.api.item.TANItems.respirator_material;
-import static toughasnails.api.item.TANItems.spawn_egg;
-import static toughasnails.api.item.TANItems.tan_icon;
-import static toughasnails.api.item.TANItems.thermometer;
-import static toughasnails.api.item.TANItems.wool_armor_material;
-import static toughasnails.api.item.TANItems.wool_boots;
-import static toughasnails.api.item.TANItems.wool_chestplate;
-import static toughasnails.api.item.TANItems.wool_helmet;
-import static toughasnails.api.item.TANItems.wool_leggings;
+import static toughasnails.api.item.TANItems.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +28,7 @@ import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemLifebloodCrystal;
 import toughasnails.item.ItemRespirator;
+import toughasnails.item.ItemSeasonClock;
 import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.util.inventory.CreativeTabTAN;
 
@@ -106,6 +81,8 @@ public class ModItems
         air_filter = registerItem(new Item(), "air_filter");
         
         lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
+        
+        season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         
         spawn_egg = registerItem(new ItemTANSpawnEgg(), "spawn_egg");
     }

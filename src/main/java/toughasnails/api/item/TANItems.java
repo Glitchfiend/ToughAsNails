@@ -34,6 +34,8 @@ public class TANItems
     
     public static Item lifeblood_crystal;
     
+    public static Item season_clock;
+    
     public static Item spawn_egg;
     
     public static ArmorMaterial wool_armor_material;

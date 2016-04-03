@@ -1,0 +1,32 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:items/season_clock_00"
+    },
+    "overrides": [
+        { "predicate": { "time": 0.000000 }, "model": "toughasnails:item/season_clock" },
+        { "predicate": { "time": 0.043478 }, "model": "toughasnails:item/season_clock_01" },
+        { "predicate": { "time": 0.086956 }, "model": "toughasnails:item/season_clock_02" },
+        { "predicate": { "time": 0.130434 }, "model": "toughasnails:item/season_clock_03" },
+        { "predicate": { "time": 0.173913 }, "model": "toughasnails:item/season_clock_04" },
+        { "predicate": { "time": 0.217391 }, "model": "toughasnails:item/season_clock_05" },
+        { "predicate": { "time": 0.260869 }, "model": "toughasnails:item/season_clock_06" },
+        { "predicate": { "time": 0.304347 }, "model": "toughasnails:item/season_clock_07" },
+        { "predicate": { "time": 0.347826 }, "model": "toughasnails:item/season_clock_08" },
+        { "predicate": { "time": 0.391304 }, "model": "toughasnails:item/season_clock_09" },
+        { "predicate": { "time": 0.434782 }, "model": "toughasnails:item/season_clock_10" },
+        { "predicate": { "time": 0.478260 }, "model": "toughasnails:item/season_clock_11" },
+        { "predicate": { "time": 0.521739 }, "model": "toughasnails:item/season_clock_12" },
+        { "predicate": { "time": 0.565217 }, "model": "toughasnails:item/season_clock_13" },
+        { "predicate": { "time": 0.608695 }, "model": "toughasnails:item/season_clock_14" },
+        { "predicate": { "time": 0.652174 }, "model": "toughasnails:item/season_clock_15" },
+        { "predicate": { "time": 0.695652 }, "model": "toughasnails:item/season_clock_16" },
+        { "predicate": { "time": 0.739130 }, "model": "toughasnails:item/season_clock_17" },
+        { "predicate": { "time": 0.782608 }, "model": "toughasnails:item/season_clock_18" },
+        { "predicate": { "time": 0.826087 }, "model": "toughasnails:item/season_clock_19" },
+        { "predicate": { "time": 0.869565 }, "model": "toughasnails:item/season_clock_20" },
+        { "predicate": { "time": 0.913043 }, "model": "toughasnails:item/season_clock_21" },
+        { "predicate": { "time": 0.956521 }, "model": "toughasnails:item/season_clock_22" },
+        { "predicate": { "time": 1.000000 }, "model": "toughasnails:item/season_clock_23" }
+    ]
+}
