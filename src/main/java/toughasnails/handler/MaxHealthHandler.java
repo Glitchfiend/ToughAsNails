@@ -28,11 +28,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.HealthHelper;
 
 public class MaxHealthHandler 
 {
-    private static final UUID STARTING_HEALTH_MODIFIER_ID = UUID.fromString("050f240e-868f-4164-a67e-374084daca71");
-    
     //TODO: If the health config option is changed and the current health is lower
     //increase it to that new default
     @SubscribeEvent
@@ -102,7 +101,7 @@ public class MaxHealthHandler
             break;
         }
         
-        AttributeModifier modifier = maxHealthInstance.getModifier(STARTING_HEALTH_MODIFIER_ID);
+        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
 
         //If the player doesn't have a modifier for a lowered starting health, add one
         //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
@@ -110,7 +109,7 @@ public class MaxHealthHandler
         if (modifier == null || modifier.getAmount() < difficultyHealthDecrement || (forceUpdate && modifier.getAmount() != difficultyHealthDecrement))
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-            modifier = new AttributeModifier(STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
+            modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
             player.getAttributeMap().applyAttributeModifiers(multimap);
         }

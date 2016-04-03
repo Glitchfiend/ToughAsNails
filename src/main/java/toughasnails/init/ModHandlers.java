@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.handler.ExtendedStatHandler;
+import toughasnails.handler.HealthOverlayHandler;
 import toughasnails.handler.MaxHealthHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.TemperatureDebugOverlayHandler;
@@ -37,18 +38,17 @@ public class ModHandlers
         TemperatureOverlayHandler temperatureOverlayHandler = new TemperatureOverlayHandler();
 
         MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
-        MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
         MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
         
         ThirstOverlayHandler thirstOverlayHandler = new ThirstOverlayHandler();
         ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
         
         MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
-        MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
         
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
+        MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
         
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());

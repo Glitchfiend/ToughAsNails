@@ -29,7 +29,7 @@ public class ThirstOverlayHandler
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
     {
-        if (event.phase == Phase.END)
+        if (event.phase == Phase.END && !minecraft.isGamePaused())
         {
             updateCounter++;
         }
