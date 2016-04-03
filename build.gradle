@@ -45,10 +45,15 @@ repositories {
     }
 }
 
+//Add "embedded" configuration
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
 dependencies {
-    compile('org.spongepowered:mixin:0.5.3-SNAPSHOT') {
-        exclude module: 'launchwrapper'
-        exclude module: 'guava'
+    embed('org.spongepowered:mixin:0.5.3-SNAPSHOT') {
+		transitive = false
     }
 }
 
@@ -58,6 +63,9 @@ minecraft {
 }
 
 jar {
+	//Add dependencies to the JAR
+	from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+
 	manifest {
 		attributes (
 			"TweakClass": "toughasnails.launch.TANLaunchTweaker",

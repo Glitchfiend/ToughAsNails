@@ -32,9 +32,6 @@ import toughasnails.season.ISeasonedWorld;
 public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
 {
     @Shadow
-    public abstract boolean canSnowAt(BlockPos pos, boolean checkLight);
-    
-    @Shadow
     public abstract int getLightFor(EnumSkyBlock type, BlockPos pos);
 
     @Shadow
@@ -42,14 +39,14 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
     
     //Replace these methods in world to account for winter
     @Overwrite
-    public boolean canSnowAtBody(BlockPos pos, boolean checkLight)
+    public boolean canSnowAt(BlockPos pos, boolean checkLight)
     {
         Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
         return canSnowAtInSeason(pos, checkLight, season);
     }
     
     @Overwrite
-    public boolean canBlockFreezeBody(BlockPos pos, boolean noWaterAdj)
+    public boolean canBlockFreeze(BlockPos pos, boolean noWaterAdj)
     {
         Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
         return canBlockFreezeInSeason(pos, noWaterAdj, season);
