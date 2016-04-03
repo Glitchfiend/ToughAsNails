@@ -86,22 +86,22 @@ public class MaxHealthHandler
         switch (difficulty)
         {
         case EASY:
-            difficultyHealthDecrement = -2.0D;
-            break;
-
-        case NORMAL:
             difficultyHealthDecrement = -6.0D;
             break;
 
-        case HARD:
+        case NORMAL:
             difficultyHealthDecrement = -10.0D;
+            break;
+
+        case HARD:
+            difficultyHealthDecrement = -14.0D;
             break;
 
         default:
             difficultyHealthDecrement = 0.0D;
             break;
         }
-
+        
         AttributeModifier modifier = maxHealthInstance.getModifier(STARTING_HEALTH_MODIFIER_ID);
 
         //If the player doesn't have a modifier for a lowered starting health, add one
