@@ -7,7 +7,6 @@
  ******************************************************************************/
 package toughasnails.handler.season;
 
-import akka.dispatch.sysmsg.SystemMessage;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -37,18 +36,14 @@ public class WeatherFrequencyHandler
                     world.getWorldInfo().setRainTime(world.rand.nextInt(84000) + 12000);
                 }
             }
-            if (season == Season.SUMMER)
+            else if (season == Season.SUMMER)
             {
                 if (!world.getWorldInfo().isThundering() && world.getWorldInfo().getThunderTime() > 36000)
                 {
                     world.getWorldInfo().setThunderTime(world.rand.nextInt(24000) + 12000);
                 }
-                if (world.getWorldInfo().isThundering())
-                {
-                    System.out.print("Thundering");
-                }
             }
-            if (season == Season.WINTER)
+            else if (season == Season.WINTER)
             {
             	if (world.getWorldInfo().isThundering())
                 {
