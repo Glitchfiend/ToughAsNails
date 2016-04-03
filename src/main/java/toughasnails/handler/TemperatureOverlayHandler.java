@@ -59,6 +59,9 @@ public class TemperatureOverlayHandler
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         Temperature temperature = temperatureStats.getTemperature();
         
+        //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
+        random.setSeed((long)(updateCounter * 312871));
+        
         if (event.getType() == ElementType.PORTAL)
         {
             if (!player.capabilities.isCreativeMode) drawTemperatureVignettes(width, height, temperature);
@@ -85,7 +88,7 @@ public class TemperatureOverlayHandler
         {
             float shakeDelta = temperatureRange == TemperatureRange.ICY ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
             
-            if ((updateCounter % 1) == 0 && !minecraft.isGamePaused())
+            if ((updateCounter % 1) == 0)
             {
                 top += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 3F, 1.0));
                 left += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 1.5F, 1.0));

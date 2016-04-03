@@ -57,6 +57,9 @@ public class ThirstOverlayHandler
         int thirstLevel = thirstStats.getThirst();
         float thirstHydrationLevel = thirstStats.getHydration();
         
+        //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
+        random.setSeed((long)(updateCounter * 312871));
+        
         if (event.getType() == ElementType.AIR)
         {
             GlStateManager.popMatrix();

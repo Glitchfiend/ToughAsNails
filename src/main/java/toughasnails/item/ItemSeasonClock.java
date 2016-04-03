@@ -45,7 +45,6 @@ public class ItemSeasonClock extends Item
                 {
                     int seasonCycleTicks = SeasonHelper.getSeasonData(world).getSeasonCycleTicks();
                     return (float)seasonCycleTicks / (float)SeasonTime.TOTAL_CYCLE_TICKS;
-                    
                 }
             }
         });

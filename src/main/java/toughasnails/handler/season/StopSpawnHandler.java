@@ -21,7 +21,7 @@ public class StopSpawnHandler
 {
     //Animals shouldn't spawn during winter
     @SubscribeEvent
-    public void onEntitySpawn(LivingSpawnEvent.CheckSpawn event)
+    public void onCheckEntitySpawn(LivingSpawnEvent.CheckSpawn event)
     {
         Season season = SeasonHelper.getSeasonData(event.getWorld()).getSubSeason().getSeason();
         
