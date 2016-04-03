@@ -133,6 +133,11 @@ public class MaxHealthHandler
             modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
             player.getAttributeMap().applyAttributeModifiers(multimap);
+            
+            if (player.getHealth() > player.getMaxHealth())
+            {
+                player.setHealth(player.getMaxHealth());
+            }
         }
     }
 }
