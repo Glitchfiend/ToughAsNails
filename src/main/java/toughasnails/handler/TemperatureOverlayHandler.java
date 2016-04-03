@@ -85,7 +85,7 @@ public class TemperatureOverlayHandler
         {
             float shakeDelta = temperatureRange == TemperatureRange.ICY ? temperature.getRangeDelta(true) : temperature.getRangeDelta(false);
             
-            if ((updateCounter % 1) == 0)
+            if ((updateCounter % 1) == 0 && !minecraft.isGamePaused())
             {
                 top += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 3F, 1.0));
                 left += (int)((random.nextInt(3) - 1) * Math.min(shakeDelta * 1.5F, 1.0));
