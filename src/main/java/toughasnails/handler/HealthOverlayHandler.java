@@ -6,7 +6,9 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -21,14 +23,14 @@ public class HealthOverlayHandler
     private final Minecraft minecraft = Minecraft.getMinecraft();
     
     @SubscribeEvent
-    public void onPostRenderOverlay(RenderGameOverlayEvent.Post event)
+    public void onPostRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
         ScaledResolution resolution = event.getResolution();
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-       if (event.getType() == ElementType.EXPERIENCE)
+       if (event.getType() == ElementType.HEALTH)
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 
@@ -41,6 +43,7 @@ public class HealthOverlayHandler
     
     private void drawInactiveHearts(int width, int height, int inactiveHearts)
     {
+        GlStateManager.enableDepth();
         int left = width / 2 - 91;
         int top = height - 39;
         
@@ -52,5 +55,8 @@ public class HealthOverlayHandler
              
             drawTexturedModalRect(startX, startY, 0, 43, 9, 9);
         }
+        
+        GlStateManager.disableDepth();
+        minecraft.getTextureManager().bindTexture(Gui.icons);
     }
 }
