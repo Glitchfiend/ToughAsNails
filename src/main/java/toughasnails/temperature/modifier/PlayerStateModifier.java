@@ -32,7 +32,7 @@ public class PlayerStateModifier extends TemperatureModifier
         debugger.end(newChangeRate);
         debugger.start(Modifier.HEALTH_RATE, newChangeRate);
         
-        newChangeRate -= (player.getHealth() / player.getMaxHealth()) * 200;
+        newChangeRate -= (1.0 - (player.getHealth() / player.getMaxHealth())) * 200;
         
         debugger.end(newChangeRate);
         
