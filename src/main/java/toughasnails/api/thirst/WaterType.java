@@ -9,18 +9,40 @@ package toughasnails.api.thirst;
 
 public enum WaterType 
 {
-    DIRTY(4, 0.4F, 0.5F), 
-    FILTERED(6, 0.6F, 0.1F), 
-    CLEAN(8, 0.8F, 0.0F);
+    DIRTY("Dirty Water", 4, 0.4F, 0.5F), 
+    FILTERED("Filtered Water", 6, 0.6F, 0.1F), 
+    CLEAN("Clean Water", 8, 0.8F, 0.0F);
     
+    private String description;
     private int thirst;
     private float hydration;
     private float poisonChance;
     
-    private WaterType(int thirst, float hydration, float poisonChance)
+    private WaterType(String description, int thirst, float hydration, float poisonChance)
     {
+        this.description = description;
         this.thirst = thirst;
         this.hydration = hydration;
         this.poisonChance = poisonChance;
+    }
+    
+    public String getDescription()
+    {
+        return this.description;
+    }
+    
+    public int getThirst()
+    {
+        return this.thirst;
+    }
+    
+    public float getHydration()
+    {
+        return this.hydration;
+    }
+    
+    public float getPoisonChance()
+    {
+        return this.poisonChance;
     }
 }

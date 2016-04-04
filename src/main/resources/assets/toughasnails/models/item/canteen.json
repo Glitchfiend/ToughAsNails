@@ -1,0 +1,10 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:items/canteen_empty"
+    },
+    "overrides": [
+        { "predicate": { "filled": 0.0 }, "model": "toughasnails:item/canteen" },
+        { "predicate": { "filled": 1.0 }, "model": "toughasnails:item/canteen_filled" }
+    ]
+}

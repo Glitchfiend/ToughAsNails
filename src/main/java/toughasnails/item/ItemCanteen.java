@@ -3,13 +3,19 @@ package toughasnails.item;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -17,40 +23,59 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.season.SeasonHelper;
+import toughasnails.api.thirst.WaterType;
+import toughasnails.season.SeasonTime;
 import toughasnails.thirst.ThirstHandler;
 
-public class ItemCanteen extends ItemFluidContainer
+public class ItemCanteen extends Item
 {
     public ItemCanteen()
     {
-        super(-1);
+        this.addPropertyOverride(new ResourceLocation("filled"), new IItemPropertyGetter()
+        {
+            @Override
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World world, EntityLivingBase entity)
+            {
+                WaterType waterType = getWaterType(stack);
+                
+                if (waterType == null) return 0.0F;
+                else return 1.0F;
+            }
+        });
         
         this.maxStackSize = 1;
         this.setMaxDamage(3);
-        this.capacity = 200; 
     }
     
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity)
     {
-        FluidStack canteenFluid = getFluid(stack);
+        WaterType waterType = getWaterType(stack);
         
-        if (entity instanceof EntityPlayer)
+        if (entity instanceof EntityPlayer && waterType != null)
         {
             EntityPlayer player = (EntityPlayer)entity;
 
             if (!player.capabilities.isCreativeMode)
             {
-                this.drain(stack, 50, true);
-                this.setDamage(stack, 4 - ((canteenFluid.amount - 50) / 50));
+                int damage = Math.min(3, (stack.getItemDamage() >> 2) + 1);
+                this.setDamage(stack, (waterType.ordinal() + 1) | (damage << 2));
             }
 
             if (!world.isRemote)
             {
                 ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
-
-                thirstStats.addStats(8, 0.8F);
+                thirstStats.addStats(waterType.getThirst(), waterType.getHydration());
+                
+                if (world.rand.nextFloat() < waterType.getPoisonChance())
+                {
+                player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
+                }
             }
         }
 
@@ -61,14 +86,15 @@ public class ItemCanteen extends ItemFluidContainer
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         RayTraceResult movingObjectPos = this.getMovingObjectPositionFromPlayer(world, player, true);
-        FluidStack canteenFluid = getFluid(stack);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
+        WaterType waterType = getWaterType(stack);
+        int damage = stack.getItemDamage() >> 2;
         
-        if (canteenFluid != null && canteenFluid.amount >= 50 && thirstStats.isThirsty())
+        if (waterType != null && thirstStats.isThirsty())
         {
             player.setActiveHand(hand);
         }
-        else if (canteenFluid == null || canteenFluid.amount != this.capacity)
+        else if (waterType == null || damage == 3)
         {
             if (movingObjectPos != null && movingObjectPos.typeOfHit == RayTraceResult.Type.BLOCK)
             {
@@ -78,15 +104,26 @@ public class ItemCanteen extends ItemFluidContainer
 
                 if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
                 {
-                    this.fill(stack, new FluidStack(fluid, this.capacity), true);
-                    this.setDamage(stack, 0);
+                    stack.setItemDamage(1);
                 }
             }
         }
         
         return new ActionResult(EnumActionResult.SUCCESS, stack);
     }
+    
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        return (stack.getItemDamage() >> 2) / (double)stack.getMaxDamage();
+    }
 
+    private WaterType getWaterType(ItemStack stack)
+    {
+        int type = stack.getMetadata() & 3;
+        return type > 0 ? WaterType.values()[type - 1] : null;
+    }
+    
     @Override
     public int getMaxItemUseDuration(ItemStack stack)
     {
@@ -102,13 +139,11 @@ public class ItemCanteen extends ItemFluidContainer
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, List stringList, boolean showAdvancedInfo) 
     {
-        FluidStack fluid = getFluid(itemStack);
+        WaterType type = getWaterType(itemStack);
         
-        if (fluid != null && fluid.amount > 0)
+        if (type != null)
         {
-            String localizedName = fluid.getLocalizedName();
-
-            stringList.add(localizedName);
+            stringList.add(type.getDescription());
         }
     }
 }

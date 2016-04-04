@@ -10,7 +10,7 @@ public class ModPotions
 {
     public static void init()
     {
-        hypothermia = new PotionHypothermia(24).setPotionName("potion.hypothermia");
-        hyperthermia = new PotionHyperthermia(25).setPotionName("potion.hyperthermia");
+        hypothermia = new PotionHypothermia(24).setPotionName("potion.hypothermia").func_188413_j();
+        hyperthermia = new PotionHyperthermia(25).setPotionName("potion.hyperthermia").func_188413_j();
     }
 }
