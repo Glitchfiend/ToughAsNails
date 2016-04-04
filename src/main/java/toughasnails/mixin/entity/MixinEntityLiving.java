@@ -22,6 +22,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAITempt;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -66,11 +67,16 @@ public abstract class MixinEntityLiving
             nextTemptPriority++;
             //For reference, Ocelots have it as new EntityAIAvoidEntity(this, EntityPlayer.class, 16.0F, 0.8D, 1.33D);
             double movementSpeed = animal.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
-            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 20.0F, movementSpeed * 5D, movementSpeed * 10D));
+            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 40.0F, 0.8D, 1.33D));
             nextTemptPriority++;
             
             for (EntityAITaskEntry entry : animal.tasks.taskEntries)
             {
+                if (entry.action instanceof EntityAIWander)
+                {
+                    entry.action.setMutexBits(0);
+                }
+                
                 if (!(entry.action instanceof EntityAITempt) && !(entry.action instanceof EntityAIAvoidEntity))
                     entry.priority += nextTemptPriority;
             }
