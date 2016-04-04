@@ -51,6 +51,9 @@ public class ModCrafting
     	// Ice Charge
     	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.ice_charge, 3), new Object[] {TANItems.ice_cube, Items.gunpowder, TANItems.freeze_powder});
     	
+    	// Jelled Slime
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.jelled_slime, 1), new Object[] {"III", "ISI", "III", 'I', TANItems.ice_cube, 'S', Items.slime_ball});
+    	
     	//Charcoal Filter
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.charcoal_filter, 1), new Object[] {"PPP", "CCC", "PPP", 'P', Items.paper, 'C', new ItemStack(Items.coal, 1, 1)});
     	
@@ -69,7 +72,7 @@ public class ModCrafting
     	// Register smelting recipes
     	
     	// Jelled Slime
-    	GameRegistry.addSmelting(new ItemStack(Items.slime_ball), new ItemStack(TANItems.jelled_slime), 0F);
+    	//GameRegistry.addSmelting(new ItemStack(Items.slime_ball), new ItemStack(TANItems.jelled_slime), 0F);
     }
     
     private static void addOreRegistration()
