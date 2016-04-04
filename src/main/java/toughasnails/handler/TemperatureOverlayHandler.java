@@ -19,12 +19,15 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.temperature.TemperatureHandler;
 
+@SideOnly(Side.CLIENT)
 public class TemperatureOverlayHandler
 {
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/overlay.png");

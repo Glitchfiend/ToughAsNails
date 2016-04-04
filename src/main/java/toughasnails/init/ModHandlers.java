@@ -36,21 +36,10 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(extendedStatHandler);
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         
-        TemperatureOverlayHandler temperatureOverlayHandler = new TemperatureOverlayHandler();
-
-        MinecraftForge.EVENT_BUS.register(temperatureOverlayHandler);
-        MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
-        
-        ThirstOverlayHandler thirstOverlayHandler = new ThirstOverlayHandler();
         ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
-        
-        MinecraftForge.EVENT_BUS.register(thirstOverlayHandler);
+
         MinecraftForge.EVENT_BUS.register(thirstStatHandler);
-        MinecraftForge.EVENT_BUS.register(thirstStatHandler);
-        
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
-        MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
-        
         MinecraftForge.EVENT_BUS.register(new EntitySprintHandler());
         
         //Handlers for functionality related to seasons
@@ -65,6 +54,11 @@ public class ModHandlers
         
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
+            MinecraftForge.EVENT_BUS.register(new TemperatureOverlayHandler());
+            MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
+            MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
+            MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
+            
             registerSeasonColourHandlers();
         }
     }
