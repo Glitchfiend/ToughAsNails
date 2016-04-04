@@ -24,9 +24,8 @@ public class ItemLifebloodCrystal extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-    	if (HealthHelper.getActiveHearts(player) < 10)
+    	if (HealthHelper.addActiveHearts(player, 1))
     	{
-    		HealthHelper.addActiveHearts(player, 1);
     		for (int i = 0; i < 8; i++)
     		{
     			double d0 = world.rand.nextGaussian() * 0.02D;

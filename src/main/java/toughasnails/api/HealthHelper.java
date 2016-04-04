@@ -20,8 +20,9 @@ import net.minecraft.util.math.MathHelper;
 
 public class HealthHelper 
 {
-    public static final UUID STARTING_HEALTH_MODIFIER_ID = UUID.fromString("050f240e-868f-4164-a67e-374084daca71");
-
+    public static final UUID STARTING_HEALTH_MODIFIER_ID = UUID.fromString("050F240E-868F-4164-A67E-374084DACA71");
+    public static final UUID LIFEBLOOD_HEALTH_MODIFIER_ID = UUID.fromString("B04DB09D-ED8A-4B82-B1EF-ADB425174925");
+    
     public static int getActiveHearts(EntityPlayer player)
     {
         return Math.min((int)(player.getMaxHealth() / 2), 10);
@@ -32,17 +33,36 @@ public class HealthHelper
         return Math.max(10 - (int)(player.getMaxHealth() / 2), 0);
     }
     
-    public static void addActiveHearts(EntityPlayer player, int hearts)
+    public static int getLifebloodHearts(EntityPlayer player)
     {
         IAttributeInstance maxHealthInstance = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
         
         if (modifier != null)
         {
+            return (int)(modifier.getAmount() / 2.0D);
+        }
+
+        return 0;
+    }
+    
+    /**Returns true if successful*/
+    public static boolean addActiveHearts(EntityPlayer player, int hearts)
+    {
+        IAttributeInstance maxHealthInstance = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
+        float newHealth = player.getMaxHealth() + (hearts * 2);
+        double existingHearts = modifier != null ? modifier.getAmount() : 0.0D;
+        
+        if (newHealth <= 20.0F && newHealth > 0.0F)
+        {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-            modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", MathHelper.clamp_int((int)modifier.getAmount() + hearts * 2, -18, 0), 0);
+            modifier = new AttributeModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID, "Lifeblood Health Modifier", existingHearts + hearts * 2, 0);
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
             player.getAttributeMap().applyAttributeModifiers(multimap);
+            return true;
         }
+        
+        return false;
     }
 }

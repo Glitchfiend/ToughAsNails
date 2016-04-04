@@ -44,7 +44,7 @@ public class MaxHealthHandler
 
         if (!world.isRemote)
         {
-            updateStartingHealthModifier(world.getDifficulty(), player, false);
+            updateStartingHealthModifier(world.getDifficulty(), player);
         }
     }
     
@@ -52,18 +52,14 @@ public class MaxHealthHandler
     public void onPlayerClone(PlayerEvent.Clone event)
     {
         IAttributeInstance oldMaxHealthInstance = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+        AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
         
-        //Copy the modifier from the 'old' player
+        //Copy the lifeblood modifier from the 'old' player
         if (modifier != null)
         { 
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
             event.getEntityPlayer().getAttributeMap().applyAttributeModifiers(multimap);
-        }
-        else
-        {
-            updateStartingHealthModifier(event.getEntityPlayer().worldObj.getDifficulty(), event.getEntityPlayer(), false);
         }
     }
     
@@ -91,14 +87,14 @@ public class MaxHealthHandler
                     //Update the modifiers of all the connected players
                     for (EntityPlayerMP player : players)
                     {
-                        updateStartingHealthModifier(localWorldInfo.getDifficulty(), player, true);
+                        updateStartingHealthModifier(localWorldInfo.getDifficulty(), player);
                     }
                 }
             }
         }
     }
     
-    private void updateStartingHealthModifier(EnumDifficulty difficulty, EntityPlayer player, boolean forceUpdate)
+    private void updateStartingHealthModifier(EnumDifficulty difficulty, EntityPlayer player)
     {
         IAttributeInstance maxHealthInstance = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
         double difficultyHealthDecrement;
@@ -122,12 +118,21 @@ public class MaxHealthHandler
             break;
         }
         
+        double lifebloodHearts = HealthHelper.getLifebloodHearts(player) * 2;
+        double overallHealthDecrement = difficultyHealthDecrement + lifebloodHearts;
+        
+        //Ensure that the total hearts is never above 20 when the difficulty is changed
+        if (overallHealthDecrement > 0.0D)
+        {
+            difficultyHealthDecrement -= overallHealthDecrement;
+        }
+        
         AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
 
         //If the player doesn't have a modifier for a lowered starting health, add one
         //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
         //When the difficulty is changed locally in the options menu, it should always change (forceUpdate)
-        if (modifier == null || modifier.getAmount() < difficultyHealthDecrement || (forceUpdate && modifier.getAmount() != difficultyHealthDecrement))
+        if (modifier == null || modifier.getAmount() != difficultyHealthDecrement)
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
