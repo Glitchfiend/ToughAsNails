@@ -32,7 +32,7 @@ public class PlayerStateModifier extends TemperatureModifier
         debugger.end(newChangeRate);
         debugger.start(Modifier.HEALTH_RATE, newChangeRate);
         
-        newChangeRate += (player.getHealth() - 20) * 20;
+        newChangeRate -= (player.getHealth() / player.getMaxHealth()) * 200;
         
         debugger.end(newChangeRate);
         
@@ -46,14 +46,6 @@ public class PlayerStateModifier extends TemperatureModifier
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
         
-        debugger.start(Modifier.HEALTH_TARGET, newTemperatureLevel);
-        
-        if (player.getHealth() <= 10.0F)
-        {
-            newTemperatureLevel += Math.abs((player.getHealth() - 20.0F)) / 2;
-        }
-        
-        debugger.end(newTemperatureLevel);
         debugger.start(Modifier.SPRINTING_TARGET, newTemperatureLevel);
         
         if (player.isSprinting())
