@@ -12,7 +12,6 @@ public class TANItems
     
     public static Item bottle_of_gas;
     
-    public static Item backpack;
     public static Item respirator;
     
     public static Item wool_helmet;
@@ -40,6 +39,5 @@ public class TANItems
     
     public static ArmorMaterial wool_armor_material;
     public static ArmorMaterial jelled_slime_armor_material;
-    public static ArmorMaterial backpack_material;
     public static ArmorMaterial respirator_material;
 }

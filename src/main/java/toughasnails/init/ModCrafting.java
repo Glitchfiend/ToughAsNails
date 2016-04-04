@@ -57,8 +57,8 @@ public class ModCrafting
     	// Air Filter
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.air_filter, 1), new Object[] {"LLL", "LCL", "LLL", 'L', Items.leather, 'C', TANItems.charcoal_filter});
     	
-    	// Backpack
-    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.backpack, 1), new Object[] {"LLL", "SLS", "LLL", 'L', Items.leather, 'S', Items.string});
+    	// Season Clock
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.season_clock, 1), new Object[] {" Q ", "QRQ", " Q ", 'Q', Items.quartz, 'R', Items.redstone});
     	
     	// Respirator
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.string, 'I', Items.iron_ingot, 'A', TANItems.air_filter});

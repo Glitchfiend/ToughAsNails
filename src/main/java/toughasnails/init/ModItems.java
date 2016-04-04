@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.ItemBackpack;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemIceCharge;
@@ -51,7 +50,6 @@ public class ModItems
         wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.wool);
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.item_armor_equip_generic);
         jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
-        backpack_material = EnumHelper.addArmorMaterial("BACKPACK", "toughasnails:backpack", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
         respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
         
         //Main Items
@@ -60,7 +58,6 @@ public class ModItems
         bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
         
         //Wearables
-        backpack = registerItem(new ItemBackpack(backpack_material, 0), "backpack");
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator");
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");
         wool_chestplate = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.CHEST), "wool_chestplate");
