@@ -1,0 +1,29 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:items/thermometer_00"
+    },
+    "overrides": [
+		{ "predicate": { "temperature": 0.000000000000000 }, "model": "toughasnails:item/thermometer" },
+        { "predicate": { "temperature": 0.047619047619048 }, "model": "toughasnails:item/thermometer_01" },
+        { "predicate": { "temperature": 0.0952380952380956 }, "model": "toughasnails:item/thermometer_02" },
+        { "predicate": { "temperature": 0.1428571428571432 }, "model": "toughasnails:item/thermometer_03" },
+        { "predicate": { "temperature": 0.1904761904761908 }, "model": "toughasnails:item/thermometer_04" },
+        { "predicate": { "temperature": 0.2380952380952384 }, "model": "toughasnails:item/thermometer_05" },
+        { "predicate": { "temperature": 0.285714285714286 }, "model": "toughasnails:item/thermometer_06" },
+        { "predicate": { "temperature": 0.3333333333333336 }, "model": "toughasnails:item/thermometer_07" },
+        { "predicate": { "temperature": 0.3809523809523812 }, "model": "toughasnails:item/thermometer_08" },
+        { "predicate": { "temperature": 0.4285714285714288 }, "model": "toughasnails:item/thermometer_09" },
+        { "predicate": { "temperature": 0.4761904761904764 }, "model": "toughasnails:item/thermometer_10" },
+        { "predicate": { "temperature": 0.523809523809524 }, "model": "toughasnails:item/thermometer_11" },
+        { "predicate": { "temperature": 0.5714285714285716 }, "model": "toughasnails:item/thermometer_12" },
+        { "predicate": { "temperature": 0.6190476190476192 }, "model": "toughasnails:item/thermometer_13" },
+        { "predicate": { "temperature": 0.6666666666666668 }, "model": "toughasnails:item/thermometer_14" },
+        { "predicate": { "temperature": 0.7142857142857144 }, "model": "toughasnails:item/thermometer_15" },
+        { "predicate": { "temperature": 0.761904761904762 }, "model": "toughasnails:item/thermometer_16" },
+        { "predicate": { "temperature": 0.8095238095238096 }, "model": "toughasnails:item/thermometer_17" },
+        { "predicate": { "temperature": 0.8571428571428572 }, "model": "toughasnails:item/thermometer_18" },
+        { "predicate": { "temperature": 0.9047619047619048 }, "model": "toughasnails:item/thermometer_19" },
+        { "predicate": { "temperature": 0.9523809523809524 }, "model": "toughasnails:item/thermometer_20" }
+    ]
+}
