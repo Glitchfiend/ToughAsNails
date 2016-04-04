@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.google.common.collect.Sets;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAITempt;
@@ -64,7 +65,8 @@ public abstract class MixinEntityLiving
             //Avoid task should have a priority one above tempt tasks
             nextTemptPriority++;
             //For reference, Ocelots have it as new EntityAIAvoidEntity(this, EntityPlayer.class, 16.0F, 0.8D, 1.33D);
-            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 20.0F, 1.0D, 1.5D));
+            double movementSpeed = animal.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
+            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 20.0F, movementSpeed * 1.5D, movementSpeed * 2.0D));
             nextTemptPriority++;
             
             for (EntityAITaskEntry entry : animal.tasks.taskEntries)
