@@ -66,7 +66,7 @@ public abstract class MixinEntityLiving
             nextTemptPriority++;
             //For reference, Ocelots have it as new EntityAIAvoidEntity(this, EntityPlayer.class, 16.0F, 0.8D, 1.33D);
             double movementSpeed = animal.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
-            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 20.0F, movementSpeed * 1.5D, movementSpeed * 2.0D));
+            animal.tasks.addTask(nextTemptPriority, new EntityAIAvoidEntity(animal, EntityPlayer.class, 20.0F, movementSpeed * 5D, movementSpeed * 10D));
             nextTemptPriority++;
             
             for (EntityAITaskEntry entry : animal.tasks.taskEntries)
