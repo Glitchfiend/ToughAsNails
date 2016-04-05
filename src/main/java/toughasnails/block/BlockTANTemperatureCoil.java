@@ -18,6 +18,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -153,15 +154,25 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        boolean flag = world.isBlockPowered(pos) || world.isBlockPowered(pos.up());
-
+        updatePowered(world, pos, state);
+    }
+    
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+    {
+        updatePowered(world, pos, state);
+    }
+    
+    private void updatePowered(World world, BlockPos pos, IBlockState state)
+    {
+        boolean powered = world.isBlockPowered(pos) || world.isBlockPowered(pos.up());
         TileEntity te = world.getTileEntity(pos);
         
-        if (!world.isRemote && te != null)
+        if (!world.isRemote && te != null && powered != (Boolean)world.getBlockState(pos).getValue(POWERED))
         {
             TileEntityTemperatureSpread tempFill = (TileEntityTemperatureSpread)te;
             
-            if (flag)
+            if (powered)
             {
                 tempFill.fill();
                 world.setBlockState(pos, state.withProperty(POWERED, Boolean.valueOf(true)));
