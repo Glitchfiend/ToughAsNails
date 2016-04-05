@@ -4,7 +4,6 @@
     "package": "toughasnails.mixin",
     "mixins": [
         "block.MixinBlockCrops",
-        "entity.MixinEntityLiving",
         "world.MixinWorld"
     ],
     "client": [
