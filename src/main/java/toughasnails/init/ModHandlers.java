@@ -7,7 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.handler.EntitySprintHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.HealthOverlayHandler;
 import toughasnails.handler.MaxHealthHandler;
@@ -43,7 +42,6 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
         
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
-        MinecraftForge.EVENT_BUS.register(new EntitySprintHandler());
         
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
