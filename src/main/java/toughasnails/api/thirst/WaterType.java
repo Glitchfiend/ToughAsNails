@@ -9,9 +9,9 @@ package toughasnails.api.thirst;
 
 public enum WaterType 
 {
-    DIRTY("Dirty Water", 4, 0.4F, 0.5F), 
-    FILTERED("Filtered Water", 6, 0.6F, 0.1F), 
-    CLEAN("Clean Water", 8, 0.8F, 0.0F);
+    DIRTY("Dirty Water", 1, 0.1F, 0.75F), 
+    FILTERED("Filtered Water", 2, 0.2F, 0.25F), 
+    CLEAN("Clean Water", 4, 0.4F, 0.0F);
     
     private String description;
     private int thirst;

@@ -113,14 +113,14 @@ public class ItemFruitJuice extends Item
     
     public static enum JuiceType implements IStringSerializable
     {
-        APPLE(5, 0.5F), 
-        BEETROOT(9, 0.9F), 
-        CACTUS(7, 0.7F), 
-        CARROT(3, 0.3F), 
-        GOLDEN_APPLE(15, 0.16F), 
-        GOLDEN_CARROT(14, 0.14F), 
-        MELON(6, 0.6F), 
-        PUMPKIN(4, 0.4F);
+        APPLE(5, 0.6F), 
+        BEETROOT(9, 0.6F), 
+        CACTUS(7, 0.1F), 
+        CARROT(4, 0.5F), 
+        GOLDEN_APPLE(15, 1.0F), 
+        GOLDEN_CARROT(13, 0.8F), 
+        MELON(5, 0.3F), 
+        PUMPKIN(3, 0.2F);
         
         private int thirst;
         private float hydration;

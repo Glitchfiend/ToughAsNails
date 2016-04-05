@@ -32,11 +32,11 @@ public class VanillaDrinkHandler
             {
                 if (stack.getItem() == Items.milk_bucket)
                 {
-                    thirstHandler.addStats(8, 0.8F);
+                    thirstHandler.addStats(8, 0.5F);
                 }
                 else if (stack.getItem() == Items.potionitem && PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                 {
-                    thirstHandler.addStats(WaterType.CLEAN.getThirst(), WaterType.CLEAN.getHydration());
+                	thirstHandler.addStats(4, 0.6F);
                 }
             }
         }
