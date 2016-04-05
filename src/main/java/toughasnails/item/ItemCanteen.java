@@ -2,8 +2,8 @@ package toughasnails.item;
 
 import java.util.List;
 
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -12,6 +12,7 @@ import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -21,14 +22,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.ItemFluidContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANCapabilities;
-import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.thirst.WaterType;
-import toughasnails.season.SeasonTime;
 import toughasnails.thirst.ThirstHandler;
 
 public class ItemCanteen extends Item
@@ -105,6 +102,22 @@ public class ItemCanteen extends Item
                 if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
                 {
                     stack.setItemDamage(1);
+                }
+                else if (state.getBlock() instanceof BlockCauldron)
+                {
+                    BlockCauldron cauldron = (BlockCauldron)state.getBlock();
+                    int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
+                    
+                    if (level > 0 && !world.isRemote)
+                    {
+                        if (!player.capabilities.isCreativeMode)
+                        {
+                            player.addStat(StatList.cauldronUsed);
+                            stack.setItemDamage(1);
+                        }
+
+                        cauldron.setWaterLevel(world, pos, state, level - 1);
+                    }
                 }
             }
         }
