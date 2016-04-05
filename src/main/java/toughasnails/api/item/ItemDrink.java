@@ -19,6 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import toughasnails.api.TANPotions;
 import toughasnails.api.stat.capability.IThirst;
 import toughasnails.api.thirst.IDrink;
 import toughasnails.api.thirst.ThirstHelper;
@@ -68,7 +69,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     {
         if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
         {
-            player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
+            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 100));
         }
     }
     

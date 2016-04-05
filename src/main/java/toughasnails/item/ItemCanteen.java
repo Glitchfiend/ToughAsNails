@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.TANPotions;
 import toughasnails.api.thirst.WaterType;
 import toughasnails.thirst.ThirstHandler;
 
@@ -80,7 +81,7 @@ public class ItemCanteen extends Item
                 
                 if (world.rand.nextFloat() < waterType.getPoisonChance())
                 {
-                    player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
+                    player.addPotionEffect(new PotionEffect(TANPotions.thirst, 100));
                 }
             }
         }

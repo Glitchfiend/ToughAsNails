@@ -1,4 +1,4 @@
-package toughasnails.handler;
+package toughasnails.handler.thirst;
 
 import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 
