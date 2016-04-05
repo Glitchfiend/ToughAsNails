@@ -60,8 +60,17 @@ public class ItemCanteen extends Item
 
             if (!player.capabilities.isCreativeMode)
             {
-                int damage = Math.min(3, (stack.getItemDamage() >> 2) + 1);
-                this.setDamage(stack, (waterType.ordinal() + 1) | (damage << 2));
+                int damage = (stack.getItemDamage() >> 2) + 1;
+                int typeIndex = (waterType.ordinal() + 1);
+                
+                //Reset the canteen to its empty state
+                if (damage == this.getMaxDamage())
+                {
+                    damage = 0;
+                    typeIndex = 0;
+                }
+                
+                this.setDamage(stack, typeIndex | (damage << 2));
             }
 
             if (!world.isRemote)
@@ -87,7 +96,7 @@ public class ItemCanteen extends Item
         WaterType waterType = getWaterType(stack);
         int damage = stack.getItemDamage() >> 2;
         
-        if (waterType != null && thirstStats.isThirsty())
+        if (waterType != null && getTimesUsed(stack) < 3 && thirstStats.isThirsty())
         {
             player.setActiveHand(hand);
         }
@@ -135,6 +144,11 @@ public class ItemCanteen extends Item
     {
         int type = stack.getMetadata() & 3;
         return type > 0 ? WaterType.values()[type - 1] : null;
+    }
+    
+    private int getTimesUsed(ItemStack stack)
+    {
+        return stack.getItemDamage() >> 2;
     }
     
     @Override
