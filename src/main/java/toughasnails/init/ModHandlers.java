@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.handler.EntitySprintHandler;
 import toughasnails.handler.ExtendedStatHandler;
+import toughasnails.handler.FillBottleHandler;
 import toughasnails.handler.HealthOverlayHandler;
 import toughasnails.handler.MaxHealthHandler;
 import toughasnails.handler.PacketHandler;
@@ -39,6 +40,7 @@ public class ModHandlers
         
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
+        MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
         
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
         MinecraftForge.EVENT_BUS.register(new EntitySprintHandler());

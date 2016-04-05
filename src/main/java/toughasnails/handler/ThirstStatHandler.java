@@ -145,34 +145,4 @@ public class ThirstStatHandler
             }
         }
     }
-    
-    @SubscribeEvent
-    public void onPlayerRightClickWater(PlayerInteractEvent event)
-    {
-    	World world = event.getWorld();
-        BlockPos pos = event.getPos();
-        EntityPlayer player = event.getEntityPlayer();
-
-        if (!world.isRemote && !player.capabilities.isCreativeMode)
-        {
-        	if (event.getAction() == event.getAction().RIGHT_CLICK_BLOCK)
-        	{
-                IBlockState state = world.getBlockState(pos);
-                
-	        	if (state.getMaterial() == Material.water && ((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-	        	{
-			        if (event.getEntity() instanceof EntityPlayer)
-			        {
-			        	if (player.isSneaking())
-			        	{
-			                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
-				            
-		                    thirstStats.addStats(1, 0.5F);
-		                    world.playSound(player, player.getPosition(), SoundEvents.entity_generic_drink, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
-			        	}
-			        }
-                }
-        	}
-        }
-    }
 }
