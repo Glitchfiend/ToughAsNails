@@ -11,6 +11,7 @@ import toughasnails.api.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.item.ItemFruitJuice;
+import toughasnails.item.ItemTANWaterBottle;
 
 public class ModCrafting
 {
@@ -47,6 +48,9 @@ public class ModCrafting
         
     	// Canteen
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" L ", "L L", "LLL", 'L', Items.leather});
+    	
+    	// Filtered Water Bottle
+    	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), new Object[] {new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.DIRTY.ordinal()), TANItems.charcoal_filter});
 
     	// Fruit Juices
     	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.APPLE.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.potionitem), PotionTypes.water), Items.sugar, Items.apple});
@@ -92,8 +96,8 @@ public class ModCrafting
     {
     	// Register smelting recipes
     	
-    	// Jelled Slime
-    	//GameRegistry.addSmelting(new ItemStack(Items.slime_ball), new ItemStack(TANItems.jelled_slime), 0F);
+    	// Clean Water Bottle
+    	GameRegistry.addSmelting(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), PotionUtils.addPotionToItemStack(new ItemStack(Items.potionitem), PotionTypes.water), 0F);
     }
     
     private static void addOreRegistration()

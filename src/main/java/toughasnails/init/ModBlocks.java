@@ -29,16 +29,15 @@ public class ModBlocks
     
     public static void init()
     {
+        season_sensors[0] = registerBlock( new BlockSeasonSensor(DetectorType.SPRING), "season_sensor_spring" );
+        season_sensors[1] = registerBlock( new BlockSeasonSensor(DetectorType.SUMMER), "season_sensor_summer" ).setCreativeTab(null);
+        season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
+        season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null); 
         campfire = registerBlock( new BlockTANCampfire(), "campfire" );
         gas = registerBlock( new BlockTANGas(), "gas" );
         gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
-        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);
-        
-        season_sensors[0] = registerBlock( new BlockSeasonSensor(DetectorType.SPRING), "season_sensor_spring" );
-        season_sensors[1] = registerBlock( new BlockSeasonSensor(DetectorType.SUMMER), "season_sensor_summer" ).setCreativeTab(null);
-        season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
-        season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null);   
+        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);  
         
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
         GameRegistry.registerTileEntity(TileEntitySeasonSensor.class, "season_sensor");

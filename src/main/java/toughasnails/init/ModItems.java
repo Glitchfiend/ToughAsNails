@@ -43,27 +43,39 @@ public class ModItems
     
     public static void registerItems()
     {
-    	//TAN Creative Tab Icon
+    	// TAN Creative Tab Icon
     	tan_icon = registerItem(new Item(), "tan_icon");
         tan_icon.setCreativeTab(null);
         
-        //Armor Materials
+        // Armor Materials
         wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.item_armor_equip_generic);
         wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.wool);
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.item_armor_equip_generic);
         jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
         respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
         
-        //Main Items
-        canteen = registerItem(new ItemCanteen(), "canteen");
-        fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
-        water_bottle = registerItem(new ItemTANWaterBottle(), "water_bottle");
+        // Main Items
         thermometer = registerItem(new Item(), "thermometer");
-        bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
+        season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
+        canteen = registerItem(new ItemCanteen(), "canteen");
+        water_bottle = registerItem(new ItemTANWaterBottle(), "water_bottle");
+        fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
         
-        //Wearables
+        // Materials
+        ice_cube = registerItem(new Item(), "ice_cube");
+        freeze_rod = registerItem(new Item(), "freeze_rod");
+        freeze_powder = registerItem(new Item(), "freeze_powder");
+        ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
+        jelled_slime = registerItem(new Item(), "jelled_slime");
+        charcoal_filter = registerItem(new Item(), "charcoal_filter");
+        bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
+        
+        // Respirators
+        air_filter = registerItem(new Item(), "air_filter");
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator");
+        
+        // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");
         wool_chestplate = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.CHEST), "wool_chestplate");
         wool_leggings = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.LEGS), "wool_leggings");
@@ -72,19 +84,6 @@ public class ModItems
         jelled_slime_chestplate = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.CHEST), "jelled_slime_chestplate");
         jelled_slime_leggings = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.LEGS), "jelled_slime_leggings");
         jelled_slime_boots = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.FEET), "jelled_slime_boots");
-        
-        //Materials
-        jelled_slime = registerItem(new Item(), "jelled_slime");
-        freeze_rod = registerItem(new Item(), "freeze_rod");
-        freeze_powder = registerItem(new Item(), "freeze_powder");
-        ice_cube = registerItem(new Item(), "ice_cube");
-        ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
-        charcoal_filter = registerItem(new Item(), "charcoal_filter");
-        air_filter = registerItem(new Item(), "air_filter");
-        
-
-        
-        season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         
         spawn_egg = registerItem(new ItemTANSpawnEgg(), "spawn_egg");
     }
