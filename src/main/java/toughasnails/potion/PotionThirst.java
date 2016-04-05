@@ -1,8 +1,13 @@
 package toughasnails.potion;
 
+import toughasnails.api.TANPotions;
+import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.thirst.ThirstHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +19,7 @@ public class PotionThirst extends Potion
     
     public PotionThirst(int id)
     {
-        super(true, 0xA8CFFF);
+        super(true, 0x61D51A);
     
         this.setIconIndex(0, 0);
     }
@@ -31,7 +36,13 @@ public class PotionThirst extends Potion
     @Override
     public void performEffect(EntityLivingBase entity, int amplifier)
     {
-        entity.attackEntityFrom(DamageSource.generic, 0.5F);
+    	if (entity instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer)entity;
+            ThirstHandler handler = (ThirstHandler)ThirstHelper.getThirstData(player);
+
+            handler.addExhaustion(0.025F * (float)(amplifier + 1));
+        }
     }
     
     @Override

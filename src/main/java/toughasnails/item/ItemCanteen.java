@@ -81,7 +81,7 @@ public class ItemCanteen extends Item
                 
                 if (world.rand.nextFloat() < waterType.getPoisonChance())
                 {
-                    player.addPotionEffect(new PotionEffect(TANPotions.thirst, 100));
+                    player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
                 }
             }
         }

@@ -141,17 +141,4 @@ public class ThirstStatHandler
             }
         }
     }
-    
-    @SubscribeEvent
-    public void onEntityUpdate(LivingUpdateEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().isPotionActive(TANPotions.thirst))
-        {
-            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            PotionEffect effect = player.getActivePotionEffect(TANPotions.thirst);
-            ThirstHandler handler = (ThirstHandler)ThirstHelper.getThirstData(player);
-
-            handler.addExhaustion(0.025F * (float)(effect.getAmplifier() + 1));
-        }
-    }
 }

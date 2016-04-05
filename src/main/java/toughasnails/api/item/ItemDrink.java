@@ -69,7 +69,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     {
         if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
         {
-            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 100));
+            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }
     }
     
