@@ -56,16 +56,20 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
             T type = getTypeFromMeta(stack.getMetadata());
             
             thirst.addStats(type.getThirst(), type.getHydration());
-            
-            if (world.rand.nextFloat() < type.getPoisonChance())
-            {
-                player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
-            }
+            addEffects(player, type);
             
             return new ItemStack(Items.glass_bottle);
         }
 
         return stack;
+    }
+    
+    public void addEffects(EntityPlayer player, T type)
+    {
+        if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
+        {
+            player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
+        }
     }
     
     public abstract T getTypeFromMeta(int meta);
