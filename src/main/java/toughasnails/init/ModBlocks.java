@@ -12,11 +12,14 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
+import toughasnails.block.BlockSeasonSensor;
+import toughasnails.block.BlockSeasonSensor.DetectorType;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.block.BlockTANDeadCrops;
 import toughasnails.block.BlockTANGas;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.core.ToughAsNails;
+import toughasnails.tileentity.TileEntitySeasonSensor;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
 import toughasnails.util.BlockStateUtils;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -30,9 +33,15 @@ public class ModBlocks
         gas = registerBlock( new BlockTANGas(), "gas" );
         gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
-        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops");
+        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);
+        
+        season_sensors[0] = registerBlock( new BlockSeasonSensor(DetectorType.SPRING), "season_sensor_spring" );
+        season_sensors[1] = registerBlock( new BlockSeasonSensor(DetectorType.SUMMER), "season_sensor_summer" ).setCreativeTab(null);
+        season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
+        season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null);   
         
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
+        GameRegistry.registerTileEntity(TileEntitySeasonSensor.class, "season_sensor");
     }
     
     

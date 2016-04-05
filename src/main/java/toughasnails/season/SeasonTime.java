@@ -17,6 +17,7 @@ public final class SeasonTime implements ISeasonData
     public static final int DAY_TICKS = 24000;
     /** The duration of a sub season in days*/
     public static final int SUB_SEASON_DURATION = 7;
+    public static final int SEASON_TICKS = DAY_TICKS * SUB_SEASON_DURATION * 3;
     public static final int TOTAL_CYCLE_TICKS = (DAY_TICKS * SUB_SEASON_DURATION) * SubSeason.values().length;
     
     public final int time;

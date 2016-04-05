@@ -10,6 +10,7 @@ package toughasnails.block;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -19,6 +20,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -34,7 +36,7 @@ import toughasnails.particle.TANParticleTypes;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
 import toughasnails.util.BlockStateUtils;
 
-public class BlockTANTemperatureCoil extends Block implements ITANBlock, ITileEntityProvider
+public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
 {
     public static final PropertyEnum<CoilType> VARIANT = PropertyEnum.create("variant", CoilType.class);
     public static final PropertyBool POWERED = PropertyBool.create("powered");
@@ -182,6 +184,12 @@ public class BlockTANTemperatureCoil extends Block implements ITANBlock, ITileEn
     public boolean isFullCube(IBlockState state)
     {
         return false;
+    }
+    
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
     }
     
     @Override

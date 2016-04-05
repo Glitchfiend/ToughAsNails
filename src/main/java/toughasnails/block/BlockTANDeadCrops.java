@@ -26,7 +26,6 @@ public class BlockTANDeadCrops extends BlockBush
     {
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab((CreativeTabs)null);
         this.disableStats();
     }
     

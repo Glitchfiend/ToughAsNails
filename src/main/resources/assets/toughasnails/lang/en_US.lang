@@ -9,6 +9,10 @@ tile.campfire.name=Campfire
 tile.dead_crops.name=Dead Crops
 tile.temperature_coil.cooling_coil.name=Cooling Coil
 tile.temperature_coil.heating_coil.name=Heating Coil
+tile.season_sensor_spring.name=Season Sensor
+tile.season_sensor_summer.name=Season Sensor
+tile.season_sensor_autumn.name=Season Sensor
+tile.season_sensor_winter.name=Season Sensor
 
 item.air_filter.name=Air Filter
 item.bottle_of_blackdamp.name=Bottle of Blackdamp
