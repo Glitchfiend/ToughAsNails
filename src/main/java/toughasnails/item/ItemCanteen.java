@@ -165,13 +165,17 @@ public class ItemCanteen extends Item
     }
     
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List stringList, boolean showAdvancedInfo) 
+    public String getUnlocalizedName(ItemStack stack)
     {
-        WaterType type = getWaterType(itemStack);
+        WaterType type = getWaterType(stack);
         
         if (type != null)
         {
-            stringList.add(type.getDescription());
+        	return "item." + type.toString().toLowerCase() + "_water_canteen";
+        }
+        else
+        {
+        	return "item.empty_canteen";
         }
     }
 }
