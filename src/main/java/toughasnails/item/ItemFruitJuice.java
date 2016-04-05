@@ -47,9 +47,11 @@ public class ItemFruitJuice extends ItemDrink<JuiceType>
     public static enum JuiceType implements IDrink, IStringSerializable
     {
         APPLE(5, 0.6F), 
-        BEETROOT(9, 0.6F), 
+        BEETROOT(8, 0.6F), 
         CACTUS(7, 0.1F), 
         CARROT(4, 0.5F), 
+        CHORUS_FRUIT(2, 0.7F),
+        GLISTERING_MELON(10, 0.9F),
         GOLDEN_APPLE(15, 1.0F), 
         GOLDEN_CARROT(13, 0.8F), 
         MELON(5, 0.3F), 
@@ -94,4 +96,17 @@ public class ItemFruitJuice extends ItemDrink<JuiceType>
             return this.getName();
         }
     }
+    
+    @Override
+    public boolean hasEffect(ItemStack stack)
+    {
+        switch (getTypeFromMeta(stack.getMetadata()))
+        {
+            case GLISTERING_MELON: case GOLDEN_APPLE: case GOLDEN_CARROT:
+                return true;
+            default:
+                return super.hasEffect(stack); 
+        }
+    }
+   
 }
