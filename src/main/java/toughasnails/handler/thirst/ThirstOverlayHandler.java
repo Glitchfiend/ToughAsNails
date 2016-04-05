@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.TANPotions;
 import toughasnails.thirst.ThirstHandler;
 
 public class ThirstOverlayHandler
@@ -84,15 +85,22 @@ public class ThirstOverlayHandler
         {
             int dropletHalf = i * 2 + 1;
             int iconIndex = 0;
+            int backgroundOffset = 0;
             int startX = left - i * 8 - 9;
             int startY = top;
+            
+            if (minecraft.thePlayer.isPotionActive(TANPotions.thirst))
+            {
+                iconIndex += 4;
+                backgroundOffset += 117;
+            }
             
             if (thirstHydrationLevel <= 0.0F && updateCounter % (thirstLevel * 3 + 1) == 0)
             {
                 startY = top + (random.nextInt(3) - 1);
             }
             
-            drawTexturedModalRect(startX, startY, iconIndex * 8, 16, 9, 9);
+            drawTexturedModalRect(startX, startY, backgroundOffset, 16, 9, 9);
             
             if (thirstLevel > dropletHalf)
             {
