@@ -67,7 +67,7 @@ public class ModCrafting
     	GameRegistry.addShapedRecipe(new ItemStack(TANBlocks.season_sensors[0], 1), new Object[] {"GGG", "QSQ", "CCC", 'G', Blocks.glass, 'Q', Items.quartz, 'S', TANItems.season_clock, 'C', new ItemStack(Blocks.stone_slab, 1, 3)});
     	
     	// Thermometer
-    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.thermometer, 1), new Object[] {" D ", "DRD", " D ", 'D', Items.diamond, 'R', Items.redstone});
+    	GameRegistry.addShapedRecipe(new ItemStack(TANItems.thermometer, 1), new Object[] {" D ", "DQD", " D ", 'D', Items.diamond, 'Q', Items.quartz});
     	
     	// Respirator
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.string, 'I', Items.iron_ingot, 'A', TANItems.air_filter});
