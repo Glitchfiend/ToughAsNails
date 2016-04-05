@@ -16,6 +16,7 @@ import toughasnails.handler.TemperatureDebugOverlayHandler;
 import toughasnails.handler.TemperatureOverlayHandler;
 import toughasnails.handler.ThirstOverlayHandler;
 import toughasnails.handler.ThirstStatHandler;
+import toughasnails.handler.VanillaDrinkHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
 import toughasnails.handler.season.SeasonHandler;
@@ -36,9 +37,9 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(extendedStatHandler);
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         
-        ThirstStatHandler thirstStatHandler = new ThirstStatHandler();
-
-        MinecraftForge.EVENT_BUS.register(thirstStatHandler);
+        MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
+        MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
+        
         MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
         MinecraftForge.EVENT_BUS.register(new EntitySprintHandler());
         

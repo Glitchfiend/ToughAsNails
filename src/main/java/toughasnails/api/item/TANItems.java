@@ -8,6 +8,7 @@ public class TANItems
 	public static Item tan_icon;
 	
     public static Item canteen;
+    public static Item fruit_juice;
     public static Item thermometer;
     
     public static Item bottle_of_gas;

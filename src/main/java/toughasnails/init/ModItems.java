@@ -24,6 +24,7 @@ import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
+import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemLifebloodCrystal;
 import toughasnails.item.ItemRespirator;
@@ -54,8 +55,10 @@ public class ModItems
         
         //Main Items
         canteen = registerItem(new ItemCanteen(), "canteen");
+        fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
         thermometer = registerItem(new Item(), "thermometer");
         bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
+        lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
         
         //Wearables
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator");
@@ -77,7 +80,7 @@ public class ModItems
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
         air_filter = registerItem(new Item(), "air_filter");
         
-        lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
+
         
         season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         

@@ -188,6 +188,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
         return this.thirstTimer;
     }
     
+    @Override
     public void addStats(int thirst, float hydration)
     {
         this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);

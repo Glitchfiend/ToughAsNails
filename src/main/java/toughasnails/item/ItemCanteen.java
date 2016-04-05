@@ -74,7 +74,7 @@ public class ItemCanteen extends Item
                 
                 if (world.rand.nextFloat() < waterType.getPoisonChance())
                 {
-                player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
+                    player.addPotionEffect(new PotionEffect(MobEffects.poison, 100));
                 }
             }
         }
