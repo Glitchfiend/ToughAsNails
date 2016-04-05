@@ -30,6 +30,7 @@ import toughasnails.item.ItemLifebloodCrystal;
 import toughasnails.item.ItemRespirator;
 import toughasnails.item.ItemSeasonClock;
 import toughasnails.item.ItemTANSpawnEgg;
+import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.util.inventory.CreativeTabTAN;
 
 public class ModItems
@@ -56,6 +57,7 @@ public class ModItems
         //Main Items
         canteen = registerItem(new ItemCanteen(), "canteen");
         fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
+        water_bottle = registerItem(new ItemTANWaterBottle(), "water_bottle");
         thermometer = registerItem(new Item(), "thermometer");
         bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas");
         lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");

@@ -17,69 +17,62 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.item.ItemDrink;
 import toughasnails.api.thirst.IDrink;
-import toughasnails.item.ItemFruitJuice.JuiceType;
+import toughasnails.api.thirst.WaterType;
+import toughasnails.item.ItemTANWaterBottle.WaterBottleType;
 
-public class ItemFruitJuice extends ItemDrink<JuiceType>
+public class ItemTANWaterBottle extends ItemDrink<WaterBottleType>
 {
     @Override
-    public JuiceType getTypeFromMeta(int meta) 
+    public WaterBottleType getTypeFromMeta(int meta) 
     {
-        return JuiceType.values()[meta % JuiceType.values().length];
+        return WaterBottleType.values()[meta % WaterBottleType.values().length];
     }
     
     // get the correct name for this item by looking up the meta value in the DartType enum
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return "item.juice_" + getTypeFromMeta(stack.getMetadata()).toString();
+        return "item." + getTypeFromMeta(stack.getMetadata()).toString() + "_water_bottle";
     }
     
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List subItems)
     {
-        for (JuiceType juiceType : JuiceType.values())
+        for (WaterBottleType waterBottleType : WaterBottleType.values())
         {
-            subItems.add(new ItemStack(item, 1, juiceType.ordinal()));
+            subItems.add(new ItemStack(item, 1, waterBottleType.ordinal()));
         }
     }
     
-    public static enum JuiceType implements IDrink, IStringSerializable
+    public static enum WaterBottleType implements IDrink, IStringSerializable
     {
-        APPLE(5, 0.6F), 
-        BEETROOT(9, 0.6F), 
-        CACTUS(7, 0.1F), 
-        CARROT(4, 0.5F), 
-        GOLDEN_APPLE(15, 1.0F), 
-        GOLDEN_CARROT(13, 0.8F), 
-        MELON(5, 0.3F), 
-        PUMPKIN(3, 0.2F);
+        DIRTY(WaterType.DIRTY), 
+        FILTERED(WaterType.FILTERED);
         
-        private int thirst;
-        private float hydration;
+        private WaterType type;
         
-        private JuiceType(int thirst, float hydration)
+        private WaterBottleType(WaterType type)
         {
-            this.thirst = thirst;
-            this.hydration = hydration;
+            this.type = type;
         }
         
         @Override
         public int getThirst()
         {
-            return this.thirst;
+            return type.getThirst();
         }
         
         @Override
         public float getHydration()
         {
-            return this.hydration;
+            return type.getHydration();
         }
         
         @Override
-        public float getPoisonChance() 
+        public float getPoisonChance()
         {
-            return 0.0F;
+            return type.getPoisonChance();
         }
         
         @Override
