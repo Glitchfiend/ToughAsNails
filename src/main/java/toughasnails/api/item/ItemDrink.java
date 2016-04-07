@@ -67,7 +67,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     
     public void addEffects(EntityPlayer player, T type)
     {
-        if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
+        if (!player.worldObj.isRemote && player.worldObj.rand.nextFloat() < type.getPoisonChance())
         {
             player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }

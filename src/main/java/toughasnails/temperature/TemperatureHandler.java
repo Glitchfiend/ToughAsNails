@@ -76,7 +76,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {
-        if (phase == Phase.END)
+        if (phase == Phase.END && !world.isRemote)
         {
             int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
 

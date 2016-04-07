@@ -77,7 +77,7 @@ public abstract class TANPotion extends Potion
         int scaledWidth = resolution.getScaledWidth();
         scaledWidth = scaledWidth - 25 * (index + 1);
 
-        int effectHeight = 27; //Always render on the second row
+        int effectHeight = 1 + (this.isBadEffect() ? 26 : 0); //Render on the second row if this is a bad effect
         int effectIconIndex = iconIndex; //Don't use the icon index provided by the potion, it's purposefully wrong to ignore Vanilla rendering
         float alpha = 1.0F;
         

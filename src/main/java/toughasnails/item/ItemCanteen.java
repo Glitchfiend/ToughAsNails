@@ -77,7 +77,7 @@ public class ItemCanteen extends Item
             ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
             thirstStats.addStats(waterType.getThirst(), waterType.getHydration());
             
-            if (world.rand.nextFloat() < waterType.getPoisonChance())
+            if (!world.isRemote && world.rand.nextFloat() < waterType.getPoisonChance())
             {
                 player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
             }
