@@ -50,7 +50,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity)
     {
-        if (entity instanceof EntityPlayer)
+        if (!world.isRemote && entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer)entity;
             IThirst thirst = ThirstHelper.getThirstData(player);
@@ -67,7 +67,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     
     public void addEffects(EntityPlayer player, T type)
     {
-        if (!player.worldObj.isRemote && player.worldObj.rand.nextFloat() < type.getPoisonChance())
+        if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
         {
             player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }

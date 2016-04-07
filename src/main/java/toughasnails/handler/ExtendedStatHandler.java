@@ -71,7 +71,7 @@ public class ExtendedStatHandler
 
                 stat.update(player, world, event.phase);
 
-                if (event.phase == Phase.END)
+                if (event.phase == Phase.START)
                 {
                     if (stat.hasChanged())
                     {

@@ -51,11 +51,8 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
         else if (phase == Phase.END)
         {
             this.movementVec = new Vector3d(player.posX, player.posY, player.posZ);
-            this.prevThirstLevel = this.thirstLevel;
-            
-            EnumDifficulty enumdifficulty = world.getDifficulty();
 
-            //System.out.println(thirstExhaustionLevel);
+            EnumDifficulty enumdifficulty = world.getDifficulty();
             
             if (this.thirstExhaustionLevel > 4.0F)
             {
