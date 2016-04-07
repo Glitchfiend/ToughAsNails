@@ -1,31 +1,15 @@
 package toughasnails.potion;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionHypothermia extends Potion
+public class PotionHypothermia extends TANPotion
 {
-    private static final ResourceLocation POTIONS_LOCATION = new ResourceLocation("toughasnails:textures/potions/TANPotionFX.png");
-    
     public PotionHypothermia(int id)
     {
-        super(true, 0xA8CFFF);
+        super(true, 0xA8CFFF, 2, 0);
     
         this.setIconIndex(2, 0);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getStatusIconIndex()
-    {
-        Minecraft.getMinecraft().renderEngine.bindTexture(POTIONS_LOCATION);
-        
-        return super.getStatusIconIndex();
     }
     
     @Override
