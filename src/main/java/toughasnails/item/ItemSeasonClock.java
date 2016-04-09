@@ -26,6 +26,12 @@ public class ItemSeasonClock extends Item
     {
         this.addPropertyOverride(new ResourceLocation("time"), new IItemPropertyGetter()
         {
+            @SideOnly(Side.CLIENT)
+            double field_185088_a;
+            @SideOnly(Side.CLIENT)
+            double field_185089_b;
+            @SideOnly(Side.CLIENT)
+            int ticks;
             @Override
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entity)
@@ -43,9 +49,41 @@ public class ItemSeasonClock extends Item
                 }
                 else
                 {
-                    int seasonCycleTicks = SeasonHelper.getSeasonData(world).getSeasonCycleTicks();
-                    return (float)seasonCycleTicks / (float)SeasonTime.TOTAL_CYCLE_TICKS;
+                    double d0;
+                    
+                    if (world.provider.isSurfaceWorld())
+                    {
+                        int seasonCycleTicks = SeasonHelper.getSeasonData(world).getSeasonCycleTicks();
+                        d0 = (double)((float)seasonCycleTicks / (float)SeasonTime.TOTAL_CYCLE_TICKS);
+                    }
+                    else
+                    {
+                        d0 = Math.random();
+                    }
+                    
+                    d0 = this.actualFrame(world, d0);
+                    return MathHelper.func_188207_b((float)d0, 1.0F);
                 }
+            }
+            @SideOnly(Side.CLIENT)
+            private double actualFrame(World world, double frame)
+            {
+                if (world.getTotalWorldTime() != this.ticks)
+                {
+                    this.ticks = (int)world.getTotalWorldTime();
+                    double newFrame = frame - this.field_185088_a;
+
+                    if (newFrame < -0.5D)
+                    {
+                        ++newFrame;
+                    }
+
+                    this.field_185089_b += newFrame * 0.1D;
+                    this.field_185089_b *= 0.9D;
+                    this.field_185088_a += this.field_185089_b;
+                }
+
+                return this.field_185088_a;
             }
         });
     }
