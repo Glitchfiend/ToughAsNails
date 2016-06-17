@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "toughasnails:items/season_clock_18"
+        "layer0": "toughasnails:items/season_clock_08"
     }
 }
