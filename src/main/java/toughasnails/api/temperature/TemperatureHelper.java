@@ -11,12 +11,21 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.TANCapabilities;
+import toughasnails.api.stat.capability.ITemperature;
+import toughasnails.api.stat.capability.IThirst;
 
 public class TemperatureHelper 
 {
+    public static ITemperature getTemperatureData(EntityPlayer player)
+    {
+        return player.getCapability(TANCapabilities.TEMPERATURE, null);
+    }
+    
     public static List<ITemperatureRegulator> getTemperatureRegulators(World world)
     {
         List<ITemperatureRegulator> list = Lists.newArrayList();

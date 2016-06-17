@@ -58,6 +58,7 @@ import toughasnails.item.ItemRespirator;
 import toughasnails.item.ItemSeasonClock;
 import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.item.ItemTANWaterBottle;
+import toughasnails.item.ItemThermometer;
 import toughasnails.util.inventory.CreativeTabTAN;
 
 public class ModItems
@@ -82,7 +83,7 @@ public class ModItems
         respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         
         // Main Items
-        thermometer = registerItem(new Item(), "thermometer");
+        thermometer = registerItem(new ItemThermometer(), "thermometer");
         season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         lifeblood_crystal = registerItem(new ItemLifebloodCrystal(), "lifeblood_crystal");
         canteen = registerItem(new ItemCanteen(), "canteen");

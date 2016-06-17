@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.core.ToughAsNails;
 import toughasnails.network.message.MessageSyncSeasonCycle;
-import toughasnails.network.message.MessageTemperatureDebug;
+import toughasnails.network.message.MessageTemperatureClient;
 import toughasnails.network.message.MessageToggleUI;
 import toughasnails.network.message.MessageUpdateStat;
 
@@ -16,7 +16,7 @@ public class PacketHandler
     public static void init()
     {
         instance.registerMessage(MessageUpdateStat.class, MessageUpdateStat.class, 0, Side.CLIENT);
-        instance.registerMessage(MessageTemperatureDebug.class, MessageTemperatureDebug.class, 1, Side.CLIENT);
+        instance.registerMessage(MessageTemperatureClient.class, MessageTemperatureClient.class, 1, Side.CLIENT);
         instance.registerMessage(MessageToggleUI.class, MessageToggleUI.class, 2, Side.CLIENT);
         instance.registerMessage(MessageSyncSeasonCycle.class, MessageSyncSeasonCycle.class, 3, Side.CLIENT);
     }

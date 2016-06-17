@@ -15,6 +15,6 @@ public class ThirstHelper
 {
     public static IThirst getThirstData(EntityPlayer player)
     {
-        return (IThirst)player.getCapability(TANCapabilities.THIRST, null);
+        return player.getCapability(TANCapabilities.THIRST, null);
     }
 }

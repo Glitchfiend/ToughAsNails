@@ -18,7 +18,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureDebugger.ModifierType;
 import toughasnails.temperature.TemperatureHandler;
 
-public class MessageTemperatureDebug implements IMessage, IMessageHandler<MessageTemperatureDebug, IMessage>
+public class MessageTemperatureClient implements IMessage, IMessageHandler<MessageTemperatureClient, IMessage>
 {
     public int temperatureTimer;
     public int changeTicks;
@@ -26,7 +26,7 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
     
     public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
     
-    public MessageTemperatureDebug() 
+    public MessageTemperatureClient() 
     {
         for (int i = 0; i < ModifierType.values().length; i++)
         {
@@ -34,7 +34,7 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
         }
     }
     
-    public MessageTemperatureDebug(int temperatureTimer, int changeTicks, int targetTemperature, Map<Modifier, Integer>[] modifiers)
+    public MessageTemperatureClient(int temperatureTimer, int changeTicks, int targetTemperature, Map<Modifier, Integer>[] modifiers)
     {
         this.temperatureTimer = temperatureTimer;
         this.changeTicks = changeTicks;
@@ -87,7 +87,7 @@ public class MessageTemperatureDebug implements IMessage, IMessageHandler<Messag
     }
 
     @Override
-    public IMessage onMessage(MessageTemperatureDebug message, MessageContext ctx)
+    public IMessage onMessage(MessageTemperatureClient message, MessageContext ctx)
     {
         if (ctx.side == Side.CLIENT)
         {

@@ -100,7 +100,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             newTempChangeTicks = Math.max(20, newTempChangeTicks);
 
             boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
-            boolean updateDebug = debugger.isGuiVisible() && ++debugger.debugTimer % 5 == 0;
+            boolean updateClient = ++debugger.debugTimer % 5 == 0;
 
             debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = newTempChangeTicks;
@@ -113,7 +113,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 }
             }
             
-            if (incrementTemperature || updateDebug)
+            if (incrementTemperature || updateClient)
             {
                 debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
                 debugger.end(TemperatureScale.getScaleTotal() / 2);
@@ -145,7 +145,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
 
             addPotionEffects(player);
 
-            if (updateDebug)
+            if (updateClient)
             {
                 //This works because update is only called if !world.isRemote
                 debugger.finalize((EntityPlayerMP)player);

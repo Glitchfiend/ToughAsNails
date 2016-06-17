@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import toughasnails.handler.PacketHandler;
-import toughasnails.network.message.MessageTemperatureDebug;
+import toughasnails.network.message.MessageTemperatureClient;
 import toughasnails.network.message.MessageToggleUI;
 import toughasnails.util.MapUtils;
 
@@ -13,10 +13,6 @@ public class TemperatureDebugger
 {
     public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
     
-    /**
-     * Determines whether or not updates about the various modifiers should be sent to the player.
-     * Also determines whether or not they see the debug ui.
-     */
     private boolean showGui = false;
     public int debugTimer;
     
@@ -81,7 +77,7 @@ public class TemperatureDebugger
             sortModifiers();
         }
         
-        PacketHandler.instance.sendTo(new MessageTemperatureDebug(temperatureTimer, changeTicks, targetTemperature, modifiers), player);
+        PacketHandler.instance.sendTo(new MessageTemperatureClient(temperatureTimer, changeTicks, targetTemperature, modifiers), player);
         clearModifiers();
     }
     
