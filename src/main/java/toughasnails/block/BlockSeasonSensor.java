@@ -7,7 +7,6 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -18,7 +17,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -32,8 +30,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.season.SeasonHelper;
@@ -63,7 +59,7 @@ public class BlockSeasonSensor extends BlockContainer implements ITANBlock
     
     public BlockSeasonSensor(DetectorType type)
     {
-        super(Material.wood);
+        super(Material.WOOD);
         this.type = type;
         this.setHardness(0.2F);
         this.setSoundType(SoundType.WOOD);

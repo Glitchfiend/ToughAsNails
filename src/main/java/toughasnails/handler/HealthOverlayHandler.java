@@ -57,7 +57,7 @@ public class HealthOverlayHandler
             drawTexturedModalRect(startX, startY, 0, 43, 9, 9);
         }
         
-        minecraft.getTextureManager().bindTexture(Gui.icons);
+        minecraft.getTextureManager().bindTexture(Gui.ICONS);
         GlStateManager.disableBlend();
         GlStateManager.enableDepth();
     }

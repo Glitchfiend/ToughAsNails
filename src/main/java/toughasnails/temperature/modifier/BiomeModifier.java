@@ -2,7 +2,7 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -20,7 +20,7 @@ public class BiomeModifier extends TemperatureModifier
     @Override
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
     {
-        BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiomeGenForCoords(player.getPosition());
         float humidity = biome.getRainfall();
         float humidityMultiplier = 2.0F * Math.abs((humidity % 1.0F) - 0.5F);
         int newChangeRate = changeRate - (int)((10 * humidityMultiplier) * 20);
@@ -34,7 +34,7 @@ public class BiomeModifier extends TemperatureModifier
     @Override
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiomeGenForCoords(player.getPosition());
         
         //Denormalize, multiply by the max temp offset, add to the current temp
         int newTemperatureLevel = temperature.getRawValue() + (int)Math.round((BiomeUtils.getBiomeTempNorm(biome) * 2.0F - 1.0F) * MAX_TEMP_OFFSET);

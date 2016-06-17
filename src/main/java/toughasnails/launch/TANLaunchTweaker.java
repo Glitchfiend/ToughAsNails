@@ -13,7 +13,6 @@ import java.util.List;
 import org.spongepowered.asm.launch.MixinTweaker;
 
 import net.minecraft.launchwrapper.ITweaker;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 
 public class TANLaunchTweaker implements ITweaker

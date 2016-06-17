@@ -62,7 +62,7 @@ public class ItemSeasonClock extends Item
                     }
                     
                     d0 = this.actualFrame(world, d0);
-                    return MathHelper.func_188207_b((float)d0, 1.0F);
+                    return MathHelper.positiveModulo((float)d0, 1.0F);
                 }
             }
             @SideOnly(Side.CLIENT)

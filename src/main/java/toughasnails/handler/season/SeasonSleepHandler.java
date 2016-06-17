@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.season.SeasonSavedData;
-import toughasnails.season.SeasonTime;
 
 public class SeasonSleepHandler 
 {

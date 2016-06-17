@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.Block;
@@ -23,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.season.ISeasonedWorld;
@@ -52,18 +51,18 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
         return canBlockFreezeInSeason(pos, noWaterAdj, season);
     }
     
-    @Inject(method = "isRainingAt(Lnet/minecraft/util/math/BlockPos;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBiomeGenForCoords(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/biome/BiomeGenBase;"), cancellable = true)
+    @Inject(method = "isRainingAt(Lnet/minecraft/util/math/BlockPos;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBiomeGenForCoords(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/biome/Biome;"), cancellable = true)
     public void onIsRainingAt(BlockPos pos, CallbackInfoReturnable<Boolean> ci) 
     {
         Season season = SeasonHelper.getSeasonData((World)(Object)this).getSubSeason().getSeason();
-        BiomeGenBase biome = this.getBiomeGenForCoords(pos);
+        Biome biome = this.getBiomeGenForCoords(pos);
         ci.setReturnValue(biome.getEnableSnow() && season != Season.WINTER ? false : (this.canSnowAt(pos, false) ? false : biome.canRain()));
     }
     
     @Override
     public boolean canSnowAtInSeason(BlockPos pos, boolean checkLight, Season season)
     {
-        BiomeGenBase biome = this.getBiomeGenForCoords(pos);
+        Biome biome = this.getBiomeGenForCoords(pos);
         float temperature = biome.getFloatTemperature(pos);
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
@@ -77,7 +76,7 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
             {
                 IBlockState state = this.getBlockState(pos);
 
-                if (state.getBlock().isAir(state, this, pos) && Blocks.snow_layer.canPlaceBlockAt((World)(Object)this, pos))
+                if (state.getBlock().isAir(state, this, pos) && Blocks.SNOW_LAYER.canPlaceBlockAt((World)(Object)this, pos))
                 {
                     return true;
                 }
@@ -92,8 +91,8 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
     @Override
     public boolean canBlockFreezeInSeason(BlockPos pos, boolean noWaterAdj, Season season)
     {
-        BiomeGenBase biomegenbase = this.getBiomeGenForCoords(pos);
-        float temperature = biomegenbase.getFloatTemperature(pos);
+        Biome Biome = this.getBiomeGenForCoords(pos);
+        float temperature = Biome.getFloatTemperature(pos);
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
@@ -107,7 +106,7 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
                 IBlockState iblockstate = this.getBlockState(pos);
                 Block block = iblockstate.getBlock();
 
-                if ((block == Blocks.water || block == Blocks.flowing_water) && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
+                if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
                 {
                     if (!noWaterAdj)
                     {

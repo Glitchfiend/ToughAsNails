@@ -25,7 +25,7 @@ public class BlockTANGeneric extends Block implements ITANBlock
     
     public BlockTANGeneric() {
         // use rock as default material
-        this(Material.rock);
+        this(Material.ROCK);
     }
     
     public BlockTANGeneric(Material material)

@@ -7,9 +7,6 @@
  ******************************************************************************/
 package toughasnails.api.stat;
 
-import net.minecraft.nbt.NBTTagCompound;
-import toughasnails.network.message.MessageUpdateStat;
-
 public abstract class StatHandlerBase implements IPlayerStat
 {
     @Override

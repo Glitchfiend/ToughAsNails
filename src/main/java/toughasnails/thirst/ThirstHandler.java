@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.StatHandlerBase;
-import toughasnails.api.stat.capability.CapabilityProvider;
 import toughasnails.api.stat.capability.IThirst;
 import toughasnails.network.message.MessageUpdateStat;
 
@@ -98,7 +97,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     
     private void applyMovementExhaustion(EntityPlayer player, int distance)
     {
-        if (player.isInsideOfMaterial(Material.water))
+        if (player.isInsideOfMaterial(Material.WATER))
         {
             this.addExhaustion(0.015F * (float)distance * 0.01F);
         }

@@ -1,12 +1,9 @@
 package toughasnails.item;
 
-import java.util.List;
-
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
@@ -89,7 +86,7 @@ public class ItemCanteen extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        RayTraceResult movingObjectPos = this.getMovingObjectPositionFromPlayer(world, player, true);
+        RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
         WaterType waterType = getWaterType(stack);
         int damage = stack.getItemDamage() >> 2;
@@ -119,7 +116,7 @@ public class ItemCanteen extends Item
                     {
                         if (!player.capabilities.isCreativeMode)
                         {
-                            player.addStat(StatList.cauldronUsed);
+                            player.addStat(StatList.CAULDRON_USED);
                             stack.setItemDamage(1);
                         }
 

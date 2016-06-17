@@ -14,7 +14,6 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.api.thirst.WaterType;
 import toughasnails.thirst.ThirstHandler;
 
 public class VanillaDrinkHandler 
@@ -30,11 +29,11 @@ public class VanillaDrinkHandler
             
             if (thirstHandler.isThirsty())
             {
-                if (stack.getItem() == Items.milk_bucket)
+                if (stack.getItem() == Items.MILK_BUCKET)
                 {
                     thirstHandler.addStats(8, 0.7F);
                 }
-                else if (stack.getItem() == Items.potionitem)
+                else if (stack.getItem() == Items.POTIONITEM)
                 {
                     if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {

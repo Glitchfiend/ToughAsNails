@@ -10,7 +10,6 @@ package toughasnails.util;
 
 import org.lwjgl.util.Color;
 
-import net.minecraft.util.math.MathHelper;
 import toughasnails.api.season.Season.SubSeason;
 
 public class SeasonColourUtil 

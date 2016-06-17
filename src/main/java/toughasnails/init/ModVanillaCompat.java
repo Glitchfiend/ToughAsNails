@@ -1,9 +1,5 @@
 package toughasnails.init;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
-import toughasnails.api.item.TANItems;
-
 public class ModVanillaCompat
 {
     public static void init()

@@ -12,7 +12,6 @@ import java.util.Random;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +31,7 @@ public class BlockTANDeadCrops extends BlockBush
     @Override
     protected boolean canSustainBush(IBlockState state)
     {
-        return state.getBlock() == Blocks.farmland;
+        return state.getBlock() == Blocks.FARMLAND;
     }
     
     @Override

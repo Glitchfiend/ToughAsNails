@@ -12,9 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
-import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.stat.capability.IThirst;
-import toughasnails.api.temperature.Temperature;
 
 public class ThirstStorage implements IStorage<IThirst>
 {

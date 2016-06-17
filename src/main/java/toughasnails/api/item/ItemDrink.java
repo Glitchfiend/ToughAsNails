@@ -10,7 +10,6 @@ package toughasnails.api.item;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -59,7 +58,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
             thirst.addStats(type.getThirst(), type.getHydration());
             addEffects(player, type);
             
-            return new ItemStack(Items.glass_bottle);
+            return new ItemStack(Items.GLASS_BOTTLE);
         }
 
         return stack;

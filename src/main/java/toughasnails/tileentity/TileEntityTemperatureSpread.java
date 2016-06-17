@@ -314,7 +314,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
         
@@ -333,6 +333,8 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         NBTTagCompound obstructedCompound = new NBTTagCompound();
         writePosSet(obstructedCompound, this.obstructedPositions);
         compound.setTag("ObstructedPositions", obstructedCompound);
+        
+        return compound;
     }
     
     @Override

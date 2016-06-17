@@ -8,7 +8,6 @@
 package toughasnails.handler.season;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
@@ -97,7 +96,7 @@ public class SeasonHandler
     public static SeasonSavedData getSeasonSavedData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.loadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+        SeasonSavedData savedData = (SeasonSavedData)mapStorage.getOrLoadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
         //If the saved data file hasn't been created before, create it
         if (savedData == null)

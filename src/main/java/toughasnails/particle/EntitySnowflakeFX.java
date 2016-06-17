@@ -1,6 +1,6 @@
 package toughasnails.particle;
 
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.Entity;
@@ -9,27 +9,27 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import toughasnails.core.ClientProxy;
 
-public class EntitySnowflakeFX extends EntityFX
+public class EntitySnowflakeFX extends Particle
 {
     
-    public EntitySnowflakeFX(World world, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
+    public EntitySnowflakeFX(World world, double xCoordIn, double yCoordIn, double zCoordIn, double motionXIn, double motionYIn, double motionZIn)
     {
-        this(world, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, 1.0F);
+        this(world, xCoordIn, yCoordIn, zCoordIn, motionXIn, motionYIn, motionZIn, 1.0F);
     }
     
-    public EntitySnowflakeFX(World world, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float par14)
+    public EntitySnowflakeFX(World world, double xCoordIn, double yCoordIn, double zCoordIn, double motionXIn, double motionYIn, double motionZIn, float par14)
     {
         super(world, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
         
         this.particleTextureIndexX = 7;
         this.particleTextureIndexY = 0;
         
-        this.xSpeed *= 0.10000000149011612D;
-        this.ySpeed *= 0.10000000149011612D;
-        this.zSpeed *= 0.10000000149011612D;
-        this.xSpeed += xSpeedIn;
-        this.ySpeed += ySpeedIn;
-        this.zSpeed += zSpeedIn;
+        this.motionX *= 0.10000000149011612D;
+        this.motionY *= 0.10000000149011612D;
+        this.motionZ *= 0.10000000149011612D;
+        this.motionX += motionXIn;
+        this.motionY += motionYIn;
+        this.motionZ += motionZIn;
         this.particleScale *= 0.75F;
         this.particleScale *= par14;
         this.particleMaxAge = (int)((8.0D / (Math.random() * 0.8D + 0.2D)) * 8);
@@ -80,22 +80,22 @@ public class EntitySnowflakeFX extends EntityFX
         }
 
         this.particleTextureIndexX = 7 - particleAge * 8 / particleMaxAge;
-        this.moveEntity(xSpeed, ySpeed, zSpeed);
+        this.moveEntity(motionX, motionY, motionZ);
 
         if (posY == prevPosY)
         {
-            xSpeed *= 1.1D;
-            zSpeed *= 1.1D;
+            motionX *= 1.1D;
+            motionZ *= 1.1D;
         }
 
-        xSpeed *= 0.9599999785423279D;
-        ySpeed *= 0.9599999785423279D;
-        zSpeed *= 0.9599999785423279D;
+        motionX *= 0.9599999785423279D;
+        motionY *= 0.9599999785423279D;
+        motionZ *= 0.9599999785423279D;
 
         if (isCollided)
         {
-            xSpeed *= 0.699999988079071D;
-            zSpeed *= 0.699999988079071D;
+            motionX *= 0.699999988079071D;
+            motionZ *= 0.699999988079071D;
         }
     }
     

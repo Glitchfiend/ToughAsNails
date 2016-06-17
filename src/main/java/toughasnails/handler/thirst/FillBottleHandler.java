@@ -12,9 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.world.World;
@@ -30,7 +28,7 @@ public class FillBottleHandler
         ItemStack stack = event.getItemStack();
         EntityPlayer player = event.getEntityPlayer();
         
-        if (stack.getItem() == Items.glass_bottle)
+        if (stack.getItem() == Items.GLASS_BOTTLE)
         {
             //Provide an itemstack with a size of 0 so no water bottles get added to the inventory if successful
             EnumActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand()).getType();
@@ -43,7 +41,7 @@ public class FillBottleHandler
                 
                 if (!player.inventory.addItemStackToInventory(bottleStack))
                 {
-                    player.dropPlayerItemWithRandomChoice(bottleStack, false);
+                    player.dropItem(bottleStack, false);
                 }
 
                 event.setCanceled(true);
@@ -68,7 +66,7 @@ public class FillBottleHandler
                 if (!player.capabilities.isCreativeMode)
                 {
                     ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
-                    player.addStat(StatList.cauldronUsed);
+                    player.addStat(StatList.CAULDRON_USED);
 
                     if (--player.getHeldItem(event.getHand()).stackSize == 0)
                     {
@@ -76,7 +74,7 @@ public class FillBottleHandler
                     }
                     else if (!player.inventory.addItemStackToInventory(waterBottle))
                     {
-                        player.dropPlayerItemWithRandomChoice(waterBottle, false);
+                        player.dropItem(waterBottle, false);
                     }
                     else if (player instanceof EntityPlayerMP)
                     {

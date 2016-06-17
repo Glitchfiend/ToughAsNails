@@ -51,7 +51,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
     
     public BlockTANCampfire() {
         // use rock as default material
-        this(Material.rock);
+        this(Material.ROCK);
     }
     
     public BlockTANCampfire(Material material)
@@ -136,14 +136,14 @@ public class BlockTANCampfire extends Block implements ITANBlock
 
             if (state.getValue(BURNING) == false)
             {
-	            if (item == Items.stick)
+	            if (item == Items.STICK)
 	            {
 	            	if (worldIn.rand.nextInt(5) == 0)
 	            	{
 	            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
 	            	}
 	
-	                if (item == Items.stick)
+	                if (item == Items.STICK)
 	                {
 	                    --playerIn.getHeldItem(hand).stackSize;
 	                }

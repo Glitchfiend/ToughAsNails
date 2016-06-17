@@ -5,11 +5,10 @@ import java.util.HashMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import net.minecraft.stats.StatBase;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
-import toughasnails.api.stat.capability.CapabilityProvider;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import toughasnails.api.stat.capability.CapabilityProvider;
 
 public class PlayerStatRegistry
 {

@@ -117,14 +117,14 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
         {
             IBlockState iblockstate = worldIn.getBlockState(pos);
 
-            if (iblockstate.getBlock() == Blocks.mob_spawner)
+            if (iblockstate.getBlock() == Blocks.MOB_SPAWNER)
             {
                 TileEntity tileentity = worldIn.getTileEntity(pos);
 
                 if (tileentity instanceof TileEntityMobSpawner)
                 {
                     MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic();
-                    mobspawnerbaselogic.setEntityName(EntityList.classToStringMapping.get(EntityList.getClassFromID(stack.getMetadata())));
+                    mobspawnerbaselogic.setEntityName(EntityList.CLASS_TO_NAME.get(EntityList.getClassFromID(stack.getMetadata())));
                     tileentity.markDirty();
                     worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
 
@@ -173,7 +173,7 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
         }
         else
         {
-            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult movingobjectposition = this.rayTrace(world, player, true);
 
             if (movingobjectposition == null)
             {

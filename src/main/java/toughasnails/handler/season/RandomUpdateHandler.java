@@ -37,7 +37,7 @@ public class RandomUpdateHandler
             //Only melt when it isn't winter
             if (subSeason != SubSeason.EARLY_WINTER && subSeason != SubSeason.MID_WINTER && subSeason != SubSeason.LATE_WINTER)
             {
-                for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkManager().getChunkIterator()); iterator.hasNext();)
+                for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
                 {
                     Chunk chunk = (Chunk)iterator.next();
                     int x = chunk.xPosition * 16;
@@ -67,12 +67,12 @@ public class RandomUpdateHandler
                         BlockPos topPos = world.getPrecipitationHeight(new BlockPos(x + (randOffset & 15), 0, z + (randOffset >> 8 & 15)));
                         BlockPos groundPos = topPos.down();
 
-                        if (world.getBlockState(groundPos).getBlock() == Blocks.ice && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiomeGenForCoords(groundPos).getFloatTemperature(groundPos)))
+                        if (world.getBlockState(groundPos).getBlock() == Blocks.ICE && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiomeGenForCoords(groundPos).getFloatTemperature(groundPos)))
                         {
-                            ((BlockIce)Blocks.ice).func_185679_b(world, groundPos);
+                            ((BlockIce)Blocks.ICE).turnIntoWater(world, groundPos);
                         }
 
-                        if (world.getBlockState(topPos).getBlock() == Blocks.snow_layer && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiomeGenForCoords(topPos).getFloatTemperature(topPos)))
+                        if (world.getBlockState(topPos).getBlock() == Blocks.SNOW_LAYER && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiomeGenForCoords(topPos).getFloatTemperature(topPos)))
                         {
                             world.setBlockToAir(topPos);
                         }

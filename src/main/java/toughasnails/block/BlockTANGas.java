@@ -67,7 +67,7 @@ public class BlockTANGas extends Block implements ITANBlock
 
     public BlockTANGas()
     {
-        super(Material.air);
+        super(Material.AIR);
         // set some defaults
         this.setHardness(0.0F);
         this.setDefaultState( this.blockState.getBaseState().withProperty(VARIANT, GasType.BLACKDAMP) );
@@ -212,11 +212,10 @@ public class BlockTANGas extends Block implements ITANBlock
             // suffer wither effect if you walk on deathbloom
             case WHITEDAMP:
                 if (entityIn instanceof EntityLivingBase) {
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.weakness, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.hunger, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.confusion, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.digSlowdown, 500));
-                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.moveSlowdown, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.HUNGER, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 500));
+                    ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 500));
                 }
                 break;
             case STINKDAMP:

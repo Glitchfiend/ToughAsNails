@@ -233,7 +233,7 @@ public class EntityFreeze extends EntityMob implements IMob
                         if (this.field_179467_b > 1)
                         {
                             float f = MathHelper.sqrt_float(MathHelper.sqrt_double(d0)) * 0.5F;
-                            this.freeze.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, new BlockPos((int)this.freeze.posX, (int)this.freeze.posY, (int)this.freeze.posZ), 0);
+                            this.freeze.worldObj.playEvent((EntityPlayer)null, 1009, new BlockPos((int)this.freeze.posX, (int)this.freeze.posY, (int)this.freeze.posZ), 0);
 
                             for (int i = 0; i < 1; ++i)
                             {

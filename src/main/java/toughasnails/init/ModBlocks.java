@@ -1,6 +1,10 @@
 package toughasnails.init;
 
-import static toughasnails.api.TANBlocks.*;
+import static toughasnails.api.TANBlocks.campfire;
+import static toughasnails.api.TANBlocks.dead_crops;
+import static toughasnails.api.TANBlocks.gas;
+import static toughasnails.api.TANBlocks.season_sensors;
+import static toughasnails.api.TANBlocks.temperature_coil;
 
 import com.google.common.collect.ImmutableSet;
 

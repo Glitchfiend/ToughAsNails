@@ -8,7 +8,6 @@
 package toughasnails.handler;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -20,7 +19,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
@@ -72,7 +70,7 @@ public class MaxHealthHandler
         
         if (event.phase == Phase.END && integratedServer != null)
         {
-            boolean gamePaused = Minecraft.getMinecraft().getNetHandler() != null && minecraft.isGamePaused();
+            boolean gamePaused = Minecraft.getMinecraft().getConnection() != null && minecraft.isGamePaused();
             
             if (!gamePaused && minecraft.theWorld != null)
             {

@@ -38,12 +38,12 @@ public class ProviderIceHandler
 
                     if (((ISeasonedWorld)world).canBlockFreezeInSeason(blockpos2, false, null))
                     {
-                        world.setBlockState(blockpos2, Blocks.ice.getDefaultState(), 2);
+                        world.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
                     }
 
                     if (((ISeasonedWorld)world).canSnowAtInSeason(blockpos1, true, null))
                     {
-                        world.setBlockState(blockpos1, Blocks.snow_layer.getDefaultState(), 2);
+                        world.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
                     }
                 }
             }

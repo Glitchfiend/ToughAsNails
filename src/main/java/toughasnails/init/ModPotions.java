@@ -16,9 +16,9 @@ public class ModPotions
 {
     public static void init()
     {
-        hypothermia = registerPotion("hypothermia", new PotionHypothermia(24).setPotionName("potion.hypothermia").func_188413_j());
-        hyperthermia = registerPotion("hyperthermia", new PotionHyperthermia(25).setPotionName("potion.hyperthermia").func_188413_j());
-        thirst = registerPotion("thirst", new PotionThirst(26).setPotionName("potion.thirst").func_188413_j());
+        hypothermia = registerPotion("hypothermia", new PotionHypothermia(24).setPotionName("potion.hypothermia").setBeneficial());
+        hyperthermia = registerPotion("hyperthermia", new PotionHyperthermia(25).setPotionName("potion.hyperthermia").setBeneficial());
+        thirst = registerPotion("thirst", new PotionThirst(26).setPotionName("potion.thirst").setBeneficial());
     }
     
     public static Potion registerPotion(String name, Potion potion)

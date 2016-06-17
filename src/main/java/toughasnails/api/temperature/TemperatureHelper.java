@@ -14,7 +14,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import toughasnails.tileentity.TileEntityTemperatureSpread;
 
 public class TemperatureHelper 
 {

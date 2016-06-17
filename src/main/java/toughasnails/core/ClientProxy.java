@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy
     public void spawnParticle(TANParticleTypes type, double x, double y, double z, Object... info)
     {
         Minecraft minecraft = Minecraft.getMinecraft();
-        EntityFX entityFx = null;
+        Particle entityFx = null;
         switch (type)
         {
         case SNOWFLAKE:

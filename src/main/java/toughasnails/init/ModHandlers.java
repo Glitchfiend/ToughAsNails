@@ -1,8 +1,8 @@
 package toughasnails.init;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -70,7 +70,7 @@ public class ModHandlers
         BiomeColorHelper.GRASS_COLOR = new BiomeColorHelper.ColorResolver()
         {
             @Override
-            public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
+            public int getColorAtPos(Biome biome, BlockPos blockPosition)
             {
                 SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
                 return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
@@ -80,7 +80,7 @@ public class ModHandlers
         BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
         {
             @Override
-            public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
+            public int getColorAtPos(Biome biome, BlockPos blockPosition)
             {
                 SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
                 return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));

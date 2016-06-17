@@ -8,20 +8,16 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.TANCapabilities;
-import toughasnails.api.TANPotions;
-import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.thirst.ThirstHandler;
 
 public class ThirstStatHandler
@@ -78,7 +74,7 @@ public class ThirstStatHandler
         {
             EntityPlayer player = event.getEntityPlayer();
             
-            if (target.canAttackWithItem())
+            if (target.canBeAttackedWithItem())
             {
                 if (!target.hitByEntity(player))
                 {
@@ -96,7 +92,7 @@ public class ThirstStatHandler
                     
                     if (attackDamage > 0.0F || weaponAttackDamage > 0.0F)
                     {
-                        boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.blindness) && player.getRidingEntity() == null && target instanceof EntityLivingBase;
+                        boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && player.getRidingEntity() == null && target instanceof EntityLivingBase;
 
                         if (flag && attackDamage > 0.0F)
                         {

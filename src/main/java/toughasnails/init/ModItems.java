@@ -1,6 +1,33 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.*;
+import static toughasnails.api.item.TANItems.air_filter;
+import static toughasnails.api.item.TANItems.bottle_of_gas;
+import static toughasnails.api.item.TANItems.canteen;
+import static toughasnails.api.item.TANItems.charcoal_filter;
+import static toughasnails.api.item.TANItems.freeze_powder;
+import static toughasnails.api.item.TANItems.freeze_rod;
+import static toughasnails.api.item.TANItems.fruit_juice;
+import static toughasnails.api.item.TANItems.ice_charge;
+import static toughasnails.api.item.TANItems.ice_cube;
+import static toughasnails.api.item.TANItems.jelled_slime;
+import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
+import static toughasnails.api.item.TANItems.jelled_slime_boots;
+import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
+import static toughasnails.api.item.TANItems.jelled_slime_helmet;
+import static toughasnails.api.item.TANItems.jelled_slime_leggings;
+import static toughasnails.api.item.TANItems.lifeblood_crystal;
+import static toughasnails.api.item.TANItems.respirator;
+import static toughasnails.api.item.TANItems.respirator_material;
+import static toughasnails.api.item.TANItems.season_clock;
+import static toughasnails.api.item.TANItems.spawn_egg;
+import static toughasnails.api.item.TANItems.tan_icon;
+import static toughasnails.api.item.TANItems.thermometer;
+import static toughasnails.api.item.TANItems.water_bottle;
+import static toughasnails.api.item.TANItems.wool_armor_material;
+import static toughasnails.api.item.TANItems.wool_boots;
+import static toughasnails.api.item.TANItems.wool_chestplate;
+import static toughasnails.api.item.TANItems.wool_helmet;
+import static toughasnails.api.item.TANItems.wool_leggings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +75,11 @@ public class ModItems
         tan_icon.setCreativeTab(null);
         
         // Armor Materials
-        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.item_armor_equip_generic);
-        wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.wool);
-        jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.item_armor_equip_generic);
+        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
+        wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.WOOL);
+        jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
-        respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.item_armor_equip_generic);
+        respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         
         // Main Items
         thermometer = registerItem(new Item(), "thermometer");

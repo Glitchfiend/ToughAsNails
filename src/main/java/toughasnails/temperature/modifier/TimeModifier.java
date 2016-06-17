@@ -2,7 +2,7 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -32,7 +32,7 @@ public class TimeModifier extends TemperatureModifier
     @Override
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiomeGenForCoords(player.getPosition());
         long worldTime = world.getWorldTime();
         
         float extremityModifier = BiomeUtils.getBiomeTempExtremity(biome);

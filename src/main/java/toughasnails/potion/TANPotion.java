@@ -65,7 +65,7 @@ public abstract class TANPotion extends Potion
     //with custom texture sheets
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean func_188408_i()
+    public boolean isBeneficial()
     {
         //Emulate the ordering of potion effect icons when rendering normally
         Collection<PotionEffect> activePotions = Ordering.natural().reverse().sortedCopy(Minecraft.getMinecraft().thePlayer.getActivePotionEffects());
@@ -98,7 +98,7 @@ public abstract class TANPotion extends Potion
         ingameGui.drawTexturedModalRect(scaledWidth + 3, effectHeight + 3, effectIconIndex % 8 * 18, 198 + effectIconIndex / 8 * 18, 18, 18);
         GlStateManager.popMatrix();
         
-        Minecraft.getMinecraft().getTextureManager().bindTexture(GuiContainer.inventoryBackground);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
         
         return false;
     }
@@ -111,6 +111,6 @@ public abstract class TANPotion extends Potion
         int effectIconIndex = iconIndex;
         //Draw the icon with its real icon index
         mc.currentScreen.drawTexturedModalRect(x + 6, y + 7, 0 + effectIconIndex % 8 * 18, 198 + effectIconIndex / 8 * 18, 18, 18);
-        mc.getTextureManager().bindTexture(GuiContainer.inventoryBackground);
+        mc.getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
     }
 }

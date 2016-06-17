@@ -94,7 +94,7 @@ public class ItemBottleOfGas extends Item
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        if (block == Blocks.snow_layer && ((Integer)iblockstate.getValue(BlockSnow.LAYERS)).intValue() < 1)
+        if (block == Blocks.SNOW_LAYER && ((Integer)iblockstate.getValue(BlockSnow.LAYERS)).intValue() < 1)
         {
             side = EnumFacing.UP;
         }
@@ -127,7 +127,7 @@ public class ItemBottleOfGas extends Item
                         iblockstate1.getBlock().onBlockPlacedBy(worldIn, pos, iblockstate1, playerIn, stack);
                     }
 
-                    stack.setItem(Items.glass_bottle);
+                    stack.setItem(Items.GLASS_BOTTLE);
                     stack.setItemDamage(0);
                     return EnumActionResult.SUCCESS;
                 }

@@ -11,14 +11,12 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -35,7 +33,6 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemTANBlock;
 import toughasnails.particle.TANParticleTypes;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
-import toughasnails.util.BlockStateUtils;
 
 public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
 {
@@ -58,7 +55,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     
     public BlockTANTemperatureCoil() 
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setHardness(1.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, CoilType.COOLING).withProperty(POWERED, Boolean.valueOf(false)));
     }
@@ -152,7 +149,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     }
     
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
     {
         updatePowered(world, pos, state);
     }

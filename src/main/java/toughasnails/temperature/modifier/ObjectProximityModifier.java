@@ -5,11 +5,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.block.BlockTANCampfire;
-import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
@@ -85,7 +84,7 @@ public class ObjectProximityModifier extends TemperatureModifier
     {
         World world = player.worldObj;
         Material material = state.getMaterial();
-        BiomeGenBase biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiomeGenForCoords(player.getPosition());
         
         if (state.getBlock() == TANBlocks.campfire)
         {
@@ -99,11 +98,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         	}
         }
         
-        if (material == Material.fire)
+        if (material == Material.FIRE)
         {
             return 1.0F;
         }
-        else if (material == Material.lava)
+        else if (material == Material.LAVA)
         {
             return 1.5F;
         }

@@ -34,8 +34,10 @@ public class SeasonSavedData extends WorldSavedData
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) 
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) 
     {
         nbt.setInteger("SeasonCycleTicks", this.seasonCycleTicks);
+        
+        return nbt;
     }
 }

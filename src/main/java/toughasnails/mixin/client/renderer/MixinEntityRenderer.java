@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.season.Season;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonTime;
@@ -27,8 +27,8 @@ public abstract class MixinEntityRenderer implements IResourceManagerReloadListe
     //
     
     //Render snow instead of rain
-    @Redirect(method = "renderRainSnow(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/BiomeGenBase;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
-    private float onGetFloatTemperature1(BiomeGenBase this$0, BlockPos pos) 
+    @Redirect(method = "renderRainSnow(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
+    private float onGetFloatTemperature1(Biome this$0, BlockPos pos) 
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
@@ -43,8 +43,8 @@ public abstract class MixinEntityRenderer implements IResourceManagerReloadListe
     }
     
     //Prevent adding rain particles
-    @Redirect(method = "addRainParticles()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/BiomeGenBase;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
-    private float onGetFloatTemperature2(BiomeGenBase this$0, BlockPos pos) 
+    @Redirect(method = "addRainParticles()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;getFloatTemperature(Lnet/minecraft/util/math/BlockPos;)F"))
+    private float onGetFloatTemperature2(Biome this$0, BlockPos pos) 
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
