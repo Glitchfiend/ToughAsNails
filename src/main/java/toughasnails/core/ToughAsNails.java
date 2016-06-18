@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
+import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
 import toughasnails.init.ModCrafting;
@@ -49,6 +50,7 @@ public class ToughAsNails
         ModCrafting.init();
         
         MinecraftForge.EVENT_BUS.register(new LootTableEventHandler());
+        MinecraftForge.EVENT_BUS.register(new BlockHarvestEventHandler());
         
         proxy.registerRenderers();
     }
