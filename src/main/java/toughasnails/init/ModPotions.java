@@ -1,14 +1,15 @@
 package toughasnails.init;
 
 import static toughasnails.api.TANPotions.cold_resistance;
+import static toughasnails.api.TANPotions.cold_resistance_type;
+import static toughasnails.api.TANPotions.long_cold_resistance_type;
 import static toughasnails.api.TANPotions.heat_resistance;
+import static toughasnails.api.TANPotions.heat_resistance_type;
+import static toughasnails.api.TANPotions.long_heat_resistance_type;
 import static toughasnails.api.TANPotions.hyperthermia;
 import static toughasnails.api.TANPotions.hypothermia;
 import static toughasnails.api.TANPotions.thirst;
-import static toughasnails.api.TANPotions.cold_resistance_type;
-import static toughasnails.api.TANPotions.heat_resistance_type;
 
-import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
@@ -33,7 +34,9 @@ public class ModPotions
         heat_resistance = registerPotion("heat_resistance", new PotionHeatResistance(28).setPotionName("potion.heat_resistance").setBeneficial());
         
         cold_resistance_type = registerPotionType("cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 3600)}));
+        long_cold_resistance_type = registerPotionType("long_cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 9600)}));
         heat_resistance_type = registerPotionType("heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 3600)}));
+        long_heat_resistance_type = registerPotionType("long_heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 9600)}));
     }
     
     public static Potion registerPotion(String name, Potion potion)
