@@ -3,6 +3,7 @@ package toughasnails.core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
+import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
 import toughasnails.init.ModCrafting;
 import toughasnails.init.ModEntities;
@@ -45,6 +47,8 @@ public class ToughAsNails
         ModHandlers.init();
         
         ModCrafting.init();
+        
+        MinecraftForge.EVENT_BUS.register(new LootTableEventHandler());
         
         proxy.registerRenderers();
     }
