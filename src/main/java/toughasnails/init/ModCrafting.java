@@ -4,10 +4,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
+import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.item.ItemFruitJuice;
@@ -26,6 +29,10 @@ public class ModCrafting
     private static void addCraftingRecipies()
     {
     	// Register crafting recipes
+    	
+    	//Brewing
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), new ItemStack(Items.FIRE_CHARGE), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.heat_resistance_type));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), new ItemStack(TANItems.ice_charge), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.cold_resistance_type));
     	
     	// Armor
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_helmet), new Object [] {"###", "# #", '#', Blocks.WOOL});

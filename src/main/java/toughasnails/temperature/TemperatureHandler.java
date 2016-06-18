@@ -170,13 +170,13 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         //Don't apply any negative effects whilst in creative mode
         if (!player.capabilities.isCreativeMode)
         {
-            if (this.temperatureLevel <= hypoRangeStart && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
+            if (this.temperatureLevel <= hypoRangeStart && (!player.isPotionActive(TANPotions.cold_resistance)) && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
             {
                 multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
                 player.removePotionEffect(TANPotions.hypothermia);
                 player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
             }
-            else if (this.temperatureLevel >= hyperRangeStart && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
+            else if (this.temperatureLevel >= hyperRangeStart && (!player.isPotionActive(TANPotions.heat_resistance)) && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
             {
                 multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
                 player.removePotionEffect(TANPotions.hyperthermia);

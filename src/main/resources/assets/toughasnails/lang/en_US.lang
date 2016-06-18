@@ -59,3 +59,8 @@ item.wool_boots.name=Wool Boots
 potion.hypothermia=Hypothermia
 potion.hyperthermia=Hyperthermia
 potion.thirst=Thirst
+potion.cold_resistance=Cold Resistance
+potion.heat_resistance=Heat Resistance
+
+potion.effect.cold_resistance_type=Potion of Cold Resistance
+potion.effect.heat_resistance_type=Potion of Heat Resistance
