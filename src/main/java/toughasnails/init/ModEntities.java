@@ -7,7 +7,10 @@ import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Biomes;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -29,7 +32,7 @@ public class ModEntities
         registerTANEntity(EntityIceball.class, "iceball", 80, 3, true);
         
         // mobs
-        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3);
+        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS);
     }
     
     // register an entity
@@ -43,10 +46,11 @@ public class ModEntities
     }
     
     // register an entity and in addition create a spawn egg for it
-    public static int registerTANEntityWithSpawnEgg(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor)
+    public static int registerTANEntityWithSpawnEgg(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, Biome... entityBiomes)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
         entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(entityName, eggBackgroundColor, eggForegroundColor));
+        EntityRegistry.addSpawn(entityName, 3, 1, 3, EnumCreatureType.MONSTER, entityBiomes);
         return tanEntityId;
     }
     
