@@ -22,6 +22,7 @@ import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.network.message.MessageUpdateStat;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.modifier.ArmorModifier;
 import toughasnails.temperature.modifier.BiomeModifier;
 import toughasnails.temperature.modifier.ObjectProximityModifier;
 import toughasnails.temperature.modifier.PlayerStateModifier;
@@ -40,6 +41,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     private int prevTemperatureLevel;
     private int temperatureTimer;
     
+    private TemperatureModifier armorModifier;
     private TemperatureModifier biomeModifier;
     private TemperatureModifier playerStateModifier;
     private TemperatureModifier objectProximityModifier;
@@ -56,6 +58,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
         
+        this.armorModifier = new ArmorModifier(debugger);
         this.biomeModifier = new BiomeModifier(debugger);
         this.playerStateModifier = new PlayerStateModifier(debugger);
         this.objectProximityModifier = new ObjectProximityModifier(debugger);
@@ -73,6 +76,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         {
             int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
 
+            newTempChangeTicks = armorModifier.modifyChangeRate(world, player, newTempChangeTicks);
             newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
             newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
             newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
@@ -119,6 +123,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 debugger.end(TemperatureScale.getScaleTotal() / 2);
                 
                 Temperature targetTemperature = biomeModifier.modifyTarget(world, player, new Temperature(TEMPERATURE_SCALE_MIDPOINT));
+                targetTemperature = armorModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
                 targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
