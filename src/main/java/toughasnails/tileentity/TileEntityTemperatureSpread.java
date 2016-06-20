@@ -306,7 +306,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
                 NBTTagCompound strengthCompound = filledCompound.getCompoundTag("Strength" + strength);
                 this.filledPositions[strength] = readPosSet(strengthCompound);
             }
-            this.spawnedEntities.clear(); //Clear spawned entities and repopulate later
+            this.spawnedEntities = Sets.newConcurrentHashSet(); //Recreate spawned entities set and repopulate later
             
             NBTTagCompound obstructedCompound = compound.getCompoundTag("ObstructedPositions");
             this.obstructedPositions = readPosSet(obstructedCompound);

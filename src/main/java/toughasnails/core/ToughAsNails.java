@@ -1,5 +1,7 @@
 package toughasnails.core;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +16,7 @@ import toughasnails.command.TANCommand;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModCrafting;
 import toughasnails.init.ModEntities;
 import toughasnails.init.ModHandlers;
@@ -35,10 +38,15 @@ public class ToughAsNails
     public static CommonProxy proxy;
     
     public static Logger logger = LogManager.getLogger(MOD_ID);
+    public static File configDirectory;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        configDirectory = new File(event.getModConfigurationDirectory(), "toughasnails");
+
+        ModConfig.init(configDirectory);
+        
     	ModBlocks.init();
     	ModEntities.init();
         ModItems.init();

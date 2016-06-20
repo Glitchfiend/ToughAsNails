@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.config.GameplayConfigurationHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.HealthOverlayHandler;
 import toughasnails.handler.MaxHealthHandler;
@@ -41,7 +42,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
         MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
         
-        MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
+        if (GameplayConfigurationHandler.loweredStartingHealth) MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
         
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
