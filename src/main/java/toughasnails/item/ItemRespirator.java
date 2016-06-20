@@ -8,6 +8,8 @@ public class ItemRespirator extends ItemArmor
     public ItemRespirator(ItemArmor.ArmorMaterial material, int renderIndex)
     {
         // respirators are always on your head - armorType = 0
-        super(material, renderIndex, EntityEquipmentSlot.HEAD);        
+        super(material, renderIndex, EntityEquipmentSlot.HEAD);   
+        
+        this.setCreativeTab(null);
     }
 }

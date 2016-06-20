@@ -38,8 +38,8 @@ public class ModBlocks
         season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
         season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null); 
         campfire = registerBlock( new BlockTANCampfire(), "campfire" );
-        gas = registerBlock( new BlockTANGas(), "gas" );
-        gas.setCreativeTab(null);
+        //gas = registerBlock( new BlockTANGas(), "gas" );
+        //gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
         dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);  
         
