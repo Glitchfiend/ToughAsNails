@@ -33,10 +33,10 @@ public class ModPotions
         cold_resistance = registerPotion("cold_resistance", new PotionColdResistance(27).setPotionName("potion.cold_resistance").setBeneficial());
         heat_resistance = registerPotion("heat_resistance", new PotionHeatResistance(28).setPotionName("potion.heat_resistance").setBeneficial());
         
-        cold_resistance_type = registerPotionType("cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 3600)}));
-        long_cold_resistance_type = registerPotionType("long_cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 9600)}));
-        heat_resistance_type = registerPotionType("heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 3600)}));
-        long_heat_resistance_type = registerPotionType("long_heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 9600)}));
+        cold_resistance_type = registerPotionType("cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 1200)}));
+        long_cold_resistance_type = registerPotionType("long_cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 2400)}));
+        heat_resistance_type = registerPotionType("heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 1200)}));
+        long_heat_resistance_type = registerPotionType("long_heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 2400)}));
     }
     
     public static Potion registerPotion(String name, Potion potion)
