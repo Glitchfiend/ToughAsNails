@@ -102,6 +102,12 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     }
     
     @Override
+    public int damageDropped(IBlockState state)
+    {
+        return ((CoilType) state.getValue(VARIANT)).ordinal(); //Always drop the unpowered version
+    }
+    
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         int baseMeta = ((CoilType) state.getValue(VARIANT)).ordinal();
