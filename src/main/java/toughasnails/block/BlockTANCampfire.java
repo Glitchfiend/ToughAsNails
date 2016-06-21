@@ -178,6 +178,12 @@ public class BlockTANCampfire extends Block implements ITANBlock
         }
     }
     
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0; //Campfires shouldn't drop anything when mined
+    }
+    
     // not opaque
     @Override
     public boolean isOpaqueCube(IBlockState state)
