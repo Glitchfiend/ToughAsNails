@@ -86,44 +86,12 @@ public class ItemCanteen extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
         WaterType waterType = getWaterType(stack);
-        int damage = stack.getItemDamage() >> 2;
         
-        if (waterType != null && getTimesUsed(stack) < 3 && thirstStats.isThirsty())
+        if (!attemptCanteenFill(player, stack) && waterType != null && getTimesUsed(stack) < 3 && thirstStats.isThirsty())
         {
             player.setActiveHand(hand);
-        }
-        else if (waterType == null || damage == 3)
-        {
-            if (movingObjectPos != null && movingObjectPos.typeOfHit == RayTraceResult.Type.BLOCK)
-            {
-                BlockPos pos = movingObjectPos.getBlockPos();
-                IBlockState state = world.getBlockState(pos);
-                Fluid fluid = FluidRegistry.lookupFluidForBlock(state.getBlock());
-
-                if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
-                {
-                    stack.setItemDamage(1);
-                }
-                else if (state.getBlock() instanceof BlockCauldron)
-                {
-                    BlockCauldron cauldron = (BlockCauldron)state.getBlock();
-                    int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
-                    
-                    if (level > 0 && !world.isRemote)
-                    {
-                        if (!player.capabilities.isCreativeMode)
-                        {
-                            player.addStat(StatList.CAULDRON_USED);
-                            stack.setItemDamage(1);
-                        }
-
-                        cauldron.setWaterLevel(world, pos, state, level - 1);
-                    }
-                }
-            }
         }
         
         return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -133,6 +101,50 @@ public class ItemCanteen extends Item
     public double getDurabilityForDisplay(ItemStack stack)
     {
         return (stack.getItemDamage() >> 2) / (double)stack.getMaxDamage();
+    }
+    
+    /**
+     * Attempt to fill the provided canteen stack with water.
+     * @param player The player holding the canteen.
+     * @param stack The canteen item stack.
+     * @return true if successful, otherwise false.
+     */
+    private boolean attemptCanteenFill(EntityPlayer player, ItemStack stack)
+    {
+        World world = player.worldObj;
+        RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
+        
+        if (movingObjectPos != null && movingObjectPos.typeOfHit == RayTraceResult.Type.BLOCK)
+        {
+            BlockPos pos = movingObjectPos.getBlockPos();
+            IBlockState state = world.getBlockState(pos);
+            Fluid fluid = FluidRegistry.lookupFluidForBlock(state.getBlock());
+
+            if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
+            {
+                stack.setItemDamage(1);
+                return true;
+            }
+            else if (state.getBlock() instanceof BlockCauldron)
+            {
+                BlockCauldron cauldron = (BlockCauldron)state.getBlock();
+                int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
+                
+                if (level > 0 && !world.isRemote)
+                {
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        player.addStat(StatList.CAULDRON_USED);
+                        stack.setItemDamage(1);
+                        return true;
+                    }
+
+                    cauldron.setWaterLevel(world, pos, state, level - 1);
+                }
+            }
+        }
+        
+        return false;
     }
 
     private WaterType getWaterType(ItemStack stack)
