@@ -12,6 +12,7 @@ import toughasnails.block.BlockTANCampfire;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
+//TODO: Replace this with something better
 public class ObjectProximityModifier extends TemperatureModifier
 {
     public ObjectProximityModifier(TemperatureDebugger debugger)
@@ -29,11 +30,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         //System.out.println(new Calendar(world).getSubSeason());
         
-        for (int x = -2; x <= 2; x++)
+        for (int x = -3; x <= 3; x++)
         {
             for (int y = -2; y <= 2; y++)
             {
-                for (int z = -2; z <= 2; z++)
+                for (int z = -3; z <= 3; z++)
                 {
                     BlockPos pos = playerPos.add(x, y - 1, z);
                     IBlockState state = world.getBlockState(pos);
@@ -59,11 +60,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         float blockTemperatureModifier = 0.0F;
         
-        for (int x = -1; x <= 1; x++)
+        for (int x = -3; x <= 3; x++)
         {
-            for (int y = -1; y <= 1; y++)
+            for (int y = -2; y <= 2; y++)
             {
-                for (int z = -1; z <= 1; z++)
+                for (int z = -3; z <= 3; z++)
                 {
                     BlockPos pos = playerPos.add(x, y - 1, z);
                     IBlockState state = world.getBlockState(pos);
