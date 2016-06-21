@@ -37,7 +37,7 @@ public class VanillaDrinkHandler
                 {
                     if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {
-                        thirstHandler.addStats(7, 0.6F);
+                        thirstHandler.addStats(7, 0.5F);
                     }
                     else
                     {
