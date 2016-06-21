@@ -31,18 +31,18 @@ public class VanillaDrinkHandler
             {
                 if (stack.getItem() == Items.MILK_BUCKET)
                 {
-                    thirstHandler.addStats(8, 0.7F);
+                    thirstHandler.addStats(10, 0.5F);
                 }
                 else if (stack.getItem() == Items.POTIONITEM)
                 {
                     if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {
-                        thirstHandler.addStats(6, 0.5F);
+                        thirstHandler.addStats(7, 0.6F);
                     }
                     else
                     {
                         //Still fill thirst for other potions, but less than water
-                        thirstHandler.addStats(3, 0.2F);
+                        thirstHandler.addStats(4, 0.3F);
                     }
                 }
             }
