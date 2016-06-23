@@ -72,15 +72,20 @@ public abstract class MixinWorld implements IBlockAccess, ISeasonedWorld
         }
         else if (checkLight)
         {
-            if (pos.getY() >= 0 && pos.getY() < 256 && this.getLightFor(EnumSkyBlock.BLOCK, pos) < 10)
-            {
-                IBlockState state = this.getBlockState(pos);
-
-                if (state.getBlock().isAir(state, this, pos) && Blocks.SNOW_LAYER.canPlaceBlockAt((World)(Object)this, pos))
-                {
-                    return true;
-                }
-            }
+        	if (biome.canRain())
+        	{
+	            if (pos.getY() >= 0 && pos.getY() < 256 && this.getLightFor(EnumSkyBlock.BLOCK, pos) < 10)
+	            {
+	                IBlockState state = this.getBlockState(pos);
+	
+	                if (state.getBlock().isAir(state, this, pos) && Blocks.SNOW_LAYER.canPlaceBlockAt((World)(Object)this, pos))
+	                {
+	                    return true;
+	                }
+	            }
+	            
+	            return false;
+        	}
 
             return false;
         }
