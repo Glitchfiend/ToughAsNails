@@ -65,7 +65,6 @@ public class ArmorModifier extends TemperatureModifier
     {
         int temperatureLevel = temperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
-        BlockPos playerPos = player.getPosition();
         
         debugger.start(Modifier.ARMOR_TARGET, newTemperatureLevel);
         
