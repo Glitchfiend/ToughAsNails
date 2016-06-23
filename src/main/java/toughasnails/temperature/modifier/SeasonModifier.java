@@ -35,30 +35,34 @@ public class SeasonModifier extends TemperatureModifier
         SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
         
         debugger.start(Modifier.SEASON_TARGET, temperatureLevel);
-        switch (season)
-        {
-        case MID_WINTER: case LATE_WINTER:
-            temperatureLevel -= 6;
-            break;
         
-        case EARLY_SPRING: case EARLY_WINTER:
-            temperatureLevel -= 4;
-            break;
-            
-        case MID_SPRING: case LATE_AUTUMN:
-            temperatureLevel -= 2;
-            break;
-            
-        case MID_SUMMER: case EARLY_AUTUMN:
-            temperatureLevel += 2;
-            break;
-            
-        case LATE_SUMMER:
-            temperatureLevel += 4;
-            break;
-            
-        default:
-            break;
+        if (world.provider.isSurfaceWorld())
+        {
+	        switch (season)
+	        {
+	        case MID_WINTER: case LATE_WINTER:
+	            temperatureLevel -= 6;
+	            break;
+	        
+	        case EARLY_SPRING: case EARLY_WINTER:
+	            temperatureLevel -= 4;
+	            break;
+	            
+	        case MID_SPRING: case LATE_AUTUMN:
+	            temperatureLevel -= 2;
+	            break;
+	            
+	        case MID_SUMMER: case EARLY_AUTUMN:
+	            temperatureLevel += 2;
+	            break;
+	            
+	        case LATE_SUMMER:
+	            temperatureLevel += 4;
+	            break;
+	            
+	        default:
+	            break;
+	        }
         }
         debugger.end(temperatureLevel);
         
