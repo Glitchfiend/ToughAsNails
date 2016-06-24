@@ -138,7 +138,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
             {
 	            if (item == Items.STICK)
 	            {
-	            	if (worldIn.rand.nextInt(5) == 0)
+	            	if (worldIn.rand.nextInt(12) == 0)
 	            	{
 	            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
 	            	}
