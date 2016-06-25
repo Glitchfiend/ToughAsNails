@@ -14,12 +14,10 @@ buildscript {
     }
 	dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-        classpath 'org.spongepowered:mixingradle:0.3-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'maven'
 
 ext {
@@ -51,12 +49,6 @@ configurations {
     compile.extendsFrom(embed)
 }
 
-dependencies {
-    embed('org.spongepowered:mixin:0.5.3-SNAPSHOT') {
-		transitive = false
-    }
-}
-
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 	mappings = project.config.mappings_version
@@ -68,12 +60,10 @@ jar {
 
 	manifest {
 		attributes (
-			"TweakClass": "toughasnails.launch.TANLaunchTweaker",
-			"TweakOrder": 0,
-			"MixinConfigs": "mixins.toughasnails.json",
-			"FMLCorePluginContainsFMLMod": "true",
-			"ForceLoadAsMod": true,
-			"FMLAT": "toughasnails_at.cfg"
+			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
+			"FMLCorePluginContainsFMLMod": 'true',
+			"ForceLoadAsMod": 'true',
+			"FMLAT": 'toughasnails_at.cfg'
 		)
 	}
 }
