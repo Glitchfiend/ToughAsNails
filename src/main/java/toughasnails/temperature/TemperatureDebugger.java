@@ -132,6 +132,7 @@ public class TemperatureDebugger
         NEARBY_BLOCKS_TARGET("Nearby Blocks", ModifierType.TARGET),
         SPRINTING_RATE("Sprinting", ModifierType.RATE),
         HEALTH_RATE("Health", ModifierType.RATE),
+        ALTITUDE_TARGET("Altitude", ModifierType.TARGET),
         ARMOR_TARGET("Armor", ModifierType.TARGET),
         ARMOR_RATE("Armor", ModifierType.RATE),
         SPRINTING_TARGET("Sprinting", ModifierType.TARGET),

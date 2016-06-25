@@ -43,7 +43,12 @@ public class TimeModifier extends TemperatureModifier
         int newTemperatureLevel = temperatureLevel;
 
         debugger.start(Modifier.TIME_TARGET, newTemperatureLevel);
-        newTemperatureLevel += TIME_TARGET_MODIFIER * timeNorm * (Math.max(1.0F, extremityModifier * EXTREMITY_MULTIPLIER));
+        
+        if (world.provider.isSurfaceWorld())
+        {
+        	newTemperatureLevel += TIME_TARGET_MODIFIER * timeNorm * (Math.max(1.0F, extremityModifier * EXTREMITY_MULTIPLIER));
+        }
+        
         debugger.end(newTemperatureLevel);
         
         return new Temperature(newTemperatureLevel);

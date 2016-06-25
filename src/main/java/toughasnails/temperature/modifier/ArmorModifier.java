@@ -14,10 +14,8 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 public class ArmorModifier extends TemperatureModifier
 {
     public static final int ARMOR_RATE_MODIFIER = -25;
-    public static final int JELLED_SLIME_TARGET_MODIFIER = -2;
-    public static final int DIAMOND_TARGET_MODIFIER = -1;
-    public static final int LEATHER_TARGET_MODIFIER = 1;
-    public static final int WOOL_TARGET_MODIFIER = 2;
+    public static final int JELLED_SLIME_TARGET_MODIFIER = -1;
+    public static final int WOOL_TARGET_MODIFIER = 1;
     
     public ArmorModifier(TemperatureDebugger debugger)
     {
@@ -67,7 +65,6 @@ public class ArmorModifier extends TemperatureModifier
     {
         int temperatureLevel = temperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
-        BlockPos playerPos = player.getPosition();
         
         debugger.start(Modifier.ARMOR_TARGET, newTemperatureLevel);
         
@@ -76,14 +73,6 @@ public class ArmorModifier extends TemperatureModifier
         //Helmet
         if (inventory.armorInventory[3] != null)
         {
-	        if (inventory.armorInventory[3].getItem() == Items.LEATHER_HELMET)
-	        {
-	        	newTemperatureLevel += LEATHER_TARGET_MODIFIER;
-	        }
-	        if (inventory.armorInventory[3].getItem() == Items.DIAMOND_HELMET)
-	        {
-	        	newTemperatureLevel += DIAMOND_TARGET_MODIFIER;
-	        }
 	        if (inventory.armorInventory[3].getItem() == TANItems.wool_helmet)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
@@ -97,14 +86,6 @@ public class ArmorModifier extends TemperatureModifier
         //Chestplate
         if (inventory.armorInventory[2] != null)
         {
-	        if (inventory.armorInventory[2].getItem() == Items.LEATHER_CHESTPLATE)
-	        {
-	        	newTemperatureLevel += LEATHER_TARGET_MODIFIER;
-	        }
-	        if (inventory.armorInventory[2].getItem() == Items.DIAMOND_CHESTPLATE)
-	        {
-	        	newTemperatureLevel += DIAMOND_TARGET_MODIFIER;
-	        }
 	        if (inventory.armorInventory[2].getItem() == TANItems.wool_chestplate)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
@@ -118,14 +99,6 @@ public class ArmorModifier extends TemperatureModifier
         //Leggings
         if (inventory.armorInventory[1] != null)
         {
-	        if (inventory.armorInventory[1].getItem() == Items.LEATHER_LEGGINGS)
-	        {
-	        	newTemperatureLevel += LEATHER_TARGET_MODIFIER;
-	        }
-	        if (inventory.armorInventory[1].getItem() == Items.DIAMOND_LEGGINGS)
-	        {
-	        	newTemperatureLevel += DIAMOND_TARGET_MODIFIER;
-	        }
 	        if (inventory.armorInventory[1].getItem() == TANItems.wool_leggings)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
@@ -139,14 +112,6 @@ public class ArmorModifier extends TemperatureModifier
         //Boots
         if (inventory.armorInventory[0] != null)
         {
-	        if (inventory.armorInventory[0].getItem() == Items.LEATHER_BOOTS)
-	        {
-	        	newTemperatureLevel += LEATHER_TARGET_MODIFIER;
-	        }
-	        if (inventory.armorInventory[0].getItem() == Items.DIAMOND_BOOTS)
-	        {
-	        	newTemperatureLevel += DIAMOND_TARGET_MODIFIER;
-	        }
 	        if (inventory.armorInventory[0].getItem() == TANItems.wool_boots)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;

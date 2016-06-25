@@ -10,7 +10,7 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 public class WeatherModifier extends TemperatureModifier
 {
     public static final int WET_RATE_MODIFIER = -750;
-    public static final int WET_TARGET_MODIFIER = -5;
+    public static final int WET_TARGET_MODIFIER = -7;
     public static final int SNOW_TARGET_MODIFIER = -10;
     
     public WeatherModifier(TemperatureDebugger debugger)
