@@ -31,7 +31,7 @@ public class VanillaDrinkHandler
             {
                 if (stack.getItem() == Items.MILK_BUCKET)
                 {
-                    thirstHandler.addStats(10, 0.5F);
+                    thirstHandler.addStats(6, 0.7F);
                 }
                 else if (stack.getItem() == Items.POTIONITEM)
                 {
