@@ -127,6 +127,7 @@ public class WorldTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
                 insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHandler", "isRainingAtInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "toughasnails/api/season/Season"), false));
+                insnList.add(new InsnNode(Opcodes.ICONST_0)); //Necessary for compatibility with RandomThingsCore
                 insnList.add(new InsnNode(Opcodes.IRETURN));
                 
                 MethodInsnNode invokeMethodNode = ASMHelper.getUniqueMethodInsnNode(methodNode, Opcodes.INVOKEVIRTUAL, ObfHelper.unmapType(obfuscatedClass, "net/minecraft/world/World"), GET_BIOME_GEN_FOR_COORDS_NAMES, ObfHelper.createMethodDescriptor(obfuscatedClass, "net/minecraft/world/biome/Biome", "net/minecraft/util/math/BlockPos"));
