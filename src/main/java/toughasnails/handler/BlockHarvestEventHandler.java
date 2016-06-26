@@ -13,7 +13,7 @@ public class BlockHarvestEventHandler
 	@SubscribeEvent
     public void onBlockBreak(HarvestDropsEvent event)
     {	
-        if (event.getState().getBlock() == Blocks.ICE)
+        if (event.getState().getBlock() == Blocks.ICE && event.getHarvester() != null)
         {
         	event.getDrops().clear();
             event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
