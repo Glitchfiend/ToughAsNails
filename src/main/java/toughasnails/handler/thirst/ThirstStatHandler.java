@@ -92,16 +92,7 @@ public class ThirstStatHandler
                     
                     if (attackDamage > 0.0F || weaponAttackDamage > 0.0F)
                     {
-                        boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && player.getRidingEntity() == null && target instanceof EntityLivingBase;
-
-                        if (flag && attackDamage > 0.0F)
-                        {
-                            attackDamage *= 1.5F;
-                        }
-
-                        attackDamage += weaponAttackDamage;
-                        
-                        boolean canAttack = target.attackEntityFrom(DamageSource.causePlayerDamage(player), attackDamage);
+                        boolean canAttack = target.attackEntityFrom(DamageSource.causePlayerDamage(player), 0.0F);
                         
                         if (canAttack)
                         {
