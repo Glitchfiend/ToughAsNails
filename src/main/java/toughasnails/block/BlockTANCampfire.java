@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -59,7 +61,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
         super(material);
         // set some defaults
         this.setTickRandomly(true);
-        this.setHardness(1.0F);
+        this.setHardness(0.7F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)).withProperty(BURNING, Boolean.valueOf(false)));
         this.setSoundType(SoundType.STONE);
     }
@@ -73,18 +75,27 @@ public class BlockTANCampfire extends Block implements ITANBlock
 
         if (state.getValue(BURNING) == true)
         {
+        	if (worldIn.isRainingAt(pos))
+        	{
+    			worldIn.setBlockState(pos, state.withProperty(BURNING, false).withProperty(AGE, 15), 2);
+    	        worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
+    	        for (int i = 0; i < 8; ++i)
+    	        {           
+    	            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.9F), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
+    	        }
+        	}
 	        if (age < 15)
 	        {
-	            if (rand.nextInt(10) == 0)
+	            if (rand.nextInt(8) == 0)
 	            {
 	                worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age + 1)), 2);
 	            }
 	        }
 	        if (age == 15)
 	        {
-	            if (rand.nextInt(10) == 0)
+	            if (rand.nextInt(8) == 0)
 	            {
-	                worldIn.setBlockState(pos, state.withProperty(BURNING, false).withProperty(AGE, 0), 2);
+	                worldIn.setBlockState(pos, state.withProperty(BURNING, false), 2);
 	            }
 	        }
         }
@@ -133,22 +144,29 @@ public class BlockTANCampfire extends Block implements ITANBlock
         if (playerIn.getHeldItem(hand) != null)
         {
             Item item = playerIn.getHeldItem(hand).getItem();
+            int age = ((Integer)state.getValue(AGE)).intValue();
 
-            if (state.getValue(BURNING) == false)
+            if (age == 0)
             {
-	            if (item == Items.STICK)
+	            if (state.getValue(BURNING) == false)
 	            {
-	            	if (worldIn.rand.nextInt(12) == 0)
+	            	if (!worldIn.isRainingAt(pos))
 	            	{
-	            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
+			            if (item == Items.STICK)
+			            {
+			            	if (worldIn.rand.nextInt(12) == 0)
+			            	{
+			            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
+			            	}
+			
+			                if (item == Items.STICK)
+			                {
+			                    --playerIn.getHeldItem(hand).stackSize;
+			                }
+			
+			                return true;
+			            }
 	            	}
-	
-	                if (item == Items.STICK)
-	                {
-	                    --playerIn.getHeldItem(hand).stackSize;
-	                }
-	
-	                return true;
 	            }
             }
         }
@@ -165,6 +183,11 @@ public class BlockTANCampfire extends Block implements ITANBlock
         
         if (state.getValue(BURNING) == true)
         {
+        	if (rand.nextInt(24) == 0)
+            {
+                worldIn.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
+            }
+        	
 	        worldIn.spawnParticle(EnumParticleTypes.FLAME, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.25F + (rand.nextFloat() / 2.0F)), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
 	        worldIn.spawnParticle(EnumParticleTypes.FLAME, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.25F + (rand.nextFloat() / 2.0F)), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
 	        worldIn.spawnParticle(EnumParticleTypes.FLAME, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.25F + (rand.nextFloat() / 2.0F)), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
