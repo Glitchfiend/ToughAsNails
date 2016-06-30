@@ -35,7 +35,7 @@ public class AltitudeModifier extends TemperatureModifier
         
         if (world.provider.isSurfaceWorld())
         {
-        	newTemperatureLevel += MathHelper.floor_double(((64 - player.posY) / 64) * ALTITUDE_TARGET_MODIFIER) + 1;
+        	newTemperatureLevel -= MathHelper.abs_int(MathHelper.floor_double(((64 - player.posY) / 64) * ALTITUDE_TARGET_MODIFIER) + 1);
         }
         
         debugger.end(newTemperatureLevel);
