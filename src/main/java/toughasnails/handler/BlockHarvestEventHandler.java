@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.item.TANItems;
+import toughasnails.item.ItemBark;
 
 public class BlockHarvestEventHandler
 {
@@ -56,22 +57,22 @@ public class BlockHarvestEventHandler
         	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.OAK)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_oak, 2 + new Random().nextInt(2)));
+	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.OAK.ordinal()));
 	        }
         	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.SPRUCE)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_spruce, 2 + new Random().nextInt(2)));
+	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.SPRUCE.ordinal()));
 	        }
         	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.BIRCH)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_birch, 2 + new Random().nextInt(2)));
+	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.BIRCH.ordinal()));
 	        }
         	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.JUNGLE)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_jungle, 2 + new Random().nextInt(2)));
+	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.JUNGLE.ordinal()));
 	        }
         }
         if (event.getState().getBlock() == Blocks.LOG2 && event.getHarvester() != null && !event.isSilkTouching())
@@ -79,12 +80,12 @@ public class BlockHarvestEventHandler
         	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.ACACIA)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_acacia, 2 + new Random().nextInt(2)));
+	            event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.ACACIA.ordinal()));
 	        }
         	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.DARK_OAK)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark_dark_oak, 2 + new Random().nextInt(2)));
+	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.DARK_OAK.ordinal()));
 	        }
         }
         

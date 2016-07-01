@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
+import toughasnails.item.ItemBark;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemFruitJuice;
@@ -97,12 +98,7 @@ public class ModItems
         glass_shard = registerItem(new Item(), "glass_shard");
         obsidian_shard = registerItem(new Item(), "obsidian_shard");
         
-        bark_oak = registerItem(new Item(), "bark_oak");
-        bark_spruce = registerItem(new Item(), "bark_spruce");
-        bark_birch = registerItem(new Item(), "bark_birch");
-        bark_jungle = registerItem(new Item(), "bark_jungle");
-        bark_acacia = registerItem(new Item(), "bark_acacia");
-        bark_dark_oak = registerItem(new Item(), "bark_dark_oak");
+        bark = registerItem(new ItemBark(), "bark");
         
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");

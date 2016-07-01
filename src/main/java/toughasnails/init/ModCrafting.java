@@ -9,11 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
+import toughasnails.handler.FurnaceFuelHandler;
+import toughasnails.item.ItemBark;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemTANWaterBottle;
 
@@ -155,12 +158,12 @@ public class ModCrafting
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.OBSIDIAN, 1), new Object[] {"SS", "SS", 'S', TANItems.obsidian_shard});
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GLASS, 1), new Object[] {"SS", "SS", 'S', TANItems.glass_shard});
     	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_oak});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_spruce});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_birch});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_jungle});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_acacia});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_dark_oak});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.OAK.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.SPRUCE.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.BIRCH.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.JUNGLE.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.ACACIA.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.DARK_OAK.ordinal())});
     	
     	GameRegistry.addShapedRecipe(new ItemStack(Items.IRON_INGOT, 1), new Object[] {"III", "III", "III", 'I', TANItems.iron_nugget});
     }
@@ -176,11 +179,19 @@ public class ModCrafting
     	GameRegistry.addSmelting(new ItemStack(TANItems.pile_of_sand), new ItemStack(TANItems.glass_shard), 0.05F);
     	GameRegistry.addSmelting(new ItemStack(TANItems.gold_ore_chunk), new ItemStack(Items.GOLD_NUGGET), 0.5F);
     	GameRegistry.addSmelting(new ItemStack(TANItems.iron_ore_chunk), new ItemStack(TANItems.iron_nugget), 0.3F);
+    
+    	// Fuel
+    	FurnaceFuelHandler tanFuel = new FurnaceFuelHandler();
+        GameRegistry.registerFuelHandler(tanFuel);
+        
+    	tanFuel.addFuel(TANItems.bark, 75);
     }
     
     private static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
+    	
+    	OreDictionary.registerOre("nuggetIron", new ItemStack(TANItems.iron_nugget));
     }
     
     /*private static void removeCraftingRecipes()
