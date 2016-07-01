@@ -1,4 +1,4 @@
-package toughasnails.handler;
+package toughasnails.handler.temperature;
 
 import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 

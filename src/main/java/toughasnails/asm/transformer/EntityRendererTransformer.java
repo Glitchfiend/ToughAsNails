@@ -63,7 +63,7 @@ public class EntityRendererTransformer implements IClassTransformer
                 
                 //Redirect the call to our own version of getFloatTemperature
                 targetMethodInsnNode.setOpcode(Opcodes.INVOKESTATIC);
-                targetMethodInsnNode.owner = "toughasnails/season/SeasonASMHandler";
+                targetMethodInsnNode.owner = "toughasnails/season/SeasonASMHelper";
                 targetMethodInsnNode.name = "getFloatTemperature";
                 targetMethodInsnNode.desc = ObfHelper.createMethodDescriptor(obfuscatedClass, "F", "net/minecraft/world/biome/Biome", "net/minecraft/util/math/BlockPos");
                 
@@ -75,7 +75,7 @@ public class EntityRendererTransformer implements IClassTransformer
                 
                 //Redirect the call to our own version of getFloatTemperature
                 targetMethodInsnNode.setOpcode(Opcodes.INVOKESTATIC);
-                targetMethodInsnNode.owner = "toughasnails/season/SeasonASMHandler";
+                targetMethodInsnNode.owner = "toughasnails/season/SeasonASMHelper";
                 targetMethodInsnNode.name = "getFloatTemperature";
                 targetMethodInsnNode.desc = ObfHelper.createMethodDescriptor(obfuscatedClass, "F", "net/minecraft/world/biome/Biome", "net/minecraft/util/math/BlockPos");
                 

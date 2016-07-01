@@ -8,18 +8,20 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.config.GameplayConfigurationHandler;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.ExtendedStatHandler;
-import toughasnails.handler.HealthOverlayHandler;
-import toughasnails.handler.MaxHealthHandler;
 import toughasnails.handler.PacketHandler;
-import toughasnails.handler.TemperatureDebugOverlayHandler;
-import toughasnails.handler.TemperatureOverlayHandler;
+import toughasnails.handler.health.HealthOverlayHandler;
+import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
 import toughasnails.handler.season.StopSpawnHandler;
 import toughasnails.handler.season.WeatherFrequencyHandler;
+import toughasnails.handler.temperature.TemperatureDebugOverlayHandler;
+import toughasnails.handler.temperature.TemperatureOverlayHandler;
 import toughasnails.handler.thirst.FillBottleHandler;
 import toughasnails.handler.thirst.ThirstOverlayHandler;
 import toughasnails.handler.thirst.ThirstStatHandler;
@@ -33,17 +35,16 @@ public class ModHandlers
     {
         PacketHandler.init();
 
-        ExtendedStatHandler extendedStatHandler = new ExtendedStatHandler();
-        
-        MinecraftForge.EVENT_BUS.register(extendedStatHandler);
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
+        MinecraftForge.EVENT_BUS.register(new SyncedConfigHandler());
         
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
         MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
         
-        if (GameplayConfigurationHandler.loweredStartingHealth) MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
-        
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
+            MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
+
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
@@ -60,7 +61,7 @@ public class ModHandlers
             MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
             MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
             MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
-            
+
             registerSeasonColourHandlers();
         }
     }

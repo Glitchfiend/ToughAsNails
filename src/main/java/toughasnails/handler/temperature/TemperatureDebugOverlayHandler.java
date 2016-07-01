@@ -1,4 +1,4 @@
-package toughasnails.handler;
+package toughasnails.handler.temperature;
 
 import java.util.Iterator;
 import java.util.Map;

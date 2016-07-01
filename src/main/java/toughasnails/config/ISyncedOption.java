@@ -5,21 +5,9 @@
  * 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.api.season;
+package toughasnails.config;
 
-import toughasnails.api.season.Season.SubSeason;
-
-public interface ISeasonData 
+public interface ISyncedOption
 {
-    /**
-     * The elapsed time in ticks for the current season cycle.
-     * Cycles are split into seasons rather than sub seasons
-     * i.e. Summer, Autumn, Winter and Spring.
-     * 
-     * @return The time in ticks
-     */
-    int getSeasonCycleTicks();
-    
-    
-    SubSeason getSubSeason();
+    String getOptionName();
 }

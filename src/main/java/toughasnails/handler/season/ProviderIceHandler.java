@@ -15,7 +15,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import toughasnails.season.SeasonASMHandler;
+import toughasnails.season.SeasonASMHelper;
 
 public class ProviderIceHandler 
 {
@@ -36,12 +36,12 @@ public class ProviderIceHandler
                     BlockPos blockpos1 = world.getPrecipitationHeight(pos.add(k2, 0, j3));
                     BlockPos blockpos2 = blockpos1.down();
 
-                    if (SeasonASMHandler.canBlockFreezeInSeason(world, blockpos2, false, null))
+                    if (SeasonASMHelper.canBlockFreezeInSeason(world, blockpos2, false, null))
                     {
                         world.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
                     }
 
-                    if (SeasonASMHandler.canSnowAtInSeason(world, blockpos1, true, null))
+                    if (SeasonASMHelper.canSnowAtInSeason(world, blockpos1, true, null))
                     {
                         world.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
                     }

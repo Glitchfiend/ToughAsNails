@@ -26,7 +26,7 @@ import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.handler.season.SeasonHandler;
 
-public class SeasonASMHandler
+public class SeasonASMHelper
 {
     ///////////////////
     // World methods //
