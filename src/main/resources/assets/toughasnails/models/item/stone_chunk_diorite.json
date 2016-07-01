@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:items/stone_chunk_diorite"
+    }
+}

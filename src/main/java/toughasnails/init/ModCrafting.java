@@ -1,10 +1,10 @@
 package toughasnails.init;
 
+import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -134,6 +134,27 @@ public class ModCrafting
     	
     	// Respirator
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'A', TANItems.air_filter});
+    
+    	// Vanilla Materials
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), new Object[] {"SS", "SS", 'S', TANItems.stone_chunk});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.ANDESITE.ordinal()), new Object[] {"SS", "SS", 'S', TANItems.stone_chunk_andesite});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.DIORITE.ordinal()), new Object[] {"SS", "SS", 'S', TANItems.stone_chunk_diorite});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.GRANITE.ordinal()), new Object[] {"SS", "SS", 'S', TANItems.stone_chunk_granite});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"SC", "CS", 'S', TANItems.stone_chunk, 'C', Items.CLAY_BALL});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"CS", "SC", 'S', TANItems.stone_chunk, 'C', Items.CLAY_BALL});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIRT, 1), new Object[] {"PP", "PP", 'P', TANItems.pile_of_dirt});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GRAVEL, 1), new Object[] {"PP", "PP", 'P', TANItems.pile_of_gravel});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.SAND, 1), new Object[] {"PP", "PP", 'P', TANItems.pile_of_sand});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.NETHERRACK, 1), new Object[] {"CC", "CC", 'C', TANItems.netherrack_chunk});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.END_STONE, 1), new Object[] {"CC", "CC", 'C', TANItems.end_stone_chunk});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.OBSIDIAN, 1), new Object[] {"SS", "SS", 'S', TANItems.obsidian_shard});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GLASS, 1), new Object[] {"SS", "SS", 'S', TANItems.glass_shard});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Items.IRON_INGOT, 1), new Object[] {"III", "III", "III", 'I', TANItems.iron_nugget});
     }
     
     public static void addSmeltingRecipes()
@@ -142,6 +163,11 @@ public class ModCrafting
     	
     	// Clean Water Bottle
     	GameRegistry.addSmelting(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
+    	
+    	// Vanilla Materials
+    	GameRegistry.addSmelting(new ItemStack(TANItems.pile_of_sand), new ItemStack(TANItems.glass_shard), 0.05F);
+    	GameRegistry.addSmelting(new ItemStack(TANItems.gold_ore_chunk), new ItemStack(Items.GOLD_NUGGET), 0.5F);
+    	GameRegistry.addSmelting(new ItemStack(TANItems.iron_ore_chunk), new ItemStack(TANItems.iron_nugget), 0.3F);
     }
     
     private static void addOreRegistration()
