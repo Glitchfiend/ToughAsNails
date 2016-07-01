@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,6 +16,8 @@ public class BlockHarvestEventHandler
 	@SubscribeEvent
     public void onBlockBreak(HarvestDropsEvent event)
     {	
+		int fortune = event.getFortuneLevel();
+		
         if (event.getState().getBlock() == Blocks.ICE && event.getHarvester() != null)
         {
         	event.getDrops().clear();
@@ -67,6 +70,16 @@ public class BlockHarvestEventHandler
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.pile_of_gravel, 2 + new Random().nextInt(2)));
+	        
+	        if (fortune > 3)
+	        {
+	            fortune = 3;
+	        }
+	        
+	        if (new Random().nextInt(10 - fortune * 3) == 0)
+	        {
+	        	event.getDrops().add(new ItemStack(Items.FLINT, 1));
+	        }
         }
         
         if (event.getState().getBlock() == Blocks.SAND && event.getHarvester() != null && !event.isSilkTouching())
