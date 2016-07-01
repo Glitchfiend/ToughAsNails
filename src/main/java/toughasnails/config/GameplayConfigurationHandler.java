@@ -7,9 +7,12 @@
  ******************************************************************************/
 package toughasnails.config;
 
+import static toughasnails.config.SyncedConfigHandler.addOption;
+
 import java.io.File;
 
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.core.ToughAsNails;
@@ -19,10 +22,7 @@ public class GameplayConfigurationHandler
     public static final String SURVIVAL_SETTINGS = "Survival Settings";
     
     public static Configuration config;
-
-    //Options
-    public static boolean loweredStartingHealth;
-
+    
     public static void init(File configFile)
     {
         if (config == null)
@@ -36,7 +36,7 @@ public class GameplayConfigurationHandler
     {
         try
         {
-            loweredStartingHealth = config.getBoolean("Lowered Starting Health", SURVIVAL_SETTINGS, true, "Players begin with a lowered maximum health.");
+            addSyncedBool(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH, true, SURVIVAL_SETTINGS, "Players begin with a lowered maximum health.");
         }
         catch (Exception e)
         {
@@ -46,6 +46,12 @@ public class GameplayConfigurationHandler
         {
             if (config.hasChanged()) config.save();
         }
+    }
+    
+    private static void addSyncedBool(GameplayOption option, boolean defaultValue, String category, String comment)
+    {
+        boolean value = config.getBoolean(option.getOptionName(), category, defaultValue, comment);
+        SyncedConfigHandler.addOption(option, "" + value);
     }
 
     @SubscribeEvent

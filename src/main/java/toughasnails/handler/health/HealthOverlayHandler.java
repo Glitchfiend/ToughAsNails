@@ -1,4 +1,4 @@
-package toughasnails.handler;
+package toughasnails.handler.health;
 
 import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 
@@ -14,6 +14,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.HealthHelper;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 
 public class HealthOverlayHandler
 {
@@ -30,7 +32,7 @@ public class HealthOverlayHandler
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         
-        if (event.getType() == ElementType.HEALTH)
+        if (event.getType() == ElementType.HEALTH && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 

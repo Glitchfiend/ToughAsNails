@@ -67,7 +67,7 @@ public class BlockCropsTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
-                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHandler", "onUpdateTick", ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/block/BlockCrops", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "onUpdateTick", ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/block/BlockCrops", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
             
                 //Insert our new instructions before returning
                 methodNode.instructions.insertBefore(methodNode.instructions.get(methodNode.instructions.indexOf(methodNode.instructions.getLast()) - 1), insnList);

@@ -77,7 +77,7 @@ public class WorldTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ILOAD, 2));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 3));
-                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHandler", "canSnowAtInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "Z", "toughasnails/api/season/Season"), false));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "canSnowAtInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "Z", "toughasnails/api/season/Season"), false));
                 insnList.add(new InsnNode(Opcodes.IRETURN));
 
                 //Substitute existing instructions with our new ones
@@ -102,7 +102,7 @@ public class WorldTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ILOAD, 2));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 3));
-                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHandler", "canBlockFreezeInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "Z", "toughasnails/api/season/Season"), false));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "canBlockFreezeInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "Z", "toughasnails/api/season/Season"), false));
                 insnList.add(new InsnNode(Opcodes.IRETURN));
 
                 //Substitute existing instructions with our new ones
@@ -126,7 +126,7 @@ public class WorldTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
-                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHandler", "isRainingAtInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "toughasnails/api/season/Season"), false));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "isRainingAtInSeason", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "toughasnails/api/season/Season"), false));
                 insnList.add(new InsnNode(Opcodes.ICONST_0)); //Necessary for compatibility with RandomThingsCore
                 insnList.add(new InsnNode(Opcodes.IRETURN));
                 
