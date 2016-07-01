@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "toughasnails:items/glass_shard"
+        "layer0": "toughasnails:items/chunk_gold_ore"
     }
 }

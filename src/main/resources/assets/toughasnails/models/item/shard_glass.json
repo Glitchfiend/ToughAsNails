@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "toughasnails:items/netherrack_chunk"
+        "layer0": "toughasnails:items/shard_glass"
     }
 }

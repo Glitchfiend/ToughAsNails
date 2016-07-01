@@ -25,11 +25,14 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemBark;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
+import toughasnails.item.ItemChunks;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemLifebloodCrystal;
+import toughasnails.item.ItemPiles;
 import toughasnails.item.ItemRespirator;
 import toughasnails.item.ItemSeasonClock;
+import toughasnails.item.ItemShards;
 import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.item.ItemThermometer;
@@ -80,25 +83,10 @@ public class ModItems
         iron_nugget = registerItem(new Item(), "iron_nugget");
         
         // Materials
-        pile_of_dirt = registerItem(new Item(), "pile_of_dirt");
-        pile_of_gravel = registerItem(new Item(), "pile_of_gravel");
-        pile_of_sand = registerItem(new Item(), "pile_of_sand");
-        
-        stone_chunk = registerItem(new Item(), "stone_chunk");
-        stone_chunk_andesite = registerItem(new Item(), "stone_chunk_andesite");
-        stone_chunk_diorite = registerItem(new Item(), "stone_chunk_diorite");
-        stone_chunk_granite = registerItem(new Item(), "stone_chunk_granite");
-        
-        iron_ore_chunk = registerItem(new Item(), "iron_ore_chunk");
-        gold_ore_chunk = registerItem(new Item(), "gold_ore_chunk");
-        
-        netherrack_chunk = registerItem(new Item(), "netherrack_chunk");
-        end_stone_chunk = registerItem(new Item(), "end_stone_chunk");
-        
-        glass_shard = registerItem(new Item(), "glass_shard");
-        obsidian_shard = registerItem(new Item(), "obsidian_shard");
-        
+        pile = registerItem(new ItemPiles(), "pile"); 
+        chunk = registerItem(new ItemChunks(), "chunk");
         bark = registerItem(new ItemBark(), "bark");
+        shard = registerItem(new ItemShards(), "shard");
         
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");

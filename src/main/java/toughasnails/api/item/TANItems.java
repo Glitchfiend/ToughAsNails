@@ -37,27 +37,12 @@ public class TANItems
     
     public static Item season_clock;
     
-    public static Item pile_of_dirt;
-    public static Item pile_of_gravel;
-    public static Item pile_of_sand;
-    
-    public static Item stone_chunk;
-    public static Item stone_chunk_andesite;
-    public static Item stone_chunk_diorite;
-    public static Item stone_chunk_granite;
-    
-    public static Item iron_ore_chunk;
-    public static Item gold_ore_chunk;
-    
-    public static Item netherrack_chunk;
-    public static Item end_stone_chunk;
-    
-    public static Item glass_shard;
-    public static Item obsidian_shard;
+    public static Item pile;
+    public static Item chunk;
+    public static Item shard;
+    public static Item bark;
     
     public static Item iron_nugget;
-    
-    public static Item bark;
     
     public static Item spawn_egg;
     

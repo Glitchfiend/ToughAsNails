@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "toughasnails:items/end_stone_chunk"
+        "layer0": "toughasnails:items/pile_of_red_sand"
     }
 }
