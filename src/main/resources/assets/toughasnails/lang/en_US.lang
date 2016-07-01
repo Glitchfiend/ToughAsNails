@@ -15,6 +15,12 @@ tile.season_sensor_autumn.name=Season Sensor
 tile.season_sensor_winter.name=Season Sensor
 
 item.air_filter.name=Air Filter
+item.bark_acacia.name=Acacia Wood Bark
+item.bark_birch.name=Birch Wood Bark
+item.bark_dark_oak.name=Dark Oak Wood Bark
+item.bark_jungle.name=Jungle Wood Bark
+item.bark_oak.name=Oak Wood Bark
+item.bark_spruce.name=Spruce Wood Bark
 item.bottle_of_blackdamp.name=Bottle of Blackdamp
 item.bottle_of_whitedamp.name=Bottle of Whitedamp
 item.bottle_of_firedamp.name=Bottle of Firedamp

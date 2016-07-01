@@ -57,6 +57,13 @@ public class TANItems
     
     public static Item iron_nugget;
     
+    public static Item bark_oak;
+    public static Item bark_birch;
+    public static Item bark_spruce;
+    public static Item bark_jungle;
+    public static Item bark_acacia;
+    public static Item bark_dark_oak;
+    
     public static Item spawn_egg;
     
     public static ArmorMaterial wool_armor_material;

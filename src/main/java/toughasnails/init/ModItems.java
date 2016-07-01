@@ -1,47 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.air_filter;
-import static toughasnails.api.item.TANItems.bottle_of_gas;
-import static toughasnails.api.item.TANItems.canteen;
-import static toughasnails.api.item.TANItems.charcoal_filter;
-import static toughasnails.api.item.TANItems.end_stone_chunk;
-import static toughasnails.api.item.TANItems.freeze_powder;
-import static toughasnails.api.item.TANItems.freeze_rod;
-import static toughasnails.api.item.TANItems.fruit_juice;
-import static toughasnails.api.item.TANItems.glass_shard;
-import static toughasnails.api.item.TANItems.gold_ore_chunk;
-import static toughasnails.api.item.TANItems.ice_charge;
-import static toughasnails.api.item.TANItems.ice_cube;
-import static toughasnails.api.item.TANItems.iron_nugget;
-import static toughasnails.api.item.TANItems.iron_ore_chunk;
-import static toughasnails.api.item.TANItems.jelled_slime;
-import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.item.TANItems.jelled_slime_boots;
-import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.item.TANItems.jelled_slime_helmet;
-import static toughasnails.api.item.TANItems.jelled_slime_leggings;
-import static toughasnails.api.item.TANItems.lifeblood_crystal;
-import static toughasnails.api.item.TANItems.netherrack_chunk;
-import static toughasnails.api.item.TANItems.obsidian_shard;
-import static toughasnails.api.item.TANItems.pile_of_dirt;
-import static toughasnails.api.item.TANItems.pile_of_gravel;
-import static toughasnails.api.item.TANItems.pile_of_sand;
-import static toughasnails.api.item.TANItems.respirator;
-import static toughasnails.api.item.TANItems.respirator_material;
-import static toughasnails.api.item.TANItems.season_clock;
-import static toughasnails.api.item.TANItems.spawn_egg;
-import static toughasnails.api.item.TANItems.stone_chunk;
-import static toughasnails.api.item.TANItems.stone_chunk_andesite;
-import static toughasnails.api.item.TANItems.stone_chunk_diorite;
-import static toughasnails.api.item.TANItems.stone_chunk_granite;
-import static toughasnails.api.item.TANItems.tan_icon;
-import static toughasnails.api.item.TANItems.thermometer;
-import static toughasnails.api.item.TANItems.water_bottle;
-import static toughasnails.api.item.TANItems.wool_armor_material;
-import static toughasnails.api.item.TANItems.wool_boots;
-import static toughasnails.api.item.TANItems.wool_chestplate;
-import static toughasnails.api.item.TANItems.wool_helmet;
-import static toughasnails.api.item.TANItems.wool_leggings;
+import static toughasnails.api.item.TANItems.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +96,13 @@ public class ModItems
         
         glass_shard = registerItem(new Item(), "glass_shard");
         obsidian_shard = registerItem(new Item(), "obsidian_shard");
+        
+        bark_oak = registerItem(new Item(), "bark_oak");
+        bark_spruce = registerItem(new Item(), "bark_spruce");
+        bark_birch = registerItem(new Item(), "bark_birch");
+        bark_jungle = registerItem(new Item(), "bark_jungle");
+        bark_acacia = registerItem(new Item(), "bark_acacia");
+        bark_dark_oak = registerItem(new Item(), "bark_dark_oak");
         
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");

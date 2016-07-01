@@ -2,6 +2,9 @@ package toughasnails.handler;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockNewLog;
+import net.minecraft.block.BlockOldLog;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
@@ -45,6 +48,43 @@ public class BlockHarvestEventHandler
 	        {
 	        	event.getDrops().clear();
 	            event.getDrops().add(new ItemStack(TANItems.stone_chunk_granite, 2 + new Random().nextInt(2)));
+	        }
+        }
+        
+        if (event.getState().getBlock() == Blocks.LOG && event.getHarvester() != null && !event.isSilkTouching())
+        {
+        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.OAK)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_oak, 2 + new Random().nextInt(2)));
+	        }
+        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.SPRUCE)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_spruce, 2 + new Random().nextInt(2)));
+	        }
+        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.BIRCH)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_birch, 2 + new Random().nextInt(2)));
+	        }
+        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.JUNGLE)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_jungle, 2 + new Random().nextInt(2)));
+	        }
+        }
+        if (event.getState().getBlock() == Blocks.LOG2 && event.getHarvester() != null && !event.isSilkTouching())
+        {
+        	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.ACACIA)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_acacia, 2 + new Random().nextInt(2)));
+	        }
+        	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.DARK_OAK)
+	        {
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.bark_dark_oak, 2 + new Random().nextInt(2)));
 	        }
         }
         

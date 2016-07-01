@@ -1,5 +1,6 @@
 package toughasnails.init;
 
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -153,6 +154,13 @@ public class ModCrafting
     	
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.OBSIDIAN, 1), new Object[] {"SS", "SS", 'S', TANItems.obsidian_shard});
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GLASS, 1), new Object[] {"SS", "SS", 'S', TANItems.glass_shard});
+    	
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_oak});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_spruce});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_birch});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_jungle});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_acacia});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', TANItems.bark_dark_oak});
     	
     	GameRegistry.addShapedRecipe(new ItemStack(Items.IRON_INGOT, 1), new Object[] {"III", "III", "III", 'I', TANItems.iron_nugget});
     }
