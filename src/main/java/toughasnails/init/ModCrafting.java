@@ -149,8 +149,8 @@ public class ModCrafting
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.DIORITE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.DIORITE.ordinal())});
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.GRANITE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.GRANITE.ordinal())});
     	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"SC", "CS", 'S', TANItems.chunk, 'C', Items.CLAY_BALL});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"CS", "SC", 'S', TANItems.chunk, 'C', Items.CLAY_BALL});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 4), new Object[] {"SNS", "NCN", "SNS", 'S', TANItems.chunk, 'C', Items.CLAY_BALL, 'N', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.SAND.ordinal())});
+    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 4), new Object[] {"NSN", "SCS", "NSN", 'S', TANItems.chunk, 'C', Items.CLAY_BALL, 'N', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.SAND.ordinal())});
     	
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIRT, 1), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.DIRT.ordinal())});
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GRAVEL, 1), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.GRAVEL.ordinal())});
