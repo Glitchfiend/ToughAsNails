@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.item.TANItems;
-import toughasnails.item.ItemBark;
+import toughasnails.item.ItemSplit;
 import toughasnails.item.ItemChunks;
 import toughasnails.item.ItemPiles;
 import toughasnails.item.ItemShards;
@@ -34,6 +34,13 @@ public class BlockHarvestEventHandler
         {
         	event.getDrops().clear();
             event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
+        }
+        if ((state.getBlock() == Blocks.LEAVES || state.getBlock() == Blocks.LEAVES2) && event.getHarvester() != null)
+        {
+        	if (new Random().nextInt(10) == 0)
+        	{
+        		event.getDrops().add(new ItemStack(Items.STICK, 1 + new Random().nextInt(1)));
+        	}
         }
         else if (state.getBlock() == Blocks.STONE)
         {
@@ -62,45 +69,45 @@ public class BlockHarvestEventHandler
             }
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), meta));
+            event.getDrops().add(new ItemStack(TANItems.chunk, 1 + new Random().nextInt(3), meta));
         }
         else if (state.getBlock() == Blocks.LOG)
         {
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), state.getValue(BlockOldLog.VARIANT).ordinal()));
+            event.getDrops().add(new ItemStack(TANItems.split, 1 + new Random().nextInt(3), state.getValue(BlockOldLog.VARIANT).ordinal()));
         }
         else if (state.getBlock() == Blocks.LOG2)
         {
         	if (state.getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.ACACIA)
 	        {
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.ACACIA.ordinal()));
+	            event.getDrops().add(new ItemStack(TANItems.split, 1 + new Random().nextInt(3), ItemSplit.WoodType.ACACIA.ordinal()));
 	        }
         	if (state.getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.DARK_OAK)
 	        {
 	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.DARK_OAK.ordinal()));
+	        	event.getDrops().add(new ItemStack(TANItems.split, 1 + new Random().nextInt(3), ItemSplit.WoodType.DARK_OAK.ordinal()));
 	        }
         }
         else if (state.getBlock() == Blocks.GRASS)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.DIRT.ordinal()));
         }
         else if (state.getBlock() == Blocks.GRASS_PATH)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.DIRT.ordinal()));
         }
         else if (state.getBlock() == Blocks.DIRT)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.DIRT.ordinal()));
         }
         else if (state.getBlock() == Blocks.GRAVEL)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.GRAVEL.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.GRAVEL.ordinal()));
 	        
 	        if (fortune > 3)
 	        {
@@ -117,38 +124,38 @@ public class BlockHarvestEventHandler
         	if (state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
 	        {
 	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.SAND.ordinal()));
+	        	event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.SAND.ordinal()));
 	        }
         	if (state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
 	        {
 	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.RED_SAND.ordinal()));
+	        	event.getDrops().add(new ItemStack(TANItems.pile, 1 + new Random().nextInt(3), ItemPiles.PileType.RED_SAND.ordinal()));
 	        }
         }
         else if (state.getBlock() == Blocks.OBSIDIAN)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.shard, 2 + new Random().nextInt(2), ItemShards.ShardType.OBSIDIAN.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.shard, 1 + new Random().nextInt(3), ItemShards.ShardType.OBSIDIAN.ordinal()));
         }
         else if (state.getBlock() == Blocks.NETHERRACK)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.NETHERRACK.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.chunk, 1 + new Random().nextInt(3), ItemChunks.ChunkType.NETHERRACK.ordinal()));
         }
         else if (state.getBlock() == Blocks.END_STONE)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.END_STONE.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.chunk, 1 + new Random().nextInt(3), ItemChunks.ChunkType.END_STONE.ordinal()));
         }
         else if (state.getBlock() == Blocks.IRON_ORE)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.IRON_ORE.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.chunk, 1 + new Random().nextInt(3), ItemChunks.ChunkType.IRON_ORE.ordinal()));
         }
         else if (state.getBlock() == Blocks.GOLD_ORE)
         {
 	        event.getDrops().clear();
-	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.GOLD_ORE.ordinal()));
+	        event.getDrops().add(new ItemStack(TANItems.chunk, 1 + new Random().nextInt(3), ItemChunks.ChunkType.GOLD_ORE.ordinal()));
         }
     }
 }

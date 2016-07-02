@@ -40,7 +40,7 @@ public class TANItems
     public static Item pile;
     public static Item chunk;
     public static Item shard;
-    public static Item bark;
+    public static Item split;
     
     public static Item iron_nugget;
     

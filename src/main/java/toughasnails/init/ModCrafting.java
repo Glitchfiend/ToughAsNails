@@ -17,7 +17,7 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.handler.FurnaceFuelHandler;
-import toughasnails.item.ItemBark;
+import toughasnails.item.ItemSplit;
 import toughasnails.item.ItemChunks;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemPiles;
@@ -90,7 +90,7 @@ public class ModCrafting
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.jelled_slime_boots), new Object [] {"# #", "# #", '#', TANItems.jelled_slime});
         
         // Campfire
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.campfire), new Object [] {" L ", "LLL", "CCC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.STONE.ordinal()), 'L', "barkWood"}));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.campfire), new Object [] {" L ", "LLL", "CCC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.STONE.ordinal()), 'L', "splitWood"}));
         
         // Heating Coil
     	GameRegistry.addShapedRecipe(new ItemStack(TANBlocks.temperature_coil, 1, BlockTANTemperatureCoil.CoilType.HEATING.ordinal()), new Object[] {"BBB", "BBB", "CCC", 'B', Items.BLAZE_ROD, 'C', Blocks.COBBLESTONE});
@@ -163,12 +163,12 @@ public class ModCrafting
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.OBSIDIAN, 1), new Object[] {"SS", "SS", 'S', new ItemStack(TANItems.shard, 1, ItemShards.ShardType.GLASS.ordinal())});
     	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GLASS, 1), new Object[] {"SS", "SS", 'S',new ItemStack(TANItems.shard, 1, ItemShards.ShardType.OBSIDIAN.ordinal())});
     	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.OAK.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.SPRUCE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.BIRCH.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.JUNGLE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.ACACIA.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.DARK_OAK.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.OAK.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.SPRUCE.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.BIRCH.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.JUNGLE.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.ACACIA.ordinal())});
+    	//GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.split, 1, ItemSplit.WoodType.DARK_OAK.ordinal())});
     	
     	GameRegistry.addShapedRecipe(new ItemStack(Items.IRON_INGOT, 1), new Object[] {"III", "III", "III", 'I', TANItems.iron_nugget});
     	GameRegistry.addShapelessRecipe(new ItemStack(TANItems.iron_nugget, 9), new Object[] {Items.IRON_INGOT});
@@ -191,7 +191,7 @@ public class ModCrafting
     	FurnaceFuelHandler tanFuel = new FurnaceFuelHandler();
         GameRegistry.registerFuelHandler(tanFuel);
         
-    	tanFuel.addFuel(TANItems.bark, 75);
+    	tanFuel.addFuel(TANItems.split, 75);
     }
     
     private static void addOreRegistration()
@@ -199,7 +199,7 @@ public class ModCrafting
     	//Registration in Ore Dictionary
     	
     	OreDictionary.registerOre("nuggetIron", new ItemStack(TANItems.iron_nugget));
-    	OreDictionary.registerOre("barkWood", new ItemStack(TANItems.bark));
+    	OreDictionary.registerOre("splitWood", new ItemStack(TANItems.split));
     }
     
     /*private static void removeCraftingRecipes()

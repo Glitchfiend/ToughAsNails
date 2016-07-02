@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "toughasnails:items/bark_birch"
+        "layer0": "toughasnails:items/split_spruce"
     }
 }

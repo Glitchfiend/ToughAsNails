@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.ItemBark;
+import toughasnails.item.ItemSplit;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemChunks;
@@ -85,7 +85,7 @@ public class ModItems
         // Materials
         pile = registerItem(new ItemPiles(), "pile"); 
         chunk = registerItem(new ItemChunks(), "chunk");
-        bark = registerItem(new ItemBark(), "bark");
+        split = registerItem(new ItemSplit(), "split");
         shard = registerItem(new ItemShards(), "shard");
         
         // Armor
