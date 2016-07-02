@@ -35,9 +35,15 @@ public class BiomeModifier extends TemperatureModifier
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
         Biome biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biomeNorth = world.getBiomeGenForCoords(player.getPosition().add(0, 0, -10));
+        Biome biomeSouth = world.getBiomeGenForCoords(player.getPosition().add(0, 0, 10));
+        Biome biomeEast = world.getBiomeGenForCoords(player.getPosition().add(10, 0, 0));
+        Biome biomeWest = world.getBiomeGenForCoords(player.getPosition().add(-10, 0, 0));
+        
+        float biomeTemp = ((BiomeUtils.getBiomeTempNorm(biome) + BiomeUtils.getBiomeTempNorm(biomeNorth) + BiomeUtils.getBiomeTempNorm(biomeSouth) + BiomeUtils.getBiomeTempNorm(biomeEast) + BiomeUtils.getBiomeTempNorm(biomeWest)) / 5.0F);
         
         //Denormalize, multiply by the max temp offset, add to the current temp
-        int newTemperatureLevel = temperature.getRawValue() + (int)Math.round((BiomeUtils.getBiomeTempNorm(biome) * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
+        int newTemperatureLevel = temperature.getRawValue() + (int)Math.round((biomeTemp * 2.0F - 1.0F) * MAX_TEMP_OFFSET);
         
         debugger.start(Modifier.BIOME_TEMPERATURE_TARGET, temperature.getRawValue());
         debugger.end(newTemperatureLevel);
