@@ -7,6 +7,7 @@ import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -23,94 +24,80 @@ public class BlockHarvestEventHandler
 	@SubscribeEvent
     public void onBlockBreak(HarvestDropsEvent event)
     {	
+	    IBlockState state = event.getState();
 		int fortune = event.getFortuneLevel();
 		
-        if (event.getState().getBlock() == Blocks.ICE && event.getHarvester() != null)
+		if (event.getHarvester() == null || event.isSilkTouching())
+		    return;
+		
+        if (state.getBlock() == Blocks.ICE && event.getHarvester() != null)
         {
         	event.getDrops().clear();
             event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
         }
-        
-        if (event.getState().getBlock() == Blocks.STONE && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.STONE)
         {
-        	if (event.getState().getValue(BlockStone.VARIANT) == BlockStone.EnumType.STONE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.STONE.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockStone.VARIANT) == BlockStone.EnumType.ANDESITE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.ANDESITE.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockStone.VARIANT) == BlockStone.EnumType.DIORITE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.DIORITE.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockStone.VARIANT) == BlockStone.EnumType.GRANITE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.GRANITE.ordinal()));
-	        }
+            int meta;
+            
+            switch ((BlockStone.EnumType)state.getValue(BlockStone.VARIANT))
+            {
+            case STONE:
+                meta = 0;
+                break;
+                
+            case ANDESITE:
+                meta = 1;
+                break;
+                
+            case DIORITE:
+                meta = 2;
+                break;
+                
+            case GRANITE:
+                meta = 3;
+                break;
+                
+            default:
+                return; //Don't touch other variants
+            }
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), meta));
         }
-        
-        if (event.getState().getBlock() == Blocks.LOG && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.LOG)
         {
-        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.OAK)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.OAK.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.SPRUCE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.SPRUCE.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.BIRCH)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.BIRCH.ordinal()));
-	        }
-        	if (event.getState().getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.JUNGLE)
-	        {
-	        	event.getDrops().clear();
-	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.JUNGLE.ordinal()));
-	        }
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), state.getValue(BlockOldLog.VARIANT).ordinal()));
         }
-        if (event.getState().getBlock() == Blocks.LOG2 && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.LOG2)
         {
-        	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.ACACIA)
+        	if (state.getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.ACACIA)
 	        {
 	        	event.getDrops().clear();
 	            event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.ACACIA.ordinal()));
 	        }
-        	if (event.getState().getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.DARK_OAK)
+        	if (state.getValue(BlockNewLog.VARIANT) == BlockPlanks.EnumType.DARK_OAK)
 	        {
 	        	event.getDrops().clear();
 	        	event.getDrops().add(new ItemStack(TANItems.bark, 2 + new Random().nextInt(2), ItemBark.BarkType.DARK_OAK.ordinal()));
 	        }
         }
-        
-        if (event.getState().getBlock() == Blocks.GRASS && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.GRASS)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.GRASS_PATH && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.GRASS_PATH)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.DIRT && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.DIRT)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.DIRT.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.GRAVEL && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.GRAVEL)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.GRAVEL.ordinal()));
@@ -125,46 +112,40 @@ public class BlockHarvestEventHandler
 	        	event.getDrops().add(new ItemStack(Items.FLINT, 1));
 	        }
         }
-        
-        if (event.getState().getBlock() == Blocks.SAND && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.SAND)
         {
-        	if (event.getState().getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
+        	if (state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
 	        {
 	        	event.getDrops().clear();
 	        	event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.SAND.ordinal()));
 	        }
-        	if (event.getState().getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
+        	if (state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
 	        {
 	        	event.getDrops().clear();
 	        	event.getDrops().add(new ItemStack(TANItems.pile, 2 + new Random().nextInt(2), ItemPiles.PileType.RED_SAND.ordinal()));
 	        }
         }
-        
-        if (event.getState().getBlock() == Blocks.OBSIDIAN && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.OBSIDIAN)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.shard, 2 + new Random().nextInt(2), ItemShards.ShardType.OBSIDIAN.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.NETHERRACK && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.NETHERRACK)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.NETHERRACK.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.END_STONE && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.END_STONE)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.END_STONE.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.IRON_ORE && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.IRON_ORE)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.IRON_ORE.ordinal()));
         }
-        
-        if (event.getState().getBlock() == Blocks.GOLD_ORE && event.getHarvester() != null && !event.isSilkTouching())
+        else if (state.getBlock() == Blocks.GOLD_ORE)
         {
 	        event.getDrops().clear();
 	        event.getDrops().add(new ItemStack(TANItems.chunk, 2 + new Random().nextInt(2), ItemChunks.ChunkType.GOLD_ORE.ordinal()));
