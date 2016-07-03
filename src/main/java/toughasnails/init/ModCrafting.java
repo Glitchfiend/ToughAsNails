@@ -1,8 +1,5 @@
 package toughasnails.init;
 
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -10,18 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
-import toughasnails.handler.FurnaceFuelHandler;
-import toughasnails.item.ItemSplit;
-import toughasnails.item.ItemChunks;
 import toughasnails.item.ItemFruitJuice;
-import toughasnails.item.ItemPiles;
-import toughasnails.item.ItemShards;
 import toughasnails.item.ItemTANWaterBottle;
 
 public class ModCrafting
