@@ -41,9 +41,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
         MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
-        
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
-            MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
+        MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
 
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());

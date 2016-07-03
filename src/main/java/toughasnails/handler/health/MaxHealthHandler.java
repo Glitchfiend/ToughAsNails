@@ -29,6 +29,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.HealthHelper;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 
 public class MaxHealthHandler 
 {
@@ -53,7 +55,7 @@ public class MaxHealthHandler
         AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
         
         //Copy the lifeblood modifier from the 'old' player
-        if (modifier != null)
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && modifier != null)
         { 
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
@@ -68,7 +70,7 @@ public class MaxHealthHandler
         Minecraft minecraft = Minecraft.getMinecraft();
         IntegratedServer integratedServer = minecraft.getIntegratedServer();
         
-        if (event.phase == Phase.END && integratedServer != null)
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && event.phase == Phase.END && integratedServer != null)
         {
             boolean gamePaused = Minecraft.getMinecraft().getConnection() != null && minecraft.isGamePaused();
             
@@ -95,6 +97,19 @@ public class MaxHealthHandler
     private void updateStartingHealthModifier(EnumDifficulty difficulty, EntityPlayer player)
     {
         IAttributeInstance maxHealthInstance = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+        
+        //Don't update if the lowered starting health config option is disabled
+        if (!SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
+        {
+            if (modifier != null)
+            {
+                maxHealthInstance.removeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+            }
+
+            return;
+        }
+        
         double difficultyHealthDecrement;
 
         switch (difficulty)
@@ -124,8 +139,6 @@ public class MaxHealthHandler
         {
             difficultyHealthDecrement -= overallHealthDecrement;
         }
-        
-        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
 
         //If the player doesn't have a modifier for a lowered starting health, add one
         //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
