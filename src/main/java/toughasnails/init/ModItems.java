@@ -80,14 +80,6 @@ public class ModItems
         air_filter = registerItem(new Item(), "air_filter", null);
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator", null);
         
-        iron_nugget = registerItem(new Item(), "iron_nugget");
-        
-        // Materials
-        pile = registerItem(new ItemPiles(), "pile"); 
-        chunk = registerItem(new ItemChunks(), "chunk");
-        split = registerItem(new ItemSplit(), "split");
-        shard = registerItem(new ItemShards(), "shard");
-        
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");
         wool_chestplate = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.CHEST), "wool_chestplate");
