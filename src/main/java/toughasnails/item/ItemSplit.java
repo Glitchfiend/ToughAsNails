@@ -9,10 +9,10 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBark extends Item
+public class ItemSplit extends Item
 {
     
-    public enum BarkType implements IStringSerializable
+    public enum WoodType implements IStringSerializable
     {
         OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARK_OAK;
         
@@ -28,7 +28,7 @@ public class ItemBark extends Item
         }
     }
 
-    public ItemBark()
+    public ItemSplit()
     {
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -39,7 +39,7 @@ public class ItemBark extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
     {
-        for (BarkType contents : BarkType.values())
+        for (WoodType contents : WoodType.values())
         {
             subItems.add(new ItemStack(itemIn, 1, contents.ordinal()));
         }
@@ -52,14 +52,14 @@ public class ItemBark extends Item
         return metadata;
     }
     
-    public BarkType getContentsType(ItemStack stack)
+    public WoodType getContentsType(ItemStack stack)
     {
         int meta = stack.getMetadata();
         try {
-            return BarkType.values()[meta];
+            return WoodType.values()[meta];
         } catch (Exception e) {
             // if metadata is out of bounds return honey as a default (should never happen)
-            return BarkType.OAK;
+            return WoodType.OAK;
         }
     }
     

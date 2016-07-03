@@ -17,7 +17,7 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.handler.FurnaceFuelHandler;
-import toughasnails.item.ItemBark;
+import toughasnails.item.ItemSplit;
 import toughasnails.item.ItemChunks;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemPiles;
@@ -142,35 +142,6 @@ public class ModCrafting
     	
     	// Respirator
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'A', TANItems.air_filter});
-    
-    	// Vanilla Materials
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.STONE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.ANDESITE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.ANDESITE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.DIORITE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.DIORITE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.GRANITE.ordinal()), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.GRANITE.ordinal())});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"SC", "CS", 'S', TANItems.chunk, 'C', Items.CLAY_BALL});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.COBBLESTONE, 1), new Object[] {"CS", "SC", 'S', TANItems.chunk, 'C', Items.CLAY_BALL});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIRT, 1), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.DIRT.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GRAVEL, 1), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.GRAVEL.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.SAND.ordinal()), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.SAND.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal()), new Object[] {"PP", "PP", 'P', new ItemStack(TANItems.pile, 1, ItemPiles.PileType.RED_SAND.ordinal())});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.NETHERRACK, 1), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.NETHERRACK.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.END_STONE, 1), new Object[] {"CC", "CC", 'C', new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.END_STONE.ordinal())});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.OBSIDIAN, 1), new Object[] {"SS", "SS", 'S', new ItemStack(TANItems.shard, 1, ItemShards.ShardType.GLASS.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.GLASS, 1), new Object[] {"SS", "SS", 'S',new ItemStack(TANItems.shard, 1, ItemShards.ShardType.OBSIDIAN.ordinal())});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.OAK.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.SPRUCE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.BIRCH.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.JUNGLE.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.JUNGLE.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.ACACIA.ordinal())});
-    	GameRegistry.addShapedRecipe(new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.ordinal()), new Object[] {"BB", "BB", 'B', new ItemStack(TANItems.bark, 1, ItemBark.BarkType.DARK_OAK.ordinal())});
-    	
-    	GameRegistry.addShapedRecipe(new ItemStack(Items.IRON_INGOT, 1), new Object[] {"III", "III", "III", 'I', TANItems.iron_nugget});
     }
     
     public static void addSmeltingRecipes()
@@ -179,25 +150,11 @@ public class ModCrafting
     	
     	// Clean Water Bottle
     	GameRegistry.addSmelting(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
-    	
-    	// Vanilla Materials
-    	GameRegistry.addSmelting(new ItemStack(TANItems.pile, 1, ItemPiles.PileType.SAND.ordinal()), new ItemStack(TANItems.shard, 1, ItemShards.ShardType.GLASS.ordinal()), 0.05F);
-    	GameRegistry.addSmelting(new ItemStack(TANItems.pile, 1, ItemPiles.PileType.RED_SAND.ordinal()), new ItemStack(TANItems.shard, 1, ItemShards.ShardType.GLASS.ordinal()), 0.05F);
-    	GameRegistry.addSmelting(new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.GOLD_ORE.ordinal()), new ItemStack(Items.GOLD_NUGGET), 0.5F);
-    	GameRegistry.addSmelting(new ItemStack(TANItems.chunk, 1, ItemChunks.ChunkType.IRON_ORE.ordinal()), new ItemStack(TANItems.iron_nugget), 0.3F);
-    
-    	// Fuel
-    	FurnaceFuelHandler tanFuel = new FurnaceFuelHandler();
-        GameRegistry.registerFuelHandler(tanFuel);
-        
-    	tanFuel.addFuel(TANItems.bark, 75);
     }
     
     private static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
-    	
-    	OreDictionary.registerOre("nuggetIron", new ItemStack(TANItems.iron_nugget));
     }
     
     /*private static void removeCraftingRecipes()

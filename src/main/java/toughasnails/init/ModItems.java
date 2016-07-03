@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.ItemBark;
+import toughasnails.item.ItemSplit;
 import toughasnails.item.ItemBottleOfGas;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemChunks;
@@ -79,14 +79,6 @@ public class ModItems
         // Respirators
         air_filter = registerItem(new Item(), "air_filter", null);
         respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator", null);
-        
-        iron_nugget = registerItem(new Item(), "iron_nugget");
-        
-        // Materials
-        pile = registerItem(new ItemPiles(), "pile"); 
-        chunk = registerItem(new ItemChunks(), "chunk");
-        bark = registerItem(new ItemBark(), "bark");
-        shard = registerItem(new ItemShards(), "shard");
         
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");

@@ -37,13 +37,6 @@ public class TANItems
     
     public static Item season_clock;
     
-    public static Item pile;
-    public static Item chunk;
-    public static Item shard;
-    public static Item bark;
-    
-    public static Item iron_nugget;
-    
     public static Item spawn_egg;
     
     public static ArmorMaterial wool_armor_material;
