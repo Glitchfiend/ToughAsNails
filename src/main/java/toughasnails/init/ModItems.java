@@ -74,11 +74,11 @@ public class ModItems
         ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
         jelled_slime = registerItem(new Item(), "jelled_slime");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
-        bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas", null);
+        //bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas", null);
         
         // Respirators
-        air_filter = registerItem(new Item(), "air_filter", null);
-        respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator", null);
+        //air_filter = registerItem(new Item(), "air_filter", null);
+        //respirator = registerItem(new ItemRespirator(respirator_material, 0), "respirator", null);
         
         // Armor
         wool_helmet = registerItem(new ItemArmor(wool_armor_material, 0, EntityEquipmentSlot.HEAD), "wool_helmet");

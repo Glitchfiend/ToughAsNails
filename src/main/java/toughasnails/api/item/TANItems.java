@@ -12,9 +12,9 @@ public class TANItems
     public static Item water_bottle;
     public static Item thermometer;
     
-    public static Item bottle_of_gas;
+    //public static Item bottle_of_gas;
     
-    public static Item respirator;
+    //public static Item respirator;
     
     public static Item wool_helmet;
     public static Item wool_chestplate;
@@ -31,7 +31,7 @@ public class TANItems
     public static Item ice_cube;
     public static Item ice_charge;
     public static Item charcoal_filter;
-    public static Item air_filter;
+    //public static Item air_filter;
     
     public static Item lifeblood_crystal;
     
