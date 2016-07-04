@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
+import toughasnails.temperature.TemperatureTrend;
 
 public abstract class TemperatureModifier
 {
@@ -16,7 +17,7 @@ public abstract class TemperatureModifier
         this.debugger = debugger;
     }
     
-    public abstract int modifyChangeRate(World world, EntityPlayer player, int changeRate);
+    public abstract int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend);
     public abstract Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature);
     
     public static class ExternalModifier implements INBTSerializable<NBTTagCompound>

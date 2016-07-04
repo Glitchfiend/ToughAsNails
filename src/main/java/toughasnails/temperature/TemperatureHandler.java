@@ -79,13 +79,18 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         {
             int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
 
-            newTempChangeTicks = altitudeModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = armorModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks);
-            newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks);
+            TemperatureTrend trend;
+            
+            if (debugger.targetTemperature == this.temperatureLevel) trend = TemperatureTrend.STILL;
+            else trend = debugger.targetTemperature > this.temperatureLevel ? TemperatureTrend.INCREASING : TemperatureTrend.DECREASING;
+            
+            newTempChangeTicks = altitudeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = armorModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
+            newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
 
             java.util.Iterator<TemperatureModifier.ExternalModifier> iterator = this.externalModifiers.values().iterator();
             

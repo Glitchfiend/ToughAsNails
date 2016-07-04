@@ -10,10 +10,11 @@ import toughasnails.api.item.TANItems;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.TemperatureTrend;
 
 public class ArmorModifier extends TemperatureModifier
 {
-    public static final int ARMOR_RATE_MODIFIER = -25;
+    public static final int ARMOR_RATE_MODIFIER = 25;
     public static final int JELLED_SLIME_TARGET_MODIFIER = -1;
     public static final int WOOL_TARGET_MODIFIER = 1;
     
@@ -23,9 +24,21 @@ public class ArmorModifier extends TemperatureModifier
     }
     
     @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
+    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
     {
         int newChangeRate = changeRate;
+        int armorRateModifier = ARMOR_RATE_MODIFIER;
+        
+        switch (trend)
+        {
+            case INCREASING:
+                armorRateModifier *= -1;
+                break;
+                
+            case STILL:
+                armorRateModifier = 0;
+                break;
+        }
         
         debugger.start(Modifier.ARMOR_RATE, newChangeRate);
         
@@ -34,25 +47,25 @@ public class ArmorModifier extends TemperatureModifier
         //Helmet
         if (inventory.armorInventory[3] != null)
         {
-        	newChangeRate += ARMOR_RATE_MODIFIER;
+        	newChangeRate += armorRateModifier;
         }
         
         //Chestplate
         if (inventory.armorInventory[2] != null)
         {
-        	newChangeRate += ARMOR_RATE_MODIFIER;
+        	newChangeRate += armorRateModifier;
         }
         
         //Legging
         if (inventory.armorInventory[1] != null)
         {
-        	newChangeRate += ARMOR_RATE_MODIFIER;
+        	newChangeRate += armorRateModifier;
         }
         
         //Boots
         if (inventory.armorInventory[0] != null)
         {
-        	newChangeRate += ARMOR_RATE_MODIFIER;
+        	newChangeRate += armorRateModifier;
         }
         
         debugger.end(newChangeRate);

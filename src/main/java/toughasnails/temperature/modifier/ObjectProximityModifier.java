@@ -11,6 +11,7 @@ import toughasnails.api.temperature.Temperature;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.TemperatureTrend;
 
 //TODO: Replace this with something better
 public class ObjectProximityModifier extends TemperatureModifier
@@ -21,7 +22,7 @@ public class ObjectProximityModifier extends TemperatureModifier
     }
 
     @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
+    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
     {
         int newChangeRate = changeRate;
         BlockPos playerPos = player.getPosition();

@@ -7,6 +7,7 @@ import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.TemperatureTrend;
 import toughasnails.util.BiomeUtils;
 
 public class AltitudeModifier extends TemperatureModifier
@@ -20,7 +21,7 @@ public class AltitudeModifier extends TemperatureModifier
     }
     
     @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
+    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
     {
         return changeRate;
     }
