@@ -139,7 +139,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (TileEntityTemperatureSpread.ENABLE_DEBUG)
+        if (TileEntityTemperatureSpread.enableDebug)
         {
             TileEntity te = world.getTileEntity(pos);
             

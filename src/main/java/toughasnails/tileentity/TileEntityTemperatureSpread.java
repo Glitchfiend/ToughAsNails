@@ -34,7 +34,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 {
     public static final int MAX_SPREAD_DISTANCE = 50;
     public static final int RATE_MODIFIER = -500;
-    public static final boolean ENABLE_DEBUG = false;
+    public static boolean enableDebug = false;
     
     private Set<Entity> spawnedEntities;
     
@@ -55,8 +55,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
             this.filledPositions[i] = Sets.newConcurrentHashSet();
         }
         this.obstructedPositions = Sets.newConcurrentHashSet();
-        
-        if (ENABLE_DEBUG) this.spawnedEntities = Sets.newHashSet();
+        this.spawnedEntities = Sets.newHashSet();
     }
     
     public TileEntityTemperatureSpread(int temperatureModifier)
@@ -122,7 +121,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
                 }
             }
 
-            if (ENABLE_DEBUG)
+            if (enableDebug)
             {
                 //There is a mismatch between the filled positions and the spawned entities, repopulate spawned entities
                 //If this is active, there should at least be a position in the set for the max spread distance
@@ -157,7 +156,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 
     public void reset()
     {
-        if (ENABLE_DEBUG)
+        if (enableDebug)
         {
             for (Entity entity : this.spawnedEntities)
             {
@@ -191,7 +190,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         
         runStage(MAX_SPREAD_DISTANCE - 1);
         
-        if (ENABLE_DEBUG)
+        if (enableDebug)
         {
             for (Set<BlockPos> trackedPositions : this.filledPositions)
             {

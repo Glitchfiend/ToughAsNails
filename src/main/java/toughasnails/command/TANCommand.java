@@ -22,6 +22,7 @@ import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
+import toughasnails.tileentity.TileEntityTemperatureSpread;
 
 public class TANCommand extends CommandBase
 {
@@ -67,6 +68,10 @@ public class TANCommand extends CommandBase
         else if ("setseason".equals(args[0]))
         {
             setSeason(sender, args);
+        }
+        else if ("coildebug".equals(args[0]))
+        {
+            showCoilDebug(sender, args);
         }
     }
     
@@ -124,6 +129,11 @@ public class TANCommand extends CommandBase
         {
             sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
         }
+    }
+    
+    private void showCoilDebug(ICommandSender sender, String[] args) throws CommandException
+    {
+        TileEntityTemperatureSpread.enableDebug = !TileEntityTemperatureSpread.enableDebug;
     }
     
     @Override

@@ -1,4 +1,4 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason|coildebug> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s
 commands.toughasnails.setseason.success=Set season to %s
 commands.toughasnails.setseason.fail=Invalid season %s

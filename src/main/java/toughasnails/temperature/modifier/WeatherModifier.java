@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
+import toughasnails.temperature.TemperatureTrend;
 
 public class WeatherModifier extends TemperatureModifier
 {
@@ -19,7 +20,7 @@ public class WeatherModifier extends TemperatureModifier
     }
     
     @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate)
+    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
     {
         int newChangeRate = changeRate;
         
