@@ -66,3 +66,8 @@ potion.effect.cold_resistance_type=Potion of Cold Resistance
 potion.effect.long_cold_resistance_type=Potion of Cold Resistance
 potion.effect.heat_resistance_type=Potion of Heat Resistance
 potion.effect.long_heat_resistance_type=Potion of Heat Resistance
+
+tipped_arrow.effect.cold_resistance_type=Arrow of Cold Resistance
+tipped_arrow.effect.long_cold_resistance_type=Arrow of Cold Resistance
+tipped_arrow.effect.heat_resistance_type=Arrow of Heat Resistance
+tipped_arrow.effect.long_heat_resistance_type=Arrow of Heat Resistance
