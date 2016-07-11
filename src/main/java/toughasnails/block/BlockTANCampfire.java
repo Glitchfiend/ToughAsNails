@@ -166,6 +166,19 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			
 			                return true;
 			            }
+			            
+			            if (item == Items.FLINT_AND_STEEL)
+			            {
+			            	worldIn.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.4F + 0.8F);
+			            	worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
+			
+			                if (item == Items.FLINT_AND_STEEL)
+			                {
+			                    playerIn.getHeldItem(hand).damageItem(1, playerIn);;
+			                }
+			
+			                return true;
+			            }
 	            	}
 	            }
             }
