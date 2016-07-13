@@ -66,3 +66,8 @@ potion.effect.cold_resistance_type=严寒抗性药水
 potion.effect.long_cold_resistance_type=严寒抗性药水
 potion.effect.heat_resistance_type=炽热抗性药水
 potion.effect.long_heat_resistance_type=炙热抗性药水
+
+tipped_arrow.effect.cold_resistance_type=严寒抗性之箭
+tipped_arrow.effect.long_cold_resistance_type=严寒抗性之箭
+tipped_arrow.effect.heat_resistance_type=炙热抗性之箭
+tipped_arrow.effect.long_heat_resistance_type=炙热抗性之箭
