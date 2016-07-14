@@ -10,6 +10,7 @@ package toughasnails.handler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -19,6 +20,8 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import toughasnails.api.achievement.TANAchievements;
+import toughasnails.api.item.TANItems;
 
 public class AchievementEventHandler 
 {
@@ -32,10 +35,10 @@ public class AchievementEventHandler
         IBlockState state = block != null ? block.getStateFromMeta(stack.getItemDamage()) : null;
         EntityPlayer player = event.player;
 
-        /*if (block != null && block instanceof BlockBOPLog)
+        if (item != null && item == TANItems.freeze_rod)
         {
-            player.addStat(AchievementList.MINE_WOOD);
-        }*/
+            player.addStat(TANAchievements.into_ice);
+        }
     }
     
     @SubscribeEvent
@@ -65,10 +68,11 @@ public class AchievementEventHandler
         {
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
 
-            //Trippin'
-            /*if (item == BOPItems.shroompowder) {
-                player.addStat(BOPAchievements.eat_shroom_powder);
-            }*/
+            //Life or Death
+            if (item == TANItems.lifeblood_crystal)
+            {
+                player.addStat(TANAchievements.life_or_death);
+            }
         }
     }
     
@@ -102,34 +106,45 @@ public class AchievementEventHandler
         Item item = event.crafting.getItem();
         EntityPlayer player = event.player;
         
-        //Nectar of the Gods Achievement
-        /*if (item != null && item == BOPItems.ambrosia)
+        //Thirst Quencher Achievement
+        if (item != null && item == TANItems.canteen)
         {
-            player.addStat(BOPAchievements.craft_ambrosia);
-        }*/
+            player.addStat(TANAchievements.thirst_quencher);
+        }
         
+        //Thirst Ender Achievement
+        if (item != null && item == TANItems.fruit_juice)
+        {
+            player.addStat(TANAchievements.thirst_ender);
+        }
+        
+        //Hot or Cold Achievement
+        if (item != null && item == TANItems.thermometer)
+        {
+            player.addStat(TANAchievements.hot_or_cold);
+        }
+        
+        //That Time Of Year
+        if (item != null && item == TANItems.season_clock)
+        {
+            player.addStat(TANAchievements.that_time_of_year);
+        }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onPlayerUpdate(LivingUpdateEvent event)
     {
-        /* TODO: 1.9 if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
+        if (!event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityPlayer)
         {
-            EntityPlayerMP player = (EntityPlayerMP)event.entity;
+            EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
 
-            //Check every five seconds if the player has entered a new biome, if they haven't already gotten the achievement
             if (player.ticksExisted % 20 * 5 == 0)
             {
-                if (!player.getStatFile().hasAchievementUnlocked(BOPAchievements.use_biome_finder))
+                if (!player.getStatFile().hasAchievementUnlocked(TANAchievements.year_one))
                 {
-                    this.updateBiomeRadarExplore(player);
-                }
-                
-                if (!player.getStatFile().hasAchievementUnlocked(BOPAchievements.explore_all_biomes))
-                {
-                    this.updateBiomesExplored(player);
+                    
                 }
             }
-        }*/
-    }
+        }
+    }*/
 }

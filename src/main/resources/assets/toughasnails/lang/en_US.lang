@@ -1,5 +1,19 @@
+achievement.thirst_quencher=Thirst Quencher
+achievement.thirst_quencher.desc=Craft a canteen out of leather
+achievement.thirst_ender=Thirst Ender
+achievement.thirst_ender.desc=Make a bottle of refreshing fruit juice
 achievement.campfire_song=Campfire Song
 achievement.campfire_song.desc=Light a campfire made out of logs and cobblestone!
+achievement.into_ice=Into Ice
+achievement.into_ice.desc=Relieve a Freeze of its rod
+achievement.hot_or_cold=Hot or Cold
+achievement.hot_or_cold.desc=Make a thermometer out of diamonds and Nether quartz
+achievement.that_time_of_year=That Time of Year
+achievement.that_time_of_year.desc=Craft a season clock with Nether quartz and redstone
+achievement.year_one=Year One
+achievement.year_one.desc=Survive a full year!
+achievement.life_or_death=Life or Death
+achievement.life_or_death.desc=Search Nether Fortresses for loot to increase your health!
 
 commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s

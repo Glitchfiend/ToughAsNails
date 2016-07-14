@@ -7,12 +7,14 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import static toughasnails.api.achievement.TANAchievements.campfire_song;
+import static toughasnails.api.achievement.TANAchievements.*;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 import toughasnails.api.TANBlocks;
+import toughasnails.api.item.TANItems;
 
 public class ModAchievements 
 {
@@ -27,7 +29,17 @@ public class ModAchievements
     
     private static void addAchievements()
     {
-        campfire_song = addAchievement("achievement.campfire_song", "campfire_song", 0, 0, new ItemStack(TANBlocks.campfire), null);
+    	thirst_quencher = addAchievement("achievement.thirst_quencher", "thirst_quencher", 0, 0, new ItemStack(TANItems.canteen), null);
+    	thirst_ender = addAchievement("achievement.thirst_ender", "thirst_ender", -2, -2, new ItemStack(TANItems.fruit_juice), thirst_quencher);
+    	
+        campfire_song = addAchievement("achievement.campfire_song", "campfire_song", 2, 1, new ItemStack(TANBlocks.campfire), thirst_quencher);
+        life_or_death = addAchievement("achievement.life_or_death", "life_or_death", 1, 3, new ItemStack(TANItems.lifeblood_crystal), campfire_song);
+        
+        into_ice = addAchievement("achievement.into_ice", "into_ice", -3, 1, new ItemStack(TANItems.freeze_rod), thirst_quencher);
+        hot_or_cold = addAchievement("achievement.hot_or_cold", "hot_or_cold", -4, -1, new ItemStack(TANItems.thermometer), into_ice);
+        
+        that_time_of_year = addAchievement("achievement.that_time_of_year", "that_time_of_year", 2, -1, new ItemStack(TANItems.season_clock), campfire_song);
+        year_one = addAchievement("achievement.year_one", "year_one", 0, -3, new ItemStack(Items.CLOCK), that_time_of_year).setSpecial();
     }
     
     private static Achievement addAchievement(String unlocalizedName, String identifier, int column, int row, ItemStack iconStack, Achievement parent)
