@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
+import toughasnails.init.ModAchievements;
 import toughasnails.init.ModBlocks;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModCrafting;
@@ -57,6 +58,7 @@ public class ToughAsNails
         ModHandlers.init();
         
         ModCrafting.init();
+        ModAchievements.init();
         
         MinecraftForge.EVENT_BUS.register(new LootTableEventHandler());
         MinecraftForge.EVENT_BUS.register(new BlockHarvestEventHandler());

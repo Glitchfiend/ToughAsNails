@@ -1,3 +1,6 @@
+achievement.campfire_song=Campfire Song
+achievement.campfire_song.desc=Light a campfire made out of logs and cobblestone!
+
 commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s
 commands.toughasnails.setseason.success=Set season to %s

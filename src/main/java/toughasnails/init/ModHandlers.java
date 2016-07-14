@@ -7,9 +7,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.config.GameplayConfigurationHandler;
-import toughasnails.config.GameplayOption;
 import toughasnails.config.SyncedConfigHandler;
+import toughasnails.handler.AchievementEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.health.HealthOverlayHandler;
@@ -52,6 +51,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(stopSpawnHandler);
         MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
         MinecraftForge.EVENT_BUS.register(new WeatherFrequencyHandler());
+        MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
         
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
