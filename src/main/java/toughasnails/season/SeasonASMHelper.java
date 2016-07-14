@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
@@ -42,6 +43,10 @@ public class SeasonASMHelper
         {
             return false;
         }
+        else if (biome == Biomes.RIVER || biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN)
+        {
+            return false;
+        }
         else if (checkLight)
         {
             if (pos.getY() >= 0 && pos.getY() < 256 && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 10)
@@ -67,6 +72,10 @@ public class SeasonASMHelper
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
+        {
+            return false;
+        }
+        else if (Biome == Biomes.RIVER || Biome == Biomes.OCEAN || Biome == Biomes.DEEP_OCEAN)
         {
             return false;
         }

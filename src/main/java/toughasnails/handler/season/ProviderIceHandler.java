@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.handler.season;
 
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,12 +39,12 @@ public class ProviderIceHandler
 
                     if (SeasonASMHelper.canBlockFreezeInSeason(world, blockpos2, false, null))
                     {
-                        world.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
+                    	world.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
                     }
 
                     if (SeasonASMHelper.canSnowAtInSeason(world, blockpos1, true, null))
                     {
-                        world.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
+                    	world.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
                     }
                 }
             }
