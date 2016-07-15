@@ -2,7 +2,7 @@ achievement.thirst_quencher=Szomjoltó
 achievement.thirst_quencher.desc=Készíts egy kulacsot bőrből
 achievement.thirst_ender=Szomjvégző
 achievement.thirst_ender.desc=Készíts egy palack frissítő gyümölcslevet
-achievement.campfire_song=Tábortűz Énekek
+achievement.campfire_song=Tábortüzi Énekek
 achievement.campfire_song.desc=Gyújts egy tábortüzet, ami rönkből és zúzottkőből készül!
 achievement.into_ice=Be a jégbe!
 achievement.into_ice.desc=Könnyíts meg egy Fagyot a rúdjától ( ͡° ͜ʖ ͡°)
@@ -13,7 +13,7 @@ achievement.that_time_of_year.desc=Készíts évszakórát kvarcból és vörös
 achievement.year_one=Első év
 achievement.year_one.desc=Élj túl egy évet!
 achievement.life_or_death=Élet vagy Halál
-achievement.life_or_death.desc=Search Nether Fortresses for loot to increase your health!
+achievement.life_or_death.desc=Keress Pokol kastélyokat zsákmányokért, és növeld az életed!
 
 commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [érték]
 commands.toughasnails.settemp.success=Játékos hőmérséklete átállítva: %s
