@@ -35,6 +35,7 @@ tile.season_sensor_spring.name=Season Sensor
 tile.season_sensor_summer.name=Season Sensor
 tile.season_sensor_autumn.name=Season Sensor
 tile.season_sensor_winter.name=Season Sensor
+tile.torch_new.name=Torch
 
 item.air_filter.name=Air Filter
 item.bottle_of_blackdamp.name=Bottle of Blackdamp
