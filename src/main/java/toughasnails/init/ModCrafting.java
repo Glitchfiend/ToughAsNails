@@ -84,6 +84,9 @@ public class ModCrafting
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.campfire), new Object [] {" L ", "LLL", "CCC", 'C', Blocks.COBBLESTONE, 'L', "logWood"}));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.campfire), new Object [] {" L ", "LLL", "CCC", 'C', "chunkStone", 'L', "splitWood"}));
         
+        // Rain Collector
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TANBlocks.rain_collector), new Object [] {"IBI", "C C", "CCC", 'C', Blocks.COBBLESTONE, 'I', "ingotIron", 'B', Blocks.IRON_BARS}));
+        
         // Heating Coil
     	GameRegistry.addShapedRecipe(new ItemStack(TANBlocks.temperature_coil, 1, BlockTANTemperatureCoil.CoilType.HEATING.ordinal()), new Object[] {"BBB", "BBB", "CCC", 'B', Items.BLAZE_ROD, 'C', Blocks.COBBLESTONE});
 

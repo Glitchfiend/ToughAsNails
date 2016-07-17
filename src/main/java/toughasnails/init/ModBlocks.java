@@ -2,7 +2,7 @@ package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
 import static toughasnails.api.TANBlocks.dead_crops;
-import static toughasnails.api.TANBlocks.gas;
+import static toughasnails.api.TANBlocks.rain_collector;
 import static toughasnails.api.TANBlocks.season_sensors;
 import static toughasnails.api.TANBlocks.temperature_coil;
 
@@ -16,11 +16,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
+import toughasnails.block.BlockRainCollector;
 import toughasnails.block.BlockSeasonSensor;
 import toughasnails.block.BlockSeasonSensor.DetectorType;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.block.BlockTANDeadCrops;
-import toughasnails.block.BlockTANGas;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.core.ToughAsNails;
 import toughasnails.tileentity.TileEntitySeasonSensor;
@@ -38,6 +38,7 @@ public class ModBlocks
         season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
         season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null); 
         campfire = registerBlock( new BlockTANCampfire(), "campfire" );
+        rain_collector = registerBlock( new BlockRainCollector(), "rain_collector" );
         //gas = registerBlock( new BlockTANGas(), "gas" );
         //gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");

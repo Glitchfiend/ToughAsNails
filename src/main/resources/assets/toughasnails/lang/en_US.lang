@@ -28,6 +28,7 @@ itemGroup.tabToughAsNails=Tough As Nails
 
 tile.campfire.name=Campfire
 tile.dead_crops.name=Dead Crops
+tile.rain_collector.name=Rain Collector
 tile.temperature_coil.cooling_coil.name=Cooling Coil
 tile.temperature_coil.heating_coil.name=Heating Coil
 tile.season_sensor_spring.name=Season Sensor
