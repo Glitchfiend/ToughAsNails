@@ -26,12 +26,13 @@ import toughasnails.init.ModPotions;
 import toughasnails.init.ModStats;
 import toughasnails.init.ModVanillaCompat;
 
-@Mod(modid = ToughAsNails.MOD_ID, version = ToughAsNails.MOD_VERSION, name = ToughAsNails.MOD_NAME)
+@Mod(modid = ToughAsNails.MOD_ID, version = ToughAsNails.MOD_VERSION, name = ToughAsNails.MOD_NAME, guiFactory = ToughAsNails.GUI_FACTORY)
 public class ToughAsNails
 {
     public static final String MOD_NAME = "Tough As Nails";
     public static final String MOD_ID = "ToughAsNails";
     public static final String MOD_VERSION = "@MOD_VERSION@";
+    public static final String GUI_FACTORY = "toughasnails.client.gui.GuiFactory";
     
     @Instance(MOD_ID)
     public static ToughAsNails instance;

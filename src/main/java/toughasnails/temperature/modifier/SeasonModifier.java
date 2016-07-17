@@ -12,6 +12,8 @@ import net.minecraft.world.World;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureTrend;
@@ -34,6 +36,11 @@ public class SeasonModifier extends TemperatureModifier
     {
         int temperatureLevel = temperature.getRawValue();
         SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
+        
+        if (!(SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
+        {
+        	season = SubSeason.MID_SUMMER;
+        }
         
         debugger.start(Modifier.SEASON_TARGET, temperatureLevel);
         

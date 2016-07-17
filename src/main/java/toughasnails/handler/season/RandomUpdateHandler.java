@@ -30,11 +30,17 @@ public class RandomUpdateHandler
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == Phase.END && event.side == Side.SERVER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == Phase.END && event.side == Side.SERVER)
         {
             WorldServer world = (WorldServer)event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
             SubSeason subSeason = SeasonHelper.getSeasonData(world).getSubSeason();
+            
+            if (!(SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
+            {
+            	season = Season.SUMMER;
+            	subSeason = SubSeason.MID_SUMMER;
+            }
             
             //Only melt when it isn't winter
             if (subSeason != SubSeason.EARLY_WINTER && subSeason != SubSeason.MID_WINTER && subSeason != SubSeason.LATE_WINTER)

@@ -40,10 +40,7 @@ public class ModHandlers
         
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
-        {
-	        MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
-        }
+	    MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
 	    MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
 
         //Handlers for functionality related to seasons
@@ -71,27 +68,24 @@ public class ModHandlers
     @SideOnly(Side.CLIENT)
     private static void registerSeasonColourHandlers()
     {
-    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
-    	{
-	        BiomeColorHelper.GRASS_COLOR = new BiomeColorHelper.ColorResolver()
-	        {
-	            @Override
-	            public int getColorAtPos(Biome biome, BlockPos blockPosition)
-	            {
-	                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
-	                return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
-	            }
-	        };
-	        
-	        BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
-	        {
-	            @Override
-	            public int getColorAtPos(Biome biome, BlockPos blockPosition)
-	            {
-	                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
-	                return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));
-	            }
-	        };
-    	}
+        BiomeColorHelper.GRASS_COLOR = new BiomeColorHelper.ColorResolver()
+        {
+            @Override
+            public int getColorAtPos(Biome biome, BlockPos blockPosition)
+            {
+                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
+                return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
+            }
+        };
+        
+        BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
+        {
+            @Override
+            public int getColorAtPos(Biome biome, BlockPos blockPosition)
+            {
+                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
+                return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));
+            }
+        };
     }
 }

@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.item.TANItems;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 
 public class FillBottleHandler 
 {
@@ -28,7 +30,7 @@ public class FillBottleHandler
         ItemStack stack = event.getItemStack();
         EntityPlayer player = event.getEntityPlayer();
         
-        if (stack.getItem() == Items.GLASS_BOTTLE)
+        if (stack.getItem() == Items.GLASS_BOTTLE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             //Provide an itemstack with a size of 0 so no water bottles get added to the inventory if successful
             EnumActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand()).getType();
@@ -56,7 +58,7 @@ public class FillBottleHandler
         EntityPlayer player = event.getEntityPlayer();
         IBlockState state = world.getBlockState(event.getPos());
         
-        if (state.getBlock() instanceof BlockCauldron)
+        if (state.getBlock() instanceof BlockCauldron && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             BlockCauldron cauldron = (BlockCauldron)state.getBlock();
             int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
