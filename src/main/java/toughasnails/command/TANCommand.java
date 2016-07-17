@@ -17,6 +17,8 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
@@ -75,8 +77,15 @@ public class TANCommand extends CommandBase
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         TemperatureDebugger debugger = temperatureStats.debugger;
-        
-        debugger.setGuiVisible(!debugger.isGuiVisible(), player);
+
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+    	{
+        	debugger.setGuiVisible(!debugger.isGuiVisible(), player);
+    	}
+        else
+        {
+        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
+        }
     }
     
     private void setTemperature(ICommandSender sender, String[] args) throws CommandException
@@ -86,16 +95,23 @@ public class TANCommand extends CommandBase
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
         Temperature playerTemp = temperatureStats.getTemperature();
 
-        //Remove any existing potion effects for hypo/hyperthermia
-        player.removePotionEffect(TANPotions.hypothermia);
-        player.removePotionEffect(TANPotions.hyperthermia);
-
-        //Reset the change timer to 0
-        temperatureStats.setChangeTime(0);
-        //Set to the new temperature
-        temperatureStats.setTemperature(new Temperature(newTemp));
-
-        sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+    	{
+	        //Remove any existing potion effects for hypo/hyperthermia
+	        player.removePotionEffect(TANPotions.hypothermia);
+	        player.removePotionEffect(TANPotions.hyperthermia);
+	
+	        //Reset the change timer to 0
+	        temperatureStats.setChangeTime(0);
+	        //Set to the new temperature
+	        temperatureStats.setTemperature(new Temperature(newTemp));
+	
+	        sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
+    	}
+        else
+        {
+        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
+        }
     }
     
     private void setSeason(ICommandSender sender, String[] args) throws CommandException
@@ -112,17 +128,24 @@ public class TANCommand extends CommandBase
             }
         }
         
-        if (newSeason != null)
-        {
-            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
-            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
-            seasonData.markDirty();
-            SeasonHandler.sendSeasonUpdate(player.worldObj);
-            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
-        }
+        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+    	{
+	        if (newSeason != null)
+	        {
+		            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
+		            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
+		            seasonData.markDirty();
+		            SeasonHandler.sendSeasonUpdate(player.worldObj);
+		            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
+	        }
+	        else
+	        {
+	            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
+	        }
+    	}
         else
         {
-            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
+        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.disabled"));
         }
     }
     
