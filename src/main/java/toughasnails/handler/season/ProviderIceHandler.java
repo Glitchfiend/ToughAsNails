@@ -16,6 +16,8 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.season.SeasonASMHelper;
 
 public class ProviderIceHandler 
@@ -27,7 +29,7 @@ public class ProviderIceHandler
         World world = event.getWorld();
         BlockPos pos = new BlockPos(event.getChunkX() * 16, 0, event.getChunkZ() * 16).add(8, 0, 8);
         
-        if (event.getType() == EventType.ICE)
+        if (event.getType() == EventType.ICE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             
             for (int k2 = 0; k2 < 16; ++k2)

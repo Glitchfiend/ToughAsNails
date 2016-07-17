@@ -25,6 +25,8 @@ import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.season.SeasonHandler;
 
 public class SeasonASMHelper
@@ -138,7 +140,7 @@ public class SeasonASMHelper
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)))
+        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }

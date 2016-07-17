@@ -25,6 +25,8 @@ import toughasnails.api.TANCapabilities;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.temperature.TemperatureHandler;
 
 @SideOnly(Side.CLIENT)
@@ -65,11 +67,11 @@ public class TemperatureOverlayHandler
         //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
         random.setSeed((long)(updateCounter * 312871));
         
-        if (event.getType() == ElementType.PORTAL)
+        if (event.getType() == ElementType.PORTAL && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
         {
             if (!player.capabilities.isCreativeMode) drawTemperatureVignettes(width, height, temperature);
         }
-        else if (event.getType() == ElementType.EXPERIENCE)
+        else if (event.getType() == ElementType.EXPERIENCE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 

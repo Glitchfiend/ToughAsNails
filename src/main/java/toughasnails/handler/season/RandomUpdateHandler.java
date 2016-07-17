@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.api.season.SeasonHelper;
 
 public class RandomUpdateHandler 
@@ -28,7 +30,7 @@ public class RandomUpdateHandler
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == Phase.END && event.side == Side.SERVER)
+        if (event.phase == Phase.END && event.side == Side.SERVER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             WorldServer world = (WorldServer)event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();

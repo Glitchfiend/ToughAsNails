@@ -14,13 +14,15 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 
 public class WeatherFrequencyHandler 
 {
     @SubscribeEvent
     public void onWorldTick(WorldTickEvent event)
     {
-        if (event.phase == Phase.END && event.side == Side.SERVER)
+        if (event.phase == Phase.END && event.side == Side.SERVER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             World world = event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();

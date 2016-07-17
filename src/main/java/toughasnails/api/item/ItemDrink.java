@@ -22,6 +22,8 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.stat.capability.IThirst;
 import toughasnails.api.thirst.IDrink;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.thirst.ThirstHandler;
 
 public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
@@ -66,7 +68,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     
     public void addEffects(EntityPlayer player, T type)
     {
-        if (player.worldObj.rand.nextFloat() < type.getPoisonChance())
+        if (player.worldObj.rand.nextFloat() < type.getPoisonChance() && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }

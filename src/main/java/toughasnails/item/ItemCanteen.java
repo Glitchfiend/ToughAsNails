@@ -24,6 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.thirst.WaterType;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.thirst.ThirstHandler;
 
 public class ItemCanteen extends Item
@@ -74,7 +76,7 @@ public class ItemCanteen extends Item
             ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
             thirstStats.addStats(waterType.getThirst(), waterType.getHydration());
             
-            if (!world.isRemote && world.rand.nextFloat() < waterType.getPoisonChance())
+            if (!world.isRemote && world.rand.nextFloat() < waterType.getPoisonChance() && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
             {
                 player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
             }

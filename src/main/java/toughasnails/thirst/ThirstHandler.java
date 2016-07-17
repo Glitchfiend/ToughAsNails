@@ -13,6 +13,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.IThirst;
+import toughasnails.config.GameplayOption;
+import toughasnails.config.SyncedConfigHandler;
 import toughasnails.network.message.MessageUpdateStat;
 
 public class ThirstHandler extends StatHandlerBase implements IThirst
@@ -36,63 +38,66 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {  
-        if (phase == Phase.START)
-        {
-            if (movementVec != null)
-            {
-                Vector3d movement = new Vector3d(player.posX, player.posY, player.posZ);
-                movement.sub(movementVec); movement.absolute();
-                int distance = (int)Math.round(movement.length() * 100.0F);
-                
-                if (distance > 0) applyMovementExhaustion(player, distance);
-            }
-        }
-        else if (phase == Phase.END)
-        {
-            this.movementVec = new Vector3d(player.posX, player.posY, player.posZ);
-
-            EnumDifficulty enumdifficulty = world.getDifficulty();
-            
-            if (this.thirstExhaustionLevel > 4.0F)
-            {
-                this.thirstExhaustionLevel -= 4.0F;
-
-                if (this.thirstHydrationLevel > 0.0F)
-                {
-                    this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
-                }
-                else if (enumdifficulty != EnumDifficulty.PEACEFUL)
-                {
-                    this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
-                }
-            }
-
-            if (this.thirstLevel <= 0)
-            {
-                ++this.thirstTimer;
-
-                //Inflict thirst damage every 4 seconds
-                if (this.thirstTimer >= 80)
-                {
-                    if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
-                    {
-                        player.attackEntityFrom(DamageSource.starve, 1.0F);
-                    }
-
-                    this.thirstTimer = 0;
-                }
-            }
-            else
-            {
-                this.thirstTimer = 0;
-            }
-            
-            //If thirst is too low, prevent the player from sprinting
-            if (!player.capabilities.isCreativeMode && player.isSprinting() && thirstLevel <= 6)
-            {
-                player.setSprinting(false);
-            }
-        }
+    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	{
+	        if (phase == Phase.START)
+	        {
+	            if (movementVec != null)
+	            {
+	                Vector3d movement = new Vector3d(player.posX, player.posY, player.posZ);
+	                movement.sub(movementVec); movement.absolute();
+	                int distance = (int)Math.round(movement.length() * 100.0F);
+	                
+	                if (distance > 0) applyMovementExhaustion(player, distance);
+	            }
+	        }
+	        else if (phase == Phase.END)
+	        {
+	            this.movementVec = new Vector3d(player.posX, player.posY, player.posZ);
+	
+	            EnumDifficulty enumdifficulty = world.getDifficulty();
+	            
+	            if (this.thirstExhaustionLevel > 4.0F)
+	            {
+	                this.thirstExhaustionLevel -= 4.0F;
+	
+	                if (this.thirstHydrationLevel > 0.0F)
+	                {
+	                    this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
+	                }
+	                else if (enumdifficulty != EnumDifficulty.PEACEFUL)
+	                {
+	                    this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
+	                }
+	            }
+	
+	            if (this.thirstLevel <= 0)
+	            {
+	                ++this.thirstTimer;
+	
+	                //Inflict thirst damage every 4 seconds
+	                if (this.thirstTimer >= 80)
+	                {
+	                    if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
+	                    {
+	                        player.attackEntityFrom(DamageSource.starve, 1.0F);
+	                    }
+	
+	                    this.thirstTimer = 0;
+	                }
+	            }
+	            else
+	            {
+	                this.thirstTimer = 0;
+	            }
+	            
+	            //If thirst is too low, prevent the player from sprinting
+	            if (!player.capabilities.isCreativeMode && player.isSprinting() && thirstLevel <= 6)
+	            {
+	                player.setSprinting(false);
+	            }
+	        }
+    	}
     }
     
     private void applyMovementExhaustion(EntityPlayer player, int distance)
@@ -188,13 +193,19 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     @Override
     public void addStats(int thirst, float hydration)
     {
-        this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
-        this.thirstHydrationLevel = Math.min(this.thirstHydrationLevel + (float)thirst * hydration * 2.0F, (float)this.thirstLevel);
+    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	{
+	        this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
+	        this.thirstHydrationLevel = Math.min(this.thirstHydrationLevel + (float)thirst * hydration * 2.0F, (float)this.thirstLevel);
+    	}
     }
     
     public void addExhaustion(float amount)
     {
-        this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
+    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	{
+    		this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
+    	}
     }
     
     public boolean isThirsty()
