@@ -20,7 +20,9 @@ commands.toughasnails.settemp.success=已经将玩家体温设置为%s
 commands.toughasnails.setseason.success=已经将季节设置为%s
 commands.toughasnails.setseason.fail=无效的季节参数:%s
 
-itemGroup.tabToughAsNails=Tough As Nails
+config.category.survivalSettings.title=生存设定
+
+itemGroup.tabToughAsNails=意志坚定
 
 tile.campfire.name=篝火
 tile.dead_crops.name=死亡的作物
@@ -44,7 +46,7 @@ item.empty_canteen.name=空水壶
 item.filtered_water_canteen.name=过滤水水壶
 item.filtered_water_bottle.name=过滤水水瓶
 item.freeze_powder.name=寒冰粉
-item.freeze_rod.name=寒冰棍
+item.freeze_rod.name=寒冰棒
 item.ice_charge.name=寒冰弹
 item.ice_cube.name=小冰块
 item.jelled_slime.name=冻结史莱姆
