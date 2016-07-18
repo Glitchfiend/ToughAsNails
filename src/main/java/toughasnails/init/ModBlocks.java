@@ -2,6 +2,7 @@ package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
 import static toughasnails.api.TANBlocks.dead_crops;
+import static toughasnails.api.TANBlocks.glowstone_torch;
 import static toughasnails.api.TANBlocks.rain_collector;
 import static toughasnails.api.TANBlocks.season_sensors;
 import static toughasnails.api.TANBlocks.temperature_coil;
@@ -17,6 +18,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
+import toughasnails.block.BlockGlowstoneTorch;
 import toughasnails.block.BlockRainCollector;
 import toughasnails.block.BlockSeasonSensor;
 import toughasnails.block.BlockSeasonSensor.DetectorType;
@@ -45,6 +47,7 @@ public class ModBlocks
         //gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
         torch_new = registerBlock( new BlockTANTorchNew(), "torch_new" );
+        glowstone_torch = registerBlock( new BlockGlowstoneTorch(), "glowstone_torch" );
         dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);  
         
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");

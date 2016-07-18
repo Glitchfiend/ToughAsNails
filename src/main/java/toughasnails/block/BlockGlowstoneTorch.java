@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -55,13 +56,17 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
     protected static final AxisAlignedBB TORCH_WEST_AABB = new AxisAlignedBB(0.699999988079071D, 0.20000000298023224D, 0.3499999940395355D, 1.0D, 0.800000011920929D, 0.6499999761581421D);
     protected static final AxisAlignedBB TORCH_EAST_AABB = new AxisAlignedBB(0.0D, 0.20000000298023224D, 0.3499999940395355D, 0.30000001192092896D, 0.800000011920929D, 0.6499999761581421D);
 
-    protected BlockGlowstoneTorch()
+    public BlockGlowstoneTorch()
     {
         super(Material.CIRCUITS);
+        this.setHardness(0.0F);
+        this.setSoundType(SoundType.WOOD);
+        this.setLightLevel(1.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
         this.setTickRandomly(true);
     }
 
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         switch ((EnumFacing)state.getValue(FACING))
@@ -80,16 +85,19 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
     }
 
     @Nullable
+    @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }
 
+    @Override
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
@@ -108,6 +116,7 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
         }
     }
 
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         for (EnumFacing enumfacing : FACING.getAllowedValues())
@@ -128,6 +137,7 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
         return flag && worldIn.isSideSolid(blockpos, facing, true) || facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos);
     }
 
+    @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         if (this.canPlaceAt(worldIn, pos, facing))
@@ -148,11 +158,13 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
         }
     }
 
+    @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.checkForDrop(worldIn, pos, state);
     }
 
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
     {
         this.onNeighborChangeInternal(worldIn, pos, state);
@@ -211,7 +223,8 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    /*@SideOnly(Side.CLIENT)
+    @Override
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
         EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
@@ -232,8 +245,9 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
             worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
             worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
         }
-    }
+    }*/
 
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState iblockstate = this.getDefaultState();
@@ -261,11 +275,13 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public BlockRenderLayer getBlockLayer()
     {
         return BlockRenderLayer.CUTOUT;
     }
 
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
@@ -293,16 +309,19 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
         return i;
     }
 
+    @Override
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
     }
 
+    @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
 
+    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});

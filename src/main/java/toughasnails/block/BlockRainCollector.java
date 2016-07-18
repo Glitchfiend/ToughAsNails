@@ -47,6 +47,7 @@ public class BlockRainCollector extends Block implements ITANBlock
     public BlockRainCollector()
     {
         super(Material.IRON, MapColor.STONE);
+        this.setHardness(2.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, Integer.valueOf(0)));
     }
 

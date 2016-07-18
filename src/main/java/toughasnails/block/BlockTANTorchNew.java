@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -72,6 +73,8 @@ public class BlockTANTorchNew extends Block implements ITANBlock
     public BlockTANTorchNew()
     {
         super(Material.CIRCUITS);
+        this.setHardness(0.0F);
+        this.setSoundType(SoundType.WOOD);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP).withProperty(AGE, Integer.valueOf(0)).withProperty(BURNING, Boolean.valueOf(true)));
         this.setTickRandomly(true);
     }
@@ -174,7 +177,7 @@ public class BlockTANTorchNew extends Block implements ITANBlock
 	            		if (item == Items.FLINT_AND_STEEL)
 			            {
 			            	worldIn.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.4F + 0.8F);
-			            	worldIn.setBlockState(pos, TANBlocks.torch_new.getDefaultState().withProperty(BURNING, true));
+			            	worldIn.setBlockState(pos, TANBlocks.torch_new.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, true));
 			
 			                if (item == Items.FLINT_AND_STEEL)
 			                {

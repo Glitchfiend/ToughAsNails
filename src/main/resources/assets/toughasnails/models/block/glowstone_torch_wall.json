@@ -1,0 +1,6 @@
+{
+    "parent": "block/torch_wall",
+    "textures": {
+        "torch": "toughasnails:blocks/glowstone_torch"
+    }
+}
