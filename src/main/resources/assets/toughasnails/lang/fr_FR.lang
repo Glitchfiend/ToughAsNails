@@ -1,0 +1,96 @@
+achievement.thirst_quencher=Boisson désaltérante
+achievement.thirst_quencher.desc=Fabriquer une gourde en cuir
+achievement.thirst_ender=Boisson exotique
+achievement.thirst_ender.desc=Fabriquer une fiole d'un jus de fruit rafraichissant
+achievement.campfire_song=Musique de Feu de camp
+achievement.campfire_song.desc=Allumer un feu de camp créé de bois et de pierres!
+achievement.into_ice=Dans la glace
+achievement.into_ice.desc=Soulager un Freeze de son bâton
+achievement.hot_or_cold=Chaleur ou fraicheur
+achievement.hot_or_cold.desc=Fabriquer un thermometre de diamonts et de Quartz du Nether
+achievement.that_time_of_year=Cet période de l'année
+achievement.that_time_of_year.desc=Fabriquer une montre des saisons de Quartz du Nether et de la redstone
+achievement.year_one=Année Une
+achievement.year_one.desc=Survivre une année complète!
+achievement.life_or_death=Vivre ou mourir
+achievement.life_or_death.desc=A la recherche d'une forteresse du Nether pour un butin qui augmente votre santé!
+
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.settemp.success=Température corporelle du joueur réglée à %s
+commands.toughasnails.settemp.disabled=La température corporelle a été désactivée!
+commands.toughasnails.setseason.success=Saison réglée à %s
+commands.toughasnails.setseason.fail=Saison incorrecte %s
+commands.toughasnails.setseason.disabled=Les saisons ont été désactivées!
+
+config.category.survivalSettings.title=Réglages de Survie
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+tile.campfire.name=Feux de camp
+tile.dead_crops.name=Cultures mortes
+tile.rain_collector.name=Collecteur d'eau de pluie
+tile.temperature_coil.cooling_coil.name=Tube de refroidissement
+tile.temperature_coil.heating_coil.name=Bobine de chauffage
+tile.season_sensor_spring.name=Capteur de saison
+tile.season_sensor_summer.name=Capteur de saison
+tile.season_sensor_autumn.name=Capteur de saison
+tile.season_sensor_winter.name=Capteur de saison
+tile.torch_new.name=Torche
+
+item.air_filter.name=Filtreur d'air
+item.bottle_of_blackdamp.name=Fiole de Blackdamp
+item.bottle_of_whitedamp.name=Fiole de Whitedamp
+item.bottle_of_firedamp.name=Fiole de Firedamp
+item.bottle_of_stinkdamp.name=Fiole de Stinkdamp
+item.clean_water_canteen.name=Gourde d'eau potable
+item.charcoal_filter.name=Filtre au charbon de bois
+item.dirty_water_canteen.name=Gourde d'eau sale
+item.dirty_water_bottle.name=Fiole d'eau sale
+item.empty_canteen.name=Gourde vide
+item.filtered_water_canteen.name=Gourde d'eau filtré
+item.filtered_water_bottle.name=Fiole d'eau filtré
+item.freeze_powder.name=Poudre de glace
+item.freeze_rod.name=Bâton de Freeze
+item.ice_charge.name=Boule de glace
+item.ice_cube.name=Cube de glace
+item.jelled_slime.name=Gelée de Slime
+item.jelled_slime_helmet.name=Casque en gelée de Slime
+item.jelled_slime_chestplate.name=Plastron en gelée de Slime
+item.jelled_slime_leggings.name=Jambières en gelée de Slime
+item.jelled_slime_boots.name=Bottes en gelée de Slime
+item.juice_apple.name=Jus de Pomme
+item.juice_beetroot.name=Jus de Betterave
+item.juice_cactus.name=Jus de Cactus
+item.juice_carrot.name=Jus de Carotte
+item.juice_chorus_fruit.name=Jus de fruit de Chorus
+item.juice_glistering_melon.name=Jus de Pastèque scintillante
+item.juice_golden_apple.name=Jus de Pomme d'orée
+item.juice_golden_carrot.name=Jus de Carotte d'orée
+item.juice_melon.name=Jus de Pastèque
+item.juice_pumpkin.name=Jus de Citrouille
+item.lifeblood_crystal.name=Cristal de santé
+item.respirator.name=Respirateur
+item.season_clock.name=Montre des saisons
+item.spawn_egg_freeze.name=Oeuf de Freeze
+item.tan_icon.name=TAN Icône
+item.thermometer.name=Thermometre
+item.wool_helmet.name=Capuche de laine
+item.wool_chestplate.name=Veste de laine
+item.wool_leggings.name=Pentalon de laine
+item.wool_boots.name=Bottes de laine
+
+potion.hypothermia=Hypothermie
+potion.hyperthermia=Hyperthermie
+potion.thirst=Soif
+potion.cold_resistance=Résistance au froid
+potion.heat_resistance=Résistance à la chaleur
+
+potion.effect.cold_resistance_type=Potion de résistance au froid
+potion.effect.long_cold_resistance_type=Potion de résistance au froid
+potion.effect.heat_resistance_type=Potion de résistance à la chaleur
+potion.effect.long_heat_resistance_type=Potion de résistance à la chaleur
+
+tipped_arrow.effect.cold_resistance_type=Flêche de résistance au froid
+tipped_arrow.effect.long_cold_resistance_type=Flêche de résistance au froid
+tipped_arrow.effect.heat_resistance_type=Flêche de résistance à la chaleur
+tipped_arrow.effect.long_heat_resistance_type=Flêche de résistance à la chaleur
