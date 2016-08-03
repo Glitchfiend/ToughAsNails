@@ -163,7 +163,7 @@ public class BlockRainCollector extends Block implements ITANBlock
     @Override
     public void fillWithRain(World worldIn, BlockPos pos)
     {
-    	if (worldIn.rand.nextInt(5) == 1)
+    	if (worldIn.rand.nextInt(4) == 1)
         {
 	        float f = worldIn.getBiomeGenForCoords(pos).getFloatTemperature(pos);
 	
