@@ -237,6 +237,12 @@ public class BlockTANCampfire extends Block implements ITANBlock
         return false;
     }
     
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    {
+        return worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos) && worldIn.getBlockState(pos.down()).isSideSolid(worldIn, pos, EnumFacing.UP);
+    }
+    
     @SideOnly(Side.CLIENT)
     @Override
     public BlockRenderLayer getBlockLayer()
