@@ -49,10 +49,6 @@ public class SeasonASMHelper
         {
             return false;
         }
-        else if (!(SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
-        {
-        	return false;
-        }
         else if (checkLight)
         {
             if (pos.getY() >= 0 && pos.getY() < 256 && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 10)
@@ -84,10 +80,6 @@ public class SeasonASMHelper
         else if (Biome == Biomes.RIVER || Biome == Biomes.OCEAN || Biome == Biomes.DEEP_OCEAN)
         {
             return false;
-        }
-        else if (!(SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
-        {
-        	return false;
         }
         else
         {

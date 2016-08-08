@@ -87,8 +87,8 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
         return super.getUnlocalizedName(stack)+"_"+entityName;
     }
     
-    @SideOnly(Side.CLIENT)
     @Override
+    @SideOnly(Side.CLIENT)
     public IItemColor getItemColor()
     {
         return new IItemColor()

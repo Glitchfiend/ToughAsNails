@@ -29,9 +29,8 @@ public class ProviderIceHandler
         World world = event.getWorld();
         BlockPos pos = new BlockPos(event.getChunkX() * 16, 0, event.getChunkZ() * 16).add(8, 0, 8);
         
-        if (event.getType() == EventType.ICE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.getType() == EventType.ICE)
         {
-            
             for (int k2 = 0; k2 < 16; ++k2)
             {
                 for (int j3 = 0; j3 < 16; ++j3)
