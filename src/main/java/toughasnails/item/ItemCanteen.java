@@ -47,6 +47,7 @@ public class ItemCanteen extends Item
         
         this.maxStackSize = 1;
         this.setMaxDamage(3);
+        this.setNoRepair();
     }
     
     @Override
