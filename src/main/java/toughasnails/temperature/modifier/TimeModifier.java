@@ -33,7 +33,7 @@ public class TimeModifier extends TemperatureModifier
     @Override
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        Biome biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiome(player.getPosition());
         long worldTime = world.getWorldTime();
         
         float extremityModifier = BiomeUtils.getBiomeTempExtremity(biome);

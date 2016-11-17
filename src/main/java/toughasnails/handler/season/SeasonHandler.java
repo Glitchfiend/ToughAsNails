@@ -52,7 +52,7 @@ public class SeasonHandler
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
-        World world = player.worldObj;
+        World world = player.world;
         
         sendSeasonUpdate(world);
     }
@@ -64,9 +64,9 @@ public class SeasonHandler
     public void onClientTick(TickEvent.ClientTickEvent event) 
     {
         //Only do this when in the world
-        if (Minecraft.getMinecraft().thePlayer == null) return;
+        if (Minecraft.getMinecraft().player == null) return;
         
-        int dimension = Minecraft.getMinecraft().thePlayer.dimension;
+        int dimension = Minecraft.getMinecraft().player.dimension;
 
         if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)) 
         {

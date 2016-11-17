@@ -54,7 +54,7 @@ public class ThirstOverlayHandler
         ScaledResolution resolution = event.getResolution();
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
         
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
         int thirstLevel = thirstStats.getThirst();
@@ -91,7 +91,7 @@ public class ThirstOverlayHandler
             int startX = left - i * 8 - 9;
             int startY = top;
             
-            if (minecraft.thePlayer.isPotionActive(TANPotions.thirst))
+            if (minecraft.player.isPotionActive(TANPotions.thirst))
             {
                 iconIndex += 4;
                 backgroundOffset += 117;

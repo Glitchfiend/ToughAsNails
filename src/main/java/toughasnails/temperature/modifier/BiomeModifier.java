@@ -21,7 +21,7 @@ public class BiomeModifier extends TemperatureModifier
     @Override
     public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
     {
-        Biome biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiome(player.getPosition());
         float humidity = biome.getRainfall();
         float humidityMultiplier = 2.0F * Math.abs((humidity % 1.0F) - 0.5F);
         int newChangeRate = changeRate - (int)((10 * humidityMultiplier) * 20);
@@ -35,11 +35,11 @@ public class BiomeModifier extends TemperatureModifier
     @Override
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
-        Biome biome = world.getBiomeGenForCoords(player.getPosition());
-        Biome biomeNorth = world.getBiomeGenForCoords(player.getPosition().add(0, 0, -10));
-        Biome biomeSouth = world.getBiomeGenForCoords(player.getPosition().add(0, 0, 10));
-        Biome biomeEast = world.getBiomeGenForCoords(player.getPosition().add(10, 0, 0));
-        Biome biomeWest = world.getBiomeGenForCoords(player.getPosition().add(-10, 0, 0));
+        Biome biome = world.getBiome(player.getPosition());
+        Biome biomeNorth = world.getBiome(player.getPosition().add(0, 0, -10));
+        Biome biomeSouth = world.getBiome(player.getPosition().add(0, 0, 10));
+        Biome biomeEast = world.getBiome(player.getPosition().add(10, 0, 0));
+        Biome biomeWest = world.getBiome(player.getPosition().add(-10, 0, 0));
         
         float biomeTemp = ((BiomeUtils.getBiomeTempNorm(biome) + BiomeUtils.getBiomeTempNorm(biomeNorth) + BiomeUtils.getBiomeTempNorm(biomeSouth) + BiomeUtils.getBiomeTempNorm(biomeEast) + BiomeUtils.getBiomeTempNorm(biomeWest)) / 5.0F);
         

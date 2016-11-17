@@ -91,7 +91,7 @@ public class MessageTemperatureClient implements IMessage, IMessageHandler<Messa
     {
         if (ctx.side == Side.CLIENT)
         {
-            EntityPlayerSP player =  Minecraft.getMinecraft().thePlayer;
+            EntityPlayerSP player =  Minecraft.getMinecraft().player;
 
             if (player != null)
             {

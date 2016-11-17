@@ -99,7 +99,7 @@ public class BlockTANTorchNew extends Block implements ITANBlock
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }
@@ -161,7 +161,7 @@ public class BlockTANTorchNew extends Block implements ITANBlock
     }
     
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (playerIn.getHeldItem(hand) != null)
         {
@@ -191,7 +191,7 @@ public class BlockTANTorchNew extends Block implements ITANBlock
             }
         }
 
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
     }
 
     private boolean canPlaceOn(World worldIn, BlockPos pos)
@@ -256,7 +256,7 @@ public class BlockTANTorchNew extends Block implements ITANBlock
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos neighborPos)
     {
         this.onNeighborChangeInternal(worldIn, pos, state);
     }

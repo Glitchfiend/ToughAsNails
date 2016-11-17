@@ -33,11 +33,11 @@ public class FillBottleHandler
         if (stack.getItem() == Items.GLASS_BOTTLE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             //Provide an itemstack with a size of 0 so no water bottles get added to the inventory if successful
-            EnumActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand()).getType();
+            EnumActionResult actionResult = stack.getItem().onItemRightClick(event.getWorld(), player, event.getHand()).getType();
         
             if (actionResult == EnumActionResult.SUCCESS)
             {
-                --stack.stackSize;
+                stack.func_190920_e(stack.func_190916_E() - 1);
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
                 ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
                 
@@ -69,8 +69,8 @@ public class FillBottleHandler
                 {
                     ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
                     player.addStat(StatList.CAULDRON_USED);
-
-                    if (--player.getHeldItem(event.getHand()).stackSize == 0)
+                    player.getHeldItem(event.getHand()).func_190920_e(player.getHeldItem(event.getHand()).func_190916_E() - 1);
+                    if (player.getHeldItem(event.getHand()).func_190916_E() == 0)
                     {
                         player.setHeldItem(event.getHand(), waterBottle);
                     }

@@ -53,7 +53,7 @@ public class SyncedConfigHandler
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
-        World world = player.worldObj;
+        World world = player.world;
         
         if (!world.isRemote)
         {

@@ -30,7 +30,7 @@ import toughasnails.init.ModVanillaCompat;
 public class ToughAsNails
 {
     public static final String MOD_NAME = "Tough As Nails";
-    public static final String MOD_ID = "ToughAsNails";
+    public static final String MOD_ID = "toughasnails";
     public static final String MOD_VERSION = "@MOD_VERSION@";
     public static final String GUI_FACTORY = "toughasnails.client.gui.GuiFactory";
     

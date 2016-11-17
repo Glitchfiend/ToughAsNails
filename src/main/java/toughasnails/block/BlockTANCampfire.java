@@ -123,7 +123,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
     
     // no collision box - you can walk straight through them
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return NULL_AABB;
     }
@@ -140,7 +140,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
     }
     
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (playerIn.getHeldItem(hand) != null)
         {
@@ -163,7 +163,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			
 			                if (item == Items.STICK)
 			                {
-			                    --playerIn.getHeldItem(hand).stackSize;
+                                playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
 			                }
 			
 			                return true;
@@ -187,7 +187,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
             }
         }
 
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
     }
     
     @Override

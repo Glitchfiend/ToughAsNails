@@ -36,8 +36,9 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         ThirstHandler thirstHandler = (ThirstHandler)ThirstHelper.getThirstData(player);
         
         if (thirstHandler.isThirsty())
@@ -68,7 +69,7 @@ public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
     
     public void addEffects(EntityPlayer player, T type)
     {
-        if (player.worldObj.rand.nextFloat() < type.getPoisonChance() && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (player.world.rand.nextFloat() < type.getPoisonChance() && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }

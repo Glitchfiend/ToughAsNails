@@ -17,9 +17,9 @@ public class TileEntitySeasonSensor extends TileEntity implements ITickable
     @Override
     public void update()
     {
-        if (this.worldObj != null && !this.worldObj.isRemote && SeasonHelper.getSeasonData(this.worldObj).getSeasonCycleTicks() % 20L == 0L)
+        if (this.world != null && !this.world.isRemote && SeasonHelper.getSeasonData(this.world).getSeasonCycleTicks() % 20L == 0L)
         {
-            ((BlockSeasonSensor)this.getBlockType()).updatePower(this.worldObj, this.pos);
+            ((BlockSeasonSensor)this.getBlockType()).updatePower(this.world, this.pos);
         }
     }
 }

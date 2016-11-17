@@ -2,7 +2,7 @@ run/*
 bin/*
 .gradle/*
 .settings/*
-
+.idea/*
 .project
 .classpath
 /bin/

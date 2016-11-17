@@ -2,6 +2,7 @@ package toughasnails.util.inventory;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import toughasnails.api.item.TANItems;
 
 public class CreativeTabTAN extends CreativeTabs
@@ -14,8 +15,8 @@ public class CreativeTabTAN extends CreativeTabs
     }
 
     @Override
-    public Item getTabIconItem()
+    public ItemStack getTabIconItem()
     {
-        return TANItems.tan_icon;
+        return new ItemStack(TANItems.tan_icon);
     }
 }

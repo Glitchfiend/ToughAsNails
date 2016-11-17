@@ -127,7 +127,7 @@ public class BlockTANGas extends Block implements ITANBlock
     
     // no collision box - you can walk straight through them
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return NULL_AABB;
     }

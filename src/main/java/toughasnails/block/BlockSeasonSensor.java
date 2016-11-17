@@ -108,7 +108,7 @@ public class BlockSeasonSensor extends BlockContainer implements ITANBlock
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (player.isAllowEdit())
         {
@@ -126,7 +126,7 @@ public class BlockSeasonSensor extends BlockContainer implements ITANBlock
         }
         else
         {
-            return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+            return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
         }
     }
 

@@ -39,7 +39,7 @@ public class MessageToggleUI implements IMessage, IMessageHandler<MessageToggleU
     {
         if (ctx.side == Side.CLIENT)
         {
-            EntityPlayerSP player =  Minecraft.getMinecraft().thePlayer;
+            EntityPlayerSP player =  Minecraft.getMinecraft().player;
 
             if (player != null)
             {

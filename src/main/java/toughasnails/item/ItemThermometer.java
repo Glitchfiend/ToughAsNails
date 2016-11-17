@@ -46,7 +46,7 @@ public class ItemThermometer extends Item
                 
                 EntityPlayer player = (EntityPlayer)entity;
                 
-                if (world == null) world = entity.worldObj;
+                if (world == null) world = entity.world;
 
                 TemperatureHandler tempHandler = (TemperatureHandler)TemperatureHelper.getTemperatureData(player);
                 return (float)MathHelper.clamp_double(tempHandler.debugger.targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();

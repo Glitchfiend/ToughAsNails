@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -50,7 +51,7 @@ public class ModEntities
     public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, Biome... entityBiomes)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
-        entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(entityName, eggBackgroundColor, eggForegroundColor));
+        entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor));
         EntityRegistry.addSpawn(entityClass, 3, 1, 3, EnumCreatureType.MONSTER, entityBiomes);
         return tanEntityId;
     }

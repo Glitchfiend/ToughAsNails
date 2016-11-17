@@ -86,7 +86,7 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }
@@ -165,7 +165,7 @@ public class BlockGlowstoneTorch extends Block implements ITANBlock
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos neighborPos)
     {
         this.onNeighborChangeInternal(worldIn, pos, state);
     }

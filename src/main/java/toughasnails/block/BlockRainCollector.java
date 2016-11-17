@@ -71,8 +71,9 @@ public class BlockRainCollector extends Block implements ITANBlock
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack heldItem = playerIn.getHeldItem(hand);
         if (heldItem == null)
         {
             return true;
@@ -88,9 +89,9 @@ public class BlockRainCollector extends Block implements ITANBlock
                 {
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        --heldItem.stackSize;
+                        playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
 
-                        if (heldItem.stackSize == 0)
+                        if (playerIn.getHeldItem(hand).func_190916_E() == 0)
                         {
                             playerIn.setHeldItem(hand, new ItemStack(Items.WATER_BUCKET));
                         }
@@ -114,7 +115,8 @@ public class BlockRainCollector extends Block implements ITANBlock
                     {
                         ItemStack itemstack1 = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
 
-                        if (--heldItem.stackSize == 0)
+                        playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
+                        if (playerIn.getHeldItem(hand).func_190916_E() == 0)
                         {
                             playerIn.setHeldItem(hand, itemstack1);
                         }
@@ -165,7 +167,7 @@ public class BlockRainCollector extends Block implements ITANBlock
     {
     	if (worldIn.rand.nextInt(4) == 1)
         {
-	        float f = worldIn.getBiomeGenForCoords(pos).getFloatTemperature(pos);
+	        float f = worldIn.getBiome(pos).getFloatTemperature(pos);
 	
 	        if (worldIn.getBiomeProvider().getTemperatureAtHeight(f, pos.getY()) >= 0.15F)
 	        {

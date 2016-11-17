@@ -38,6 +38,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
@@ -131,7 +132,7 @@ public class ModItems
         {
             if (item.getHasSubtypes())
             {
-                List<ItemStack> subItems = new ArrayList<ItemStack>();
+                NonNullList<ItemStack> subItems = NonNullList.func_191196_a();
                 item.getSubItems(item, CreativeTabTAN.instance, subItems);
                 for (ItemStack subItem : subItems)
                 {

@@ -40,7 +40,7 @@ public class MaxHealthHandler
     public void onPlayerLogin(TickEvent.PlayerTickEvent event)
     {
         EntityPlayer player = event.player;
-        World world = player.worldObj;
+        World world = player.world;
 
         if (!world.isRemote)
         {
@@ -74,10 +74,10 @@ public class MaxHealthHandler
         {
             boolean gamePaused = Minecraft.getMinecraft().getConnection() != null && minecraft.isGamePaused();
             
-            if (!gamePaused && minecraft.theWorld != null)
+            if (!gamePaused && minecraft.world != null)
             {
                 WorldInfo serverWorldInfo = integratedServer.worldServers[0].getWorldInfo();
-                WorldInfo localWorldInfo = minecraft.theWorld.getWorldInfo();
+                WorldInfo localWorldInfo = minecraft.world.getWorldInfo();
                 
                 //This is checked before the difficulty is actually changed to make the two match in IntegratedServer's tick()
                 if (localWorldInfo.getDifficulty() != serverWorldInfo.getDifficulty())

@@ -45,25 +45,25 @@ public class ArmorModifier extends TemperatureModifier
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
         
         //Helmet
-        if (inventory.armorInventory[3] != null)
+        if (inventory.armorInventory.get(3) != ItemStack.field_190927_a)
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Chestplate
-        if (inventory.armorInventory[2] != null)
+        if (inventory.armorInventory.get(2) != ItemStack.field_190927_a)
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Legging
-        if (inventory.armorInventory[1] != null)
+        if (inventory.armorInventory.get(1) != ItemStack.field_190927_a)
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Boots
-        if (inventory.armorInventory[0] != null)
+        if (inventory.armorInventory.get(0) != ItemStack.field_190927_a)
         {
         	newChangeRate += armorRateModifier;
         }
@@ -84,52 +84,52 @@ public class ArmorModifier extends TemperatureModifier
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
         
         //Helmet
-        if (inventory.armorInventory[3] != null)
+        if (inventory.armorInventory.get(3) != ItemStack.field_190927_a)
         {
-	        if (inventory.armorInventory[3].getItem() == TANItems.wool_helmet)
+	        if (inventory.armorInventory.get(3).getItem() == TANItems.wool_helmet)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
 	        }
-	        if (inventory.armorInventory[3].getItem() == TANItems.jelled_slime_helmet)
+	        if (inventory.armorInventory.get(3).getItem() == TANItems.jelled_slime_helmet)
 	        {
 	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
 	        }
         }
         
         //Chestplate
-        if (inventory.armorInventory[2] != null)
+        if (inventory.armorInventory.get(2) != ItemStack.field_190927_a)
         {
-	        if (inventory.armorInventory[2].getItem() == TANItems.wool_chestplate)
+	        if (inventory.armorInventory.get(2).getItem() == TANItems.wool_chestplate)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
 	        }
-	        if (inventory.armorInventory[2].getItem() == TANItems.jelled_slime_chestplate)
+	        if (inventory.armorInventory.get(2).getItem() == TANItems.jelled_slime_chestplate)
 	        {
 	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
 	        }
         }
         
         //Leggings
-        if (inventory.armorInventory[1] != null)
+        if (inventory.armorInventory.get(1) != ItemStack.field_190927_a)
         {
-	        if (inventory.armorInventory[1].getItem() == TANItems.wool_leggings)
+	        if (inventory.armorInventory.get(1).getItem() == TANItems.wool_leggings)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
 	        }
-	        if (inventory.armorInventory[1].getItem() == TANItems.jelled_slime_leggings)
+	        if (inventory.armorInventory.get(1).getItem() == TANItems.jelled_slime_leggings)
 	        {
 	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
 	        }
         }
         
         //Boots
-        if (inventory.armorInventory[0] != null)
+        if (inventory.armorInventory.get(0) != ItemStack.field_190927_a)
         {
-	        if (inventory.armorInventory[0].getItem() == TANItems.wool_boots)
+	        if (inventory.armorInventory.get(0).getItem() == TANItems.wool_boots)
 	        {
 	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
 	        }
-	        if (inventory.armorInventory[0].getItem() == TANItems.jelled_slime_boots)
+	        if (inventory.armorInventory.get(0).getItem() == TANItems.jelled_slime_boots)
 	        {
 	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
 	        }

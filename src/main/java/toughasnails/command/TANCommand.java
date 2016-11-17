@@ -132,10 +132,10 @@ public class TANCommand extends CommandBase
     	{
 	        if (newSeason != null)
 	        {
-		            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
+		            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.world);
 		            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
 		            seasonData.markDirty();
-		            SeasonHandler.sendSeasonUpdate(player.worldObj);
+		            SeasonHandler.sendSeasonUpdate(player.world);
 		            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
 	        }
 	        else

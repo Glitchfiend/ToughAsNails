@@ -84,9 +84,9 @@ public class ObjectProximityModifier extends TemperatureModifier
 
     public static float getBlockTemperature(EntityPlayer player, IBlockState state)
     {
-        World world = player.worldObj;
+        World world = player.world;
         Material material = state.getMaterial();
-        Biome biome = world.getBiomeGenForCoords(player.getPosition());
+        Biome biome = world.getBiome(player.getPosition());
         
         if (state.getBlock() == TANBlocks.campfire)
         {

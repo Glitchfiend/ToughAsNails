@@ -50,7 +50,7 @@ public class WeatherModifier extends TemperatureModifier
             newTemperatureLevel += WET_TARGET_MODIFIER;
             debugger.end(newTemperatureLevel);
         }
-        else if (world.isRaining() && world.canSeeSky(playerPos) && world.getBiomeGenForCoords(playerPos).getEnableSnow())
+        else if (world.isRaining() && world.canSeeSky(playerPos) && world.getBiome(playerPos).getEnableSnow())
         {
             debugger.start(Modifier.SNOW_TARGET, newTemperatureLevel);
             newTemperatureLevel += SNOW_TARGET_MODIFIER;

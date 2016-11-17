@@ -45,7 +45,7 @@ public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdat
     @Override
     public IMessage onMessage(MessageUpdateStat message, MessageContext ctx)
     {
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
         
         if (player != null)
         {

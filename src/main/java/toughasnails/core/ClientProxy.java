@@ -90,7 +90,7 @@ public class ClientProxy extends CommonProxy
         switch (type)
         {
         case SNOWFLAKE:
-            entityFx = new EntitySnowflakeFX(minecraft.theWorld, x, y, z, MathHelper.getRandomDoubleInRange(minecraft.theWorld.rand, -0.03, 0.03), -0.02D, MathHelper.getRandomDoubleInRange(minecraft.theWorld.rand, -0.03, 0.03));
+            entityFx = new EntitySnowflakeFX(minecraft.world, x, y, z, MathHelper.getRandomDoubleInRange(minecraft.world.rand, -0.03, 0.03), -0.02D, MathHelper.getRandomDoubleInRange(minecraft.world.rand, -0.03, 0.03));
             break;
         default:
             break;

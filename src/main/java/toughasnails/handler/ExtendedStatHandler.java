@@ -39,7 +39,7 @@ public class ExtendedStatHandler
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
-        World world = player.worldObj;
+        World world = player.world;
         
         if (!world.isRemote)
         {
@@ -58,7 +58,7 @@ public class ExtendedStatHandler
     public void onPlayerTick(PlayerTickEvent event)
     {
         EntityPlayer player = event.player;
-        World world = player.worldObj;
+        World world = player.world;
 
         if (!world.isRemote)
         {

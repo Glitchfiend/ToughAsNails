@@ -40,7 +40,7 @@ public class ItemSeasonClock extends Item
 
                 if (world == null && holder != null)
                 {
-                    world = holder.worldObj;
+                    world = holder.world;
                 }
 
                 if (world == null)

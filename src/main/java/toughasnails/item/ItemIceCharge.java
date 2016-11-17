@@ -24,8 +24,9 @@ public class ItemIceCharge extends Item
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
+        ItemStack itemStackIn = playerIn.getHeldItem(hand);
         RayTraceResult movingobjectposition = this.rayTrace(worldIn, playerIn, true);
         
         if (movingobjectposition == null)
@@ -64,7 +65,7 @@ public class ItemIceCharge extends Item
 
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        --itemStackIn.stackSize;
+                        itemStackIn.func_190920_e(itemStackIn.func_190916_E() - 1);
                     }
 
                     playerIn.addStat(StatList.getObjectUseStats(this));

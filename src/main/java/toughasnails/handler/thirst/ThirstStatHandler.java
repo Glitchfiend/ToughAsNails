@@ -25,7 +25,7 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerJump(LivingJumpEvent event)
     {
-        World world = event.getEntity().worldObj;
+        World world = event.getEntity().world;
 
         if (!world.isRemote)
         {
@@ -49,7 +49,7 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerHurt(LivingHurtEvent event)
     {
-        World world = event.getEntity().worldObj;
+        World world = event.getEntity().world;
 
         if (!world.isRemote && event.getAmount() != 0.0F)
         {
@@ -67,7 +67,7 @@ public class ThirstStatHandler
     @SubscribeEvent
     public void onPlayerAttackEntity(AttackEntityEvent event)
     {
-        World world = event.getEntity().worldObj;
+        World world = event.getEntity().world;
         Entity target = event.getTarget();
         
         if (!world.isRemote)

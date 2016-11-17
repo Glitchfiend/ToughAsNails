@@ -67,7 +67,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return BOUNDING_BOX;
     }
@@ -155,7 +155,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock, BlockPos neighborPos)
     {
         updatePowered(world, pos, state);
     }

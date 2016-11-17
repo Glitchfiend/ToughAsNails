@@ -93,11 +93,11 @@ public class EntityFreeze extends EntityMob implements IMob
             this.motionY *= 0.6D;
         }
 
-        if (this.worldObj.isRemote)
+        if (this.world.isRemote)
         {
             /*if (this.rand.nextInt(24) == 0 && !this.isSilent())
             {
-                this.worldObj.playSound(this.posX + 0.5D, this.posY + 0.5D, this.posZ + 0.5D, "fire.fire", 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
+                this.world.playSound(this.posX + 0.5D, this.posY + 0.5D, this.posZ + 0.5D, "fire.fire", 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
             }*/
 
             for (int i = 0; i < 2; ++i)
@@ -233,13 +233,13 @@ public class EntityFreeze extends EntityMob implements IMob
                         if (this.field_179467_b > 1)
                         {
                             float f = MathHelper.sqrt_float(MathHelper.sqrt_double(d0)) * 0.5F;
-                            this.freeze.worldObj.playEvent((EntityPlayer)null, 1009, new BlockPos((int)this.freeze.posX, (int)this.freeze.posY, (int)this.freeze.posZ), 0);
+                            this.freeze.world.playEvent((EntityPlayer)null, 1009, new BlockPos((int)this.freeze.posX, (int)this.freeze.posY, (int)this.freeze.posZ), 0);
 
                             for (int i = 0; i < 1; ++i)
                             {
-                                EntityIceball entityiceball = new EntityIceball(this.freeze.worldObj, this.freeze, d1 + this.freeze.getRNG().nextGaussian() * (double)f, d2, d3 + this.freeze.getRNG().nextGaussian() * (double)f);
+                                EntityIceball entityiceball = new EntityIceball(this.freeze.world, this.freeze, d1 + this.freeze.getRNG().nextGaussian() * (double)f, d2, d3 + this.freeze.getRNG().nextGaussian() * (double)f);
                                 entityiceball.posY = this.freeze.posY + (double)(this.freeze.height / 2.0F) + 0.5D;
-                                this.freeze.worldObj.spawnEntityInWorld(entityiceball);
+                                this.freeze.world.spawnEntityInWorld(entityiceball);
                             }
                         }
                     }

@@ -95,13 +95,13 @@ public class EntityIceball extends Entity implements IProjectile
     @Override
     public void onUpdate()
     {
-        if (this.worldObj.isRemote || (this.shootingEntity == null || !this.shootingEntity.isDead) && this.worldObj.isBlockLoaded(new BlockPos(this)))
+        if (this.world.isRemote || (this.shootingEntity == null || !this.shootingEntity.isDead) && this.world.isBlockLoaded(new BlockPos(this)))
         {
             super.onUpdate();
 
             if (this.inGround)
             {
-                if (this.worldObj.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock() == this.inTile)
+                if (this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock() == this.inTile)
                 {
                     ++this.ticksAlive;
 
@@ -127,7 +127,7 @@ public class EntityIceball extends Entity implements IProjectile
 
             Vec3d vec3 = new Vec3d(this.posX, this.posY, this.posZ);
             Vec3d vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
+            RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec3, vec31);
             vec3 = new Vec3d(this.posX, this.posY, this.posZ);
             vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -137,7 +137,7 @@ public class EntityIceball extends Entity implements IProjectile
             }
 
             Entity entity = null;
-            List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+            List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
 
             for (int i = 0; i < list.size(); ++i)
@@ -208,7 +208,7 @@ public class EntityIceball extends Entity implements IProjectile
                 for (int j = 0; j < 4; ++j)
                 {
                     float f3 = 0.25F;
-                    this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f3, this.posY - this.motionY * (double)f3, this.posZ - this.motionZ * (double)f3, this.motionX, this.motionY, this.motionZ, new int[0]);
+                    this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f3, this.posY - this.motionY * (double)f3, this.posZ - this.motionZ * (double)f3, this.motionX, this.motionY, this.motionZ, new int[0]);
                 }
 
                 f2 = 0.8F;
@@ -236,7 +236,7 @@ public class EntityIceball extends Entity implements IProjectile
 
     protected void onImpact(RayTraceResult movingObject)
     {
-        if (!this.worldObj.isRemote)
+        if (!this.world.isRemote)
         {
             if (movingObject.entityHit != null)
             {
@@ -258,16 +258,16 @@ public class EntityIceball extends Entity implements IProjectile
 
                 if (this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
                 {
-                    flag1 = this.worldObj.getGameRules().getBoolean("mobGriefing");
+                    flag1 = this.world.getGameRules().getBoolean("mobGriefing");
                 }
 
                 if (flag1)
                 {
                     BlockPos blockpos = movingObject.getBlockPos().offset(movingObject.sideHit);
 
-                    /*if (this.worldObj.isAirBlock(blockpos))
+                    /*if (this.world.isAirBlock(blockpos))
                     {
-                        this.worldObj.setBlockState(blockpos, Blocks.snow_layer.getDefaultState());
+                        this.world.setBlockState(blockpos, Blocks.snow_layer.getDefaultState());
                     }*/
                 }
             }
