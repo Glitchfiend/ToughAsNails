@@ -28,12 +28,10 @@ import toughasnails.asm.ObfHelper;
 
 public class WorldTransformer implements IClassTransformer
 {
-    private static final String[] VALID_HASHES = new String[] { "547d356661b3b86facf7043fb930bcfb", "a812fff5e65c73ca82f3f2c9ddd2fb03" };
-    
     private static final String[] CAN_SNOW_AT_NAMES = new String[] { "canSnowAt", "func_175708_f", "f" };
     private static final String[] CAN_BLOCK_FREEZE_NAMES = new String[] { "canBlockFreeze", "func_175670_e", "e" };
     private static final String[] IS_RAINING_AT_NAMES = new String[] { "isRainingAt", "func_175727_C", "B" };
-    private static final String[] GET_BIOME_GEN_FOR_COORDS_NAMES = new String[] { "getBiomeGenForCoords", "func_180494_b", "b" };
+    private static final String[] GET_BIOME_GEN_FOR_COORDS_NAMES = new String[] { "getBiome", "func_180494_b", "b" };
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)
@@ -52,10 +50,7 @@ public class WorldTransformer implements IClassTransformer
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
-        
-        //Check this class is unmodified
-        ASMHelper.verifyClassHash("World", bytes, VALID_HASHES);
-        
+
         List<String> successfulTransformations = Lists.newArrayList();
         
         //Iterate over the methods in the class

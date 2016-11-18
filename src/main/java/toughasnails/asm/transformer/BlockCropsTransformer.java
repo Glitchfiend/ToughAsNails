@@ -26,8 +26,6 @@ import toughasnails.asm.ObfHelper;
 
 public class BlockCropsTransformer implements IClassTransformer
 {
-    private static final String[] VALID_HASHES = new String[] { "3d74307bb515539176e7a84967b10a28", "b835f0bbb24031fee6ad804d8c48d2dc" };
-    
     private static final String[] UPDATE_TICK_NAMES = new String[] { "updateTick", "func_180650_b", "b" };
     
     @Override
@@ -48,9 +46,6 @@ public class BlockCropsTransformer implements IClassTransformer
         ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
 
-        //Check this class is unmodified
-        ASMHelper.verifyClassHash("BlockCrops", bytes, VALID_HASHES);
-        
         //All Vanilla crops should decay
         classNode.interfaces.add("toughasnails/api/season/IDecayableCrop");
         
