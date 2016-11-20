@@ -42,7 +42,7 @@ public class ModEntities
     {
         int tanEntityId = nextTANEntityId;
         nextTANEntityId++;
-        EntityRegistry.registerModEntity(entityClass, entityName, tanEntityId, ToughAsNails.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+        EntityRegistry.registerModEntity(new ResourceLocation(ToughAsNails.MOD_ID, entityName), entityClass, entityName, tanEntityId, ToughAsNails.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
         idToTANEntityName.put(tanEntityId, entityName);
         return tanEntityId;
     }
