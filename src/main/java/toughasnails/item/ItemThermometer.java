@@ -49,7 +49,7 @@ public class ItemThermometer extends Item
                 if (world == null) world = entity.world;
 
                 TemperatureHandler tempHandler = (TemperatureHandler)TemperatureHelper.getTemperatureData(player);
-                return (float)MathHelper.clamp_double(tempHandler.debugger.targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();
+                return (float)MathHelper.clamp(tempHandler.debugger.targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();
             }
         });
     }

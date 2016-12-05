@@ -28,19 +28,19 @@ import toughasnails.temperature.TemperatureHandler;
 public class TANCommand extends CommandBase
 {
     @Override
-    public String getCommandName()
+    public String getName()
     {
         return "toughasnails";
     }
     
     @Override
-    public List getCommandAliases()
+    public List getAliases()
     {
         return Lists.newArrayList("tan");
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender)
+    public String getUsage(ICommandSender sender)
     {
         return "commands.toughasnails.usage";
     }
@@ -84,7 +84,7 @@ public class TANCommand extends CommandBase
     	}
         else
         {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
+        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
         }
     }
     
@@ -106,11 +106,11 @@ public class TANCommand extends CommandBase
 	        //Set to the new temperature
 	        temperatureStats.setTemperature(new Temperature(newTemp));
 	
-	        sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
+	        sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
     	}
         else
         {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
+        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
         }
     }
     
@@ -136,21 +136,21 @@ public class TANCommand extends CommandBase
 		            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
 		            seasonData.markDirty();
 		            SeasonHandler.sendSeasonUpdate(player.world);
-		            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
+		            sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
 	        }
 	        else
 	        {
-	            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
+	            sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
 	        }
     	}
         else
         {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.disabled"));
+        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.disabled"));
         }
     }
     
     @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

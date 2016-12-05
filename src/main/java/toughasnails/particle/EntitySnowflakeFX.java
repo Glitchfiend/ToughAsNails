@@ -53,7 +53,7 @@ public class EntitySnowflakeFX extends Particle
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(ClientProxy.particleTexturesLocation);
         
         float scaleMultiplier = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge * 32.0F;
-        scaleMultiplier = MathHelper.clamp_float(scaleMultiplier, 0.0F, 1.0F);
+        scaleMultiplier = MathHelper.clamp(scaleMultiplier, 0.0F, 1.0F);
         this.particleScale = this.particleScale * scaleMultiplier;
         
         GlStateManager.depthMask(false);
@@ -80,7 +80,7 @@ public class EntitySnowflakeFX extends Particle
         }
 
         this.particleTextureIndexX = 7 - particleAge * 8 / particleMaxAge;
-        this.moveEntity(motionX, motionY, motionZ);
+        this.move(motionX, motionY, motionZ);
 
         if (posY == prevPosY)
         {
@@ -92,7 +92,7 @@ public class EntitySnowflakeFX extends Particle
         motionY *= 0.9599999785423279D;
         motionZ *= 0.9599999785423279D;
 
-        if (isCollided)
+        if (onGround)
         {
             motionX *= 0.699999988079071D;
             motionZ *= 0.699999988079071D;

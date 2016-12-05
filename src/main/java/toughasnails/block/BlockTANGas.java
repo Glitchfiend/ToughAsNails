@@ -240,7 +240,7 @@ public class BlockTANGas extends Block implements ITANBlock
         if (!worldIn.isRemote)
         {
         	EntityFallingBlock explosion = new EntityFallingBlock(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), state);
-        	worldIn.spawnEntityInWorld(explosion);
+        	worldIn.spawnEntity(explosion);
         	
             float f = 2.0F;
             worldIn.createExplosion(explosion, pos.getX(), pos.getY(), pos.getZ(), f, true);

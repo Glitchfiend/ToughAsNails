@@ -89,9 +89,9 @@ public class BlockRainCollector extends Block implements ITANBlock
                 {
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
+                        playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
 
-                        if (playerIn.getHeldItem(hand).func_190916_E() == 0)
+                        if (playerIn.getHeldItem(hand).isEmpty())
                         {
                             playerIn.setHeldItem(hand, new ItemStack(Items.WATER_BUCKET));
                         }
@@ -115,8 +115,8 @@ public class BlockRainCollector extends Block implements ITANBlock
                     {
                         ItemStack itemstack1 = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
 
-                        playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
-                        if (playerIn.getHeldItem(hand).func_190916_E() == 0)
+                        playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
+                        if (playerIn.getHeldItem(hand).isEmpty())
                         {
                             playerIn.setHeldItem(hand, itemstack1);
                         }
@@ -158,7 +158,7 @@ public class BlockRainCollector extends Block implements ITANBlock
 
     public void setWaterLevel(World worldIn, BlockPos pos, IBlockState state, int level)
     {
-        worldIn.setBlockState(pos, state.withProperty(LEVEL, Integer.valueOf(MathHelper.clamp_int(level, 0, 3))), 2);
+        worldIn.setBlockState(pos, state.withProperty(LEVEL, Integer.valueOf(MathHelper.clamp(level, 0, 3))), 2);
         worldIn.updateComparatorOutputLevel(pos, this);
     }
 

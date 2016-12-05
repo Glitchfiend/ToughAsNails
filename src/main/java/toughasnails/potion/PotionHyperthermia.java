@@ -15,7 +15,7 @@ public class PotionHyperthermia extends TANPotion
     @Override
     public void performEffect(EntityLivingBase entity, int amplifier)
     {
-        entity.attackEntityFrom(DamageSource.generic, 0.5F);
+        entity.attackEntityFrom(DamageSource.GENERIC, 0.5F);
     }
     
     @Override

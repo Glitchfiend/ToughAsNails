@@ -202,7 +202,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
                         BlockPos pos = trackedPosition;
                         EntitySmallFireball fireball = new EntitySmallFireball(getWorld(), (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
                         this.spawnedEntities.add(fireball);
-                        this.getWorld().spawnEntityInWorld(fireball);
+                        this.getWorld().spawnEntity(fireball);
                     }
                 }
             }

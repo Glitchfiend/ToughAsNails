@@ -114,7 +114,7 @@ public class EntityFreeze extends EntityMob implements IMob
     {
         if (this.isBurning())
         {
-            this.attackEntityFrom(DamageSource.inFire, 1.0F);
+            this.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
         }
 
         --this.heightOffsetUpdateTime;
@@ -232,14 +232,14 @@ public class EntityFreeze extends EntityMob implements IMob
 
                         if (this.field_179467_b > 1)
                         {
-                            float f = MathHelper.sqrt_float(MathHelper.sqrt_double(d0)) * 0.5F;
+                            float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
                             this.freeze.world.playEvent((EntityPlayer)null, 1009, new BlockPos((int)this.freeze.posX, (int)this.freeze.posY, (int)this.freeze.posZ), 0);
 
                             for (int i = 0; i < 1; ++i)
                             {
                                 EntityIceball entityiceball = new EntityIceball(this.freeze.world, this.freeze, d1 + this.freeze.getRNG().nextGaussian() * (double)f, d2, d3 + this.freeze.getRNG().nextGaussian() * (double)f);
                                 entityiceball.posY = this.freeze.posY + (double)(this.freeze.height / 2.0F) + 0.5D;
-                                this.freeze.world.spawnEntityInWorld(entityiceball);
+                                this.freeze.world.spawnEntity(entityiceball);
                             }
                         }
                     }

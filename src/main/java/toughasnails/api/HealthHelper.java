@@ -57,7 +57,7 @@ public class HealthHelper
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             modifier = new AttributeModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID, "Lifeblood Health Modifier", existingHearts + hearts * 2, 0);
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), modifier);
             player.getAttributeMap().applyAttributeModifiers(multimap);
             return true;
         }

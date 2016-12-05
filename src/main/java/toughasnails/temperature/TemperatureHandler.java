@@ -154,7 +154,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 
                 debugger.targetTemperature = targetTemperature.getRawValue();
 
-                targetTemperature = new Temperature(MathHelper.clamp_int(targetTemperature.getRawValue(), 0, TemperatureScale.getScaleTotal()));
+                targetTemperature = new Temperature(MathHelper.clamp(targetTemperature.getRawValue(), 0, TemperatureScale.getScaleTotal()));
 
                 if (incrementTemperature)
                 {

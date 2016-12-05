@@ -105,7 +105,7 @@ public class ItemBottleOfGas extends Item
         {
             return EnumActionResult.PASS;
         }
-        else if (stack.func_190916_E() == 0)
+        else if (stack.isEmpty())
         {
             return EnumActionResult.PASS;
         }
@@ -113,7 +113,7 @@ public class ItemBottleOfGas extends Item
         {
             if (this.block.canPlaceBlockOnSide(worldIn, pos, side))
             {
-                IBlockState iblockstate1 = this.block.onBlockPlaced(worldIn, pos, side, hitX, hitY, hitZ, this.getMetadata(stack), playerIn);
+                IBlockState iblockstate1 = this.block.getStateForPlacement(worldIn, pos, side, hitX, hitY, hitZ, this.getMetadata(stack), playerIn);
 
                 if (worldIn.setBlockState(pos, iblockstate1, 3))
                 {

@@ -45,25 +45,25 @@ public class ArmorModifier extends TemperatureModifier
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
         
         //Helmet
-        if (inventory.armorInventory.get(3) != ItemStack.field_190927_a)
+        if (!inventory.armorInventory.get(3).isEmpty())
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Chestplate
-        if (inventory.armorInventory.get(2) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(2) != ItemStack.EMPTY)
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Legging
-        if (inventory.armorInventory.get(1) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(1) != ItemStack.EMPTY)
         {
         	newChangeRate += armorRateModifier;
         }
         
         //Boots
-        if (inventory.armorInventory.get(0) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(0) != ItemStack.EMPTY)
         {
         	newChangeRate += armorRateModifier;
         }
@@ -84,7 +84,7 @@ public class ArmorModifier extends TemperatureModifier
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
         
         //Helmet
-        if (inventory.armorInventory.get(3) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(3) != ItemStack.EMPTY)
         {
 	        if (inventory.armorInventory.get(3).getItem() == TANItems.wool_helmet)
 	        {
@@ -97,7 +97,7 @@ public class ArmorModifier extends TemperatureModifier
         }
         
         //Chestplate
-        if (inventory.armorInventory.get(2) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(2) != ItemStack.EMPTY)
         {
 	        if (inventory.armorInventory.get(2).getItem() == TANItems.wool_chestplate)
 	        {
@@ -110,7 +110,7 @@ public class ArmorModifier extends TemperatureModifier
         }
         
         //Leggings
-        if (inventory.armorInventory.get(1) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(1) != ItemStack.EMPTY)
         {
 	        if (inventory.armorInventory.get(1).getItem() == TANItems.wool_leggings)
 	        {
@@ -123,7 +123,7 @@ public class ArmorModifier extends TemperatureModifier
         }
         
         //Boots
-        if (inventory.armorInventory.get(0) != ItemStack.field_190927_a)
+        if (inventory.armorInventory.get(0) != ItemStack.EMPTY)
         {
 	        if (inventory.armorInventory.get(0).getItem() == TANItems.wool_boots)
 	        {

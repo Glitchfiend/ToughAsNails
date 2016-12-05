@@ -163,7 +163,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			
 			                if (item == Items.STICK)
 			                {
-                                playerIn.getHeldItem(hand).func_190920_e(playerIn.getHeldItem(hand).func_190916_E() - 1);
+                                playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
 			                }
 			
 			                return true;

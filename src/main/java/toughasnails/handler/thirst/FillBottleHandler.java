@@ -37,7 +37,7 @@ public class FillBottleHandler
         
             if (actionResult == EnumActionResult.SUCCESS)
             {
-                stack.func_190920_e(stack.func_190916_E() - 1);
+                stack.setCount(stack.getCount() - 1);
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
                 ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
                 
@@ -69,8 +69,8 @@ public class FillBottleHandler
                 {
                     ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
                     player.addStat(StatList.CAULDRON_USED);
-                    player.getHeldItem(event.getHand()).func_190920_e(player.getHeldItem(event.getHand()).func_190916_E() - 1);
-                    if (player.getHeldItem(event.getHand()).func_190916_E() == 0)
+                    player.getHeldItem(event.getHand()).setCount(player.getHeldItem(event.getHand()).getCount() - 1);
+                    if (player.getHeldItem(event.getHand()).isEmpty())
                     {
                         player.setHeldItem(event.getHand(), waterBottle);
                     }

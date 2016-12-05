@@ -58,7 +58,7 @@ public class MaxHealthHandler
         if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && modifier != null)
         { 
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), modifier);
             event.getEntityPlayer().getAttributeMap().applyAttributeModifiers(multimap);
         }
     }
@@ -76,13 +76,13 @@ public class MaxHealthHandler
             
             if (!gamePaused && minecraft.world != null)
             {
-                WorldInfo serverWorldInfo = integratedServer.worldServers[0].getWorldInfo();
+                WorldInfo serverWorldInfo = integratedServer.worlds[0].getWorldInfo();
                 WorldInfo localWorldInfo = minecraft.world.getWorldInfo();
                 
                 //This is checked before the difficulty is actually changed to make the two match in IntegratedServer's tick()
                 if (localWorldInfo.getDifficulty() != serverWorldInfo.getDifficulty())
                 {
-                    List<EntityPlayerMP> players = integratedServer.getPlayerList().getPlayerList();
+                    List<EntityPlayerMP> players = integratedServer.getPlayerList().getPlayers();
                     
                     //Update the modifiers of all the connected players
                     for (EntityPlayerMP player : players)
@@ -147,7 +147,7 @@ public class MaxHealthHandler
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), modifier);
             player.getAttributeMap().applyAttributeModifiers(multimap);
             
             if (player.getHealth() > player.getMaxHealth())

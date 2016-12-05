@@ -70,7 +70,7 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
             entityliving.rotationYawHead = entityliving.rotationYaw;
             entityliving.renderYawOffset = entityliving.rotationYaw;
             entityliving.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
-            worldIn.spawnEntityInWorld(entity);
+            worldIn.spawnEntity(entity);
             entityliving.playLivingSound();
         }
 
@@ -123,13 +123,13 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
                 if (tileentity instanceof TileEntityMobSpawner)
                 {
                     MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic();
-                    mobspawnerbaselogic.func_190894_a(ItemMonsterPlacer.func_190908_h(stack));
+                    mobspawnerbaselogic.setEntityId(ItemMonsterPlacer.getNamedIdFrom(stack));
                     tileentity.markDirty();
                     worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
 
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        stack.func_190920_e(stack.func_190916_E() - 1);
+                        stack.setCount(stack.getCount() - 1);
                     }
 
                     return EnumActionResult.SUCCESS;
@@ -155,7 +155,7 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
 
                 if (!playerIn.capabilities.isCreativeMode)
                 {
-                    stack.func_190920_e(stack.func_190916_E() - 1);
+                    stack.setCount(stack.getCount() - 1);
                 }
             }
 
@@ -209,7 +209,7 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
 
                             if (!player.capabilities.isCreativeMode)
                             {
-                                stack.func_190920_e(stack.func_190916_E() - 1);
+                                stack.setCount(stack.getCount() - 1);
                             }
 
                             //TODO: 1.9 playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);

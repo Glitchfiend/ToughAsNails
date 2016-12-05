@@ -73,9 +73,9 @@ public class ModItems
         
         // Armor Materials
         wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
-        wool_armor_material.customCraftingMaterial = Item.getItemFromBlock(Blocks.WOOL);
+        wool_armor_material.repairMaterial = new ItemStack(Blocks.WOOL);
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
-        jelled_slime_armor_material.customCraftingMaterial = TANItems.jelled_slime;
+        jelled_slime_armor_material.repairMaterial = new ItemStack(TANItems.jelled_slime);
         respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         
         // Main Items
@@ -132,7 +132,7 @@ public class ModItems
         {
             if (item.getHasSubtypes())
             {
-                NonNullList<ItemStack> subItems = NonNullList.func_191196_a();
+                NonNullList<ItemStack> subItems = NonNullList.create();
                 item.getSubItems(item, CreativeTabTAN.instance, subItems);
                 for (ItemStack subItem : subItems)
                 {

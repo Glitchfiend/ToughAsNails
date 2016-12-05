@@ -35,7 +35,7 @@ public class ItemLifebloodCrystal extends Item
             	world.spawnParticle(EnumParticleTypes.HEART, player.posX + (double)(world.rand.nextFloat() * player.width * 2.0F) - (double)player.width, player.posY + 0.5D + (double)(world.rand.nextFloat() * player.height), player.posZ + (double)(world.rand.nextFloat() * player.width * 2.0F) - (double)player.width, d0, d1, d2, new int[0]);
     		}
     		world.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.75F, 1.0F);
-            stack.func_190920_e(stack.func_190916_E() - 1);
+            stack.setCount(stack.getCount() - 1);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     	}
     	else
