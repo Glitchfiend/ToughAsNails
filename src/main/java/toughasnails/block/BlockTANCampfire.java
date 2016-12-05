@@ -38,7 +38,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 {
     protected static final AxisAlignedBB SELECTION_BOX = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.6D, 0.9D);
     
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
+	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
     
     // implement IBOPBlock
@@ -85,14 +85,14 @@ public class BlockTANCampfire extends Block implements ITANBlock
     	            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.9F), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
     	        }
         	}
-	        if (age < 15)
+	        if (age < 7)
 	        {
 	            if (rand.nextInt(8) == 0)
 	            {
 	                worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age + 1)), 2);
 	            }
 	        }
-	        if (age == 15)
+	        if (age == 7)
 	        {
 	            if (rand.nextInt(8) == 0)
 	            {
@@ -253,13 +253,14 @@ public class BlockTANCampfire extends Block implements ITANBlock
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(BURNING, Boolean.valueOf((meta & 1) > 0));
+        return this.getDefaultState().withProperty(AGE, meta >> 1).withProperty(BURNING, Boolean.valueOf((meta & 1) > 0));
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((Boolean)state.getValue(BURNING)).booleanValue() ? 1 : 0;
+        int meta = state.getValue(AGE) << 1;
+        return ((Boolean)state.getValue(BURNING)).booleanValue() ? meta | 1 : meta;
     }
 
     @Override
