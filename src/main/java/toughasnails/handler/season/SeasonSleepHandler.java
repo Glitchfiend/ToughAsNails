@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.config.GameplayOption;
 import toughasnails.config.SyncedConfigHandler;
 import toughasnails.season.SeasonSavedData;
+import toughasnails.season.SeasonTime;
 
 public class SeasonSleepHandler 
 {
@@ -29,9 +30,8 @@ public class SeasonSleepHandler
             if (world.areAllPlayersAsleep())
             {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-                long i = world.getWorldInfo().getWorldTime() + 24000L;
+                long i = (world.getWorldInfo().getWorldTime() % 24000L)  + 24000L;
                 long timeDiff = i - i % 24000L;
-                
                 seasonData.seasonCycleTicks += timeDiff;
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
