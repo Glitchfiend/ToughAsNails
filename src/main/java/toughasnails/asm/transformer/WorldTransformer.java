@@ -33,7 +33,7 @@ public class WorldTransformer implements IClassTransformer
     private static final String[] CAN_SNOW_AT_NAMES = new String[] { "canSnowAt", "func_175708_f", "f" };
     private static final String[] CAN_BLOCK_FREEZE_NAMES = new String[] { "canBlockFreeze", "func_175670_e", "e" };
     private static final String[] IS_RAINING_AT_NAMES = new String[] { "isRainingAt", "func_175727_C", "B" };
-    private static final String[] GET_BIOME_GEN_FOR_COORDS_NAMES = new String[] { "getBiomeGenForCoords", "func_180494_b", "b" };
+    private static final String[] GET_BIOME_GEN_FOR_COORDS_NAMES = new String[] { "getBiome", "func_180494_b", "b" };
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)
