@@ -198,13 +198,15 @@ public class ItemCanteen extends Item
 						return true;
 					}
 				} else if (state.getBlock() instanceof  BlockRainCollector) {
-					BlockRainCollector collector = (BlockRainCollector)state.getBlock();
-					comp.setInteger("water_type", 3);
-					stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
-					if (player.capabilities.isCreativeMode) {
-						return true;
-					} else {
-						collector.setWaterLevel(world, pos, state, ((Integer)state.getValue(BlockRainCollector.LEVEL)).intValue() - 1);
+					int level = ((Integer)state.getValue(BlockRainCollector.LEVEL)).intValue();
+					if (level > 0){
+						BlockRainCollector collector = (BlockRainCollector)state.getBlock();
+						comp.setInteger("water_type", 3);
+						stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
+						if (player.capabilities.isCreativeMode) {
+							return true;
+						}
+						collector.setWaterLevel(world, pos, state, level - 1);
 						return true;
 					}
 				}
