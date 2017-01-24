@@ -169,7 +169,7 @@ public class ItemCanteen extends Item
      * @param stack The canteen item stack.
      * @return true if successful, otherwise false.
      */
-	private boolean attemptCanteenFill(EntityPlayer player, ItemStack stack) {
+	public boolean attemptCanteenFill(EntityPlayer player, ItemStack stack) {
 		World world = player.world;
 		RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
 		NBTTagCompound comp = stack.getTagCompound();
@@ -188,18 +188,24 @@ public class ItemCanteen extends Item
 					BlockCauldron cauldron = (BlockCauldron)state.getBlock();
 					int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
 					if (level > 0 && !world.isRemote) {
-						if (player.capabilities.isCreativeMode) {
-							player.addStat(StatList.CAULDRON_USED);
-							comp.setInteger("water_type", 1);
-							stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
-							return true;
-						} else {
-							player.addStat(StatList.CAULDRON_USED);
-							comp.setInteger("water_type", 1);
-							stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
+						player.addStat(StatList.CAULDRON_USED);
+						comp.setInteger("water_type", 1);
+						stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
+						if (!player.capabilities.isCreativeMode) {
 							cauldron.setWaterLevel(world, pos, state, level - 1);
 							return true;
 						}
+						return true;
+					}
+				} else if (state.getBlock() instanceof  BlockRainCollector) {
+					BlockRainCollector collector = (BlockRainCollector)state.getBlock();
+					comp.setInteger("water_type", 3);
+					stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
+					if (player.capabilities.isCreativeMode) {
+						return true;
+					} else {
+						collector.setWaterLevel(world, pos, state, ((Integer)state.getValue(BlockRainCollector.LEVEL)).intValue() - 1);
+						return true;
 					}
 				}
 			}
