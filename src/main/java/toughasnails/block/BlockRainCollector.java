@@ -139,20 +139,13 @@ public class BlockRainCollector extends Block implements ITANBlock
             {
             	if (i > 0 && !worldIn.isRemote)
                 {
-			if (playerIn.capabilities.isCreativeMode) {
-				NBTTagCompound comp = heldItem.getTagCompound();
-				comp.setInteger("water_type", 3);
-				heldItem.setTagCompound(((ItemCanteen) item).doRefill(((ItemCanteen) item).setUses(comp, 3), heldItem, playerIn)); 
-				return true;
-			} else {
-				NBTTagCompound comp = heldItem.getTagCompound();
-				comp.setInteger("water_type", 3);
-				heldItem.setTagCompound(((ItemCanteen) item).doRefill(((ItemCanteen) item).setUses(comp, 3), heldItem, playerIn)); 
-				this.setWaterLevel(worldIn, pos, state, i - 1);
-				return true;
-			}
-                }
-            	
+                	if (i > 0 && !worldIn.isRemote)
+                    {
+                		return ((ItemCanteen) item).onItemRightClick(worldIn, playerIn, hand)
+                				.getType().equals(EnumActionResult.SUCCESS) ? true : false;
+                    }            	
+                	return true;
+                }            	
             	return true;
             }
             else
