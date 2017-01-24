@@ -199,7 +199,7 @@ public class ItemCanteen extends Item
 					}
 				} else if (state.getBlock() instanceof  BlockRainCollector) {
 					int level = ((Integer)state.getValue(BlockRainCollector.LEVEL)).intValue();
-					if (level > 0){
+					if (level > 0 && !world.isRemote){
 						BlockRainCollector collector = (BlockRainCollector)state.getBlock();
 						comp.setInteger("water_type", 3);
 						stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
