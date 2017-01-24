@@ -58,7 +58,7 @@ public class FillBottleHandler
         EntityPlayer player = event.getEntityPlayer();
         IBlockState state = world.getBlockState(event.getPos());
         
-        if (state.getBlock() instanceof BlockCauldron && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (player.getHeldItem(event.getHand()).getItem() == Items.GLASS_BOTTLE && state.getBlock() instanceof BlockCauldron && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             BlockCauldron cauldron = (BlockCauldron)state.getBlock();
             int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
