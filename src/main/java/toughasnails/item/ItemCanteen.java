@@ -133,14 +133,21 @@ public class ItemCanteen extends Item
         int refills = comp.getInteger("refills");
     	return refills;
     }
+    /**
+     * Handles lore for item display
+     * @param comp compound to modify 
+     * @param stack item stack in question
+     * @return compound with lore
+     */
     private NBTTagCompound doLore(NBTTagCompound comp, ItemStack stack){
    	 	return setLore(comp, new String[] {"Refills: " + getRefills(stack) + " / " + REFILLS, "Uses Left: " + (getUses(stack) > 0 ? getUses(stack) : "none") + " / 3"}); //TODO % value at the end
     }
     /**
-     * Attempt to fill the provided canteen stack with water.
-     * @param player The player holding the canteen.
-     * @param stack The canteen item stack.
-     * @return true if successful, otherwise false.
+     * handles refill action
+     * @param comp Tag compound to work off of
+     * @param stack item stack in question
+     * @param player player involved
+     * @return modified tag compound
      */
     private NBTTagCompound doRefill(NBTTagCompound comp, ItemStack stack, EntityPlayer player) {
         int ref = comp.getInteger("refills");
@@ -162,6 +169,12 @@ public class ItemCanteen extends Item
         }
     	return comp;
     }
+    /**
+     * Attempt to fill the provided canteen stack with water.
+     * @param player The player holding the canteen.
+     * @param stack The canteen item stack.
+     * @return true if successful, otherwise false.
+     */
     private boolean attemptCanteenFill(EntityPlayer player, ItemStack stack) {
         World world = player.world;
         RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
@@ -219,10 +232,10 @@ public class ItemCanteen extends Item
         return EnumAction.DRINK;
     }
     /**
-	 * sets the items lore
-	 * @param stack item stack to set lore on
-	 * @param lore string list of lore to add (each string is a line)
-	 */
+     * sets the items lore
+     * @param stack item stack to set lore on
+     * @param lore string list of lore to add (each string is a line)
+     */
     public NBTTagCompound setLore(NBTTagCompound comp, String[] lore){
     	NBTTagList list = new NBTTagList();
     	for (String s : lore){
