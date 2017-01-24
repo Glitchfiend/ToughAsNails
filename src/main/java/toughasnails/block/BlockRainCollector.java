@@ -139,12 +139,8 @@ public class BlockRainCollector extends Block implements ITANBlock
             {
             	if (i > 0 && !worldIn.isRemote)
                 {
-                	if (i > 0 && !worldIn.isRemote)
-                    {
-                		return ((ItemCanteen) item).onItemRightClick(worldIn, playerIn, hand)
-                				.getType().equals(EnumActionResult.SUCCESS) ? true : false;
-                    }            	
-                	return true;
+            		return ((ItemCanteen) item).onItemRightClick(worldIn, playerIn, hand)
+            			.getType().equals(EnumActionResult.SUCCESS) ? true : false; 
                 }            	
             	return true;
             }
