@@ -10,11 +10,11 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.IThirst;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.network.message.MessageUpdateStat;
 
 public class ThirstHandler extends StatHandlerBase implements IThirst
@@ -38,7 +38,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {  
-    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
     	{
 	        if (phase == Phase.START)
 	        {
@@ -193,7 +193,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     @Override
     public void addStats(int thirst, float hydration)
     {
-    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
     	{
 	        this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
 	        this.thirstHydrationLevel = Math.min(this.thirstHydrationLevel + (float)thirst * hydration * 2.0F, (float)this.thirstLevel);
@@ -202,7 +202,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     
     public void addExhaustion(float amount)
     {
-    	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
     	{
     		this.thirstExhaustionLevel = Math.min(this.thirstExhaustionLevel + amount, 40.0F);
     	}

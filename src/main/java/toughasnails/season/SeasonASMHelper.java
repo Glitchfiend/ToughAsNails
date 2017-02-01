@@ -7,8 +7,6 @@
  ******************************************************************************/
 package toughasnails.season;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLiquid;
@@ -19,14 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.handler.season.SeasonHandler;
 
 public class SeasonASMHelper
@@ -122,7 +120,7 @@ public class SeasonASMHelper
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
-        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             return 0.0F;
         }
@@ -140,7 +138,7 @@ public class SeasonASMHelper
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }

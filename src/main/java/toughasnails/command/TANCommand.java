@@ -12,13 +12,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
@@ -78,7 +78,7 @@ public class TANCommand extends CommandBase
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         TemperatureDebugger debugger = temperatureStats.debugger;
 
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
         	debugger.setGuiVisible(!debugger.isGuiVisible(), player);
     	}
@@ -95,7 +95,7 @@ public class TANCommand extends CommandBase
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
         Temperature playerTemp = temperatureStats.getTemperature();
 
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
 	        //Remove any existing potion effects for hypo/hyperthermia
 	        player.removePotionEffect(TANPotions.hypothermia);
@@ -128,7 +128,7 @@ public class TANCommand extends CommandBase
             }
         }
         
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
     	{
 	        if (newSeason != null)
 	        {
