@@ -12,17 +12,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.season.SeasonSavedData;
-import toughasnails.season.SeasonTime;
 
 public class SeasonSleepHandler 
 {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             WorldServer world = (WorldServer)event.world;
             

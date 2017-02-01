@@ -34,7 +34,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
 {
     public static final int MAX_SPREAD_DISTANCE = 50;
     public static final int RATE_MODIFIER = -500;
-    public static final boolean ENABLE_DEBUG = false;
+    public static final boolean ENABLE_DEBUG = true;
     
     private Set<Entity> spawnedEntities;
     

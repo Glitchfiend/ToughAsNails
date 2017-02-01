@@ -7,10 +7,7 @@
  ******************************************************************************/
 package toughasnails.config;
 
-import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.common.collect.Maps;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,32 +20,13 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncConfigs;
 
 public class SyncedConfigHandler
 {
-    public static Map<String, SyncedConfigEntry> optionsToSync = Maps.newHashMap();
-
-    public static void addOption(ISyncedOption option, String defaultValue)
-    {
-        optionsToSync.put(option.getOptionName(), new SyncedConfigEntry(defaultValue));
-    }
-    
-    public static boolean getBooleanValue(ISyncedOption option)
-    {
-        return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
-    }
-    
-    public static void restoreDefaults()
-    {
-        for (SyncedConfigEntry entry : optionsToSync.values())
-        {
-            entry.value = entry.defaultValue;
-        }
-    }
-    
     @SubscribeEvent
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
@@ -59,7 +37,7 @@ public class SyncedConfigHandler
         {
             NBTTagCompound nbtOptions = new NBTTagCompound();
             
-            for (Entry<String, SyncedConfigEntry> entry : optionsToSync.entrySet())
+            for (Entry<String, SyncedConfig.SyncedConfigEntry> entry : SyncedConfig.optionsToSync.entrySet())
             {
                 nbtOptions.setString(entry.getKey(), entry.getValue().value);
             }
@@ -75,20 +53,9 @@ public class SyncedConfigHandler
     {
         if (event.getWorld().isRemote && !Minecraft.getMinecraft().getConnection().getNetworkManager().isChannelOpen())
         {
-            restoreDefaults();
+            SyncedConfig.restoreDefaults();
             ToughAsNails.logger.info("TAN configuration restored to local values");
         }
     }
-    
-    public static class SyncedConfigEntry
-    {
-        public String value;
-        public final String defaultValue;
-        
-        public SyncedConfigEntry(String defaultValue)
-        {
-            this.defaultValue = defaultValue;
-            this.value = defaultValue;
-        }
-    }
+
 }
