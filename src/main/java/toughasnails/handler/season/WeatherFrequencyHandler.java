@@ -12,17 +12,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 
 public class WeatherFrequencyHandler 
 {
     @SubscribeEvent
     public void onWorldTick(WorldTickEvent event)
     {
-        if (event.phase == Phase.END && event.side == Side.SERVER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == Phase.END && event.side == Side.SERVER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             World world = event.world;
             Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();

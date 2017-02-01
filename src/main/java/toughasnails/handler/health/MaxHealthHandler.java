@@ -29,8 +29,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.HealthHelper;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.config.GameplayOption;
 
 public class MaxHealthHandler 
 {
@@ -55,7 +55,7 @@ public class MaxHealthHandler
         AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
         
         //Copy the lifeblood modifier from the 'old' player
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && modifier != null)
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && modifier != null)
         { 
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), modifier);
@@ -70,7 +70,7 @@ public class MaxHealthHandler
         Minecraft minecraft = Minecraft.getMinecraft();
         IntegratedServer integratedServer = minecraft.getIntegratedServer();
         
-        if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && event.phase == Phase.END && integratedServer != null)
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && event.phase == Phase.END && integratedServer != null)
         {
             boolean gamePaused = Minecraft.getMinecraft().getConnection() != null && minecraft.isGamePaused();
             
@@ -100,7 +100,7 @@ public class MaxHealthHandler
         AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
         
         //Don't update if the lowered starting health config option is disabled
-        if (!SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
+        if (!SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
         {
             if (modifier != null)
             {
