@@ -30,25 +30,26 @@ import toughasnails.thirst.ThirstHandler;
 
 public class ItemCanteen extends Item
 {
-    protected int REFILLS = 500;
-    public ItemCanteen() {
-        this.addPropertyOverride(new ResourceLocation("filled"), new IItemPropertyGetter() {
+    protected static final int REFILLS = 500;
+    public ItemCanteen()
+    {
+        this.addPropertyOverride(new ResourceLocation("filled"), new IItemPropertyGetter()
+        {
             @Override
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World world, EntityLivingBase entity) {
+            public float apply(ItemStack stack, World world, EntityLivingBase entity)
+            {
                 WaterType waterType = getWaterType(stack);
-                if (waterType == null) {
-                    return 0.0F;
-                } else {
-                    return 1.0F;
-                }
+                if (waterType == null) return 0.0F;
+                else return 1.0F;
             }
         });
         this.maxStackSize = 1;
         this.setNoRepair();
     }
     
-    private int getUses(NBTTagCompound comp) {
+    private int getUses(NBTTagCompound comp)
+    {
         if (comp == null) comp = new NBTTagCompound();
         int uses = comp.getInteger("uses");
         if (uses == 0) uses = -1;
@@ -61,22 +62,28 @@ public class ItemCanteen extends Item
      * @param stack
      * @param uses -1 = new, 0 = unassigned,  3 = 3 drinks left;
      */
-    public NBTTagCompound setUses(NBTTagCompound comp, int uses){
+    public NBTTagCompound setUses(NBTTagCompound comp, int uses)
+    {
         if (comp == null) comp = new NBTTagCompound();
-        if ((uses > 0 && uses < 4) || uses == -1) {
+        if ((uses > 0 && uses < 4) || uses == -1)
+        {
             comp.setInteger("uses", uses);
         }
         return comp;
     }
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity)
+    {
         WaterType waterType = getWaterType(stack);
-        if (entity instanceof EntityPlayer && waterType != null) {
+        if (entity instanceof EntityPlayer && waterType != null)
+        {
             EntityPlayer player = (EntityPlayer)entity;
-            if (!player.capabilities.isCreativeMode) {
+            if (!player.capabilities.isCreativeMode)
+            {
                 NBTTagCompound comp = stack.getTagCompound();
                 int uses = getUses(comp) - 1;
-                if (uses == 0) {
+                if (uses == 0)
+                {
                     uses = -1;
                     comp.setInteger("water_type", 0);
                 }
@@ -84,8 +91,8 @@ public class ItemCanteen extends Item
             }
             ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
             thirstStats.addStats(waterType.getThirst(), waterType.getHydration());
-            if (!world.isRemote && world.rand.nextFloat() < waterType.getPoisonChance() && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST)
-            ) {
+            if (!world.isRemote && world.rand.nextFloat() < waterType.getPoisonChance() && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST)) 
+            {
                 player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
             }
         }
@@ -93,34 +100,45 @@ public class ItemCanteen extends Item
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+    {
         ItemStack stack = player.getHeldItem(hand);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
         WaterType waterType = getWaterType(stack);
-        if (getUses(stack.getTagCompound()) > 0 && thirstStats.isThirsty()){
-            if (player.isSneaking()) {
+        if (getUses(stack.getTagCompound()) > 0 && thirstStats.isThirsty())
+        {
+            if (player.isSneaking())
+            {
                 if (!attemptCanteenFill(player, stack)) player.setActiveHand(hand);
-            } else {
+            }
+            else
+            {
                 player.setActiveHand(hand);
             }
-        } else {
+        }
+        else
+        {
             attemptCanteenFill(player, stack);
         }
         return new ActionResult(EnumActionResult.SUCCESS, stack);
     }
     @Override
-    public boolean showDurabilityBar(ItemStack stack){
+    public boolean showDurabilityBar(ItemStack stack)
+    {
         return getUses(stack.getTagCompound()) > 0 ? true : false;
     }
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
         return (3d - (double)getUses(stack.getTagCompound())) / 3d;
     }
     @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack) {
+    public int getRGBDurabilityForDisplay(ItemStack stack)
+    {
         return MathHelper.hsvToRGB(Math.max(0.0F, (float)getUses(stack.getTagCompound()) / 3) / 3.0F, 1.0F, 1.0F);
     }
-    private int getRefills(NBTTagCompound comp){
+    private int getRefills(NBTTagCompound comp)
+    {
         if (comp == null) comp = new NBTTagCompound();
         int refills = comp.getInteger("refills");
         return refills;
@@ -131,7 +149,8 @@ public class ItemCanteen extends Item
      * @param stack item stack in question
      * @return compound with lore
      */
-    private NBTTagCompound doLore(NBTTagCompound comp, ItemStack stack){
+    private NBTTagCompound doLore(NBTTagCompound comp, ItemStack stack)
+    {
             return setLore(comp, new String[] {"Refills: " + getRefills(comp) + " / " + REFILLS, "Uses Left: " + (getUses(comp) > 0 ? getUses(comp) : "0") + " / 3"}); //TODO % value at the end
     }
     /**
@@ -141,22 +160,30 @@ public class ItemCanteen extends Item
      * @param player player involved
      * @return modified tag compound
      */
-    private NBTTagCompound doRefill(NBTTagCompound comp, ItemStack stack, EntityPlayer player) {
+    private NBTTagCompound doRefill(NBTTagCompound comp, ItemStack stack, EntityPlayer player)
+    {
         int ref = comp.getInteger("refills");
         int ren = ref - 1;
-        if (ref == 0) { //no tag found
+        if (ref == 0)
+        { //no tag found
             comp.setInteger("refills", REFILLS); 
             comp = doLore(comp, stack);
-        } else {
-            if (ren == 1) {
-                if (!player.capabilities.isCreativeMode) {
+        }
+        else
+        {
+            if (ren == 1)
+            {
+                if (!player.capabilities.isCreativeMode)
+                {
                     comp.setInteger("refills", ren); 
                     comp = doLore(comp, stack);
                     player.renderBrokenItemStack(stack);
                     stack.shrink(1);
                     player.addStat(StatList.getObjectBreakStats(stack.getItem()));
                 }
-            } else {
+            }
+            else 
+            {
                 comp.setInteger("refills", ren);
                 comp = doLore(comp, stack);
             }
@@ -169,35 +196,45 @@ public class ItemCanteen extends Item
      * @param stack The canteen item stack.
      * @return true if successful, otherwise false.
      */
-    public boolean attemptCanteenFill(EntityPlayer player, ItemStack stack) {
+    public boolean attemptCanteenFill(EntityPlayer player, ItemStack stack)
+    {
         World world = player.world;
         RayTraceResult movingObjectPos = this.rayTrace(world, player, true);
         NBTTagCompound comp = stack.getTagCompound();
         if (comp == null) comp = new NBTTagCompound();
-        if (getUses(comp) < 3) {
-            if (movingObjectPos != null && movingObjectPos.typeOfHit == RayTraceResult.Type.BLOCK) {
+        if (getUses(comp) < 3)
+        {
+            if (movingObjectPos != null && movingObjectPos.typeOfHit == RayTraceResult.Type.BLOCK)
+            {
                 BlockPos pos = movingObjectPos.getBlockPos();
                 IBlockState state = world.getBlockState(pos);
                 Fluid fluid = FluidRegistry.lookupFluidForBlock(state.getBlock());
-                if (fluid != null && fluid == FluidRegistry.WATER) { //Temporary, until a registry is created
+                if (fluid != null && fluid == FluidRegistry.WATER) //Temporary, until a registry is created
+                { 
                     comp.setInteger("water_type", 1);
                     NBTTagCompound tag = doRefill(setUses(comp, 3), stack, player);
                     if (!stack.isEmpty) stack.setTagCompound(tag); 
                     return true;
-                } else if (state.getBlock() instanceof BlockCauldron) {
+                }
+                else if (state.getBlock() instanceof BlockCauldron)
+                {
                     BlockCauldron cauldron = (BlockCauldron)state.getBlock();
                     int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
-                    if (level > 0 && !world.isRemote) {
+                    if (level > 0 && !world.isRemote)
+                    {
                         player.addStat(StatList.CAULDRON_USED);
                         comp.setInteger("water_type", 1);
                         stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
-                        if (!player.capabilities.isCreativeMode) {
+                        if (!player.capabilities.isCreativeMode)
+                        {
                             cauldron.setWaterLevel(world, pos, state, level - 1);
                             return true;
                         }
                         return true;
                     }
-                } else if (state.getBlock() instanceof  BlockRainCollector) {
+                }
+                else if (state.getBlock() instanceof BlockRainCollector)
+                {
                     int level = ((Integer)state.getValue(BlockRainCollector.LEVEL)).intValue();
                     if (level > 0 && !world.isRemote){
                         BlockRainCollector collector = (BlockRainCollector)state.getBlock();
@@ -215,7 +252,8 @@ public class ItemCanteen extends Item
         return false;
     }
 
-    private WaterType getWaterType(ItemStack stack) {
+    private WaterType getWaterType(ItemStack stack)
+    {
         NBTTagCompound comp = stack.getTagCompound();
         if (comp == null) comp = new NBTTagCompound();
         int type = comp.getInteger("water_type");
@@ -223,12 +261,14 @@ public class ItemCanteen extends Item
     }
     
     @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
         return 32;
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
         return EnumAction.DRINK;
     }
     /**
@@ -236,10 +276,12 @@ public class ItemCanteen extends Item
      * @param stack item stack to set lore on
      * @param lore string list of lore to add (each string is a line)
      */
-    public NBTTagCompound setLore(NBTTagCompound comp, String[] lore){
+    public NBTTagCompound setLore(NBTTagCompound comp, String[] lore)
+    {
         NBTTagList list = new NBTTagList();
         for (String s : lore){
-            if (s != null && s != ""){
+            if (s != null && s != "")
+            {
                 list.appendTag(new NBTTagString(s));
             }
         }
@@ -251,11 +293,15 @@ public class ItemCanteen extends Item
         return comp;
     }
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         WaterType type = getWaterType(stack);
-        if (type != null) {
+        if (type != null)
+        {
             return "item." + type.toString().toLowerCase() + "_water_canteen";
-        } else {
+        }
+        else
+        {
             return "item.empty_canteen";
         }
     }
