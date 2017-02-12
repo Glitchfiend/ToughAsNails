@@ -29,8 +29,11 @@ public class SeasonSleepHandler
             if (world.areAllPlayersAsleep())
             {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-                long i = (world.getWorldInfo().getWorldTime() % 24000L)  + 24000L;
-                long timeDiff = i - i % 24000L;
+                /*
+                 * 23460L is the tick value for Dawn (When a player wakes from bed)
+                 * Caveat: timeDiff may be negative if a mod edits when a player is allowed to sleep.
+                 */
+                long timeDiff = 23460L - (world.getWorldInfo().getWorldTime());
                 seasonData.seasonCycleTicks += timeDiff;
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
