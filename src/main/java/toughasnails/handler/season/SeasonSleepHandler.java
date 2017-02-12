@@ -34,6 +34,9 @@ public class SeasonSleepHandler
                  * Caveat: timeDiff may be negative if a mod edits when a player is allowed to sleep.
                  */
                 long timeDiff = 23460L - (world.getWorldInfo().getWorldTime());
+                if (timeDiff <= 0) {
+                	timeDiff += 24000L; //This covers our caveat
+                }
                 seasonData.seasonCycleTicks += timeDiff;
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
