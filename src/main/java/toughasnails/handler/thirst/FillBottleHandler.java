@@ -8,30 +8,22 @@
 package toughasnails.handler.thirst;
 
 import net.minecraft.block.BlockCauldron;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.item.TANItems;
-import toughasnails.api.config.GameplayOption;
-
-import java.lang.reflect.Method;
 
 public class FillBottleHandler 
 {
@@ -84,6 +76,9 @@ public class FillBottleHandler
         }
     }
 
+    /**
+     * Produce dirty water bottles when filling empty bottles from the cauldron
+     */
     @SubscribeEvent
     public void onRightClickCauldron(PlayerInteractEvent.RightClickBlock event)
     {
@@ -91,11 +86,12 @@ public class FillBottleHandler
         EntityPlayer player = event.getEntityPlayer();
         IBlockState state = world.getBlockState(event.getPos());
         
-        if (state.getBlock() instanceof BlockCauldron && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (state.getBlock() instanceof BlockCauldron && player.getHeldItem(event.getHand()).getItem() == Items.GLASS_BOTTLE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             BlockCauldron cauldron = (BlockCauldron)state.getBlock();
             int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
 
+            // Only fill when the cauldron has water in it
             if (level > 0 && !world.isRemote)
             {
                 if (!player.capabilities.isCreativeMode)
@@ -104,6 +100,7 @@ public class FillBottleHandler
                     player.addStat(StatList.CAULDRON_USED);
 
                     if (--player.getHeldItem(event.getHand()).stackSize == 0)
+
                     {
                         player.setHeldItem(event.getHand(), waterBottle);
                     }
@@ -118,6 +115,7 @@ public class FillBottleHandler
                 }
 
                 cauldron.setWaterLevel(world, event.getPos(), state, level - 1);
+                // Prevent from producing a Vanilla water bottle
                 event.setCanceled(true);
             }
         }
