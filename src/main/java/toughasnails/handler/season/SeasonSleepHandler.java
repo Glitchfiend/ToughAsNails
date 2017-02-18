@@ -24,13 +24,12 @@ public class SeasonSleepHandler
         if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             WorldServer world = (WorldServer)event.world;
-            
+
             //Called before all players are awoken for the next day
             if (world.areAllPlayersAsleep())
             {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-                long i = (world.getWorldInfo().getWorldTime() % 24000L)  + 24000L;
-                long timeDiff = i - i % 24000L;
+                long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
                 seasonData.seasonCycleTicks += timeDiff;
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
