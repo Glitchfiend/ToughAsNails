@@ -3,6 +3,7 @@ package toughasnails.temperature.modifier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -90,14 +91,17 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         if (state.getBlock() == TANBlocks.campfire)
         {
-        	if (state.getValue(BlockTANCampfire.BURNING) == true)
-        	{
-        		return 12.0F;
-        	}
-        	else
-        	{
-        		return 0.0F;
-        	}
+            if (state.getValue(BlockTANCampfire.BURNING) == true)
+            {
+                return 12.0F;
+            } else
+            {
+                return 0.0F;
+            }
+        }
+        else if (state.getBlock() == Blocks.LIT_FURNACE)
+        {
+            return 12.0F;
         }
         
         if (material == Material.FIRE)
