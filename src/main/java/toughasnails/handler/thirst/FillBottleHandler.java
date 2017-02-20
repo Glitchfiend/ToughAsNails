@@ -41,22 +41,14 @@ public class FillBottleHandler
         if (stack.getItem().equals(Items.GLASS_BOTTLE) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
 
-            int originalCount = stack.stackSize;
-            // Trick onItemRightClick into not adding any water bottles into the player's inventory
-            stack.stackSize = 1;
 
-            ActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand());
-            ItemStack resultStack = ((ItemStack)actionResult.getResult());
+            EnumActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand()).getType();
 
             // Only substitute water bottles with dirty water bottles
-            if (actionResult.getType() == EnumActionResult.SUCCESS && ItemStack.areItemStackTagsEqual(resultStack, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER)))
+            if (actionResult.equals(EnumActionResult.SUCCESS))
             {
-                // We must restore the original amount of bottles before continuing to prevent the fake empty bottle
-                // stack from being replaced
-
-                // A bottle has been consumed, so reduce the original count by one before it is restored
-                originalCount--;
-                stack.stackSize = originalCount; // Restore original amount of bottles
+              
+                --stack.stackSize; // Restore original amount of bottles
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
                 ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
 
@@ -66,14 +58,10 @@ public class FillBottleHandler
                 }
 
                 // Prevent onItemRightClick from being fired a second time for bottles right clicked on water
-                event.setCanceled(true);
+            
 
             }
-            else
-            {
-                // Restore original amount of bottles
-                stack.stackSize = originalCount;
-            }
+            event.setCanceled(true);
         }
     }
 
