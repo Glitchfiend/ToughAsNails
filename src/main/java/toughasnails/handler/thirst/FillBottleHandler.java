@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.StatList;
@@ -85,8 +86,15 @@ public class FillBottleHandler
         World world = event.getWorld();
         EntityPlayer player = event.getEntityPlayer();
         IBlockState state = world.getBlockState(event.getPos());
+        ItemStack heldStack = player.getHeldItem(event.getHand());
+        Item heldItem;
+        if (heldStack == null || state == null || (heldItem = heldStack.getItem()) == null) {
+        	event.setCanceled(true);
+        	return;
+        }
         
-        if (state.getBlock() instanceof BlockCauldron && player.getHeldItem(event.getHand()).getItem() == Items.GLASS_BOTTLE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        
+        if (state.getBlock() instanceof BlockCauldron && heldItem == Items.GLASS_BOTTLE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             BlockCauldron cauldron = (BlockCauldron)state.getBlock();
             int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
