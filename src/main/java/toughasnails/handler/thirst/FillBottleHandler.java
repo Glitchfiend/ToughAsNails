@@ -81,7 +81,6 @@ public class FillBottleHandler
         ItemStack heldStack = player.getHeldItem(event.getHand());
         Item heldItem;
         if (heldStack == null || state == null || (heldItem = heldStack.getItem()) == null) {
-        	event.setCanceled(true);
         	return;
         }
         
