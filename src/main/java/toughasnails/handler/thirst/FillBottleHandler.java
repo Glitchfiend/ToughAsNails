@@ -7,6 +7,8 @@
  ******************************************************************************/
 package toughasnails.handler.thirst;
 
+import java.util.Set;
+
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,14 +40,15 @@ public class FillBottleHandler
         ItemStack stack = player.getHeldItem(event.getHand());
         World world = player.worldObj;
 
-        if (stack.getItem().equals(Items.GLASS_BOTTLE) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (stack != null && stack.getItem().equals(Items.GLASS_BOTTLE) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
-
-
-            EnumActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand()).getType();
-
-            // Only substitute water bottles with dirty water bottles
-            if (actionResult.equals(EnumActionResult.SUCCESS))
+        	
+            ActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand());
+			ItemStack resultStack = ((ItemStack)actionResult.getResult());
+		
+			//NOTES FROM 1.9.4 testing.  ResultStack is item.potion only when used on water. Dragon's breath is different.
+            //Don't compare tags directly, the water bottle in resultStack doesn't have Potion tag.
+            if (actionResult.getType().equals(EnumActionResult.SUCCESS) && resultStack != null && ItemStack.areItemsEqual(resultStack, new ItemStack(Items.POTIONITEM)))
             {
               
                 --stack.stackSize; // Restore original amount of bottles
@@ -56,12 +59,13 @@ public class FillBottleHandler
                 {
                     player.dropItem(bottleStack, false);
                 }
+				 event.setCanceled(true);
 
                 // Prevent onItemRightClick from being fired a second time for bottles right clicked on water
             
 
             }
-            event.setCanceled(true);
+           
         }
     }
 
