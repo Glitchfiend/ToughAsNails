@@ -138,7 +138,7 @@ public class SeasonASMHelper
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_CROP_DEATH))
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
