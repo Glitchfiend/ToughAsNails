@@ -13,7 +13,7 @@ public enum GameplayOption implements ISyncedOption
     ENABLE_THIRST("Enable Thirst"),
     ENABLE_TEMPERATURE("Enable Body Temperature"),
     ENABLE_SEASONS("Enable Seasons"),
-    ENABLE_CROP_DEATH("Enable crop death");
+    ENABLE_CROP_DEATH("Enable Crop Decay");
 
     private final String optionName;
     
