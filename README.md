@@ -4,10 +4,6 @@
 
 -----------------
 
-**Please note that the 1.9.4 version is still in development.  Certain planned features may be missing, so please hang tight!**
- 
- -----------------
-
  [<img src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png">](http://creativecommons.org/licenses/by-nc-nd/4.0/deed.en_US)
 
 Tough As Nails is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License](http://creativecommons.org/licenses/by-nc-nd/4.0/deed.en_US).
