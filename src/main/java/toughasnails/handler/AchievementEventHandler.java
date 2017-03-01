@@ -32,7 +32,7 @@ public class AchievementEventHandler
         Item item = stack.getItem();
         
         Block block = Block.getBlockFromItem(item);
-        IBlockState state = block != null ? block.getStateFromMeta(stack.getItemDamage()) : null;
+        IBlockState state = block != null && item instanceof ItemBlock ? block.getStateFromMeta(((ItemBlock)item).getMetadata(stack.getMetadata())) : null;
         EntityPlayer player = event.player;
 
         if (item != null && item == TANItems.freeze_rod)
@@ -86,7 +86,7 @@ public class AchievementEventHandler
         {
             Item item = stack.getItem();
             Block block = Block.getBlockFromItem(item);
-            IBlockState state = block != null ? block.getStateFromMeta(stack.getItemDamage()) : null;
+            IBlockState state = block != null && item instanceof ItemBlock ? block.getStateFromMeta(((ItemBlock)item).getMetadata(stack.getMetadata())) : null;
 
             try
             {
