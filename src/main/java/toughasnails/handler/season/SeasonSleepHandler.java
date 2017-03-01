@@ -16,18 +16,15 @@ import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.season.SeasonSavedData;
 
-public class SeasonSleepHandler 
-{
+public class SeasonSleepHandler {
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event)
-    {
-        if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
-        {
-            WorldServer world = (WorldServer)event.world;
+    public void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (event.phase == Phase.START && event.side == Side.SERVER
+                && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)) {
+            WorldServer world = (WorldServer) event.world;
 
-            //Called before all players are awoken for the next day
-            if (world.areAllPlayersAsleep())
-            {
+            // Called before all players are awoken for the next day
+            if (world.areAllPlayersAsleep()) {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
                 long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
                 seasonData.seasonCycleTicks += timeDiff;

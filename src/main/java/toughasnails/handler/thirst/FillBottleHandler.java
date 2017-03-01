@@ -28,44 +28,44 @@ import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.item.TANItems;
 
-public class FillBottleHandler 
-{
+public class FillBottleHandler {
     /**
      * Substitutes normal filled water bottles for dirty water bottles
      */
     @SubscribeEvent
-    public void onPlayerRightClickWater(PlayerInteractEvent.RightClickItem event) throws Exception
-    {
+    public void onPlayerRightClickWater(PlayerInteractEvent.RightClickItem event) throws Exception {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack stack = player.getHeldItem(event.getHand());
         World world = player.worldObj;
 
-        if (stack != null && stack.getItem().equals(Items.GLASS_BOTTLE) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
-        {
-        	
-            ActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0), event.getWorld(), player, event.getHand());
-			ItemStack resultStack = ((ItemStack)actionResult.getResult());
-		
-			//NOTES FROM 1.9.4 testing.  ResultStack is item.potion only when used on water. Dragon's breath is different.
-            //Don't compare tags directly, the water bottle in resultStack doesn't have Potion tag.
-            if (actionResult.getType().equals(EnumActionResult.SUCCESS) && resultStack != null && ItemStack.areItemsEqual(resultStack, new ItemStack(Items.POTIONITEM)))
-            {
-              
+        if (stack != null && stack.getItem().equals(Items.GLASS_BOTTLE)
+                && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST)) {
+
+            ActionResult actionResult = stack.getItem().onItemRightClick(new ItemStack(stack.getItem(), 0),
+                    event.getWorld(), player, event.getHand());
+            ItemStack resultStack = ((ItemStack) actionResult.getResult());
+
+            // NOTES FROM 1.9.4 testing. ResultStack is item.potion only when
+            // used on water. Dragon's breath is different.
+            // Don't compare tags directly, the water bottle in resultStack
+            // doesn't have Potion tag.
+            if (actionResult.getType().equals(EnumActionResult.SUCCESS) && resultStack != null
+                    && ItemStack.areItemsEqual(resultStack, new ItemStack(Items.POTIONITEM))) {
+
                 --stack.stackSize; // Restore original amount of bottles
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
                 ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
 
-                if (!player.inventory.addItemStackToInventory(bottleStack))
-                {
+                if (!player.inventory.addItemStackToInventory(bottleStack)) {
                     player.dropItem(bottleStack, false);
                 }
-				 event.setCanceled(true);
+                event.setCanceled(true);
 
-                // Prevent onItemRightClick from being fired a second time for bottles right clicked on water
-            
+                // Prevent onItemRightClick from being fired a second time for
+                // bottles right clicked on water
 
             }
-           
+
         }
     }
 
@@ -73,28 +73,24 @@ public class FillBottleHandler
      * Produce dirty water bottles when filling empty bottles from the cauldron
      */
     @SubscribeEvent
-    public void onRightClickCauldron(PlayerInteractEvent.RightClickBlock event)
-    {
+    public void onRightClickCauldron(PlayerInteractEvent.RightClickBlock event) {
         World world = event.getWorld();
         EntityPlayer player = event.getEntityPlayer();
         IBlockState state = world.getBlockState(event.getPos());
         ItemStack heldStack = player.getHeldItem(event.getHand());
         Item heldItem;
         if (heldStack == null || state == null || (heldItem = heldStack.getItem()) == null) {
-        	return;
+            return;
         }
-        
-        
-        if (state.getBlock() instanceof BlockCauldron && heldItem == Items.GLASS_BOTTLE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
-        {
-            BlockCauldron cauldron = (BlockCauldron)state.getBlock();
-            int level = ((Integer)state.getValue(BlockCauldron.LEVEL));
+
+        if (state.getBlock() instanceof BlockCauldron && heldItem == Items.GLASS_BOTTLE
+                && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST)) {
+            BlockCauldron cauldron = (BlockCauldron) state.getBlock();
+            int level = ((Integer) state.getValue(BlockCauldron.LEVEL));
 
             // Only fill when the cauldron has water in it
-            if (level > 0 && !world.isRemote)
-            {
-                if (!player.capabilities.isCreativeMode)
-                {
+            if (level > 0 && !world.isRemote) {
+                if (!player.capabilities.isCreativeMode) {
                     ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
                     player.addStat(StatList.CAULDRON_USED);
 
@@ -102,14 +98,10 @@ public class FillBottleHandler
 
                     {
                         player.setHeldItem(event.getHand(), waterBottle);
-                    }
-                    else if (!player.inventory.addItemStackToInventory(waterBottle))
-                    {
+                    } else if (!player.inventory.addItemStackToInventory(waterBottle)) {
                         player.dropItem(waterBottle, false);
-                    }
-                    else if (player instanceof EntityPlayerMP)
-                    {
-                        ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+                    } else if (player instanceof EntityPlayerMP) {
+                        ((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
                     }
                 }
 
