@@ -14,10 +14,10 @@ import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season.SubSeason;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
@@ -30,7 +30,7 @@ public class SeasonHandler
     {
         World world = event.world;
 
-        if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0 && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0 && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
 
@@ -68,7 +68,7 @@ public class SeasonHandler
         
         int dimension = Minecraft.getMinecraft().thePlayer.dimension;
 
-        if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS)) 
+        if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             //Keep ticking as we're synchronized with the server only every second
             if (clientSeasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
@@ -88,7 +88,7 @@ public class SeasonHandler
     
     public static void sendSeasonUpdate(World world)
     {
-        if (!world.isRemote && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (!world.isRemote && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
             PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  

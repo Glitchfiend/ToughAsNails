@@ -14,10 +14,10 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 
 public class StopSpawnHandler 
 {
@@ -27,7 +27,7 @@ public class StopSpawnHandler
     {
         Season season = SeasonHelper.getSeasonData(event.getWorld()).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && event.getEntity() instanceof EntityAnimal && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (season == Season.WINTER && event.getEntity() instanceof EntityAnimal && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             event.setResult(Result.DENY);
         }
@@ -40,7 +40,7 @@ public class StopSpawnHandler
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
         //Prevent animals from spawning in new chunks during the winter
-        if (event.getType() == EventType.ANIMALS && season == Season.WINTER && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.getType() == EventType.ANIMALS && season == Season.WINTER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             event.setResult(Result.DENY);
         }

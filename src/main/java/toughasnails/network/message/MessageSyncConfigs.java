@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import toughasnails.config.SyncedConfigHandler;
-import toughasnails.config.SyncedConfigHandler.SyncedConfigEntry;
+import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.config.SyncedConfig.SyncedConfigEntry;
 import toughasnails.core.ToughAsNails;
 
 public class MessageSyncConfigs implements IMessage, IMessageHandler<MessageSyncConfigs, IMessage>
@@ -48,7 +48,7 @@ public class MessageSyncConfigs implements IMessage, IMessageHandler<MessageSync
         {
             for (String key : message.nbtOptions.getKeySet())
             {
-                SyncedConfigEntry entry = SyncedConfigHandler.optionsToSync.get(key);
+                SyncedConfigEntry entry = SyncedConfig.optionsToSync.get(key);
                 
                 if (entry == null) ToughAsNails.logger.error("Option " + key + " does not exist locally!");
                 

@@ -12,6 +12,8 @@ import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.core.ToughAsNails;
 
 public class GameplayConfigurationHandler
@@ -51,7 +53,7 @@ public class GameplayConfigurationHandler
     private static void addSyncedBool(GameplayOption option, boolean defaultValue, String category, String comment)
     {
         boolean value = config.getBoolean(option.getOptionName(), category, defaultValue, comment);
-        SyncedConfigHandler.addOption(option, "" + value);
+        SyncedConfig.addOption(option, "" + value);
     }
 
     @SubscribeEvent

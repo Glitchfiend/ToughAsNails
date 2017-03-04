@@ -24,16 +24,26 @@ public class VanillaDrinkHandler
         if (event.getEntityLiving() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            ItemStack stack = event.getItem();
+            ItemStack stack = player.getHeldItem(player.getActiveHand());
             ThirstHandler thirstHandler = (ThirstHandler)ThirstHelper.getThirstData(player);
-            
+
             if (thirstHandler.isThirsty())
             {
-                if (stack.getItem() == Items.MILK_BUCKET)
+                // For some reason the stack size can be zero for water bottles, which breaks everything.
+                // As a workaround, we temporarily set it to 1
+                boolean zeroStack = false;
+
+                if (stack.stackSize <= 0)
+                {
+                    stack.stackSize = 1;
+                    zeroStack = true;
+                }
+
+                if (stack.getItem().equals(Items.MILK_BUCKET))
                 {
                     thirstHandler.addStats(6, 0.7F);
                 }
-                else if (stack.getItem() == Items.POTIONITEM)
+                else if (stack.getItem().equals(Items.POTIONITEM))
                 {
                     if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {
@@ -45,6 +55,8 @@ public class VanillaDrinkHandler
                         thirstHandler.addStats(4, 0.3F);
                     }
                 }
+
+                if (zeroStack) stack.stackSize = 0;
             }
         }
     }

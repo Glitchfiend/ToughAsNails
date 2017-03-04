@@ -1,0 +1,98 @@
+//Made by marcoasfonseca
+
+achievement.thirst_quencher=Supressor de Sede
+achievement.thirst_quencher.desc=Constrói um cantil a partir de couro.
+achievement.thirst_ender=Fim da Sede
+achievement.thirst_ender.desc=Faz uma garrafa de sumo de fruta refrescante.
+achievement.campfire_song=Juntos à volta da Fogueira
+achievement.campfire_song.desc=Acende uma fogueira feita de troncos e empedrado!
+achievement.into_ice=Congelado
+achievement.into_ice.desc=Faz com que um Freeze largue a sua vara.
+achievement.hot_or_cold=Quente ou Frio
+achievement.hot_or_cold.desc=Faz um tremómetro a partir de diamantes e quartzo do Nether.
+achievement.that_time_of_year=Tempo do Ano
+achievement.that_time_of_year.desc=Faz um relógio de estações com quartzo do Nether e redstone.
+achievement.year_one=Ano 1
+achievement.year_one.desc=Subrevive um ano!
+achievement.life_or_death=Uma Questão de Vida ou Morte!
+achievement.life_or_death.desc=Procura nos baús duma Fortaleza do Nether uma melhoria de vida!
+
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.settemp.success=Set player temperature to %s
+commands.toughasnails.settemp.disabled=Body Temperature is currently disabled!
+commands.toughasnails.setseason.success=Set season to %s
+commands.toughasnails.setseason.fail=Invalid season %s
+commands.toughasnails.setseason.disabled=Seasons are currently disabled!
+
+config.category.survivalSettings.title=Definições de Subrevivência
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+tile.campfire.name=Fogueira
+tile.dead_crops.name=Plantação Mortas
+tile.rain_collector.name=Coletor de Chuva
+tile.temperature_coil.cooling_coil.name=Bobina de Arrefecimento	
+tile.temperature_coil.heating_coil.name=Bobina de Aquecimento
+tile.season_sensor_spring.name=Sensor de Estação
+tile.season_sensor_summer.name=Sensor de Estação
+tile.season_sensor_autumn.name=Sensor de Estação
+tile.season_sensor_winter.name=Sensor de Estação
+tile.torch_new.name=Tocha
+
+item.air_filter.name=Filtro de Ar
+item.bottle_of_blackdamp.name=Garrafa de Blackdamp
+item.bottle_of_whitedamp.name=Garrafa de Whitedamp
+item.bottle_of_firedamp.name=Garrafa de Firedamp
+item.bottle_of_stinkdamp.name=Garrafa de Stinkdamp
+item.clean_water_canteen.name=Cantil de Água Limpa
+item.charcoal_filter.name=Filtro de Carvão Vegetal
+item.dirty_water_canteen.name=Cantil de Água Suja
+item.dirty_water_bottle.name=Garrafa de Água Suja
+item.empty_canteen.name=Cantil Vazio
+item.filtered_water_canteen.name=Cantil de Água Filtrada
+item.filtered_water_bottle.name=Garrafa de Água Filtrada
+item.freeze_powder.name=Pó de Freeze
+item.freeze_rod.name=Vara de Freeze
+item.ice_charge.name=Projétil de Fogo
+item.ice_cube.name=Cubo de Gelo
+item.jelled_slime.name=Slime Gelatinoso
+item.jelled_slime_helmet.name=Capacete de Slime Gelatinoso
+item.jelled_slime_chestplate.name=Peitoral de Slime Gelatinoso
+item.jelled_slime_leggings.name=Perneiras de Slime Gelatinoso
+item.jelled_slime_boots.name=Botas de Slime Gelatinoso
+item.juice_apple.name=Sumo de Maçã
+item.juice_beetroot.name=Sumo de Beterraba
+item.juice_cactus.name=Sumo de Cato
+item.juice_carrot.name=Sumo de Cenoura
+item.juice_chorus_fruit.name=Sumo de Fruta do Coro
+item.juice_glistering_melon.name=Sumo de Melancia Reluzente
+item.juice_golden_apple.name=Sumo de Maçã Dourada
+item.juice_golden_carrot.name=Sumo de Cenoura Dourada
+item.juice_melon.name=Somo de Melancia
+item.juice_pumpkin.name=Sumo de Abóbora
+item.lifeblood_crystal.name=Cristal de Vida
+item.respirator.name=Respirator
+item.season_clock.name=Relógio de Estações
+item.spawn_egg_freeze.name=Evocar Freeze
+item.tan_icon.name=Ícone TAN
+item.thermometer.name=Termómetro
+item.wool_helmet.name=Capuz de Lã
+item.wool_chestplate.name=Casaco de Lã
+item.wool_leggings.name=Calças de Lã
+item.wool_boots.name=Botas de Lã
+
+potion.hypothermia=Hipotermia	
+potion.hyperthermia=hipertermia
+potion.thirst=Sede
+potion.cold_resistance=Resistência ao Frio	
+potion.heat_resistance=Resistência ao Calor
+
+potion.effect.cold_resistance_type=Poção de Resistência ao Frio
+potion.effect.long_cold_resistance_type=Poção de Resistência ao Frio
+potion.effect.heat_resistance_type=Poção de Resistência ao Calor
+potion.effect.long_heat_resistance_type=Poção de Resistência ao Frio
+
+tipped_arrow.effect.cold_resistance_type=Flecha de Resistência ao Frio
+tipped_arrow.effect.long_cold_resistance_type=Flecha de Resistência ao Frio
+tipped_arrow.effect.heat_resistance_type=Flecha de Resistência ao Calor
+tipped_arrow.effect.long_heat_resistance_type=Flecha de Resistência ao Calor

@@ -14,10 +14,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.thirst.ThirstHandler;
 
 public class ThirstOverlayHandler
@@ -41,7 +41,7 @@ public class ThirstOverlayHandler
     @SubscribeEvent
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
-        if (event.getType() == ElementType.AIR && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (event.getType() == ElementType.AIR && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, -10.0F, 0.0F);
@@ -63,11 +63,11 @@ public class ThirstOverlayHandler
         //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
         random.setSeed((long)(updateCounter * 312871));
         
-        if (event.getType() == ElementType.AIR && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        if (event.getType() == ElementType.AIR && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             GlStateManager.popMatrix();
         }
-        else if (event.getType() == ElementType.EXPERIENCE && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        else if (event.getType() == ElementType.EXPERIENCE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 

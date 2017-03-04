@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TANPotion extends Potion
 {
-    private static final ResourceLocation POTIONS_LOCATION = new ResourceLocation("toughasnails:textures/potions/TANPotionFX.png");
+    private static final ResourceLocation POTIONS_LOCATION = new ResourceLocation("toughasnails:textures/potions/tanpotionfx.png");
     
     protected TANPotion(boolean isBadEffectIn, int liquidColorIn, int x, int y)
     {

@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.stat.StatHandlerBase;
@@ -20,8 +21,7 @@ import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.network.message.MessageUpdateStat;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.modifier.AltitudeModifier;
@@ -107,7 +107,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 }
                 else
                 {
-                	if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+                	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
                 	{
                 		newTempChangeTicks += modifier.getRate();
                 	}
@@ -123,7 +123,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = newTempChangeTicks;
 
-            if (incrementTemperature && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+            if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
                 for (ExternalModifier modifier : this.externalModifiers.values())
                 {
@@ -131,7 +131,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 }
             }
             
-            if ((incrementTemperature || updateClient) && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+            if ((incrementTemperature || updateClient) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
                 debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
                 debugger.end(TemperatureScale.getScaleTotal() / 2);
@@ -188,7 +188,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
         //Don't apply any negative effects whilst in creative mode
-        if (!player.capabilities.isCreativeMode && (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)))
+        if (!player.capabilities.isCreativeMode && (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)))
         {
             if (this.temperatureLevel <= hypoRangeStart && (!player.isPotionActive(TANPotions.cold_resistance)) && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
             {

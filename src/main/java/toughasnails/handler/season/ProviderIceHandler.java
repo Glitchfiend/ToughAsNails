@@ -7,7 +7,6 @@
  ******************************************************************************/
 package toughasnails.handler.season;
 
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,8 +15,6 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import toughasnails.config.GameplayOption;
-import toughasnails.config.SyncedConfigHandler;
 import toughasnails.season.SeasonASMHelper;
 
 public class ProviderIceHandler 
