@@ -20,6 +20,7 @@ import net.minecraft.world.biome.Biome;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.season.IDecayableCrop;
+import toughasnails.api.season.IHibernatingCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
@@ -142,5 +143,22 @@ public class SeasonASMHelper
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
+    }
+    
+    public static void onUpdateTick(Block block, World world, BlockPos pos)
+    {
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        
+        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        {
+            world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
+        }
+    }
+    
+    public static boolean shouldHibernate(Block block, World world, BlockPos pos)
+    {
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        
+        return (season == Season.WINTER && block instanceof IHibernatingCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_SEASONS));
     }
 }
