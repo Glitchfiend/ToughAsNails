@@ -20,6 +20,7 @@ public class TANLoadingPlugin implements IFMLLoadingPlugin
         		"toughasnails.asm.transformer.BlockCropsTransformer",
         		"toughasnails.asm.transformer.BlockStemTransformer",
         		"toughasnails.asm.transformer.PamCropTransformer",
+        		"toughasnails.asm.transformer.MysticalCropTransformer",
         		"toughasnails.asm.transformer.EntityRendererTransformer",
         		"toughasnails.asm.transformer.WorldTransformer"
         		};
