@@ -24,7 +24,12 @@ public abstract class AbstractCropTransformer implements IClassTransformer
 {
     private static final String[] UPDATE_TICK_NAMES = new String[] { "updateTick", "func_180650_b", "b" };
     
-    protected byte[] transformCrop(byte[] bytes, boolean obfuscatedClass, String shortClassName, String[] validHashes, boolean shouldDecay)
+    public static enum WinterBehavior {
+        DECAY,
+        HIBERNATE;
+    }
+    
+    protected byte[] transformCrop(byte[] bytes, boolean obfuscatedClass, String shortClassName, String[] validHashes, WinterBehavior transformType)
     {
         //Decode the class from bytes
         ClassNode classNode = new ClassNode();
@@ -34,14 +39,14 @@ public abstract class AbstractCropTransformer implements IClassTransformer
         //Check this class is unmodified
         ASMHelper.verifyClassHash(shortClassName, bytes, validHashes);
         
-        if (shouldDecay)
+        if (transformType == WinterBehavior.DECAY)
         {
-            //Instances of IDecayableCrop decay into dead crops
+            //Instances of IDecayableCrop decay into dead crops when cold
             classNode.interfaces.add("toughasnails/api/season/IDecayableCrop");
         }
-        else
+        else if (transformType == WinterBehavior.HIBERNATE)
         {
-            //Instances of IHibernatingCrop do not tick
+            //Instances of IHibernatingCrop do not tick when cold
             classNode.interfaces.add("toughasnails/api/season/IHibernatingCrop");
         }
         
@@ -58,13 +63,13 @@ public abstract class AbstractCropTransformer implements IClassTransformer
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
-                if (shouldDecay)
+                if (transformType == WinterBehavior.DECAY)
                 {
                     insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "onUpdateTick", ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/block/Block", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
                     //Insert our new instructions before returning
                     methodNode.instructions.insertBefore(methodNode.instructions.get(methodNode.instructions.indexOf(methodNode.instructions.getLast()) - 1), insnList);
                 }
-                else
+                else if (transformType == WinterBehavior.HIBERNATE)
                 {
                     insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "shouldHibernate", ObfHelper.createMethodDescriptor(obfuscatedClass, "Z", "net/minecraft/block/Block", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
                     //If above statement is true, don't let the function do anything else (i.e. stop the crop from ticking into a ripe block state)

@@ -7,6 +7,8 @@
  ******************************************************************************/
 package toughasnails.asm.transformer;
 
+import toughasnails.asm.transformer.AbstractCropTransformer.WinterBehavior;
+
 // Pam's Harvestcraft compatibility
 public class PamCropTransformer extends AbstractCropTransformer
 {
@@ -19,15 +21,15 @@ public class PamCropTransformer extends AbstractCropTransformer
     {
 		if (transformedName.equals("com.pam.harvestcraft.blocks.growables.BlockPamCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockPamCrop", VALID_HASHES_CROP, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockPamCrop", VALID_HASHES_CROP, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.pam.harvestcraft.blocks.growables.BlockPamFruit"))
         {
-        	return transformCrop(basicClass, !transformedName.equals(name), "BlockPamFruit", VALID_HASHES_FRUIT, false);
+        	return transformCrop(basicClass, !transformedName.equals(name), "BlockPamFruit", VALID_HASHES_FRUIT, WinterBehavior.HIBERNATE);
         }
         if (transformedName.equals("com.pam.harvestcraft.blocks.growables.BlockPamFruitLog"))
         {
-        	return transformCrop(basicClass, !transformedName.equals(name), "BlockPamFruitLog", VALID_HASHES_FRUIT_LOG, false);
+        	return transformCrop(basicClass, !transformedName.equals(name), "BlockPamFruitLog", VALID_HASHES_FRUIT_LOG, WinterBehavior.HIBERNATE);
         }
         
         return basicClass;

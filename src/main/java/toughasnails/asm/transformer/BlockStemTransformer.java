@@ -10,7 +10,7 @@ public class BlockStemTransformer extends AbstractCropTransformer
     {
     	if (transformedName.equals("net.minecraft.block.BlockStem"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockStem", VALID_HASHES, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockStem", VALID_HASHES, WinterBehavior.DECAY);
         }
     	
         return basicClass;

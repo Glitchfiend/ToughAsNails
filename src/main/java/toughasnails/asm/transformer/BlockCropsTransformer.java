@@ -16,7 +16,7 @@ public class BlockCropsTransformer extends AbstractCropTransformer
     {
         if (transformedName.equals("net.minecraft.block.BlockCrops"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockCrops", VALID_HASHES, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockCrops", VALID_HASHES, WinterBehavior.DECAY);
         }
         
         return basicClass;

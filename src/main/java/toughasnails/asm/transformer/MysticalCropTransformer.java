@@ -15,27 +15,27 @@ public class MysticalCropTransformer extends AbstractCropTransformer
     {
     	if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockMysticalCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockMysticalCrop", VALID_HASHES_RESOURCE, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockMysticalCrop", VALID_HASHES_RESOURCE, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockTier1InferiumCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier1InferiumCrop", VALID_HASHES_INFERIUM_1, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier1InferiumCrop", VALID_HASHES_INFERIUM_1, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockTier2InferiumCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier2InferiumCrop", VALID_HASHES_INFERIUM_2, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier2InferiumCrop", VALID_HASHES_INFERIUM_2, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockTier3InferiumCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier3InferiumCrop", VALID_HASHES_INFERIUM_3, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier3InferiumCrop", VALID_HASHES_INFERIUM_3, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockTier4InferiumCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier4InferiumCrop", VALID_HASHES_INFERIUM_4, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier4InferiumCrop", VALID_HASHES_INFERIUM_4, WinterBehavior.DECAY);
         }
         if (transformedName.equals("com.blakebr0.mysticalagriculture.blocks.crop.BlockTier5InferiumCrop"))
         {
-            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier5InferiumCrop", VALID_HASHES_INFERIUM_5, true);
+            return transformCrop(basicClass, !transformedName.equals(name), "BlockTier5InferiumCrop", VALID_HASHES_INFERIUM_5, WinterBehavior.DECAY);
         }
         
         return basicClass;
