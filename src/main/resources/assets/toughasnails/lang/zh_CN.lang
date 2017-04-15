@@ -3,7 +3,7 @@ achievement.thirst_quencher.desc=制作一个水壶
 achievement.thirst_ender=脱水终结者
 achievement.thirst_ender.desc=做一瓶新鲜的果汁
 achievement.campfire_song=篝火晚会
-achievement.campfire_song.desc=点燃由圆石和原木制作的篝火!
+achievement.campfire_song.desc=点燃由圆石和原木制作的篝火！
 achievement.into_ice=与冰共舞
 achievement.into_ice.desc=得到一个寒冰棍
 achievement.hot_or_cold=冰与火
@@ -11,14 +11,16 @@ achievement.hot_or_cold.desc=用钻石和下界石英做一个体温计
 achievement.that_time_of_year=一年之计
 achievement.that_time_of_year.desc=用红石和下界石英做一个季节指示器
 achievement.year_one=新年大吉
-achievement.year_one.desc=在游戏中生存下一整年!
+achievement.year_one.desc=在游戏中生存下一整年！
 achievement.life_or_death=生存与死亡
-achievement.life_or_death.desc=在地狱堡垒找到生命水晶并恢复生命值!
+achievement.life_or_death.desc=在地狱堡垒找到生命水晶并恢复生命值！
 
 commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [参数]
 commands.toughasnails.settemp.success=已经将玩家体温设置为%s
+commands.toughasnails.settemp.disabled=玩家体温目前已禁用！
 commands.toughasnails.setseason.success=已经将季节设置为%s
-commands.toughasnails.setseason.fail=无效的季节参数:%s
+commands.toughasnails.setseason.fail=无效的季节参数：%s
+commands.toughasnails.setseason.disabled=季节目前已禁用！
 
 config.category.survivalSettings.title=生存设定
 
@@ -26,12 +28,14 @@ itemGroup.tabToughAsNails=意志坚定
 
 tile.campfire.name=篝火
 tile.dead_crops.name=死亡的作物
+tile.rain_collector.name=雨水收集器
 tile.temperature_coil.cooling_coil.name=冷却旋管
 tile.temperature_coil.heating_coil.name=加热旋管
-tile.season_sensor_spring.name=季节传感器(春)
-tile.season_sensor_summer.name=季节传感器(夏)
-tile.season_sensor_autumn.name=季节传感器(秋)
-tile.season_sensor_winter.name=季节传感器(冬)
+tile.season_sensor_spring.name=季节传感器（春）
+tile.season_sensor_summer.name=季节传感器（夏）
+tile.season_sensor_autumn.name=季节传感器（秋）
+tile.season_sensor_winter.name=季节传感器（冬）
+tile.torch_new.name=火把
 
 item.air_filter.name=空气过滤器
 item.bottle_of_blackdamp.name=一瓶窒息瓦斯
