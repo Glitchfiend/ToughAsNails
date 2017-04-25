@@ -1,15 +1,16 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import toughasnails.api.TANBlocks;
 import toughasnails.api.temperature.Temperature;
-import toughasnails.block.BlockTANCampfire;
+import toughasnails.config.GameplayConfigurationHandler;
+import toughasnails.temperature.BlockTemperatureData;
+import toughasnails.temperature.BlockTemperatureStateData;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureTrend;
@@ -82,35 +83,43 @@ public class ObjectProximityModifier extends TemperatureModifier
         
         return new Temperature(newTemperatureLevel);
     }
-
+    
     public static float getBlockTemperature(EntityPlayer player, IBlockState state)
     {
         World world = player.worldObj;
         Material material = state.getMaterial();
         Biome biome = world.getBiomeGenForCoords(player.getPosition());
         
-        if (state.getBlock() == TANBlocks.campfire)
+        String blockName = state.getBlock().getRegistryName().toString();
+        
+        //Blocks
+        if (GameplayConfigurationHandler.blockTemperatureData.containsKey(blockName))
         {
-            if (state.getValue(BlockTANCampfire.BURNING) == true)
-            {
-                return 12.0F;
-            } else
-            {
-                return 0.0F;
-            }
-        }
-        else if (state.getBlock() == Blocks.LIT_FURNACE)
-        {
-            return 12.0F;
+        	BlockTemperatureData relevantTempData = GameplayConfigurationHandler.blockTemperatureData.get(blockName);
+        	
+        	//Check if block has relevant state: 
+        	for (BlockTemperatureStateData stateTempData : relevantTempData.stateTemperatures)
+        	{
+        		for (IProperty<?> blockProperty : state.getProperties().keySet())
+        		{
+            		if (blockProperty.getName().equalsIgnoreCase(stateTempData.propertyName))
+            		{
+            			if (state.getValue(blockProperty).toString().equalsIgnoreCase(stateTempData.propertyValue))
+            			{
+            				return stateTempData.blockTemperature;
+            			}
+            		}
+            	}
+        	}
+        	
+        	//Use default temperature if no relevant state:
+        	return relevantTempData.blockBaseTemperature;
         }
         
+        //Handle materials, but only if we didn't already find an actual block to use: 
         if (material == Material.FIRE)
         {
-            return 1.0F;
-        }
-        else if (material == Material.LAVA)
-        {
-            return 1.5F;
+            return GameplayConfigurationHandler.materialTemperatureData.FIRE;
         }
         
         return 0.0F;
