@@ -94,3 +94,5 @@ tipped_arrow.effect.cold_resistance_type=Arrow of Cold Resistance
 tipped_arrow.effect.long_cold_resistance_type=Arrow of Cold Resistance
 tipped_arrow.effect.heat_resistance_type=Arrow of Heat Resistance
 tipped_arrow.effect.long_heat_resistance_type=Arrow of Heat Resistance
+
+entity.freeze.name=Freeze
