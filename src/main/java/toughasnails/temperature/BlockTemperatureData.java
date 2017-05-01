@@ -1,14 +1,17 @@
 package toughasnails.temperature;
 
+import net.minecraft.block.state.IBlockState;
+
 public class BlockTemperatureData {
-	public String blockName;
-	public float blockBaseTemperature;
-	public BlockTemperatureStateData[] stateTemperatures;
-	
-	public BlockTemperatureData(String blockName, float blockBaseTemperature, BlockTemperatureStateData[] stateTemperatures) {
-		this.blockName = blockName;
-		this.blockBaseTemperature = blockBaseTemperature;
-		this.stateTemperatures = stateTemperatures;
-	}
-	
+
+    public IBlockState state;
+    public float blockTemperature;
+    public String[] use_properties;
+
+    public BlockTemperatureData(IBlockState state, String[] use_properties, float blockTemperature) {
+        this.state = state;
+        this.use_properties = use_properties;
+        this.blockTemperature = blockTemperature;
+    }
+
 }
