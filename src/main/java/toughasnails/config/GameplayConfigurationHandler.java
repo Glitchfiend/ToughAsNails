@@ -19,9 +19,9 @@ import toughasnails.core.ToughAsNails;
 public class GameplayConfigurationHandler
 {
     public static final String SURVIVAL_SETTINGS = "Survival Settings";
-    
+
     public static Configuration config;
-    
+
     public static void init(File configFile)
     {
         if (config == null)
@@ -49,7 +49,7 @@ public class GameplayConfigurationHandler
             if (config.hasChanged()) config.save();
         }
     }
-    
+
     private static void addSyncedBool(GameplayOption option, boolean defaultValue, String category, String comment)
     {
         boolean value = config.getBoolean(option.getOptionName(), category, defaultValue, comment);

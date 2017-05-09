@@ -17,6 +17,6 @@ public class ModConfig
     public static void init(File configDirectory)
     {
         GameplayConfigurationHandler.init(new File(configDirectory, "gameplay.cfg"));
-        MinecraftForge.EVENT_BUS.register(new GameplayConfigurationHandler());
+        MinecraftForge.EVENT_BUS.register(new GameplayConfigurationHandler());        
     }
 }
