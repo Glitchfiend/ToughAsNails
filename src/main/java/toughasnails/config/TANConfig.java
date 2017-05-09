@@ -195,7 +195,7 @@ public class TANConfig
         return members;
     }
 
-    protected static IBlockState asBlockState(JsonElement ele, String extraPrefix)
+    protected static ReadBlockState asBlockState(JsonElement ele, String extraPrefix)
     {
 
         try {
@@ -223,6 +223,8 @@ public class TANConfig
 
             IBlockState state = block.getDefaultState();
 
+            ArrayList<String> usedProperties = new ArrayList<String>(); 
+
             // attempt to add properties
             if (obj.has("properties"))
             {
@@ -230,33 +232,40 @@ public class TANConfig
                 if (!properties.isJsonObject())
                 {
                     ToughAsNails.logger.error(extraPrefix + " Invalid properties list - must be a JSON object");
-                    return state;
+                    return null;
                 }
 
                 for (Entry<String, JsonElement> entry : properties.getAsJsonObject().entrySet())
                 {
-                    IProperty property = BlockStateUtils.getPropertyByName(state, entry.getKey());
+                    String propRawName = entry.getKey();
+
+                    IProperty property = BlockStateUtils.getPropertyByName(state, propRawName);
                     if (property != null)
                     {
-                        Comparable propertyValue = BlockStateUtils.getPropertyValueByName(state, property, entry.getValue().getAsString());
-                        if (propertyValue != null)
+                        String propRawValue = entry.getValue().getAsString();
+
+                        if (!propRawValue.equals("*"))
                         {
-                            state = state.withProperty(property, propertyValue);
-                        }
-                        else
-                        {
-                            ToughAsNails.logger.error(extraPrefix + " Invalid value " + entry.getValue().getAsString() + " for property " + entry.getKey());
-                        }
+                            Comparable propertyValue = BlockStateUtils.getPropertyValueByName(state, property, propRawValue);
+                            if (propertyValue != null)
+                            {
+                                state = state.withProperty(property, propertyValue);
+                                usedProperties.add(propRawName);
+                            }
+                            else
+                            {
+                                ToughAsNails.logger.error(extraPrefix + " Invalid value " + propRawValue + " for property " + propRawName);
+                            }
+                        }                    
                     }
                     else
                     {
-                        ToughAsNails.logger.error(extraPrefix + " Invalid property name: " + entry.getKey());
+                        ToughAsNails.logger.error(extraPrefix + " Invalid property name: " + propRawName);
                     }
                 }
             }
 
-            return state;
-
+            return new ReadBlockState(state, usedProperties.toArray(new String[0]));
         }
         catch (Exception e)
         {
@@ -266,7 +275,7 @@ public class TANConfig
 
     }
 
-    protected static JsonObject asJsonObject(IBlockState state)
+    protected static JsonObject asJsonObject(IBlockState state, String[] useProperties)
     {
         try
         {
@@ -279,7 +288,29 @@ public class TANConfig
 
             for (IProperty<?> blockProperty : state.getProperties().keySet())
             {
-                props.addProperty(blockProperty.getName(), state.getValue(blockProperty).toString());
+                String propName = blockProperty.getName();
+                String propValue = state.getValue(blockProperty).toString();
+
+                if (useProperties != null)
+                {
+                    boolean foundProp = false;
+                    for (String useName : useProperties)
+                    {
+                        if (useName.equalsIgnoreCase(propName))
+                        {
+                            foundProp = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundProp)
+                    {
+                        //If a property is unused, set the value to a special wildcard * to indicate that any value matches
+                        propValue = "*";
+                    }
+                }
+
+                props.addProperty(propName, propValue);
             }
 
             obj.add("properties", props);
@@ -293,12 +324,26 @@ public class TANConfig
         }
     }
 
+    protected static JsonObject asJsonObject(IBlockState state)
+    {
+        try
+        {
+            return asJsonObject(state, null);
+        }
+        catch (Exception e)
+        {
+            ToughAsNails.logger.error("Error converting blockstate to Json: " + e.getMessage());
+            return null;
+        }
+    }
+
     protected static JsonObject asJsonObject(BlockTemperatureData blockTemperatureData)
     {
         JsonObject blockTempJson = new JsonObject();
 
-        blockTempJson.add("state", asJsonObject(blockTemperatureData.state));
-        blockTempJson.add("use_properties", serializer.toJsonTree(blockTemperatureData.use_properties));
+        JsonObject stateObject = asJsonObject(blockTemperatureData.state, blockTemperatureData.useProperties);
+
+        blockTempJson.add("state", stateObject);
         blockTempJson.addProperty("temperature", blockTemperatureData.blockTemperature);
 
         return blockTempJson;
@@ -323,36 +368,10 @@ public class TANConfig
                 return null;
             }
 
-            IBlockState state = asBlockState(blockState, extraPrefix);
+            ReadBlockState readState = asBlockState(blockState, extraPrefix);
 
-            // attempt to get properties to use for comparison
-            if (!obj.has("use_properties"))
-            {
-                ToughAsNails.logger.error(extraPrefix + " Block use properties missing");
-                return null;
-            }
-
-            JsonElement blockUse_properties = obj.get("use_properties");
-            if (!blockUse_properties.isJsonArray())
-            {
-                ToughAsNails.logger.error(extraPrefix + " Invalid use properties - must be an array");
-                return null;
-            }
-
-            Gson gson = new Gson();
-
-            String[] use_properties = gson.fromJson(blockUse_properties, String[].class); 
-
-            //Check specified property names are valid:
-            for(String propertyName : use_properties)
-            {
-                if(!BlockStateUtils.isValidPropertyName(state, propertyName))
-                {
-                    ToughAsNails.logger.error(extraPrefix + " Invalid use property name: " + propertyName + ", valid property names are " + state.getPropertyKeys().toString());
-                    return null;
-                }
-            }
-
+            IBlockState state = readState.state;
+            String[] use_properties = readState.usedProperties; 
 
             // attempt to get the temperature value
             if(!obj.has("temperature"))
@@ -369,7 +388,6 @@ public class TANConfig
             float temperature = blockTemperature.getAsFloat();
 
             return new BlockTemperatureData(state, use_properties, temperature);
-
         }
         catch (Exception e)
         {
@@ -379,4 +397,15 @@ public class TANConfig
 
     }
 
+}
+
+final class ReadBlockState {
+    IBlockState state;
+    String[] usedProperties;
+
+    public ReadBlockState(IBlockState state, String[] usedProperties)
+    {
+        this.state = state;
+        this.usedProperties = usedProperties;
+    }
 }

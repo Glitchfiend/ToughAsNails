@@ -6,11 +6,11 @@ public class BlockTemperatureData {
 
     public IBlockState state;
     public float blockTemperature;
-    public String[] use_properties;
+    public String[] useProperties;
 
-    public BlockTemperatureData(IBlockState state, String[] use_properties, float blockTemperature) {
+    public BlockTemperatureData(IBlockState state, String[] useProperties, float blockTemperature) {
         this.state = state;
-        this.use_properties = use_properties;
+        this.useProperties = useProperties;
         this.blockTemperature = blockTemperature;
     }
 

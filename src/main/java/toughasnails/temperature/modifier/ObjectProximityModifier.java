@@ -103,7 +103,7 @@ public class ObjectProximityModifier extends TemperatureModifier
             for (BlockTemperatureData tempData : blockTempData)
             {
                 boolean bAllSpecifiedPropertiesMatch = true;
-                for (String comparisonProperty : tempData.use_properties)
+                for (String comparisonProperty : tempData.useProperties)
                 {
                     IProperty<?> targetProperty = BlockStateUtils.getPropertyByName(state, comparisonProperty);
 
