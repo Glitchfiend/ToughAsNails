@@ -10,9 +10,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
+import toughasnails.config.TANConfig;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModAchievements;
@@ -65,6 +67,12 @@ public class ToughAsNails
         MinecraftForge.EVENT_BUS.register(new BlockHarvestEventHandler());
         
         proxy.registerRenderers();
+    }
+    
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+        TANConfig.init(configDirectory);
     }
     
     @EventHandler
