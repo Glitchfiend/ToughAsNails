@@ -2,6 +2,12 @@ package toughasnails.api.temperature;
 
 public class TemperatureScale
 {
+    // by default, temperature changes once every 30 seconds
+    public static final int BASE_TEMPERATURE_CHANGE_TICKS = 400;
+    /** The maximum number of ticks the temperature change rate can be reduced by.
+     * By default this is set sp that the minimum change rate is at least 5 seconds.**/
+    public static final int MAX_RATE_MODIFIER = 380;
+
     private static int scaleTotal = generateTotalScale();
     private static int[] rangeStarts = generateRangeStarts();
     
@@ -54,16 +60,48 @@ public class TemperatureScale
         return isScalePosInRange(scalePos, range, range);
     }
     
-    /**Returns the position in the overall temperature scale of this range*/
+    /**
+     * Returns the position in the overall temperature scale of this range
+     */
     public static int getRangeStart(TemperatureRange range)
     {
         return rangeStarts[range.ordinal()];
     }
-    
+
+    public static int getRateForTemperatures(int currentScalePos, int targetScalePos)
+    {
+        // the greater the difference between the current temperature and the target temperature,
+        // the faster the rate should be
+        double rateDelta = Math.abs((double)(currentScalePos - targetScalePos) / (double)getScaleTotal());
+
+        // temperature can't change at a rate faster than every second
+        return Math.max(20, getAdjustedBaseRate(currentScalePos) - (int)(rateDelta * (double)MAX_RATE_MODIFIER));
+    }
+
+    public static int getAdjustedBaseRate(int currentScalePos)
+    {
+        int ret = BASE_TEMPERATURE_CHANGE_TICKS;
+        TemperatureRange currentRange = getTemperatureRange(currentScalePos);
+
+        // the base rate is 10-15 seconds less in extremities.
+        // the closer to the start of the range, the faster it is
+        if (currentRange == TemperatureRange.ICY)
+        {
+            ret -= (200 * getRangeDelta(currentScalePos, false));
+        }
+        else if (currentRange == TemperatureRange.HOT)
+        {
+            ret -= (200 * getRangeDelta(currentScalePos, true));
+        }
+        return ret;
+    }
+
     public static int getScaleTotal()
     {
         return scaleTotal;
     }
+
+    public static int getScaleMidpoint() { return TemperatureScale.getScaleTotal() / 2; }
     
     private static int generateTotalScale()
     {

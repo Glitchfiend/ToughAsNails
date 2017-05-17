@@ -1,5 +1,7 @@
 package toughasnails.temperature;
 
+import static toughasnails.api.temperature.TemperatureScale.*;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -39,26 +41,9 @@ import toughasnails.temperature.modifier.WeatherModifier;
 
 public class TemperatureHandler extends StatHandlerBase implements ITemperature
 {
-    public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
-    // by default, temperature changes once every 30 seconds
-    public static final int BASE_TEMPERATURE_CHANGE_TICKS = 600;
-    /** The maximum number of ticks the temperature change rate can be reduced by.
-     * By default this is set sp that the minimum change rate is at least 5 seconds.**/
-    public static final int MAX_RATE_MODIFIER = 700;
-    
     private int temperatureLevel;
     private int prevTemperatureLevel;
     private int temperatureTimer;
-    
-    private TemperatureModifier altitudeModifier;
-    private TemperatureModifier armorModifier;
-    private TemperatureModifier biomeModifier;
-    private TemperatureModifier playerStateModifier;
-    private TemperatureModifier objectProximityModifier;
-    private TemperatureModifier weatherModifier;
-    private TemperatureModifier timeModifier;
-    private TemperatureModifier seasonModifier;
-
     private Set<TemperatureModifier> temperatureModifiers;
     private Map<String, TemperatureModifier.ExternalModifier> externalModifiers;
     
@@ -81,22 +66,14 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     {
         if (phase == Phase.END && !world.isRemote)
         {
-            int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
-            Temperature targetTemperature = getTargetTemperature(world, player);
+            int targetTemperature = getTargetTemperature(world, player);
+            int tempChangeTicks = TemperatureScale.getRateForTemperatures(temperatureLevel, targetTemperature);
 
-            // the greater the difference between the current temperature and the target temperature,
-            // the faster the rate should be
-            double rateDelta = Math.abs((this.temperatureLevel - targetTemperature.getRawValue()) / TemperatureScale.getScaleTotal());
-            newTempChangeTicks -= (int)(rateDelta * (double)MAX_RATE_MODIFIER);
-
-            // temperature can't change at a rate faster than every second
-            newTempChangeTicks = Math.max(20, newTempChangeTicks);
-
-            boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
+            boolean incrementTemperature = ++temperatureTimer >= tempChangeTicks;
             boolean updateClient = ++debugger.debugTimer % 5 == 0;
 
             debugger.temperatureTimer = temperatureTimer;
-            debugger.changeTicks = newTempChangeTicks;
+            debugger.changeTicks = tempChangeTicks;
 
             if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
@@ -108,7 +85,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             
             if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
-                this.addTemperature(new Temperature((int)Math.signum(targetTemperature.getRawValue() - this.temperatureLevel)));
+                this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
                 this.temperatureTimer = 0;
             }
 
@@ -122,31 +99,28 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         }
     }
 
-    private Temperature getTargetTemperature(World world, EntityPlayer player)
+    private int getTargetTemperature(World world, EntityPlayer player)
     {
         debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
         debugger.end(TemperatureScale.getScaleTotal() / 2);
-
-        Temperature targetTemperature = new Temperature(TEMPERATURE_SCALE_MIDPOINT);
+        int targetTemperature = TemperatureScale.getScaleMidpoint();
 
         for (TemperatureModifier modifier : temperatureModifiers)
         {
-            modifier.modifyTarget(world, player, targetTemperature);
+            targetTemperature = modifier.modifyTarget(world, player, new Temperature(targetTemperature)).getRawValue();
         }
 
-        debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature.getRawValue());
+        debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature);
         for (TemperatureModifier.ExternalModifier modifier : this.externalModifiers.values())
         {
-            targetTemperature = new Temperature(targetTemperature.getRawValue() + modifier.getAmount());
+            targetTemperature = targetTemperature + modifier.getAmount();
         }
-        debugger.end(targetTemperature.getRawValue());
+        debugger.end(targetTemperature);
 
-        debugger.targetTemperature = targetTemperature.getRawValue();
+        debugger.targetTemperature = targetTemperature;
         // temperature values can't be above or less than the scale allows
         // TODO: Possibly move this to the temperature class
-        targetTemperature = new Temperature(MathHelper.clamp(targetTemperature.getRawValue(), 0, TemperatureScale.getScaleTotal()));
-
-        return targetTemperature;
+        return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal());
     }
     
     private void addPotionEffects(EntityPlayer player)

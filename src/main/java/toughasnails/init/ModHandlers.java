@@ -19,7 +19,7 @@ import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
 import toughasnails.handler.season.StopSpawnHandler;
 import toughasnails.handler.season.WeatherFrequencyHandler;
-import toughasnails.handler.temperature.TemperatureDebugOverlayHandler;
+import toughasnails.handler.temperature.TemperatureStatTableHandler;
 import toughasnails.handler.temperature.TemperatureOverlayHandler;
 import toughasnails.handler.thirst.FillBottleHandler;
 import toughasnails.handler.thirst.ThirstOverlayHandler;
@@ -56,7 +56,7 @@ public class ModHandlers
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
             MinecraftForge.EVENT_BUS.register(new TemperatureOverlayHandler());
-            MinecraftForge.EVENT_BUS.register(new TemperatureDebugOverlayHandler());
+            MinecraftForge.EVENT_BUS.register(new TemperatureStatTableHandler());
             MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
             MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
 
