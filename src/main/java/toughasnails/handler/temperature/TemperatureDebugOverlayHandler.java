@@ -48,7 +48,7 @@ public class TemperatureDebugOverlayHandler
         
         if (targetModifiers != null && rateModifiers != null)
         {
-            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
 
             int targetTableHeight = getTableHeight(targetModifiers);
             int totalTableHeight = targetTableHeight + getTableHeight(rateModifiers) + 2;
@@ -65,7 +65,7 @@ public class TemperatureDebugOverlayHandler
     @SideOnly(Side.CLIENT)
     private static void drawTable(String title, int x, int y, Map<Modifier, Integer> contents)
     {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         
         int lineWidth = getLineWidth(title, contents);
         int textStart = x + 2;
@@ -101,7 +101,7 @@ public class TemperatureDebugOverlayHandler
     @SideOnly(Side.CLIENT)
     private static int getTableHeight(Map contents)
     {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         
         return (contents.size() + 1) * fontRenderer.FONT_HEIGHT + 1;
     }
@@ -109,7 +109,7 @@ public class TemperatureDebugOverlayHandler
     @SideOnly(Side.CLIENT)
     private static int getLineWidth(String title, Map<Modifier, Integer> elements)
     {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         int lineWidth = 0;
         
         for (Entry<Modifier, Integer> entry : elements.entrySet())

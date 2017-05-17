@@ -12,9 +12,15 @@ public class GuiFactory implements IModGuiFactory {
     public void initialize(Minecraft minecraftInstance) { }
 
     @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass()
+    public boolean hasConfigGui() { return true; }
+
+    @Override
+    public Class<? extends GuiScreen> mainConfigGuiClass() { return GuiTANConfig.class; }
+
+    @Override
+    public GuiScreen createConfigGui(GuiScreen parentScreen)
     {
-        return GuiTANConfig.class;
+        return new GuiTANConfig(parentScreen);
     }
 
     @Override

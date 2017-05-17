@@ -14,7 +14,6 @@ import toughasnails.config.TANConfig;
 import toughasnails.temperature.BlockTemperatureData;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
 import toughasnails.util.BlockStateUtils;
 
 //TODO: Replace this with something better
@@ -23,37 +22,6 @@ public class ObjectProximityModifier extends TemperatureModifier
     public ObjectProximityModifier(TemperatureDebugger debugger)
     {
         super(debugger);
-    }
-
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
-    {
-        int newChangeRate = changeRate;
-        BlockPos playerPos = player.getPosition();
-
-        int tempSourceBlocks = 0;
-
-        //System.out.println(new Calendar(world).getSubSeason());
-
-        for (int x = -3; x <= 3; x++)
-        {
-            for (int y = -2; y <= 2; y++)
-            {
-                for (int z = -3; z <= 3; z++)
-                {
-                    BlockPos pos = playerPos.add(x, y - 1, z);
-                    IBlockState state = world.getBlockState(pos);
-
-                    if (getBlockTemperature(player, state) != 0.0F) tempSourceBlocks++;
-                }
-            }
-        }
-
-        debugger.start(Modifier.NEARBY_BLOCKS_RATE, newChangeRate);
-        newChangeRate -= tempSourceBlocks * 20;
-        debugger.end(newChangeRate);
-
-        return newChangeRate;
     }
 
     @Override

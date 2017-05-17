@@ -5,8 +5,10 @@ public class TemperatureScale
     private static int scaleTotal = generateTotalScale();
     private static int[] rangeStarts = generateRangeStarts();
     
-    /**Get the temperature range this position in the overall temperature scale is
-     * located within*/
+    /**
+     * Get the temperature range this position in the overall temperature scale is
+     * located within
+     * */
     public static TemperatureRange getTemperatureRange(int scalePos)
     {
         //Ensure the scale position is within the allowed values
