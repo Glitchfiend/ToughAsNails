@@ -96,7 +96,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
 		        double d0 = (double)((float)pos.getX() + 0.4F + rand.nextFloat() * 0.2F);
 		        double d1 = (double)((float)pos.getY() + 0.7F + rand.nextFloat() * 0.3F);
 		        double d2 = (double)((float)pos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
-		        ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+		        ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, world, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 	    	}
     	}
     }

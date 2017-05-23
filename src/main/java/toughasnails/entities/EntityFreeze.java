@@ -102,7 +102,7 @@ public class EntityFreeze extends EntityMob implements IMob
 
             for (int i = 0; i < 2; ++i)
             {
-            	ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, 0.0D, 0.0D, 0.0D, new int[0]);
+            	ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, this.world, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, 0.0D, 0.0D, 0.0D, new int[0]);
             }
         }
 

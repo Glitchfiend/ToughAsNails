@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -83,14 +84,14 @@ public class ClientProxy extends CommonProxy
     }
     
     @Override
-    public void spawnParticle(TANParticleTypes type, double x, double y, double z, Object... info)
+    public void spawnParticle(TANParticleTypes type, World parWorld, double x, double y, double z, Object... info)
     {
         Minecraft minecraft = Minecraft.getMinecraft();
         Particle entityFx = null;
         switch (type)
         {
         case SNOWFLAKE:
-            entityFx = new EntitySnowflakeFX(minecraft.world, x, y, z, MathHelper.nextDouble(minecraft.world.rand, -0.03, 0.03), -0.02D, MathHelper.nextDouble(minecraft.world.rand, -0.03, 0.03));
+            entityFx = new EntitySnowflakeFX(parWorld, x, y, z, MathHelper.nextDouble(parWorld.rand, -0.03, 0.03), -0.02D, MathHelper.nextDouble(parWorld.rand, -0.03, 0.03));
             break;
         default:
             break;
