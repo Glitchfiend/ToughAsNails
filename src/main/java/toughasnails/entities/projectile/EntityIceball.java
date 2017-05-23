@@ -220,7 +220,7 @@ public class EntityIceball extends Entity implements IProjectile
             this.motionX *= (double)f2;
             this.motionY *= (double)f2;
             this.motionZ *= (double)f2;
-            ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+            ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, this.world, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
             this.setPosition(this.posX, this.posY, this.posZ);
         }
         else
