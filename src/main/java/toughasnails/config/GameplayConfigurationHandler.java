@@ -39,6 +39,7 @@ public class GameplayConfigurationHandler
             addSyncedBool(GameplayOption.ENABLE_SEASONS, true, SURVIVAL_SETTINGS, "Seasons progress as days increase");
             addSyncedBool(GameplayOption.ENABLE_TEMPERATURE, true, SURVIVAL_SETTINGS, "Players are affected by temperature");
             addSyncedBool(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst");
+            addSyncedBool(GameplayOption.ENABLE_CROP_DEATH, true, SURVIVAL_SETTINGS, "Crops can die in winter if not heated");
         }
         catch (Exception e)
         {
