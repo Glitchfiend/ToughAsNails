@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
 
 public class WeatherModifier extends TemperatureModifier
 {
@@ -17,23 +16,6 @@ public class WeatherModifier extends TemperatureModifier
     public WeatherModifier(TemperatureDebugger debugger)
     {
         super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
-    {
-        int newChangeRate = changeRate;
-        
-        debugger.start(Modifier.WET_RATE, changeRate);
-        
-        if (player.isWet())
-        {
-            newChangeRate += WET_RATE_MODIFIER;
-        }
-        
-        debugger.end(newChangeRate);
-        
-        return newChangeRate;
     }
     
     @Override

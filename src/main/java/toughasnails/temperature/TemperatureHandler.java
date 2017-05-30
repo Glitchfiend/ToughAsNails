@@ -1,10 +1,14 @@
 package toughasnails.temperature;
 
+import static toughasnails.api.temperature.TemperatureScale.*;
+
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,22 +41,10 @@ import toughasnails.temperature.modifier.WeatherModifier;
 
 public class TemperatureHandler extends StatHandlerBase implements ITemperature
 {
-    public static final int TEMPERATURE_SCALE_MIDPOINT = TemperatureScale.getScaleTotal() / 2;
-    public static final int BASE_TEMPERATURE_CHANGE_TICKS = 1200;
-    
     private int temperatureLevel;
     private int prevTemperatureLevel;
     private int temperatureTimer;
-    
-    private TemperatureModifier altitudeModifier;
-    private TemperatureModifier armorModifier;
-    private TemperatureModifier biomeModifier;
-    private TemperatureModifier playerStateModifier;
-    private TemperatureModifier objectProximityModifier;
-    private TemperatureModifier weatherModifier;
-    private TemperatureModifier timeModifier;
-    private TemperatureModifier seasonModifier;
-    
+    private Set<TemperatureModifier> temperatureModifiers;
     private Map<String, TemperatureModifier.ExternalModifier> externalModifiers;
     
     public final TemperatureDebugger debugger = new TemperatureDebugger();
@@ -61,16 +53,11 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     {
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
-        
-        this.altitudeModifier = new AltitudeModifier(debugger);
-        this.armorModifier = new ArmorModifier(debugger);
-        this.biomeModifier = new BiomeModifier(debugger);
-        this.playerStateModifier = new PlayerStateModifier(debugger);
-        this.objectProximityModifier = new ObjectProximityModifier(debugger);
-        this.weatherModifier = new WeatherModifier(debugger);
-        this.timeModifier = new TimeModifier(debugger);
-        this.seasonModifier = new SeasonModifier(debugger);
-        
+
+        this.temperatureModifiers = Sets.newHashSet(new AltitudeModifier(debugger), new ArmorModifier(debugger), new BiomeModifier(debugger),
+                new PlayerStateModifier(debugger), new ObjectProximityModifier(debugger), new WeatherModifier(debugger), new TimeModifier(debugger),
+                new SeasonModifier(debugger));
+
         this.externalModifiers = Maps.newHashMap();
     }
     
@@ -79,49 +66,14 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     {
         if (phase == Phase.END && !world.isRemote)
         {
-            int newTempChangeTicks = BASE_TEMPERATURE_CHANGE_TICKS;
+            int targetTemperature = getTargetTemperature(world, player);
+            int tempChangeTicks = TemperatureScale.getRateForTemperatures(temperatureLevel, targetTemperature);
 
-            TemperatureTrend trend;
-            
-            if (debugger.targetTemperature == this.temperatureLevel) trend = TemperatureTrend.STILL;
-            else trend = debugger.targetTemperature > this.temperatureLevel ? TemperatureTrend.INCREASING : TemperatureTrend.DECREASING;
-            
-            newTempChangeTicks = altitudeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = armorModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = biomeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = playerStateModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = objectProximityModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = weatherModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-            newTempChangeTicks = timeModifier.modifyChangeRate(world, player, newTempChangeTicks, trend);
-
-            java.util.Iterator<TemperatureModifier.ExternalModifier> iterator = this.externalModifiers.values().iterator();
-            
-            debugger.start(Modifier.CLIMATISATION_RATE, newTempChangeTicks);
-            while (iterator.hasNext())
-            {
-                TemperatureModifier.ExternalModifier modifier = iterator.next();
-                
-                if (this.temperatureTimer > modifier.getEndTime())
-                {
-                    iterator.remove();
-                }
-                else
-                {
-                	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
-                	{
-                		newTempChangeTicks += modifier.getRate();
-                	}
-                }
-            }
-            debugger.end(newTempChangeTicks);
-            
-            newTempChangeTicks = Math.max(20, newTempChangeTicks);
-
-            boolean incrementTemperature = ++temperatureTimer >= newTempChangeTicks;
+            boolean incrementTemperature = ++temperatureTimer >= tempChangeTicks;
             boolean updateClient = ++debugger.debugTimer % 5 == 0;
 
             debugger.temperatureTimer = temperatureTimer;
-            debugger.changeTicks = newTempChangeTicks;
+            debugger.changeTicks = tempChangeTicks;
 
             if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
@@ -131,36 +83,10 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 }
             }
             
-            if ((incrementTemperature || updateClient) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+            if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             {
-                debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
-                debugger.end(TemperatureScale.getScaleTotal() / 2);
-                
-                Temperature targetTemperature = biomeModifier.modifyTarget(world, player, new Temperature(TEMPERATURE_SCALE_MIDPOINT));
-                targetTemperature = altitudeModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = armorModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = playerStateModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = objectProximityModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = weatherModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = timeModifier.modifyTarget(world, player, targetTemperature);
-                targetTemperature = seasonModifier.modifyTarget(world, player, targetTemperature);
-                
-                debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature.getRawValue());
-                for (TemperatureModifier.ExternalModifier modifier : this.externalModifiers.values())
-                {
-                    targetTemperature = new Temperature(targetTemperature.getRawValue() + modifier.getAmount());
-                }
-                debugger.end(targetTemperature.getRawValue());
-                
-                debugger.targetTemperature = targetTemperature.getRawValue();
-
-                targetTemperature = new Temperature(MathHelper.clamp(targetTemperature.getRawValue(), 0, TemperatureScale.getScaleTotal()));
-
-                if (incrementTemperature)
-                {
-                    this.addTemperature(new Temperature((int)Math.signum(targetTemperature.getRawValue() - this.temperatureLevel)));
-                    this.temperatureTimer = 0;
-                }
+                this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
+                this.temperatureTimer = 0;
             }
 
             addPotionEffects(player);
@@ -171,6 +97,30 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 debugger.finalize((EntityPlayerMP)player);
             }
         }
+    }
+
+    private int getTargetTemperature(World world, EntityPlayer player)
+    {
+        debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
+        debugger.end(TemperatureScale.getScaleTotal() / 2);
+        int targetTemperature = TemperatureScale.getScaleMidpoint();
+
+        for (TemperatureModifier modifier : temperatureModifiers)
+        {
+            targetTemperature = modifier.modifyTarget(world, player, new Temperature(targetTemperature)).getRawValue();
+        }
+
+        debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature);
+        for (TemperatureModifier.ExternalModifier modifier : this.externalModifiers.values())
+        {
+            targetTemperature = targetTemperature + modifier.getAmount();
+        }
+        debugger.end(targetTemperature);
+
+        debugger.targetTemperature = targetTemperature;
+        // temperature values can't be above or less than the scale allows
+        // TODO: Possibly move this to the temperature class
+        return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal());
     }
     
     private void addPotionEffects(EntityPlayer player)

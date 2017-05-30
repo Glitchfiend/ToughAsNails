@@ -6,7 +6,6 @@ import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
 import toughasnails.util.BiomeUtils;
 
 public class TimeModifier extends TemperatureModifier
@@ -22,12 +21,6 @@ public class TimeModifier extends TemperatureModifier
     public TimeModifier(TemperatureDebugger debugger)
     {
         super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
-    {
-        return changeRate;
     }
 
     @Override

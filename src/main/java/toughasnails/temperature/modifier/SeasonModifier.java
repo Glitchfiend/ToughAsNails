@@ -16,19 +16,12 @@ import toughasnails.api.temperature.Temperature;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
 
 public class SeasonModifier extends TemperatureModifier
 {
     public SeasonModifier(TemperatureDebugger debugger) 
     {
         super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend) 
-    {
-        return changeRate;
     }
 
     @Override

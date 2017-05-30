@@ -3,12 +3,9 @@ package toughasnails.temperature.modifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
-import toughasnails.util.BiomeUtils;
 
 public class AltitudeModifier extends TemperatureModifier
 {
@@ -18,12 +15,6 @@ public class AltitudeModifier extends TemperatureModifier
     public AltitudeModifier(TemperatureDebugger debugger)
     {
         super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
-    {
-        return changeRate;
     }
 
     @Override

@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureTrend;
 
 public class PlayerStateModifier extends TemperatureModifier
 {
@@ -16,40 +15,6 @@ public class PlayerStateModifier extends TemperatureModifier
     public PlayerStateModifier(TemperatureDebugger debugger)
     {
         super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend)
-    {
-        int newChangeRate = changeRate;
-        int sprintingRateModifier = SPRINTING_RATE_MODIFIER;
-        
-        switch (trend)
-        {
-            case INCREASING:
-                sprintingRateModifier *= -1;
-                break;
-                
-            case STILL:
-                sprintingRateModifier = 0;
-                break;
-        }
-        
-        debugger.start(Modifier.SPRINTING_RATE, newChangeRate);
-        
-        if (player.isSprinting())
-        {
-            newChangeRate += sprintingRateModifier;
-        }
-        
-        debugger.end(newChangeRate);
-        debugger.start(Modifier.HEALTH_RATE, newChangeRate);
-        
-        newChangeRate -= (1.0 - (player.getHealth() / player.getMaxHealth())) * 200;
-        
-        debugger.end(newChangeRate);
-        
-        return newChangeRate;
     }
 
     @Override

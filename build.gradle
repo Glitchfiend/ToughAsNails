@@ -7,10 +7,6 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-		maven {
-            name = 'sponge'
-            url = 'http://repo.spongepowered.org/maven'
-        }
     }
 	dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -35,13 +31,6 @@ configFile.withReader {
 group = "glitchfiend.toughasnails"
 version = config.mod_version
 archivesBaseName = "ToughAsNails"
-
-repositories {
-    maven {
-        name = 'sponge'
-        url = 'https://repo.spongepowered.org/maven/'
-    }
-}
 
 //Add "embedded" configuration
 configurations {

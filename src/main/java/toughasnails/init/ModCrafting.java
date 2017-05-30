@@ -4,6 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -14,6 +15,7 @@ import toughasnails.api.item.TANItems;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemTANWaterBottle;
+import toughasnails.util.PotionBrewingRecipe;
 
 public class ModCrafting
 {
@@ -31,45 +33,19 @@ public class ModCrafting
     	
     	//Brewing
     	//Base
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), new ItemStack(Items.FIRE_CHARGE), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), new ItemStack(TANItems.ice_charge), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.cold_resistance_type));
-    	
+    	addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(Items.FIRE_CHARGE), TANPotions.heat_resistance_type);
+    	addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.ice_charge), TANPotions.cold_resistance_type);
+   	
     	//Extended
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.heat_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.cold_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_cold_resistance_type));
-    	
-    	//Splash
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.heat_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.cold_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.cold_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_heat_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_cold_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_cold_resistance_type));
-    	
-    	//Extended Splash
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.heat_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.cold_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_cold_resistance_type));
-    	
-    	//Lingering -> Splash
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.heat_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.cold_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.cold_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_heat_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_cold_resistance_type), new ItemStack(Items.GUNPOWDER), PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_cold_resistance_type));
-    	
-    	//Lingering
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.heat_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.cold_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.cold_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_heat_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), TANPotions.long_cold_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_cold_resistance_type));
-    	
-    	//Lingering Extended
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.heat_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.cold_resistance_type), new ItemStack(Items.REDSTONE), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_cold_resistance_type));
-    	
-    	//Splash -> Lingering
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.heat_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.cold_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.cold_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_heat_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_heat_resistance_type));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), TANPotions.long_cold_resistance_type), new ItemStack(Items.DRAGON_BREATH), PotionUtils.addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), TANPotions.long_cold_resistance_type));
-    	
+    	addBrewingRecipe(TANPotions.heat_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_heat_resistance_type);
+    	addBrewingRecipe(TANPotions.cold_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_cold_resistance_type);
+   	
+    	//Splash and lingering
+    	addPotionTransforms(TANPotions.heat_resistance_type);
+    	addPotionTransforms(TANPotions.cold_resistance_type);
+    	addPotionTransforms(TANPotions.long_heat_resistance_type);
+    	addPotionTransforms(TANPotions.long_cold_resistance_type);
+
     	// Armor
     	GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_helmet), new Object [] {"###", "# #", '#', Blocks.WOOL});
         GameRegistry.addShapedRecipe(new ItemStack(TANItems.wool_chestplate), new Object [] {"# #", "###", "###", '#', Blocks.WOOL});
@@ -170,4 +146,46 @@ public class ModCrafting
     		}
     	}
     }*/
+    
+    /**
+     * Adds a brewing recipe for each bottle to the specified potion type transformation
+     * @param input       Input potion
+     * @param ingredient  Transformation ingredient
+     * @param output      Output potion
+     */
+    private static void addBrewingRecipe(PotionType input, ItemStack ingredient, PotionType output)
+    {
+    	addBrewingRecipe(new ItemStack(Items.POTIONITEM), input, ingredient, new ItemStack(Items.POTIONITEM), output);
+    	addBrewingRecipe(new ItemStack(Items.SPLASH_POTION), input, ingredient, new ItemStack(Items.SPLASH_POTION), output);
+    	addBrewingRecipe(new ItemStack(Items.LINGERING_POTION), input, ingredient, new ItemStack(Items.LINGERING_POTION), output);
+    }
+    
+    /**
+     * Adds recipes to transform potions into splash and lingering variants
+     * @param potion  Potion type to add transformations
+     */
+    private static void addPotionTransforms(PotionType potion)
+    {
+    	// splash
+    	addBrewingRecipe(new ItemStack(Items.POTIONITEM), potion, new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SPLASH_POTION), potion);
+    	addBrewingRecipe(new ItemStack(Items.LINGERING_POTION), potion, new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SPLASH_POTION), potion);
+    	
+    	// lingering
+    	addBrewingRecipe(new ItemStack(Items.POTIONITEM), potion, new ItemStack(Items.DRAGON_BREATH), new ItemStack(Items.LINGERING_POTION), potion);
+    	addBrewingRecipe(new ItemStack(Items.SPLASH_POTION), potion, new ItemStack(Items.DRAGON_BREATH), new ItemStack(Items.LINGERING_POTION), potion);
+
+    }
+    
+    /**
+     * Adds a general brewing recipe. Basically just a wrapper to remove the ugly PotionUtils calls and to use the NBT sensitive PotionBrewingRecipe
+     * @param inBottle    Input bottle
+     * @param input       Input potion
+     * @param ingredient  Input ingredient
+     * @param outBottle   Output bottle
+     * @param output      Output potion
+     */
+    private static void addBrewingRecipe(ItemStack inBottle, PotionType input, ItemStack ingredient, ItemStack outBottle, PotionType output)
+    {
+    	BrewingRecipeRegistry.addRecipe(new PotionBrewingRecipe(PotionUtils.addPotionToItemStack(inBottle, input), ingredient, PotionUtils.addPotionToItemStack(outBottle, output)));
+    }
 }
