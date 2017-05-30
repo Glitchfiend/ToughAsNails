@@ -240,7 +240,8 @@ public class ItemCanteen extends Item
                         BlockRainCollector collector = (BlockRainCollector)state.getBlock();
                         comp.setInteger("water_type", 3);
                         stack.setTagCompound(doRefill(setUses(comp, 3), stack, player)); 
-                        if (player.capabilities.isCreativeMode) {
+                        if (player.capabilities.isCreativeMode)
+                        {
                             return true;
                         }
                         collector.setWaterLevel(world, pos, state, level - 1);
