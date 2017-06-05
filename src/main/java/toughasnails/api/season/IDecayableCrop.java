@@ -10,6 +10,9 @@ package toughasnails.api.season;
 /** 
  * A marker interface which should be implemented by crops which decay
  * in the winter in the absence of proper heating.
+ * 
+ * Please note that due to how Java bytecode works, you must explicitly
+ * implement this interface if your class overrides updateTick.
  */
 public interface IDecayableCrop {
     // Crop will only decay in winter if this returns true
