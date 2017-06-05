@@ -8,7 +8,7 @@
 package toughasnails.api.season;
 
 /** 
- * A marker interface which should be implemented by crops
+ * An interface which should be implemented by crops
  * which become inactive in the winter in the absence of
  * proper heating.
  * 
@@ -19,5 +19,6 @@ package toughasnails.api.season;
  * alternatively net.minecraftforge.common.ForgeHooks.onCropsGrowPre)
  */
 public interface IHibernatingCrop {
-
+    // Crop will only hibernate in winter if this returns true
+    boolean shouldHibernate();
 }

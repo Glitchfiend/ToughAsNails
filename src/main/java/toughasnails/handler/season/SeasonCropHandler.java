@@ -22,14 +22,18 @@ import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
 
 public class SeasonCropHandler {
-	@SubscribeEvent
-	public void onCropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
-		Block block = event.getState().getBlock();
-		BlockPos pos = event.getPos();
-		World world = event.getWorld();
-		Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
-		if (season == Season.WINTER && block instanceof IHibernatingCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)) {
-			event.setResult(Event.Result.DENY);
-		}
-	}
+    @SubscribeEvent
+    public void onCropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
+        Block block = event.getState().getBlock();
+        BlockPos pos = event.getPos();
+        World world = event.getWorld();
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        if (season == Season.WINTER &&
+                (block instanceof IHibernatingCrop && ((IHibernatingCrop)block).shouldHibernate()) &&
+                !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) &&
+                SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)
+                ) {
+            event.setResult(Event.Result.DENY);
+        }
+    }
 }
