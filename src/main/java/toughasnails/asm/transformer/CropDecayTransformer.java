@@ -35,10 +35,10 @@ public class CropDecayTransformer implements IClassTransformer
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)
     {
-        if (transformedName.equals("net.minecraft.block.BlockCrops"))
+        if (transformedName.equals("net.minecraft.block.BlockCrops") || transformedName.equals("net.minecraft.block.BlockStem"))
         {
             // This is a vanilla crop; let's implement the interface and inject the crop decay hook
-            return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, true);
+            return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, transformedName, true);
         }
         else
         {
@@ -47,13 +47,13 @@ public class CropDecayTransformer implements IClassTransformer
             InterfaceCheckVisitor visitor = new InterfaceCheckVisitor("toughasnails/api/season/IDecayableCrop");
             classReader.accept(visitor, ClassReader.SKIP_CODE);
             if (visitor.isInterfaceFound) {
-                return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, false);
+                return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, transformedName, false);
             }
         }
         return basicClass;
     }
     
-    private byte[] transformToDecay(byte[] bytes, boolean obfuscatedClass, boolean isVanilla)
+    private byte[] transformToDecay(byte[] bytes, boolean obfuscatedClass, String name, boolean isVanilla)
     {
         //Decode the class from bytes
         ClassNode classNode = new ClassNode();
@@ -91,7 +91,7 @@ public class CropDecayTransformer implements IClassTransformer
         if (isVanilla)
         {
             // The vanilla method does not exist? What is this sorcery?!?
-            if (successfulTransformations.size() != 1) throw new RuntimeException("An error occurred transforming BlockCrops. Applied transformations: " + successfulTransformations.toString());
+            if (successfulTransformations.size() != 1) throw new RuntimeException("An error occurred transforming " + name + ". Applied transformations: " + successfulTransformations.toString());
             
             //Implement shouldDecay() method, which simply returns true. The method allows subclasses to override behavior.
             MethodNode decayMethod = new MethodNode(Opcodes.ACC_PUBLIC, "shouldDecay", "()Z", null, null);
