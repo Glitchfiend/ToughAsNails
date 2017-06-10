@@ -15,6 +15,7 @@ import toughasnails.handler.health.HealthOverlayHandler;
 import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
+import toughasnails.handler.season.SeasonCropHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
 import toughasnails.handler.season.StopSpawnHandler;
@@ -46,6 +47,7 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new SeasonHandler());
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
         MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
+        MinecraftForge.EVENT_BUS.register(new SeasonCropHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonSleepHandler());
         StopSpawnHandler stopSpawnHandler = new StopSpawnHandler();
         MinecraftForge.EVENT_BUS.register(stopSpawnHandler);
