@@ -34,11 +34,13 @@ import toughasnails.api.config.GameplayOption;
 
 public class MaxHealthHandler 
 {
+    public static boolean disableMaxHealth;
     //TODO: If the health config option is changed and the current health is lower
     //increase it to that new default
     @SubscribeEvent
     public void onPlayerLogin(TickEvent.PlayerTickEvent event)
     {
+        if(!disableMaxHealth){
         EntityPlayer player = event.player;
         World world = player.world;
 
@@ -46,11 +48,13 @@ public class MaxHealthHandler
         {
             updateStartingHealthModifier(world.getDifficulty(), player);
         }
+        }
     }
     
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event)
     {
+        if(!disableMaxHealth){
         IAttributeInstance oldMaxHealthInstance = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
         AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
         
@@ -61,12 +65,14 @@ public class MaxHealthHandler
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), modifier);
             event.getEntityPlayer().getAttributeMap().applyAttributeModifiers(multimap);
         }
+        }
     }
     
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event)
     {
+        if(!disableMaxHealth){
         Minecraft minecraft = Minecraft.getMinecraft();
         IntegratedServer integratedServer = minecraft.getIntegratedServer();
         
@@ -91,6 +97,7 @@ public class MaxHealthHandler
                     }
                 }
             }
+        }
         }
     }
     
