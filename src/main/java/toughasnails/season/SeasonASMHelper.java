@@ -8,7 +8,6 @@
 package toughasnails.season;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
@@ -134,11 +133,14 @@ public class SeasonASMHelper
     // BlockCrops methods //
     ////////////////////////
     
-    public static void onUpdateTick(BlockCrops block, World world, BlockPos pos)
+    public static void onUpdateTick(Block block, World world, BlockPos pos)
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
-        if (season == Season.WINTER && block instanceof IDecayableCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (season == Season.WINTER &&
+                (block instanceof IDecayableCrop && ((IDecayableCrop)block).shouldDecay()) &&
+                !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) &&
+                SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
