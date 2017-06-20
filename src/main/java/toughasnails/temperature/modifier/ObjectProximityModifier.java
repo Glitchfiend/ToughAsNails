@@ -41,8 +41,13 @@ public class ObjectProximityModifier extends TemperatureModifier
                 {
                     BlockPos pos = playerPos.add(x, y - 1, z);
                     IBlockState state = world.getBlockState(pos);
+                    float mod = getBlockTemperature(player, state);
 
-                    blockTemperatureModifier += getBlockTemperature(player, state);
+                    // use the most drastic temperature affecting block's temperature
+                    if (Math.abs(mod) > Math.abs(blockTemperatureModifier))
+                    {
+                        blockTemperatureModifier = mod;
+                    }
                 }
             }
         }
