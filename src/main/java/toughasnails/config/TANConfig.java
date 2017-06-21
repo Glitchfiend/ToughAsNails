@@ -57,12 +57,14 @@ public class TANConfig
         {
             try
             {
-                BlockTemperatureData[] defaultBlockTemperatureData = {
-                        new BlockTemperatureData(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), new String[]{BlockTANCampfire.BURNING.getName()}, 12.0F),
-                        new BlockTemperatureData(Blocks.LIT_FURNACE.getDefaultState(), new String[0], 12.0F),
-                        new BlockTemperatureData(Blocks.LAVA.getDefaultState(), new String[0], 1.5F),
-                        new BlockTemperatureData(Blocks.FLOWING_LAVA.getDefaultState(), new String[0], 1.5F),
-                };
+                BlockTemperatureData[] defaultBlockTemperatureData =
+                    {
+                    new BlockTemperatureData(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), new String[]{BlockTANCampfire.BURNING.getName()}, 15.0F),
+                    new BlockTemperatureData(Blocks.LIT_FURNACE.getDefaultState(), new String[0], 10.0F),
+                    new BlockTemperatureData(Blocks.LAVA.getDefaultState(), new String[0], 20.0F),
+                    new BlockTemperatureData(Blocks.FLOWING_LAVA.getDefaultState(), new String[0], 20.0F),
+                    new BlockTemperatureData(Blocks.MAGMA.getDefaultState(), new String[0], 17.0F),
+                    };
 
                 //Need to do this manually as there is some issue with getting Gson to serialise an IBlockState directly due to duplicated keys
                 JsonArray tempAry = new JsonArray();

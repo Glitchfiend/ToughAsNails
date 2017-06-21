@@ -41,25 +41,49 @@ public class SeasonModifier extends TemperatureModifier
         {
 	        switch (season)
 	        {
-	        case MID_WINTER: case LATE_WINTER:
-	            temperatureLevel -= 6;
-	            break;
-	        
-	        case EARLY_SPRING: case EARLY_WINTER:
-	            temperatureLevel -= 4;
-	            break;
-	            
-	        case MID_SPRING: case LATE_AUTUMN:
-	            temperatureLevel -= 2;
-	            break;
-	            
-	        case MID_SUMMER: case EARLY_AUTUMN:
+	        case EARLY_SPRING:
+	            temperatureLevel -= 5;
+                break;
+                
+            //MID_SPRING = 0
+                
+	        case LATE_SPRING:
 	            temperatureLevel += 2;
+                break;
+                
+	        case EARLY_SUMMER:
+	            temperatureLevel += 4;
+	            break;
+	            
+	        case MID_SUMMER:
+	            temperatureLevel += 6;
 	            break;
 	            
 	        case LATE_SUMMER:
 	            temperatureLevel += 4;
 	            break;
+	            
+	        case EARLY_AUTUMN:
+	            temperatureLevel += 2;
+	            break;
+	            
+	        //MID_AUTUMN = 0;
+	            
+	        case LATE_AUTUMN:
+	            temperatureLevel -= 3;
+	            break;
+	            
+	        case EARLY_WINTER:
+	            temperatureLevel -= 7;
+	            break;
+	            
+	        case MID_WINTER:
+	            temperatureLevel -= 15;
+	            break;
+	            
+	        case LATE_WINTER:
+                temperatureLevel -= 10;
+                break;
 	            
 	        default:
 	            break;
