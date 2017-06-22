@@ -52,15 +52,15 @@ public class SeasonModifier extends TemperatureModifier
                 break;
                 
 	        case EARLY_SUMMER:
-	            temperatureLevel += 4;
-	            break;
-	            
-	        case MID_SUMMER:
 	            temperatureLevel += 6;
 	            break;
 	            
+	        case MID_SUMMER:
+	            temperatureLevel += 8;
+	            break;
+	            
 	        case LATE_SUMMER:
-	            temperatureLevel += 4;
+	            temperatureLevel += 6;
 	            break;
 	            
 	        case EARLY_AUTUMN:
@@ -74,15 +74,15 @@ public class SeasonModifier extends TemperatureModifier
 	            break;
 	            
 	        case EARLY_WINTER:
-	            temperatureLevel -= 7;
+	            temperatureLevel -= 9;
 	            break;
 	            
 	        case MID_WINTER:
-	            temperatureLevel -= 15;
+	            temperatureLevel -= 17;
 	            break;
 	            
 	        case LATE_WINTER:
-                temperatureLevel -= 10;
+                temperatureLevel -= 12;
                 break;
 	            
 	        default:

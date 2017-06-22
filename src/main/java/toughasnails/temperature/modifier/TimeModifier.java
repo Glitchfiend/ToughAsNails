@@ -10,7 +10,7 @@ import toughasnails.util.BiomeUtils;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public static final int TIME_TARGET_MODIFIER = 7;
+    public static final int TIME_TARGET_MODIFIER = 9;
     
     /**
      * Multiplies how much should the temperature be increased/decreased by the closer the
