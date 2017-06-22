@@ -1,11 +1,19 @@
-run/*
-bin/*
-.gradle/*
-.settings/*
-
-.project
-.classpath
-/bin/
 /build/
-src/main/resources/META-INF/biomesoplenty_at.cfg
+/bin/
+/out/
+/repo/
+/run/
+.idea/*
 /.gradle/
+/.settings/
+/.classpath
+/.project
+
+# OS generated files
+*.DS_Store
+
+# IntelliJ project files
+*.iml
+*.ipr
+*.iws
+src/main/resources/META-INF/biomesoplenty_at.cfg
