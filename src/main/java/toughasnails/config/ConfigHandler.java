@@ -31,7 +31,7 @@ public abstract class ConfigHandler
 
     protected abstract void loadConfiguration();
 
-    protected <T extends Object> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment, T... args)
+    protected void addSyncedValue(ISyncedOption option, Object defaultValue, String category, String comment, Object... args)
     {
         String value = "";
 
