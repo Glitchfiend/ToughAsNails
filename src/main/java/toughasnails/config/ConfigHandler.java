@@ -31,7 +31,7 @@ public abstract class ConfigHandler
 
     protected abstract void loadConfiguration();
 
-    protected void addSyncedValue(ISyncedOption option, Object defaultValue, String category, String comment, Object... args)
+    protected <T> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment, T... args)
     {
         String value = "";
 
@@ -41,15 +41,15 @@ public abstract class ConfigHandler
         }
         else if (defaultValue instanceof Integer)
         {
-            value = "" + config.getInt(option.getOptionName(), category, (int)defaultValue, (int)args[0], (int)args[1], comment);
+            value = "" + config.getInt(option.getOptionName(), category, (Integer)defaultValue, (Integer)args[0], (Integer)args[1], comment);
         }
         else if (defaultValue instanceof Boolean)
         {
-            value = "" + config.getBoolean(option.getOptionName(), category, (boolean)defaultValue, comment);
+            value = "" + config.getBoolean(option.getOptionName(), category, (Boolean)defaultValue, comment);
         }
         else if (defaultValue instanceof Float)
         {
-            value = "" + config.getFloat(option.getOptionName(), category, (float)defaultValue, (float)args[0], (float)args[1], comment);
+            value = "" + config.getFloat(option.getOptionName(), category, (Float)defaultValue, (Float)args[0], (Float)args[1], comment);
         }
 
         SyncedConfig.addOption(option, value);
