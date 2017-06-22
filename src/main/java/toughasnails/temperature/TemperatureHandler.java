@@ -126,7 +126,6 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     private void addPotionEffects(EntityPlayer player)
     {
         TemperatureRange range = TemperatureScale.getTemperatureRange(this.temperatureLevel);
-        float multiplier = 1.0F;
         
         //The point from 0 to 1 at which potion effects begin in an extremity range
         float extremityDelta = (3.0F / 6.0F);
@@ -142,15 +141,13 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         {
             if (this.temperatureLevel <= hypoRangeStart && (!player.isPotionActive(TANPotions.cold_resistance)) && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
             {
-                multiplier = 1.0F - ((float)(this.temperatureLevel + 1) / (float)hypoRangeSize);
                 player.removePotionEffect(TANPotions.hypothermia);
-                player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier + extremityDelta)));
+                player.addPotionEffect(new PotionEffect(TANPotions.hypothermia, 200, 0));
             }
             else if (this.temperatureLevel >= hyperRangeStart && (!player.isPotionActive(TANPotions.heat_resistance)) && (temperatureLevel > prevTemperatureLevel || !player.isPotionActive(TANPotions.hyperthermia)))
             {
-                multiplier = (float)(this.temperatureLevel - hyperRangeStart) / hyperRangeSize;
                 player.removePotionEffect(TANPotions.hyperthermia);
-                player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia, (int)(1800 * multiplier) + 600, (int)(3 * multiplier)));
+                player.addPotionEffect(new PotionEffect(TANPotions.hyperthermia, 200, 0));
             }
         }
     }
