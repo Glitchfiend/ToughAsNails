@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.season.SeasonHelper;
 import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.AchievementEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
@@ -31,6 +32,8 @@ import toughasnails.util.SeasonColourUtil;
 
 public class ModHandlers
 {
+    private static final SeasonHandler SEASON_HANDLER = new SeasonHandler();
+
     public static void init()
     {
         PacketHandler.init();
@@ -44,7 +47,8 @@ public class ModHandlers
 	    MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
 
         //Handlers for functionality related to seasons
-        MinecraftForge.EVENT_BUS.register(new SeasonHandler());
+        MinecraftForge.EVENT_BUS.register(SEASON_HANDLER);
+        SeasonHelper.dataProvider = SEASON_HANDLER;
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
         MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonCropHandler());

@@ -18,12 +18,13 @@ import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.config.GameplayOption;
+import toughasnails.api.season.SeasonHelper;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 
-public class SeasonHandler 
+public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
@@ -115,13 +116,13 @@ public class SeasonHandler
     // Used to implement getSeasonData in the API
     //
     
-    public static ISeasonData getServerSeasonData(World world)
+    public ISeasonData getServerSeasonData(World world)
     {
         SeasonSavedData savedData = getSeasonSavedData(world);
         return new SeasonTime(savedData.seasonCycleTicks);
     }
     
-    public static ISeasonData getClientSeasonData()
+    public ISeasonData getClientSeasonData()
     {
         return new SeasonTime(clientSeasonCycleTicks);
     }
