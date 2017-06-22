@@ -10,9 +10,10 @@ package toughasnails.util;
 
 import org.lwjgl.util.Color;
 
+import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season.SubSeason;
-import toughasnails.api.config.GameplayOption;
+import toughasnails.init.ModConfig;
 
 public class SeasonColourUtil 
 {
@@ -60,7 +61,7 @@ public class SeasonColourUtil
     {
         int overlay = season.getGrassOverlay();
         float saturationMultiplier = season.getGrassSaturationMultiplier();
-        if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
+        if (!(SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS)) || !ModConfig.seasons.changeGrassColour)
     	{
         	overlay = SubSeason.MID_SUMMER.getGrassOverlay();
             saturationMultiplier = SubSeason.MID_SUMMER.getGrassSaturationMultiplier();
@@ -73,7 +74,7 @@ public class SeasonColourUtil
     {
         int overlay = season.getFoliageOverlay();
         float saturationMultiplier = season.getFoliageSaturationMultiplier();
-        if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
+        if (!(SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS)) || !ModConfig.seasons.changeFoliageColour)
     	{
         	overlay = SubSeason.MID_SUMMER.getFoliageOverlay();
             saturationMultiplier = SubSeason.MID_SUMMER.getFoliageSaturationMultiplier();

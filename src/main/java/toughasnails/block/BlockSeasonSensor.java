@@ -84,15 +84,15 @@ public class BlockSeasonSensor extends BlockContainer implements ITANBlock
         if (world.provider.getDimension() == 0)
         {
             IBlockState currentState = world.getBlockState(pos);
-            
+
             int power = 0;
-            int startTicks = this.type.ordinal() * SeasonTime.SEASON_TICKS;
-            int endTicks = (this.type.ordinal() + 1) * SeasonTime.SEASON_TICKS;
+            int startTicks = this.type.ordinal() * SeasonTime.ZERO.getSeasonDuration();
+            int endTicks = (this.type.ordinal() + 1) * SeasonTime.ZERO.getSeasonDuration();
             int currentTicks = SeasonHelper.getSeasonData(world).getSeasonCycleTicks();
             
             if (currentTicks >= startTicks && currentTicks <= endTicks)
             {
-                float delta = (float)(currentTicks - startTicks) / (float)SeasonTime.SEASON_TICKS;
+                float delta = (float)(currentTicks - startTicks) / (float)SeasonTime.ZERO.getSeasonDuration();
                 //Delta adjusted so that it peaks at 0.5 (the middle of the month)
                 float peak = 2.0F * (-Math.abs(delta - 0.5F) + 0.5F);
                 //Add one so at the start of the season it is powered at least a little

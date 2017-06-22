@@ -17,8 +17,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season.SubSeason;
-import toughasnails.api.config.GameplayOption;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.api.config.SeasonsOption;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
@@ -31,11 +31,11 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
     {
         World world = event.world;
 
-        if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0 && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0 && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
 
-            if (savedData.seasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
+            if (savedData.seasonCycleTicks++ > SeasonTime.ZERO.getCycleDuration())
             {
                 savedData.seasonCycleTicks = 0;
             }
@@ -69,10 +69,10 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         
         int dimension = Minecraft.getMinecraft().player.dimension;
 
-        if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             //Keep ticking as we're synchronized with the server only every second
-            if (clientSeasonCycleTicks++ > SeasonTime.TOTAL_CYCLE_TICKS)
+            if (clientSeasonCycleTicks++ > SeasonTime.ZERO.getCycleDuration())
             {
                 clientSeasonCycleTicks = 0;
             }
@@ -89,7 +89,7 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
     
     public static void sendSeasonUpdate(World world)
     {
-        if (!world.isRemote && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (!world.isRemote && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
             PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  

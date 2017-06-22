@@ -15,7 +15,17 @@ public class SyncedConfig
 
     public static boolean getBooleanValue(ISyncedOption option)
     {
-        return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
+        return Boolean.valueOf(getValue(option));
+    }
+
+    public static int getIntValue(ISyncedOption option)
+    {
+        return Integer.valueOf(getValue(option));
+    }
+
+    public static String getValue(ISyncedOption option)
+    {
+        return optionsToSync.get(option.getOptionName()).value;
     }
 
     public static void restoreDefaults()

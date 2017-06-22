@@ -51,7 +51,6 @@ public class ToughAsNails
         configDirectory = new File(event.getModConfigurationDirectory(), "toughasnails");
 
         ModConfig.init(configDirectory);
-        
     	ModBlocks.init();
     	ModEntities.init();
         ModItems.init();

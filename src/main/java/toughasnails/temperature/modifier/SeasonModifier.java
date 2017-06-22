@@ -9,6 +9,7 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
@@ -30,7 +31,7 @@ public class SeasonModifier extends TemperatureModifier
         int temperatureLevel = temperature.getRawValue();
         SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
         
-        if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
+        if (!(SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS)))
         {
         	season = SubSeason.MID_SUMMER;
         }

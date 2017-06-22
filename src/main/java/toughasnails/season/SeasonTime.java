@@ -7,29 +7,45 @@
  ******************************************************************************/
 package toughasnails.season;
 
+import toughasnails.api.config.SeasonsOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
+import toughasnails.config.SeasonsConfig;
 
 public final class SeasonTime implements ISeasonData
 {
-    /** Not configurable, the duration of a single day*/
-    public static final int DAY_TICKS = 24000;
-    /** The duration of a sub season in days*/
-    public static final int SUB_SEASON_DURATION = 5;
-    public static final int SEASON_TICKS = DAY_TICKS * SUB_SEASON_DURATION * 3;
-    public static final int TOTAL_CYCLE_TICKS = (DAY_TICKS * SUB_SEASON_DURATION) * SubSeason.values().length;
-    
+    public static final SeasonTime ZERO = new SeasonTime(0);
     public final int time;
     
     public SeasonTime(int time)
     {
         this.time = time;
     }
-    
-    public int getDay()
+
+    @Override
+    public int getDayDuration()
     {
-        return (int)(this.time / DAY_TICKS);
+        return SyncedConfig.getIntValue(SeasonsOption.DAY_DURATION);
+    }
+
+    @Override
+    public int getSubSeasonDuration()
+    {
+        return getDayDuration() * SyncedConfig.getIntValue(SeasonsOption.SUB_SEASON_DURATION);
+    }
+
+    @Override
+    public int getSeasonDuration()
+    {
+        return getSubSeasonDuration() * 3;
+    }
+
+    @Override
+    public int getCycleDuration()
+    {
+        return getSubSeasonDuration() * SubSeason.values().length;
     }
     
     @Override
@@ -37,14 +53,21 @@ public final class SeasonTime implements ISeasonData
     {
         return this.time;
     }
-    
+
+    @Override
+    public int getDay()
+    {
+        return this.time / getDayDuration();
+    }
+
     @Override
     public SubSeason getSubSeason()
     {
-        int index = (getDay() / SUB_SEASON_DURATION) % SubSeason.values().length;
+        int index = (this.time / getSubSeasonDuration()) % SubSeason.values().length;
         return SubSeason.values()[index];
     }
-    
+
+    @Override
     public Season getSeason()
     {
         return this.getSubSeason().getSeason();

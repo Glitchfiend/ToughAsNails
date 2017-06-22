@@ -8,6 +8,7 @@
 package toughasnails.api.season;
 
 import net.minecraft.world.World;
+import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.GameplayOption;
 
@@ -46,7 +47,7 @@ public class SeasonHelper
     public static boolean canSnowAtTempInSeason(Season season, float temperature)
     {
         //If we're in winter, the temperature can be anything equal to or below 0.7
-        return temperature < 0.15F || (season == Season.WINTER && temperature <= 0.7F && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS));
+        return temperature < 0.15F || (season == Season.WINTER && temperature <= 0.7F && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS));
     }
 
     public interface ISeasonDataProvider

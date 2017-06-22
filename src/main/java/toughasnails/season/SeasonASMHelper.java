@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANBlocks;
 import toughasnails.api.season.IDecayableCrop;
@@ -25,6 +26,7 @@ import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.handler.season.SeasonHandler;
+import toughasnails.init.ModConfig;
 
 public class SeasonASMHelper
 {
@@ -119,7 +121,7 @@ public class SeasonASMHelper
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
-        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
+        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             return 0.0F;
         }
@@ -140,7 +142,7 @@ public class SeasonASMHelper
         if (season == Season.WINTER &&
                 (block instanceof IDecayableCrop && ((IDecayableCrop)block).shouldDecay()) &&
                 !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && 
-                SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)
+                SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS) && ModConfig.seasons.winterCropDeath
                 )
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());

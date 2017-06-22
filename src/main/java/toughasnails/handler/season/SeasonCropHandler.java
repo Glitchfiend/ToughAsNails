@@ -13,17 +13,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.IHibernatingCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.api.config.SeasonsOption;
+import toughasnails.init.ModConfig;
 
-public class SeasonCropHandler {
+public class SeasonCropHandler
+{
     @SubscribeEvent
-    public void onCropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
+    public void onCropGrowPre(BlockEvent.CropGrowEvent.Pre event)
+    {
         Block block = event.getState().getBlock();
         BlockPos pos = event.getPos();
         World world = event.getWorld();
@@ -31,7 +34,7 @@ public class SeasonCropHandler {
         if (season == Season.WINTER &&
                 (block instanceof IHibernatingCrop && ((IHibernatingCrop)block).shouldHibernate()) &&
                 !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) &&
-                SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)
+                SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS) && ModConfig.seasons.winterCropDeath
                 ) {
             event.setResult(Event.Result.DENY);
         }
