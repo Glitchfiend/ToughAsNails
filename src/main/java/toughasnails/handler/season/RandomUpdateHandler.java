@@ -48,8 +48,8 @@ public class RandomUpdateHandler
                 for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
                 {
                     Chunk chunk = (Chunk)iterator.next();
-                    int x = chunk.xPosition * 16;
-                    int z = chunk.zPosition * 16;
+                    int x = chunk.x * 16;
+                    int z = chunk.z * 16;
                     
                     int rand;
                     switch (subSeason)

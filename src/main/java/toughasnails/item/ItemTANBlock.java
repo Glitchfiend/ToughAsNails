@@ -38,18 +38,17 @@ public class ItemTANBlock extends ItemBlock
     // define the items which will appear in the creative tab (called by ItemBlock class)
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
-    {        
-        ImmutableSet<IBlockState> presets = BlockStateUtils.getBlockPresets(this.block);
-        if (presets.isEmpty())
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    {
+        if (this.isInCreativeTab(tab))
         {
-            subItems.add(new ItemStack(this.block, 1, 0));
-        }
-        else
-        {
-            for (IBlockState state : presets)
-            {
-                subItems.add(new ItemStack(this.block, 1, this.block.getMetaFromState(state)));
+            ImmutableSet<IBlockState> presets = BlockStateUtils.getBlockPresets(this.block);
+            if (presets.isEmpty()) {
+                subItems.add(new ItemStack(this.block, 1, 0));
+            } else {
+                for (IBlockState state : presets) {
+                    subItems.add(new ItemStack(this.block, 1, this.block.getMetaFromState(state)));
+                }
             }
         }
     }

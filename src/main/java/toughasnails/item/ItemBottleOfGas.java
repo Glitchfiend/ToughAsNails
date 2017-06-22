@@ -52,11 +52,11 @@ public class ItemBottleOfGas extends Item
     // add all the contents types as separate items in the creative tab
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for (BottleContents contents : BottleContents.values())
         {
-            subItems.add(new ItemStack(itemIn, 1, contents.ordinal()));
+            subItems.add(new ItemStack(this, 1, contents.ordinal()));
         }
     }
 

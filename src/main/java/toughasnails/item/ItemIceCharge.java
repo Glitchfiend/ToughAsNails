@@ -57,7 +57,7 @@ public class ItemIceCharge extends Item
                     net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(worldIn, blockpos1);
                                         
                     worldIn.setBlockState(blockpos, Blocks.ICE.getDefaultState());
-                    if (net.minecraftforge.event.ForgeEventFactory.onPlayerBlockPlace(playerIn, blocksnapshot, net.minecraft.util.EnumFacing.UP).isCanceled())
+                    if (net.minecraftforge.event.ForgeEventFactory.onPlayerBlockPlace(playerIn, blocksnapshot, net.minecraft.util.EnumFacing.UP, hand).isCanceled())
                     {
                         blocksnapshot.restore(true, false);
                         return new ActionResult(EnumActionResult.PASS, itemStackIn);

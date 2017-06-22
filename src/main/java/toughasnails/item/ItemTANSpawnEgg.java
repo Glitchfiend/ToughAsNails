@@ -50,11 +50,11 @@ public class ItemTANSpawnEgg extends Item implements IColoredItem
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for (Entry<Integer, EntityList.EntityEggInfo> entry : ModEntities.entityEggs.entrySet())
         {
-            subItems.add(new ItemStack(itemIn, 1, entry.getKey()));
+            subItems.add(new ItemStack(this, 1, entry.getKey()));
         }
     }
     

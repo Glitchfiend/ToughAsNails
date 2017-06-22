@@ -37,11 +37,11 @@ public class ItemFruitJuice extends ItemDrink<JuiceType>
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for (JuiceType juiceType : JuiceType.values())
         {
-            subItems.add(new ItemStack(item, 1, juiceType.ordinal()));
+            subItems.add(new ItemStack(this, 1, juiceType.ordinal()));
         }
     }
     

@@ -17,7 +17,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -31,7 +30,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.api.TANBlocks;
-import toughasnails.api.achievement.TANAchievements;
 import toughasnails.item.ItemTANBlock;
 
 public class BlockTANCampfire extends Block implements ITANBlock
@@ -158,7 +156,6 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			            	if (worldIn.rand.nextInt(12) == 0)
 			            	{
 			            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
-			            		playerIn.addStat(TANAchievements.campfire_song);
 			            	}
 			
 			                if (item == Items.STICK)
@@ -173,7 +170,6 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			            {
 			            	worldIn.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.4F + 0.8F);
 			            	worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
-			            	playerIn.addStat(TANAchievements.campfire_song);
 			
 			                if (item == Items.FLINT_AND_STEEL)
 			                {

@@ -4,6 +4,7 @@ import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 
 import java.util.Random;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -11,7 +12,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -61,10 +61,10 @@ public class TemperatureOverlayHandler
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-        
+
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         Temperature temperature = temperatureStats.getTemperature();
-        
+
         //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
         random.setSeed((long)(updateCounter * 312871));
         
@@ -201,12 +201,12 @@ public class TemperatureOverlayHandler
             GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
             GlStateManager.disableAlpha();
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer renderer = tessellator.getBuffer();
-            renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-            renderer.pos(0.0D, height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            renderer.pos(width, height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            renderer.pos(width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+            BufferBuilder buffer = tessellator.getBuffer();
+            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+            buffer.pos(0.0D, height, -90.0D).tex(0.0D, 1.0D).endVertex();
+            buffer.pos(width, height, -90.0D).tex(1.0D, 1.0D).endVertex();
+            buffer.pos(width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
+            buffer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
             tessellator.draw();
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();

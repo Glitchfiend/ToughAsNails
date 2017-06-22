@@ -1,5 +1,6 @@
 package toughasnails.handler;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
@@ -18,23 +19,22 @@ import toughasnails.core.ToughAsNails;
 public class ExtendedStatHandler
 {
     @SubscribeEvent
-    public void onAttachCapabilities(AttachCapabilitiesEvent.Entity event)
+    public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
     {
-        if (event.getEntity() instanceof EntityPlayer)
+        if (event.getObject() instanceof EntityPlayer)
         {
-            EntityPlayer player = (EntityPlayer)event.getEntity();
-            
-            for (String identifier : PlayerStatRegistry.getCapabilityMap().keySet())
-            {
+            EntityPlayer player = (EntityPlayer)event.getObject();
+
+            for (String identifier : PlayerStatRegistry.getCapabilityMap().keySet()) {
                 ResourceLocation loc = new ResourceLocation(ToughAsNails.MOD_ID, identifier);
-                
+
                 //Each player should have their own instance for each stat, as associated values may vary
                 if (!event.getCapabilities().containsKey(loc))
                     event.addCapability(loc, PlayerStatRegistry.createCapabilityProvider(identifier));
             }
         }
     }
-    
+
     @SubscribeEvent
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {

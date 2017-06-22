@@ -10,22 +10,19 @@ package toughasnails.handler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import toughasnails.api.achievement.TANAchievements;
 import toughasnails.api.item.TANItems;
 
 public class AchievementEventHandler 
 {
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onItemPickup(PlayerEvent.ItemPickupEvent event)
     {
         ItemStack stack = event.pickedUp.getEntityItem();
@@ -39,23 +36,6 @@ public class AchievementEventHandler
         {
             player.addStat(TANAchievements.into_ice);
         }
-    }
-    
-    @SubscribeEvent
-    public void onItemUsed(PlayerInteractEvent event)
-    {
-        /* TODO: 1.9 if (event.action != Action.LEFT_CLICK_BLOCK)
-        {
-            ItemStack stack = event.entityPlayer.getHeldItem();
-            Item item = stack != null ? stack.getItem() : null;
-            EntityPlayer player = event.entityPlayer;
-
-            //Gone Home
-            if (item == BOPItems.enderporter)
-            {
-                player.addStat(BOPAchievements.use_enderporter);
-            }
-        }*/
     }
     
     @SubscribeEvent
@@ -73,30 +53,6 @@ public class AchievementEventHandler
             {
                 player.addStat(TANAchievements.life_or_death);
             }
-        }
-    }
-    
-    @SubscribeEvent
-    public void onBlockPlaced(BlockEvent.PlaceEvent event)
-    {
-        ItemStack stack = event.getItemInHand();
-        
-        //Blocks can be placed by things other than players
-        if (stack != null)
-        {
-            Item item = stack.getItem();
-            Block block = Block.getBlockFromItem(item);
-            IBlockState state = Block.getBlockFromItem(item).getStateFromMeta(item.getMetadata(stack));
-            
-            try
-            {
-                //Yggdrasil
-                /*if (state == BlockBOPSapling.paging.getVariantState(BOPTrees.SACRED_OAK))
-                {
-                    event.getPlayer().addStat(BOPAchievements.grow_sacred_oak);
-                }*/
-            }
-            catch(Exception e) {} //Fail quietly if there's a problem matching metadata to a block state
         }
     }
     
@@ -129,7 +85,7 @@ public class AchievementEventHandler
         {
             player.addStat(TANAchievements.that_time_of_year);
         }
-    }
+    }*/
 
     /*@SubscribeEvent
     public void onPlayerUpdate(LivingUpdateEvent event)

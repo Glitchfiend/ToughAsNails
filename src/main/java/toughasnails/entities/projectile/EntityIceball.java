@@ -133,11 +133,11 @@ public class EntityIceball extends Entity implements IProjectile
 
             if (movingobjectposition != null)
             {
-                vec31 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec31 = new Vec3d(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
             }
 
             Entity entity = null;
-            List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+            List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
 
             for (int i = 0; i < list.size(); ++i)
@@ -342,23 +342,23 @@ public class EntityIceball extends Entity implements IProjectile
         {
             this.setBeenAttacked();
 
-            if (source.getEntity() != null)
+            if (source.getTrueSource() != null)
             {
-                Vec3d vec3 = source.getEntity().getLookVec();
+                Vec3d vec3 = source.getTrueSource().getLookVec();
 
                 if (vec3 != null)
                 {
-                    this.motionX = vec3.xCoord;
-                    this.motionY = vec3.yCoord;
-                    this.motionZ = vec3.zCoord;
+                    this.motionX = vec3.x;
+                    this.motionY = vec3.y;
+                    this.motionZ = vec3.z;
                     this.accelerationX = this.motionX * 0.1D;
                     this.accelerationY = this.motionY * 0.1D;
                     this.accelerationZ = this.motionZ * 0.1D;
                 }
 
-                if (source.getEntity() instanceof EntityLivingBase)
+                if (source.getTrueSource() instanceof EntityLivingBase)
                 {
-                    this.shootingEntity = (EntityLivingBase)source.getEntity();
+                    this.shootingEntity = (EntityLivingBase)source.getTrueSource();
                 }
 
                 return true;
