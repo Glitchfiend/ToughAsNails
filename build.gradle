@@ -1,20 +1,18 @@
 buildscript {
     repositories {
         jcenter()
-		mavenLocal()
-        mavenCentral()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
-        }
-		maven {
-            name = 'sponge'
-            url = 'http://repo.spongepowered.org/maven'
         }
     }
 	dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
+}
+
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.0.9"
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -26,44 +24,210 @@ ext {
 }
 
 configFile.withReader {
+     // read config.  it shall from now on be referenced as simply config or as project.config
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-
-group = "glitchfiend.toughasnails"
-version = config.mod_version
+group = "com.github.glitchfiend.biomesoplenty"
+version = "${config.minecraft_version}-${config.mod_version}.${System.getenv().BUILD_NUMBER}"
 archivesBaseName = "ToughAsNails"
 
-repositories {
-    maven {
-        name = 'sponge'
-        url = 'https://repo.spongepowered.org/maven/'
-    }
-}
-
-//Add "embedded" configuration
-configurations {
-    embed
-    compile.extendsFrom(embed)
-}
+config.build_number = (System.getenv().BUILD_NUMBER) ? System.getenv().BUILD_NUMBER : ""
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 	mappings = project.config.mappings_version
+
+    // gradle complains if this isn't set when setting up/using IDEA workspace
+    runDir = "run"
+    // set a full version string with appended build number to be used in mod registration
+    def buildnum = (config.build_number!="") ? '.' + config.build_number : ""
+    
+    replace '@MOD_VERSION@', config.mod_version + buildnum
+    replace '1.0.0.0', config.forge_version
+    replaceIn 'ToughAsNails.java'
 }
 
-jar {
-	//Add dependencies to the JAR
-	from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
-
-	manifest {
+def commonManifest = {
 		attributes (
 			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
 			"FMLCorePluginContainsFMLMod": 'true',
 			"ForceLoadAsMod": 'true',
 			"FMLAT": 'toughasnails_at.cfg'
 		)
-	}
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.info'
+        include '**/*.properties'
+
+        // replaces
+        expand ([
+            'modid': project.archivesBaseName,
+            'mod_version': project.config.mod_version,
+            'minecraft_version': project.config.minecraft_version,
+            'build_number': project.config.build_number
+        ])
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.info'
+        exclude '**/*.properties'
+    }
+}
+
+import net.minecraftforge.gradle.tasks.JenkinsChangelog
+import net.minecraftforge.gradle.common.Constants
+
+task changelog(type: JenkinsChangelog) {
+    def buildNumber = "${System.getenv().BUILD_NUMBER}"
+
+    serverRoot = 'http://ci.jenkins.minecraftforge.net/'
+    jobName = 'ToughAsNails'
+    authName = 'console_script';
+    authPassword = "$System.env.changelog_pass";
+    targetBuild = buildNumber.toString();
+    output = 'build/libs/' + project.getName() + '-' + project.version + '-changelog.txt';
+}
+
+tasks.build.dependsOn('changelog')
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    from (sourceSets.main.output) {
+        include 'LICENSE.txt'
+    }
+
+    classifier = 'sources'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+
+    manifest commonManifest
+    classifier = 'deobf'
+}
+
+task apiJar(type: Jar) {
+    from(sourceSets.main.allJava) {
+        include 'toughasnails/api/**'
+    }
+    from (sourceSets.main.output) {
+        include 'LICENSE.txt'
+        include 'toughasnails/api/**'
+    }
+
+    classifier = 'api'
+}
+
+task listOutputs << {
+    //This is needed by the Groovy Postbuild to append labels for each build used in the changelog.
+    println "Output files:"
+    println "--------------------"
+    def list = []
+
+    def dir = new File("build/libs/")
+    
+    if (dir.exists()) {
+        dir.eachFileRecurse (FileType.FILES) { file ->
+            //Add each file to the list
+            list << file
+        }
+    
+        //Print the names of all of the output files
+        list.each {
+            println it.getName()
+        }
+    }
+    println "--------------------"
+}
+
+tasks.build.finalizedBy('listOutputs')
+
+artifacts {
+    archives changelog.output
+    archives sourcesJar
+    archives deobfJar
+	archives apiJar
+}
+
+curseforge {
+    apiKey = "$System.env.curse_api_key"
+    project {
+        id = '246391'
+        changelog = file('build/libs/' + project.getName() + '-' + project.version + '-changelog.txt');
+        releaseType = 'beta'
+    }
+}
+
+jar {
+	manifest commonManifest
+    classifier = 'universal'
+}
+
+import groovy.io.FileType
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+			if (project.hasProperty('forgeMavenPassword'))
+			{
+				repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
+					authentication(userName: project.getProperty('forgeMavenUsername'), password: project.getProperty('forgeMavenPassword'))
+				}
+			}
+			else
+			{
+				// local repo folder. Might wanna juset use  gradle install   if you wanans end it to maven-local
+				repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
+			}
+
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'Tough As Nails'
+                    url 'https://github.com/Glitchfiend/ToughAsNails'
+                
+                    scm {
+                        url 'https://github.com/Glitchfiend/ToughAsNails'
+                        connection 'scm:git:git://github.com/Glitchfiend/ToughAsNails.git'
+                        developerConnection 'scm:git:git@github.com:Glitchfiend/ToughAsNails.git'
+                    }
+                
+                    issueManagement {
+                        system 'github'
+                        url 'https://github.com/Glitchfiend/ToughAsNails/issues'
+                    }
+                
+                    licenses {
+                        license {
+                            name 'Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International Public License'
+                            url 'http://creativecommons.org/licenses/by-nc-nd/4.0/'
+                            distribution 'repo'
+                        }
+                    }
+                
+                    developers {
+                        developer {
+                            id 'Adubbz'
+                            name 'Adubbz'
+                            roles { role 'developer' }
+                        }
+                        developer {
+                            id 'Forstride'
+                            name 'Forstride'
+                            roles { role 'developer' }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
