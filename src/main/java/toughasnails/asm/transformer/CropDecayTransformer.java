@@ -38,7 +38,7 @@ public class CropDecayTransformer implements IClassTransformer
         if (transformedName.equals("net.minecraft.block.BlockCrops") || transformedName.equals("net.minecraft.block.BlockStem"))
         {
             // This is a vanilla crop; let's implement the interface and inject the crop decay hook
-            return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, transformedName, true);
+            return transformToDecay(basicClass, !transformedName.equals(name), transformedName, true);
         }
         else
         {
@@ -47,7 +47,7 @@ public class CropDecayTransformer implements IClassTransformer
             InterfaceCheckVisitor visitor = new InterfaceCheckVisitor("toughasnails/api/season/IDecayableCrop");
             classReader.accept(visitor, ClassReader.SKIP_CODE);
             if (visitor.isInterfaceFound) {
-                return transformToDecay(basicClass, !FMLForgePlugin.RUNTIME_DEOBF, transformedName, false);
+                return transformToDecay(basicClass, !transformedName.equals(name), transformedName, false);
             }
         }
         return basicClass;
