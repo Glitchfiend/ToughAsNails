@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "I#I",
+    "III"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:slime_ball",
+      "data": 32767
+    },
+    "I": {
+      "item": "toughasnails:ice_cube",
+      "data": 32767
+    }
+  },
+  "result": {
+    "item": "toughasnails:jelled_slime",
+    "count": 3
+  }
+}

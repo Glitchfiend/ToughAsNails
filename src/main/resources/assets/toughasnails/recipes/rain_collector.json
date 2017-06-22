@@ -1,0 +1,26 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "I#I",
+    "C C",
+    "CCC"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_bars",
+      "data": 32767
+    },
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    },
+    "C": {
+      "item": "minecraft:cobblestone",
+      "data": 32767
+    }
+  },
+  "result": {
+    "item": "toughasnails:rain_collector",
+    "data": 0
+  }
+}

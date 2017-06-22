@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "toughasnails:ice_cube",
+      "data": 32767
+    },
+    {
+      "item": "minecraft:gunpowder",
+      "data": 32767
+    },
+    {
+      "item": "toughasnails:freeze_powder",
+      "data": 32767
+    }
+  ],
+  "result": {
+    "item": "toughasnails:ice_charge",
+    "count": 3,
+    "data": 0
+  }
+}

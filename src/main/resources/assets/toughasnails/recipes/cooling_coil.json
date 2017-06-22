@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FFF",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:cobblestone",
+      "data": 32767
+    },
+    "F": {
+      "item": "toughasnails:freeze_rod",
+      "data": 32767
+    }
+  },
+  "result": {
+    "item": "toughasnails:temperature_coil",
+    "data": 0
+  }
+}

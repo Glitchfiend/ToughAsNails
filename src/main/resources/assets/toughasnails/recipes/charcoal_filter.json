@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "CCC",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:paper",
+      "data": 32767
+    },
+    "C": {
+      "item": "minecraft:coal",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "toughasnails:charcoal_filter",
+    "count": 3
+  }
+}

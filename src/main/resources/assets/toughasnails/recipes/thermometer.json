@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#Q#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diamond",
+      "data": 32767
+    },
+    "Q": {
+      "item": "minecraft:quartz",
+      "data": 32767
+    }
+  },
+  "result": {
+    "item": "toughasnails:thermometer"
+  }
+}

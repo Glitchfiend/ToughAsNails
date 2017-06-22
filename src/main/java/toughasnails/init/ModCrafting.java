@@ -1,6 +1,5 @@
 package toughasnails.init;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
@@ -8,15 +7,10 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import toughasnails.api.TANBlocks;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
-import toughasnails.block.BlockTANTemperatureCoil;
-import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.util.PotionBrewingRecipe;
-import toughasnails.util.inventory.CraftingUtil;
 
 public class ModCrafting
 {
@@ -28,97 +22,25 @@ public class ModCrafting
         //removeCraftingRecipes();
     }
     
-    private static void addCraftingRecipies()
-    {
-    	// Register crafting recipes
-    	
-    	//Brewing
-    	//Base
-    	addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(Items.FIRE_CHARGE), TANPotions.heat_resistance_type);
-    	addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.ice_charge), TANPotions.cold_resistance_type);
-   	
-    	//Extended
-    	addBrewingRecipe(TANPotions.heat_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_heat_resistance_type);
-    	addBrewingRecipe(TANPotions.cold_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_cold_resistance_type);
-   	
-    	//Splash and lingering
-    	addPotionTransforms(TANPotions.heat_resistance_type);
-    	addPotionTransforms(TANPotions.cold_resistance_type);
-    	addPotionTransforms(TANPotions.long_heat_resistance_type);
-    	addPotionTransforms(TANPotions.long_cold_resistance_type);
+    private static void addCraftingRecipies() {
+		// Register crafting recipes
 
-    	// Armor
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.wool_helmet), new Object [] {"###", "# #", '#', Blocks.WOOL});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.wool_chestplate), new Object [] {"# #", "###", "###", '#', Blocks.WOOL});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.wool_leggings), new Object [] {"###", "# #", "# #", '#', Blocks.WOOL});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.wool_boots), new Object [] {"# #", "# #", '#', Blocks.WOOL});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.jelled_slime_helmet), new Object [] {"###", "# #", '#', TANItems.jelled_slime});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.jelled_slime_chestplate), new Object [] {"# #", "###", "###", '#', TANItems.jelled_slime});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.jelled_slime_leggings), new Object [] {"###", "# #", "# #", '#', TANItems.jelled_slime});
-        CraftingUtil.addShapedRecipe(new ItemStack(TANItems.jelled_slime_boots), new Object [] {"# #", "# #", '#', TANItems.jelled_slime});
-        
-        // Campfire
-        CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.campfire), " L ", "LLL", "CCC", 'C', Blocks.COBBLESTONE, 'L', "logWood");
-        CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.campfire), " L ", "LLL", "CCC", 'C', "chunkStone", 'L', "splitWood");
-        
-        // Rain Collector
-        CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.rain_collector), "IBI", "C C", "CCC", 'C', Blocks.COBBLESTONE, 'I', "ingotIron", 'B', Blocks.IRON_BARS);
-        
-        // Heating Coil
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.temperature_coil, 1, BlockTANTemperatureCoil.CoilType.HEATING.ordinal()), new Object[] {"BBB", "BBB", "CCC", 'B', Items.BLAZE_ROD, 'C', Blocks.COBBLESTONE});
+		//Brewing
+		//Base
+		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(Items.FIRE_CHARGE), TANPotions.heat_resistance_type);
+		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.ice_charge), TANPotions.cold_resistance_type);
 
-    	// Cooling Coil
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.temperature_coil, 1, BlockTANTemperatureCoil.CoilType.COOLING.ordinal()), new Object[] {"FFF", "FFF", "CCC", 'F', TANItems.freeze_rod, 'C', Blocks.COBBLESTONE});
-        
-    	// Canteen
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.canteen, 1), new Object[] {" L ", "L L", "LLL", 'L', Items.LEATHER});
-    	
-    	// Filtered Canteen
-        CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.canteen, 1, 2), TANItems.charcoal_filter, new ItemStack(TANItems.canteen, 1, 1));
-    	
-    	// Filtered Water Bottle
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), new Object[] {new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.DIRTY.ordinal()), TANItems.charcoal_filter});
+		//Extended
+		addBrewingRecipe(TANPotions.heat_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_heat_resistance_type);
+		addBrewingRecipe(TANPotions.cold_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_cold_resistance_type);
 
-    	// Fruit Juices
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.APPLE.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.APPLE});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.BEETROOT.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.BEETROOT});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.CACTUS.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Blocks.CACTUS});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.CARROT.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.CARROT});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.CHORUS_FRUIT.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.CHORUS_FRUIT});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.GLISTERING_MELON.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.SPECKLED_MELON});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.GOLDEN_APPLE.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.GOLDEN_APPLE});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.GOLDEN_CARROT.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.GOLDEN_CARROT});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.MELON.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Items.MELON});
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.fruit_juice, 1, ItemFruitJuice.JuiceType.PUMPKIN.ordinal()), new Object[] {PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.SUGAR, Blocks.PUMPKIN});
-    	
-    	// Freeze Powder
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.freeze_powder, 2), new Object[] {TANItems.freeze_rod});
-    	
-    	// Ice Charge
-    	CraftingUtil.addShapelessRecipe(new ItemStack(TANItems.ice_charge, 3), new Object[] {TANItems.ice_cube, Items.GUNPOWDER, TANItems.freeze_powder});
-    	
-    	// Jelled Slime
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.jelled_slime, 3), new Object[] {"III", "ISI", "III", 'I', TANItems.ice_cube, 'S', Items.SLIME_BALL});
-    	
-    	//Charcoal Filter
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.charcoal_filter, 3), new Object[] {"PPP", "CCC", "PPP", 'P', Items.PAPER, 'C', new ItemStack(Items.COAL, 1, 1)});
-    	
-    	// Air Filter
-    	//CraftingUtil.addShapedRecipe(new ItemStack(TANItems.air_filter, 1), new Object[] {"LLL", "LCL", "LLL", 'L', Items.LEATHER, 'C', TANItems.charcoal_filter});
-    	
-    	// Season Clock
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.season_clock, 1), new Object[] {" Q ", "QRQ", " Q ", 'Q', Items.QUARTZ, 'R', Items.REDSTONE});
-    	
-    	// Season Sensor
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANBlocks.season_sensors[0], 1), new Object[] {"GGG", "QSQ", "CCC", 'G', Blocks.GLASS, 'Q', Items.QUARTZ, 'S', TANItems.season_clock, 'C', new ItemStack(Blocks.STONE_SLAB, 1, 3)});
-    	
-    	// Thermometer
-    	CraftingUtil.addShapedRecipe(new ItemStack(TANItems.thermometer, 1), new Object[] {" D ", "DQD", " D ", 'D', Items.DIAMOND, 'Q', Items.QUARTZ});
-    	
-    	// Respirator
-    	//CraftingUtil.addShapedRecipe(new ItemStack(TANItems.respirator, 1), new Object[] {"SSS", "III", "AIA", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'A', TANItems.air_filter});
-    }
-    
+		//Splash and lingering
+		addPotionTransforms(TANPotions.heat_resistance_type);
+		addPotionTransforms(TANPotions.cold_resistance_type);
+		addPotionTransforms(TANPotions.long_heat_resistance_type);
+		addPotionTransforms(TANPotions.long_cold_resistance_type);
+	}
+
     public static void addSmeltingRecipes()
     {
     	// Register smelting recipes

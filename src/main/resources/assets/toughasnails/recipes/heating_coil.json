@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "CCC"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:blaze_rod",
+      "data": 32767
+    },
+    "C": {
+      "item": "minecraft:cobblestone",
+      "data": 32767
+    }
+  },
+  "result": {
+    "item": "toughasnails:temperature_coil",
+    "data": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "toughasnails:freeze_rod",
+      "data": 32767
+    }
+  ],
+  "result": {
+    "item": "toughasnails:freeze_powder",
+    "count": 2
+  }
+}

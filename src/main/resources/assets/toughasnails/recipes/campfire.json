@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " L ",
+    "LLL",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:cobblestone",
+      "data": 32767
+    },
+    "L": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
+    }
+  },
+  "result": {
+    "item": "toughasnails:campfire",
+    "data": 0
+  }
+}
