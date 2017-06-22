@@ -7,6 +7,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SeasonsOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.AchievementEventHandler;
@@ -53,9 +56,14 @@ public class ModHandlers
         MinecraftForge.TERRAIN_GEN_BUS.register(new ProviderIceHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonCropHandler());
         MinecraftForge.EVENT_BUS.register(new SeasonSleepHandler());
-        StopSpawnHandler stopSpawnHandler = new StopSpawnHandler();
-        MinecraftForge.EVENT_BUS.register(stopSpawnHandler);
-        MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
+        
+        if (!(ModConfig.seasons.winterAnimalSpawns))
+            {
+            StopSpawnHandler stopSpawnHandler = new StopSpawnHandler();
+            MinecraftForge.EVENT_BUS.register(stopSpawnHandler);
+            MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
+            }
+        
         MinecraftForge.EVENT_BUS.register(new WeatherFrequencyHandler());
         MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
         
