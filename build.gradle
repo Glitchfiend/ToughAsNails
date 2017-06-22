@@ -157,18 +157,18 @@ curseforge {
     }
 }
 
-jar {
-	//Add dependencies to the JAR
-	from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
-
-	manifest {
+def commonManifest = {
 		attributes (
 			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
 			"FMLCorePluginContainsFMLMod": 'true',
 			"ForceLoadAsMod": 'true',
 			"FMLAT": 'toughasnails_at.cfg'
 		)
-	}
+}
+
+jar {
+	manifest commonManifest
+    classifier = 'universal'
 }
 
 import groovy.io.FileType
