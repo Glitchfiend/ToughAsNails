@@ -30,7 +30,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-group = "glitchfiend"
+group = "com.github.glitchfiend.biomesoplenty"
 version = "${config.minecraft_version}-${config.mod_version}.${System.getenv().BUILD_NUMBER}"
 archivesBaseName = "ToughAsNails"
 
@@ -39,7 +39,7 @@ config.build_number = (System.getenv().BUILD_NUMBER) ? System.getenv().BUILD_NUM
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 	mappings = project.config.mappings_version
-    
+
     // gradle complains if this isn't set when setting up/using IDEA workspace
     runDir = "run"
     // set a full version string with appended build number to be used in mod registration
