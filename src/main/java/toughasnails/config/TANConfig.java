@@ -33,6 +33,7 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.temperature.BlockTemperatureData;
 import toughasnails.temperature.MaterialTemperatureData;
 import toughasnails.util.BlockStateUtils;
+import biomesoplenty.api.block.BOPBlocks;
 
 public class TANConfig
 {
@@ -64,6 +65,7 @@ public class TANConfig
                     new BlockTemperatureData(Blocks.LAVA.getDefaultState(), new String[0], 20.0F),
                     new BlockTemperatureData(Blocks.FLOWING_LAVA.getDefaultState(), new String[0], 20.0F),
                     new BlockTemperatureData(Blocks.MAGMA.getDefaultState(), new String[0], 17.0F),
+                    new BlockTemperatureData(BOPBlocks.hot_spring_water.getDefaultState(), new String[0], 12.0F)
                     };
 
                 //Need to do this manually as there is some issue with getting Gson to serialise an IBlockState directly due to duplicated keys
