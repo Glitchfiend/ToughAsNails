@@ -31,18 +31,15 @@ configFile.withReader {
 }
 
 group = "glitchfiend"
-version = config.mod_version
+version = "${config.minecraft_version}-${config.mod_version}.${System.getenv().BUILD_NUMBER}"
 archivesBaseName = "ToughAsNails"
 
-//Add "embedded" configuration
-configurations {
-    embed
-    compile.extendsFrom(embed)
-}
+config.build_number = (System.getenv().BUILD_NUMBER) ? System.getenv().BUILD_NUMBER : ""
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 	mappings = project.config.mappings_version
+    
     // gradle complains if this isn't set when setting up/using IDEA workspace
     runDir = "run"
     // set a full version string with appended build number to be used in mod registration
@@ -51,6 +48,15 @@ minecraft {
     replace '@MOD_VERSION@', config.mod_version + buildnum
     replace '1.0.0.0', config.forge_version
     replaceIn 'ToughAsNails.java'
+}
+
+def commonManifest = {
+		attributes (
+			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
+			"FMLCorePluginContainsFMLMod": 'true',
+			"ForceLoadAsMod": 'true',
+			"FMLAT": 'toughasnails_at.cfg'
+		)
 }
 
 processResources {
@@ -155,15 +161,6 @@ curseforge {
         changelog = file('build/libs/' + project.getName() + '-' + project.version + '-changelog.txt');
         releaseType = 'beta'
     }
-}
-
-def commonManifest = {
-		attributes (
-			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
-			"FMLCorePluginContainsFMLMod": 'true',
-			"ForceLoadAsMod": 'true',
-			"FMLAT": 'toughasnails_at.cfg'
-		)
 }
 
 jar {
