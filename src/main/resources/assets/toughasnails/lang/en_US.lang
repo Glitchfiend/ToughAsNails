@@ -90,6 +90,16 @@ potion.effect.long_cold_resistance_type=Potion of Cold Resistance
 potion.effect.heat_resistance_type=Potion of Heat Resistance
 potion.effect.long_heat_resistance_type=Potion of Heat Resistance
 
+splash_potion.effect.cold_resistance_type=Splash Potion of Cold Resistance
+splash_potion.effect.long_cold_resistance_type=Splash Potion of Cold Resistance
+splash_potion.effect.heat_resistance_type=Splash Potion of Heat Resistance
+splash_potion.effect.long_heat_resistance_type=Splash Potion of Heat Resistance
+
+lingering_potion.effect.cold_resistance_type=Lingering Potion of Cold Resistance
+lingering_potion.effect.long_cold_resistance_type=Lingering Potion of Cold Resistance
+lingering_potion.effect.heat_resistance_type=Lingering Potion of Heat Resistance
+lingering_potion.effect.long_heat_resistance_type=Lingering Potion of Heat Resistance
+
 tipped_arrow.effect.cold_resistance_type=Arrow of Cold Resistance
 tipped_arrow.effect.long_cold_resistance_type=Arrow of Cold Resistance
 tipped_arrow.effect.heat_resistance_type=Arrow of Heat Resistance
