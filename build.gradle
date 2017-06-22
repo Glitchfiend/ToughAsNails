@@ -30,7 +30,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-group = "glitchfiend.toughasnails"
+group = "glitchfiend"
 version = config.mod_version
 archivesBaseName = "ToughAsNails"
 
