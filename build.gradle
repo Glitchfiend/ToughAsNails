@@ -160,9 +160,9 @@ curseforge {
         id = '246391'
         changelog = file('build/libs/' + project.getName() + '-' + project.version + '-changelog.txt');
         releaseType = 'beta'
+        addGameVersion '1.10'
+        addGameVersion '1.10.2'
     }
-    addGameVersion '1.10'
-    addGameVersion '1.10.2'
 }
 
 jar {
