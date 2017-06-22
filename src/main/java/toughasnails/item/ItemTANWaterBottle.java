@@ -40,9 +40,12 @@ public class ItemTANWaterBottle extends ItemDrink<WaterBottleType>
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        for (WaterBottleType waterBottleType : WaterBottleType.values())
+        if (this.isInCreativeTab(tab))
         {
-            subItems.add(new ItemStack(this, 1, waterBottleType.ordinal()));
+            for (WaterBottleType waterBottleType : WaterBottleType.values())
+            {
+                subItems.add(new ItemStack(this, 1, waterBottleType.ordinal()));
+            }
         }
     }
     

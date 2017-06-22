@@ -5,8 +5,6 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
@@ -23,7 +21,6 @@ import toughasnails.entities.projectile.EntityIceball;
 
 public class ModEntities
 {
-	public static final Map<Integer, EntityEggInfo> entityEggs = Maps.<Integer, EntityEggInfo>newLinkedHashMap();
     public static final Map<Integer, String> idToTANEntityName = Maps.<Integer, String>newLinkedHashMap();
 
     private static int nextTANEntityId = 1;
@@ -31,10 +28,10 @@ public class ModEntities
     public static void init()
     {
         // projectiles
-        registerTANEntity(EntityIceball.class, "iceball", 80, 3, true);
+        registerTANEntity(EntityIceball.class, "iceball", 64, 10, true);
         
         // mobs
-        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS);
+        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, EnumCreatureType.MONSTER, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS);
     }
     
     // register an entity
@@ -48,11 +45,11 @@ public class ModEntities
     }
     
     // register an entity and in addition create a spawn egg for it
-    public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, Biome... entityBiomes)
+    public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, EnumCreatureType enumCreatureType, Biome... entityBiomes)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
-        entityEggs.put(Integer.valueOf(tanEntityId), new EntityList.EntityEggInfo(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor));
-        EntityRegistry.addSpawn(entityClass, 3, 1, 3, EnumCreatureType.MONSTER, entityBiomes);
+        EntityRegistry.registerEgg(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor);
+        EntityRegistry.addSpawn(entityClass, 3, 1, 3, enumCreatureType, entityBiomes);
         return tanEntityId;
     }
     

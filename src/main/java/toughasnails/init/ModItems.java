@@ -16,7 +16,6 @@ import static toughasnails.api.item.TANItems.jelled_slime_leggings;
 import static toughasnails.api.item.TANItems.lifeblood_crystal;
 import static toughasnails.api.item.TANItems.respirator_material;
 import static toughasnails.api.item.TANItems.season_clock;
-import static toughasnails.api.item.TANItems.spawn_egg;
 import static toughasnails.api.item.TANItems.tan_icon;
 import static toughasnails.api.item.TANItems.thermometer;
 import static toughasnails.api.item.TANItems.water_bottle;
@@ -25,9 +24,6 @@ import static toughasnails.api.item.TANItems.wool_boots;
 import static toughasnails.api.item.TANItems.wool_chestplate;
 import static toughasnails.api.item.TANItems.wool_helmet;
 import static toughasnails.api.item.TANItems.wool_leggings;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -52,7 +48,6 @@ import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemLifebloodCrystal;
 import toughasnails.item.ItemSeasonClock;
-import toughasnails.item.ItemTANSpawnEgg;
 import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.item.ItemThermometer;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -108,8 +103,6 @@ public class ModItems
         jelled_slime_chestplate = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.CHEST), "jelled_slime_chestplate");
         jelled_slime_leggings = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.LEGS), "jelled_slime_leggings");
         jelled_slime_boots = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.FEET), "jelled_slime_boots");
-        
-        spawn_egg = registerItem(new ItemTANSpawnEgg(), "spawn_egg");
     }
     
     public static Item registerItem(Item item, String name)

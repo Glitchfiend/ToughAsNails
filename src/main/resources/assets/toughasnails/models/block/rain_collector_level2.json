@@ -1,4 +1,5 @@
 {
+	"parent": "block/block",
     "ambientocclusion": false,
     "textures": {
         "particle": "toughasnails:blocks/rain_collector_side",
