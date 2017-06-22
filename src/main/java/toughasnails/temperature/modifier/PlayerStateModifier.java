@@ -4,14 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.init.ModConfig;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class PlayerStateModifier extends TemperatureModifier
 {
-    public static final int SPRINTING_RATE_MODIFIER = 200;
-    public static final int SPRINTING_TARGET_MODIFIER = 3;
-    
     public PlayerStateModifier(TemperatureDebugger debugger)
     {
         super(debugger);
@@ -28,7 +26,7 @@ public class PlayerStateModifier extends TemperatureModifier
         
         if (player.isSprinting())
         {
-            newTemperatureLevel += SPRINTING_TARGET_MODIFIER;
+            newTemperatureLevel += ModConfig.temperature.sprintingModifier;
         }
         
         debugger.end(newTemperatureLevel);

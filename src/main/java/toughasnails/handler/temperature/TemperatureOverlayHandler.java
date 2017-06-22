@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
@@ -67,11 +68,11 @@ public class TemperatureOverlayHandler
         //When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
         random.setSeed((long)(updateCounter * 312871));
         
-        if (event.getType() == ElementType.PORTAL && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+        if (event.getType() == ElementType.PORTAL && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
         {
             if (!player.capabilities.isCreativeMode) drawTemperatureVignettes(width, height, temperature);
         }
-        else if (event.getType() == ElementType.EXPERIENCE && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+        else if (event.getType() == ElementType.EXPERIENCE && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
         {
             minecraft.getTextureManager().bindTexture(OVERLAY);
 

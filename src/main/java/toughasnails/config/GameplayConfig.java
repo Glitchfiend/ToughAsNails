@@ -27,7 +27,6 @@ public class GameplayConfig extends ConfigHandler
         try
         {
             addSyncedValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH, true, SURVIVAL_SETTINGS, "Players begin with a lowered maximum health.");
-            addSyncedValue(GameplayOption.ENABLE_TEMPERATURE, true, SURVIVAL_SETTINGS, "Players are affected by temperature");
             addSyncedValue(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst");
         }
         catch (Exception e)

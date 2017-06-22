@@ -15,6 +15,7 @@ import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.config.GameplayOption;
+import toughasnails.init.ModConfig;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
@@ -43,47 +44,51 @@ public class SeasonModifier extends TemperatureModifier
 	        switch (season)
 	        {
 	        case EARLY_SPRING:
-	            temperatureLevel -= 5;
+	            temperatureLevel += ModConfig.temperature.earlySpringModifier;
                 break;
-                
-            //MID_SPRING = 0
+
+			case MID_SPRING:
+				temperatureLevel += ModConfig.temperature.midSpringModifier;
+				break;
                 
 	        case LATE_SPRING:
-	            temperatureLevel += 2;
+	            temperatureLevel += ModConfig.temperature.lateSpringModifier;
                 break;
                 
 	        case EARLY_SUMMER:
-	            temperatureLevel += 4;
+	            temperatureLevel += ModConfig.temperature.earlySummerModifier;
 	            break;
 	            
 	        case MID_SUMMER:
-	            temperatureLevel += 6;
+	            temperatureLevel += ModConfig.temperature.midSummerModifier;
 	            break;
 	            
 	        case LATE_SUMMER:
-	            temperatureLevel += 4;
+	            temperatureLevel += ModConfig.temperature.lateSummerModifier;
 	            break;
 	            
 	        case EARLY_AUTUMN:
-	            temperatureLevel += 2;
+	            temperatureLevel += ModConfig.temperature.earlyAutumnModifier;
 	            break;
-	            
-	        //MID_AUTUMN = 0;
+
+			case MID_AUTUMN:
+				temperatureLevel += ModConfig.temperature.midAutumnModifier;
+				break;
 	            
 	        case LATE_AUTUMN:
-	            temperatureLevel -= 3;
+	            temperatureLevel += ModConfig.temperature.lateAutumnModifier;
 	            break;
 	            
 	        case EARLY_WINTER:
-	            temperatureLevel -= 7;
+	            temperatureLevel += ModConfig.temperature.earlyWinterModifier;
 	            break;
 	            
 	        case MID_WINTER:
-	            temperatureLevel -= 15;
+	            temperatureLevel += ModConfig.temperature.midWinterModifier;
 	            break;
 	            
 	        case LATE_WINTER:
-                temperatureLevel -= 10;
+                temperatureLevel += ModConfig.temperature.lateWinterModifier;
                 break;
 	            
 	        default:

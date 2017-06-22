@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.init.ModConfig;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class ArmorModifier extends TemperatureModifier
 {
-    public static final int ARMOR_RATE_MODIFIER = 25;
     public static final int JELLED_SLIME_TARGET_MODIFIER = -1;
     public static final int WOOL_TARGET_MODIFIER = 1;
     
@@ -35,11 +35,11 @@ public class ArmorModifier extends TemperatureModifier
         {
 	        if (inventory.armorInventory.get(3).getItem() == TANItems.wool_helmet)
 	        {
-	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
 	        if (inventory.armorInventory.get(3).getItem() == TANItems.jelled_slime_helmet)
 	        {
-	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
@@ -48,11 +48,11 @@ public class ArmorModifier extends TemperatureModifier
         {
 	        if (inventory.armorInventory.get(2).getItem() == TANItems.wool_chestplate)
 	        {
-	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
 	        if (inventory.armorInventory.get(2).getItem() == TANItems.jelled_slime_chestplate)
 	        {
-	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
@@ -61,11 +61,11 @@ public class ArmorModifier extends TemperatureModifier
         {
 	        if (inventory.armorInventory.get(1).getItem() == TANItems.wool_leggings)
 	        {
-	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
 	        if (inventory.armorInventory.get(1).getItem() == TANItems.jelled_slime_leggings)
 	        {
-	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
@@ -74,11 +74,11 @@ public class ArmorModifier extends TemperatureModifier
         {
 	        if (inventory.armorInventory.get(0).getItem() == TANItems.wool_boots)
 	        {
-	        	newTemperatureLevel += WOOL_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
 	        if (inventory.armorInventory.get(0).getItem() == TANItems.jelled_slime_boots)
 	        {
-	        	newTemperatureLevel += JELLED_SLIME_TARGET_MODIFIER;
+	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         

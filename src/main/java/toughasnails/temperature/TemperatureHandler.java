@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.Temperature;
@@ -75,7 +76,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = tempChangeTicks;
 
-            if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+            if (incrementTemperature && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
             {
                 for (ExternalModifier modifier : this.externalModifiers.values())
                 {
@@ -83,7 +84,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
                 }
             }
             
-            if (incrementTemperature && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+            if (incrementTemperature && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
             {
                 this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
                 this.temperatureTimer = 0;
@@ -137,7 +138,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
         //Don't apply any negative effects whilst in creative mode
-        if (!player.capabilities.isCreativeMode && (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)))
+        if (!player.capabilities.isCreativeMode && (SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE)))
         {
             if (this.temperatureLevel <= hypoRangeStart && (!player.isPotionActive(TANPotions.cold_resistance)) && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
             {

@@ -4,20 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.init.ModConfig;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.util.BiomeUtils;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public static final int TIME_TARGET_MODIFIER = 9;
-    
-    /**
-     * Multiplies how much should the temperature be increased/decreased by the closer the
-     * biome temp is to a extreme hot or cold
-     */
-    public static final float EXTREMITY_MULTIPLIER = 1.25F;
-    
     public TimeModifier(TemperatureDebugger debugger)
     {
         super(debugger);
@@ -40,7 +33,7 @@ public class TimeModifier extends TemperatureModifier
         
         if (world.provider.isSurfaceWorld())
         {
-        	newTemperatureLevel += TIME_TARGET_MODIFIER * timeNorm * (Math.max(1.0F, extremityModifier * EXTREMITY_MULTIPLIER));
+        	newTemperatureLevel += ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier));
         }
         
         debugger.end(newTemperatureLevel);

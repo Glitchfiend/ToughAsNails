@@ -7,12 +7,12 @@
  ******************************************************************************/
 package toughasnails.season;
 
+import com.google.common.base.Preconditions;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
-import toughasnails.config.SeasonsConfig;
 
 public final class SeasonTime implements ISeasonData
 {
@@ -21,6 +21,7 @@ public final class SeasonTime implements ISeasonData
     
     public SeasonTime(int time)
     {
+        Preconditions.checkArgument(time >= 0, "Time cannot be negative!");
         this.time = time;
     }
 

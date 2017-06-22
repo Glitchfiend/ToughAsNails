@@ -64,7 +64,7 @@ public class TemperatureStatTableHandler
             int gradient = TemperatureScale.getRateForTemperatures(currentTemp, debugger.targetTemperature) - TemperatureScale.getAdjustedBaseRate(currentTemp);
             if (gradient != 0) RATE_TABLE.addRow("Gradient", gradient);
 
-            int extremityModifier = TemperatureScale.getAdjustedBaseRate(currentTemp) - TemperatureScale.BASE_TEMPERATURE_CHANGE_TICKS;
+            int extremityModifier = TemperatureScale.getAdjustedBaseRate(currentTemp) - TemperatureScale.getBaseTemperatureChangeTicks();
             if (extremityModifier != 0) RATE_TABLE.addRow("Extremity", extremityModifier);
 
             drawTables(event.getResolution());
