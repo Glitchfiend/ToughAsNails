@@ -80,21 +80,24 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = tempChangeTicks;
 
+            Iterator<Map.Entry<String, ExternalModifier>> it = externalModifiers.entrySet().iterator();
+
+            while (it.hasNext())
+            {
+                Map.Entry<String, ExternalModifier> entry = it.next();
+
+                if (entry.getValue().getEndTime() < this.temperatureTimer)
+                {
+                    this.externalModifiers.remove(entry.getKey());
+                }
+            }
+
             if (incrementTemperature)
             {
-                Iterator<Map.Entry<String, ExternalModifier>> it = externalModifiers.entrySet().iterator();
-
-                while (it.hasNext())
-                {
-                    Map.Entry<String, ExternalModifier> entry = it.next();
-
-                    if (entry.getValue().getEndTime() < this.temperatureTimer)
-                    {
-                        this.externalModifiers.remove(entry.getKey());
-                    }
-                }
-
-                this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
+                if (!player.isCreative())
+                    this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
+                // always reset the time when incrementing is supposed to happen
+                // even in creative mode
                 this.temperatureTimer = 0;
             }
 

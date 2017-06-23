@@ -27,19 +27,16 @@ public class ThirstStatHandler
     {
         World world = event.getEntity().world;
 
-        if (!world.isRemote)
+        if (!world.isRemote && event.getEntity() instanceof EntityPlayer)
         {
-            if (event.getEntity() instanceof EntityPlayer)
-            {
-                EntityPlayer player = (EntityPlayer)event.getEntity();
-                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
+            EntityPlayer player = (EntityPlayer) event.getEntity();
 
-                if (player.isSprinting())
-                {
+            if (!player.isCreative()) {
+                ThirstHandler thirstStats = (ThirstHandler) player.getCapability(TANCapabilities.THIRST, null);
+
+                if (player.isSprinting()) {
                     thirstStats.addExhaustion(0.8F);
-                }
-                else
-                {
+                } else {
                     thirstStats.addExhaustion(0.2F);
                 }
             }
@@ -56,10 +53,13 @@ public class ThirstStatHandler
             if (event.getEntity() instanceof EntityPlayer)
             {
                 EntityPlayer player = (EntityPlayer)event.getEntity();
-                ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
-                
-                //Uses hunger values for now, may change in the future
-                thirstStats.addExhaustion(event.getSource().getHungerDamage());
+
+                if (!player.isCreative())
+                {
+                    ThirstHandler thirstStats = (ThirstHandler) player.getCapability(TANCapabilities.THIRST, null);
+                    //Uses hunger values for now, may change in the future
+                    thirstStats.addExhaustion(event.getSource().getHungerDamage());
+                }
             }
         }
     }
@@ -74,7 +74,7 @@ public class ThirstStatHandler
         {
             EntityPlayer player = event.getEntityPlayer();
             
-            if (target.canBeAttackedWithItem())
+            if (target.canBeAttackedWithItem() && !player.isCreative())
             {
                 if (!target.hitByEntity(player))
                 {
@@ -115,7 +115,7 @@ public class ThirstStatHandler
         BlockPos pos = event.getPos();
         IBlockState state = event.getState();
         
-        if (!world.isRemote && !player.capabilities.isCreativeMode)
+        if (!world.isRemote && !player.isCreative())
         {
             boolean canHarvestBlock = state.getBlock().canHarvestBlock(world, pos, player);
             

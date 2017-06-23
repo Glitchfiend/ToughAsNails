@@ -38,66 +38,66 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {  
-    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
-    	{
-	        if (phase == Phase.START)
-	        {
-	            if (movementVec != null)
-	            {
-	                Vector3d movement = new Vector3d(player.posX, player.posY, player.posZ);
-	                movement.sub(movementVec); movement.absolute();
-	                int distance = (int)Math.round(movement.length() * 100.0F);
-	                
-	                if (distance > 0) applyMovementExhaustion(player, distance);
-	            }
-	        }
-	        else if (phase == Phase.END)
-	        {
-	            this.movementVec = new Vector3d(player.posX, player.posY, player.posZ);
-	
-	            EnumDifficulty enumdifficulty = world.getDifficulty();
-	            
-	            if (this.thirstExhaustionLevel > 4.0F)
-	            {
-	                this.thirstExhaustionLevel -= 4.0F;
-	
-	                if (this.thirstHydrationLevel > 0.0F)
-	                {
-	                    this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
-	                }
-	                else if (enumdifficulty != EnumDifficulty.PEACEFUL)
-	                {
-	                    this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
-	                }
-	            }
-	
-	            if (this.thirstLevel <= 0)
-	            {
-	                ++this.thirstTimer;
-	
-	                //Inflict thirst damage every 4 seconds
-	                if (this.thirstTimer >= 80)
-	                {
-	                    if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
-	                    {
-	                        player.attackEntityFrom(DamageSource.STARVE, 1.0F);
-	                    }
-	
-	                    this.thirstTimer = 0;
-	                }
-	            }
-	            else
-	            {
-	                this.thirstTimer = 0;
-	            }
-	            
-	            //If thirst is too low, prevent the player from sprinting
-	            if (!player.capabilities.isCreativeMode && player.isSprinting() && thirstLevel <= 6)
-	            {
-	                player.setSprinting(false);
-	            }
-	        }
-    	}
+    	if (!SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST) || player.isCreative())
+    	    return;
+
+        if (phase == Phase.START)
+        {
+            if (movementVec != null)
+            {
+                Vector3d movement = new Vector3d(player.posX, player.posY, player.posZ);
+                movement.sub(movementVec); movement.absolute();
+                int distance = (int)Math.round(movement.length() * 100.0F);
+
+                if (distance > 0) applyMovementExhaustion(player, distance);
+            }
+        }
+        else if (phase == Phase.END)
+        {
+            this.movementVec = new Vector3d(player.posX, player.posY, player.posZ);
+
+            EnumDifficulty enumdifficulty = world.getDifficulty();
+
+            if (this.thirstExhaustionLevel > 4.0F)
+            {
+                this.thirstExhaustionLevel -= 4.0F;
+
+                if (this.thirstHydrationLevel > 0.0F)
+                {
+                    this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
+                }
+                else if (enumdifficulty != EnumDifficulty.PEACEFUL)
+                {
+                    this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
+                }
+            }
+
+            if (this.thirstLevel <= 0)
+            {
+                ++this.thirstTimer;
+
+                //Inflict thirst damage every 4 seconds
+                if (this.thirstTimer >= 80)
+                {
+                    if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
+                    {
+                        player.attackEntityFrom(DamageSource.STARVE, 1.0F);
+                    }
+
+                    this.thirstTimer = 0;
+                }
+            }
+            else
+            {
+                this.thirstTimer = 0;
+            }
+
+            //If thirst is too low, prevent the player from sprinting
+            if (player.isSprinting() && thirstLevel <= 6)
+            {
+                player.setSprinting(false);
+            }
+        }
     }
     
     private void applyMovementExhaustion(EntityPlayer player, int distance)
