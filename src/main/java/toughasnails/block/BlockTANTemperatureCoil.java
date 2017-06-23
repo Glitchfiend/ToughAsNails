@@ -17,6 +17,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -152,6 +153,13 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
         }
         
         super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state)
+    {
+        // check for power when first placed
+        updatePowered(world, pos, state);
     }
     
     @Override
