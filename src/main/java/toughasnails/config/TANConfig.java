@@ -9,11 +9,10 @@
 package toughasnails.config;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 
 import com.google.gson.Gson;
@@ -30,10 +29,10 @@ import net.minecraft.init.Blocks;
 import toughasnails.api.TANBlocks;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.core.ToughAsNails;
+import toughasnails.init.ModCompat;
 import toughasnails.temperature.BlockTemperatureData;
 import toughasnails.temperature.MaterialTemperatureData;
 import toughasnails.util.BlockStateUtils;
-import biomesoplenty.api.block.BOPBlocks;
 
 public class TANConfig
 {
@@ -58,15 +57,14 @@ public class TANConfig
         {
             try
             {
-                BlockTemperatureData[] defaultBlockTemperatureData =
-                    {
-                    new BlockTemperatureData(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), new String[]{BlockTANCampfire.BURNING.getName()}, 15.0F),
-                    new BlockTemperatureData(Blocks.LIT_FURNACE.getDefaultState(), new String[0], 10.0F),
-                    new BlockTemperatureData(Blocks.LAVA.getDefaultState(), new String[0], 20.0F),
-                    new BlockTemperatureData(Blocks.FLOWING_LAVA.getDefaultState(), new String[0], 20.0F),
-                    new BlockTemperatureData(Blocks.MAGMA.getDefaultState(), new String[0], 17.0F),
-                    new BlockTemperatureData(BOPBlocks.hot_spring_water.getDefaultState(), new String[0], 15.0F)
-                    };
+                List<BlockTemperatureData> defaultBlockTemperatureData = Lists.newArrayList(
+                        new BlockTemperatureData(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), new String[]{BlockTANCampfire.BURNING.getName()}, 15.0F),
+                        new BlockTemperatureData(Blocks.LIT_FURNACE.getDefaultState(), new String[0], 10.0F),
+                        new BlockTemperatureData(Blocks.LAVA.getDefaultState(), new String[0], 20.0F),
+                        new BlockTemperatureData(Blocks.FLOWING_LAVA.getDefaultState(), new String[0], 20.0F),
+                        new BlockTemperatureData(Blocks.MAGMA.getDefaultState(), new String[0], 17.0F));
+
+                if (ModCompat.HOT_SPRING_WATER != null) defaultBlockTemperatureData.add(new BlockTemperatureData(ModCompat.HOT_SPRING_WATER.getDefaultState(), new String[0], 15.0F));
 
                 //Need to do this manually as there is some issue with getting Gson to serialise an IBlockState directly due to duplicated keys
                 JsonArray tempAry = new JsonArray();

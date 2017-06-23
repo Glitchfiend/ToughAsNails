@@ -1,11 +1,11 @@
 package toughasnails.temperature.modifier;
 
-import biomesoplenty.api.block.BOPBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.init.ModCompat;
 import toughasnails.init.ModConfig;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -28,7 +28,7 @@ public class WeatherModifier extends TemperatureModifier
         
         if (player.isWet())
         {
-            if (block != BOPBlocks.hot_spring_water)
+            if (block != ModCompat.HOT_SPRING_WATER)
             {
                 debugger.start(Modifier.WET_TARGET, newTemperatureLevel);
                 newTemperatureLevel += ModConfig.temperature.wetModifier;
