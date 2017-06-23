@@ -2,6 +2,7 @@ package toughasnails.temperature;
 
 import static toughasnails.api.temperature.TemperatureScale.*;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -65,6 +66,9 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {
+        if (!SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
+            return;
+
         if (phase == Phase.END && !world.isRemote)
         {
             int targetTemperature = getTargetTemperature(world, player);
@@ -76,16 +80,20 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
             debugger.temperatureTimer = temperatureTimer;
             debugger.changeTicks = tempChangeTicks;
 
-            if (incrementTemperature && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
+            if (incrementTemperature)
             {
-                for (ExternalModifier modifier : this.externalModifiers.values())
+                Iterator<Map.Entry<String, ExternalModifier>> it = externalModifiers.entrySet().iterator();
+
+                while (it.hasNext())
                 {
-                    modifier.setEndTime(modifier.getEndTime() - this.temperatureTimer);
+                    Map.Entry<String, ExternalModifier> entry = it.next();
+
+                    if (entry.getValue().getEndTime() < this.temperatureTimer)
+                    {
+                        this.externalModifiers.remove(entry.getKey());
+                    }
                 }
-            }
-            
-            if (incrementTemperature && SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
-            {
+
                 this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
                 this.temperatureTimer = 0;
             }
