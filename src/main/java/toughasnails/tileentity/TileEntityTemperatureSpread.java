@@ -118,7 +118,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
                     ITemperature temperature = player.getCapability(TANCapabilities.TEMPERATURE, null);
                     
                     //Apply modifier for 5 seconds
-                    temperature.applyModifier("Climatisation", this.temperatureModifier, RATE_MODIFIER, 5 * 20);
+                    temperature.applyModifier("Climatisation", this.temperatureModifier, RATE_MODIFIER, 3 * 20);
                 }
             }
 
