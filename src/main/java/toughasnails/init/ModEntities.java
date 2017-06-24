@@ -31,7 +31,7 @@ public class ModEntities
         registerTANEntity(EntityIceball.class, "iceball", 64, 10, true);
         
         // mobs
-        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, EnumCreatureType.MONSTER, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS);
+        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, 3, 1, 3, EnumCreatureType.MONSTER, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS);
     }
     
     // register an entity
@@ -45,11 +45,11 @@ public class ModEntities
     }
     
     // register an entity and in addition create a spawn egg for it
-    public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, EnumCreatureType enumCreatureType, Biome... entityBiomes)
+    public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, int spawnWeight, int spawnMin, int spawnMax, EnumCreatureType enumCreatureType, Biome... entityBiomes)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
         EntityRegistry.registerEgg(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor);
-        EntityRegistry.addSpawn(entityClass, 3, 1, 3, enumCreatureType, entityBiomes);
+        EntityRegistry.addSpawn(entityClass, spawnWeight, spawnMin, spawnMax, enumCreatureType, entityBiomes);
         return tanEntityId;
     }
     
