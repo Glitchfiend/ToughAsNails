@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -91,9 +92,9 @@ public class ObjectProximityModifier extends TemperatureModifier
         World world = player.worldObj;
         Material material = state.getMaterial();
         Biome biome = world.getBiomeGenForCoords(player.getPosition());
-
+        ResourceLocation registryName = state.getBlock().getRegistryName();
+        if (registryName == null) return 0.0F;
         String blockName = state.getBlock().getRegistryName().toString();
-
         //Blocks
         if (TANConfig.blockTemperatureData.containsKey(blockName))
         {
