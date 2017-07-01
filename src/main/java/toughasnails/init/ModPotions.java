@@ -41,13 +41,13 @@ public class ModPotions
     
     public static Potion registerPotion(String name, Potion potion)
     {
-        GameRegistry.register(potion, new ResourceLocation(ToughAsNails.MOD_ID, name));
+        RegistryEventHandler.POTIONS.add(potion.setRegistryName(ToughAsNails.MOD_ID, name));
         return potion;
     }
     
     public static PotionType registerPotionType(String name, PotionType potionType)
     {
-        GameRegistry.register(potionType, new ResourceLocation(ToughAsNails.MOD_ID, name));
+    	RegistryEventHandler.POTION_TYPES.add(potionType.setRegistryName(ToughAsNails.MOD_ID, name));
         return potionType;
     }
 }
