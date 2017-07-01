@@ -42,6 +42,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
+import toughasnails.client.ModelRegistryHandler;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemFruitJuice;
@@ -132,13 +133,12 @@ public class ModItems
                     String subItemName = item.getUnlocalizedName(subItem);
                     subItemName =  subItemName.substring(subItemName.indexOf(".") + 1); // remove 'item.' from the front
 
-                    //ModelBakery.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
-                    ModelLoader.setCustomModelResourceLocation(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
+                    ModelRegistryHandler.queueForModelRegistry(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
                 }
             }
             else
             {
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
+            	ModelRegistryHandler.queueForModelRegistry(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
             }
         }
         
