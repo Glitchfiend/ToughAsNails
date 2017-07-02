@@ -16,7 +16,6 @@ public class ModCrafting
 {
     public static void init()
     {
-        addOreRegistration();
         addCraftingRecipies();
         addSmeltingRecipes();
         //removeCraftingRecipes();
@@ -49,7 +48,7 @@ public class ModCrafting
     	GameRegistry.addSmelting(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
     }
     
-    private static void addOreRegistration()
+    public static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
     }

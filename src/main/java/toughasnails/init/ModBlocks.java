@@ -57,8 +57,7 @@ public class ModBlocks
     
     public static void registerBlockVariant(Block block, String stateName, int stateMeta)
     {
-        Item item = Item.getItemFromBlock(block);
-        ToughAsNails.proxy.registerItemVariantModel(item, stateName, stateMeta);
+        ToughAsNails.proxy.registerBlockVariantModel(block, stateName, stateMeta);
     }
     
     public static Block registerBlock(Block block, String blockName)
@@ -124,8 +123,8 @@ public class ModBlocks
             Item itemBlock = clazz != null ? (Item)clazz.getConstructor(Block.class).newInstance(block) : null;
             ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, blockName);
 
-            GameRegistry.register(block, location);
-            if (itemBlock != null) GameRegistry.register(itemBlock, location);
+            RegistryEventHandler.BLOCKS.add(block.setRegistryName(location));
+            if (itemBlock != null) RegistryEventHandler.ITEMS.add(itemBlock.setRegistryName(location));
         }
         catch (Exception e)
         {
