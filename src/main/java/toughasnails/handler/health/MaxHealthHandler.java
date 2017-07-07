@@ -94,66 +94,152 @@ public class MaxHealthHandler
         }
     }
     
-    private void updateStartingHealthModifier(EnumDifficulty difficulty, EntityPlayer player)
-    {
-        IAttributeInstance maxHealthInstance = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        AttributeModifier modifier = maxHealthInstance.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
-        
-        //Don't update if the lowered starting health config option is disabled
-        if (!SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH))
-        {
-            if (modifier != null)
-            {
-                maxHealthInstance.removeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
-            }
+    private static Map<UUID, Integer> maxHealth = new HashMap<UUID, Integer>();
 
-            return;
-        }
-        
-        double difficultyHealthDecrement;
+	public static void overrideMaximumHealth(UUID player,
+			int newMaximumHealth) {
+		if (newMaximumHealth > 0 && newMaximumHealth <= 20) {
+			maxHealth.put(player, newMaximumHealth);
+			File f = new File("player_health_overrides.txt");
+			List<String> lines = new ArrayList<String>();
+			try {
+				if (!f.exists()) {
+					f.createNewFile();
+				}
 
-        switch (difficulty)
-        {
-        case EASY:
-            difficultyHealthDecrement = -6.0D;
-            break;
+				BufferedReader br = new BufferedReader(new FileReader(f));
+				String line;
+				while ((line = br.readLine()) != null) {
+					String[] split = line.split("\\|");
+					String idString = split[0];
+					if (!player.toString().equals(idString)) {
+						lines.add(line);
+					}
+				}
+				br.close();
 
-        case NORMAL:
-            difficultyHealthDecrement = -10.0D;
-            break;
+				f.delete();
+				f.createNewFile();
+				PrintWriter writer = new PrintWriter(
+						new FileWriter("player_health_overrides.txt"));
+				for (String outLine : lines) {
+					writer.println(outLine);
+				}
+				writer.println(player.toString() + "|" + newMaximumHealth);
+				writer.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-        case HARD:
-            difficultyHealthDecrement = -14.0D;
-            break;
+	private void updateStartingHealthModifier(EnumDifficulty difficulty,
+			EntityPlayer player) {
+		UUID id = player.getUniqueID();
+		IAttributeInstance maxHealthInstance = player.getAttributeMap()
+				.getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+		AttributeModifier modifier = maxHealthInstance
+				.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
 
-        default:
-            difficultyHealthDecrement = 0.0D;
-            break;
-        }
-        
-        double lifebloodHearts = HealthHelper.getLifebloodHearts(player) * 2;
-        double overallHealthDecrement = difficultyHealthDecrement + lifebloodHearts;
-        
-        //Ensure that the total hearts is never above 20 when the difficulty is changed
-        if (overallHealthDecrement > 0.0D)
-        {
-            difficultyHealthDecrement -= overallHealthDecrement;
-        }
+		// Don't update if the lowered starting health config option is disabled
+		if (!SyncedConfigHandler.getBooleanValue(
+				GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)) {
+			if (modifier != null) {
+				maxHealthInstance.removeModifier(
+						HealthHelper.STARTING_HEALTH_MODIFIER_ID);
+			}
 
-        //If the player doesn't have a modifier for a lowered starting health, add one
-        //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
-        //When the difficulty is changed locally in the options menu, it should always change (forceUpdate)
-        if (modifier == null || modifier.getAmount() != difficultyHealthDecrement)
-        {
-            Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-            modifier = new AttributeModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID, "Starting Health Modifier", difficultyHealthDecrement, 0);
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
-            player.getAttributeMap().applyAttributeModifiers(multimap);
-            
-            if (player.getHealth() > player.getMaxHealth())
-            {
-                player.setHealth(player.getMaxHealth());
-            }
-        }
-    }
+			return;
+		}
+
+		double difficultyHealthDecrement = 0;
+		boolean initialized = false;
+		if (!maxHealth.containsKey(id)) {
+			File f = new File("player_health_overrides.txt");
+			try {
+				if (!f.exists()) {
+					f.createNewFile();
+				}
+
+				BufferedReader br = new BufferedReader(new FileReader(f));
+				String line;
+				while ((line = br.readLine()) != null) {
+					String split[] = line.split("|");
+					String idString = split[0];
+					String maxHealthString = split[1];
+					if (id.toString().equals(idString)) {
+						maxHealth.put(id, Integer.parseInt(maxHealthString));
+						initialized = true;
+						break;
+					}
+				}
+				br.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			difficultyHealthDecrement = -(20 - maxHealth.get(id));
+			initialized = true;
+		}
+
+		if (!initialized) {
+			switch (difficulty) {
+			case EASY:
+				difficultyHealthDecrement = -6.0D;
+				maxHealth.put(id, 14);
+				break;
+
+			case NORMAL:
+				difficultyHealthDecrement = -10.0D;
+				maxHealth.put(id, 10);
+				break;
+
+			case HARD:
+				difficultyHealthDecrement = -14.0D;
+				maxHealth.put(id, 6);
+				break;
+
+			default:
+				difficultyHealthDecrement = -0.0D;
+				maxHealth.put(id, 20);
+				break;
+			}
+		}
+
+		double lifebloodHearts = HealthHelper.getLifebloodHearts(player) * 2;
+		double overallHealthDecrement = difficultyHealthDecrement
+				+ lifebloodHearts;
+
+		// Ensure that the total hearts is never above 20 when the difficulty is
+		// changed
+		if (overallHealthDecrement > 0.0D) {
+			difficultyHealthDecrement -= overallHealthDecrement;
+		}
+
+		// If the player doesn't have a modifier for a lowered starting health,
+		// add one
+		// Or alternatively, if the player already has the attribute, update it
+		// only if it is less than the current difficulty
+		// When the difficulty is changed locally in the options menu, it should
+		// always change (forceUpdate)
+		if (modifier == null
+				|| modifier.getAmount() != difficultyHealthDecrement) {
+			Multimap<String, AttributeModifier> multimap = HashMultimap
+					.<String, AttributeModifier> create();
+			modifier = new AttributeModifier(
+					HealthHelper.STARTING_HEALTH_MODIFIER_ID,
+					"Starting Health Modifier", difficultyHealthDecrement, 0);
+			multimap.put(SharedMonsterAttributes.MAX_HEALTH
+					.getAttributeUnlocalizedName(), modifier);
+			player.getAttributeMap().applyAttributeModifiers(multimap);
+
+			if (player.getHealth() > player.getMaxHealth()) {
+				player.setHealth(player.getMaxHealth());
+			}
+		}
+	}
 }

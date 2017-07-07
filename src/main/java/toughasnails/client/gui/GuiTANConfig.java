@@ -25,8 +25,17 @@ public class GuiTANConfig extends GuiConfig
 
         List<IConfigElement> SURVIVAL_SETTINGS = new ConfigElement(GameplayConfigurationHandler.config.getCategory(GameplayConfigurationHandler.SURVIVAL_SETTINGS.toLowerCase())).getChildElements();
 
+        List<IConfigElement> DRINK_SETTINGS = new ConfigElement(
+				GameplayConfigurationHandler.config.getCategory(
+						GameplayConfigurationHandler.DRINKS.toLowerCase()))
+								.getChildElements();
+        
         list.add(new DummyConfigElement.DummyCategoryElement(I18n.translateToLocal("config.category.survivalSettings.title"), "config.category.arrowSettings", SURVIVAL_SETTINGS));
 
+        list.add(new DummyConfigElement.DummyCategoryElement(
+				I18n.translateToLocal("config.category.drinkSettings.title"),
+				"config.category.arrowSettings", DRINK_SETTINGS));
+        
         return list;
     }
 }

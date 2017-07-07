@@ -29,34 +29,31 @@ public class VanillaDrinkHandler
 
             if (thirstHandler.isThirsty())
             {
-                // For some reason the stack size can be zero for water bottles, which breaks everything.
-                // As a workaround, we temporarily set it to 1
-                boolean zeroStack = false;
+				ResourceLocation resLoc = ForgeRegistries.ITEMS
+						.getKey(stack.getItem());
+				String itemName = resLoc.toString();
 
-                if (stack.stackSize <= 0)
-                {
-                    stack.stackSize = 1;
-                    zeroStack = true;
-                }
+				List<String> drinks = SyncedConfigHandler
+						.getListValue(GameplayOption.DRINKS);
 
-                if (stack.getItem().equals(Items.MILK_BUCKET))
-                {
-                    thirstHandler.addStats(6, 0.7F);
-                }
-                else if (stack.getItem().equals(Items.POTIONITEM))
-                {
-                    if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
-                    {
-                        thirstHandler.addStats(7, 0.5F);
-                    }
-                    else
-                    {
-                        //Still fill thirst for other potions, but less than water
-                        thirstHandler.addStats(4, 0.3F);
-                    }
-                }
-
-                if (zeroStack) stack.stackSize = 0;
+				for (String drinkEntry : drinks) {
+					String[] drinkData = drinkEntry.split(";");
+					if (drinkData.length == 3) {
+						if (itemName.equals(drinkData[0])) {
+							int thirstLevel = 0;
+							float hydration = 0f;
+							try {
+								thirstLevel = Integer.parseInt(drinkData[1]);
+								hydration = Float.parseFloat(drinkData[2]);
+								thirstHandler.addStats(thirstLevel, hydration);
+							} catch (NumberFormatException e) {
+								System.out
+										.println("Tried to drink misconfigured "
+												+ itemName);
+							}
+						}
+					}
+				}
             }
         }
     }

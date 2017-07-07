@@ -68,8 +68,25 @@ public class TANCommand extends CommandBase
         }
         else if ("setseason".equals(args[0]))
         {
-            setSeason(sender, args);
+			if (args.length != 3) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			} else {
+				setSeason(sender, args);
+			}
         }
+        else if ("setthirst".equals(args[0])) {
+			if (args.length != 3) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			} else {
+				setThirst(sender, args);
+			}
+		} else if ("sethealth".equals(args[0])) {
+			if (args.length != 3) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			} else {
+				setHealth(sender, args);
+			}
+		}
     }
     
     private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
@@ -114,47 +131,143 @@ public class TANCommand extends CommandBase
         }
     }
     
-    private void setSeason(ICommandSender sender, String[] args) throws CommandException
-    {
-        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        SubSeason newSeason = null;
-        
-        for (SubSeason season : SubSeason.values())
-        {
-            if (season.toString().toLowerCase().equals(args[1].toLowerCase()))
-            {
-                newSeason = season;
-                break;
-            }
-        }
-        
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))
-    	{
-	        if (newSeason != null)
-	        {
-		            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.worldObj);
-		            seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS * SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
-		            seasonData.markDirty();
-		            SeasonHandler.sendSeasonUpdate(player.worldObj);
-		            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
-	        }
-	        else
-	        {
-	            sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
-	        }
-    	}
-        else
-        {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.setseason.disabled"));
-        }
-    }
+	private void setSeason(ICommandSender sender, String[] args)
+			throws CommandException {
+		int dimensionID = 0;
+		try {
+			dimensionID = Integer.parseInt(args[2]);
+		} catch (NumberFormatException e) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+		SubSeason newSeason = null;
+
+		for (SubSeason season : SubSeason.values()) {
+			if (season.toString().toLowerCase().equals(args[1].toLowerCase())) {
+				newSeason = season;
+				break;
+			}
+		}
+
+		if (SyncedConfigHandler
+				.getBooleanValue(GameplayOption.ENABLE_SEASONS)) {
+			if (newSeason != null) {
+				World world = null;
+				WorldServer[] worldServers = FMLCommonHandler.instance()
+						.getMinecraftServerInstance().worldServers;
+				WorldServer candidate = FMLCommonHandler.instance()
+						.getMinecraftServerInstance()
+						.worldServerForDimension(dimensionID);
+				if (candidate == null) {
+					throw new WrongUsageException(
+							"commands.toughasnails.usage");
+				}
+
+				for (int i = 0; i < worldServers.length; i++) {
+					WorldServer target = worldServers[i];
+					if (candidate.equals(target)) {
+						world = target;
+						break;
+					}
+				}
+
+				if (world == null) {
+					throw new WrongUsageException(
+							"commands.toughasnails.usage");
+				}
+
+				SeasonSavedData seasonData = SeasonHandler
+						.getSeasonSavedData(world);
+				seasonData.seasonCycleTicks = SeasonTime.DAY_TICKS
+						* SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
+				seasonData.markDirty();
+				SeasonHandler.sendSeasonUpdate(world);
+				sender.addChatMessage(new TextComponentTranslation(
+						"commands.toughasnails.setseason.success", args[1]));
+			} else {
+				sender.addChatMessage(new TextComponentTranslation(
+						"commands.toughasnails.setseason.fail", args[1]));
+			}
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.setseason.disabled"));
+		}
+	}
+    
+    private void setHealth(ICommandSender sender, String[] args)
+			throws CommandException {
+		String playerName = args[1];
+		EntityPlayerMP player = FMLCommonHandler.instance()
+				.getMinecraftServerInstance().getPlayerList()
+				.getPlayerByUsername(playerName);
+		if (player == null) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+
+		int newHealth = 0;
+		try {
+			newHealth = Integer.parseInt(args[2]);
+		} catch (NumberFormatException e) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+
+		// If health is enabled
+		if (SyncedConfigHandler.getBooleanValue(
+				GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)) {
+
+			// Set the new health
+			MaxHealthHandler.overrideMaximumHealth(player.getUniqueID(),
+					newHealth);
+
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.sethealth.success", newHealth));
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.sethealth.disabled"));
+		}
+	}
+
+	private void setThirst(ICommandSender sender, String[] args)
+			throws CommandException {
+		String playerName = args[1];
+		EntityPlayerMP player = FMLCommonHandler.instance()
+				.getMinecraftServerInstance().getPlayerList()
+				.getPlayerByUsername(playerName);
+		if (player == null) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+
+		int thirstLevel = 0;
+		try {
+			thirstLevel = Integer.parseInt(args[2]);
+		} catch (NumberFormatException e) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+
+		// If thirst is enabled
+		if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST)) {
+
+			// Remove any existing potion effects for thirst
+			player.removePotionEffect(TANPotions.thirst);
+
+			// Set the new thirst
+			ThirstHandler thirstHandler = (ThirstHandler) ThirstHelper
+					.getThirstData(player);
+			thirstHandler.setThirst(thirstLevel);
+
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.setthirst.success", thirstLevel));
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.setthirst.disabled"));
+		}
+	}
     
     @Override
     public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {
-            return getListOfStringsMatchingLastWord(args, "settemp", "tempinfo");
+            return getListOfStringsMatchingLastWord(args, "settemp", "tempinfo", "setseason", "sethealth", "setthirst");
         }
         
         return null;

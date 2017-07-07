@@ -19,6 +19,7 @@ import toughasnails.core.ToughAsNails;
 public class GameplayConfigurationHandler
 {
     public static final String SURVIVAL_SETTINGS = "Survival Settings";
+    public static final String DRINKS = "Drink Configuration";
     
     public static Configuration config;
     
@@ -39,6 +40,9 @@ public class GameplayConfigurationHandler
             addSyncedBool(GameplayOption.ENABLE_SEASONS, true, SURVIVAL_SETTINGS, "Seasons progress as days increase");
             addSyncedBool(GameplayOption.ENABLE_TEMPERATURE, true, SURVIVAL_SETTINGS, "Players are affected by temperature");
             addSyncedBool(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst");
+            String[] drinkDefault = { "minecraft:milk_bucket;6;0.7" };
+			addSyncedList(GameplayOption.DRINKS, drinkDefault, DRINKS,
+					"List of additional drinks with configurable thirst and hydration values, ;-delimited");
         }
         catch (Exception e)
         {
@@ -56,6 +60,17 @@ public class GameplayConfigurationHandler
         SyncedConfig.addOption(option, "" + value);
     }
 
+	private static void addSyncedList(GameplayOption option,
+			String[] defaultValue, String category, String comment) {
+		String[] drinkEntries = config.getStringList(option.getOptionName(),
+				category, defaultValue, comment);
+		String drinkString = "";
+		for (String drinkEntry : drinkEntries) {
+			drinkString += (drinkEntry + ",");
+		}
+		SyncedConfigHandler.addOption(option, drinkString);
+	}
+    
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
