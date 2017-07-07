@@ -1,40 +1,47 @@
 package toughasnails.api.config;
 
-import com.google.common.collect.Maps;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class SyncedConfig
-{
-    public static Map<String, SyncedConfigEntry> optionsToSync = Maps.newHashMap();
+import com.google.common.collect.Maps;
 
-    public static void addOption(ISyncedOption option, String defaultValue)
-    {
-        optionsToSync.put(option.getOptionName(), new SyncedConfigEntry(defaultValue));
-    }
+public class SyncedConfig {
+	public static Map<String, SyncedConfigEntry> optionsToSync = Maps
+			.newHashMap();
 
-    public static boolean getBooleanValue(ISyncedOption option)
-    {
-        return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
-    }
+	public static void addOption(ISyncedOption option, String defaultValue) {
+		optionsToSync.put(option.getOptionName(),
+				new SyncedConfigEntry(defaultValue));
+	}
 
-    public static void restoreDefaults()
-    {
-        for (SyncedConfigEntry entry : optionsToSync.values())
-        {
-            entry.value = entry.defaultValue;
-        }
-    }
+	public static boolean getBooleanValue(ISyncedOption option) {
+		return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
+	}
 
-    public static class SyncedConfigEntry
-    {
-        public String value;
-        public final String defaultValue;
+	public static List<String> getListValue(ISyncedOption option) {
+		SyncedConfigEntry value = optionsToSync.get(option.getOptionName());
+		String rawList = value.value;
+		List<String> result = new ArrayList<String>();
+		for (String drinkEntry : rawList.split(",")) {
+			result.add(drinkEntry);
+		}
+		return result;
+	}
 
-        public SyncedConfigEntry(String defaultValue)
-        {
-            this.defaultValue = defaultValue;
-            this.value = defaultValue;
-        }
-    }
+	public static void restoreDefaults() {
+		for (SyncedConfigEntry entry : optionsToSync.values()) {
+			entry.value = entry.defaultValue;
+		}
+	}
+
+	public static class SyncedConfigEntry {
+		public String value;
+		public final String defaultValue;
+
+		public SyncedConfigEntry(String defaultValue) {
+			this.defaultValue = defaultValue;
+			this.value = defaultValue;
+		}
+	}
 }

@@ -25,74 +25,34 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncConfigs;
 
-public class SyncedConfigHandler
-{
-	public static Map<String, SyncedConfigEntry> optionsToSync = Maps
-			.newHashMap();
+public class SyncedConfigHandler {
 
-	public static void addOption(ISyncedOption option, String defaultValue) {
-		optionsToSync.put(option.getOptionName(),
-				new SyncedConfigEntry(defaultValue));
-	}
+	@SubscribeEvent
+	public void onPlayerLogin(PlayerLoggedInEvent event) {
+		EntityPlayer player = event.player;
+		World world = player.worldObj;
 
-	public static boolean getBooleanValue(ISyncedOption option) {
-		return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
-	}
+		if (!world.isRemote) {
+			NBTTagCompound nbtOptions = new NBTTagCompound();
 
-	public static List<String> getListValue(ISyncedOption option) {
-		SyncedConfigEntry value = optionsToSync.get(option.getOptionName());
-		String rawList = value.value;
-		List<String> result = new ArrayList<String>();
-		for (String drinkEntry : rawList.split(",")) {
-			result.add(drinkEntry);
-		}
-		return result;
-	}
+			for (Entry<String, SyncedConfig.SyncedConfigEntry> entry : SyncedConfig.optionsToSync
+					.entrySet()) {
+				nbtOptions.setString(entry.getKey(), entry.getValue().value);
+			}
 
-	public static void restoreDefaults() {
-		for (SyncedConfigEntry entry : optionsToSync.values()) {
-			entry.value = entry.defaultValue;
+			IMessage message = new MessageSyncConfigs(nbtOptions);
+			PacketHandler.instance.sendTo(message, (EntityPlayerMP) player);
 		}
 	}
-	
-    @SubscribeEvent
-    public void onPlayerLogin(PlayerLoggedInEvent event)
-    {
-        EntityPlayer player = event.player;
-        World world = player.worldObj;
-        
-        if (!world.isRemote)
-        {
-            NBTTagCompound nbtOptions = new NBTTagCompound();
-            
-            for (Entry<String, SyncedConfig.SyncedConfigEntry> entry : SyncedConfig.optionsToSync.entrySet())
-            {
-                nbtOptions.setString(entry.getKey(), entry.getValue().value);
-            }
-            
-            IMessage message = new MessageSyncConfigs(nbtOptions);
-            PacketHandler.instance.sendTo(message, (EntityPlayerMP)player);        
-        }
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onWorldUnload(WorldEvent.Unload event)
-    {
-        if (event.getWorld().isRemote && !Minecraft.getMinecraft().getConnection().getNetworkManager().isChannelOpen())
-        {
-            SyncedConfig.restoreDefaults();
-            ToughAsNails.logger.info("TAN configuration restored to local values");
-        }
-    }
 
-	public static class SyncedConfigEntry {
-		public String value;
-		public final String defaultValue;
-
-		public SyncedConfigEntry(String defaultValue) {
-			this.defaultValue = defaultValue;
-			this.value = defaultValue;
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onWorldUnload(WorldEvent.Unload event) {
+		if (event.getWorld().isRemote && !Minecraft.getMinecraft()
+				.getConnection().getNetworkManager().isChannelOpen()) {
+			SyncedConfig.restoreDefaults();
+			ToughAsNails.logger
+					.info("TAN configuration restored to local values");
 		}
 	}
 }

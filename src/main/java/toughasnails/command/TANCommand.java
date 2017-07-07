@@ -12,69 +12,62 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import toughasnails.api.config.SyncedConfig;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.api.config.GameplayOption;
+import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
+import toughasnails.thirst.ThirstHandler;
 
-public class TANCommand extends CommandBase
-{
-    @Override
-    public String getCommandName()
-    {
-        return "toughasnails";
-    }
-    
-    @Override
-    public List getCommandAliases()
-    {
-        return Lists.newArrayList("tan");
-    }
+public class TANCommand extends CommandBase {
+	@Override
+	public String getCommandName() {
+		return "toughasnails";
+	}
 
-    @Override
-    public String getCommandUsage(ICommandSender sender)
-    {
-        return "commands.toughasnails.usage";
-    }
-    
-    @Override
-    public int getRequiredPermissionLevel()
-    {
-        return 2;
-    }
-    
-    @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
-    {
-        if (args.length < 1)
-        {
-            throw new WrongUsageException("commands.toughasnails.usage");
-        }
-        else if ("tempinfo".equals(args[0]))
-        {
-            displayTemperatureInfo(sender, args);
-        }
-        else if ("settemp".equals(args[0]))
-        {
-            setTemperature(sender, args);
-        }
-        else if ("setseason".equals(args[0]))
-        {
+	@Override
+	public List<String> getCommandAliases() {
+		return Lists.newArrayList("tan");
+	}
+
+	@Override
+	public String getCommandUsage(ICommandSender sender) {
+		return "commands.toughasnails.usage";
+	}
+
+	@Override
+	public int getRequiredPermissionLevel() {
+		return 2;
+	}
+
+	@Override
+	public void execute(MinecraftServer server, ICommandSender sender,
+			String[] args) throws CommandException {
+		if (args.length < 1) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		} else if ("tempinfo".equals(args[0])) {
+			displayTemperatureInfo(sender, args);
+		} else if ("settemp".equals(args[0])) {
+			setTemperature(sender, args);
+		} else if ("setseason".equals(args[0])) {
 			if (args.length != 3) {
 				throw new WrongUsageException("commands.toughasnails.usage");
 			} else {
 				setSeason(sender, args);
 			}
-        }
-        else if ("setthirst".equals(args[0])) {
+		} else if ("setthirst".equals(args[0])) {
 			if (args.length != 3) {
 				throw new WrongUsageException("commands.toughasnails.usage");
 			} else {
@@ -87,50 +80,49 @@ public class TANCommand extends CommandBase
 				setHealth(sender, args);
 			}
 		}
-    }
-    
-    private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
-    {
-        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
-        TemperatureDebugger debugger = temperatureStats.debugger;
+	}
 
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
-    	{
-        	debugger.setGuiVisible(!debugger.isGuiVisible(), player);
-    	}
-        else
-        {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
-        }
-    }
-    
-    private void setTemperature(ICommandSender sender, String[] args) throws CommandException
-    {
-        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
-        int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
-        Temperature playerTemp = temperatureStats.getTemperature();
+	private void displayTemperatureInfo(ICommandSender sender, String[] args)
+			throws CommandException {
+		EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+		TemperatureHandler temperatureStats = (TemperatureHandler) player
+				.getCapability(TANCapabilities.TEMPERATURE, null);
+		TemperatureDebugger debugger = temperatureStats.debugger;
 
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
-    	{
-	        //Remove any existing potion effects for hypo/hyperthermia
-	        player.removePotionEffect(TANPotions.hypothermia);
-	        player.removePotionEffect(TANPotions.hyperthermia);
-	
-	        //Reset the change timer to 0
-	        temperatureStats.setChangeTime(0);
-	        //Set to the new temperature
-	        temperatureStats.setTemperature(new Temperature(newTemp));
-	
-	        sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
-    	}
-        else
-        {
-        	sender.addChatMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
-        }
-    }
-    
+		if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)) {
+			debugger.setGuiVisible(!debugger.isGuiVisible(), player);
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.settemp.disabled"));
+		}
+	}
+
+	private void setTemperature(ICommandSender sender, String[] args)
+			throws CommandException {
+		EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+		TemperatureHandler temperatureStats = (TemperatureHandler) player
+				.getCapability(TANCapabilities.TEMPERATURE, null);
+		int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
+		// Temperature playerTemp = temperatureStats.getTemperature();
+
+		if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)) {
+			// Remove any existing potion effects for hypo/hyperthermia
+			player.removePotionEffect(TANPotions.hypothermia);
+			player.removePotionEffect(TANPotions.hyperthermia);
+
+			// Reset the change timer to 0
+			temperatureStats.setChangeTime(0);
+			// Set to the new temperature
+			temperatureStats.setTemperature(new Temperature(newTemp));
+
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.settemp.success", newTemp));
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.settemp.disabled"));
+		}
+	}
+
 	private void setSeason(ICommandSender sender, String[] args)
 			throws CommandException {
 		int dimensionID = 0;
@@ -148,8 +140,7 @@ public class TANCommand extends CommandBase
 			}
 		}
 
-		if (SyncedConfigHandler
-				.getBooleanValue(GameplayOption.ENABLE_SEASONS)) {
+		if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)) {
 			if (newSeason != null) {
 				World world = null;
 				WorldServer[] worldServers = FMLCommonHandler.instance()
@@ -192,8 +183,8 @@ public class TANCommand extends CommandBase
 					"commands.toughasnails.setseason.disabled"));
 		}
 	}
-    
-    private void setHealth(ICommandSender sender, String[] args)
+
+	private void setHealth(ICommandSender sender, String[] args)
 			throws CommandException {
 		String playerName = args[1];
 		EntityPlayerMP player = FMLCommonHandler.instance()
@@ -211,7 +202,7 @@ public class TANCommand extends CommandBase
 		}
 
 		// If health is enabled
-		if (SyncedConfigHandler.getBooleanValue(
+		if (SyncedConfig.getBooleanValue(
 				GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)) {
 
 			// Set the new health
@@ -244,7 +235,7 @@ public class TANCommand extends CommandBase
 		}
 
 		// If thirst is enabled
-		if (SyncedConfigHandler.getBooleanValue(GameplayOption.ENABLE_THIRST)) {
+		if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST)) {
 
 			// Remove any existing potion effects for thirst
 			player.removePotionEffect(TANPotions.thirst);
@@ -261,15 +252,15 @@ public class TANCommand extends CommandBase
 					"commands.toughasnails.setthirst.disabled"));
 		}
 	}
-    
-    @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
-    {
-        if (args.length == 1)
-        {
-            return getListOfStringsMatchingLastWord(args, "settemp", "tempinfo", "setseason", "sethealth", "setthirst");
-        }
-        
-        return null;
-    }
+
+	@Override
+	public List<String> getTabCompletionOptions(MinecraftServer server,
+			ICommandSender sender, String[] args, BlockPos pos) {
+		if (args.length == 1) {
+			return getListOfStringsMatchingLastWord(args, "settemp", "tempinfo",
+					"setseason", "sethealth", "setthirst");
+		}
+
+		return null;
+	}
 }

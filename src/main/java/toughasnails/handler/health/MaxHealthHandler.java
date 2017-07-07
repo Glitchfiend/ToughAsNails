@@ -7,7 +7,18 @@
  ******************************************************************************/
 package toughasnails.handler.health;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -29,72 +40,78 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.HealthHelper;
-import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 
-public class MaxHealthHandler 
-{
-    //TODO: If the health config option is changed and the current health is lower
-    //increase it to that new default
-    @SubscribeEvent
-    public void onPlayerLogin(TickEvent.PlayerTickEvent event)
-    {
-        EntityPlayer player = event.player;
-        World world = player.worldObj;
+public class MaxHealthHandler {
+	// TODO: If the health config option is changed and the current health is
+	// lower increase it to that new default
+	@SubscribeEvent
+	public void onPlayerLogin(TickEvent.PlayerTickEvent event) {
+		EntityPlayer player = event.player;
+		World world = player.worldObj;
 
-        if (!world.isRemote)
-        {
-            updateStartingHealthModifier(world.getDifficulty(), player);
-        }
-    }
-    
-    @SubscribeEvent
-    public void onPlayerClone(PlayerEvent.Clone event)
-    {
-        IAttributeInstance oldMaxHealthInstance = event.getOriginal().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        AttributeModifier modifier = oldMaxHealthInstance.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
-        
-        //Copy the lifeblood modifier from the 'old' player
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && modifier != null)
-        { 
-            Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier);
-            event.getEntityPlayer().getAttributeMap().applyAttributeModifiers(multimap);
-        }
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event)
-    {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        IntegratedServer integratedServer = minecraft.getIntegratedServer();
-        
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH) && event.phase == Phase.END && integratedServer != null)
-        {
-            boolean gamePaused = Minecraft.getMinecraft().getConnection() != null && minecraft.isGamePaused();
-            
-            if (!gamePaused && minecraft.theWorld != null)
-            {
-                WorldInfo serverWorldInfo = integratedServer.worldServers[0].getWorldInfo();
-                WorldInfo localWorldInfo = minecraft.theWorld.getWorldInfo();
-                
-                //This is checked before the difficulty is actually changed to make the two match in IntegratedServer's tick()
-                if (localWorldInfo.getDifficulty() != serverWorldInfo.getDifficulty())
-                {
-                    List<EntityPlayerMP> players = integratedServer.getPlayerList().getPlayerList();
-                    
-                    //Update the modifiers of all the connected players
-                    for (EntityPlayerMP player : players)
-                    {
-                        updateStartingHealthModifier(localWorldInfo.getDifficulty(), player);
-                    }
-                }
-            }
-        }
-    }
-    
-    private static Map<UUID, Integer> maxHealth = new HashMap<UUID, Integer>();
+		if (!world.isRemote) {
+			updateStartingHealthModifier(world.getDifficulty(), player);
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerClone(PlayerEvent.Clone event) {
+		IAttributeInstance oldMaxHealthInstance = event.getOriginal()
+				.getAttributeMap()
+				.getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+		AttributeModifier modifier = oldMaxHealthInstance
+				.getModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID);
+
+		// Copy the lifeblood modifier from the 'old' player
+		if (SyncedConfig
+				.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)
+				&& modifier != null) {
+			Multimap<String, AttributeModifier> multimap = HashMultimap
+					.<String, AttributeModifier> create();
+			multimap.put(SharedMonsterAttributes.MAX_HEALTH
+					.getAttributeUnlocalizedName(), modifier);
+			event.getEntityPlayer().getAttributeMap()
+					.applyAttributeModifiers(multimap);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		Minecraft minecraft = Minecraft.getMinecraft();
+		IntegratedServer integratedServer = minecraft.getIntegratedServer();
+
+		if (SyncedConfig
+				.getBooleanValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)
+				&& event.phase == Phase.END && integratedServer != null) {
+			boolean gamePaused = Minecraft.getMinecraft()
+					.getConnection() != null && minecraft.isGamePaused();
+
+			if (!gamePaused && minecraft.theWorld != null) {
+				WorldInfo serverWorldInfo = integratedServer.worldServers[0]
+						.getWorldInfo();
+				WorldInfo localWorldInfo = minecraft.theWorld.getWorldInfo();
+
+				// This is checked before the difficulty is actually changed to
+				// make the two match in IntegratedServer's tick()
+				if (localWorldInfo.getDifficulty() != serverWorldInfo
+						.getDifficulty()) {
+					List<EntityPlayerMP> players = integratedServer
+							.getPlayerList().getPlayerList();
+
+					// Update the modifiers of all the connected players
+					for (EntityPlayerMP player : players) {
+						updateStartingHealthModifier(
+								localWorldInfo.getDifficulty(), player);
+					}
+				}
+			}
+		}
+	}
+
+	private static Map<UUID, Integer> maxHealth = new HashMap<UUID, Integer>();
 
 	public static void overrideMaximumHealth(UUID player,
 			int newMaximumHealth) {
@@ -144,7 +161,7 @@ public class MaxHealthHandler
 				.getModifier(HealthHelper.STARTING_HEALTH_MODIFIER_ID);
 
 		// Don't update if the lowered starting health config option is disabled
-		if (!SyncedConfigHandler.getBooleanValue(
+		if (!SyncedConfig.getBooleanValue(
 				GameplayOption.ENABLE_LOWERED_STARTING_HEALTH)) {
 			if (modifier != null) {
 				maxHealthInstance.removeModifier(
@@ -166,7 +183,7 @@ public class MaxHealthHandler
 				BufferedReader br = new BufferedReader(new FileReader(f));
 				String line;
 				while ((line = br.readLine()) != null) {
-					String split[] = line.split("|");
+					String split[] = line.split("\\|");
 					String idString = split[0];
 					String maxHealthString = split[1];
 					if (id.toString().equals(idString)) {

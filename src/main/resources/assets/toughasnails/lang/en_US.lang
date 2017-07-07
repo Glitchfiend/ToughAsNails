@@ -15,12 +15,16 @@ achievement.year_one.desc=Survive a full year!
 achievement.life_or_death=Life or Death
 achievement.life_or_death.desc=Search Nether Fortresses for loot to increase your health!
 
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason|setthirst|sethealth> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s
 commands.toughasnails.settemp.disabled=Body Temperature is currently disabled!
 commands.toughasnails.setseason.success=Set season to %s
 commands.toughasnails.setseason.fail=Invalid season %s
 commands.toughasnails.setseason.disabled=Seasons are currently disabled!
+commands.toughasnails.setthirst.success=Set thirst to %s
+commands.toughasnails.setthirst.disabled=Thirst is currently disabled!
+commands.toughasnails.sethealth.success=Set health to %s
+commands.toughasnails.sethealth.disabled=Health is currently disabled!
 
 config.category.survivalSettings.title=Survival Settings
 

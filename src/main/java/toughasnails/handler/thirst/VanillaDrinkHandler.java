@@ -7,33 +7,34 @@
  ******************************************************************************/
 package toughasnails.handler.thirst;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.thirst.ThirstHandler;
 
-public class VanillaDrinkHandler 
-{
-    @SubscribeEvent
-    public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
-            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            ItemStack stack = player.getHeldItem(player.getActiveHand());
-            ThirstHandler thirstHandler = (ThirstHandler)ThirstHelper.getThirstData(player);
+public class VanillaDrinkHandler {
+	@SubscribeEvent
+	public void onItemUseFinish(LivingEntityUseItemEvent.Finish event) {
+		if (event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			ItemStack stack = player.getHeldItem(player.getActiveHand());
+			ThirstHandler thirstHandler = (ThirstHandler) ThirstHelper
+					.getThirstData(player);
 
-            if (thirstHandler.isThirsty())
-            {
+			if (thirstHandler.isThirsty()) {
 				ResourceLocation resLoc = ForgeRegistries.ITEMS
 						.getKey(stack.getItem());
 				String itemName = resLoc.toString();
 
-				List<String> drinks = SyncedConfigHandler
+				List<String> drinks = SyncedConfig
 						.getListValue(GameplayOption.DRINKS);
 
 				for (String drinkEntry : drinks) {
@@ -54,7 +55,7 @@ public class VanillaDrinkHandler
 						}
 					}
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 }
