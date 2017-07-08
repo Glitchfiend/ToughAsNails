@@ -8,7 +8,6 @@
 package toughasnails.season;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
@@ -17,14 +16,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANBlocks;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.IDecayableCrop;
+import toughasnails.api.season.IHibernatingCrop;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.api.config.GameplayOption;
 import toughasnails.handler.season.SeasonHandler;
 
 public class SeasonASMHelper
@@ -134,7 +134,7 @@ public class SeasonASMHelper
     // BlockCrops methods //
     ////////////////////////
     
-    public static void onUpdateTick(BlockCrops block, World world, BlockPos pos)
+    public static void onUpdateTick(Block block, World world, BlockPos pos)
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
@@ -142,5 +142,12 @@ public class SeasonASMHelper
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
+    }
+    
+    public static boolean shouldHibernate(Block block, World world, BlockPos pos)
+    {
+        Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+        
+        return (season == Season.WINTER && block instanceof IHibernatingCrop && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS));
     }
 }
