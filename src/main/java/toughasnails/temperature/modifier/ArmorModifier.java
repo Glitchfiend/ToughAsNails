@@ -20,10 +20,10 @@ public class ArmorModifier extends TemperatureModifier
         super(debugger);
     }
 
-    @Override
-    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
+	@Override
+	public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
     {
-        int temperatureLevel = temperature.getRawValue();
+        int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
         
         debugger.start(Modifier.ARMOR_TARGET, newTemperatureLevel);
@@ -87,4 +87,9 @@ public class ArmorModifier extends TemperatureModifier
         return new Temperature(newTemperatureLevel);
     }
 
+	@Override
+	public boolean isPlayerSpecific()
+	{
+		return true;
+	}
 }

@@ -30,13 +30,6 @@ public class ItemThermometer extends Item
     {
         this.addPropertyOverride(new ResourceLocation("temperature"), new IItemPropertyGetter()
         {
-            @SideOnly(Side.CLIENT)
-            double field_185088_a;
-            @SideOnly(Side.CLIENT)
-            double field_185089_b;
-            @SideOnly(Side.CLIENT)
-            int ticks;
-            
             @Override
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entity)

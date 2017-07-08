@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -71,7 +72,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
 
         if (phase == Phase.END && !world.isRemote)
         {
-            int targetTemperature = getTargetTemperature(world, player);
+            int targetTemperature = getPlayerTarget(player);
             int tempChangeTicks = TemperatureScale.getRateForTemperatures(temperatureLevel, targetTemperature);
 
             boolean incrementTemperature = ++temperatureTimer >= tempChangeTicks;
@@ -111,7 +112,8 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         }
     }
 
-    private int getTargetTemperature(World world, EntityPlayer player)
+    @Override
+    public int getTargetAtPos(World world, BlockPos pos)
     {
         debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
         debugger.end(TemperatureScale.getScaleTotal() / 2);
@@ -119,7 +121,23 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
 
         for (TemperatureModifier modifier : temperatureModifiers)
         {
-            targetTemperature = modifier.modifyTarget(world, player, new Temperature(targetTemperature)).getRawValue();
+            if (!modifier.isPlayerSpecific())
+                targetTemperature = modifier.applyEnvironmentModifiers(world, pos, new Temperature(targetTemperature)).getRawValue();
+        }
+
+        debugger.targetTemperature = targetTemperature;
+        return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal());
+    }
+
+    @Override
+    public int getPlayerTarget(EntityPlayer player)
+    {
+        int targetTemperature = getTargetAtPos(player.world, player.getPosition());
+
+        for (TemperatureModifier modifier : temperatureModifiers)
+        {
+            if (modifier.isPlayerSpecific())
+                targetTemperature = modifier.applyPlayerModifiers(player, new Temperature(targetTemperature)).getRawValue();
         }
 
         debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature);

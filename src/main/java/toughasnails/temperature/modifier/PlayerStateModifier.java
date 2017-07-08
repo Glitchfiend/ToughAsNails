@@ -16,9 +16,9 @@ public class PlayerStateModifier extends TemperatureModifier
     }
 
     @Override
-    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
+    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
     {
-        int temperatureLevel = temperature.getRawValue();
+        int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
         
@@ -32,6 +32,12 @@ public class PlayerStateModifier extends TemperatureModifier
         debugger.end(newTemperatureLevel);
         
         return new Temperature(newTemperatureLevel);
+    }
+
+    @Override
+    public boolean isPlayerSpecific()
+    {
+        return true;
     }
 
 }

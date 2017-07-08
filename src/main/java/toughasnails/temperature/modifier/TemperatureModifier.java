@@ -2,6 +2,7 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import toughasnails.api.temperature.Temperature;
@@ -16,8 +17,18 @@ public abstract class TemperatureModifier
         this.debugger = debugger;
     }
 
-    public abstract Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature);
-    
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
+    {
+        return initialTemperature;
+    }
+
+    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
+    {
+        return applyEnvironmentModifiers(player.world, player.getPosition(), initialTemperature);
+    }
+
+    public abstract boolean isPlayerSpecific();
+
     public static class ExternalModifier implements INBTSerializable<NBTTagCompound>
     {
         private String name;

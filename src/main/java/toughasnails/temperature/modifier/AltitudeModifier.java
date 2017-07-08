@@ -1,6 +1,7 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import toughasnails.api.temperature.Temperature;
@@ -16,20 +17,26 @@ public class AltitudeModifier extends TemperatureModifier
     }
 
     @Override
-    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
     {
-        int temperatureLevel = temperature.getRawValue();
+        int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
 
         debugger.start(Modifier.ALTITUDE_TARGET, newTemperatureLevel);
         
         if (world.provider.isSurfaceWorld())
         {
-        	newTemperatureLevel -= MathHelper.abs(MathHelper.floor(((64 - player.posY) / 64) * ModConfig.temperature.altitudeModifier) + 1);
+        	newTemperatureLevel -= MathHelper.abs(MathHelper.floor(((64 - pos.getY()) / 64) * ModConfig.temperature.altitudeModifier) + 1);
         }
         
         debugger.end(newTemperatureLevel);
         
         return new Temperature(newTemperatureLevel);
+    }
+
+    @Override
+    public boolean isPlayerSpecific()
+    {
+        return false;
     }
 }

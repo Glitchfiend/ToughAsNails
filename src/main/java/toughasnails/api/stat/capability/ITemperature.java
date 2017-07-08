@@ -11,8 +11,15 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import toughasnails.api.stat.IPlayerStat;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.temperature.TemperatureDebugger;
+import toughasnails.temperature.modifier.TemperatureModifier;
 import toughasnails.temperature.modifier.TemperatureModifier.ExternalModifier;
 
 //TODO: Switch over to using capabilities entirely. In some places it is still assumed that
@@ -23,8 +30,11 @@ public interface ITemperature extends IPlayerStat
     public void addTemperature(Temperature difference);
     public void applyModifier(String name, int amount, int rate, int duration);
     public boolean hasModifier(String name);
+
+    public int getTargetAtPos(World world, BlockPos pos);
+    public int getPlayerTarget(EntityPlayer player);
     public Temperature getTemperature();
-    
+
     public void setChangeTime(int ticks);
     public int getChangeTime();
     

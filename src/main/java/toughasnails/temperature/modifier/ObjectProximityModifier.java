@@ -26,11 +26,10 @@ public class ObjectProximityModifier extends TemperatureModifier
     }
 
     @Override
-    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
     {
-        int temperatureLevel = temperature.getRawValue();
+        int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
-        BlockPos playerPos = player.getPosition();
 
         float blockTemperatureModifier = 0.0F;
 
@@ -40,9 +39,9 @@ public class ObjectProximityModifier extends TemperatureModifier
             {
                 for (int z = -3; z <= 3; z++)
                 {
-                    BlockPos pos = playerPos.add(x, y - 1, z);
-                    IBlockState state = world.getBlockState(pos);
-                    float mod = getBlockTemperature(player, state);
+                    BlockPos pos2 = pos.add(x, y - 1, z);
+                    IBlockState state = world.getBlockState(pos2);
+                    float mod = getBlockTemperature(world, pos2, state);
 
                     // use the most drastic temperature affecting block's temperature
                     if (Math.abs(mod) > Math.abs(blockTemperatureModifier))
@@ -60,11 +59,10 @@ public class ObjectProximityModifier extends TemperatureModifier
         return new Temperature(newTemperatureLevel);
     }
 
-    public static float getBlockTemperature(EntityPlayer player, IBlockState state)
+    public static float getBlockTemperature(World world, BlockPos pos, IBlockState state)
     {
-        World world = player.world;
         Material material = state.getMaterial();
-        Biome biome = world.getBiome(player.getPosition());
+        Biome biome = world.getBiome(pos);
 
         ResourceLocation registryName = state.getBlock().getRegistryName();
         if (registryName == null) return 0.0F;
@@ -106,5 +104,11 @@ public class ObjectProximityModifier extends TemperatureModifier
         }
 
         return 0.0F;
+    }
+
+    @Override
+    public boolean isPlayerSpecific()
+    {
+        return false;
     }
 }
