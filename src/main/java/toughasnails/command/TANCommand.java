@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,6 +30,12 @@ import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
+import toughasnails.temperature.modifier.AltitudeModifier;
+import toughasnails.temperature.modifier.BiomeModifier;
+import toughasnails.temperature.modifier.ObjectProximityModifier;
+import toughasnails.temperature.modifier.SeasonModifier;
+import toughasnails.temperature.modifier.TimeModifier;
+import toughasnails.temperature.modifier.WeatherModifier;
 import toughasnails.thirst.ThirstHandler;
 
 public class TANCommand extends CommandBase {
@@ -59,10 +66,16 @@ public class TANCommand extends CommandBase {
 			throw new WrongUsageException("commands.toughasnails.usage");
 		} else if ("tempinfo".equals(args[0])) {
 			displayTemperatureInfo(sender, args);
+		} else if ("tempat".equals(args[0])) {
+			if (args.length < 5 || args.length > 6) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			} else {
+				retrieveTemperatureAt(sender, args);
+			}
 		} else if ("settemp".equals(args[0])) {
 			setTemperature(sender, args);
 		} else if ("setseason".equals(args[0])) {
-			if (args.length != 3) {
+			if (args.length < 3 || args.length > 4) {
 				throw new WrongUsageException("commands.toughasnails.usage");
 			} else {
 				setSeason(sender, args);
@@ -97,6 +110,87 @@ public class TANCommand extends CommandBase {
 		}
 	}
 
+	// tan tempat <world> <x> <y> <z>
+	private void retrieveTemperatureAt(ICommandSender sender, String[] args)
+			throws CommandException {
+		int dimensionID = 0;
+		int x = 0;
+		int y = 0;
+		int z = 0;
+		boolean printOutput = true;
+		try {
+			dimensionID = Integer.parseInt(args[1]);
+			x = Integer.parseInt(args[2]);
+			y = Integer.parseInt(args[3]);
+			z = Integer.parseInt(args[4]);
+			if (args.length >= 6) {
+				printOutput = Boolean.parseBoolean(args[5]);
+			}
+		} catch (NumberFormatException e) {
+			throw new WrongUsageException("commands.toughasnails.usage");
+		}
+
+		if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)) {
+			World world = null;
+			WorldServer[] worldServers = FMLCommonHandler.instance()
+					.getMinecraftServerInstance().worldServers;
+			WorldServer candidate = FMLCommonHandler.instance()
+					.getMinecraftServerInstance()
+					.worldServerForDimension(dimensionID);
+			if (candidate == null) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			}
+
+			for (int i = 0; i < worldServers.length; i++) {
+				WorldServer target = worldServers[i];
+				if (candidate.equals(target)) {
+					world = target;
+					break;
+				}
+			}
+
+			if (world == null) {
+				throw new WrongUsageException("commands.toughasnails.usage");
+			}
+			final TemperatureDebugger debugger = new TemperatureDebugger();
+			AltitudeModifier altitudeModifier = new AltitudeModifier(debugger);
+			BiomeModifier biomeModifier = new BiomeModifier(debugger);
+			ObjectProximityModifier objectProximityModifier = new ObjectProximityModifier(
+					debugger);
+			WeatherModifier weatherModifier = new WeatherModifier(debugger);
+			TimeModifier timeModifier = new TimeModifier(debugger);
+			SeasonModifier seasonModifier = new SeasonModifier(debugger);
+
+			BlockPos position = new BlockPos(x, y, z);
+			Temperature baseTemperature = new Temperature(
+					TemperatureHandler.TEMPERATURE_SCALE_MIDPOINT);
+			Temperature targetTemperature = biomeModifier.modifyTarget(world,
+					position, baseTemperature);
+			targetTemperature = altitudeModifier.modifyTarget(world, position,
+					targetTemperature);
+			targetTemperature = objectProximityModifier.modifyTarget(world,
+					position, targetTemperature);
+			targetTemperature = weatherModifier.modifyTarget(world, position,
+					targetTemperature);
+			targetTemperature = timeModifier.modifyTarget(world, position,
+					targetTemperature);
+			targetTemperature = seasonModifier.modifyTarget(world, position,
+					targetTemperature);
+
+			int finalTemperature = targetTemperature.getRawValue();
+			if (printOutput) {
+				sender.addChatMessage(new TextComponentTranslation(
+						"commands.toughasnails.tempat.success", dimensionID, x,
+						y, z, finalTemperature));
+			}
+			sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT,
+					finalTemperature);
+		} else {
+			sender.addChatMessage(new TextComponentTranslation(
+					"commands.toughasnails.tempat.disabled"));
+		}
+	}
+
 	private void setTemperature(ICommandSender sender, String[] args)
 			throws CommandException {
 		EntityPlayerMP player = getCommandSenderAsPlayer(sender);
@@ -126,8 +220,12 @@ public class TANCommand extends CommandBase {
 	private void setSeason(ICommandSender sender, String[] args)
 			throws CommandException {
 		int dimensionID = 0;
+		boolean printOutput = true;
 		try {
 			dimensionID = Integer.parseInt(args[2]);
+			if (args.length >= 4) {
+				printOutput = Boolean.parseBoolean(args[3]);
+			}
 		} catch (NumberFormatException e) {
 			throw new WrongUsageException("commands.toughasnails.usage");
 		}
@@ -172,8 +270,11 @@ public class TANCommand extends CommandBase {
 						* SeasonTime.SUB_SEASON_DURATION * newSeason.ordinal();
 				seasonData.markDirty();
 				SeasonHandler.sendSeasonUpdate(world);
-				sender.addChatMessage(new TextComponentTranslation(
-						"commands.toughasnails.setseason.success", args[1]));
+				if (printOutput) {
+					sender.addChatMessage(new TextComponentTranslation(
+							"commands.toughasnails.setseason.success",
+							args[1]));
+				}
 			} else {
 				sender.addChatMessage(new TextComponentTranslation(
 						"commands.toughasnails.setseason.fail", args[1]));

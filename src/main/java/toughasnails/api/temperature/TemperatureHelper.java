@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.capability.ITemperature;
-import toughasnails.api.stat.capability.IThirst;
 
 public class TemperatureHelper 
 {

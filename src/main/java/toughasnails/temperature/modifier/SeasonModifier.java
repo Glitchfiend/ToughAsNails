@@ -8,6 +8,7 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season.SubSeason;
@@ -18,63 +19,104 @@ import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureTrend;
 
-public class SeasonModifier extends TemperatureModifier
-{
-    public SeasonModifier(TemperatureDebugger debugger) 
-    {
-        super(debugger);
-    }
-    
-    @Override
-    public int modifyChangeRate(World world, EntityPlayer player, int changeRate, TemperatureTrend trend) 
-    {
-        return changeRate;
-    }
+public class SeasonModifier extends TemperatureModifier {
+	public SeasonModifier(TemperatureDebugger debugger) {
+		super(debugger);
+	}
 
-    @Override
-    public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature) 
-    {
-        int temperatureLevel = temperature.getRawValue();
-        SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
-        
-        if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS)))
-        {
-        	season = SubSeason.MID_SUMMER;
-        }
-        
-        debugger.start(Modifier.SEASON_TARGET, temperatureLevel);
-        
-        if (world.provider.isSurfaceWorld())
-        {
-	        switch (season)
-	        {
-	        case MID_WINTER: case LATE_WINTER:
-	            temperatureLevel -= 6;
-	            break;
-	        
-	        case EARLY_SPRING: case EARLY_WINTER:
-	            temperatureLevel -= 4;
-	            break;
-	            
-	        case MID_SPRING: case LATE_AUTUMN:
-	            temperatureLevel -= 2;
-	            break;
-	            
-	        case MID_SUMMER: case EARLY_AUTUMN:
-	            temperatureLevel += 2;
-	            break;
-	            
-	        case LATE_SUMMER:
-	            temperatureLevel += 4;
-	            break;
-	            
-	        default:
-	            break;
-	        }
-        }
-        debugger.end(temperatureLevel);
-        
-        return new Temperature(temperatureLevel);
-    }
+	@Override
+	public int modifyChangeRate(World world, EntityPlayer player,
+			int changeRate, TemperatureTrend trend) {
+		return changeRate;
+	}
 
+	@Override
+	public Temperature modifyTarget(World world, EntityPlayer player,
+			Temperature temperature) {
+		int temperatureLevel = temperature.getRawValue();
+		SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
+
+		if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))) {
+			season = SubSeason.MID_SUMMER;
+		}
+
+		debugger.start(Modifier.SEASON_TARGET, temperatureLevel);
+
+		if (world.provider.isSurfaceWorld()) {
+			switch (season) {
+			case MID_WINTER:
+			case LATE_WINTER:
+				temperatureLevel -= 6;
+				break;
+
+			case EARLY_SPRING:
+			case EARLY_WINTER:
+				temperatureLevel -= 4;
+				break;
+
+			case MID_SPRING:
+			case LATE_AUTUMN:
+				temperatureLevel -= 2;
+				break;
+
+			case MID_SUMMER:
+			case EARLY_AUTUMN:
+				temperatureLevel += 2;
+				break;
+
+			case LATE_SUMMER:
+				temperatureLevel += 4;
+				break;
+
+			default:
+				break;
+			}
+		}
+		debugger.end(temperatureLevel);
+
+		return new Temperature(temperatureLevel);
+	}
+
+	public Temperature modifyTarget(World world, BlockPos position,
+			Temperature temperature) {
+		int temperatureLevel = temperature.getRawValue();
+		SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
+
+		if (!(SyncedConfig.getBooleanValue(GameplayOption.ENABLE_SEASONS))) {
+			season = SubSeason.MID_SUMMER;
+		}
+
+		if (world.provider.isSurfaceWorld()) {
+			switch (season) {
+			case MID_WINTER:
+			case LATE_WINTER:
+				temperatureLevel -= 6;
+				break;
+
+			case EARLY_SPRING:
+			case EARLY_WINTER:
+				temperatureLevel -= 4;
+				break;
+
+			case MID_SPRING:
+			case LATE_AUTUMN:
+				temperatureLevel -= 2;
+				break;
+
+			case MID_SUMMER:
+			case EARLY_AUTUMN:
+				temperatureLevel += 2;
+				break;
+
+			case LATE_SUMMER:
+				temperatureLevel += 4;
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		return new Temperature(temperatureLevel);
+	}
 }

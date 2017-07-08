@@ -25,6 +25,8 @@ commands.toughasnails.setthirst.success=Set thirst to %s
 commands.toughasnails.setthirst.disabled=Thirst is currently disabled!
 commands.toughasnails.sethealth.success=Set health to %s
 commands.toughasnails.sethealth.disabled=Health is currently disabled!
+commands.toughasnails.tempat.success=Temperature at dimension %s: %s,%s,%s is %s
+commands.toughasnails.tempat.disabled=Temperature is currently disabled!
 
 config.category.survivalSettings.title=Survival Settings
 
