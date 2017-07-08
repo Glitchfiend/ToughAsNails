@@ -40,9 +40,11 @@ public class GameplayConfigurationHandler {
 					SURVIVAL_SETTINGS, "Players are affected by temperature");
 			addSyncedBool(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS,
 					"Players are affected by thirst");
-			String[] drinkDefault = { "minecraft:milk_bucket;6;0.4", "minecraft:potion;7;0.5" };
+
+			String[] drinkDefault = { "minecraft:milk_bucket;*;6;0.4;0.0" };
 			addSyncedList(GameplayOption.DRINKS, drinkDefault, DRINKS,
-					"List of additional drinks with configurable thirst and hydration values, ;-delimited");
+					"List of additional drinks with configurable damage (* = any), thirst, "
+							+ "hydration, and poison chance values. ;-delimited");
 		} catch (Exception e) {
 			ToughAsNails.logger.error(
 					"Tough As Nails has encountered a problem loading gameplay.cfg",

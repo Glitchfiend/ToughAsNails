@@ -37,7 +37,7 @@ public class ItemTANWaterBottle extends ItemDrink<WaterBottleType>
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List subItems)
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems)
     {
         for (WaterBottleType waterBottleType : WaterBottleType.values())
         {
