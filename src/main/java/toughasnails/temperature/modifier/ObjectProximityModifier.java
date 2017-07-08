@@ -91,6 +91,7 @@ public class ObjectProximityModifier extends TemperatureModifier
         World world = player.worldObj;
         Material material = state.getMaterial();
         Biome biome = world.getBiomeGenForCoords(player.getPosition());
+        if (state.getBlock().getRegistryName() == null) return 0.0F;
 
         String blockName = state.getBlock().getRegistryName().toString();
 
