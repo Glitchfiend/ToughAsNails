@@ -117,7 +117,7 @@ public class ModItems
         {
             item.setCreativeTab(CreativeTabTAN.instance);
         }
-        RegistryEventHandler.ITEMS.add(item.setRegistryName(ToughAsNails.MOD_ID, name));
+        GameRegistry.register(item, new ResourceLocation(ToughAsNails.MOD_ID, name));
         //TANCommand.itemCount++;
         
         // register sub types if there are any
@@ -132,7 +132,7 @@ public class ModItems
                     String subItemName = item.getUnlocalizedName(subItem);
                     subItemName =  subItemName.substring(subItemName.indexOf(".") + 1); // remove 'item.' from the front
 
-                    //ModelBakery.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
+                    ModelBakery.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
                     ModelLoader.setCustomModelResourceLocation(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
                 }
             }
