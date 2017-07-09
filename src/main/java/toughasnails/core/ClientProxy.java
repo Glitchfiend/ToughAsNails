@@ -1,5 +1,6 @@
 package toughasnails.core;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +14,10 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -27,6 +31,7 @@ import toughasnails.entities.projectile.EntityIceball;
 import toughasnails.entities.projectile.RenderIceball;
 import toughasnails.particle.EntitySnowflakeFX;
 import toughasnails.particle.TANParticleTypes;
+import toughasnails.util.inventory.CreativeTabTAN;
 
 public class ClientProxy extends CommonProxy
 {
@@ -39,23 +44,25 @@ public class ClientProxy extends CommonProxy
         registerEntityRenderer(EntityIceball.class, RenderIceball.class);
         registerEntityRenderer(EntityFreeze.class, RenderFreeze.class);
     }
-	
+
     @Override
-    public void registerItemVariantModel(Item item, String name, int metadata) 
+    public void registerItemVariantModel(Item item, String name, int metadata)
     {
-        if (item != null) 
-        { 
-            ModelBakery.registerItemVariants(item, new ResourceLocation("toughasnails:" + name));
-            ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
-        }
+        Preconditions.checkNotNull(item, "Cannot register models for null item " + name);
+        Preconditions.checkArgument(item != Items.AIR, "Cannot register models for air (" + name + ")");
+
+        ModelLoader.registerItemVariants(item, new ResourceLocation("toughasnails:" + name));
+        ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
     }
 
     @Override
-    public void registerNonRenderingProperties(Block block) 
+    public void registerBlockSided(Block block)
     {
         if (block instanceof ITANBlock)
         {
-            ITANBlock bopBlock = (ITANBlock)block;
+            ITANBlock bopBlock = (ITANBlock) block;
+
+            //Register non-rendering properties
             IProperty[] nonRenderingProperties = bopBlock.getNonRenderingProperties();
 
             if (nonRenderingProperties != null)
@@ -64,6 +71,29 @@ public class ClientProxy extends CommonProxy
                 IStateMapper custom_mapper = (new StateMap.Builder()).ignore(nonRenderingProperties).build();
                 ModelLoader.setCustomStateMapper(block, custom_mapper);
             }
+        }
+    }
+
+    @Override
+    public void registerItemSided(Item item)
+    {
+        // register sub types if there are any
+        if (item.getHasSubtypes())
+        {
+            NonNullList<ItemStack> subItems = NonNullList.create();
+            item.getSubItems(CreativeTabTAN.instance, subItems);
+            for (ItemStack subItem : subItems)
+            {
+                String subItemName = item.getUnlocalizedName(subItem);
+                subItemName =  subItemName.substring(subItemName.indexOf(".") + 1); // remove 'item.' from the front
+
+                ModelLoader.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
+                ModelLoader.setCustomModelResourceLocation(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
+            }
+        }
+        else
+        {
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + item.delegate.name().getResourcePath(), "inventory"));
         }
     }
 

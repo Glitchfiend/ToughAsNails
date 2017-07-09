@@ -14,6 +14,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.TANPotions;
 import toughasnails.core.ToughAsNails;
@@ -38,16 +39,20 @@ public class ModPotions
         heat_resistance_type = registerPotionType("heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 1200)}));
         long_heat_resistance_type = registerPotionType("long_heat_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.heat_resistance, 2400)}));
     }
-    
+
     public static Potion registerPotion(String name, Potion potion)
     {
-        GameRegistry.register(potion, new ResourceLocation(ToughAsNails.MOD_ID, name));
+        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        potion.setRegistryName(location);
+        ForgeRegistries.POTIONS.register(potion);
         return potion;
     }
     
     public static PotionType registerPotionType(String name, PotionType potionType)
     {
-        GameRegistry.register(potionType, new ResourceLocation(ToughAsNails.MOD_ID, name));
+        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        potionType.setRegistryName(location);
+        ForgeRegistries.POTION_TYPES.register(potionType);
         return potionType;
     }
 }

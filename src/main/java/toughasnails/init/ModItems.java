@@ -39,6 +39,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
@@ -104,44 +105,24 @@ public class ModItems
         jelled_slime_leggings = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.LEGS), "jelled_slime_leggings");
         jelled_slime_boots = registerItem(new ItemArmor(jelled_slime_armor_material, 0, EntityEquipmentSlot.FEET), "jelled_slime_boots");
     }
-    
+
     public static Item registerItem(Item item, String name)
     {
         return registerItem(item, name, CreativeTabTAN.instance);
     }
-    
+
     public static Item registerItem(Item item, String name, CreativeTabs tab)
-    {    
+    {
         item.setUnlocalizedName(name);
         if (tab != null)
         {
             item.setCreativeTab(CreativeTabTAN.instance);
         }
-        GameRegistry.register(item, new ResourceLocation(ToughAsNails.MOD_ID, name));
-        //TANCommand.itemCount++;
-        
-        // register sub types if there are any
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            if (item.getHasSubtypes())
-            {
-                NonNullList<ItemStack> subItems = NonNullList.create();
-                item.getSubItems(CreativeTabTAN.instance, subItems);
-                for (ItemStack subItem : subItems)
-                {
-                    String subItemName = item.getUnlocalizedName(subItem);
-                    subItemName =  subItemName.substring(subItemName.indexOf(".") + 1); // remove 'item.' from the front
 
-                    ModelBakery.registerItemVariants(item, new ResourceLocation(ToughAsNails.MOD_ID, subItemName));
-                    ModelLoader.setCustomModelResourceLocation(item, subItem.getMetadata(), new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + subItemName, "inventory"));
-                }
-            }
-            else
-            {
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
-            }
-        }
-        
-        return item;   
+        item.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, name));
+        ForgeRegistries.ITEMS.register(item);
+        ToughAsNails.proxy.registerItemSided(item);
+
+        return item;
     }
 }
