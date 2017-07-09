@@ -9,7 +9,6 @@ public class CommonProxy
 {
     public void registerRenderers() {}
     public void registerItemVariantModel(Item item, String name, int metadata) {}
-    public void registerBlockVariantModel(Block block, String stateName, int stateMeta) {}
     public void registerNonRenderingProperties(Block block) {}
     public void registerFluidBlockRendering(Block block, String name) {}
     public void spawnParticle(TANParticleTypes type, World parWorld, double x, double y, double z, Object... info) {}

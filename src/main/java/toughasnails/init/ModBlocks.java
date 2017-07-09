@@ -57,7 +57,8 @@ public class ModBlocks
     
     public static void registerBlockVariant(Block block, String stateName, int stateMeta)
     {
-        ToughAsNails.proxy.registerBlockVariantModel(block, stateName, stateMeta);
+        Item item = Item.getItemFromBlock(block);
+        ToughAsNails.proxy.registerItemVariantModel(item, stateName, stateMeta);
     }
     
     public static Block registerBlock(Block block, String blockName)

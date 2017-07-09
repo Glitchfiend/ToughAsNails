@@ -21,7 +21,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import toughasnails.api.ITANBlock;
-import toughasnails.client.ModelRegistryHandler;
 import toughasnails.entities.EntityFreeze;
 import toughasnails.entities.RenderFreeze;
 import toughasnails.entities.projectile.EntityIceball;
@@ -32,7 +31,7 @@ import toughasnails.particle.TANParticleTypes;
 public class ClientProxy extends CommonProxy
 {
 	public static ResourceLocation particleTexturesLocation = new ResourceLocation("toughasnails:textures/particles/particles.png");
-		
+	
     @Override
     public void registerRenderers()
     {
@@ -44,13 +43,11 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerItemVariantModel(Item item, String name, int metadata) 
     {
-        ModelRegistryHandler.queueForModelRegistry(item, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
-    }
-    
-    @Override
-    public void registerBlockVariantModel(Block block, String name, int metadata) 
-    {
-        ModelRegistryHandler.queueForModelRegistry(block, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
+        if (item != null) 
+        { 
+            ModelBakery.registerItemVariants(item, new ResourceLocation("toughasnails:" + name));
+            ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
+        }
     }
 
     @Override
