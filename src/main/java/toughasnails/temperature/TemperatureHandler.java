@@ -1,44 +1,31 @@
 package toughasnails.temperature;
 
-import static toughasnails.api.temperature.TemperatureHelper.registerTemperatureModifier;
-
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
-import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
-import toughasnails.api.config.GameplayOption;
 import toughasnails.network.message.MessageUpdateStat;
-import toughasnails.temperature.modifier.AltitudeModifier;
-import toughasnails.temperature.modifier.ArmorModifier;
-import toughasnails.temperature.modifier.BiomeModifier;
-import toughasnails.temperature.modifier.ObjectProximityModifier;
-import toughasnails.temperature.modifier.PlayerStateModifier;
-import toughasnails.temperature.modifier.SeasonModifier;
-import toughasnails.temperature.modifier.TemperatureModifier;
+import toughasnails.temperature.modifier.*;
 import toughasnails.temperature.modifier.TemperatureModifier.ExternalModifier;
-import toughasnails.temperature.modifier.TimeModifier;
-import toughasnails.temperature.modifier.WeatherModifier;
+
+import java.util.Iterator;
+import java.util.Map;
+
+import static toughasnails.api.temperature.TemperatureHelper.registerTemperatureModifier;
 
 public class TemperatureHandler extends StatHandlerBase implements ITemperature
 {
@@ -117,25 +104,9 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     }
 
     @Override
-    public int getTargetAtPos(World world, BlockPos pos)
-    {
-        debugger.addEntry(new IModifierMonitor.Context("equilibrium", "Equilibrium", new Temperature(0), new Temperature(TemperatureScale.getScaleTotal() / 2)));
-        int targetTemperature = TemperatureScale.getScaleMidpoint();
-
-        for (ITemperatureModifier modifier : TemperatureHelper.getTemperatureModifiers().values())
-        {
-            if (!modifier.isPlayerSpecific())
-                targetTemperature = modifier.applyEnvironmentModifiers(world, pos, new Temperature(targetTemperature), debugger).getRawValue();
-        }
-
-        debugger.targetTemperature = targetTemperature;
-        return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal());
-    }
-
-    @Override
     public int getPlayerTarget(EntityPlayer player)
     {
-        int targetTemperature = getTargetAtPos(player.world, player.getPosition());
+        int targetTemperature = TemperatureHelper.getTargetAtPos(player.world, player.getPosition(), debugger).getRawValue();
 
         for (ITemperatureModifier modifier : TemperatureHelper.getTemperatureModifiers().values())
         {
@@ -151,10 +122,9 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         debugger.addEntry(new IModifierMonitor.Context("climatisation", "Climatisation", preClimatisationTemp, new Temperature(targetTemperature)));
         debugger.targetTemperature = targetTemperature;
         // temperature values can't be above or less than the scale allows
-        // TODO: Possibly move this to the temperature class
         return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal());
     }
-    
+
     private void addPotionEffects(EntityPlayer player)
     {
         TemperatureRange range = TemperatureScale.getTemperatureRange(this.temperatureLevel);

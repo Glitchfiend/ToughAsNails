@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.Sys;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureScale;
@@ -34,15 +36,16 @@ public class ItemThermometer extends Item
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entity)
             {
-                if (entity == null || !(entity instanceof EntityPlayer))
-                    return 0.0F;
-                
-                EntityPlayer player = (EntityPlayer)entity;
-                
-                if (world == null) world = entity.world;
+                float targetTemperature = 0.0F;
 
-                TemperatureHandler tempHandler = (TemperatureHandler)TemperatureHelper.getTemperatureData(player);
-                return (float)MathHelper.clamp(tempHandler.debugger.targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();
+                if (entity instanceof EntityPlayer || (entity == null && (entity = Minecraft.getMinecraft().player) != null) )
+                {
+                    EntityPlayer player = (EntityPlayer) entity;
+                    TemperatureHandler tempHandler = (TemperatureHandler) TemperatureHelper.getTemperatureData(player);
+                    targetTemperature = tempHandler.debugger.targetTemperature;
+                }
+
+                return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();
             }
         });
     }

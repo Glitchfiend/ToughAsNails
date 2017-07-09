@@ -4,6 +4,7 @@ import java.util.*;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import toughasnails.api.temperature.IModifierMonitor;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageTemperatureClient;
 import toughasnails.network.message.MessageToggleUI;
@@ -29,7 +30,13 @@ public class TemperatureDebugger implements IModifierMonitor
             modifiers.put(context.modifierId, context);
         }
     }
-    
+
+    @Override
+    public void setTargetTemperature(Temperature temperature)
+    {
+        this.targetTemperature = temperature.getRawValue();
+    }
+
     /**
      * Sorts the modifier maps and sends them to the client
      */

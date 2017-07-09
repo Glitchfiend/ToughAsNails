@@ -31,7 +31,6 @@ public interface ITemperature extends IPlayerStat
     public void applyModifier(String name, int amount, int rate, int duration);
     public boolean hasModifier(String name);
 
-    public int getTargetAtPos(World world, BlockPos pos);
     public int getPlayerTarget(EntityPlayer player);
     public Temperature getTemperature();
 

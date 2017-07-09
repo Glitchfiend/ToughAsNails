@@ -12,6 +12,7 @@ import com.google.common.base.Preconditions;
 public interface IModifierMonitor
 {
     void addEntry(Context context);
+    void setTargetTemperature(Temperature temperature);
 
     class Context
     {
