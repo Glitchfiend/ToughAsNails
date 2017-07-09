@@ -1,22 +1,23 @@
 package toughasnails.network.message;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.temperature.IModifierMonitor;
+import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
-import toughasnails.temperature.TemperatureDebugger.ModifierType;
 import toughasnails.temperature.TemperatureHandler;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class MessageTemperatureClient implements IMessage, IMessageHandler<MessageTemperatureClient, IMessage>
 {
@@ -24,17 +25,11 @@ public class MessageTemperatureClient implements IMessage, IMessageHandler<Messa
     public int changeTicks;
     public int targetTemperature;
     
-    public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
-    
-    public MessageTemperatureClient() 
-    {
-        for (int i = 0; i < ModifierType.values().length; i++)
-        {
-            modifiers[i] = new LinkedHashMap();
-        }
-    }
-    
-    public MessageTemperatureClient(int temperatureTimer, int changeTicks, int targetTemperature, Map<Modifier, Integer>[] modifiers)
+    public Map<String, IModifierMonitor.Context> modifiers = new LinkedHashMap();
+
+    public MessageTemperatureClient() {}
+
+    public MessageTemperatureClient(int temperatureTimer, int changeTicks, int targetTemperature, Map<String, IModifierMonitor.Context> modifiers)
     {
         this.temperatureTimer = temperatureTimer;
         this.changeTicks = changeTicks;
@@ -46,22 +41,21 @@ public class MessageTemperatureClient implements IMessage, IMessageHandler<Messa
     public void fromBytes(ByteBuf buf)
     {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
-        
+
         this.temperatureTimer = packetBuffer.readInt();
         this.changeTicks = packetBuffer.readInt();
         this.targetTemperature = packetBuffer.readInt();
-        
-        for (int mapIdx = 0; mapIdx < modifiers.length; mapIdx++)
-        {
-            int size = packetBuffer.readInt();
 
-            for (int i = 0; i < size; i++)
-            {
-                Modifier modifier = (Modifier)packetBuffer.readEnumValue(Modifier.class);
-                int value = packetBuffer.readInt();
-                
-                modifiers[mapIdx].put(modifier, value);
-            }
+        int size = packetBuffer.readInt();
+
+        for (int i = 0; i < size; i++)
+        {
+            String modifierId = ByteBufUtils.readUTF8String(buf);
+            String description = ByteBufUtils.readUTF8String(buf);
+            Temperature startTemp = new Temperature(buf.readInt());
+            Temperature endTemp = new Temperature(buf.readInt());
+
+            modifiers.put(modifierId, new IModifierMonitor.Context(modifierId, description, startTemp, endTemp));
         }
     }
 
@@ -69,20 +63,19 @@ public class MessageTemperatureClient implements IMessage, IMessageHandler<Messa
     public void toBytes(ByteBuf buf)
     {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
-        
+
         packetBuffer.writeInt(this.temperatureTimer);
         packetBuffer.writeInt(this.changeTicks);
         packetBuffer.writeInt(this.targetTemperature);
 
-        for (Map<Modifier, Integer> modifier : modifiers)
-        {
-            packetBuffer.writeInt(modifier.size());
+        packetBuffer.writeInt(modifiers.size());
 
-            for (Entry<Modifier, Integer> entry : modifier.entrySet())
-            {
-                packetBuffer.writeEnumValue(entry.getKey());
-                packetBuffer.writeInt(entry.getValue());
-            }
+        for (Entry<String, IModifierMonitor.Context> entry : modifiers.entrySet())
+        {
+            ByteBufUtils.writeUTF8String(buf, entry.getValue().modifierId);
+            ByteBufUtils.writeUTF8String(buf, entry.getValue().description);
+            packetBuffer.writeInt(entry.getValue().startTemperature.getRawValue());
+            packetBuffer.writeInt(entry.getValue().endTemperature.getRawValue());
         }
     }
 

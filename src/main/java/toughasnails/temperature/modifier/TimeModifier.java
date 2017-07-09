@@ -1,24 +1,22 @@
 package toughasnails.temperature.modifier;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.util.BiomeUtils;
 
 public class TimeModifier extends TemperatureModifier
 {
-    public TimeModifier(TemperatureDebugger debugger)
+    public TimeModifier(String id)
     {
-        super(debugger);
+        super(id);
     }
 
     @Override
-    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         Biome biome = world.getBiome(pos);
         long worldTime = world.getWorldTime();
@@ -30,15 +28,13 @@ public class TimeModifier extends TemperatureModifier
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
 
-        debugger.start(Modifier.TIME_TARGET, newTemperatureLevel);
-        
         if (world.provider.isSurfaceWorld())
         {
         	newTemperatureLevel += ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier));
         }
-        
-        debugger.end(newTemperatureLevel);
-        
+
+        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Time", initialTemperature, new Temperature(newTemperatureLevel)));
+
         return new Temperature(newTemperatureLevel);
     }
 

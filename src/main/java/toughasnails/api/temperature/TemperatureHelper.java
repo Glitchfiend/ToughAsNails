@@ -8,9 +8,12 @@
 package toughasnails.api.temperature;
 
 import java.util.List;
+import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
+import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +24,24 @@ import toughasnails.api.stat.capability.IThirst;
 
 public class TemperatureHelper 
 {
+    private static Map<String, ITemperatureModifier> modifiers = Maps.newHashMap();
+
+    public static boolean registerTemperatureModifier(ITemperatureModifier modifier)
+    {
+        if (modifiers.containsKey(modifier.getId()))
+        {
+            return false;
+        }
+
+        modifiers.put(modifier.getId(), modifier);
+        return true;
+    }
+
+    public static ImmutableMap<String, ITemperatureModifier> getTemperatureModifiers()
+    {
+        return ImmutableMap.copyOf(modifiers);
+    }
+
     public static ITemperature getTemperatureData(EntityPlayer player)
     {
         return player.getCapability(TANCapabilities.TEMPERATURE, null);

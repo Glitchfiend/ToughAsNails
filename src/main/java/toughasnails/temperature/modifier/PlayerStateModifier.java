@@ -2,34 +2,30 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class PlayerStateModifier extends TemperatureModifier
 {
-    public PlayerStateModifier(TemperatureDebugger debugger)
+    public PlayerStateModifier(String id)
     {
-        super(debugger);
+        super(id);
     }
 
     @Override
-    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
+    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
         BlockPos playerPos = player.getPosition();
-        
-        debugger.start(Modifier.SPRINTING_TARGET, newTemperatureLevel);
-        
+
         if (player.isSprinting())
         {
             newTemperatureLevel += ModConfig.temperature.sprintingModifier;
         }
-        
-        debugger.end(newTemperatureLevel);
+
+        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Sprinting", initialTemperature, new Temperature(newTemperatureLevel)));
         
         return new Temperature(newTemperatureLevel);
     }

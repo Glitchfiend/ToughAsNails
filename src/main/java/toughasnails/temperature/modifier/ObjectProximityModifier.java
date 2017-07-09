@@ -1,32 +1,30 @@
 package toughasnails.temperature.modifier;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.config.TANConfig;
 import toughasnails.temperature.BlockTemperatureData;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.util.BlockStateUtils;
+
+import java.util.ArrayList;
 
 //TODO: Replace this with something better
 public class ObjectProximityModifier extends TemperatureModifier
 {
-    public ObjectProximityModifier(TemperatureDebugger debugger)
+    public ObjectProximityModifier(String id)
     {
-        super(debugger);
+        super(id);
     }
 
     @Override
-    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
@@ -52,9 +50,8 @@ public class ObjectProximityModifier extends TemperatureModifier
             }
         }
 
-        debugger.start(Modifier.NEARBY_BLOCKS_TARGET, newTemperatureLevel);
         newTemperatureLevel += blockTemperatureModifier;
-        debugger.end(newTemperatureLevel);
+        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Nearby Blocks", initialTemperature, new Temperature(newTemperatureLevel)));
 
         return new Temperature(newTemperatureLevel);
     }

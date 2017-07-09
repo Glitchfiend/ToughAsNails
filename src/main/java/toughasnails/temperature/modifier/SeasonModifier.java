@@ -7,27 +7,25 @@
  ******************************************************************************/
 package toughasnails.temperature.modifier;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class SeasonModifier extends TemperatureModifier
 {
-    public SeasonModifier(TemperatureDebugger debugger)
+    public SeasonModifier(String id)
     {
-        super(debugger);
+        super(id);
     }
 
     @Override
-    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
         SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
@@ -36,8 +34,6 @@ public class SeasonModifier extends TemperatureModifier
         {
             season = SubSeason.MID_SUMMER;
         }
-
-        debugger.start(Modifier.SEASON_TARGET, temperatureLevel);
 
         if (world.provider.isSurfaceWorld())
         {
@@ -95,7 +91,7 @@ public class SeasonModifier extends TemperatureModifier
                     break;
             }
         }
-        debugger.end(temperatureLevel);
+        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Season", initialTemperature, new Temperature(temperatureLevel)));
 
         return new Temperature(temperatureLevel);
     }

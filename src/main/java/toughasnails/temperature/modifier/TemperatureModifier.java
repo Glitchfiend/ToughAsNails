@@ -5,29 +5,39 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import toughasnails.api.temperature.IModifierMonitor;
+import toughasnails.api.temperature.ITemperatureModifier;
 import toughasnails.api.temperature.Temperature;
-import toughasnails.temperature.TemperatureDebugger;
 
-public abstract class TemperatureModifier
+public abstract class TemperatureModifier implements ITemperatureModifier
 {
-    protected final TemperatureDebugger debugger;
-    
-    protected TemperatureModifier(TemperatureDebugger debugger)
+    private final String id;
+
+    public TemperatureModifier(String id)
     {
-        this.debugger = debugger;
+        this.id = id;
     }
 
-    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature)
+    @Override
+    public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         return initialTemperature;
     }
 
-    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
+    @Override
+    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature, IModifierMonitor monitor)
     {
-        return applyEnvironmentModifiers(player.world, player.getPosition(), initialTemperature);
+        return applyEnvironmentModifiers(player.world, player.getPosition(), initialTemperature, monitor);
     }
 
+    @Override
     public abstract boolean isPlayerSpecific();
+
+    @Override
+    public String getId()
+    {
+        return this.id;
+    }
 
     public static class ExternalModifier implements INBTSerializable<NBTTagCompound>
     {

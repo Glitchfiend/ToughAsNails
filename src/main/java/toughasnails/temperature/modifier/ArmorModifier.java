@@ -3,31 +3,27 @@ package toughasnails.temperature.modifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import toughasnails.api.item.TANItems;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class ArmorModifier extends TemperatureModifier
 {
     public static final int JELLED_SLIME_TARGET_MODIFIER = -1;
     public static final int WOOL_TARGET_MODIFIER = 1;
-    
-    public ArmorModifier(TemperatureDebugger debugger)
-    {
-        super(debugger);
-    }
+
+	public ArmorModifier(String id)
+	{
+		super(id);
+	}
 
 	@Override
-	public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
+	public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
-        
-        debugger.start(Modifier.ARMOR_TARGET, newTemperatureLevel);
-        
+
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
         
         //Helmet
@@ -81,8 +77,8 @@ public class ArmorModifier extends TemperatureModifier
 	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
-        
-        debugger.end(newTemperatureLevel);
+
+		monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Armor", initialTemperature, new Temperature(newTemperatureLevel)));
         
         return new Temperature(newTemperatureLevel);
     }

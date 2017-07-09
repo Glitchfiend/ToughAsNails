@@ -1,10 +1,5 @@
 package toughasnails.handler.temperature;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -19,11 +14,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.Pair;
 import toughasnails.api.TANCapabilities;
-import toughasnails.api.temperature.Temperature;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureHandler;
+
+import java.util.ArrayList;
+import java.util.Map.Entry;
 
 public class TemperatureStatTableHandler
 {
@@ -56,9 +53,9 @@ public class TemperatureStatTableHandler
 
             // translate old modifiers map to new table setup
             // TODO: Replace this once the debugger has been updated properly
-            for (Entry<Modifier, Integer> entry : debugger.modifiers[0].entrySet())
+            for (Entry<String, IModifierMonitor.Context> entry : debugger.modifiers.entrySet())
             {
-                TEMPERATURE_TABLE.addRow(entry.getKey().name, entry.getValue());
+                TEMPERATURE_TABLE.addRow(entry.getValue().description, entry.getValue().endTemperature.getRawValue() - entry.getValue().startTemperature.getRawValue());
             }
 
             int gradient = TemperatureScale.getRateForTemperatures(currentTemp, debugger.targetTemperature) - TemperatureScale.getAdjustedBaseRate(currentTemp);

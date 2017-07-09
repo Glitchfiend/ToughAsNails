@@ -1,17 +1,16 @@
 package toughasnails.temperature;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageTemperatureClient;
 import toughasnails.network.message.MessageToggleUI;
-import toughasnails.util.MapUtils;
 
-public class TemperatureDebugger
+public class TemperatureDebugger implements IModifierMonitor
 {
-    public Map<Modifier, Integer>[] modifiers = new LinkedHashMap[ModifierType.values().length];
+    public Map<String, Context> modifiers = new LinkedHashMap();
     
     private boolean showGui = false;
     public int debugTimer;
@@ -19,49 +18,15 @@ public class TemperatureDebugger
     public int temperatureTimer;
     public int changeTicks;
     public int targetTemperature;
-    
-    private boolean currentlyMeasuring = false;
-    private Modifier currentModifier;
-    private int currentLevel = -1;
-    
-    public TemperatureDebugger()
+
+    @Override
+    public void addEntry(Context context)
     {
-        for (int i = 0; i < ModifierType.values().length; i++)
+        int difference = -(context.startTemperature.getRawValue() - context.endTemperature.getRawValue());
+
+        if (difference != 0)
         {
-            modifiers[i] = new LinkedHashMap();
-        }
-    }
-    
-    public void start(Modifier modifier, int startLevel)
-    {
-        if (!currentlyMeasuring)
-        {
-            this.currentModifier = modifier;
-            this.currentLevel = startLevel;
-            this.currentlyMeasuring = true;
-        }
-        else
-        {
-            throw new RuntimeException("Already measuring!");
-        }
-    }
-    
-    public void end(int endLevel)
-    {
-        if (currentlyMeasuring)
-        {
-            int difference = -(currentLevel - endLevel);
-            
-            if (difference != 0)
-            {
-                modifiers[currentModifier.modifierType.ordinal()].put(currentModifier, difference);
-            }
-            
-            currentlyMeasuring = false;
-        }
-        else
-        {
-            throw new RuntimeException("No measurement has been started!");
+            modifiers.put(context.modifierId, context);
         }
     }
     
@@ -83,18 +48,23 @@ public class TemperatureDebugger
     
     private void sortModifiers()
     {
-        for (int i = 0; i < modifiers.length; i++)
+        LinkedList<Map.Entry<String, Context>> entries = new LinkedList<Map.Entry<String, Context>>(modifiers.entrySet());
+        Collections.sort(entries, (o1, o2) ->
         {
-            modifiers[i] = MapUtils.sortMapByValue(modifiers[i]);
-        }
+            int difference1 = o1.getValue().endTemperature.getRawValue() - o1.getValue().startTemperature.getRawValue();
+            int difference2 = o2.getValue().endTemperature.getRawValue() - o2.getValue().startTemperature.getRawValue();
+            return difference1 > difference2 ? -1 : difference1 < difference2 ? 1 : 0;
+        });
+
+        // linked to retain order
+        LinkedHashMap<String, Context> sortedMap = new LinkedHashMap();
+        entries.forEach(entry -> sortedMap.put(entry.getKey(), entry.getValue()));
+        modifiers = sortedMap;
     }
     
     public void clearModifiers()
     {
-        for (int i = 0; i < modifiers.length; i++)
-        {
-            modifiers[i].clear();
-        }
+        modifiers.clear();
     }
     
     public void setGuiVisible(boolean state, EntityPlayerMP updatePlayer)
@@ -116,34 +86,5 @@ public class TemperatureDebugger
     public boolean isGuiVisible()
     {
         return this.showGui;
-    }
-    
-    public enum ModifierType
-    {
-        TARGET;
-    }
-    
-    public static enum Modifier
-    {
-        EQUILIBRIUM_TARGET("Equilibrium", ModifierType.TARGET),
-        BIOME_TEMPERATURE_TARGET("Biome Temperature", ModifierType.TARGET),
-        NEARBY_BLOCKS_TARGET("Nearby Blocks", ModifierType.TARGET),
-        ALTITUDE_TARGET("Altitude", ModifierType.TARGET),
-        ARMOR_TARGET("Armor", ModifierType.TARGET),
-        SPRINTING_TARGET("Sprinting", ModifierType.TARGET),
-        TIME_TARGET("Time", ModifierType.TARGET),
-        WET_TARGET("Wet", ModifierType.TARGET),
-        SNOW_TARGET("Snow", ModifierType.TARGET),
-        CLIMATISATION_TARGET("Climatisation", ModifierType.TARGET),
-        SEASON_TARGET("Season", ModifierType.TARGET);
-        
-        public final String name;
-        public final ModifierType modifierType;
-        
-        Modifier(String name, ModifierType modifierType)
-        {
-            this.name = name;
-            this.modifierType = modifierType;
-        }
     }
 }

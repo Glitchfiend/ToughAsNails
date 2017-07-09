@@ -4,21 +4,20 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModCompat;
 import toughasnails.init.ModConfig;
-import toughasnails.temperature.TemperatureDebugger;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 
 public class WeatherModifier extends TemperatureModifier
 {
-    public WeatherModifier(TemperatureDebugger debugger)
+    public WeatherModifier(String id)
     {
-        super(debugger);
+        super(id);
     }
 
     @Override
-    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature)
+    public Temperature applyPlayerModifiers(EntityPlayer player, Temperature initialTemperature, IModifierMonitor monitor)
     {
         World world = player.world;
         int temperatureLevel = initialTemperature.getRawValue();
@@ -31,16 +30,14 @@ public class WeatherModifier extends TemperatureModifier
         {
             if (block != ModCompat.HOT_SPRING_WATER)
             {
-                debugger.start(Modifier.WET_TARGET, newTemperatureLevel);
                 newTemperatureLevel += ModConfig.temperature.wetModifier;
-                debugger.end(newTemperatureLevel);
+                monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Wet", initialTemperature, new Temperature(newTemperatureLevel)));
             }
         }
         else if (world.isRaining() && world.canSeeSky(playerPos) && world.getBiome(playerPos).getEnableSnow())
         {
-            debugger.start(Modifier.SNOW_TARGET, newTemperatureLevel);
             newTemperatureLevel += ModConfig.temperature.snowModifier;
-            debugger.end(newTemperatureLevel);
+            monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Snow", initialTemperature, new Temperature(newTemperatureLevel)));
         }
 
         return new Temperature(newTemperatureLevel);

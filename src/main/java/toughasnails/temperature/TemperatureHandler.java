@@ -1,6 +1,6 @@
 package toughasnails.temperature;
 
-import static toughasnails.api.temperature.TemperatureScale.*;
+import static toughasnails.api.temperature.TemperatureHelper.registerTemperatureModifier;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -25,12 +25,10 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.stat.StatHandlerBase;
 import toughasnails.api.stat.capability.ITemperature;
-import toughasnails.api.temperature.Temperature;
-import toughasnails.api.temperature.TemperatureScale;
+import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.network.message.MessageUpdateStat;
-import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.modifier.AltitudeModifier;
 import toughasnails.temperature.modifier.ArmorModifier;
 import toughasnails.temperature.modifier.BiomeModifier;
@@ -47,20 +45,26 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     private int temperatureLevel;
     private int prevTemperatureLevel;
     private int temperatureTimer;
-    private Set<TemperatureModifier> temperatureModifiers;
     private Map<String, TemperatureModifier.ExternalModifier> externalModifiers;
     
     public final TemperatureDebugger debugger = new TemperatureDebugger();
-    
+
+    static
+    {
+        registerTemperatureModifier(new AltitudeModifier("altitude"));
+        registerTemperatureModifier(new ArmorModifier("armor"));
+        registerTemperatureModifier(new BiomeModifier("biome"));
+        registerTemperatureModifier(new PlayerStateModifier("player_state"));
+        registerTemperatureModifier(new ObjectProximityModifier("object_proximity"));
+        registerTemperatureModifier(new WeatherModifier("weather"));
+        registerTemperatureModifier(new TimeModifier("time"));
+        registerTemperatureModifier(new SeasonModifier("season"));
+    }
+
     public TemperatureHandler()
     {
         this.temperatureLevel = TemperatureScale.getScaleTotal() / 2;
         this.prevTemperatureLevel = this.temperatureLevel;
-
-        this.temperatureModifiers = Sets.newHashSet(new AltitudeModifier(debugger), new ArmorModifier(debugger), new BiomeModifier(debugger),
-                new PlayerStateModifier(debugger), new ObjectProximityModifier(debugger), new WeatherModifier(debugger), new TimeModifier(debugger),
-                new SeasonModifier(debugger));
-
         this.externalModifiers = Maps.newHashMap();
     }
     
@@ -115,14 +119,13 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     @Override
     public int getTargetAtPos(World world, BlockPos pos)
     {
-        debugger.start(Modifier.EQUILIBRIUM_TARGET, 0);
-        debugger.end(TemperatureScale.getScaleTotal() / 2);
+        debugger.addEntry(new IModifierMonitor.Context("equilibrium", "Equilibrium", new Temperature(0), new Temperature(TemperatureScale.getScaleTotal() / 2)));
         int targetTemperature = TemperatureScale.getScaleMidpoint();
 
-        for (TemperatureModifier modifier : temperatureModifiers)
+        for (ITemperatureModifier modifier : TemperatureHelper.getTemperatureModifiers().values())
         {
             if (!modifier.isPlayerSpecific())
-                targetTemperature = modifier.applyEnvironmentModifiers(world, pos, new Temperature(targetTemperature)).getRawValue();
+                targetTemperature = modifier.applyEnvironmentModifiers(world, pos, new Temperature(targetTemperature), debugger).getRawValue();
         }
 
         debugger.targetTemperature = targetTemperature;
@@ -134,19 +137,18 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     {
         int targetTemperature = getTargetAtPos(player.world, player.getPosition());
 
-        for (TemperatureModifier modifier : temperatureModifiers)
+        for (ITemperatureModifier modifier : TemperatureHelper.getTemperatureModifiers().values())
         {
             if (modifier.isPlayerSpecific())
-                targetTemperature = modifier.applyPlayerModifiers(player, new Temperature(targetTemperature)).getRawValue();
+                targetTemperature = modifier.applyPlayerModifiers(player, new Temperature(targetTemperature), debugger).getRawValue();
         }
 
-        debugger.start(Modifier.CLIMATISATION_TARGET, targetTemperature);
+        Temperature preClimatisationTemp = new Temperature(targetTemperature);
         for (TemperatureModifier.ExternalModifier modifier : this.externalModifiers.values())
         {
             targetTemperature = targetTemperature + modifier.getAmount();
         }
-        debugger.end(targetTemperature);
-
+        debugger.addEntry(new IModifierMonitor.Context("climatisation", "Climatisation", preClimatisationTemp, new Temperature(targetTemperature)));
         debugger.targetTemperature = targetTemperature;
         // temperature values can't be above or less than the scale allows
         // TODO: Possibly move this to the temperature class
