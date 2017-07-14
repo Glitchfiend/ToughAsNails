@@ -1,7 +1,9 @@
 package toughasnails.potion;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.EnumDifficulty;
 
 public class PotionHypothermia extends TANPotion
 {
@@ -15,7 +17,11 @@ public class PotionHypothermia extends TANPotion
     @Override
     public void performEffect(EntityLivingBase entity, int amplifier)
     {
-        entity.attackEntityFrom(DamageSource.GENERIC, 0.5F);
+    	EnumDifficulty enumdifficulty = entity.getEntityWorld().getDifficulty();
+    	if (!(entity instanceof EntityPlayer) || (enumdifficulty == EnumDifficulty.EASY && entity.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && entity.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
+    	{
+    		entity.attackEntityFrom(DamageSource.GENERIC, 0.5F);
+    	}
     }
     
     @Override
