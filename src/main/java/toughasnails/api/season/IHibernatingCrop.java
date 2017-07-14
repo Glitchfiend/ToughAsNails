@@ -5,16 +5,20 @@
  * 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
+
 package toughasnails.api.season;
 
 /**
  * An interface which should be implemented by crops which become inactive in
  * the winter in the absence of proper heating.
  * 
- * Crops using this interface should make sure they use Forge's crop growth
- * events and appropriately cancel the crop growth when the event result is set
- * to DENY. (See net.minecraftforge.event.BlockEvent$CropGrowEvent or
+ * Crops using this interface in 1.10 should make sure they use Forge's crop
+ * growth events and appropriately cancel the crop growth when the event result
+ * is set to DENY. (See net.minecraftforge.event.BlockEvent$CropGrowEvent or
  * alternatively net.minecraftforge.common.ForgeHooks.onCropsGrowPre)
+ * 
+ * Please note that due to how Java bytecode works, you must explicitly
+ * implement this interface if your class overrides updateTick.
  */
 public interface IHibernatingCrop {
 

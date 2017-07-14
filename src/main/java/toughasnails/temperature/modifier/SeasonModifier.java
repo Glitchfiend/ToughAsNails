@@ -20,8 +20,49 @@ import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureTrend;
 
 public class SeasonModifier extends TemperatureModifier {
+
+	public final int EARLY_AUTUMN_MODIFIER;
+	public final int MID_AUTUMN_MODIFIER;
+	public final int LATE_AUTUMN_MODIFIER;
+	public final int EARLY_WINTER_MODIFIER;
+	public final int MID_WINTER_MODIFIER;
+	public final int LATE_WINTER_MODIFIER;
+	public final int EARLY_SPRING_MODIFIER;
+	public final int MID_SPRING_MODIFIER;
+	public final int LATE_SPRING_MODIFIER;
+	public final int EARLY_SUMMER_MODIFIER;
+	public final int MID_SUMMER_MODIFIER;
+	public final int LATE_SUMMER_MODIFIER;
+
 	public SeasonModifier(TemperatureDebugger debugger) {
 		super(debugger);
+		this.EARLY_AUTUMN_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.EARLY_AUTUMN_MODIFIER);
+		this.MID_AUTUMN_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.MID_AUTUMN_MODIFIER);
+		this.LATE_AUTUMN_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.LATE_AUTUMN_MODIFIER);
+
+		this.EARLY_WINTER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.EARLY_WINTER_MODIFIER);
+		this.MID_WINTER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.MID_WINTER_MODIFIER);
+		this.LATE_WINTER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.LATE_WINTER_MODIFIER);
+
+		this.EARLY_SPRING_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.EARLY_SPRING_MODIFIER);
+		this.MID_SPRING_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.MID_SPRING_MODIFIER);
+		this.LATE_SPRING_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.LATE_SPRING_MODIFIER);
+
+		this.EARLY_SUMMER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.EARLY_SUMMER_MODIFIER);
+		this.MID_SUMMER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.MID_SUMMER_MODIFIER);
+		this.LATE_SUMMER_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.LATE_SUMMER_MODIFIER);
 	}
 
 	@Override
@@ -44,30 +85,42 @@ public class SeasonModifier extends TemperatureModifier {
 
 		if (world.provider.isSurfaceWorld()) {
 			switch (season) {
-			case MID_WINTER:
-			case LATE_WINTER:
-				temperatureLevel -= 6;
-				break;
-
-			case EARLY_SPRING:
-			case EARLY_WINTER:
-				temperatureLevel -= 4;
-				break;
-
-			case MID_SPRING:
-			case LATE_AUTUMN:
-				temperatureLevel -= 2;
-				break;
-
-			case MID_SUMMER:
 			case EARLY_AUTUMN:
-				temperatureLevel += 2;
+				temperatureLevel += this.EARLY_AUTUMN_MODIFIER;
 				break;
-
+			case MID_AUTUMN:
+				temperatureLevel += this.MID_AUTUMN_MODIFIER;
+				break;
+			case LATE_AUTUMN:
+				temperatureLevel += this.LATE_AUTUMN_MODIFIER;
+				break;
+			case EARLY_WINTER:
+				temperatureLevel += this.EARLY_WINTER_MODIFIER;
+				break;
+			case MID_WINTER:
+				temperatureLevel += this.MID_WINTER_MODIFIER;
+				break;
+			case LATE_WINTER:
+				temperatureLevel += this.LATE_WINTER_MODIFIER;
+				break;
+			case EARLY_SPRING:
+				temperatureLevel += this.EARLY_SPRING_MODIFIER;
+				break;
+			case MID_SPRING:
+				temperatureLevel += this.MID_SPRING_MODIFIER;
+				break;
+			case LATE_SPRING:
+				temperatureLevel += this.LATE_SPRING_MODIFIER;
+				break;
+			case EARLY_SUMMER:
+				temperatureLevel += this.EARLY_SUMMER_MODIFIER;
+				break;
+			case MID_SUMMER:
+				temperatureLevel += this.MID_SUMMER_MODIFIER;
+				break;
 			case LATE_SUMMER:
-				temperatureLevel += 4;
+				temperatureLevel += this.LATE_SUMMER_MODIFIER;
 				break;
-
 			default:
 				break;
 			}
@@ -88,30 +141,42 @@ public class SeasonModifier extends TemperatureModifier {
 
 		if (world.provider.isSurfaceWorld()) {
 			switch (season) {
-			case MID_WINTER:
-			case LATE_WINTER:
-				temperatureLevel -= 6;
-				break;
-
-			case EARLY_SPRING:
-			case EARLY_WINTER:
-				temperatureLevel -= 4;
-				break;
-
-			case MID_SPRING:
-			case LATE_AUTUMN:
-				temperatureLevel -= 2;
-				break;
-
-			case MID_SUMMER:
 			case EARLY_AUTUMN:
-				temperatureLevel += 2;
+				temperatureLevel += this.EARLY_AUTUMN_MODIFIER;
 				break;
-
+			case MID_AUTUMN:
+				temperatureLevel += this.MID_AUTUMN_MODIFIER;
+				break;
+			case LATE_AUTUMN:
+				temperatureLevel += this.LATE_AUTUMN_MODIFIER;
+				break;
+			case EARLY_WINTER:
+				temperatureLevel += this.EARLY_WINTER_MODIFIER;
+				break;
+			case MID_WINTER:
+				temperatureLevel += this.MID_WINTER_MODIFIER;
+				break;
+			case LATE_WINTER:
+				temperatureLevel += this.LATE_WINTER_MODIFIER;
+				break;
+			case EARLY_SPRING:
+				temperatureLevel += this.EARLY_SPRING_MODIFIER;
+				break;
+			case MID_SPRING:
+				temperatureLevel += this.MID_SPRING_MODIFIER;
+				break;
+			case LATE_SPRING:
+				temperatureLevel += this.LATE_SPRING_MODIFIER;
+				break;
+			case EARLY_SUMMER:
+				temperatureLevel += this.EARLY_SUMMER_MODIFIER;
+				break;
+			case MID_SUMMER:
+				temperatureLevel += this.MID_SUMMER_MODIFIER;
+				break;
 			case LATE_SUMMER:
-				temperatureLevel += 4;
+				temperatureLevel += this.LATE_SUMMER_MODIFIER;
 				break;
-
 			default:
 				break;
 			}

@@ -19,6 +19,14 @@ public class SyncedConfig {
 		return Boolean.valueOf(optionsToSync.get(option.getOptionName()).value);
 	}
 
+	public static int getIntegerValue(ISyncedOption option) {
+		return Integer.valueOf(optionsToSync.get(option.getOptionName()).value);
+	}
+
+	public static float getFloatValue(ISyncedOption option) {
+		return Float.valueOf(optionsToSync.get(option.getOptionName()).value);
+	}
+
 	public static List<String> getListValue(ISyncedOption option) {
 		SyncedConfigEntry value = optionsToSync.get(option.getOptionName());
 		String rawList = value.value;

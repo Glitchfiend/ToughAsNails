@@ -80,6 +80,7 @@ item.season_clock.name=Season Clock
 item.spawn_egg_freeze.name=Spawn Freeze
 item.tan_icon.name=TAN Icon
 item.thermometer.name=Thermometer
+item.thermometer.read=The temperature here is %d degrees.
 item.wool_helmet.name=Wool Hood
 item.wool_chestplate.name=Wool Jacket
 item.wool_leggings.name=Wool Pants

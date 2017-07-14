@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -11,10 +13,12 @@ import toughasnails.temperature.TemperatureTrend;
 import toughasnails.util.BiomeUtils;
 
 public class BiomeModifier extends TemperatureModifier {
-	public static final int MAX_TEMP_OFFSET = 10;
+	public final int MAX_TEMP_OFFSET;
 
 	public BiomeModifier(TemperatureDebugger debugger) {
 		super(debugger);
+		this.MAX_TEMP_OFFSET = SyncedConfig
+				.getIntegerValue(GameplayOption.BIOME_TEMP_MODIFIER);
 	}
 
 	@Override

@@ -30,12 +30,6 @@ import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
-import toughasnails.temperature.modifier.AltitudeModifier;
-import toughasnails.temperature.modifier.BiomeModifier;
-import toughasnails.temperature.modifier.ObjectProximityModifier;
-import toughasnails.temperature.modifier.SeasonModifier;
-import toughasnails.temperature.modifier.TimeModifier;
-import toughasnails.temperature.modifier.WeatherModifier;
 import toughasnails.thirst.ThirstHandler;
 
 public class TANCommand extends CommandBase {
@@ -152,32 +146,10 @@ public class TANCommand extends CommandBase {
 			if (world == null) {
 				throw new WrongUsageException("commands.toughasnails.usage");
 			}
-			final TemperatureDebugger debugger = new TemperatureDebugger();
-			AltitudeModifier altitudeModifier = new AltitudeModifier(debugger);
-			BiomeModifier biomeModifier = new BiomeModifier(debugger);
-			ObjectProximityModifier objectProximityModifier = new ObjectProximityModifier(
-					debugger);
-			WeatherModifier weatherModifier = new WeatherModifier(debugger);
-			TimeModifier timeModifier = new TimeModifier(debugger);
-			SeasonModifier seasonModifier = new SeasonModifier(debugger);
-
 			BlockPos position = new BlockPos(x, y, z);
-			Temperature baseTemperature = new Temperature(
-					TemperatureHandler.TEMPERATURE_SCALE_MIDPOINT);
-			Temperature targetTemperature = biomeModifier.modifyTarget(world,
-					position, baseTemperature);
-			targetTemperature = altitudeModifier.modifyTarget(world, position,
-					targetTemperature);
-			targetTemperature = objectProximityModifier.modifyTarget(world,
-					position, targetTemperature);
-			targetTemperature = weatherModifier.modifyTarget(world, position,
-					targetTemperature);
-			targetTemperature = timeModifier.modifyTarget(world, position,
-					targetTemperature);
-			targetTemperature = seasonModifier.modifyTarget(world, position,
-					targetTemperature);
 
-			int finalTemperature = targetTemperature.getRawValue();
+			int finalTemperature = TemperatureHandler
+					.getTargetTemperatureAt(world, position);
 			if (printOutput) {
 				sender.addChatMessage(new TextComponentTranslation(
 						"commands.toughasnails.tempat.success", dimensionID, x,

@@ -7,29 +7,31 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.api.temperature.Temperature;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
-import toughasnails.temperature.modifier.AltitudeModifier;
-import toughasnails.temperature.modifier.BiomeModifier;
-import toughasnails.temperature.modifier.ObjectProximityModifier;
-import toughasnails.temperature.modifier.SeasonModifier;
-import toughasnails.temperature.modifier.TimeModifier;
-import toughasnails.temperature.modifier.WeatherModifier;
 
 public class ItemThermometer extends Item {
 	public ItemThermometer() {
@@ -46,55 +48,42 @@ public class ItemThermometer extends Item {
 					@SideOnly(Side.CLIENT)
 					public float apply(ItemStack stack, World world,
 							EntityLivingBase entity) {
+						boolean overrideThermometerLimits = SyncedConfig
+								.getBooleanValue(
+										GameplayOption.OVERRIDE_THERMOMETER_LIMITS);
+						int lowerBound = SyncedConfig.getIntegerValue(
+								GameplayOption.THERMOMETER_LOWER_BOUND);
+						int upperBound = SyncedConfig.getIntegerValue(
+								GameplayOption.THERMOMETER_UPPER_BOUND);
+
 						if (entity == null
 								|| !(entity instanceof EntityPlayer)) {
 							Entity frame = stack.getItemFrame();
 							if (frame != null) {
 								BlockPos framePosition = frame.getPosition();
 								World frameWorld = frame.getEntityWorld();
-								final TemperatureDebugger debugger = new TemperatureDebugger();
-								AltitudeModifier altitudeModifier = new AltitudeModifier(
-										debugger);
-								BiomeModifier biomeModifier = new BiomeModifier(
-										debugger);
-								ObjectProximityModifier objectProximityModifier = new ObjectProximityModifier(
-										debugger);
-								WeatherModifier weatherModifier = new WeatherModifier(
-										debugger);
-								TimeModifier timeModifier = new TimeModifier(
-										debugger);
-								SeasonModifier seasonModifier = new SeasonModifier(
-										debugger);
+								int finalTemperature = TemperatureHandler
+										.getTargetTemperatureAt(frameWorld,
+												framePosition);
 
-								Temperature baseTemperature = new Temperature(
-										TemperatureHandler.TEMPERATURE_SCALE_MIDPOINT);
-								Temperature targetTemperature = biomeModifier
-										.modifyTarget(frameWorld, framePosition,
-												baseTemperature);
-								targetTemperature = altitudeModifier
-										.modifyTarget(frameWorld, framePosition,
-												targetTemperature);
-								targetTemperature = objectProximityModifier
-										.modifyTarget(frameWorld, framePosition,
-												targetTemperature);
-								targetTemperature = weatherModifier
-										.modifyTarget(frameWorld, framePosition,
-												targetTemperature);
-								targetTemperature = timeModifier.modifyTarget(
-										frameWorld, framePosition,
-										targetTemperature);
-								targetTemperature = seasonModifier.modifyTarget(
-										frameWorld, framePosition,
-										targetTemperature);
-
-								int finalTemperature = targetTemperature
-										.getRawValue();
-								return (float) MathHelper
-										.clamp_double(finalTemperature, 0,
-												TemperatureScale
-														.getScaleTotal())
-										/ (float) TemperatureScale
-												.getScaleTotal();
+								if (overrideThermometerLimits) {
+									float clampedTemp = (float) MathHelper
+											.clamp_double(finalTemperature,
+													lowerBound, upperBound);
+									float shiftedTemp = (clampedTemp
+											- lowerBound);
+									float needlePosition = shiftedTemp
+											/ ((float) (upperBound
+													- lowerBound));
+									return needlePosition;
+								} else {
+									return (float) MathHelper
+											.clamp_double(finalTemperature, 0,
+													TemperatureScale
+															.getScaleTotal())
+											/ (float) TemperatureScale
+													.getScaleTotal();
+								}
 							} else {
 								return 0.0f;
 							}
@@ -107,11 +96,43 @@ public class ItemThermometer extends Item {
 
 						TemperatureHandler tempHandler = (TemperatureHandler) TemperatureHelper
 								.getTemperatureData(player);
-						return (float) MathHelper.clamp_double(
-								tempHandler.debugger.targetTemperature, 0,
-								TemperatureScale.getScaleTotal())
-								/ (float) TemperatureScale.getScaleTotal();
+						int finalTemperature = tempHandler.debugger.targetTemperature;
+						if (overrideThermometerLimits) {
+							float clampedTemp = (float) MathHelper.clamp_double(
+									finalTemperature, lowerBound, upperBound);
+							float shiftedTemp = (clampedTemp - lowerBound);
+							return shiftedTemp
+									/ ((float) (upperBound - lowerBound));
+						} else {
+							return (float) MathHelper.clamp_double(
+									finalTemperature, 0,
+									TemperatureScale.getScaleTotal())
+									/ (float) TemperatureScale.getScaleTotal();
+						}
 					}
 				});
+	}
+
+	Map<UUID, Long> messageDebounce = new HashMap<UUID, Long>();
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn,
+			World world, EntityPlayer player, EnumHand hand) {
+		if (!world.isRemote) {
+			// Get the temperature of the world at the player's location.
+			if (!messageDebounce.containsKey(player.getUniqueID())
+					|| (System.currentTimeMillis() - messageDebounce
+							.get(player.getUniqueID()) > 2000)) {
+				BlockPos playerPosition = player.getPosition();
+				int finalTemperature = TemperatureHandler
+						.getTargetTemperatureAt(world, playerPosition);
+
+				player.addChatMessage(new TextComponentTranslation(
+						"item.thermometer.read", finalTemperature));
+				messageDebounce.put(player.getUniqueID(),
+						System.currentTimeMillis());
+			}
+		}
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
 	}
 }

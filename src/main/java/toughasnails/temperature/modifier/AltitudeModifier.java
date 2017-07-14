@@ -4,16 +4,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
 import toughasnails.temperature.TemperatureTrend;
 
 public class AltitudeModifier extends TemperatureModifier {
-	public static final int ALTITUDE_TARGET_MODIFIER = 3;
+	public final int ALTITUDE_TARGET_MODIFIER;
 
 	public AltitudeModifier(TemperatureDebugger debugger) {
 		super(debugger);
+		this.ALTITUDE_TARGET_MODIFIER = SyncedConfig
+				.getIntegerValue(GameplayOption.ALTITUDE_TEMP_MODIFIER);
 	}
 
 	@Override

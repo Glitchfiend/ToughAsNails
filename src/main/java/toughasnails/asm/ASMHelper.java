@@ -25,96 +25,101 @@ import org.objectweb.asm.util.TraceMethodVisitor;
 
 import com.google.common.collect.Lists;
 
-public class ASMHelper
-{
-    public static final Logger LOGGER = LogManager.getLogger("ToughAsNails Transformer");
-    
-    public static boolean methodEquals(MethodNode methodNode, String[] names, String desc)
-    {
-        boolean nameMatches = false;
-        
-        for (String name : names)
-        {
-            if (methodNode.name.equals(name))
-            {
-                nameMatches = true;
-                break;
-            }
-        }
-        
-        return nameMatches && methodNode.desc.equals(desc);
-    }
-    
-    public static void clearNextInstructions(MethodNode methodNode, AbstractInsnNode insnNode)
-    {
-        Iterator<AbstractInsnNode> iterator = methodNode.instructions.iterator(methodNode.instructions.indexOf(insnNode));
-        
-        while (iterator.hasNext())
-        {
-            iterator.next();
-            iterator.remove();
-        }
-    }
-    
-    public static MethodInsnNode getUniqueMethodInsnNode(MethodNode methodNode, int opcode, String owner, String[] names, String desc)
-    {
-        List<MethodInsnNode> matchedMethodNodes = matchMethodInsnNodes(methodNode, opcode, owner, names, desc);
-        
-        if (matchedMethodNodes.isEmpty()) throw new RuntimeException("No method instruction node found matching " + owner + " " + names[0] + " " + desc);
-        if (matchedMethodNodes.size() > 1) LOGGER.warn("Too many matched instructions were found in " + methodNode.name + " for "  + owner + " " + names[0] + " " + desc + ". Crashes or bugs may occur!");
-    
-        return matchedMethodNodes.get(matchedMethodNodes.size() - 1);
-    }
-    
-    public static List<MethodInsnNode> matchMethodInsnNodes(MethodNode methodNode, int opcode, String owner, String[] names, String desc)
-    {
-       ArrayList<MethodInsnNode> matches = Lists.newArrayList();
-       ArrayList<String> validMethodNames = Lists.newArrayList(names);
-       
-       for (AbstractInsnNode insnNode : methodNode.instructions.toArray())
-       {
-           if (insnNode instanceof MethodInsnNode && insnNode.getOpcode() == opcode)
-           {
-               MethodInsnNode methodInsnNode = (MethodInsnNode)insnNode;
-               
-               if (methodInsnNode.owner.equals(owner) & validMethodNames.contains(methodInsnNode.name) && methodInsnNode.desc.equals(desc))
-               {
-                   matches.add(methodInsnNode);
-               }
-           }
-       }
-       
-       return matches;
-    }
-    
-    public static void verifyClassHash(String className, byte[] bytes, String... expectedHashes)
-    {
-        String currentHash = DigestUtils.md5Hex(bytes);
+public class ASMHelper {
+	public static final Logger LOGGER = LogManager
+			.getLogger("ToughAsNails Transformer");
 
-        if (!Lists.newArrayList(expectedHashes).contains(currentHash))
-        {
-            String error = String.format("Unexpected hash %s detected for class %s. Crashes or bugs may occur!", currentHash, className);
-            LOGGER.error(error);
-        }
-        else
-        {
-            LOGGER.info(String.format("Valid hash %s found for class %s.", currentHash, className));
-        }
-    }
-    
-    private static Printer printer = new Textifier();
-    private static TraceMethodVisitor methodVisitor = new TraceMethodVisitor(printer); 
-    
-    public static void printMethod(MethodNode methodNode)
-    {
-        for (AbstractInsnNode insnNode : methodNode.instructions.toArray())
-        {
-            insnNode.accept(methodVisitor);
-            StringWriter stringWriter = new StringWriter();
-            printer.print(new PrintWriter(stringWriter));
-            printer.getText().clear();
-            
-           LOGGER.info(stringWriter.toString().replace("\n", ""));
-        }
-    }
+	public static boolean methodEquals(MethodNode methodNode, String[] names,
+			String desc) {
+		boolean nameMatches = false;
+
+		for (String name : names) {
+			if (methodNode.name.equals(name)) {
+				nameMatches = true;
+				break;
+			}
+		}
+
+		return nameMatches && methodNode.desc.equals(desc);
+	}
+
+	public static void clearNextInstructions(MethodNode methodNode,
+			AbstractInsnNode insnNode) {
+		Iterator<AbstractInsnNode> iterator = methodNode.instructions
+				.iterator(methodNode.instructions.indexOf(insnNode));
+
+		while (iterator.hasNext()) {
+			iterator.next();
+			iterator.remove();
+		}
+	}
+
+	public static MethodInsnNode getUniqueMethodInsnNode(MethodNode methodNode,
+			int opcode, String owner, String[] names, String desc) {
+		List<MethodInsnNode> matchedMethodNodes = matchMethodInsnNodes(
+				methodNode, opcode, owner, names, desc);
+
+		if (matchedMethodNodes.isEmpty())
+			throw new RuntimeException(
+					"No method instruction node found matching " + owner + " "
+							+ names[0] + " " + desc);
+		if (matchedMethodNodes.size() > 1)
+			LOGGER.warn("Too many matched instructions were found in "
+					+ methodNode.name + " for " + owner + " " + names[0] + " "
+					+ desc + ". Crashes or bugs may occur!");
+
+		return matchedMethodNodes.get(matchedMethodNodes.size() - 1);
+	}
+
+	public static List<MethodInsnNode> matchMethodInsnNodes(
+			MethodNode methodNode, int opcode, String owner, String[] names,
+			String desc) {
+		ArrayList<MethodInsnNode> matches = Lists.newArrayList();
+		ArrayList<String> validMethodNames = Lists.newArrayList(names);
+
+		for (AbstractInsnNode insnNode : methodNode.instructions.toArray()) {
+			if (insnNode instanceof MethodInsnNode
+					&& insnNode.getOpcode() == opcode) {
+				MethodInsnNode methodInsnNode = (MethodInsnNode) insnNode;
+
+				if (methodInsnNode.owner.equals(owner)
+						& validMethodNames.contains(methodInsnNode.name)
+						&& methodInsnNode.desc.equals(desc)) {
+					matches.add(methodInsnNode);
+				}
+			}
+		}
+
+		return matches;
+	}
+
+	public static void verifyClassHash(String className, byte[] bytes,
+			String... expectedHashes) {
+		String currentHash = DigestUtils.md5Hex(bytes);
+
+		if (!Lists.newArrayList(expectedHashes).contains(currentHash)) {
+			String error = String.format(
+					"Unexpected hash %s detected for class %s. Crashes or bugs may occur!",
+					currentHash, className);
+			LOGGER.error(error);
+		} else {
+			LOGGER.info(String.format("Valid hash %s found for class %s.",
+					currentHash, className));
+		}
+	}
+
+	private static Printer printer = new Textifier();
+	private static TraceMethodVisitor methodVisitor = new TraceMethodVisitor(
+			printer);
+
+	public static void printMethod(MethodNode methodNode) {
+		for (AbstractInsnNode insnNode : methodNode.instructions.toArray()) {
+			insnNode.accept(methodVisitor);
+			StringWriter stringWriter = new StringWriter();
+			printer.print(new PrintWriter(stringWriter));
+			printer.getText().clear();
+
+			LOGGER.info(stringWriter.toString().replace("\n", ""));
+		}
+	}
 }

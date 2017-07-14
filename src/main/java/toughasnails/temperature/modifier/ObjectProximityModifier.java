@@ -81,6 +81,10 @@ public class ObjectProximityModifier extends TemperatureModifier {
 	public static float getBlockTemperature(IBlockState state) {
 		Material material = state.getMaterial();
 
+		// NPE guard
+		if (state.getBlock().getRegistryName() == null) {
+			return 0.0F;
+		}
 		String blockName = state.getBlock().getRegistryName().toString();
 
 		// Blocks

@@ -9,21 +9,19 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.item.TANItems;
 
-public class BlockHarvestEventHandler
-{
+public class BlockHarvestEventHandler {
 	@SubscribeEvent
-    public void onBlockBreak(HarvestDropsEvent event)
-    {	
-	    IBlockState state = event.getState();
-		int fortune = event.getFortuneLevel();
-		
+	public void onBlockBreak(HarvestDropsEvent event) {
+		IBlockState state = event.getState();
+		// int fortune = event.getFortuneLevel();
+
 		if (event.getHarvester() == null || event.isSilkTouching())
-		    return;
-		
-        if (state.getBlock() == Blocks.ICE && event.getHarvester() != null)
-        {
-        	event.getDrops().clear();
-            event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
-        }
-    }
+			return;
+
+		if (state.getBlock() == Blocks.ICE && event.getHarvester() != null) {
+			event.getDrops().clear();
+			event.getDrops().add(
+					new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
+		}
+	}
 }

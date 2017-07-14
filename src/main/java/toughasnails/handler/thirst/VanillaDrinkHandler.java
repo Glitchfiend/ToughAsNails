@@ -22,6 +22,7 @@ import toughasnails.api.TANPotions;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.core.ToughAsNails;
 import toughasnails.thirst.ThirstHandler;
 
 public class VanillaDrinkHandler {
@@ -90,8 +91,8 @@ public class VanillaDrinkHandler {
 											TANPotions.thirst, 600));
 								}
 							} catch (NumberFormatException e) {
-								System.out
-										.println("Tried to drink misconfigured "
+								ToughAsNails.logger
+										.error("Tried to drink misconfigured "
 												+ itemName);
 							}
 							break;
