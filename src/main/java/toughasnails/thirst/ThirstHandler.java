@@ -78,8 +78,8 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
 	                //Inflict thirst damage every 4 seconds
 	                if (this.thirstTimer >= 80)
 	                {
-	                    if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
-	                    {
+	                	if ((enumdifficulty == EnumDifficulty.EASY && player.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && player.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
+	                	{
 	                        player.attackEntityFrom(DamageSource.STARVE, 1.0F);
 	                    }
 	
