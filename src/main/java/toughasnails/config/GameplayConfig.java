@@ -17,6 +17,11 @@ public class GameplayConfig extends ConfigHandler
     public static final String SURVIVAL_SETTINGS = "Survival Settings";
     public static final String STARTING_HEALTH = "Staring health";
 
+    public int easyStartingHearts;
+    public int normalStartingHearts;
+    public int hardStartingHearts;
+    public int maxHearts;
+
     public GameplayConfig(File configFile)
     {
         super(configFile);
@@ -29,10 +34,11 @@ public class GameplayConfig extends ConfigHandler
         {
             addSyncedValue(GameplayOption.ENABLE_LOWERED_STARTING_HEALTH, true, SURVIVAL_SETTINGS, "Players begin with a lowered maximum health.");
             addSyncedValue(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst");
-            addSyncedValue(GameplayOption.EASY_STARTING_HEARTS, 7, STARTING_HEALTH, "Amount of hearts players will start with on easy", 1, 10);
-            addSyncedValue(GameplayOption.NORMAL_STARTING_HEARTS, 5, STARTING_HEALTH, "Amount of hearts players will start with on normal", 1, 10);
-            addSyncedValue(GameplayOption.HARD_STARTING_HEARTS, 3, STARTING_HEALTH, "Amount of hearts players will start with on hard", 1, 10);
-            addSyncedValue(GameplayOption.MAX_HEARTS, 10, SURVIVAL_SETTINGS, "Max amount of hearts players can get", 10, 100);
+
+            easyStartingHearts = config.getInt("Easy starting hearts", STARTING_HEALTH, 7, 1, 10, "Amount of hearts players will start with on easy");
+            normalStartingHearts = config.getInt("Normal starting hearts", STARTING_HEALTH, 5, 1, 10, "Amount of hearts players will start with on normal");
+            hardStartingHearts = config.getInt("Hard starting hearts", STARTING_HEALTH, 3, 1, 10, "Amount of hearts players will start with on hard");
+            maxHearts = config.getInt("Max hearts", SURVIVAL_SETTINGS, 10, 10, 100, "Max amount of hearts players can get");
         }
         catch (Exception e)
         {

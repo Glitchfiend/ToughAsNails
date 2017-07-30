@@ -31,8 +31,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.HealthHelper;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.GameplayOption;
+import toughasnails.init.ModConfig;
 
-public class MaxHealthHandler 
+public class MaxHealthHandler implements HealthHelper.IHeartAmountProvider
 {
     //TODO: If the health config option is changed and the current health is lower
     //increase it to that new default
@@ -110,39 +111,18 @@ public class MaxHealthHandler
             return;
         }
         
-        int startingHealth;
-
-        switch (difficulty)
-        {
-        case EASY:
-            startingHealth = SyncedConfig.getIntValue(GameplayOption.EASY_STARTING_HEARTS);
-            break;
-
-        case NORMAL:
-            startingHealth = SyncedConfig.getIntValue(GameplayOption.NORMAL_STARTING_HEARTS);
-            break;
-
-        case HARD:
-            startingHealth = SyncedConfig.getIntValue(GameplayOption.HARD_STARTING_HEARTS);
-            break;
-
-        default:
-            startingHealth = 10;
-            break;
-        }
-
+        int startingHealth = getStartingHearts(difficulty);
         double difficultyHealthDecrement = -20 + startingHealth * 2;
 
-        /*
         double lifebloodHearts = HealthHelper.getLifebloodHearts(player) * 2;
         double overallHealthDecrement = difficultyHealthDecrement + lifebloodHearts;
+        double extraHealth = getMaxHearts() * 2 - 20;
 
-        //Ensure that the total hearts is never above 20 when the difficulty is changed
-        if (overallHealthDecrement > 0.0D)
+        //Ensure that the total hearts is never above max hearts when the difficulty is changed
+        if (overallHealthDecrement > extraHealth)
         {
-            difficultyHealthDecrement -= overallHealthDecrement;
+            difficultyHealthDecrement -= overallHealthDecrement - extraHealth;
         }
-        */
 
         //If the player doesn't have a modifier for a lowered starting health, add one
         //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
@@ -158,6 +138,31 @@ public class MaxHealthHandler
             {
                 player.setHealth(player.getMaxHealth());
             }
+        }
+    }
+
+    @Override
+    public int getMaxHearts()
+    {
+        return ModConfig.gameplay.maxHearts;
+    }
+
+    @Override
+    public int getStartingHearts(EnumDifficulty difficulty)
+    {
+        switch(difficulty)
+        {
+            case EASY:
+                return ModConfig.gameplay.easyStartingHearts;
+
+            case NORMAL:
+                return ModConfig.gameplay.normalStartingHearts;
+
+            case HARD:
+                return ModConfig.gameplay.hardStartingHearts;
+                
+            default:
+                return 10;
         }
     }
 }

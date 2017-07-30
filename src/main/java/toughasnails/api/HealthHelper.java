@@ -16,13 +16,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import toughasnails.api.config.GameplayOption;
-import toughasnails.api.config.SyncedConfig;
+import net.minecraft.world.EnumDifficulty;
 
 public class HealthHelper 
 {
     public static final UUID STARTING_HEALTH_MODIFIER_ID = UUID.fromString("050F240E-868F-4164-A67E-374084DACA71");
     public static final UUID LIFEBLOOD_HEALTH_MODIFIER_ID = UUID.fromString("B04DB09D-ED8A-4B82-B1EF-ADB425174925");
+
+    public static IHeartAmountProvider heartProvider;
     
     public static int getActiveHearts(EntityPlayer player)
     {
@@ -55,7 +56,7 @@ public class HealthHelper
         float newHealth = player.getMaxHealth() + (hearts * 2);
         double existingHearts = modifier != null ? modifier.getAmount() : 0.0D;
         
-        if (newHealth <= SyncedConfig.getIntValue(GameplayOption.MAX_HEARTS) * 2F && newHealth > 0.0F)
+        if (newHealth <= heartProvider.getMaxHearts() * 2F && newHealth > 0.0F)
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             modifier = new AttributeModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID, "Lifeblood Health Modifier", existingHearts + hearts * 2, 0);
@@ -65,5 +66,16 @@ public class HealthHelper
         }
         
         return false;
+    }
+
+    public static int getStartingHearts(EnumDifficulty difficulty)
+    {
+        return heartProvider.getStartingHearts(difficulty);
+    }
+
+    public interface IHeartAmountProvider
+    {
+        int getMaxHearts();
+        int getStartingHearts(EnumDifficulty difficulty);
     }
 }

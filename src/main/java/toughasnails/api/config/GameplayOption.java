@@ -10,11 +10,7 @@ package toughasnails.api.config;
 public enum GameplayOption implements ISyncedOption
 {
     ENABLE_LOWERED_STARTING_HEALTH("Enable Lowered Starting Health"),
-    ENABLE_THIRST("Enable Thirst"),
-    EASY_STARTING_HEARTS("Easy Starting Health"),
-    NORMAL_STARTING_HEARTS("Normal Starting Health"),
-    HARD_STARTING_HEARTS("Hard Starting Health"),
-    MAX_HEARTS("Max Heart Amount");
+    ENABLE_THIRST("Enable Thirst");
 
     private final String optionName;
     

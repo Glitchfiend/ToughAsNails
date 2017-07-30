@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import toughasnails.api.HealthHelper;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.AchievementEventHandler;
@@ -44,7 +45,9 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
 	    MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
-	    MinecraftForge.EVENT_BUS.register(new MaxHealthHandler());
+        MaxHealthHandler maxHealthHandler = new MaxHealthHandler();
+        MinecraftForge.EVENT_BUS.register(maxHealthHandler);
+        HealthHelper.heartProvider = maxHealthHandler;
 
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(SEASON_HANDLER);
