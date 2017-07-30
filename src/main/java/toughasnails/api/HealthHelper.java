@@ -16,6 +16,8 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 
 public class HealthHelper 
 {
@@ -53,7 +55,7 @@ public class HealthHelper
         float newHealth = player.getMaxHealth() + (hearts * 2);
         double existingHearts = modifier != null ? modifier.getAmount() : 0.0D;
         
-        if (newHealth <= 20.0F && newHealth > 0.0F)
+        if (newHealth <= SyncedConfig.getIntValue(GameplayOption.MAX_HEARTS) * 2F && newHealth > 0.0F)
         {
             Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
             modifier = new AttributeModifier(HealthHelper.LIFEBLOOD_HEALTH_MODIFIER_ID, "Lifeblood Health Modifier", existingHearts + hearts * 2, 0);

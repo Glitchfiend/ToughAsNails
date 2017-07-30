@@ -110,35 +110,39 @@ public class MaxHealthHandler
             return;
         }
         
-        double difficultyHealthDecrement;
+        int startingHealth;
 
         switch (difficulty)
         {
         case EASY:
-            difficultyHealthDecrement = -6.0D;
+            startingHealth = SyncedConfig.getIntValue(GameplayOption.EASY_STARTING_HEARTS);
             break;
 
         case NORMAL:
-            difficultyHealthDecrement = -10.0D;
+            startingHealth = SyncedConfig.getIntValue(GameplayOption.NORMAL_STARTING_HEARTS);
             break;
 
         case HARD:
-            difficultyHealthDecrement = -14.0D;
+            startingHealth = SyncedConfig.getIntValue(GameplayOption.HARD_STARTING_HEARTS);
             break;
 
         default:
-            difficultyHealthDecrement = 0.0D;
+            startingHealth = 10;
             break;
         }
-        
+
+        double difficultyHealthDecrement = -20 + startingHealth * 2;
+
+        /*
         double lifebloodHearts = HealthHelper.getLifebloodHearts(player) * 2;
         double overallHealthDecrement = difficultyHealthDecrement + lifebloodHearts;
-        
+
         //Ensure that the total hearts is never above 20 when the difficulty is changed
         if (overallHealthDecrement > 0.0D)
         {
             difficultyHealthDecrement -= overallHealthDecrement;
         }
+        */
 
         //If the player doesn't have a modifier for a lowered starting health, add one
         //Or alternatively, if the player already has the attribute, update it only if it is less than the current difficulty
