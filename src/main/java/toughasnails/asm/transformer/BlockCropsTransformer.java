@@ -33,8 +33,7 @@ public class BlockCropsTransformer implements IClassTransformer
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)
     {
-        if (transformedName.equals("net.minecraft.block.BlockCrops"))
-        {
+        if (transformedName.equals("net.minecraft.block.BlockCrops") || transformedName.equals("com.pam.harvestcraft.blocks.growables.BlockPamCrop")) {
             return transformBlockCrops(basicClass, !transformedName.equals(name));
         }
         

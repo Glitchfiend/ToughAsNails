@@ -1,0 +1,106 @@
+achievement.thirst_quencher=Утолитель жажды
+achievement.thirst_quencher.desc=Создайте столовую из кожи
+achievement.thirst_ender=Жажда Эндера
+achievement.thirst_ender.desc=Сделайте бутылку освежающего фруктового сока
+achievement.campfire_song=Песня костра
+achievement.campfire_song.desc=Зажгите костер, сделанный из бревен и булыжников!
+achievement.into_ice=В лед
+achievement.into_ice.desc=Relieve a Freeze of its rod
+achievement.hot_or_cold=Горячий или холодный
+achievement.hot_or_cold.desc=Сделайте термометр из бриллиантов и кварца
+achievement.that_time_of_year=Это время года
+achievement.that_time_of_year.desc=Создайте сезонные часы из кварца и красного
+achievement.year_one=Первый год
+achievement.year_one.desc=Выжить целый год!
+achievement.life_or_death=Жизнь или смерть
+achievement.life_or_death.desc=Найти крепость Пустоты для увелечения здоровья!
+
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.settemp.success=Set player temperature to %s
+commands.toughasnails.settemp.disabled=Body Temperature is currently disabled!
+commands.toughasnails.setseason.success=Set season to %s
+commands.toughasnails.setseason.fail=Invalid season %s
+commands.toughasnails.setseason.disabled=Seasons are currently disabled!
+
+config.category.survivalSettings.title=Настройки выживания
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+tile.campfire.name=Костер
+tile.dead_crops.name=Погибший посев
+tile.rain_collector.name=Сборщик дождя
+tile.temperature_coil.cooling_coil.name=Охлаждающая катушка
+tile.temperature_coil.heating_coil.name=Отопительная катушка
+tile.season_sensor_spring.name=Сезонный сенсор (весна)
+tile.season_sensor_summer.name=Сезонный сенсор (лето)
+tile.season_sensor_autumn.name=Сезонный сенсор (осень)
+tile.season_sensor_winter.name=Сезонный сенсор (зима)
+tile.torch_new.name=Факел
+
+item.air_filter.name=Воздушный фильтр
+item.bottle_of_blackdamp.name=Bottle of Blackdamp
+item.bottle_of_whitedamp.name=Bottle of Whitedamp
+item.bottle_of_firedamp.name=Bottle of Firedamp
+item.bottle_of_stinkdamp.name=Bottle of Stinkdamp
+item.clean_water_canteen.name=Столовая с чистой водой
+item.charcoal_filter.name=Фильтр из древесного угля
+item.dirty_water_canteen.name=Столовая с грязной водой
+item.dirty_water_bottle.name=Бутылка с грязной водой
+item.empty_canteen.name=Пустая столовая
+item.filtered_water_canteen.name=Столовая с фильтрованной водой
+item.filtered_water_bottle.name=Бутылка фильтрованной воды
+item.freeze_powder.name=Замораживающий порошок
+item.freeze_rod.name=Ледяной стержень
+item.ice_charge.name=Ледяная зарядка
+item.ice_cube.name=Кубик льда
+item.jelled_slime.name=Желейная слизь
+item.jelled_slime_helmet.name=Шлем из желейной слизи
+item.jelled_slime_chestplate.name=Нагрудник из желейной слизи
+item.jelled_slime_leggings.name=Штаны из желейной слизи
+item.jelled_slime_boots.name=Ботинки из желейной слизи
+item.juice_apple.name=Яблочный сок
+item.juice_beetroot.name=Свекольный сок
+item.juice_cactus.name=Кактусовый сок
+item.juice_carrot.name=Морковный сок
+item.juice_chorus_fruit.name=Chorus Fruit Juice
+item.juice_glistering_melon.name=Glistering Melon Juice
+item.juice_golden_apple.name=Сок из золотых яблок
+item.juice_golden_carrot.name=Сок из золотой мокови
+item.juice_melon.name=Дынный сок
+item.juice_pumpkin.name=Тыквенный сок
+item.lifeblood_crystal.name=Кровавый кристал
+item.respirator.name=Противогаз
+item.season_clock.name=Сезонные часы
+item.spawn_egg_freeze.name=Spawn Freeze
+item.tan_icon.name=TAN Icon
+item.thermometer.name=Термометр
+item.wool_helmet.name=Шерстяной капюшон
+item.wool_chestplate.name=Шерстяная куртка
+item.wool_leggings.name=Шерстяные штаны
+item.wool_boots.name=Шерстяные сапоги
+
+potion.hypothermia=Гипотермия
+potion.hyperthermia=Гипертермия
+potion.thirst=Жажда
+potion.cold_resistance=Сопротивление холоду
+potion.heat_resistance=Сопротивление теплу
+
+potion.effect.cold_resistance_type=Зелье холодного сопротивления
+potion.effect.long_cold_resistance_type=Зелье холодного сопротивления
+potion.effect.heat_resistance_type=Зелье теплостойкости
+potion.effect.long_heat_resistance_type=Зелье теплостойкости
+
+splash_potion.effect.cold_resistance_type=Splash Potion of Cold Resistance
+splash_potion.effect.long_cold_resistance_type=Splash Potion of Cold Resistance
+splash_potion.effect.heat_resistance_type=Splash Potion of Heat Resistance
+splash_potion.effect.long_heat_resistance_type=Splash Potion of Heat Resistance
+
+lingering_potion.effect.cold_resistance_type=Lingering Potion of Cold Resistance
+lingering_potion.effect.long_cold_resistance_type=Lingering Potion of Cold Resistance
+lingering_potion.effect.heat_resistance_type=Lingering Potion of Heat Resistance
+lingering_potion.effect.long_heat_resistance_type=Lingering Potion of Heat Resistance
+
+tipped_arrow.effect.cold_resistance_type=Стрела сопротивления холоду
+tipped_arrow.effect.long_cold_resistance_type=Стрела сопротивления холоду
+tipped_arrow.effect.heat_resistance_type=Стрела сопротивления теплу
+tipped_arrow.effect.long_heat_resistance_type=Стрела сопротивления теплу
