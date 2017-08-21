@@ -3,6 +3,8 @@ package toughasnails.temperature.modifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureDebugger.Modifier;
@@ -33,6 +35,10 @@ public class TimeModifier extends TemperatureModifier
     @Override
     public Temperature modifyTarget(World world, EntityPlayer player, Temperature temperature)
     {
+        if (!SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE_TIME_MODIFIER)) {
+            return temperature;
+        }
+
         Biome biome = world.getBiomeGenForCoords(player.getPosition());
         long worldTime = world.getWorldTime();
         

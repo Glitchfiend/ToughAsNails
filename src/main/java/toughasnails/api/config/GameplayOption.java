@@ -12,6 +12,7 @@ public enum GameplayOption implements ISyncedOption
     ENABLE_LOWERED_STARTING_HEALTH("Enable Lowered Starting Health"),
     ENABLE_THIRST("Enable Thirst"),
     ENABLE_TEMPERATURE("Enable Body Temperature"),
+    ENABLE_TEMPERATURE_TIME_MODIFIER("Enable Temperature Time Modifier"),
     ENABLE_SEASONS("Enable Seasons");
     
     private final String optionName;
