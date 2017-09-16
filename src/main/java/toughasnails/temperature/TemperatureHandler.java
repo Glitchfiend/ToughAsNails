@@ -254,6 +254,8 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         if (this.externalModifiers.containsKey(name))
         {
             ExternalModifier modifier = this.externalModifiers.get(name);
+            modifier.setAmount(amount);
+            modifier.setRate(rate);
             modifier.setEndTime(this.temperatureTimer + duration);
         }
         else
