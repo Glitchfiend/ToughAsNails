@@ -45,9 +45,19 @@ public abstract class TemperatureModifier
             return this.amount;
         }
         
+        public void setAmount(int amount)
+        {
+            this.amount = amount;
+        }
+        
         public int getRate()
         {
             return this.rate;
+        }
+        
+        public void setRate(int rate)
+        {
+            this.rate = rate;
         }
         
         public int getEndTime()
