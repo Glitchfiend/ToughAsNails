@@ -17,3 +17,5 @@
 *.ipr
 *.iws
 src/main/resources/META-INF/biomesoplenty_at.cfg
+/ToughAsNails_Client.launch
+/ToughAsNails_Server.launch

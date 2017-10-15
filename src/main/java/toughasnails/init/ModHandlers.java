@@ -17,6 +17,7 @@ import toughasnails.handler.health.HealthOverlayHandler;
 import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
+import toughasnails.handler.season.SeasonChunkHandler;
 import toughasnails.handler.season.SeasonCropHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
@@ -61,6 +62,7 @@ public class ModHandlers
         MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
         MinecraftForge.EVENT_BUS.register(new WeatherFrequencyHandler());
         MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
+        MinecraftForge.EVENT_BUS.register(new SeasonChunkHandler());
         
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
