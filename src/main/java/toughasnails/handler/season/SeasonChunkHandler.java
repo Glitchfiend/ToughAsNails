@@ -19,13 +19,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.season.SeasonSavedData;
 
 public class SeasonChunkHandler {
 	
 	// TODO: Move it!
 	// TODO: World dependent key!
-	public Set<ChunkKey> loadedChunkSet = new HashSet<ChunkKey>();
-	public LinkedList<Chunk> loadedChunkQueue = new LinkedList<Chunk>();
+	public Set<ChunkKey> loadedChunkMask = new HashSet<ChunkKey>();
+	public LinkedList<ChunkData> loadedChunkQueue = new LinkedList<ChunkData>();
 
 	@SubscribeEvent
 	public void chunkLoad(ChunkDataEvent.Load event) {
@@ -37,20 +38,18 @@ public class SeasonChunkHandler {
 		Chunk chunk = event.getChunk();
 		synchronized( loadedChunkQueue ) {
 			if( chunk.isTerrainPopulated() ) {
-				enqueueChunkOnce(chunk);
+				enqueueChunkOnce(chunk, chunk.lastSaveTime);
 			}
 		}
-		
-/*		*/
 	}
 	
-	private void enqueueChunkOnce(Chunk chunk) {
+	private void enqueueChunkOnce(Chunk chunk, long lastSaveTime) {
 		ChunkPos cpos = chunk.getPos(); 
 		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
-		if( loadedChunkSet.contains(key) )
+		if( loadedChunkMask.contains(key) )
 			return;
-		loadedChunkSet.add(key);
-		loadedChunkQueue.add(chunk);
+		loadedChunkMask.add(key);
+		loadedChunkQueue.add(new ChunkData(chunk, lastSaveTime));
 	}
 	
 	private boolean isChunkUnpopulated(World world, int cposX, int cposZ ) {
@@ -101,7 +100,13 @@ public class SeasonChunkHandler {
 //		if( hasUnpopulatedNeighbor(world, chunk) )
 //			return;	// TODO: change to cposx, cposz style. Is faster!
 		
-		enqueueChunkOnce(chunk);
+		long lastSaveTime;
+		if( chunk.isTerrainPopulated() )
+			lastSaveTime = chunk.lastSaveTime;
+		else
+			lastSaveTime = world.getTotalWorldTime();
+		
+		enqueueChunkOnce(chunk, lastSaveTime);
 	}
 	
 	private void addNeighborChunks(World world, int cposX, int cposZ) {
@@ -128,7 +133,7 @@ public class SeasonChunkHandler {
 
 		Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
 		synchronized( loadedChunkQueue ) {
-			enqueueChunkOnce(chunk);
+			enqueueChunkOnce(chunk, world.getTotalWorldTime());
 			addNeighborChunks(world, event.getChunkX(), event.getChunkZ());
 		}
 	}
@@ -137,14 +142,35 @@ public class SeasonChunkHandler {
 	public void serverTick(TickEvent.ServerTickEvent event) {
 		synchronized( loadedChunkQueue ) {
 			for( int i = 0; i < loadedChunkQueue.size(); i ++ ) {
-				Chunk chunk = loadedChunkQueue.get(i);
+				ChunkData chunkData = loadedChunkQueue.get(i);
+				Chunk chunk = chunkData.getChunk();
 				World world = chunk.getWorld(); 
 				if( hasUnpopulatedNeighbor(world, chunk) )
 					continue;
 				
 				Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+				SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
 				ChunkPos chunkPos = chunk.getPos();
 		        
+				long lastSaveTime = chunkData.getLastSaveTime();
+				long simulationWindowTime = world.getTotalWorldTime() - lastSaveTime;
+				if( simulationWindowTime > SeasonSavedData.MAX_RAINWINDOW )
+					simulationWindowTime = SeasonSavedData.MAX_RAINWINDOW;
+				
+				// Dirty and wrong, but quick.
+				int snowTicks = seasonData.snowTicks;
+				if( snowTicks > simulationWindowTime )
+					snowTicks = (int)simulationWindowTime;
+				int meltTicks = seasonData.meltTicks;
+				if( meltTicks > simulationWindowTime )
+					meltTicks = (int)simulationWindowTime;
+				
+				// Get thresholds
+				int snowPileThreshold = evalProbUpdateTick(snowTicks);
+				int snowMeltThreshold = evalProbUpdateTick(meltTicks);
+				
+				// TODO: Get weather changes from history.
+				
 				MutableBlockPos pos = new MutableBlockPos();
 				for( int iX = 0; iX < 16; iX ++ ) {
 					for( int iZ = 0; iZ < 16; iZ ++ ) {
@@ -156,28 +182,41 @@ public class SeasonChunkHandler {
 				        
 				        if( SeasonHelper.canSnowAtTempInSeason(season, temperature) ) {
 				        	// TODO: Apply snow in dependence of last rain time.
-				        	
-							if( world.canSnowAt(pos, true) ) {
-								world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState(), 2);
+				        	if( world.rand.nextInt(100) < snowPileThreshold ) {
+								if( world.canSnowAt(pos, true) ) {
+									world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState(), 2);
+								}
 							}
 							
 							// TODO: Apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
 						}
 				        else {
 				        	// TODO: Remove snow in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
-
-				        	IBlockState blockState = world.getBlockState(pos);
-				        	if( blockState.getBlock() == Blocks.SNOW_LAYER ) {
-				        		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-				        	}
+				        	if( world.rand.nextInt(100) <= snowMeltThreshold ) {
+					        	IBlockState blockState = world.getBlockState(pos);
+					        	if( blockState.getBlock() == Blocks.SNOW_LAYER ) {
+					        		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+					        	}				        	
+					        }
 				        	
+				        	// TODO: Apply ice melting
 				        }
 					}
 				}
 			}
-			loadedChunkSet.clear();
+			loadedChunkMask.clear();
 			loadedChunkQueue.clear();
 		}
+	}
+	
+	private int evalProbUpdateTick(int duringTicks) {
+		final double fieldHitProb = 1.0 / (16.0 * 16.0);
+		final double snowUpdateProbInTick = 1.0 / 16.0;
+		final double hitProb = fieldHitProb * snowUpdateProbInTick;
+		final double missProb = 1.0 - hitProb;
+		double prob = hitProb * (1.0 - Math.pow(missProb, duringTicks + 1)) / (1.0 - missProb);
+		
+		return (int)(100.0 * prob + 0.5);	
 	}
 	
 	private static class ChunkKey {
@@ -218,5 +257,22 @@ public class SeasonChunkHandler {
 		}
 	}
 	
+	private static class ChunkData {
+		private Chunk chunk;
+		private long lastSaveTime;
+		
+		public Chunk getChunk() {
+			return chunk;
+		}
+
+		public long getLastSaveTime() {
+			return lastSaveTime;
+		}
+
+		ChunkData(Chunk chunk, long lastSaveTime) {
+			this.chunk = chunk;
+			this.lastSaveTime = lastSaveTime;
+		}
+	}
 	
 }

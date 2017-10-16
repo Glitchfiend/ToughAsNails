@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
+import toughasnails.api.season.Season;
 import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.config.SeasonsOption;
@@ -34,6 +35,7 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         if (event.phase == TickEvent.Phase.END && !world.isRemote && world.provider.getDimension() == 0 && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
+            Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
 
             if (savedData.seasonCycleTicks++ > SeasonTime.ZERO.getCycleDuration())
             {
@@ -44,6 +46,11 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             {
                 sendSeasonUpdate(world);
             }
+            
+            if( season == Season.WINTER && world.isRaining() )
+            	savedData.shiftSnowWindow( 1, true );
+            else if( season != Season.WINTER )
+            	savedData.shiftSnowWindow( 1, false );
 
             savedData.markDirty();
         }

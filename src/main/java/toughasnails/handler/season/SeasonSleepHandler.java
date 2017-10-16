@@ -14,6 +14,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.season.Season;
+import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.season.SeasonSavedData;
 
@@ -30,8 +32,14 @@ public class SeasonSleepHandler
             if (world.areAllPlayersAsleep())
             {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+                Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+                
                 long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
                 seasonData.seasonCycleTicks += timeDiff;
+                if( season == Season.WINTER && world.isRaining() )
+                	seasonData.shiftSnowWindow( (int)timeDiff, true );
+                else if( season != Season.WINTER )
+                	seasonData.shiftSnowWindow( (int)timeDiff, false );
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
             }
