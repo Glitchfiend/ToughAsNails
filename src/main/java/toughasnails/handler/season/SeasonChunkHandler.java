@@ -31,6 +31,8 @@ public class SeasonChunkHandler {
 	public void chunkLoad(ChunkDataEvent.Load event) {
 		
 		// TODO: Don't perform operation on unpopulated chunks
+		if( event.getWorld().isRemote )
+			return;
 		
 		Chunk chunk = event.getChunk();
 		synchronized( loadedChunkQueue ) {
@@ -67,27 +69,30 @@ public class SeasonChunkHandler {
 		return false;
 	}
 	
-	private void addChunkIfSurroundedByPopulated(World world, int cposX, int cposZ) {
+	private void addChunkIfGenerated(World world, int cposX, int cposZ) {
 		if( !world.isChunkGeneratedAt(cposX, cposZ) )
 			return;
 		Chunk chunk = world.getChunkFromChunkCoords(cposX, cposZ);
-		if( hasUnpopulatedNeighbor(world, chunk) )
-			return;	// TODO: change to cposx, cposz style. Is faster!
+//		if( hasUnpopulatedNeighbor(world, chunk) )
+//			return;	// TODO: change to cposx, cposz style. Is faster!
 		
 		enqueueChunkOnce(chunk);
 	}
 	
 	private void addNeighborChunks(World world, Chunk chunk) {
 		ChunkPos cpos = chunk.getPos();
-		addChunkIfSurroundedByPopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos );		
-		addChunkIfSurroundedByPopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos );		
-		addChunkIfSurroundedByPopulated(world, cpos.chunkXPos, cpos.chunkZPos - 1 );		
-		addChunkIfSurroundedByPopulated(world, cpos.chunkXPos, cpos.chunkZPos + 1 );
+		addChunkIfGenerated(world, cpos.chunkXPos - 1, cpos.chunkZPos );		
+		addChunkIfGenerated(world, cpos.chunkXPos + 1, cpos.chunkZPos );		
+		addChunkIfGenerated(world, cpos.chunkXPos, cpos.chunkZPos - 1 );		
+		addChunkIfGenerated(world, cpos.chunkXPos, cpos.chunkZPos + 1 );
 	}
 	
 	@SubscribeEvent
 	public void postPopulate(PopulateChunkEvent.Post event) {
 		World world = event.getWorld();
+		if( world.isRemote )
+			return;
+
 		Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
 		synchronized( loadedChunkQueue ) {
 			enqueueChunkOnce(chunk);
