@@ -24,7 +24,7 @@ public class SeasonChunkHandler {
 	
 	// TODO: Move it!
 	// TODO: World dependent key!
-	public Set<ChunkPos> loadedChunkSet = new HashSet<ChunkPos>();
+	public Set<ChunkKey> loadedChunkSet = new HashSet<ChunkKey>();
 	public LinkedList<Chunk> loadedChunkQueue = new LinkedList<Chunk>();
 
 	@SubscribeEvent
@@ -46,9 +46,10 @@ public class SeasonChunkHandler {
 	
 	private void enqueueChunkOnce(Chunk chunk) {
 		ChunkPos cpos = chunk.getPos(); 
-		if( loadedChunkSet.contains(cpos) )
+		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
+		if( loadedChunkSet.contains(key) )
 			return;
-		loadedChunkSet.add(cpos);
+		loadedChunkSet.add(key);
 		loadedChunkQueue.add(chunk);
 	}
 	
@@ -58,14 +59,38 @@ public class SeasonChunkHandler {
 	
 	private boolean hasUnpopulatedNeighbor(World world, Chunk chunk) {
 		ChunkPos cpos = chunk.getPos();
-		if( isChunkUnpopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos ) )
+/*		if( isChunkUnpopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos ) )
 			return true;		
 		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos ) )
 			return true;		
 		if( isChunkUnpopulated(world, cpos.chunkXPos, cpos.chunkZPos - 1 ) )
 			return true;		
 		if( isChunkUnpopulated(world, cpos.chunkXPos, cpos.chunkZPos + 1 ) )
+			return true;*/
+/*		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos, cpos.chunkZPos + 1 ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos + 1 ) )
+			return true;		*/
+		
+		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos + 1 ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos + 1 ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos, cpos.chunkZPos + 1 ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos, cpos.chunkZPos - 1 ) )
+			return true;		
+		if( isChunkUnpopulated(world, cpos.chunkXPos + 1, cpos.chunkZPos - 1 ) )
 			return true;
+		if( isChunkUnpopulated(world, cpos.chunkXPos - 1, cpos.chunkZPos - 1 ) )
+			return true;		
+
 		return false;
 	}
 	
@@ -79,12 +104,20 @@ public class SeasonChunkHandler {
 		enqueueChunkOnce(chunk);
 	}
 	
-	private void addNeighborChunks(World world, Chunk chunk) {
-		ChunkPos cpos = chunk.getPos();
+	private void addNeighborChunks(World world, int cposX, int cposZ) {
+/*		ChunkPos cpos = chunk.getPos();
 		addChunkIfGenerated(world, cpos.chunkXPos - 1, cpos.chunkZPos );		
-		addChunkIfGenerated(world, cpos.chunkXPos + 1, cpos.chunkZPos );		
+		addChunkIfGenerated(world, cpos.chunkXPos + 1, cpos.chunkZPos );
 		addChunkIfGenerated(world, cpos.chunkXPos, cpos.chunkZPos - 1 );		
-		addChunkIfGenerated(world, cpos.chunkXPos, cpos.chunkZPos + 1 );
+		addChunkIfGenerated(world, cpos.chunkXPos, cpos.chunkZPos + 1 ); */
+		addChunkIfGenerated(world, cposX + 1, cposZ );
+		addChunkIfGenerated(world, cposX + 1, cposZ + 1 );
+		addChunkIfGenerated(world, cposX - 1, cposZ );
+		addChunkIfGenerated(world, cposX - 1, cposZ + 1 );
+		addChunkIfGenerated(world, cposX, cposZ + 1 );
+		addChunkIfGenerated(world, cposX, cposZ - 1 );
+		addChunkIfGenerated(world, cposX + 1, cposZ - 1 );
+		addChunkIfGenerated(world, cposX - 1, cposZ - 1 );
 	}
 	
 	@SubscribeEvent
@@ -96,7 +129,7 @@ public class SeasonChunkHandler {
 		Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
 		synchronized( loadedChunkQueue ) {
 			enqueueChunkOnce(chunk);
-			addNeighborChunks(world, chunk);
+			addNeighborChunks(world, event.getChunkX(), event.getChunkZ());
 		}
 	}
 
@@ -146,4 +179,44 @@ public class SeasonChunkHandler {
 			loadedChunkQueue.clear();
 		}
 	}
+	
+	private static class ChunkKey {
+		private ChunkPos pos;
+		
+		ChunkKey(ChunkPos pos, World world) {
+			this.pos = pos;
+			// TODO: Add world id!
+		}
+
+		public ChunkPos getPos() {
+			return pos;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((pos == null) ? 0 : pos.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ChunkKey other = (ChunkKey) obj;
+			if (pos == null) {
+				if (other.pos != null)
+					return false;
+			} else if (!pos.equals(other.pos))
+				return false;
+			return true;
+		}
+	}
+	
+	
 }
