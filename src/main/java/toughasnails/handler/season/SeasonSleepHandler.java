@@ -25,15 +25,24 @@ public class SeasonSleepHandler
         if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             WorldServer world = (WorldServer)event.world;
-
+            boolean startedSleeping = false;//Maybe move this to save some workload
+            
             //Called before all players are awoken for the next day
             if (world.areAllPlayersAsleep())
             {
+                startedSleeping = true;
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-                long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
-                seasonData.seasonCycleTicks += timeDiff;
+                seasonData.seasonCycleTicks += (-world.getWorldInfo().getWorldTime() + 24000L/*Replace with configured daytime value*/) % 24000L /*Also Replace with configured daytime value*/;
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
+            }
+            else if (startedSleeping == true)
+            {
+                SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+                seasonData.seasonCycleTicks +=  world.getWorldInfo().getWorldTime() % 24000L/*Replace with configured daytime value*/;
+                seasonData.markDirty();
+                SeasonHandler.sendSeasonUpdate(world);
+                
             }
         }
     }
