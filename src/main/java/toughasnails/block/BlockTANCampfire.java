@@ -34,7 +34,7 @@ import toughasnails.item.ItemTANBlock;
 
 public class BlockTANCampfire extends Block implements ITANBlock
 {
-    protected static final AxisAlignedBB SELECTION_BOX = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.6D, 0.9D);
+    protected static final AxisAlignedBB SELECTION_BOX = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.5D, 0.9D);
     
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
@@ -112,16 +112,16 @@ public class BlockTANCampfire extends Block implements ITANBlock
     		return 0;
     	}
     }
-    
+
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos)
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return SELECTION_BOX;
     }
-    
+
     // no collision box - you can walk straight through them
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return NULL_AABB;
     }
