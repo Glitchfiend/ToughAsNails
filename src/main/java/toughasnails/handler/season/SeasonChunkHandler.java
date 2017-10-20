@@ -28,8 +28,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.season.SeasonSavedData;
+import toughasnails.season.WeatherEventType;
+import toughasnails.season.WeatherJournalEvent;
 
 public class SeasonChunkHandler {
+	
+	private static final int THR_PROB_MAX = 100;
 	
 	// TODO: Move it!
 	public Set<ChunkKey> loadedChunkMask = new HashSet<ChunkKey>();
@@ -187,38 +191,16 @@ public class SeasonChunkHandler {
 		addChunkIfGenerated(world, cposX - 1, cposZ - 1 );
 	}
 	
-	private void patchChunkTerrain(ChunkData chunkData) {
-		Chunk chunk = chunkData.getChunk();
+	private void executePatchCommand( int command, int threshold, Chunk chunk, Season season ) {
+		// TODO: Handle client notification on block changes properly!
+		
 		ChunkPos chunkPos = chunk.getPos();
 		World world = chunk.getWorld(); 
+		
+		if( command == 1 ) {
+			threshold = THR_PROB_MAX;
+		}
 
-		Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
-		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-		long lastPatchedTime = chunkData.getLastPatchedTime();
-		
-		// TODO: Old entries have no effect. Consider it by reseting chunk states and patch from newer journal entries
-		int commmand = 0;
-		
-		// Replay latest journal entries
-		
-		long simulationWindowTime = world.getTotalWorldTime() - lastPatchedTime;
-		if( simulationWindowTime > SeasonSavedData.MAX_RAINWINDOW )
-			simulationWindowTime = SeasonSavedData.MAX_RAINWINDOW;
-		
-		// Dirty and wrong, but quick.
-		int snowTicks = seasonData.snowTicks;
-		if( snowTicks > simulationWindowTime )
-			snowTicks = (int)simulationWindowTime;
-		int meltTicks = seasonData.meltTicks;
-		if( meltTicks > simulationWindowTime )
-			meltTicks = (int)simulationWindowTime;
-		
-		// Get thresholds
-		int snowPileThreshold = evalProbUpdateTick(snowTicks);
-		int snowMeltThreshold = evalProbUpdateTick(meltTicks);
-		
-		// TODO: Get weather changes from history.
-		
 		MutableBlockPos pos = new MutableBlockPos();
 		for( int iX = 0; iX < 16; iX ++ ) {
 			for( int iZ = 0; iZ < 16; iZ ++ ) {
@@ -228,9 +210,9 @@ public class SeasonChunkHandler {
 		        Biome biome = world.getBiome(pos);
 		        float temperature = biome.getFloatTemperature(pos);
 		        
-		        if( SeasonHelper.canSnowAtTempInSeason(season, temperature) ) {
+		        if( (command == 2 || command == 1) && SeasonHelper.canSnowAtTempInSeason(season, temperature) ) {
 		        	// TODO: Apply snow in dependence of last rain time.
-		        	if( world.rand.nextInt(100) < snowPileThreshold ) {
+		        	if( world.rand.nextInt(THR_PROB_MAX) < threshold ) {
 						if( world.canSnowAt(pos, true) ) {
 							world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState(), 2);
 						}
@@ -238,9 +220,9 @@ public class SeasonChunkHandler {
 					
 					// TODO: Apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
 				}
-		        else {
+		        else if( command == 3 || command == 1 ) {
 		        	// TODO: Remove snow in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
-		        	if( world.rand.nextInt(100) <= snowMeltThreshold ) {
+		        	if( world.rand.nextInt(THR_PROB_MAX) <= threshold ) {
 			        	IBlockState blockState = world.getBlockState(pos);
 			        	if( blockState.getBlock() == Blocks.SNOW_LAYER ) {
 			        		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
@@ -249,6 +231,120 @@ public class SeasonChunkHandler {
 		        	
 		        	// TODO: Apply ice melting
 		        }
+			}
+		}
+	}
+	
+	private void patchChunkTerrain(ChunkData chunkData) {
+		Chunk chunk = chunkData.getChunk();
+		World world = chunk.getWorld(); 
+
+		Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+
+		long lastPatchedTime = chunkData.getLastPatchedTime();
+		// TODO: Old entries have no effect. Consider it by reseting chunk states and patch from newer journal entries
+		boolean bFastForward = false;
+		
+		// Replay latest journal entries
+		int fromIdx = seasonData.getJournalIndexAfterTime(lastPatchedTime);
+		if( fromIdx != -1 ) {
+			int command = 0;	// 0 = NOP. 1 = reset chunk state. 2 = simulate chunk snow (requires ticks) 3 = simulate melting (requires ticks) 
+
+			// determine initial state
+			boolean bWasRaining = seasonData.wasLastRaining(fromIdx);
+			boolean bWasSnowy = seasonData.wasLastSnowy(fromIdx);
+			
+			long rainingTrackTicks = 0;
+			long snowyTrackTicks = 0;
+			
+			long intervalRainingTrackStart = lastPatchedTime;
+			long intervalSnowyTrackStart = lastPatchedTime;
+
+			// initialize in case of fast forward
+			if( bFastForward ) {
+				executePatchCommand( 1, 0, chunk, season );
+			}
+			
+			// Apply events from journal
+			for( int curEntry = fromIdx; curEntry <= seasonData.journal.size(); curEntry ++ ) {
+				WeatherJournalEvent wevt;
+				if( curEntry < seasonData.journal.size() )
+					wevt = seasonData.journal.get(curEntry);
+				else {
+					// TODO: handle curEntry == -1 case for snowing and melting
+					
+					WeatherEventType type = WeatherEventType.eventUnknown;
+					if( seasonData.wasLastRaining(-1) && seasonData.wasLastSnowy(-1) )
+						type = WeatherEventType.eventStopRaining;	// Force update at the switch logic below.
+					else if( seasonData.wasLastSnowy(-1) )
+						type = WeatherEventType.eventToNonSnowy;	// Force update at the switch logic below.
+					wevt = new WeatherJournalEvent(world.getTotalWorldTime(), type);
+				}
+				
+				switch( wevt.getEventType() ) {
+				case eventStartRaining:
+					if( !bWasRaining ) {
+						rainingTrackTicks = wevt.getTimeStamp() - intervalRainingTrackStart;
+						snowyTrackTicks = wevt.getTimeStamp() - intervalSnowyTrackStart;
+						intervalRainingTrackStart = wevt.getTimeStamp();
+//						if( !bWasSnowy )
+//							command = 3;
+//						else
+							command = 0;
+						bWasRaining = true;
+					}
+					break;				
+				case eventStopRaining:
+					if( bWasRaining ) {
+						rainingTrackTicks = wevt.getTimeStamp() - intervalRainingTrackStart;
+						snowyTrackTicks = wevt.getTimeStamp() - intervalSnowyTrackStart;
+						intervalRainingTrackStart = wevt.getTimeStamp();
+//						intervalSnowyTrackStart = wevt.getTimeStamp();	// Split interval, we don't want to simulate twice.
+						if( bWasSnowy )
+							command = 2;
+						else
+							command = 0;
+						bWasRaining = false;
+					}
+					break;
+				case eventToSnowy:
+					if( !bWasSnowy ) {
+						rainingTrackTicks = wevt.getTimeStamp() - intervalRainingTrackStart;
+						snowyTrackTicks = wevt.getTimeStamp() - intervalSnowyTrackStart;
+						intervalSnowyTrackStart = wevt.getTimeStamp();
+						command = 3;
+						bWasSnowy = true;
+					}
+					break;
+				case eventToNonSnowy:
+					if( bWasSnowy ) {
+						rainingTrackTicks = wevt.getTimeStamp() - intervalRainingTrackStart;
+						snowyTrackTicks = wevt.getTimeStamp() - intervalSnowyTrackStart;
+						intervalSnowyTrackStart = wevt.getTimeStamp();
+						if( bWasRaining )
+							command = 2;
+						else
+							command = 0;
+						bWasSnowy = false;
+					}
+				default:
+					// Do nothing
+					command = 0;
+				}
+				
+				if( command != 0 ) {
+					int threshold = 0;
+					if( command == 2 ) {
+						long dur = rainingTrackTicks;
+						if( dur > snowyTrackTicks )
+							dur = snowyTrackTicks;
+						threshold = evalProbUpdateTick((int)dur);
+					}
+					else if( command == 3 )
+						threshold = evalProbUpdateTick((int)intervalSnowyTrackStart);
+					executePatchCommand( command, threshold, chunk, season );
+				}
 			}
 		}
 		
@@ -441,7 +537,7 @@ public class SeasonChunkHandler {
 		final double missProb = 1.0 - hitProb;
 		double prob = hitProb * (1.0 - Math.pow(missProb, duringTicks + 1)) / (1.0 - missProb);
 		
-		return (int)(100.0 * prob + 0.5);	
+		return (int)((double)THR_PROB_MAX * prob + 0.5);	
 	}
 	
 	private static class ChunkKey {

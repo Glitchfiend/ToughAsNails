@@ -117,11 +117,41 @@ public class SeasonSavedData extends WorldSavedData
     		bLastRainyState = false;	// Default: First minecraft day has no rain.
     }
     
-    public boolean wasLastRaining() {
+    public boolean wasLastRaining( int atIdx ) {
+    	if( atIdx != -1 ) {
+    		for( int i = atIdx; i < journal.size(); i ++ ) {
+        		WeatherJournalEvent je = journal.get(i);
+        		WeatherEventType etype = je.getEventType();
+        		
+        		switch( etype ) {
+        		case eventStartRaining:
+        			return false;
+        		case eventStopRaining:
+        			return true;
+        		default:
+        		}
+    		}
+    	}
+    	
     	return bLastRainyState;
     }
     
-    public boolean wasLastSnowy() {
+    public boolean wasLastSnowy( int atIdx ) {
+    	if( atIdx != -1 ) {
+    		for( int i = atIdx; i < journal.size(); i ++ ) {
+        		WeatherJournalEvent je = journal.get(i);
+        		WeatherEventType etype = je.getEventType();
+        		
+        		switch( etype ) {
+        		case eventToSnowy:
+        			return false;
+        		case eventToNonSnowy:
+        			return true;
+        		default:
+        		}
+    		}
+    	}
+    	
     	return bLastSnowyState;
     }
     
@@ -159,14 +189,14 @@ public class SeasonSavedData extends WorldSavedData
     }
     
     public void updateState( World w, Season curSeason ) {
-        if( curSeason == Season.WINTER && !wasLastSnowy() )
+        if( curSeason == Season.WINTER && !wasLastSnowy( -1 ) )
         	addEvent(w, WeatherEventType.eventToSnowy);
-        else if( curSeason != Season.WINTER && wasLastSnowy() )
+        else if( curSeason != Season.WINTER && wasLastSnowy( -1 ) )
         	addEvent(w, WeatherEventType.eventToNonSnowy );
         
-        if( w.isRaining() && !wasLastRaining() )
+        if( w.isRaining() && !wasLastRaining( -1 ) )
         	addEvent(w, WeatherEventType.eventStartRaining);
-        else if( !w.isRaining() && wasLastRaining() )
+        else if( !w.isRaining() && wasLastRaining( -1 ) )
         	addEvent(w, WeatherEventType.eventStopRaining);
     }
 
