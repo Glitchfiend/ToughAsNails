@@ -194,8 +194,13 @@ public class SeasonChunkHandler {
 
 		Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
 		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-        
 		long lastPatchedTime = chunkData.getLastPatchedTime();
+		
+		// TODO: Old entries have no effect. Consider it by reseting chunk states and patch from newer journal entries
+		int commmand = 0;
+		
+		// Replay latest journal entries
+		
 		long simulationWindowTime = world.getTotalWorldTime() - lastPatchedTime;
 		if( simulationWindowTime > SeasonSavedData.MAX_RAINWINDOW )
 			simulationWindowTime = SeasonSavedData.MAX_RAINWINDOW;

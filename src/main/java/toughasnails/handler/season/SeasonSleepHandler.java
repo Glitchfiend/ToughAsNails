@@ -36,10 +36,12 @@ public class SeasonSleepHandler
                 
                 long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
                 seasonData.seasonCycleTicks += timeDiff;
-                if( season == Season.WINTER && world.isRaining() )
+/*                if( season == Season.WINTER && world.isRaining() )
                 	seasonData.shiftSnowWindow( (int)timeDiff, true );
                 else if( season != Season.WINTER )
-                	seasonData.shiftSnowWindow( (int)timeDiff, false );
+                	seasonData.shiftSnowWindow( (int)timeDiff, false ); */
+                seasonData.updateState(world, season);
+                
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
             }

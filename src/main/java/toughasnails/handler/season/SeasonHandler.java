@@ -24,6 +24,7 @@ import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
+import toughasnails.season.WeatherEventType;
 
 public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
@@ -47,10 +48,12 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
                 sendSeasonUpdate(world);
             }
             
-            if( season == Season.WINTER && world.isRaining() )
+            savedData.updateState(world, season);
+            
+/*            if( season == Season.WINTER && world.isRaining() )
             	savedData.shiftSnowWindow( 1, true );
             else if( season != Season.WINTER )
-            	savedData.shiftSnowWindow( 1, false );
+            	savedData.shiftSnowWindow( 1, false ); */
 
             savedData.markDirty();
         }
