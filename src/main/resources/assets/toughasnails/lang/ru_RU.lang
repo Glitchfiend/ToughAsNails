@@ -1,0 +1,91 @@
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [аргументы]
+commands.toughasnails.settemp.success=Установить температуру тела игрока в %s
+commands.toughasnails.settemp.disabled=Температура Тела в настоящий момент отключена!
+commands.toughasnails.setseason.success=Установить время года на %s
+commands.toughasnails.setseason.fail=Неверное время года %s
+commands.toughasnails.setseason.disabled=Времена Года в настоящий момент отключены!
+
+config.category.survivalSettings.title=Настройки Выживания
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+tile.campfire.name=Костёр
+tile.dead_crops.name=Погибшие саженцы
+tile.glowstone_torch.name=Факел из светокамня
+tile.rain_collector.name=Сборщик дождя
+tile.temperature_coil.cooling_coil.name=Охлаждающая катушка
+tile.temperature_coil.heating_coil.name=Нагревательная катушка
+tile.season_sensor_spring.name=Сенсор времени года
+tile.season_sensor_summer.name=Сенсор времени года
+tile.season_sensor_autumn.name=Сенсор времени года
+tile.season_sensor_winter.name=Сенсор времени года
+tile.torch_new.name=Факел
+
+item.air_filter.name=Воздушный фильтр
+item.bottle_of_blackdamp.name=Бутыль рудничного газа
+item.bottle_of_whitedamp.name=Бутыль угарного газа
+item.bottle_of_firedamp.name=Бутыль гремучего газа
+item.bottle_of_stinkdamp.name=Бутыль сероводорода
+item.clean_water_canteen.name=Фляга чистой воды
+item.charcoal_filter.name=Угольный фильтр
+item.dirty_water_canteen.name=Фляга грязной воды
+item.dirty_water_bottle.name=Бутылка грязной воды
+item.empty_canteen.name=Пустая фляга
+item.filtered_water_canteen.name=Фляга отфильтрованной воды
+item.filtered_water_bottle.name=Бутылка отфильтрованной воды
+item.freeze_powder.name=Морозный порошок
+item.freeze_rod.name=Морозный стержень
+item.ice_charge.name=Ледяной шар
+item.ice_cube.name=Ледяной куб
+item.jelled_slime.name=Желе
+item.jelled_slime_helmet.name=Желейный шлем
+item.jelled_slime_chestplate.name=Желейная кираса
+item.jelled_slime_leggings.name=Желейные поножи
+item.jelled_slime_boots.name=Желейные ботинки
+item.juice_apple.name=Яблочный сок
+item.juice_beetroot.name=Свекольный сок
+item.juice_cactus.name=Кактусовый сок
+item.juice_carrot.name=Морковный сок
+item.juice_chorus_fruit.name=Сок коруса
+item.juice_glistering_melon.name=Сверкающий арбузный сок
+item.juice_golden_apple.name=Золотой яблочный сок
+item.juice_golden_carrot.name=Золотой морковный сок
+item.juice_melon.name=Арбузный сок
+item.juice_pumpkin.name=Тыквенный сок
+item.lifeblood_crystal.name=Кристалл жизненной силы
+item.respirator.name=Респиратор
+item.season_clock.name=Сезонные часы
+item.tan_icon.name=Иконка TAN
+item.thermometer.name=Термометр
+item.wool_helmet.name=Шерстяной капюшон
+item.wool_chestplate.name=Шерстяная куртка
+item.wool_leggings.name=Шерстяные штаны
+item.wool_boots.name=Шерстяные ботинки
+
+potion.hypothermia=Гипотермия
+potion.hyperthermia=Гипертермия
+potion.thirst=Жажда
+potion.cold_resistance=Защита от холода
+potion.heat_resistance=Защита от жары
+
+potion.effect.cold_resistance_type=Зелье защиты от холода
+potion.effect.long_cold_resistance_type=Зелье защиты от холода
+potion.effect.heat_resistance_type=Зелье защиты от жары
+potion.effect.long_heat_resistance_type=Зелье защиты от жары
+
+splash_potion.effect.cold_resistance_type=Взрывающееся зелье защиты от холода
+splash_potion.effect.long_cold_resistance_type=Взрывающееся зелье защиты от холода
+splash_potion.effect.heat_resistance_type=Взрывающееся зелье защиты от жары
+splash_potion.effect.long_heat_resistance_type=Взрывающееся зелье защиты от холода
+
+lingering_potion.effect.cold_resistance_type=Оседающее зелье защиты от холода
+lingering_potion.effect.long_cold_resistance_type=Оседающее зелье защиты от холода
+lingering_potion.effect.heat_resistance_type=Оседающее зелье защиты от жары
+lingering_potion.effect.long_heat_resistance_type=Оседающее зелье защиты от жары
+
+tipped_arrow.effect.cold_resistance_type=Стрела защиты от холода
+tipped_arrow.effect.long_cold_resistance_type=Стрела защиты от холода
+tipped_arrow.effect.heat_resistance_type=Стрела защиты от жары
+tipped_arrow.effect.long_heat_resistance_type=Стрела защиты от жары
+
+entity.freeze.name=Ледяной дух
