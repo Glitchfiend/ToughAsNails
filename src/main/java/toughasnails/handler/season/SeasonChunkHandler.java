@@ -145,7 +145,7 @@ public class SeasonChunkHandler {
 		        Biome biome = world.getBiome(pos);
 		        float temperature = biome.getFloatTemperature(pos);
 		        
-		        if( (command == 2 || command == 1) && SeasonHelper.canSnowAtTempInSeason(season, temperature) ) {
+		        if( (command == 2 || command == 1) && SeasonHelper.canSnowAtTempInSeason(Season.WINTER, temperature) ) {
 		        	// TODO: Apply snow in dependence of last rain time.
 		        	if( world.rand.nextInt(THR_PROB_MAX) < threshold ) {
 						if( world.canSnowAt(pos, true) ) {
@@ -154,6 +154,7 @@ public class SeasonChunkHandler {
 					}
 					
 					// TODO: Apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
+		        	// TODO: Perform crop hibernation
 				}
 		        else if( command == 3 || command == 1 ) {
 		        	// TODO: Remove snow in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
@@ -391,8 +392,11 @@ public class SeasonChunkHandler {
 			Chunk chunk = chunkData.getChunk();
 			ChunkPos chunkPos = chunk.getPos();
 			World world = chunk.getWorld(); 
-			if( hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) )
+			if( hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) ) {
+				chunkData.setActiveFlag(false);
+				chunkData.setToBePatched(false);
 				continue;
+			}
 			
 			// Perform a chunk patch
 			patchChunkTerrain(chunkData);
