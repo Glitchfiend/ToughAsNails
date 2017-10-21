@@ -1,5 +1,6 @@
 package toughasnails.season;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
+import toughasnails.core.ToughAsNails;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.util.ChunkUtils;
 
@@ -24,26 +26,30 @@ public class SeasonChunkPatcher {
 	
 	private static final int THR_PROB_MAX = 100;
 	
-	public Set<ChunkKey> loadedChunkMask = new HashSet<ChunkKey>();
-	public LinkedList<ChunkData> loadedChunkQueue = new LinkedList<ChunkData>();
+	private Object chunkLock = new Object();
+	public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();		// Secured by multithreading access
 	
 	public SeasonChunkPatcher() {
 	}
 
 	public void enqueueChunkOnce(Chunk chunk) {
-		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
-		ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
-		ChunkKey key = chunkData.getKey();
-		if( loadedChunkMask.contains(key) )
-			return;
-		chunkData.setToBePatched(true);
-		loadedChunkMask.add(key);
-		loadedChunkQueue.add(chunkData);
+		synchronized(chunkLock) {
+//		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
+//		ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
+//		ChunkKey key = chunkData.getKey();
+			ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
+			if( pendingChunks.containsKey(key) )
+				return;
+//		chunkData.setToBePatched(true);
+			pendingChunks.put(key, chunk);
+		}
 	}
 	
 	public void removeChunkIfEnqueued(Chunk chunk) {
-		ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
-		// TODO: ...
+		synchronized(chunkLock) {
+			ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
+			pendingChunks.remove(key);
+		}
 	}
 	
 	private void addChunkIfGenerated(World world, int cposX, int cposZ) {
@@ -80,6 +86,7 @@ public class SeasonChunkPatcher {
 				enqueueChunkOnce(activeChunk);
 				
 				// Tag as active
+				chunkData.setToBePatched(true);
 				chunkData.setActiveFlag(true);
 			}
 			else if( !chunkData.isToBePatched() ) {
@@ -124,9 +131,23 @@ public class SeasonChunkPatcher {
 		}
 	}
 	
+	private void removeWorldFrom( World world, Map<ChunkKey, Chunk> pending ) {
+		Iterator<Map.Entry<ChunkKey, Chunk>> iter = pending.entrySet().iterator();
+		while( iter.hasNext() ) {
+//			Map.Entry<ChunkKey, ChunkData> entry = iter.next();
+//			ChunkData chunkData = entry.getValue();
+//			Chunk chunk = chunkData.getChunk();
+			Map.Entry<ChunkKey, Chunk> entry = iter.next();
+			Chunk chunk = entry.getValue();
+			if( chunk.getWorld() == world ) {
+				iter.remove();
+			}
+		}
+	}
+	
 	public void onServerWorldUnload(World world) {
 		// Clear loadedChunkQueue
-		Iterator<ChunkData> listIter = loadedChunkQueue.iterator();
+/*		Iterator<ChunkData> listIter = loadedChunkQueue.iterator();
 		while( listIter.hasNext() ) {
 			ChunkData chunkData = listIter.next();
 			Chunk chunk = chunkData.getChunk();
@@ -134,15 +155,26 @@ public class SeasonChunkPatcher {
 				listIter.remove();
 				loadedChunkMask.remove(chunkData.getKey());
 			}
+		} */
+		
+		synchronized(chunkLock) {
+			removeWorldFrom(world, pendingChunks);
 		}
 	}
 	
 	public void onServerTick() {
-		for( int i = 0; i < loadedChunkQueue.size(); i ++ ) {
-			ChunkData chunkData = loadedChunkQueue.get(i);
-			Chunk chunk = chunkData.getChunk();
-			if( chunk.unloaded )
+		Map<ChunkKey, Chunk> chunksInProcessChunks = pendingChunks;
+		synchronized(chunkLock) {
+			pendingChunks = new HashMap<ChunkKey, Chunk>();	
+		}
+		
+		for( Chunk chunk : chunksInProcessChunks.values() ) {
+			if( chunk.unloaded ) {
+				ToughAsNails.logger.warn("Unloaded chunk awaiting patch found.");
 				continue;
+			}
+			SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
+			ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
 			ChunkPos chunkPos = chunk.getPos();
 			World world = chunk.getWorld(); 
 			if( ChunkUtils.hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) ) {
@@ -157,8 +189,8 @@ public class SeasonChunkPatcher {
 			// Clear to-be-patched flag
 			chunkData.setToBePatched(false);
 		}
-		loadedChunkMask.clear();
-		loadedChunkQueue.clear();
+//		loadedChunkMask.clear();
+//		loadedChunkQueue.clear();
 	}
 	
 	private void executePatchCommand( int command, int threshold, Chunk chunk, Season season ) {
