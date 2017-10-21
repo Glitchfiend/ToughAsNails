@@ -1,12 +1,8 @@
 package toughasnails.season;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.ChunkPos;
@@ -34,13 +30,9 @@ public class SeasonChunkPatcher {
 
 	public void enqueueChunkOnce(Chunk chunk) {
 		synchronized(chunkLock) {
-//		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
-//		ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
-//		ChunkKey key = chunkData.getKey();
 			ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
 			if( pendingChunks.containsKey(key) )
 				return;
-//		chunkData.setToBePatched(true);
 			pendingChunks.put(key, chunk);
 		}
 	}
@@ -85,7 +77,7 @@ public class SeasonChunkPatcher {
 				// Roll up patches
 				enqueueChunkOnce(activeChunk);
 				
-				// Tag as active
+				// Tag as active and as awaiting to be patched
 				chunkData.setToBePatched(true);
 				chunkData.setActiveFlag(true);
 			}
@@ -134,9 +126,7 @@ public class SeasonChunkPatcher {
 	private void removeWorldFrom( World world, Map<ChunkKey, Chunk> pending ) {
 		Iterator<Map.Entry<ChunkKey, Chunk>> iter = pending.entrySet().iterator();
 		while( iter.hasNext() ) {
-//			Map.Entry<ChunkKey, ChunkData> entry = iter.next();
-//			ChunkData chunkData = entry.getValue();
-//			Chunk chunk = chunkData.getChunk();
+
 			Map.Entry<ChunkKey, Chunk> entry = iter.next();
 			Chunk chunk = entry.getValue();
 			if( chunk.getWorld() == world ) {
@@ -147,28 +137,18 @@ public class SeasonChunkPatcher {
 	
 	public void onServerWorldUnload(World world) {
 		// Clear loadedChunkQueue
-/*		Iterator<ChunkData> listIter = loadedChunkQueue.iterator();
-		while( listIter.hasNext() ) {
-			ChunkData chunkData = listIter.next();
-			Chunk chunk = chunkData.getChunk();
-			if( chunk.getWorld() == world ) {
-				listIter.remove();
-				loadedChunkMask.remove(chunkData.getKey());
-			}
-		} */
-		
 		synchronized(chunkLock) {
 			removeWorldFrom(world, pendingChunks);
 		}
 	}
 	
 	public void onServerTick() {
-		Map<ChunkKey, Chunk> chunksInProcessChunks = pendingChunks;
+		Map<ChunkKey, Chunk> chunksInProcess = pendingChunks;
 		synchronized(chunkLock) {
 			pendingChunks = new HashMap<ChunkKey, Chunk>();	
 		}
 		
-		for( Chunk chunk : chunksInProcessChunks.values() ) {
+		for( Chunk chunk : chunksInProcess.values() ) {
 			if( chunk.unloaded ) {
 				ToughAsNails.logger.warn("Unloaded chunk awaiting patch found.");
 				continue;
@@ -189,8 +169,6 @@ public class SeasonChunkPatcher {
 			// Clear to-be-patched flag
 			chunkData.setToBePatched(false);
 		}
-//		loadedChunkMask.clear();
-//		loadedChunkQueue.clear();
 	}
 	
 	private void executePatchCommand( int command, int threshold, Chunk chunk, Season season ) {
@@ -358,9 +336,4 @@ public class SeasonChunkPatcher {
 		
 		return (int)((double)THR_PROB_MAX * prob + 0.5);	
 	}
-
-
-
-
-
 }
