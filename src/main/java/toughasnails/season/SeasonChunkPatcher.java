@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -20,7 +21,8 @@ import toughasnails.util.ChunkUtils;
 
 public class SeasonChunkPatcher {
 	
-	private static final int THR_PROB_MAX = 100;
+	private static final int THR_PROB_MAX = 1000;
+	private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
 	
 	private Object chunkLock = new Object();
 	public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();		// Secured by multithreading access
@@ -180,7 +182,7 @@ public class SeasonChunkPatcher {
 		ChunkPos chunkPos = chunk.getPos();
 		World world = chunk.getWorld(); 
 		
-		if( command == 1 ) {
+		if( command == 4 || command == 5 ) {
 			threshold = THR_PROB_MAX;
 		}
 
@@ -191,12 +193,18 @@ public class SeasonChunkPatcher {
 				pos.setPos(chunkPos.getXStart() + iX, height, chunkPos.getZStart() + iZ);
 				
 		        Biome biome = world.getBiome(pos);
-		        float temperature = SeasonHelper.getSeasonFloatTemperature(biome, pos, Season.WINTER);
+//		        float temperature = SeasonHelper.getSeasonFloatTemperature(biome, pos, Season.WINTER);
+		        BlockPos below = pos.down();
 		        
-		        if( (command == 2 || command == 1) && SeasonHelper.canSnowAtTempInSeason(Season.WINTER, temperature) ) {
+		        if( (command == 1 || command == 2 || command == 4) ) {
 		        	// TODO: Apply snow in dependence of last rain time.
 		        	if( world.rand.nextInt(THR_PROB_MAX) < threshold ) {
-						if( SeasonASMHelper.canSnowAtInSeason(world, pos, true, Season.WINTER) ) {
+		        		
+		        		if( SeasonASMHelper.canBlockFreezeInSeason(world, below, false, Season.WINTER) ) {
+		        			// NOTE: Is a simplified freeze behavior
+		        			world.setBlockState(below, Blocks.ICE.getDefaultState(), 2);
+		        		}
+		        		else if( command != 1 && SeasonASMHelper.canSnowAtInSeason(world, pos, true, Season.WINTER) ) {
 							world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState(), 2);
 						}
 					}
@@ -204,13 +212,20 @@ public class SeasonChunkPatcher {
 					// TODO: Apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
 		        	// TODO: Perform crop hibernation
 				}
-		        else if( command == 3 || command == 1 ) {
+		        else if( command == 3 || command == 5 ) {
 		        	// TODO: Remove snow in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
-		        	if( world.rand.nextInt(THR_PROB_MAX) <= threshold ) {
+		        	if( world.rand.nextInt(THR_PROB_MAX) <= threshold * 10 ) {
 			        	IBlockState blockState = world.getBlockState(pos);
 			        	if( blockState.getBlock() == Blocks.SNOW_LAYER ) {
 			        		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-			        	}				        	
+			        	}
+			        	else {
+			        		blockState = world.getBlockState(below);
+			        		if( blockState.getBlock() == Blocks.ICE ) {
+			        			world.setBlockState(below, Blocks.WATER.getDefaultState(), 2);
+			        			world.neighborChanged(below, Blocks.WATER, below);
+			        		}
+			        	}			        	
 			        }
 		        	
 		        	// TODO: Apply ice melting
@@ -228,7 +243,7 @@ public class SeasonChunkPatcher {
 					dur = snowyTrackTicks;
 				threshold = evalProbUpdateTick((int)dur);
 			}
-			else if( command == 3 )
+			else if( command == 1 || command == 3 )
 				threshold = evalProbUpdateTick((int)snowyTrackTicks);
 			executePatchCommand( command, threshold, chunk, season );
 		}
@@ -244,6 +259,11 @@ public class SeasonChunkPatcher {
 		long lastPatchedTime = chunkData.getLastPatchedTime();
 		// TODO: Old entries have no effect. Consider it by reseting chunk states and patch from newer journal entries
 		boolean bFastForward = false;
+		long windowBorder = world.getTotalWorldTime() - RETROSPECTIVE_WINDOW_TICKS;
+		if( lastPatchedTime < windowBorder ) {
+			lastPatchedTime = windowBorder;
+			bFastForward = true;
+		}
 		int fromIdx = seasonData.getJournalIndexAfterTime(lastPatchedTime);
 
 		// determine initial state
@@ -258,12 +278,16 @@ public class SeasonChunkPatcher {
 
 		// initialize in case of fast forward
 		if( bFastForward ) {
-			executePatchCommand( 1, 0, chunk, season );
+			if( bWasSnowy )
+				executePatchCommand( 4, 0, chunk, season );
+			else
+				executePatchCommand( 5, 0, chunk, season );
 		}
 		
 		// Replay latest journal entries
 		if( fromIdx != -1 ) {
-			int command = 0;	// 0 = NOP. 1 = reset chunk state. 2 = simulate chunk snow (requires ticks) 3 = simulate melting (requires ticks) 
+			int command = 0;	// 0 = NOP. 1 = simulate freeze only. 2 = simulate chunk snow (requires ticks) 3 = simulate melting (requires ticks) 4 = set all snow 5 = set all molten
+
 			// Apply events from journal
 			for( int curEntry = fromIdx; curEntry < seasonData.journal.size(); curEntry ++ ) {
 				WeatherJournalEvent wevt = seasonData.journal.get(curEntry);
@@ -302,7 +326,7 @@ public class SeasonChunkPatcher {
 						if( bWasRaining )
 							command = 2;
 						else
-							command = 0;
+							command = 1;
 						bWasSnowy = false;
 					}
 					break;
@@ -324,6 +348,9 @@ public class SeasonChunkPatcher {
 		}
 		else if( !seasonData.wasLastSnowy(-1) ) {
 			executePatchCommand( 3, snowyTrackTicks, rainingTrackTicks, chunk, season );
+		}
+		else {
+			executePatchCommand( 1, snowyTrackTicks, rainingTrackTicks, chunk, season );
 		}
 		
 		chunkData.setPatchTimeUptodate();

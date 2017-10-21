@@ -127,7 +127,9 @@ public class DataUtils {
 			}
 			
 			return list;
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e) {
+			throw new IOException("Object instanciation error.", e);
+		} catch (IllegalAccessException e) {
 			throw new IOException("Object instanciation error.", e);
 		}
 		finally {
