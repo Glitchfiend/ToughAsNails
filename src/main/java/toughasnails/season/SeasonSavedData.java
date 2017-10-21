@@ -111,10 +111,8 @@ public class SeasonSavedData extends WorldSavedData
     			break;
     	}
     	
-    	if( lastSnowyState == -1 )
-    		bLastSnowyState = false;	// Default: First minecraft day is at spring.
-    	if( lastRainyState == -1 )
-    		bLastRainyState = false;	// Default: First minecraft day has no rain.
+   		bLastSnowyState = (lastSnowyState == 1);	// -1 state is Default: First minecraft day is at spring.
+    	bLastRainyState = (lastRainyState == 1);	// -1 state is Default: First minecraft day has no rain.
     }
     
     public boolean wasLastRaining( int atIdx ) {
@@ -188,7 +186,7 @@ public class SeasonSavedData extends WorldSavedData
     	journal.add(new WeatherJournalEvent(w.getTotalWorldTime(), eventType));
     }
     
-    public void updateState( World w, Season curSeason ) {
+    public void updateJournal( World w, Season curSeason ) {
         if( curSeason == Season.WINTER && !wasLastSnowy( -1 ) )
         	addEvent(w, WeatherEventType.eventToSnowy);
         else if( curSeason != Season.WINTER && wasLastSnowy( -1 ) )

@@ -40,7 +40,7 @@ public class SeasonSleepHandler
                 	seasonData.shiftSnowWindow( (int)timeDiff, true );
                 else if( season != Season.WINTER )
                 	seasonData.shiftSnowWindow( (int)timeDiff, false ); */
-                seasonData.updateState(world, season);
+                seasonData.updateJournal(world, season);
                 
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);

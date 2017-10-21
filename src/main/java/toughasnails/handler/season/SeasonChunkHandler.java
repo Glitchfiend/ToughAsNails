@@ -93,6 +93,7 @@ public class SeasonChunkHandler {
 		ChunkKey key = chunkData.getKey();
 		if( loadedChunkMask.contains(key) )
 			return;
+		chunkData.setToBePatched(true);
 		loadedChunkMask.add(key);
 		loadedChunkQueue.add(chunkData);
 /*		ChunkPos cpos = chunk.getPos(); 
@@ -118,9 +119,10 @@ public class SeasonChunkHandler {
 			return null;
 		
 		// TODO: Retrieve patch time
-		long lastPatchTime = chunk.getWorld().getTotalWorldTime();
+		long lastPatchTime = 0; // chunk.getWorld().getTotalWorldTime();
 		
 		chunkData = new ChunkData(key, chunk, lastPatchTime);
+		chunkData.setActiveFlag(false);
 		managedChunks.put(key, chunkData);
 		return chunkData;
 	}
@@ -245,7 +247,7 @@ public class SeasonChunkHandler {
 				threshold = evalProbUpdateTick((int)dur);
 			}
 			else if( command == 3 )
-				threshold = evalProbUpdateTick((int)rainingTrackTicks);
+				threshold = evalProbUpdateTick((int)snowyTrackTicks);
 			executePatchCommand( command, threshold, chunk, season );
 		}
 	}
@@ -365,7 +367,7 @@ public class SeasonChunkHandler {
 		if( seasonData.wasLastRaining(-1) && seasonData.wasLastSnowy(-1) ) {
 			executePatchCommand( 2, snowyTrackTicks, rainingTrackTicks, chunk, season );
 		}
-		else if( seasonData.wasLastSnowy(-1) ) {
+		else if( !seasonData.wasLastSnowy(-1) ) {
 			executePatchCommand( 3, snowyTrackTicks, rainingTrackTicks, chunk, season );
 		}
 		
@@ -410,6 +412,9 @@ public class SeasonChunkHandler {
 				// Tag as active
 				chunkData.setActiveFlag(true); */
 			}
+			else if( !chunkData.isToBePatched() ) {
+				chunkData.setPatchTimeUptodate();
+			}
 			
 			chunkData.setVisitedFlag(true);
 		}
@@ -424,7 +429,11 @@ public class SeasonChunkHandler {
 				continue;
 			
 			// This one is not active anymore
-			chunkData.setActiveFlag(false);
+			if( chunkData.isActive() )
+			{
+				chunkData.setActiveFlag(false);
+//				chunkData.setPatchTimeUptodate();
+			}
 			chunkData.setVisitedFlag(true);
 		}
 		
@@ -534,6 +543,9 @@ public class SeasonChunkHandler {
 				// Perform a chunk patch
 				patchChunkTerrain(chunkData);
 				
+				// Clear to be patched flag
+				chunkData.setToBePatched(false);
+				
 				// Register as active
 //				chunkData.setActiveFlag(true);
 //				registerChunkData(chunkData);
@@ -618,6 +630,7 @@ public class SeasonChunkHandler {
 		private long lastPatchedTime;
 		private boolean bIsVisited;
 		private boolean bIsActive;
+		private boolean bToBePatched;
 		
 		ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime) {
 			this.key = key;
@@ -625,6 +638,11 @@ public class SeasonChunkHandler {
 			this.lastPatchedTime = lastPatchedTime;
 			this.bIsVisited = false;
 			this.bIsActive = false;
+			this.bToBePatched = false;
+		}
+
+		public void setToBePatched(boolean bToBePatched) {
+			this.bToBePatched = bToBePatched;
 		}
 
 		public void setVisitedFlag( boolean bIsVisited ) {
@@ -637,6 +655,10 @@ public class SeasonChunkHandler {
 		
 		public void setActiveFlag(boolean bIsActive) {
 			this.bIsActive = bIsActive;
+		}
+		
+		public boolean isToBePatched() {
+			return bToBePatched;
 		}
 		
 		public boolean isActive() {

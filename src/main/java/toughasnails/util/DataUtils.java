@@ -87,6 +87,7 @@ public class DataUtils {
 				obj.writeToStream(oos);
 			}
 			
+			oos.flush();
 			return bos.toByteArray();
 		}
 		finally {

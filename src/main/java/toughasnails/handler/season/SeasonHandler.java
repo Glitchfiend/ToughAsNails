@@ -48,7 +48,7 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
                 sendSeasonUpdate(world);
             }
             
-            savedData.updateState(world, season);
+            savedData.updateJournal(world, season);
             
 /*            if( season == Season.WINTER && world.isRaining() )
             	savedData.shiftSnowWindow( 1, true );
