@@ -120,15 +120,7 @@ public class SeasonASMHelper
     public static float getFloatTemperature(Biome biome, BlockPos pos)
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
-        
-        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
-        {
-            return 0.0F;
-        }
-        else
-        {
-            return biome.getFloatTemperature(pos);
-        }
+        return SeasonHelper.getSeasonFloatTemperature(biome, pos, season);
     }
     
     ////////////////////////

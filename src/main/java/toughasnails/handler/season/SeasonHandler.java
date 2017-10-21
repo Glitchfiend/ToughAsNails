@@ -10,9 +10,14 @@ package toughasnails.handler.season;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.ISeasonData;
@@ -22,12 +27,14 @@ import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.handler.PacketHandler;
 import toughasnails.network.message.MessageSyncSeasonCycle;
+import toughasnails.season.SeasonChunkPatcher;
 import toughasnails.season.SeasonSavedData;
 import toughasnails.season.SeasonTime;
-import toughasnails.season.WeatherEventType;
 
 public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
+	private static SeasonChunkPatcher chunkPatcher = new SeasonChunkPatcher();
+	
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
@@ -50,14 +57,38 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             
             savedData.updateJournal(world, season);
             
-/*            if( season == Season.WINTER && world.isRaining() )
-            	savedData.shiftSnowWindow( 1, true );
-            else if( season != Season.WINTER )
-            	savedData.shiftSnowWindow( 1, false ); */
-
             savedData.markDirty();
         }
     }
+    
+	@SubscribeEvent
+	public void worldUnload(WorldEvent.Unload event) {
+		World world = event.getWorld();
+		if( world.isRemote )
+			return;
+		
+		// Clear loadedChunkQueue
+		SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
+		patcher.onServerWorldUnload(world);
+		
+		// Season data cleanup
+		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+		seasonData.onWorldUnload(world);
+	}
+	
+	@SubscribeEvent
+	public void chunkUnload(ChunkEvent.Unload event) {
+		if( event.getWorld().isRemote )
+			return;
+		
+		Chunk chunk = event.getChunk();
+		
+		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
+		seasonData.notifyChunkUnloaded(chunk);
+		
+		SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
+		patcher.removeChunkIfEnqueued(chunk);
+	}
     
     @SubscribeEvent
     public void onPlayerLogin(PlayerLoggedInEvent event)
@@ -67,6 +98,12 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         
         sendSeasonUpdate(world);
     }
+    
+	@SubscribeEvent
+	public void serverTick(TickEvent.ServerTickEvent event) {
+		// Performs pending patching tasks
+		chunkPatcher.onServerTick();
+	}
 
     private SubSeason lastSeason = null;
     public static int clientSeasonCycleTicks = 0;
@@ -121,6 +158,12 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         
         return savedData;
     }
+    
+    public static SeasonChunkPatcher getSeasonChunkPatcher() {
+    	return chunkPatcher;
+    }
+    
+
     
     //
     // Used to implement getSeasonData in the API

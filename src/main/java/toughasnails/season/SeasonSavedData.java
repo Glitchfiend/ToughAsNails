@@ -8,19 +8,20 @@
 package toughasnails.season;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.chunk.Chunk;
 import toughasnails.api.season.Season;
 import toughasnails.core.ToughAsNails;
 import toughasnails.util.DataUtils;
-import toughasnails.util.IDataStorable;
 
 public class SeasonSavedData extends WorldSavedData
 {
@@ -31,10 +32,9 @@ public class SeasonSavedData extends WorldSavedData
     private boolean bLastSnowyState = false;
     private boolean bLastRainyState = false;
     public List<WeatherJournalEvent> journal = new ArrayList<WeatherJournalEvent>();
-//    public int meltTicks;
-//    public int snowTicks;
-//    public static final int MAX_RAINWINDOW = 24000 * 3;	   // Three minecraft days
     
+	public HashMap<ChunkKey, ChunkData> managedChunks = new HashMap<ChunkKey, ChunkData>();
+	
     public SeasonSavedData()
     {
         this(DATA_IDENTIFIER);
@@ -50,8 +50,6 @@ public class SeasonSavedData extends WorldSavedData
     public void readFromNBT(NBTTagCompound nbt) 
     {
         this.seasonCycleTicks = nbt.getInteger("SeasonCycleTicks");
-//        this.meltTicks = nbt.getInteger("MeltTicks");
-//        this.snowTicks = nbt.getInteger("SnowTicks");
         try {
 			this.journal = DataUtils.toListStorable(nbt.getByteArray("WeatherJournal"), WeatherJournalEvent.class);
 		} catch (IOException e) {
@@ -66,8 +64,6 @@ public class SeasonSavedData extends WorldSavedData
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) 
     {
         nbt.setInteger("SeasonCycleTicks", this.seasonCycleTicks);
-//        nbt.setInteger("MeltTicks", this.meltTicks);
-//        nbt.setInteger("SnowTicks", this.snowTicks);
         try {
 			nbt.setByteArray("WeatherJournal", DataUtils.toBytebufStorable(journal));
 		} catch (IOException e) {
@@ -198,34 +194,61 @@ public class SeasonSavedData extends WorldSavedData
         	addEvent(w, WeatherEventType.eventStopRaining);
     }
 
-/*
-    public void shiftSnowWindow(int tickCount, boolean isWinter) {
-    	int activeTicks, nonActiveTicks;
-    	if( isWinter ) {
-    		activeTicks = this.snowTicks;
-    		nonActiveTicks = this.meltTicks;
-    	}
-    	else {
-    		nonActiveTicks = this.snowTicks;
-    		activeTicks = this.meltTicks;
-    	}
-
-    	activeTicks += tickCount;
-		if( activeTicks > MAX_RAINWINDOW ) {
-			activeTicks = MAX_RAINWINDOW;
-			nonActiveTicks = 0;
+    public ChunkData getStoredChunkData(Chunk chunk, boolean bCreateIfNotExisting) {
+		ChunkPos cpos = chunk.getPos(); 
+		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
+		ChunkData chunkData = managedChunks.get(key);
+		if( chunkData != null ) {
+			Chunk curChunk = chunkData.getChunk();
+			if( curChunk != null ) {
+				if( curChunk != chunk ) {
+					ToughAsNails.logger.error("Chunk not reported as unloaded or mismatching in SeasonSavedData.getStoredChunkData .");
+					curChunk = null;
+				}
+			}
+			
+			if( curChunk == null ) {
+				if( bCreateIfNotExisting ) {
+					chunkData.setLoadedChunk(chunk);
+					chunkData.setActiveFlag(false);
+				}
+				else
+					return null;
+			}
+			return chunkData;
 		}
-		else if( activeTicks + nonActiveTicks > MAX_RAINWINDOW ) {
-			nonActiveTicks = MAX_RAINWINDOW - activeTicks;
+		if( !bCreateIfNotExisting )
+			return null;
+		
+		// TODO: Retrieve patch time
+		long lastPatchTime = 0; // chunk.getWorld().getTotalWorldTime();
+		
+		chunkData = new ChunkData(key, chunk, lastPatchTime);
+		chunkData.setActiveFlag(false);
+		managedChunks.put(key, chunkData);
+		return chunkData;
+	}
+    
+    public void onWorldUnload(World world) {
+		// Clear managed chunk tags
+		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
+		while( entryIter.hasNext() ) {
+			ChunkData inactiveChunkData = entryIter.next().getValue();
+			Chunk chunk = inactiveChunkData.getChunk();
+			if( chunk.getWorld() == world ) {
+				// TODO: Persist lastPatchedTime to chunk data
+				entryIter.remove();
+			}
 		}
+    }
 
-    	if( isWinter ) {
-    		this.snowTicks = activeTicks;
-    		this.meltTicks = nonActiveTicks;
-    	}
-    	else {
-    		this.snowTicks = nonActiveTicks;
-    		this.meltTicks = activeTicks;
-    	}
-    } */
+	public void notifyChunkUnloaded(Chunk chunk) {
+		ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
+		ChunkData chunkData = managedChunks.get(key);
+		if( chunkData != null ) {
+			chunkData.setLoadedChunk(null);
+			// TODO: Persist lastPatchedTime to chunk data
+			managedChunks.remove(key);
+		}
+	}
 }

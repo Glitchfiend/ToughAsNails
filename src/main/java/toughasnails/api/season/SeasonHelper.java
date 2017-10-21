@@ -7,7 +7,9 @@
  ******************************************************************************/
 package toughasnails.api.season;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.GameplayOption;
@@ -55,4 +57,15 @@ public class SeasonHelper
         ISeasonData getServerSeasonData(World world);
         ISeasonData getClientSeasonData();
     }
+
+	public static float getSeasonFloatTemperature(Biome biome, BlockPos pos, Season season) {
+        if (biome.getTemperature() <= 0.7F && season == Season.WINTER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
+        {
+            return 0.0F;
+        }
+        else
+        {
+            return biome.getFloatTemperature(pos);
+        }
+	}
 }
