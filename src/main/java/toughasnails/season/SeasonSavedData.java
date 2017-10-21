@@ -270,7 +270,8 @@ public class SeasonSavedData extends WorldSavedData
     
     public void onWorldUnload(World world) {
 		// Clear managed chunk tags
-		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
+    	managedChunks.clear();
+/*		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
 		while( entryIter.hasNext() ) {
 			ChunkData inactiveChunkData = entryIter.next().getValue();
 			Chunk chunk = inactiveChunkData.getChunk();
@@ -281,7 +282,7 @@ public class SeasonSavedData extends WorldSavedData
 				// TODO: Persist lastPatchedTime to chunk data
 //				entryIter.remove();
 			}
-		}
+		}*/
     }
 
 	public void notifyChunkUnloaded(Chunk chunk) {
