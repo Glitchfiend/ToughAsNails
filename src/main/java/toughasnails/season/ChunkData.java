@@ -57,7 +57,12 @@ public class ChunkData {
 	}
 	
 	public void setPatchTimeUptodate() {
-		this.lastPatchedTime = chunk.getWorld().getTotalWorldTime();
+		if( chunk != null )
+			this.lastPatchedTime = chunk.getWorld().getTotalWorldTime();
+	}
+	
+	public void setPatchTimeTo( long lastPatchedTime ) {
+		this.lastPatchedTime = lastPatchedTime;
 	}
 
 	public long getLastPatchedTime() {

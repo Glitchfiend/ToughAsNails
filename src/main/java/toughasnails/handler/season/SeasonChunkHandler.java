@@ -12,9 +12,6 @@ import toughasnails.season.SeasonChunkPatcher;
 
 public class SeasonChunkHandler {
 	
-	// TODO: Better multi threading locks or some sort of pipelining. Hopefully no cascading calls ...
-	// TODO: Move it to a dedicated class!
-
 	@SubscribeEvent
 	public void chunkLoad(ChunkDataEvent.Load event) {
 		if( event.getWorld().isRemote )

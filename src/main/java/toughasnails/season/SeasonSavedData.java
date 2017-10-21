@@ -8,6 +8,8 @@
 package toughasnails.season;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ import net.minecraft.world.chunk.Chunk;
 import toughasnails.api.season.Season;
 import toughasnails.core.ToughAsNails;
 import toughasnails.util.DataUtils;
+import toughasnails.util.IDataStorable;
 
 public class SeasonSavedData extends WorldSavedData
 {
@@ -57,6 +60,14 @@ public class SeasonSavedData extends WorldSavedData
 			this.journal = new ArrayList<WeatherJournalEvent>();
 		}
         
+        try {
+        	List<ChunkDataStorage> timeStamps = DataUtils.toListStorable(nbt.getByteArray("ChunkExtraInfo"), ChunkDataStorage.class );
+        	applyLastPatchedTimes(timeStamps);
+        }
+        catch (IOException e) {
+        	ToughAsNails.logger.error("Couldn't load chunk patch timestamps. Some chunks won't be in synch with season.", e);
+        }
+        
         determineLastState();
     }
 
@@ -69,8 +80,37 @@ public class SeasonSavedData extends WorldSavedData
 		} catch (IOException e) {
 			ToughAsNails.logger.error("Couldn't store weather journal.", e);
 		}
+
+        try {
+        	nbt.setByteArray("ChunkExtraInfo", DataUtils.toBytebufStorable( toLastPatchedTimeStorable() ) );
+        } catch(IOException e) {
+        	ToughAsNails.logger.error("Couldn't store chunk patch timestamps. Some chunks won't be in synch with season.", e);
+        }
         
         return nbt;
+    }
+    
+    private List<ChunkDataStorage> toLastPatchedTimeStorable() {
+    	int size = managedChunks.size();
+    	ArrayList<ChunkDataStorage> result = new ArrayList<ChunkDataStorage>(size);
+    	for( Map.Entry<ChunkKey, ChunkData> entry : managedChunks.entrySet() ) {
+    		result.add(new ChunkDataStorage(entry.getKey(), entry.getValue()));
+    	}
+    	return result;
+    }
+    
+    private void applyLastPatchedTimes( List<ChunkDataStorage> list ) {
+    	for( ChunkDataStorage entry : list ) {
+    		ChunkData data = managedChunks.get(entry.getKey());
+    		if( data != null ) {
+    			data.setPatchTimeTo(data.getLastPatchedTime());
+    		}
+    		else {
+    			data = new ChunkData( entry.getKey(), null, entry.getLastPatchedTime());
+    			data.setActiveFlag(false);
+    			managedChunks.put(entry.getKey(), data);
+    		}
+    	}
     }
     
     private void determineLastState() {
@@ -220,8 +260,7 @@ public class SeasonSavedData extends WorldSavedData
 		if( !bCreateIfNotExisting )
 			return null;
 		
-		// TODO: Retrieve patch time
-		long lastPatchTime = 0; // chunk.getWorld().getTotalWorldTime();
+		long lastPatchTime = 0;		// Initial time
 		
 		chunkData = new ChunkData(key, chunk, lastPatchTime);
 		chunkData.setActiveFlag(false);
@@ -235,9 +274,12 @@ public class SeasonSavedData extends WorldSavedData
 		while( entryIter.hasNext() ) {
 			ChunkData inactiveChunkData = entryIter.next().getValue();
 			Chunk chunk = inactiveChunkData.getChunk();
+			if( chunk == null )
+				continue;
 			if( chunk.getWorld() == world ) {
+				inactiveChunkData.setLoadedChunk(null);
 				// TODO: Persist lastPatchedTime to chunk data
-				entryIter.remove();
+//				entryIter.remove();
 			}
 		}
     }
@@ -248,7 +290,49 @@ public class SeasonSavedData extends WorldSavedData
 		if( chunkData != null ) {
 			chunkData.setLoadedChunk(null);
 			// TODO: Persist lastPatchedTime to chunk data
-			managedChunks.remove(key);
+//			managedChunks.remove(key);
+		}
+	}
+	
+	public static class ChunkDataStorage implements IDataStorable {
+		private ChunkKey key;
+		private long lastPatchedTime;
+		
+		public ChunkDataStorage() {
+			// For streaming
+		}
+		
+		public ChunkDataStorage(ChunkKey key, ChunkData data) {
+			this.key = key;
+			this.lastPatchedTime = data.getLastPatchedTime();
+		}
+		
+		public ChunkKey getKey() {
+			return key;
+		}
+		
+		public long getLastPatchedTime() {
+			return lastPatchedTime;
+		}
+
+		@Override
+		public void writeToStream(ObjectOutputStream os) throws IOException {
+			// TODO Auto-generated method stub
+			os.writeInt(key.getPos().chunkXPos);
+			os.writeInt(key.getPos().chunkZPos);
+			os.writeInt(key.getDimension());
+			os.writeLong(lastPatchedTime);
+//			os.writeInt(val);
+		}
+
+		@Override
+		public void readFromStream(ObjectInputStream is) throws IOException {
+			// TODO Auto-generated method stub
+			int chunkXPos = is.readInt();
+			int chunkZPos = is.readInt();
+			int dimension = is.readInt();
+			this.key = new ChunkKey( new ChunkPos(chunkXPos, chunkZPos), dimension);
+			this.lastPatchedTime = is.readLong();
 		}
 	}
 }

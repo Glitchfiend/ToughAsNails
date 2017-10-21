@@ -111,11 +111,14 @@ public class SeasonChunkPatcher {
 		while( entryIter.hasNext() ) {
 			ChunkData inactiveChunkData = entryIter.next().getValue();
 			Chunk chunk = inactiveChunkData.getChunk();
+			if( chunk == null )
+				continue;
 			if( chunk.getWorld() != world )
 				continue;
 			if( !inactiveChunkData.isVisited() ) {
 				// TODO: Persist lastPatchedTime to chunk data
-				entryIter.remove();
+//				entryIter.remove();
+				inactiveChunkData.setLoadedChunk(null);
 			}
 			else {
 				inactiveChunkData.setVisitedFlag(false);

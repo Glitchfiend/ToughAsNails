@@ -23,6 +23,7 @@ public class DataUtils {
 			bos = new ByteArrayOutputStream();
 			oos = new ObjectOutputStream( bos );
 			
+			oos.writeInt(1);
 			oos.writeInt(data.size());
 			for( T obj : data ) {
 				oos.writeObject(obj);
@@ -49,6 +50,9 @@ public class DataUtils {
 		try {
 			bis = new ByteArrayInputStream( byteBuffer );
 			ois = new ObjectInputStream( bis );
+			
+			if( ois.readInt() != 1 )
+				throw new IOException("Unknown type.");
 			
 			int size = ois.readInt();
 			ArrayList<T> list = new ArrayList<T>(size);
@@ -82,6 +86,7 @@ public class DataUtils {
 			bos = new ByteArrayOutputStream();
 			oos = new ObjectOutputStream( bos );
 			
+			oos.writeInt(2);
 			oos.writeInt(data.size());
 			for( T obj : data ) {
 				obj.writeToStream(oos);
@@ -109,6 +114,9 @@ public class DataUtils {
 		try {
 			bis = new ByteArrayInputStream( byteBuffer );
 			ois = new ObjectInputStream( bis );
+			
+			if( ois.readInt() != 2 )
+				throw new IOException("Unknown type.");
 			
 			int size = ois.readInt();
 			ArrayList<T> list = new ArrayList<T>(size);
