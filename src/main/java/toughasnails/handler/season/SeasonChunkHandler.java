@@ -35,60 +35,26 @@ public class SeasonChunkHandler {
 	
 	private static final int THR_PROB_MAX = 100;
 	
-	// TODO: Move it!
+	// TODO: Better multi threading locks or some sort of pipelining. Hopefully no cascading calls ...
+	
+	// TODO: Move it to a dedicated class!
 	public Set<ChunkKey> loadedChunkMask = new HashSet<ChunkKey>();
 	public LinkedList<ChunkData> loadedChunkQueue = new LinkedList<ChunkData>();
 	
-//	public HashMap<ChunkKey, ChunkData> inactiveChunks = new HashMap<ChunkKey, ChunkData>();
 	public HashMap<ChunkKey, ChunkData> managedChunks = new HashMap<ChunkKey, ChunkData>();
 
 	@SubscribeEvent
-	public void chunkLoad(ChunkDataEvent.Load event) {
+	public synchronized void chunkLoad(ChunkDataEvent.Load event) {
 		if( event.getWorld().isRemote )
 			return;
 		
 		Chunk chunk = event.getChunk();
-		synchronized( loadedChunkQueue ) {
-			if( chunk.isTerrainPopulated() ) {
-				enqueueChunkOnce(chunk /*, chunk.lastSaveTime */);
-			}
+		if( chunk.isTerrainPopulated() ) {
+			enqueueChunkOnce(chunk);
 		}
 	}
 	
-/*	private boolean isTaggedAsInactive(Chunk chunk) {
-		ChunkPos cpos = chunk.getPos();
-		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
-		return inactiveChunks.containsKey(key);
-	}
-	
-	private boolean visitInactive(Chunk chunk) {
-		ChunkPos cpos = chunk.getPos();
-		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
-		ChunkData chunkData = inactiveChunks.get(key);
-		if( chunkData == null )
-			return false;
-		
-		chunkData.setVisited();
-		return true;
-	}*/
-	
-/*	private boolean isWatchedByAnyPlayer(Chunk chunk) {
-		if( chunk.getWorld().isRemote )
-			return true;
-		WorldServer world = (WorldServer)chunk.getWorld();
-		ChunkPos pos = chunk.getPos();
-		PlayerChunkMap chunkMap = world.getPlayerChunkMap();
-		for( EntityPlayer player : world.playerEntities ) {
-			if( !(player instanceof EntityPlayerMP) )
-				continue;
-			if( chunkMap.isPlayerWatchingChunk((EntityPlayerMP) player, pos.chunkXPos, pos.chunkZPos) )
-				return true;
-		}
-		
-		return false;
-	} */
-	
-	private void enqueueChunkOnce(Chunk chunk /*, long lastSaveTime */) {
+	private void enqueueChunkOnce(Chunk chunk) {
 		ChunkData chunkData = getStoredChunkData(chunk, true);
 		ChunkKey key = chunkData.getKey();
 		if( loadedChunkMask.contains(key) )
@@ -96,19 +62,8 @@ public class SeasonChunkHandler {
 		chunkData.setToBePatched(true);
 		loadedChunkMask.add(key);
 		loadedChunkQueue.add(chunkData);
-/*		ChunkPos cpos = chunk.getPos(); 
-		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
-		if( loadedChunkMask.contains(key) )
-			return;
-		loadedChunkMask.add(key);
-		loadedChunkQueue.add(new ChunkData(key, chunk, lastSaveTime)); */
 	}
-	
-/*	private void registerChunkData(ChunkData chunkData) {
-		ChunkKey key = chunkData.getKey();
-		managedChunks.put(key, chunkData);
-	} */
-	
+
 	private ChunkData getStoredChunkData(Chunk chunk, boolean bCreateIfNotExisting) {
 		ChunkPos cpos = chunk.getPos(); 
 		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
@@ -126,22 +81,6 @@ public class SeasonChunkHandler {
 		managedChunks.put(key, chunkData);
 		return chunkData;
 	}
-	
-/*	private void tagChunkAsInactive(ChunkData chunkData) {
-		ChunkKey key = chunkData.getKey();
-//		if( inactiveChunks.containsKey(key) )
-//			return;
-		inactiveChunks.put(key, chunkData);
-	} */
-	
-/*	private ChunkData untagChunkBeingInactive(Chunk chunk) {
-		ChunkPos cpos = chunk.getPos(); 
-		ChunkKey key = new ChunkKey(cpos, chunk.getWorld());
-		
-		ChunkData chunkData = inactiveChunks.get(key);
-		inactiveChunks.remove(key);
-		return chunkData;
-	}*/
 	
 	private boolean isChunkUnpopulated(World world, int cposX, int cposZ ) {
 		return !world.isChunkGeneratedAt(cposX, cposZ) || !world.getChunkFromChunkCoords(cposX, cposZ).isTerrainPopulated();
@@ -173,13 +112,7 @@ public class SeasonChunkHandler {
 			return;
 		Chunk chunk = world.getChunkFromChunkCoords(cposX, cposZ);
 	
-/*		long lastSaveTime;
-		if( chunk.isTerrainPopulated() )
-			lastSaveTime = chunk.lastSaveTime;
-		else
-			lastSaveTime = world.getTotalWorldTime(); */
-		
-		enqueueChunkOnce(chunk /*, lastSaveTime */);
+		enqueueChunkOnce(chunk);
 	}
 	
 	private void addNeighborChunks(World world, int cposX, int cposZ) {
@@ -293,17 +226,13 @@ public class SeasonChunkHandler {
 				case eventStartRaining:
 					if( !bWasRaining ) {
 						intervalRainingTrackStart = wevt.getTimeStamp();
-//						if( !bWasSnowy )
-//							command = 3;
-//						else
-							command = 0;
+						command = 0;
 						bWasRaining = true;
 					}
 					break;				
 				case eventStopRaining:
 					if( bWasRaining ) {
 						intervalRainingTrackStart = wevt.getTimeStamp();
-//						intervalSnowyTrackStart = wevt.getTimeStamp();	// Split interval, we don't want to simulate twice.
 						if( bWasSnowy )
 							command = 2;
 						else
@@ -332,35 +261,12 @@ public class SeasonChunkHandler {
 					// Do nothing
 					command = 0;
 				}
-				
-/*				if( command != 0 ) {
-					int threshold = 0;
-					if( command == 2 ) {
-						long dur = rainingTrackTicks;
-						if( dur > snowyTrackTicks )
-							dur = snowyTrackTicks;
-						threshold = evalProbUpdateTick((int)dur);
-					}
-					else if( command == 3 )
-						threshold = evalProbUpdateTick((int)rainingTrackTicks);
-					executePatchCommand( command, threshold, chunk, season );
-				} */
+
 				executePatchCommand( command, snowyTrackTicks, rainingTrackTicks, chunk, season );
 			}
-			
-/*
-					// TODO: handle curEntry == -1 case for snowing and melting
-					
-					WeatherEventType type = WeatherEventType.eventUnknown;
-					if( seasonData.wasLastRaining(-1) && seasonData.wasLastSnowy(-1) )
-						type = WeatherEventType.eventStopRaining;	// Force update at the switch logic below.
-					else if( seasonData.wasLastSnowy(-1) )
-						type = WeatherEventType.eventToNonSnowy;	// Force update at the switch logic below.
-					wevt = new WeatherJournalEvent(world.getTotalWorldTime(), type);
-			
- */
 		}
 		
+		// Post update for running events
 		rainingTrackTicks = world.getTotalWorldTime() - intervalRainingTrackStart;
 		snowyTrackTicks = world.getTotalWorldTime() - intervalSnowyTrackStart;
 		
@@ -375,20 +281,18 @@ public class SeasonChunkHandler {
 	}
 	
 	@SubscribeEvent
-	public void postPopulate(PopulateChunkEvent.Post event) {
+	public synchronized void postPopulate(PopulateChunkEvent.Post event) {
 		World world = event.getWorld();
 		if( world.isRemote )
 			return;
 
 		Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
-		synchronized( loadedChunkQueue ) {
-			enqueueChunkOnce(chunk /*, world.getTotalWorldTime() */);
-			addNeighborChunks(world, event.getChunkX(), event.getChunkZ());
-		}
+		enqueueChunkOnce(chunk);
+		addNeighborChunks(world, event.getChunkX(), event.getChunkZ());
 	}
 
 	@SubscribeEvent
-	public void worldTick(TickEvent.WorldTickEvent event) {
+	public synchronized void worldTick(TickEvent.WorldTickEvent event) {
 		if( event.side != Side.SERVER )
 			return;
 		if( !(event.world instanceof WorldServer) )
@@ -403,16 +307,14 @@ public class SeasonChunkHandler {
 			ChunkData chunkData = getStoredChunkData(activeChunk, true);
 			
 			if( !chunkData.isActive() ) {
+				// Roll up patches
 				enqueueChunkOnce(activeChunk);
-				chunkData.setActiveFlag(true);
-				
-/*				// Roll up patches
-				patchChunkTerrain(chunkData);
 				
 				// Tag as active
-				chunkData.setActiveFlag(true); */
+				chunkData.setActiveFlag(true);
 			}
 			else if( !chunkData.isToBePatched() ) {
+				// For an active chunk (having no pending patching) the time is always actual
 				chunkData.setPatchTimeUptodate();
 			}
 			
@@ -432,46 +334,9 @@ public class SeasonChunkHandler {
 			if( chunkData.isActive() )
 			{
 				chunkData.setActiveFlag(false);
-//				chunkData.setPatchTimeUptodate();
 			}
 			chunkData.setVisitedFlag(true);
 		}
-		
-/*		for( Chunk loadedChunk : provider.getLoadedChunks() ) {
-			assert world == loadedChunk.getWorld();
-			
-			boolean isTaggedAsInactive = visitInactive(loadedChunk);
-			boolean isWatched = isWatchedByAnyPlayer(loadedChunk);
-			
-			if( isTaggedAsInactive && isWatched ) {
-				// Untag from being inactive
-				ChunkData chunkData = untagChunkBeingInactive(loadedChunk);
-				
-				// Roll up patches
-				patchChunkTerrain(chunkData);
-			}
-			else if( !isTaggedAsInactive && !isWatched ) {
-				// Tag as inactive
-				ChunkKey key = new ChunkKey(loadedChunk.getPos(), world);
-				ChunkData chunkData = new ChunkData( key, loadedChunk, world.getTotalWorldTime() );
-				tagChunkAsInactive(chunkData);
-			}
-		}
-		
-		// Remove dead entries
-		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = inactiveChunks.entrySet().iterator();
-		while( entryIter.hasNext() ) {
-			ChunkData inactiveChunkData = entryIter.next().getValue();
-			Chunk chunk = inactiveChunkData.getChunk();
-			if( chunk.getWorld() != world )
-				continue;
-			if( !inactiveChunkData.isVisited() ) {
-				entryIter.remove();
-			}
-			else {
-				inactiveChunkData.clearVisited();
-			}
-		}*/
 		
 		// Remove dead entries
 		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
@@ -491,7 +356,7 @@ public class SeasonChunkHandler {
 	}
 	
 	@SubscribeEvent
-	public void worldUnload(WorldEvent.Unload event) {
+	public synchronized void worldUnload(WorldEvent.Unload event) {
 		World world = event.getWorld();
 		if( world.isRemote )
 			return;
@@ -507,16 +372,6 @@ public class SeasonChunkHandler {
 			}
 		}
 		
-/*		// Clear inactive chunk tags
-		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = inactiveChunks.entrySet().iterator();
-		while( entryIter.hasNext() ) {
-			ChunkData inactiveChunkData = entryIter.next().getValue();
-			Chunk chunk = inactiveChunkData.getChunk();
-			if( chunk.getWorld() == world ) {
-				entryIter.remove();
-			}
-		} */
-		
 		// Clear managed chunk tags
 		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
 		while( entryIter.hasNext() ) {
@@ -530,36 +385,23 @@ public class SeasonChunkHandler {
 	}
 	
 	@SubscribeEvent
-	public void serverTick(TickEvent.ServerTickEvent event) {
-		synchronized( loadedChunkQueue ) {
-			for( int i = 0; i < loadedChunkQueue.size(); i ++ ) {
-				ChunkData chunkData = loadedChunkQueue.get(i);
-				Chunk chunk = chunkData.getChunk();
-				ChunkPos chunkPos = chunk.getPos();
-				World world = chunk.getWorld(); 
-				if( hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) )
-					continue;
-				
-				// Perform a chunk patch
-				patchChunkTerrain(chunkData);
-				
-				// Clear to be patched flag
-				chunkData.setToBePatched(false);
-				
-				// Register as active
-//				chunkData.setActiveFlag(true);
-//				registerChunkData(chunkData);
-				
-/*				// Initially register as hibernated if it is the case
-				boolean isWatched = isWatchedByAnyPlayer(chunk);
-				if( isWatched )
-					untagChunkBeingInactive(chunk);
-				else
-					tagChunkAsInactive(chunkData); */
-			}
-			loadedChunkMask.clear();
-			loadedChunkQueue.clear();
+	public synchronized void serverTick(TickEvent.ServerTickEvent event) {
+		for( int i = 0; i < loadedChunkQueue.size(); i ++ ) {
+			ChunkData chunkData = loadedChunkQueue.get(i);
+			Chunk chunk = chunkData.getChunk();
+			ChunkPos chunkPos = chunk.getPos();
+			World world = chunk.getWorld(); 
+			if( hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) )
+				continue;
+			
+			// Perform a chunk patch
+			patchChunkTerrain(chunkData);
+			
+			// Clear to-be-patched flag
+			chunkData.setToBePatched(false);
 		}
+		loadedChunkMask.clear();
+		loadedChunkQueue.clear();
 	}
 	
 	private int evalProbUpdateTick(int duringTicks) {
