@@ -26,7 +26,7 @@ public class SeasonChunkPatcher {
 	private static final int THR_PROB_MAX = 1000;
 	private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
 	
-	private int numPatcherPerTick = 30;
+	private int numPatcherPerTick;
 	
 	private Object chunkLock = new Object();
 	public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();		// Secured by multithreading access
