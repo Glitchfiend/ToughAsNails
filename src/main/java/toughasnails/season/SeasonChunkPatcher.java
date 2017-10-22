@@ -21,6 +21,7 @@ import toughasnails.util.ChunkUtils;
 
 public class SeasonChunkPatcher {
 	
+	private static final int PATCHES_PER_TICK = 30;
 	private static final int THR_PROB_MAX = 1000;
 	private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
 	
@@ -66,6 +67,8 @@ public class SeasonChunkPatcher {
 	}
 	
 	public void onServerWorldTick(WorldServer world) {
+		world.profiler.startSection("seasonChunkFind");
+		
 		ChunkProviderServer provider = world.getChunkProvider();
 		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
 		
@@ -124,6 +127,8 @@ public class SeasonChunkPatcher {
 				inactiveChunkData.setVisitedFlag(false);
 			}
 		}
+		
+		world.profiler.endSection();
 	}
 	
 	private void removeWorldFrom( World world, Map<ChunkKey, Chunk> pending ) {
@@ -150,8 +155,18 @@ public class SeasonChunkPatcher {
 		synchronized(chunkLock) {
 			pendingChunks = new HashMap<ChunkKey, Chunk>();	
 		}
-		
-		for( Chunk chunk : chunksInProcess.values() ) {
+
+		int numProcessed = 0;
+		Iterator<Map.Entry<ChunkKey, Chunk>> iter = chunksInProcess.entrySet().iterator();
+//		for( Chunk chunk : chunksInProcess.values() )
+		while(iter.hasNext())
+		{
+			if( numProcessed++ >= PATCHES_PER_TICK )
+				break;
+			
+			Chunk chunk = iter.next().getValue();
+			iter.remove();
+			
 			if( chunk.unloaded ) {
 				ToughAsNails.logger.warn("Unloaded chunk awaiting patch found.");
 				continue;
@@ -171,6 +186,14 @@ public class SeasonChunkPatcher {
 			
 			// Clear to-be-patched flag
 			chunkData.setToBePatched(false);
+		}
+		
+		// reinsert unprocessed entries to queue
+		if( chunksInProcess.size() > 0 ) {
+			synchronized(chunkLock) {
+				chunksInProcess.putAll(pendingChunks);
+				pendingChunks = chunksInProcess;
+			}
 		}
 	}
 	
