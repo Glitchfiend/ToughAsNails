@@ -271,18 +271,6 @@ public class SeasonSavedData extends WorldSavedData
     public void onWorldUnload(World world) {
 		// Clear managed chunk tags
     	managedChunks.clear();
-/*		Iterator<Map.Entry<ChunkKey, ChunkData>> entryIter = managedChunks.entrySet().iterator();
-		while( entryIter.hasNext() ) {
-			ChunkData inactiveChunkData = entryIter.next().getValue();
-			Chunk chunk = inactiveChunkData.getChunk();
-			if( chunk == null )
-				continue;
-			if( chunk.getWorld() == world ) {
-				inactiveChunkData.setLoadedChunk(null);
-				// TODO: Persist lastPatchedTime to chunk data
-//				entryIter.remove();
-			}
-		}*/
     }
 
 	public void notifyChunkUnloaded(Chunk chunk) {
@@ -290,8 +278,6 @@ public class SeasonSavedData extends WorldSavedData
 		ChunkData chunkData = managedChunks.get(key);
 		if( chunkData != null ) {
 			chunkData.setLoadedChunk(null);
-			// TODO: Persist lastPatchedTime to chunk data
-//			managedChunks.remove(key);
 		}
 	}
 	
@@ -318,17 +304,14 @@ public class SeasonSavedData extends WorldSavedData
 
 		@Override
 		public void writeToStream(ObjectOutputStream os) throws IOException {
-			// TODO Auto-generated method stub
 			os.writeInt(key.getPos().chunkXPos);
 			os.writeInt(key.getPos().chunkZPos);
 			os.writeInt(key.getDimension());
 			os.writeLong(lastPatchedTime);
-//			os.writeInt(val);
 		}
 
 		@Override
 		public void readFromStream(ObjectInputStream is) throws IOException {
-			// TODO Auto-generated method stub
 			int chunkXPos = is.readInt();
 			int chunkZPos = is.readInt();
 			int dimension = is.readInt();

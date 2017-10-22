@@ -118,8 +118,6 @@ public class SeasonChunkPatcher {
 			if( chunk.getWorld() != world )
 				continue;
 			if( !inactiveChunkData.isVisited() ) {
-				// TODO: Persist lastPatchedTime to chunk data
-//				entryIter.remove();
 				inactiveChunkData.setLoadedChunk(null);
 			}
 			else {
@@ -192,12 +190,10 @@ public class SeasonChunkPatcher {
 				int height = chunk.getHeightValue(iX, iZ);
 				pos.setPos(chunkPos.getXStart() + iX, height, chunkPos.getZStart() + iZ);
 				
-		        Biome biome = world.getBiome(pos);
-//		        float temperature = SeasonHelper.getSeasonFloatTemperature(biome, pos, Season.WINTER);
 		        BlockPos below = pos.down();
 		        
 		        if( (command == 1 || command == 2 || command == 4) ) {
-		        	// TODO: Apply snow in dependence of last rain time.
+		        	// Apply snow in dependence of last rain time and apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
 		        	if( world.rand.nextInt(THR_PROB_MAX) < threshold ) {
 		        		
 		        		if( SeasonASMHelper.canBlockFreezeInSeason(world, below, false, Season.WINTER) ) {
@@ -208,12 +204,10 @@ public class SeasonChunkPatcher {
 							world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState(), 2);
 						}
 					}
-					
-					// TODO: Apply ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned false before).
-		        	// TODO: Perform crop hibernation
+		        	// TODO: Simulate crop death
 				}
 		        else if( command == 3 || command == 5 ) {
-		        	// TODO: Remove snow in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
+		        	// Remove snow and ice in dependence of last time the season changed to cold (where canSnowAtTempInSeason have returned true before).
 		        	if( world.rand.nextInt(THR_PROB_MAX) <= threshold * 10 ) {
 			        	IBlockState blockState = world.getBlockState(pos);
 			        	if( blockState.getBlock() == Blocks.SNOW_LAYER ) {
@@ -227,8 +221,6 @@ public class SeasonChunkPatcher {
 			        		}
 			        	}			        	
 			        }
-		        	
-		        	// TODO: Apply ice melting
 		        }
 			}
 		}
@@ -257,10 +249,10 @@ public class SeasonChunkPatcher {
 		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
 
 		long lastPatchedTime = chunkData.getLastPatchedTime();
-		// TODO: Old entries have no effect. Consider it by reseting chunk states and patch from newer journal entries
 		boolean bFastForward = false;
 		long windowBorder = world.getTotalWorldTime() - RETROSPECTIVE_WINDOW_TICKS;
 		if( lastPatchedTime < windowBorder ) {
+			// Old entries have no effect. Considering it by reseting chunk snow states and patch from newer journal entries only
 			lastPatchedTime = windowBorder;
 			bFastForward = true;
 		}
