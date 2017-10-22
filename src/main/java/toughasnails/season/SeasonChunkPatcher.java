@@ -13,6 +13,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
+import toughasnails.api.config.SeasonsOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.season.Season;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.core.ToughAsNails;
@@ -21,14 +23,16 @@ import toughasnails.util.ChunkUtils;
 
 public class SeasonChunkPatcher {
 	
-	private static final int PATCHES_PER_TICK = 30;
 	private static final int THR_PROB_MAX = 1000;
 	private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
+	
+	private int numPatcherPerTick = 30;
 	
 	private Object chunkLock = new Object();
 	public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();		// Secured by multithreading access
 	
 	public SeasonChunkPatcher() {
+		numPatcherPerTick = SyncedConfig.getIntValue(SeasonsOption.NUM_PATCHES_PER_TICK);
 	}
 
 	public void enqueueChunkOnce(Chunk chunk) {
@@ -158,10 +162,9 @@ public class SeasonChunkPatcher {
 
 		int numProcessed = 0;
 		Iterator<Map.Entry<ChunkKey, Chunk>> iter = chunksInProcess.entrySet().iterator();
-//		for( Chunk chunk : chunksInProcess.values() )
 		while(iter.hasNext())
 		{
-			if( numProcessed++ >= PATCHES_PER_TICK )
+			if( numProcessed++ >= numPatcherPerTick )
 				break;
 			
 			Chunk chunk = iter.next().getValue();

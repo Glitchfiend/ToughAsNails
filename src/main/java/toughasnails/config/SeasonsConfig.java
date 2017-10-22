@@ -17,6 +17,7 @@ public class SeasonsConfig extends ConfigHandler
     public static final String TIME_SETTINGS = "Time Settings";
     public static final String EVENT_SETTINGS = "Event Settings";
     public static final String AESTHETIC_SETTINGS = "Aesthetic Settings";
+    public static final String PERFORMANCE_SETTINGS = "Performance Settings";
 
     public boolean winterCropDeath;
     public boolean changeGrassColour;
@@ -35,6 +36,7 @@ public class SeasonsConfig extends ConfigHandler
             addSyncedValue(SeasonsOption.ENABLE_SEASONS, true, "Toggle", "Seasons progress as days increase");
             addSyncedValue(SeasonsOption.DAY_DURATION, 24000, TIME_SETTINGS,"The duration of a Minecraft day in ticks", 20, Integer.MAX_VALUE);
             addSyncedValue(SeasonsOption.SUB_SEASON_DURATION, 5, TIME_SETTINGS,"The duration of a sub season in days", 1, Integer.MAX_VALUE);
+            addSyncedValue(SeasonsOption.NUM_PATCHES_PER_TICK, 30, PERFORMANCE_SETTINGS,"The amount of chunk patches per server tick. Higher number increases server lag, but also increases popping artifacts.", 1, Integer.MAX_VALUE);
 
             // Only applicable server-side
             winterCropDeath = config.getBoolean("Enable Winter Crop Death", EVENT_SETTINGS, true,"Kill unheated crops during the winter");

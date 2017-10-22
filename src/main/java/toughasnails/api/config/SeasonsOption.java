@@ -11,7 +11,8 @@ public enum SeasonsOption implements ISyncedOption
 {
     ENABLE_SEASONS("Enable Seasons"),
     DAY_DURATION("Day Duration"),
-    SUB_SEASON_DURATION("Sub Season Duration");
+    SUB_SEASON_DURATION("Sub Season Duration"),
+    NUM_PATCHES_PER_TICK("Chunk patches per tick");
 
     private final String optionName;
 
