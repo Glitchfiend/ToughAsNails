@@ -34,13 +34,13 @@ public class SeasonsConfig extends ConfigHandler
         try
         {
             addSyncedValue(SeasonsOption.ENABLE_SEASONS, true, "Toggle", "Seasons progress as days increase");
-            addSyncedValue(SeasonsOption.DAY_DURATION, 24000, TIME_SETTINGS,"The duration of a Minecraft day in ticks", 20, Integer.MAX_VALUE);
-            addSyncedValue(SeasonsOption.SUB_SEASON_DURATION, 5, TIME_SETTINGS,"The duration of a sub season in days", 1, Integer.MAX_VALUE);
-            addSyncedValue(SeasonsOption.NUM_PATCHES_PER_TICK, 20, PERFORMANCE_SETTINGS,"The amount of chunk patches per server tick. Higher number increases server lag, but also increases popping artifacts.", 1, Integer.MAX_VALUE);
-            addSyncedValue(SeasonsOption.PATCH_TICK_DISTANCE, 20*5, PERFORMANCE_SETTINGS,"The amount of ticks to keep between patching a chunk.",0,Integer.MAX_VALUE);
-            
+            addSyncedValue(SeasonsOption.DAY_DURATION, 24000, TIME_SETTINGS, "The duration of a Minecraft day in ticks", 20, Integer.MAX_VALUE);
+            addSyncedValue(SeasonsOption.SUB_SEASON_DURATION, 5, TIME_SETTINGS, "The duration of a sub season in days", 1, Integer.MAX_VALUE);
+            addSyncedValue(SeasonsOption.NUM_PATCHES_PER_TICK, 20, PERFORMANCE_SETTINGS, "The amount of chunk patches per server tick. Higher number increases server lag, but also increases popping artifacts.", 1, Integer.MAX_VALUE);
+            addSyncedValue(SeasonsOption.PATCH_TICK_DISTANCE, 20 * 5, PERFORMANCE_SETTINGS, "The amount of ticks to keep between patching a chunk.", 0, Integer.MAX_VALUE);
+
             // Only applicable server-side
-            winterCropDeath = config.getBoolean("Enable Winter Crop Death", EVENT_SETTINGS, true,"Kill unheated crops during the winter");
+            winterCropDeath = config.getBoolean("Enable Winter Crop Death", EVENT_SETTINGS, true, "Kill unheated crops during the winter");
 
             // Client-only. The server shouldn't get to decide these.
             changeGrassColour = config.getBoolean("Change Grass Colour Seasonally", AESTHETIC_SETTINGS, true, "Change the grass colour based on the current season");
@@ -52,7 +52,8 @@ public class SeasonsConfig extends ConfigHandler
         }
         finally
         {
-            if (config.hasChanged()) config.save();
+            if (config.hasChanged())
+                config.save();
         }
     }
 }

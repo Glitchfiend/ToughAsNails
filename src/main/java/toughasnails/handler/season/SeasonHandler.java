@@ -31,8 +31,8 @@ import toughasnails.season.SeasonTime;
 
 public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
-	private static SeasonChunkPatcher chunkPatcher = new SeasonChunkPatcher();
-	
+    private static SeasonChunkPatcher chunkPatcher = new SeasonChunkPatcher();
+
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
@@ -47,83 +47,88 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             {
                 savedData.seasonCycleTicks = 0;
             }
-            
+
             if (savedData.seasonCycleTicks % 20 == 0)
             {
                 sendSeasonUpdate(world);
             }
-            
+
             savedData.updateJournal(world, season);
-            
+
             savedData.markDirty();
         }
     }
-    
-	@SubscribeEvent
-	public void worldUnload(WorldEvent.Unload event) {
-		World world = event.getWorld();
-		if( world.isRemote )
-			return;
-		
-		// Clear loadedChunkQueue
-		SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
-		patcher.onServerWorldUnload(world);
-		
-		// Season data cleanup
-		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
-		seasonData.onWorldUnload(world);
-	}
-	
-	@SubscribeEvent
-	public void chunkUnload(ChunkEvent.Unload event) {
-		if( event.getWorld().isRemote )
-			return;
-		
-		Chunk chunk = event.getChunk();
-		
-		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
-		seasonData.notifyChunkUnloaded(chunk);
-		
-		SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
-		patcher.removeChunkIfEnqueued(chunk);
-	}
-    
+
+    @SubscribeEvent
+    public void worldUnload(WorldEvent.Unload event)
+    {
+        World world = event.getWorld();
+        if (world.isRemote)
+            return;
+
+        // Clear loadedChunkQueue
+        SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
+        patcher.onServerWorldUnload(world);
+
+        // Season data cleanup
+        SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+        seasonData.onWorldUnload(world);
+    }
+
+    @SubscribeEvent
+    public void chunkUnload(ChunkEvent.Unload event)
+    {
+        if (event.getWorld().isRemote)
+            return;
+
+        Chunk chunk = event.getChunk();
+
+        SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
+        seasonData.notifyChunkUnloaded(chunk);
+
+        SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
+        patcher.removeChunkIfEnqueued(chunk);
+    }
+
     @SubscribeEvent
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
         World world = player.world;
-        
+
         sendSeasonUpdate(world);
     }
-    
-	@SubscribeEvent
-	public void serverTick(TickEvent.ServerTickEvent event) {
-		// Performs pending patching tasks
-		chunkPatcher.onServerTick();
-	}
+
+    @SubscribeEvent
+    public void serverTick(TickEvent.ServerTickEvent event)
+    {
+        // Performs pending patching tasks
+        chunkPatcher.onServerTick();
+    }
 
     private SubSeason lastSeason = null;
     public static int clientSeasonCycleTicks = 0;
-    
+
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) 
+    public void onClientTick(TickEvent.ClientTickEvent event)
     {
-        //Only do this when in the world
-        if (Minecraft.getMinecraft().player == null) return;
-        
+        // Only do this when in the world
+        if (Minecraft.getMinecraft().player == null)
+            return;
+
         int dimension = Minecraft.getMinecraft().player.dimension;
 
         if (event.phase == TickEvent.Phase.END && dimension == 0 && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
-            //Keep ticking as we're synchronized with the server only every second
+            // Keep ticking as we're synchronized with the server only every
+            // second
             if (clientSeasonCycleTicks++ > SeasonTime.ZERO.getCycleDuration())
             {
                 clientSeasonCycleTicks = 0;
             }
-            
+
             SeasonTime calendar = new SeasonTime(clientSeasonCycleTicks);
-            
+
             if (calendar.getSubSeason() != lastSeason)
             {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
@@ -131,48 +136,47 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             }
         }
     }
-    
+
     public static void sendSeasonUpdate(World world)
     {
         if (!world.isRemote && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             SeasonSavedData savedData = getSeasonSavedData(world);
-            PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));  
+            PacketHandler.instance.sendToAll(new MessageSyncSeasonCycle(savedData.seasonCycleTicks));
         }
     }
-    
+
     public static SeasonSavedData getSeasonSavedData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.getOrLoadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+        SeasonSavedData savedData = (SeasonSavedData) mapStorage.getOrLoadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
-        //If the saved data file hasn't been created before, create it
+        // If the saved data file hasn't been created before, create it
         if (savedData == null)
         {
             savedData = new SeasonSavedData(SeasonSavedData.DATA_IDENTIFIER);
             mapStorage.setData(SeasonSavedData.DATA_IDENTIFIER, savedData);
-            savedData.markDirty(); //Mark for saving
+            savedData.markDirty(); // Mark for saving
         }
-        
+
         return savedData;
     }
-    
-    public static SeasonChunkPatcher getSeasonChunkPatcher() {
-    	return chunkPatcher;
-    }
-    
 
-    
+    public static SeasonChunkPatcher getSeasonChunkPatcher()
+    {
+        return chunkPatcher;
+    }
+
     //
     // Used to implement getSeasonData in the API
     //
-    
+
     public ISeasonData getServerSeasonData(World world)
     {
         SeasonSavedData savedData = getSeasonSavedData(world);
         return new SeasonTime(savedData.seasonCycleTicks);
     }
-    
+
     public ISeasonData getClientSeasonData()
     {
         return new SeasonTime(clientSeasonCycleTicks);

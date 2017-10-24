@@ -32,13 +32,14 @@ public class SeasonASMHelper
     ///////////////////
     // World methods //
     ///////////////////
-    
+
     public static boolean canSnowAtInSeason(World world, BlockPos pos, boolean checkLight, Season season)
     {
         Biome biome = world.getBiome(pos);
         float temperature = biome.getFloatTemperature(pos);
-        
-        //If we're in winter, the temperature can be anything equal to or below 0.7
+
+        // If we're in winter, the temperature can be anything equal to or below
+        // 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
         {
             return false;
@@ -61,16 +62,17 @@ public class SeasonASMHelper
 
             return false;
         }
-        
+
         return true;
     }
-    
+
     public static boolean canBlockFreezeInSeason(World world, BlockPos pos, boolean noWaterAdj, Season season)
     {
         Biome Biome = world.getBiome(pos);
         float temperature = Biome.getFloatTemperature(pos);
-        
-        //If we're in winter, the temperature can be anything equal to or below 0.7
+
+        // If we're in winter, the temperature can be anything equal to or below
+        // 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
         {
             return false;
@@ -86,7 +88,7 @@ public class SeasonASMHelper
                 IBlockState iblockstate = world.getBlockState(pos);
                 Block block = iblockstate.getBlock();
 
-                if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
+                if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
                 {
                     if (!noWaterAdj)
                     {
@@ -105,36 +107,33 @@ public class SeasonASMHelper
             return false;
         }
     }
-    
+
     public static boolean isRainingAtInSeason(World world, BlockPos pos, Season season)
     {
         Biome biome = world.getBiome(pos);
         return biome.getEnableSnow() && season != Season.WINTER ? false : (world.canSnowAt(pos, false) ? false : biome.canRain());
     }
-    
+
     ///////////////////
     // Biome methods //
     ///////////////////
-    
+
     public static float getFloatTemperature(Biome biome, BlockPos pos)
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         return SeasonHelper.getSeasonFloatTemperature(biome, pos, season);
     }
-    
+
     ////////////////////////
     // BlockCrops methods //
     ////////////////////////
-    
+
     public static void onUpdateTick(Block block, World world, BlockPos pos)
     {
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
-        
-        if (season == Season.WINTER &&
-                (block instanceof IDecayableCrop && ((IDecayableCrop)block).shouldDecay()) &&
-                !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1)) && 
-                SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS) && ModConfig.seasons.winterCropDeath
-                )
+
+        if (season == Season.WINTER && (block instanceof IDecayableCrop && ((IDecayableCrop) block).shouldDecay()) && !TemperatureHelper.isPosClimatisedForTemp(world, pos, new Temperature(1))
+                && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS) && ModConfig.seasons.winterCropDeath)
         {
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
