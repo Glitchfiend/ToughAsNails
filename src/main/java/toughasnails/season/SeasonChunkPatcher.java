@@ -27,12 +27,14 @@ public class SeasonChunkPatcher {
 	private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
 	
 	private int numPatcherPerTick;
+	private int numPatchFrequencyOnUpdate;
 	
 	private Object chunkLock = new Object();
 	public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();		// Secured by multithreading access
 	
 	public SeasonChunkPatcher() {
 		numPatcherPerTick = SyncedConfig.getIntValue(SeasonsOption.NUM_PATCHES_PER_TICK);
+		numPatchFrequencyOnUpdate = SyncedConfig.getIntValue(SeasonsOption.PATCH_TICK_DISTANCE);	// once in 5 sec
 	}
 
 	public void enqueueChunkOnce(Chunk chunk) {
@@ -82,13 +84,17 @@ public class SeasonChunkPatcher {
 			Chunk activeChunk = iter.next();
 			ChunkData chunkData = seasonData.getStoredChunkData(activeChunk, true);
 			
-			if( !chunkData.isActive() ) {
-				// Roll up patches
-				enqueueChunkOnce(activeChunk);
-				
-				// Tag as active and as awaiting to be patched
-				chunkData.setToBePatched(true);
-				chunkData.setActiveFlag(true);
+			if( !chunkData.isActivelyUpdated() ) {
+				// Avoid frequent patching requests
+				if( chunkData.getLastPatchedTime() + numPatchFrequencyOnUpdate <= world.getTotalWorldTime() )
+				{
+					// Roll up patches
+					enqueueChunkOnce(activeChunk);
+					chunkData.setToBePatched(true);
+					
+					// Tag as active and as awaiting to be patched
+					chunkData.setActivelyUpdatedFlag(true);
+				}
 			}
 			else if( !chunkData.isToBePatched() ) {
 				// For an active chunk (having no pending patching) the time is always actual
@@ -98,7 +104,7 @@ public class SeasonChunkPatcher {
 			chunkData.setVisitedFlag(true);
 		}
 		
-		// Iterate through loaded chunks to find deactivated chunks
+		// Iterate through loaded chunks to find non active chunks
 		for( Chunk loadedChunk : provider.getLoadedChunks() ) {
 			assert world == loadedChunk.getWorld();
 			ChunkData chunkData = seasonData.getStoredChunkData(loadedChunk, false);
@@ -108,9 +114,9 @@ public class SeasonChunkPatcher {
 				continue;
 			
 			// This one is not active anymore
-			if( chunkData.isActive() )
+			if( chunkData.isActivelyUpdated() )
 			{
-				chunkData.setActiveFlag(false);
+				chunkData.setActivelyUpdatedFlag(false);
 			}
 			chunkData.setVisitedFlag(true);
 		}
@@ -125,7 +131,7 @@ public class SeasonChunkPatcher {
 			if( chunk.getWorld() != world )
 				continue;
 			if( !inactiveChunkData.isVisited() ) {
-				inactiveChunkData.setLoadedChunk(null);
+				inactiveChunkData.clearLoadedChunk();
 			}
 			else {
 				inactiveChunkData.setVisitedFlag(false);
@@ -179,7 +185,7 @@ public class SeasonChunkPatcher {
 			ChunkPos chunkPos = chunk.getPos();
 			World world = chunk.getWorld(); 
 			if( ChunkUtils.hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos) ) {
-				chunkData.setActiveFlag(false);
+				chunkData.setActivelyUpdatedFlag(false);
 				chunkData.setToBePatched(false);
 				continue;
 			}

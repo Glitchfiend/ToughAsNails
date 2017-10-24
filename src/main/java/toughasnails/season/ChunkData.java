@@ -29,6 +29,8 @@ public class ChunkData {
 	}
 
 	public void setLoadedChunk( Chunk chunk ) {
+		if( chunk == null )
+			throw new IllegalArgumentException("chunk must be non null. Use clearLoadedChunk() for other case.");
 		this.chunk = chunk;
 	}
 	
@@ -36,7 +38,7 @@ public class ChunkData {
 		return bIsVisited;
 	}
 	
-	public void setActiveFlag(boolean bIsActive) {
+	public void setActivelyUpdatedFlag(boolean bIsActive) {
 		this.bIsActive = bIsActive;
 	}
 	
@@ -44,7 +46,7 @@ public class ChunkData {
 		return bToBePatched;
 	}
 	
-	public boolean isActive() {
+	public boolean isActivelyUpdated() {
 		return bIsActive;
 	}
 	
@@ -67,6 +69,11 @@ public class ChunkData {
 
 	public long getLastPatchedTime() {
 		return lastPatchedTime;
+	}
+
+	public void clearLoadedChunk() {
+		setToBePatched(false);
+		this.chunk = null;
 	}
 
 }

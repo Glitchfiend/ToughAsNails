@@ -107,7 +107,7 @@ public class SeasonSavedData extends WorldSavedData
     		}
     		else {
     			data = new ChunkData( entry.getKey(), null, entry.getLastPatchedTime());
-    			data.setActiveFlag(false);
+// Covered by constructor    			data.setActiveFlag(false);
     			managedChunks.put(entry.getKey(), data);
     		}
     	}
@@ -250,7 +250,7 @@ public class SeasonSavedData extends WorldSavedData
 			if( curChunk == null ) {
 				if( bCreateIfNotExisting ) {
 					chunkData.setLoadedChunk(chunk);
-					chunkData.setActiveFlag(false);
+					chunkData.setActivelyUpdatedFlag(false);
 				}
 				else
 					return null;
@@ -263,7 +263,7 @@ public class SeasonSavedData extends WorldSavedData
 		long lastPatchTime = 0;		// Initial time
 		
 		chunkData = new ChunkData(key, chunk, lastPatchTime);
-		chunkData.setActiveFlag(false);
+// Covered by constructor		chunkData.setActiveFlag(false);
 		managedChunks.put(key, chunkData);
 		return chunkData;
 	}
@@ -277,7 +277,7 @@ public class SeasonSavedData extends WorldSavedData
 		ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
 		ChunkData chunkData = managedChunks.get(key);
 		if( chunkData != null ) {
-			chunkData.setLoadedChunk(null);
+			chunkData.clearLoadedChunk();
 		}
 	}
 	
