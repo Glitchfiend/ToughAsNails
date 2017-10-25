@@ -5,6 +5,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,8 +15,9 @@ public class SeasonChunkPatchingHandler
 {
 
     @SubscribeEvent
-    public void chunkLoad(ChunkDataEvent.Load event)
+    public void chunkDataLoad(ChunkDataEvent.Load event)
     {
+        // TODO: Use ChunkEvent.Load instead ?
         if (event.getWorld().isRemote)
             return;
         SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
@@ -25,6 +27,18 @@ public class SeasonChunkPatchingHandler
         {
             patcher.enqueueChunkOnce(chunk);
         }
+    }
+    
+    @SubscribeEvent
+    public void chunkUnload(ChunkEvent.Unload event)
+    {
+        if (event.getWorld().isRemote)
+            return;
+
+        SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
+
+        Chunk chunk = event.getChunk();
+        patcher.onChunkUnload(chunk);
     }
 
     @SubscribeEvent

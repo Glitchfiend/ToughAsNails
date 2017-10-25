@@ -290,7 +290,7 @@ public class SeasonSavedData extends WorldSavedData
                 if (bCreateIfNotExisting)
                 {
                     chunkData.setLoadedChunk(chunk);
-                    chunkData.setActivelyUpdatedFlag(false);
+//                    chunkData.setActivelyUpdatedFlag(false);
                 }
                 else
                     return null;

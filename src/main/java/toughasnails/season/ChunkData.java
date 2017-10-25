@@ -9,7 +9,7 @@ public class ChunkData
 
     private long lastPatchedTime;
     private boolean isVisited;
-    private boolean isActivelyUpdated;
+//    private boolean isActivelyUpdated;
     private boolean isToBePatched;
 
     public ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime)
@@ -17,8 +17,8 @@ public class ChunkData
         this.key = key;
         this.chunk = chunk;
         this.lastPatchedTime = lastPatchedTime;
-        this.isVisited = false;
-        this.isActivelyUpdated = false;
+//        this.isVisited = false;
+//        this.isActivelyUpdated = false;
         this.isToBePatched = false;
     }
 
@@ -27,10 +27,10 @@ public class ChunkData
         this.isToBePatched = bToBePatched;
     }
 
-    public void setVisitedFlag(boolean bIsVisited)
-    {
-        this.isVisited = bIsVisited;
-    }
+//    public void setVisitedFlag(boolean bIsVisited)
+//    {
+//        this.isVisited = bIsVisited;
+//    }
 
     public void setLoadedChunk(Chunk chunk)
     {
@@ -39,25 +39,25 @@ public class ChunkData
         this.chunk = chunk;
     }
 
-    public boolean getIsVisited()
-    {
-        return isVisited;
-    }
+//    public boolean getIsVisited()
+//    {
+//        return isVisited;
+//    }
 
-    public void setActivelyUpdatedFlag(boolean bIsActive)
-    {
-        this.isActivelyUpdated = bIsActive;
-    }
+//    public void setActivelyUpdatedFlag(boolean bIsActive)
+//    {
+//        this.isActivelyUpdated = bIsActive;
+//    }
 
     public boolean getIsToBePatched()
     {
         return isToBePatched;
     }
 
-    public boolean getIsActivelyUpdated()
-    {
-        return isActivelyUpdated;
-    }
+//    public boolean getIsActivelyUpdated()
+//    {
+//        return isActivelyUpdated;
+//    }
 
     public ChunkKey getKey()
     {
