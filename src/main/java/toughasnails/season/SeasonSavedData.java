@@ -166,9 +166,9 @@ public class SeasonSavedData extends WorldSavedData
         }
 
         isLastSnowyState = (lastSnowyState == 1); // -1 state is Default: First
-                                                 // minecraft day is at spring.
+                                                  // minecraft day is at spring.
         isLastRainyState = (lastRainyState == 1); // -1 state is Default: First
-                                                 // minecraft day has no rain.
+                                                  // minecraft day has no rain.
     }
 
     public boolean wasLastRaining(int atIdx)
@@ -290,7 +290,6 @@ public class SeasonSavedData extends WorldSavedData
                 if (bCreateIfNotExisting)
                 {
                     chunkData.setLoadedChunk(chunk);
-//                    chunkData.setActivelyUpdatedFlag(false);
                 }
                 else
                     return null;
@@ -303,7 +302,6 @@ public class SeasonSavedData extends WorldSavedData
         long lastPatchTime = 0; // Initial time
 
         chunkData = new ChunkData(key, chunk, lastPatchTime);
-        // Covered by constructor chunkData.setActiveFlag(false);
         managedChunks.put(key, chunkData);
         return chunkData;
     }
