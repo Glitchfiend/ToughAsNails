@@ -95,8 +95,9 @@ public class SeasonChunkPatcher
         {
             Chunk activeChunk = iter.next();
             ChunkData chunkData = seasonData.getStoredChunkData(activeChunk, true);
-            ActiveChunkData ac = activelyUpdatedChunks.get(chunkData.getKey());
+//            ActiveChunkData ac = activelyUpdatedChunks.get(chunkData.getKey());
 
+            ActiveChunkData ac = chunkData.getBelongingAC();
             if (ac == null)
             {
                 // Roll up patches
@@ -120,18 +121,19 @@ public class SeasonChunkPatcher
             while (activeChunkIter.hasNext())
             {
                 ActiveChunkData ac = activeChunkIter.next().getValue();
+                ChunkData chunkData = ac.getData();
                 if (!ac.isVisited())
                 {
                     // Wait for discount and then remove
                     if (ac.getLastVisitTime() + awaitTicksBeforeDeactivation <= world.getTotalWorldTime())
                     {
+                    	ac.detach();
                         activeChunkIter.remove();
                         continue;
                     }
                 }
                 else
                 {
-                    ChunkData chunkData = ac.getData();
                     if (!chunkData.getIsToBePatched() /*!pendingChunks.containsKey(ac.getKey())*/)
                     {
                         // For an active chunk (having no pending patching)
@@ -165,7 +167,9 @@ public class SeasonChunkPatcher
     public void onChunkUnload(Chunk chunk)
     {
         ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
-        activelyUpdatedChunks.remove(key);
+        ActiveChunkData ac = activelyUpdatedChunks.remove(key);
+        if( ac != null )
+        	ac.detach();
     }
 
     public void onServerWorldUnload(World world)
@@ -183,6 +187,7 @@ public class SeasonChunkPatcher
             ActiveChunkData ac = activeChunkIter.next().getValue();
             if (ac.getWorld() == world)
             {
+            	ac.detach();
                 activeChunkIter.remove();
             }
         }
@@ -193,35 +198,6 @@ public class SeasonChunkPatcher
         Map<ChunkKey, Chunk> chunksInProcess = pendingChunks;
         synchronized (chunkLock)
         {
-            // Iterate through loaded chunks to untrack non active chunks
-            Iterator<Map.Entry<ChunkKey, ActiveChunkData>> activeChunkIter = activelyUpdatedChunks.entrySet().iterator();
-            while (activeChunkIter.hasNext())
-            {
-                ActiveChunkData ac = activeChunkIter.next().getValue();
-                World world = ac.getWorld();
-                if (!ac.isVisited())
-                {
-                    // Wait for discount and then remove
-                    if (ac.getLastVisitTime() + awaitTicksBeforeDeactivation <= world.getTotalWorldTime())
-                    {
-                        activeChunkIter.remove();
-                        continue;
-                    }
-                }
-                else
-                {
-                    ChunkData chunkData = ac.getData();
-                    if (!chunkData.getIsToBePatched() /*!pendingChunks.containsKey(ac.getKey())*/)
-                    {
-                        // For an active chunk (having no pending patching)
-                        // the time is always actual
-                        chunkData.setPatchTimeUptodate();
-                    }
-
-                    ac.clearVisited();
-                }
-            }
-
             pendingChunks = new HashMap<ChunkKey, Chunk>();
         }
 
@@ -240,8 +216,7 @@ public class SeasonChunkPatcher
             ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
             if (chunk.unloaded)
             {
-                activelyUpdatedChunks.remove(chunkData.getKey());
-                chunkData.setToBePatched(false);
+            	internRemoveFromQueue(chunkData);
                 continue;
             }
             
@@ -249,8 +224,7 @@ public class SeasonChunkPatcher
             World world = chunk.getWorld();
             if (ChunkUtils.hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos))
             {
-                activelyUpdatedChunks.remove(chunkData.getKey());
-                chunkData.setToBePatched(false);
+            	internRemoveFromQueue(chunkData);
                 continue;
             }
 
@@ -270,6 +244,13 @@ public class SeasonChunkPatcher
                 pendingChunks = chunksInProcess;
             }
         }
+    }
+    
+    private void internRemoveFromQueue(ChunkData chunkData) {
+        ActiveChunkData ac = activelyUpdatedChunks.remove(chunkData.getKey());
+        if( ac != null )
+        	ac.detach();
+        chunkData.setToBePatched(false);
     }
 
     private void executePatchCommand(int command, int threshold, Chunk chunk, Season season)

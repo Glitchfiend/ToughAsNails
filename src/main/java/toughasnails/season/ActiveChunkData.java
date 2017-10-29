@@ -15,6 +15,8 @@ public class ActiveChunkData
         this.world = world;
         this.isVisited = false;
         this.lastVisitTime = 0;
+
+        data.setBelongingAC(this);
     }
 
     ChunkKey getKey()
@@ -51,5 +53,9 @@ public class ActiveChunkData
     public void clearVisited()
     {
         this.isVisited = false;
+    }
+    
+    public void detach() {
+    	data.setBelongingAC(null);
     }
 }
