@@ -9,6 +9,7 @@ public class ChunkData
 
     private long lastPatchedTime;
     private boolean isToBePatched;
+    private ActiveChunkData belongingAC;
 
     public ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime)
     {
@@ -16,11 +17,17 @@ public class ChunkData
         this.chunk = chunk;
         this.lastPatchedTime = lastPatchedTime;
         this.isToBePatched = false;
+        this.belongingAC = null;
     }
 
     public void setToBePatched(boolean bToBePatched)
     {
         this.isToBePatched = bToBePatched;
+    }
+    
+    public void setBelongingAC(ActiveChunkData belongingAC)
+    {
+    	this.belongingAC = belongingAC;
     }
 
     public void setLoadedChunk(Chunk chunk)
@@ -33,6 +40,10 @@ public class ChunkData
     public boolean getIsToBePatched()
     {
         return isToBePatched;
+    }
+    
+    public ActiveChunkData getBelongingAC() {
+    	return belongingAC;
     }
 
     public ChunkKey getKey()
