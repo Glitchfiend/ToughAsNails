@@ -1,8 +1,11 @@
 package toughasnails.season;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -22,6 +25,8 @@ import toughasnails.util.ChunkUtils;
 
 public class SeasonChunkPatcher
 {
+//	private static final int INITIAL_QUEUESIZE = 1000;
+	
     private static final int THR_PROB_MAX = 1000;
     private static final long RETROSPECTIVE_WINDOW_TICKS = 24000 * 9;
 
@@ -33,7 +38,9 @@ public class SeasonChunkPatcher
     /**
      * Secured by multi-threading access
      */
-    public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();
+//    public Map<ChunkKey, Chunk> pendingChunks = new HashMap<ChunkKey, Chunk>();
+    public HashSet<ChunkKey> pendingChunksMask = new HashSet<ChunkKey>();
+    public LinkedList<Chunk> pendingChunkList = new LinkedList<Chunk>();
 
 //    public Map<ChunkKey, ActiveChunkData> activelyUpdatedChunks = new HashMap<ChunkKey, ActiveChunkData>();
     public BinaryHeap<Long, ActiveChunkData> updatedChunksQueue = new BinaryHeap<Long, ActiveChunkData>();
@@ -49,20 +56,21 @@ public class SeasonChunkPatcher
         synchronized (chunkLock)
         {
             ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
-            if (pendingChunks.containsKey(key))
+            if (pendingChunksMask.contains(key))
                 return;
-            pendingChunks.put(key, chunk);
+            pendingChunksMask.add(key);
+            pendingChunkList.add(chunk);
         }
     }
 
-    public void removeChunkIfEnqueued(Chunk chunk)
+/*    public void removeChunkIfEnqueued(Chunk chunk)
     {
         synchronized (chunkLock)
         {
             ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
             pendingChunks.remove(key);
         }
-    }
+    } */
 
     private void addChunkIfGenerated(World world, int cposX, int cposZ)
     {
@@ -163,7 +171,7 @@ public class SeasonChunkPatcher
         world.profiler.endSection();
     }
 
-    private void removeWorldFrom(World world, Map<ChunkKey, Chunk> pending)
+/*    private void removeWorldFrom(World world, Map<ChunkKey, Chunk> pending)
     {
         Iterator<Map.Entry<ChunkKey, Chunk>> iter = pending.entrySet().iterator();
         while (iter.hasNext())
@@ -175,7 +183,7 @@ public class SeasonChunkPatcher
                 iter.remove();
             }
         }
-    }
+    } */
 
     public void onChunkUnload(Chunk chunk)
     {
@@ -197,7 +205,17 @@ public class SeasonChunkPatcher
         // Clear loadedChunkQueue
         synchronized (chunkLock)
         {
-            removeWorldFrom(world, pendingChunks);
+            Iterator<Chunk> iter = pendingChunkList.iterator();
+            while (iter.hasNext())
+            {
+            	Chunk chunk = iter.next();
+                if (chunk.getWorld() == world)
+                {
+                	ChunkKey key = new ChunkKey(chunk.getPos(), world);
+                	pendingChunksMask.remove(key);
+                    iter.remove();
+                }
+            }
         }
 
         // Clear active chunk tracking for the world
@@ -218,9 +236,10 @@ public class SeasonChunkPatcher
 
     public void onServerTick()
     {
-        Map<ChunkKey, Chunk> chunksInProcess = pendingChunks;
+        LinkedList<Chunk> chunksInProcess = pendingChunkList;
         synchronized (chunkLock)
         {
+        	// Iterate through loaded chunks to untrack non active chunks
         	while( true ) {
         		ActiveChunkData ac = updatedChunksQueue.peek();
         		if( ac == null )
@@ -231,25 +250,27 @@ public class SeasonChunkPatcher
                 if (ac.getLastVisitTime() + awaitTicksBeforeDeactivation <= world.getTotalWorldTime())
                 {
                 	ac.detach();
-                	updatedChunksQueue.remove();
+                	updatedChunksQueue.remove(ac);
                 }
                 else
                 	break;
         	}
         	
-            pendingChunks = new HashMap<ChunkKey, Chunk>();
+        	pendingChunkList = new LinkedList<Chunk>();
         }
 
         int numProcessed = 0;
-        Iterator<Map.Entry<ChunkKey, Chunk>> iter = chunksInProcess.entrySet().iterator();
+//        Iterator<Chunk> iter = chunksInProcess.iterator();
         
-        while (iter.hasNext())
+//        while (iter.hasNext())
+        for( Chunk chunk : chunksInProcess)
         {
-            if (numProcessed++ >= numPatcherPerTick)
+            if (numProcessed >= numPatcherPerTick)
                 break;
+            numProcessed ++;
 
-            Chunk chunk = iter.next().getValue();
-            iter.remove();
+//            Chunk chunk = iter.next();
+//            iter.remove();
             
             SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
             ChunkData chunkData = seasonData.getStoredChunkData(chunk, true);
@@ -273,16 +294,25 @@ public class SeasonChunkPatcher
             // Clear to-be-patched flag
             chunkData.setToBePatched(false);
         }
-
-        // reinsert unprocessed entries to queue
-        if (chunksInProcess.size() > 0)
+        
+        // Remove all processed chunks from list within the lock
+        synchronized (chunkLock)
         {
-            synchronized (chunkLock)
-            {
-                chunksInProcess.putAll(pendingChunks);
-                pendingChunks = chunksInProcess;
-            }
-        }
+        	// First drop all processed chunks
+        	for( int i = 0; i < numProcessed; i ++ ) {
+        		Chunk chunk = chunksInProcess.getFirst();
+        		ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
+        		pendingChunksMask.remove(key);
+        		chunksInProcess.removeFirst();
+        	}
+        	
+        	// reinsert unprocessed entries to queue
+        	if (chunksInProcess.size() > 0)
+        	{
+        		chunksInProcess.addAll(pendingChunkList);
+        		pendingChunkList = chunksInProcess;
+        	}
+    	}
     }
     
     private void internRemoveFromQueue(ChunkData chunkData) {
