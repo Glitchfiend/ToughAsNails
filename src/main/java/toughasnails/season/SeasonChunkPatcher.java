@@ -32,6 +32,12 @@ public class SeasonChunkPatcher
 
     private int numPatcherPerTick;
     private int awaitTicksBeforeDeactivation;
+    
+    public int statisticsVisitedActive;
+    public int statisticsAddedToActive;
+    public int statisticsDeletedFromActive;
+    public int statisticsPendingAmount;
+    public int statisticsRejectedPendingAmount;
 
     private Object chunkLock = new Object();
 
@@ -49,6 +55,12 @@ public class SeasonChunkPatcher
     {
         numPatcherPerTick = SyncedConfig.getIntValue(SeasonsOption.NUM_PATCHES_PER_TICK);
         awaitTicksBeforeDeactivation = SyncedConfig.getIntValue(SeasonsOption.PATCH_TICK_DISTANCE);
+        
+        statisticsVisitedActive = 0;
+        statisticsAddedToActive = 0;
+        statisticsDeletedFromActive = 0;
+        statisticsPendingAmount = 0;
+        statisticsRejectedPendingAmount = 0;
     }
 
     public void enqueueChunkOnce(Chunk chunk)
@@ -101,6 +113,8 @@ public class SeasonChunkPatcher
 
         // Iterate through actively updated chunks to enqueue them for patching
         // and begin tracking them
+        statisticsVisitedActive = 0;
+        statisticsAddedToActive = 0;
         Iterator<Chunk> iter = world.getPersistentChunkIterable(world.getPlayerChunkMap().getChunkIterator());
         while (iter.hasNext())
         {
@@ -118,6 +132,8 @@ public class SeasonChunkPatcher
                 // Tag as active and as awaiting to be patched
                 ac = new ActiveChunkData(chunkData, world);
                 // activelyUpdatedChunks.put(chunkData.getKey(), ac);
+                
+                statisticsAddedToActive ++;
             }
             else if (!chunkData.getIsToBePatched()) // !pendingChunks.containsKey(ac.getKey())
             {
@@ -131,7 +147,7 @@ public class SeasonChunkPatcher
             ac.setNodeKey(world.getTotalWorldTime());
             updatedChunksQueue.add(ac);
 
-            // NOTE: From here the chunk is marked as actively updated.
+            statisticsVisitedActive ++;
         }
 
 /*        synchronized (chunkLock)
@@ -239,6 +255,8 @@ public class SeasonChunkPatcher
         LinkedList<Chunk> chunksInProcess = pendingChunkList;
         synchronized (chunkLock)
         {
+            statisticsDeletedFromActive = 0;
+
         	// Iterate through loaded chunks to untrack non active chunks
         	while( true ) {
         		ActiveChunkData ac = updatedChunksQueue.peek();
@@ -251,6 +269,8 @@ public class SeasonChunkPatcher
                 {
                 	ac.detach();
                 	updatedChunksQueue.remove(ac);
+                	
+                	statisticsDeletedFromActive ++;
                 }
                 else
                 	break;
@@ -258,7 +278,10 @@ public class SeasonChunkPatcher
         	
         	pendingChunkList = new LinkedList<Chunk>();
         }
-
+        
+        statisticsPendingAmount = chunksInProcess.size();
+        statisticsRejectedPendingAmount = 0;
+        
         int numProcessed = 0;
 //        Iterator<Chunk> iter = chunksInProcess.iterator();
         
@@ -277,6 +300,8 @@ public class SeasonChunkPatcher
             if (chunk.unloaded)
             {
             	internRemoveFromQueue(chunkData);
+            	
+            	statisticsRejectedPendingAmount ++;
                 continue;
             }
             
@@ -285,6 +310,8 @@ public class SeasonChunkPatcher
             if (ChunkUtils.hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos))
             {
             	internRemoveFromQueue(chunkData);
+            	
+            	statisticsRejectedPendingAmount ++;
                 continue;
             }
 
