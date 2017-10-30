@@ -1,15 +1,16 @@
 package toughasnails.util;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Originally from https://courses.cs.washington.edu/courses/cse373/11wi/homework/5/BinaryHeap.java
  * 
  * @param <T>
  */
-public class BinaryHeap<K> {
+public class BinaryHeap<K, T extends BinaryHeapNode<K>> implements Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
-    protected BinaryHeapNode<K>[] array;
+    protected T[] array;
     protected int size;
     
     /**
@@ -18,14 +19,14 @@ public class BinaryHeap<K> {
     @SuppressWarnings("unchecked")
 	public BinaryHeap () {
         // Java doesn't allow construction of arrays of placeholder data types 
-        array = (BinaryHeapNode[])new Comparable[DEFAULT_CAPACITY];  
+        array = (T[])new BinaryHeapNode[DEFAULT_CAPACITY];  
         size = 0;
     }
     
     /**
      * Adds a value to the min-heap.
      */
-    public void add(BinaryHeapNode<K> value, long withKey) {
+    public void add(T value) {
         // grow array if needed
         if (size >= array.length - 1) {
             array = this.resize();
@@ -52,9 +53,9 @@ public class BinaryHeap<K> {
     /**
      * Returns (but does not remove) the minimum element in the heap.
      */
-    public BinaryHeapNode<K> peek() {
+    public T peek() {
         if (this.isEmpty()) {
-            throw new IllegalStateException();
+            return null;
         }
         
         return array[1];
@@ -63,38 +64,43 @@ public class BinaryHeap<K> {
     /**
      * Remove at index
      */
-    public BinaryHeapNode<K> remove( BinaryHeapNode<K> elem ) {
+    public void remove( T elem ) {
     	int index = elem.index;
-    	if( array.length <= index || array[index] != elem )
+    	if( !elem.isEnqueued() )
+    		return;	// else, index >= 1 assumed.    	
+    	if( size < index || array[index] != elem )
     		throw new IllegalStateException();
-    	if( index == 1 )
-    		return remove();
+    	if( index <= 1 )
+    	{
+    		remove();
+    		return;
+    	}
     	
-    	BinaryHeapNode<K> first = peek();
-    	elem.setKey( first.getSmallerKey() );
+     	BinaryHeapNode<K> first = peek();
+    	elem.setNodeKey( first.getSmallerKey() );
     	bubbleUp(index);
-    	
-    	return remove();
+    	remove();
     }
     
     /**
      * Removes and returns the minimum element in the heap.
      */
-    public BinaryHeapNode<K> remove() {
+    public T remove() {
     	// what do want return?
-    	BinaryHeapNode<K> result = peek();
+    	T result = peek();
+    	if( result == null )
+    		return null;
+    	result.index = 0;
     	
     	// get rid of the last leaf/decrement
     	array[1] = array[size];
+    	array[1].index = 1;
     	array[size] = null;
     	size--;
     	
-    	bubbleDown();
-    	
-    	result.index = 0;
+    	bubbleDown(1);
     	return result;
     }
-    
     
     /**
      * Returns a String representation of BinaryHeap with values stored with 
@@ -110,9 +116,8 @@ public class BinaryHeap<K> {
      * root of the heap in its correct place so that the heap maintains the 
      * min-heap order property.
      */
-    protected void bubbleDown() {
-        int index = 1;
-        
+    protected void bubbleDown(int index) {
+       
         // bubble down
         while (hasLeftChild(index)) {
             // which of my children is smaller?
@@ -187,12 +192,19 @@ public class BinaryHeap<K> {
     }
     
     
-    protected BinaryHeapNode<K>[] resize() {
+    protected T[] resize() {
         return Arrays.copyOf(array, array.length * 2);
     }
     
+	public void clear() {
+		for( int i = 1; i <= size; i ++ ) {
+			array[i] = null;
+		}
+		size = 0;
+	}
+    
     protected void swap(int index1, int index2) {
-    	BinaryHeapNode<K> tmp = array[index1];
+    	T tmp = array[index1];
         
     	array[index1] = array[index2];
         if( array[index1] != null )
@@ -201,4 +213,32 @@ public class BinaryHeap<K> {
         if( array[index2] != null )
         	array[index2].index = index2;
     }
+
+	@Override
+	public Iterator<T> iterator() {
+		return new BinaryHeapIterator();
+	}
+	
+	private class BinaryHeapIterator implements Iterator<T> {
+		int curIndex = 0;
+
+		@Override
+		public boolean hasNext() {
+			return curIndex < size;
+		}
+
+		@Override
+		public T next() {
+			return array[++ curIndex];
+		}
+		
+/*		@Override
+		public void remove() {
+			if( curIndex == 0 ) // Call next at least once.
+				throw new IllegalStateException("Invalid iterator position.");
+			BinaryHeap.this.remove(array[curIndex]);
+		}		*/
+	}
+
+
 }
