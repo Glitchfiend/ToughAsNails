@@ -44,7 +44,7 @@ public class SeasonChunkPatcher
      */
     public HashSet<ChunkKey> pendingChunksMask = new HashSet<ChunkKey>();
     public LinkedList<PendingChunkEntry> pendingChunkList = new LinkedList<PendingChunkEntry>();
-    public HashMap<ChunkKey, PendingChunkEntry> waitingChunks = new HashMap<ChunkKey, PendingChunkEntry>();
+//    public HashMap<ChunkKey, PendingChunkEntry> waitingChunks = new HashMap<ChunkKey, PendingChunkEntry>();
 
     public BinaryHeap<Long, ActiveChunkData> updatedChunksQueue = new BinaryHeap<Long, ActiveChunkData>();
 
@@ -61,7 +61,24 @@ public class SeasonChunkPatcher
     }
     
     public void notifyLoadedAndPopulated(World world, ChunkPos chunkPos) {
-    	// TODO: ...
+    	SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+    	ChunkData chunkData = seasonData.getStoredChunkData(world, chunkPos, false);
+    	if( chunkData != null ) {
+    		// Notify all listening neighbors
+    		for( int i = 0; i < ChunkKey.NEIGHBORS.length; i ++ ) {
+    			if( !chunkData.isNeighborToBeNotified(i) )
+    				continue;
+    			ChunkPos nbPos = ChunkKey.NEIGHBORS[i].getOffset(chunkPos);
+    			
+    			// re enqueue for patching
+/*    			PendingChunkEntry entry = waitingChunks.remove(nbKey);
+    			if( entry != null ) {
+    				pendingChunkList.add(entry);
+    			} */
+    			enqueueChunkOnce(world, nbPos);
+				chunkData.setNeighborToNotify(i, false);
+    		}
+    	}
     }
     
     public void enqueueChunkOnce(Chunk chunk)
@@ -178,6 +195,17 @@ public class SeasonChunkPatcher
                     iter.remove();
                 }
             }
+            
+            // Same for waiting chunks
+/*            Iterator<HashMap.Entry<ChunkKey, PendingChunkEntry>> wIter = waitingChunks.entrySet().iterator();
+            while( wIter.hasNext() ) {
+            	PendingChunkEntry entry = wIter.next().getValue();
+                if (entry.getWorld() == world)
+                {
+                	pendingChunksMask.remove(entry.getKey());
+                    iter.remove();
+                }
+            } */
 //        }
 
         // Clear active chunk tracking for the world
@@ -222,14 +250,14 @@ public class SeasonChunkPatcher
                 	break;
         	}
         	
-//        	pendingChunkList = new LinkedList<PendingChunkEntry>();
+        	pendingChunkList = new LinkedList<PendingChunkEntry>();
 //        }
         
         statisticsPendingAmount = chunksInProcess.size();
         statisticsRejectedPendingAmount = 0;
         
         int numProcessed = 0;
-        for( PendingChunkEntry entry : chunksInProcess)
+        for( PendingChunkEntry entry : chunksInProcess )
         {
             if (numProcessed >= numPatcherPerTick)
                 break;
@@ -278,11 +306,12 @@ public class SeasonChunkPatcher
         	}
         	
         	// reinsert unprocessed entries to queue
-/*        	if (chunksInProcess.size() > 0)
+        	// TODO: Remove as soon as neighbor checks are not cascading anymore!
+        	if (chunksInProcess.size() > 0)
         	{
         		chunksInProcess.addAll(pendingChunkList);
         		pendingChunkList = chunksInProcess;
-        	} */
+        	} 
 //    	}
     }
     

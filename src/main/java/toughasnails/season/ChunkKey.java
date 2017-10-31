@@ -7,14 +7,14 @@ public class ChunkKey
 {
 	public static final Neighbor[] NEIGHBORS = new Neighbor[]
 	{
-		new Neighbor(1,0),
-		new Neighbor(1,1),
-		new Neighbor(-1,0),
-		new Neighbor(-1,1),
-		new Neighbor(0,1),
-		new Neighbor(0,-1),
-		new Neighbor(1,-1),
-		new Neighbor(-1,-1)
+		new Neighbor(1,0,2),
+		new Neighbor(1,1,7),
+		new Neighbor(-1,0,0),
+		new Neighbor(-1,1,6),
+		new Neighbor(0,1,5),
+		new Neighbor(0,-1,4),
+		new Neighbor(1,-1,3),
+		new Neighbor(-1,-1,1)
 	};
 	
     private ChunkPos pos;
@@ -87,10 +87,12 @@ public class ChunkKey
     {
     	private final int dX;
     	private final int dZ;
+    	private final int oppositeIdx;
     	
-    	private Neighbor(int dX, int dZ) {
+    	private Neighbor(int dX, int dZ, int oppositeIdx) {
     		this.dX = dX;
     		this.dZ = dZ;
+    		this.oppositeIdx = oppositeIdx;
     	}
     	
     	public int getDX() {
@@ -99,6 +101,10 @@ public class ChunkKey
     	
     	public int getDZ() {
     		return dZ;
+    	}
+    	
+    	public int getOppositeIdx() {
+    		return oppositeIdx;
     	}
     	
     	public ChunkPos getOffset( ChunkPos pos ) {

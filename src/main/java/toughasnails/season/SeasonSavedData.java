@@ -326,13 +326,14 @@ public class SeasonSavedData extends WorldSavedData
     public void onWorldUnload(World world)
     {
         // Clear managed chunk tags associated to the world
-    	Iterator<HashMap.Entry<ChunkKey, ChunkData>> iter = managedChunks.entrySet().iterator();
+/*    	Iterator<HashMap.Entry<ChunkKey, ChunkData>> iter = managedChunks.entrySet().iterator();
     	while(iter.hasNext()) {
     		ChunkData chunkData = iter.next().getValue();
     		if( chunkData.getKey().isAssociatedToWorld(world) ) {
     			iter.remove();
     		}
-    	}
+    	}*/
+    	managedChunks.clear();  // No BUG: managedChunks contains only chunks associated to the world.
     }
 
     public void notifyChunkUnloaded(Chunk chunk)
