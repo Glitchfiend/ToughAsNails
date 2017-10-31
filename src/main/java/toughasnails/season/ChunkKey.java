@@ -5,6 +5,18 @@ import net.minecraft.world.World;
 
 public class ChunkKey
 {
+	public static final Neighbor[] NEIGHBORS = new Neighbor[]
+	{
+		new Neighbor(1,0),
+		new Neighbor(1,1),
+		new Neighbor(-1,0),
+		new Neighbor(-1,1),
+		new Neighbor(0,1),
+		new Neighbor(0,-1),
+		new Neighbor(1,-1),
+		new Neighbor(-1,-1)
+	};
+	
     private ChunkPos pos;
     private int dimension;
 
@@ -61,5 +73,32 @@ public class ChunkKey
         else if (!pos.equals(other.pos))
             return false;
         return true;
+    }
+    
+    public static class Neighbor
+    {
+    	private final int dX;
+    	private final int dZ;
+    	
+    	private Neighbor(int dX, int dZ) {
+    		this.dX = dX;
+    		this.dZ = dZ;
+    	}
+    	
+    	public int getDX() {
+    		return dX;
+    	}
+    	
+    	public int getDZ() {
+    		return dZ;
+    	}
+    	
+    	public ChunkPos getOffset( ChunkPos pos ) {
+    		return new ChunkPos( pos.chunkXPos + dX, pos.chunkZPos + dZ );
+    	}
+    	
+    	public ChunkKey getOffset( ChunkKey key ) {
+    		return new ChunkKey(getOffset(key.getPos()), key.getDimension());
+    	}
     }
 }

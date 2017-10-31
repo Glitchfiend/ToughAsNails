@@ -108,9 +108,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 
         SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(chunk.getWorld());
         seasonData.notifyChunkUnloaded(chunk);
-
-//        SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
-//        patcher.removeChunkIfEnqueued(chunk);
     }
 
     @SubscribeEvent

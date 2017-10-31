@@ -10,6 +10,7 @@ public class ChunkData
     private long lastPatchedTime;
     private boolean isToBePatched;
     private ActiveChunkData belongingAC;
+    private int notifyNeighbors;
 
     public ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime)
     {
@@ -18,6 +19,24 @@ public class ChunkData
         this.lastPatchedTime = lastPatchedTime;
         this.isToBePatched = false;
         this.belongingAC = null;
+        this.notifyNeighbors = 0;
+    }
+    
+    public void setNeighborToNotify(int idx, boolean bToSet) {
+    	if( idx < 0 || idx >= 8 )
+    		throw new IllegalArgumentException("index should be between 0 and 7");
+    	int bit = 0x1 << idx;
+    	if( bToSet )
+    		this.notifyNeighbors |= bit;
+    	else
+    		this.notifyNeighbors &= ~bit;
+    }
+    
+    public boolean isNeighborToBeNotified(int idx) {
+    	if( idx < 0 || idx >= 8 )
+    		throw new IllegalArgumentException("index should be between 0 and 7");
+    	int bit = 0x1 << idx;
+    	return (this.notifyNeighbors & bit) != 0;    		
     }
 
     public void setToBePatched(boolean bToBePatched)

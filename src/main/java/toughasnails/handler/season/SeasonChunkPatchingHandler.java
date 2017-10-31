@@ -27,7 +27,7 @@ public class SeasonChunkPatchingHandler
         if (chunk.isTerrainPopulated())
         {
             patcher.enqueueChunkOnce(chunk);
-            patcher.enqueueGeneratedNeighborChunks(chunk.getWorld(), chunk.xPosition, chunk.zPosition);
+//TODO            patcher.enqueueGeneratedNeighborChunks(chunk.getWorld(), chunk.xPosition, chunk.zPosition);
         }
     }
     
@@ -51,10 +51,9 @@ public class SeasonChunkPatchingHandler
             return;
         SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
 
-//        Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
-//        patcher.enqueueChunkOnce(chunk);
-        patcher.enqueueChunkOnce(world, new ChunkPos(event.getChunkX(), event.getChunkZ()));
-        patcher.enqueueGeneratedNeighborChunks(world, event.getChunkX(), event.getChunkZ());
+        ChunkPos pos = new ChunkPos(event.getChunkX(), event.getChunkZ());
+        patcher.enqueueChunkOnce(world, pos);
+        patcher.enqueueGeneratedNeighborChunks(world, pos);
     }
 
     @SubscribeEvent

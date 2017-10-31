@@ -231,13 +231,6 @@ public class BinaryHeap<K, T extends BinaryHeapNode<K>> implements Iterable<T> {
 		public T next() {
 			return array[++ curIndex];
 		}
-		
-/*		@Override
-		public void remove() {
-			if( curIndex == 0 ) // Call next at least once.
-				throw new IllegalStateException("Invalid iterator position.");
-			BinaryHeap.this.remove(array[curIndex]);
-		}		*/
 	}
 
 

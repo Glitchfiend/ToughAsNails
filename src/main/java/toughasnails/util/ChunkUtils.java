@@ -1,21 +1,23 @@
 package toughasnails.util;
 
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import toughasnails.season.ChunkKey;
 
 public class ChunkUtils
 {
-    public static boolean isChunkUnloadedOrUnpopulated(World world, int cposX, int cposZ)
+    public static boolean isChunkUnloadedOrUnpopulated(World world, ChunkPos pos)
     {
-    	Chunk chunk = world.getChunkProvider().getLoadedChunk(cposX, cposZ);
+//    	Chunk chunk = world.getChunkProvider().getLoadedChunk(cposX, cposZ);
     	
-//        return !world.isChunkGeneratedAt(cposX, cposZ) || !world.getChunkFromChunkCoords(cposX, cposZ).isTerrainPopulated();
-    	return chunk == null || !chunk.isTerrainPopulated();
+        return !world.isChunkGeneratedAt(pos.chunkXPos, pos.chunkZPos) || !world.getChunkFromChunkCoords(pos.chunkXPos, pos.chunkZPos).isTerrainPopulated();
+//    	return chunk == null || !chunk.isTerrainPopulated();
     }
 
-    public static boolean hasUnloadedOrUnpopulatedNeighbor(World world, int cposX, int cposZ)
+    public static boolean hasUnloadedOrUnpopulatedNeighbor(World world, ChunkPos pos)
     {
-        if (isChunkUnloadedOrUnpopulated(world, cposX + 1, cposZ))
+/*        if (isChunkUnloadedOrUnpopulated(world, cposX + 1, cposZ))
             return true;
         if (isChunkUnloadedOrUnpopulated(world, cposX + 1, cposZ + 1))
             return true;
@@ -30,7 +32,11 @@ public class ChunkUtils
         if (isChunkUnloadedOrUnpopulated(world, cposX + 1, cposZ - 1))
             return true;
         if (isChunkUnloadedOrUnpopulated(world, cposX - 1, cposZ - 1))
-            return true;
+            return true;*/
+    	for( ChunkKey.Neighbor nb : ChunkKey.NEIGHBORS ) {
+    		if( isChunkUnloadedOrUnpopulated(world, nb.getOffset(pos)) )
+    			return true;
+    	}
 
         return false;
     }
