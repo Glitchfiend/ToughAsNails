@@ -280,7 +280,8 @@ public class SeasonSavedData extends WorldSavedData
             {
                 if (curChunk != chunk)
                 {
-                    ToughAsNails.logger.error("Chunk not reported as unloaded or mismatching in SeasonSavedData.getStoredChunkData .");
+                	if( !curChunk.unloaded )
+                		ToughAsNails.logger.error("Chunk mismatching in SeasonSavedData.getStoredChunkData .");
                     curChunk = null;
                 }
             }
