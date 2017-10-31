@@ -56,7 +56,7 @@ public class SeasonChunkPatchingHandler
         patcher.notifyLoadedAndPopulated(world, pos);
         
         // TODO: Remove the one below as soon as notifyLoadedAndPopulated is implemented
-        patcher.enqueueGeneratedNeighborChunks(world, pos);
+//        patcher.enqueueGeneratedNeighborChunks(world, pos);
     }
 
     @SubscribeEvent

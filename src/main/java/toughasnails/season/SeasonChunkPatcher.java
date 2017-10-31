@@ -280,7 +280,18 @@ public class SeasonChunkPatcher
             int unavailableChunkMask = ChunkUtils.identifyUnloadedOrUnpopulatedNeighbors(world, chunkPos);
             if (unavailableChunkMask != 0)
             {
-            	// TODO: set on waiting and notification list.
+            	// Set on waiting and notification list.
+            	for( int i = 0; i < ChunkKey.NEIGHBORS.length; i ++ ) {
+            		int bit = 0x1 << i;
+            		if( (unavailableChunkMask & bit) == 0 )
+            			continue;
+            		
+            		ChunkKey nbKey = ChunkKey.NEIGHBORS[i].getOffset(chunkData.getKey());
+            		int oppositeI = ChunkKey.NEIGHBORS[i].getOppositeIdx();
+            		ChunkData nbChunkData = seasonData.getStoredChunkData(nbKey, true);
+            		
+            		nbChunkData.setNeighborToNotify(oppositeI, true);
+            	}
             	
             	internRemoveFromQueue(chunkData);
             	
@@ -311,7 +322,7 @@ public class SeasonChunkPatcher
         	{
         		chunksInProcess.addAll(pendingChunkList);
         		pendingChunkList = chunksInProcess;
-        	} 
+        	}
 //    	}
     }
     
@@ -510,6 +521,13 @@ public class SeasonChunkPatcher
                         // Do nothing
                         command = 0;
                 }
+                
+                // DEBUG
+/*                if( command == 1 || command == 2 )
+                	command = 4;
+                else if( command == 3 )
+                	command = 5; */
+                // DEBUG END
 
                 executePatchCommand(command, snowyTrackTicks, rainingTrackTicks, chunk, season);
             }

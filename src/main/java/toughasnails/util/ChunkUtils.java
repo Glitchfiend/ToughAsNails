@@ -9,10 +9,10 @@ public class ChunkUtils
 {
     public static boolean isChunkUnloadedOrUnpopulated(World world, ChunkPos pos)
     {
-//    	Chunk chunk = world.getChunkProvider().getLoadedChunk(cposX, cposZ);
+    	Chunk chunk = world.getChunkProvider().getLoadedChunk(pos.chunkXPos, pos.chunkZPos);
     	
-        return !world.isChunkGeneratedAt(pos.chunkXPos, pos.chunkZPos) || !world.getChunkFromChunkCoords(pos.chunkXPos, pos.chunkZPos).isTerrainPopulated();
-//    	return chunk == null || !chunk.isTerrainPopulated();
+//        return !world.isChunkGeneratedAt(pos.chunkXPos, pos.chunkZPos) || !world.getChunkFromChunkCoords(pos.chunkXPos, pos.chunkZPos).isTerrainPopulated();
+    	return chunk == null || !chunk.isTerrainPopulated();
     }
 
     public static int identifyUnloadedOrUnpopulatedNeighbors(World world, ChunkPos pos)
