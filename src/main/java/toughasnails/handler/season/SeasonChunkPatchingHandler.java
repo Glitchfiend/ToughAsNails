@@ -16,9 +16,8 @@ public class SeasonChunkPatchingHandler
 {
 
     @SubscribeEvent
-    public void chunkDataLoad(ChunkDataEvent.Load event)
+    public void chunkDataLoad(ChunkEvent.Load event)
     {
-        // TODO: Use ChunkEvent.Load instead ?
         if (event.getWorld().isRemote)
             return;
         SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
@@ -27,6 +26,7 @@ public class SeasonChunkPatchingHandler
         if (chunk.isTerrainPopulated())
         {
             patcher.enqueueChunkOnce(chunk);
+            patcher.notifyLoadedAndPopulated(chunk.getWorld(), chunk.getPos());
 //TODO            patcher.enqueueGeneratedNeighborChunks(chunk.getWorld(), chunk.xPosition, chunk.zPosition);
         }
     }
@@ -53,6 +53,9 @@ public class SeasonChunkPatchingHandler
 
         ChunkPos pos = new ChunkPos(event.getChunkX(), event.getChunkZ());
         patcher.enqueueChunkOnce(world, pos);
+        patcher.notifyLoadedAndPopulated(world, pos);
+        
+        // TODO: Remove the one below as soon as notifyLoadedAndPopulated is implemented
         patcher.enqueueGeneratedNeighborChunks(world, pos);
     }
 

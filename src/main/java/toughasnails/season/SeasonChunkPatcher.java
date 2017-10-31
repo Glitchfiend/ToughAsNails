@@ -37,7 +37,7 @@ public class SeasonChunkPatcher
     public int statisticsPendingAmount;
     public int statisticsRejectedPendingAmount;
 
-    private Object chunkLock = new Object();
+//    private Object chunkLock = new Object();
 
     /**
      * Secured by multi-threading access
@@ -59,29 +59,33 @@ public class SeasonChunkPatcher
         statisticsPendingAmount = 0;
         statisticsRejectedPendingAmount = 0;
     }
-
+    
+    public void notifyLoadedAndPopulated(World world, ChunkPos chunkPos) {
+    	// TODO: ...
+    }
+    
     public void enqueueChunkOnce(Chunk chunk)
     {
-        synchronized (chunkLock)
-        {
+//        synchronized (chunkLock)
+//        {
             ChunkKey key = new ChunkKey(chunk.getPos(), chunk.getWorld());
             if (pendingChunksMask.contains(key))
                 return;
             pendingChunksMask.add(key);
             pendingChunkList.add(new PendingChunkEntry(chunk));
-        }
+//        }
     }
     
     public void enqueueChunkOnce(World world, ChunkPos chunkPos)
     {
-        synchronized (chunkLock)
-        {
+//        synchronized (chunkLock)
+//        {
 	    	ChunkKey key = new ChunkKey(chunkPos, world);
 	        if (pendingChunksMask.contains(key))
 	            return;
 	        pendingChunksMask.add(key);
 	        pendingChunkList.add(new PendingChunkEntry(key, world));
-        }
+//        }
     }
 
     private void addChunkIfGenerated(World world, ChunkPos pos)
@@ -162,8 +166,8 @@ public class SeasonChunkPatcher
     public void onServerWorldUnload(World world)
     {
         // Clear loadedChunkQueue
-        synchronized (chunkLock)
-        {
+//        synchronized (chunkLock)
+//        {
             Iterator<PendingChunkEntry> iter = pendingChunkList.iterator();
             while (iter.hasNext())
             {
@@ -174,7 +178,7 @@ public class SeasonChunkPatcher
                     iter.remove();
                 }
             }
-        }
+//        }
 
         // Clear active chunk tracking for the world
         LinkedList<ActiveChunkData> chunks = new LinkedList<ActiveChunkData>();
@@ -195,8 +199,8 @@ public class SeasonChunkPatcher
     public void onServerTick()
     {
         LinkedList<PendingChunkEntry> chunksInProcess = pendingChunkList;
-        synchronized (chunkLock)
-        {
+//        synchronized (chunkLock)
+//        {
             statisticsDeletedFromActive = 0;
 
         	// Iterate through loaded chunks to untrack non active chunks
@@ -218,8 +222,8 @@ public class SeasonChunkPatcher
                 	break;
         	}
         	
-        	pendingChunkList = new LinkedList<PendingChunkEntry>();
-        }
+//        	pendingChunkList = new LinkedList<PendingChunkEntry>();
+//        }
         
         statisticsPendingAmount = chunksInProcess.size();
         statisticsRejectedPendingAmount = 0;
@@ -245,8 +249,11 @@ public class SeasonChunkPatcher
             
             ChunkPos chunkPos = chunk.getPos();
             World world = chunk.getWorld();
-            if (ChunkUtils.hasUnloadedOrUnpopulatedNeighbor(world, chunkPos))
+            int unavailableChunkMask = ChunkUtils.identifyUnloadedOrUnpopulatedNeighbors(world, chunkPos);
+            if (unavailableChunkMask != 0)
             {
+            	// TODO: set on waiting and notification list.
+            	
             	internRemoveFromQueue(chunkData);
             	
             	statisticsRejectedPendingAmount ++;
@@ -261,8 +268,8 @@ public class SeasonChunkPatcher
         }
         
         // Remove all processed chunks from list within the lock
-        synchronized (chunkLock)
-        {
+//        synchronized (chunkLock)
+//        {
         	// First drop all processed chunks
         	for( int i = 0; i < numProcessed; i ++ ) {
         		PendingChunkEntry chunkEntry = chunksInProcess.getFirst();
@@ -271,12 +278,12 @@ public class SeasonChunkPatcher
         	}
         	
         	// reinsert unprocessed entries to queue
-        	if (chunksInProcess.size() > 0)
+/*        	if (chunksInProcess.size() > 0)
         	{
         		chunksInProcess.addAll(pendingChunkList);
         		pendingChunkList = chunksInProcess;
-        	}
-    	}
+        	} */
+//    	}
     }
     
     private void internRemoveFromQueue(ChunkData chunkData) {

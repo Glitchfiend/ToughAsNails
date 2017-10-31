@@ -15,7 +15,7 @@ public class ChunkUtils
 //    	return chunk == null || !chunk.isTerrainPopulated();
     }
 
-    public static boolean hasUnloadedOrUnpopulatedNeighbor(World world, ChunkPos pos)
+    public static int identifyUnloadedOrUnpopulatedNeighbors(World world, ChunkPos pos)
     {
 /*        if (isChunkUnloadedOrUnpopulated(world, cposX + 1, cposZ))
             return true;
@@ -33,11 +33,14 @@ public class ChunkUtils
             return true;
         if (isChunkUnloadedOrUnpopulated(world, cposX - 1, cposZ - 1))
             return true;*/
-    	for( ChunkKey.Neighbor nb : ChunkKey.NEIGHBORS ) {
-    		if( isChunkUnloadedOrUnpopulated(world, nb.getOffset(pos)) )
-    			return true;
+    	int nbMask = 0;
+    	for( int i = 0; i < ChunkKey.NEIGHBORS.length; i ++ ) {
+    		ChunkKey.Neighbor nb = ChunkKey.NEIGHBORS[i];
+    		if( isChunkUnloadedOrUnpopulated(world, nb.getOffset(pos)) ) {
+    			nbMask |= 0x1 << i;
+    		}
     	}
 
-        return false;
+        return nbMask;
     }
 }

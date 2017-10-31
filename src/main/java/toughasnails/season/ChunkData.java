@@ -1,25 +1,28 @@
 package toughasnails.season;
 
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 public class ChunkData
 {
     private final ChunkKey key;
+//    private final World world;
     private Chunk chunk;
 
     private long lastPatchedTime;
     private boolean isToBePatched;
     private ActiveChunkData belongingAC;
-    private int notifyNeighbors;
+    private int notifyNeighborsOnLoadingPopulated;
 
-    public ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime)
+    public ChunkData(/*World world, */ChunkKey key, Chunk chunk, long lastPatchedTime)
     {
+//    	this.world = world;
         this.key = key;
         this.chunk = chunk;
         this.lastPatchedTime = lastPatchedTime;
         this.isToBePatched = false;
         this.belongingAC = null;
-        this.notifyNeighbors = 0;
+        this.notifyNeighborsOnLoadingPopulated = 0;
     }
     
     public void setNeighborToNotify(int idx, boolean bToSet) {
@@ -27,16 +30,16 @@ public class ChunkData
     		throw new IllegalArgumentException("index should be between 0 and 7");
     	int bit = 0x1 << idx;
     	if( bToSet )
-    		this.notifyNeighbors |= bit;
+    		this.notifyNeighborsOnLoadingPopulated |= bit;
     	else
-    		this.notifyNeighbors &= ~bit;
+    		this.notifyNeighborsOnLoadingPopulated &= ~bit;
     }
     
     public boolean isNeighborToBeNotified(int idx) {
     	if( idx < 0 || idx >= 8 )
     		throw new IllegalArgumentException("index should be between 0 and 7");
     	int bit = 0x1 << idx;
-    	return (this.notifyNeighbors & bit) != 0;    		
+    	return (this.notifyNeighborsOnLoadingPopulated & bit) != 0;    		
     }
 
     public void setToBePatched(boolean bToBePatched)
@@ -53,6 +56,8 @@ public class ChunkData
     {
         if (chunk == null)
             throw new IllegalArgumentException("chunk must be non null. Use clearLoadedChunk() for other case.");
+//        if( chunk.getWorld() != world )
+//        	throw new IllegalArgumentException("chunk world must match.");
         this.chunk = chunk;
     }
 
@@ -69,6 +74,10 @@ public class ChunkData
     {
         return key;
     }
+    
+/*    public World getWorld() {
+    	return world;
+    } */
 
     public Chunk getChunk()
     {

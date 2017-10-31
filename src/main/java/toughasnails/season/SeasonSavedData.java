@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -123,7 +124,6 @@ public class SeasonSavedData extends WorldSavedData
             else
             {
                 data = new ChunkData(entry.getKey(), null, entry.getLastPatchedTime());
-                // Covered by constructor data.setActiveFlag(false);
                 managedChunks.put(entry.getKey(), data);
             }
         }
@@ -300,17 +300,39 @@ public class SeasonSavedData extends WorldSavedData
         if (!bCreateIfNotExisting)
             return null;
 
-        long lastPatchTime = 0; // Initial time
+        long lastPatchTime = 0; // Initial time. Should be bigger than ActiveChunkData.getSmallerKey() value!
 
-        chunkData = new ChunkData(key, chunk, lastPatchTime);
+        chunkData = new ChunkData(/*chunk.getWorld(), */key, chunk, lastPatchTime);
         managedChunks.put(key, chunkData);
         return chunkData;
+    }
+    
+    public ChunkData getStoredChunkData(/*World world, */ChunkKey key, boolean bCreateIfNotExisting) {
+    	ChunkData chunkData = managedChunks.get(key);
+    	if( chunkData == null && bCreateIfNotExisting ) {
+            long lastPatchTime = 0; // Initial time. Should be bigger than ActiveChunkData.getSmallerKey() value!
+
+            chunkData = new ChunkData(/*world, */key, null, lastPatchTime);
+    		managedChunks.put(key, chunkData);
+    	}
+    	return chunkData;
+    }
+    
+    public ChunkData getStoredChunkData(World world, ChunkPos pos, boolean bCreateIfNotExisting) {
+    	ChunkKey key = new ChunkKey(pos, world);
+    	return getStoredChunkData(/*world,*/key, bCreateIfNotExisting );
     }
 
     public void onWorldUnload(World world)
     {
-        // Clear managed chunk tags
-        managedChunks.clear();
+        // Clear managed chunk tags associated to the world
+    	Iterator<HashMap.Entry<ChunkKey, ChunkData>> iter = managedChunks.entrySet().iterator();
+    	while(iter.hasNext()) {
+    		ChunkData chunkData = iter.next().getValue();
+    		if( chunkData.getKey().isAssociatedToWorld(world) ) {
+    			iter.remove();
+    		}
+    	}
     }
 
     public void notifyChunkUnloaded(Chunk chunk)

@@ -32,6 +32,14 @@ public class ChunkKey
         this.pos = pos;
         this.dimension = dimension;
     }
+    
+    public boolean isAssociatedToWorld(World world) {
+    	if( world.isRemote )
+    		return false;
+    	if( world.provider.getDimension() != dimension )
+    		return false;
+    	return true;
+    }
 
     public ChunkPos getPos()
     {
