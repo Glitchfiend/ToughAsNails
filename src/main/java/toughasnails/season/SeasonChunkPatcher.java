@@ -317,7 +317,7 @@ public class SeasonChunkPatcher
             
             ChunkPos chunkPos = chunk.getPos();
             World world = chunk.getWorld();
-            if (ChunkUtils.hasUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos))
+            if (ChunkUtils.hasUnloadedOrUnpopulatedNeighbor(world, chunkPos.chunkXPos, chunkPos.chunkZPos))
             {
             	internRemoveFromQueue(chunkData);
             	

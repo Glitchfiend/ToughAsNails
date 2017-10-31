@@ -1,5 +1,6 @@
 package toughasnails.handler.season;
 
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
@@ -26,6 +27,7 @@ public class SeasonChunkPatchingHandler
         if (chunk.isTerrainPopulated())
         {
             patcher.enqueueChunkOnce(chunk);
+            patcher.enqueueGeneratedNeighborChunks(chunk.getWorld(), chunk.xPosition, chunk.zPosition);
         }
     }
     
@@ -49,8 +51,9 @@ public class SeasonChunkPatchingHandler
             return;
         SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
 
-        Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
-        patcher.enqueueChunkOnce(chunk);
+//        Chunk chunk = world.getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
+//        patcher.enqueueChunkOnce(chunk);
+        patcher.enqueueChunkOnce(world, new ChunkPos(event.getChunkX(), event.getChunkZ()));
         patcher.enqueueGeneratedNeighborChunks(world, event.getChunkX(), event.getChunkZ());
     }
 
