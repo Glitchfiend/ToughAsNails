@@ -1,12 +1,10 @@
 package toughasnails.season;
 
-import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 public class ChunkData
 {
     private final ChunkKey key;
-//    private final World world;
     private Chunk chunk;
 
     private long lastPatchedTime;
@@ -14,9 +12,8 @@ public class ChunkData
     private ActiveChunkData belongingAC;
     private int notifyNeighborsOnLoadingPopulated;
 
-    public ChunkData(/*World world, */ChunkKey key, Chunk chunk, long lastPatchedTime)
+    public ChunkData(ChunkKey key, Chunk chunk, long lastPatchedTime)
     {
-//    	this.world = world;
         this.key = key;
         this.chunk = chunk;
         this.lastPatchedTime = lastPatchedTime;
@@ -24,40 +21,40 @@ public class ChunkData
         this.belongingAC = null;
         this.notifyNeighborsOnLoadingPopulated = 0;
     }
-    
-    public void setNeighborToNotify(int idx, boolean bToSet) {
-    	if( idx < 0 || idx >= 8 )
-    		throw new IllegalArgumentException("index should be between 0 and 7");
-    	int bit = 0x1 << idx;
-    	if( bToSet )
-    		this.notifyNeighborsOnLoadingPopulated |= bit;
-    	else
-    		this.notifyNeighborsOnLoadingPopulated &= ~bit;
+
+    public void setNeighborToNotify(int idx, boolean bToSet)
+    {
+        if (idx < 0 || idx >= 8)
+            throw new IllegalArgumentException("index should be between 0 and 7");
+        int bit = 0x1 << idx;
+        if (bToSet)
+            this.notifyNeighborsOnLoadingPopulated |= bit;
+        else
+            this.notifyNeighborsOnLoadingPopulated &= ~bit;
     }
-    
-    public boolean isNeighborToBeNotified(int idx) {
-    	if( idx < 0 || idx >= 8 )
-    		throw new IllegalArgumentException("index should be between 0 and 7");
-    	int bit = 0x1 << idx;
-    	return (this.notifyNeighborsOnLoadingPopulated & bit) != 0;    		
+
+    public boolean isNeighborToBeNotified(int idx)
+    {
+        if (idx < 0 || idx >= 8)
+            throw new IllegalArgumentException("index should be between 0 and 7");
+        int bit = 0x1 << idx;
+        return (this.notifyNeighborsOnLoadingPopulated & bit) != 0;
     }
 
     public void setToBePatched(boolean bToBePatched)
     {
         this.isToBePatched = bToBePatched;
     }
-    
+
     public void setBelongingAC(ActiveChunkData belongingAC)
     {
-    	this.belongingAC = belongingAC;
+        this.belongingAC = belongingAC;
     }
 
     public void setLoadedChunk(Chunk chunk)
     {
         if (chunk == null)
             throw new IllegalArgumentException("chunk must be non null. Use clearLoadedChunk() for other case.");
-//        if( chunk.getWorld() != world )
-//        	throw new IllegalArgumentException("chunk world must match.");
         this.chunk = chunk;
     }
 
@@ -65,19 +62,16 @@ public class ChunkData
     {
         return isToBePatched;
     }
-    
-    public ActiveChunkData getBelongingAC() {
-    	return belongingAC;
+
+    public ActiveChunkData getBelongingAC()
+    {
+        return belongingAC;
     }
 
     public ChunkKey getKey()
     {
         return key;
     }
-    
-/*    public World getWorld() {
-    	return world;
-    } */
 
     public Chunk getChunk()
     {

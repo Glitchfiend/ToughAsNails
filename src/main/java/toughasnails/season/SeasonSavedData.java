@@ -12,7 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -280,8 +279,8 @@ public class SeasonSavedData extends WorldSavedData
             {
                 if (curChunk != chunk)
                 {
-                	if( !curChunk.unloaded )
-                		ToughAsNails.logger.error("Chunk mismatching in SeasonSavedData.getStoredChunkData .");
+                    if (!curChunk.unloaded)
+                        ToughAsNails.logger.error("Chunk mismatching in SeasonSavedData.getStoredChunkData .");
                     curChunk = null;
                 }
             }
@@ -300,40 +299,39 @@ public class SeasonSavedData extends WorldSavedData
         if (!bCreateIfNotExisting)
             return null;
 
-        long lastPatchTime = 0; // Initial time. Should be bigger than ActiveChunkData.getSmallerKey() value!
+        long lastPatchTime = 0; // Initial time. Should be bigger than
+                                // ActiveChunkData.getSmallerKey() value!
 
-        chunkData = new ChunkData(/*chunk.getWorld(), */key, chunk, lastPatchTime);
+        chunkData = new ChunkData(key, chunk, lastPatchTime);
         managedChunks.put(key, chunkData);
         return chunkData;
     }
-    
-    public ChunkData getStoredChunkData(/*World world, */ChunkKey key, boolean bCreateIfNotExisting) {
-    	ChunkData chunkData = managedChunks.get(key);
-    	if( chunkData == null && bCreateIfNotExisting ) {
-            long lastPatchTime = 0; // Initial time. Should be bigger than ActiveChunkData.getSmallerKey() value!
 
-            chunkData = new ChunkData(/*world, */key, null, lastPatchTime);
-    		managedChunks.put(key, chunkData);
-    	}
-    	return chunkData;
+    public ChunkData getStoredChunkData(ChunkKey key, boolean bCreateIfNotExisting)
+    {
+        ChunkData chunkData = managedChunks.get(key);
+        if (chunkData == null && bCreateIfNotExisting)
+        {
+            long lastPatchTime = 0; // Initial time. Should be bigger than
+                                    // ActiveChunkData.getSmallerKey() value!
+
+            chunkData = new ChunkData(key, null, lastPatchTime);
+            managedChunks.put(key, chunkData);
+        }
+        return chunkData;
     }
-    
-    public ChunkData getStoredChunkData(World world, ChunkPos pos, boolean bCreateIfNotExisting) {
-    	ChunkKey key = new ChunkKey(pos, world);
-    	return getStoredChunkData(/*world,*/key, bCreateIfNotExisting );
+
+    public ChunkData getStoredChunkData(World world, ChunkPos pos, boolean bCreateIfNotExisting)
+    {
+        ChunkKey key = new ChunkKey(pos, world);
+        return getStoredChunkData(key, bCreateIfNotExisting);
     }
 
     public void onWorldUnload(World world)
     {
         // Clear managed chunk tags associated to the world
-/*    	Iterator<HashMap.Entry<ChunkKey, ChunkData>> iter = managedChunks.entrySet().iterator();
-    	while(iter.hasNext()) {
-    		ChunkData chunkData = iter.next().getValue();
-    		if( chunkData.getKey().isAssociatedToWorld(world) ) {
-    			iter.remove();
-    		}
-    	}*/
-    	managedChunks.clear();  // No BUG: managedChunks contains only chunks associated to the world.
+        managedChunks.clear(); // No BUG: managedChunks contains only chunks
+                               // associated to the world.
     }
 
     public void notifyChunkUnloaded(Chunk chunk)

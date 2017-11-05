@@ -36,7 +36,7 @@ import toughasnails.season.SeasonTime;
 public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
     private static SeasonChunkPatcher chunkPatcher = new SeasonChunkPatcher();
-    
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onDebugOverlay(final RenderGameOverlayEvent.Text event)
@@ -46,14 +46,14 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             final Minecraft mc = Minecraft.getMinecraft();
             if (mc.gameSettings.showDebugInfo)
             {
-            	event.getLeft().add( "" + chunkPatcher.statisticsVisitedActive + " active chunks were visited.");
-            	event.getLeft().add( "" + chunkPatcher.statisticsAddedToActive + " active chunks were added.");
-            	event.getLeft().add( "" + chunkPatcher.statisticsDeletedFromActive + " active chunks were deleted.");
-            	event.getLeft().add( "" + chunkPatcher.statisticsPendingAmount + " chunks enqueued for patching.");
-            	event.getLeft().add( "" + chunkPatcher.statisticsRejectedPendingAmount + " chunks got rejected from patching.");
+                event.getLeft().add("" + chunkPatcher.statisticsVisitedActive + " active chunks were visited.");
+                event.getLeft().add("" + chunkPatcher.statisticsAddedToActive + " active chunks were added.");
+                event.getLeft().add("" + chunkPatcher.statisticsDeletedFromActive + " active chunks were deleted.");
+                event.getLeft().add("" + chunkPatcher.statisticsPendingAmount + " chunks enqueued for patching.");
+                event.getLeft().add("" + chunkPatcher.statisticsRejectedPendingAmount + " chunks got rejected from patching.");
             }
         }
-    	
+
     }
 
     @SubscribeEvent

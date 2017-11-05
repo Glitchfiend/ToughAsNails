@@ -14,7 +14,6 @@ import toughasnails.season.SeasonChunkPatcher;
 
 public class SeasonChunkPatchingHandler
 {
-
     @SubscribeEvent
     public void chunkDataLoad(ChunkEvent.Load event)
     {
@@ -27,10 +26,9 @@ public class SeasonChunkPatchingHandler
         {
             patcher.enqueueChunkOnce(chunk);
             patcher.notifyLoadedAndPopulated(chunk.getWorld(), chunk.getPos());
-//TODO            patcher.enqueueGeneratedNeighborChunks(chunk.getWorld(), chunk.xPosition, chunk.zPosition);
         }
     }
-    
+
     @SubscribeEvent
     public void chunkUnload(ChunkEvent.Unload event)
     {
@@ -54,9 +52,6 @@ public class SeasonChunkPatchingHandler
         ChunkPos pos = new ChunkPos(event.getChunkX(), event.getChunkZ());
         patcher.enqueueChunkOnce(world, pos);
         patcher.notifyLoadedAndPopulated(world, pos);
-        
-        // TODO: Remove the one below as soon as notifyLoadedAndPopulated is implemented
-//        patcher.enqueueGeneratedNeighborChunks(world, pos);
     }
 
     @SubscribeEvent

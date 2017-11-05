@@ -38,27 +38,32 @@ public class ActiveChunkData extends BinaryHeapNode<Long>
         return lastVisitTime;
     }
 
-    public void detach() {
-    	data.setBelongingAC(null);
+    public void detach()
+    {
+        data.setBelongingAC(null);
     }
 
-	@Override
-	public int compareTo(BinaryHeapNode<Long> o) {
-		return Long.compare(this.lastVisitTime, o.getNodeKey());
-	}
+    @Override
+    public int compareTo(BinaryHeapNode<Long> o)
+    {
+        return Long.compare(this.lastVisitTime, o.getNodeKey());
+    }
 
-	@Override
-	public Long getSmallerKey() {
-		return -1L;
-	}
+    @Override
+    public Long getSmallerKey()
+    {
+        return -1L;
+    }
 
-	@Override
-	public void setNodeKey(Long key) {
-		this.lastVisitTime = key;
-	}
+    @Override
+    public void setNodeKey(Long key)
+    {
+        this.lastVisitTime = key;
+    }
 
-	@Override
-	public long getNodeKey() {
-		return this.lastVisitTime;
-	}
+    @Override
+    public long getNodeKey()
+    {
+        return this.lastVisitTime;
+    }
 }

@@ -2,7 +2,11 @@ package toughasnails.season;
 
 public enum WeatherEventType
 {
-    EVENT_UNKNOWN(0), EVENT_TO_COLD_SEASON(1), EVENT_TO_WARM_SEASON(2), EVENT_START_RAINING(3), EVENT_STOP_RAINING(4);
+    EVENT_UNKNOWN(0),
+    EVENT_TO_COLD_SEASON(1),
+    EVENT_TO_WARM_SEASON(2),
+    EVENT_START_RAINING(3),
+    EVENT_STOP_RAINING(4);
 
     private int code;
 
