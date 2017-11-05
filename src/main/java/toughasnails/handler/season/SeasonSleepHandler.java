@@ -14,24 +14,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.config.SeasonsOption;
 import toughasnails.api.config.SyncedConfig;
-import toughasnails.api.config.GameplayOption;
+import toughasnails.api.season.Season;
+import toughasnails.api.season.SeasonHelper;
 import toughasnails.season.SeasonSavedData;
 
-public class SeasonSleepHandler 
+public class SeasonSleepHandler
 {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
         if (event.phase == Phase.START && event.side == Side.SERVER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
-            WorldServer world = (WorldServer)event.world;
+            WorldServer world = (WorldServer) event.world;
 
-            //Called before all players are awoken for the next day
+            // Called before all players are awoken for the next day
             if (world.areAllPlayersAsleep())
             {
                 SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
+                Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
+
                 long timeDiff = 24000L - ((world.getWorldInfo().getWorldTime() + 24000L) % 24000L);
                 seasonData.seasonCycleTicks += timeDiff;
+                seasonData.updateJournal(world, season);
+
                 seasonData.markDirty();
                 SeasonHandler.sendSeasonUpdate(world);
             }

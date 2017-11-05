@@ -17,6 +17,7 @@ import toughasnails.handler.health.HealthOverlayHandler;
 import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
+import toughasnails.handler.season.SeasonChunkPatchingHandler;
 import toughasnails.handler.season.SeasonCropHandler;
 import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
@@ -41,15 +42,15 @@ public class ModHandlers
 
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         MinecraftForge.EVENT_BUS.register(new SyncedConfigHandler());
-        
+
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new VanillaDrinkHandler());
-	    MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
+        MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
         MaxHealthHandler maxHealthHandler = new MaxHealthHandler();
         MinecraftForge.EVENT_BUS.register(maxHealthHandler);
         HealthHelper.heartProvider = maxHealthHandler;
 
-        //Handlers for functionality related to seasons
+        // Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(SEASON_HANDLER);
         SeasonHelper.dataProvider = SEASON_HANDLER;
         MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
@@ -61,7 +62,8 @@ public class ModHandlers
         MinecraftForge.TERRAIN_GEN_BUS.register(stopSpawnHandler);
         MinecraftForge.EVENT_BUS.register(new WeatherFrequencyHandler());
         MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
-        
+        MinecraftForge.EVENT_BUS.register(new SeasonChunkPatchingHandler());
+
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
             MinecraftForge.EVENT_BUS.register(new TemperatureOverlayHandler());
@@ -72,7 +74,7 @@ public class ModHandlers
             registerSeasonColourHandlers();
         }
     }
-    
+
     @SideOnly(Side.CLIENT)
     private static void registerSeasonColourHandlers()
     {
@@ -85,7 +87,7 @@ public class ModHandlers
                 return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
             }
         };
-        
+
         BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
         {
             @Override
