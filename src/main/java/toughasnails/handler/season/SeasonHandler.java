@@ -35,27 +35,6 @@ import toughasnails.season.SeasonTime;
 
 public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
 {
-    private static SeasonChunkPatcher chunkPatcher = new SeasonChunkPatcher();
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onDebugOverlay(final RenderGameOverlayEvent.Text event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-        {
-            final Minecraft mc = Minecraft.getMinecraft();
-            if (mc.gameSettings.showDebugInfo)
-            {
-                event.getLeft().add("" + chunkPatcher.statisticsVisitedActive + " active chunks were visited.");
-                event.getLeft().add("" + chunkPatcher.statisticsAddedToActive + " active chunks were added.");
-                event.getLeft().add("" + chunkPatcher.statisticsDeletedFromActive + " active chunks were deleted.");
-                event.getLeft().add("" + chunkPatcher.statisticsPendingAmount + " chunks enqueued for patching.");
-                event.getLeft().add("" + chunkPatcher.statisticsRejectedPendingAmount + " chunks got rejected from patching.");
-            }
-        }
-
-    }
-
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
@@ -89,10 +68,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         if (world.isRemote)
             return;
 
-        // Clear loadedChunkQueue
-        SeasonChunkPatcher patcher = SeasonHandler.getSeasonChunkPatcher();
-        patcher.onServerWorldUnload(world);
-
         // Season data cleanup
         SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(world);
         seasonData.onWorldUnload(world);
@@ -117,13 +92,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         World world = player.world;
 
         sendSeasonUpdate(world);
-    }
-
-    @SubscribeEvent
-    public void serverTick(TickEvent.ServerTickEvent event)
-    {
-        // Performs pending patching tasks
-        chunkPatcher.onServerTick();
     }
 
     private SubSeason lastSeason = null;
@@ -180,11 +148,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         }
 
         return savedData;
-    }
-
-    public static SeasonChunkPatcher getSeasonChunkPatcher()
-    {
-        return chunkPatcher;
     }
 
     //
