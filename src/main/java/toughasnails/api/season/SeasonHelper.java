@@ -46,8 +46,8 @@ public class SeasonHelper
      */
     public static boolean canSnowAtTempInSeason(Season season, float temperature)
     {
-        //If we're in winter, the temperature can be anything equal to or below 0.7
-        return temperature < 0.15F || (season == Season.WINTER && temperature <= 0.7F && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS));
+        //If we're in winter, the temperature can be anything equal to or below 0.8
+        return temperature < 0.15F || (season == Season.WINTER && temperature <= 0.8F && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS));
     }
 
     public interface ISeasonDataProvider
