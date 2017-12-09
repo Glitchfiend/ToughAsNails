@@ -11,8 +11,8 @@ itemGroup.tabToughAsNails=意志坚定
 
 tile.campfire.name=篝火
 tile.dead_crops.name=死亡的作物
-tile.glowstone_torch.name=雨水收集器
-tile.rain_collector.name=荧光火把
+tile.glowstone_torch.name=荧光火把
+tile.rain_collector.name=雨水收集器
 tile.temperature_coil.cooling_coil.name=冷却旋管
 tile.temperature_coil.heating_coil.name=加热旋管
 tile.season_sensor_spring.name=季节传感器（春）
