@@ -10,7 +10,7 @@ import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.config.TANConfig;
-import toughasnails.temperature.BlockTemperatureData;
+import toughasnails.config.temperature.BlockTemperatureData;
 import toughasnails.util.BlockStateUtils;
 
 import java.util.ArrayList;
@@ -73,18 +73,7 @@ public class ObjectProximityModifier extends TemperatureModifier
             //Check if block has relevant state: 
             for (BlockTemperatureData tempData : blockTempData)
             {
-                boolean bAllSpecifiedPropertiesMatch = true;
-                for (String comparisonProperty : tempData.useProperties)
-                {
-                    IProperty<?> targetProperty = BlockStateUtils.getPropertyByName(state, comparisonProperty);
-
-                    if (!(state.getValue(targetProperty) == tempData.state.getValue(targetProperty)))
-                    {
-                        bAllSpecifiedPropertiesMatch = false;
-                    }
-                }
-
-                if (bAllSpecifiedPropertiesMatch)
+                if (tempData.predicate.apply(state))
                 {
                     return tempData.blockTemperature;
                 }

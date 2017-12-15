@@ -1,4 +1,4 @@
-package toughasnails.temperature;
+package toughasnails.config.temperature;
 
 public class MaterialTemperatureData {
 
