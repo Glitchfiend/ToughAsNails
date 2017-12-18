@@ -1,7 +1,6 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -9,11 +8,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
-import toughasnails.config.TANConfig;
-import toughasnails.config.temperature.BlockTemperatureData;
-import toughasnails.util.BlockStateUtils;
+import toughasnails.config.json.BlockTemperatureData;
+import toughasnails.init.ModConfig;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO: Replace this with something better
 public class ObjectProximityModifier extends TemperatureModifier
@@ -66,9 +65,9 @@ public class ObjectProximityModifier extends TemperatureModifier
         String blockName = state.getBlock().getRegistryName().toString();
 
         //Blocks
-        if (TANConfig.blockTemperatureData.containsKey(blockName))
+        if (ModConfig.blockTemperatureData.containsKey(blockName))
         {
-            ArrayList<BlockTemperatureData> blockTempData = TANConfig.blockTemperatureData.get(blockName);
+            List<BlockTemperatureData> blockTempData = ModConfig.blockTemperatureData.get(blockName);
 
             //Check if block has relevant state: 
             for (BlockTemperatureData tempData : blockTempData)
@@ -86,7 +85,7 @@ public class ObjectProximityModifier extends TemperatureModifier
         //Handle materials, but only if we didn't already find an actual block to use: 
         if (material == Material.FIRE)
         {
-            return TANConfig.materialTemperatureData.fire;
+            return ModConfig.materialTemperatureData.fire;
         }
 
         return 0.0F;

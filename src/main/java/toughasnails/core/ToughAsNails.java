@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
-import toughasnails.config.TANConfig;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
@@ -49,7 +48,7 @@ public class ToughAsNails
     {
         configDirectory = new File(event.getModConfigurationDirectory(), "toughasnails");
 
-        ModConfig.init(configDirectory);
+        ModConfig.preInit(configDirectory);
     	ModBlocks.init();
     	ModEntities.init();
         ModItems.init();
@@ -69,7 +68,7 @@ public class ToughAsNails
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        TANConfig.init(configDirectory);
+        ModConfig.init(configDirectory);
     }
     
     @EventHandler

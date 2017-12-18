@@ -10,13 +10,21 @@ package toughasnails.handler.thirst;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import toughasnails.api.TANPotions;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.item.ItemDrink;
+import toughasnails.api.stat.capability.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.config.json.DrinkData;
+import toughasnails.init.ModConfig;
 import toughasnails.thirst.ThirstHandler;
 
-public class VanillaDrinkHandler 
+public class DrinkHandler
 {
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
@@ -39,11 +47,8 @@ public class VanillaDrinkHandler
                     zeroStack = true;
                 }
 
-                if (stack.getItem().equals(Items.MILK_BUCKET))
-                {
-                    thirstHandler.addStats(6, 0.7F);
-                }
-                else if (stack.getItem().equals(Items.POTIONITEM))
+                // Special case potions because they use NBT
+                if (stack.getItem().equals(Items.POTIONITEM))
                 {
                     if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {
@@ -55,9 +60,36 @@ public class VanillaDrinkHandler
                         thirstHandler.addStats(4, 0.3F);
                     }
                 }
+                else if (!(stack.getItem() instanceof ItemDrink))
+                {
+                    String registryName = stack.getItem().getRegistryName().toString();
+
+                    if (ModConfig.drinkData.containsKey(registryName))
+                    {
+                        for (DrinkData drinkData : ModConfig.drinkData.get(registryName))
+                        {
+                            if (drinkData.getPredicate().apply(stack))
+                            {
+                                applyDrinkStats(player, drinkData);
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 if (zeroStack) stack.setCount(0);
             }
+        }
+    }
+
+    private void applyDrinkStats(EntityPlayer player, DrinkData data)
+    {
+        IThirst thirst = ThirstHelper.getThirstData(player);
+        thirst.addStats(data.getThirstRestored(), data.getHydrationRestored());
+
+        if (player.world.rand.nextFloat() < data.getPoisonChance() && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
+        {
+            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
         }
     }
 }

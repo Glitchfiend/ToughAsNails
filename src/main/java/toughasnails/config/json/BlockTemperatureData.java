@@ -1,8 +1,6 @@
-package toughasnails.config.temperature;
+package toughasnails.config.json;
 
 import com.google.gson.annotations.SerializedName;
-import net.minecraft.block.state.IBlockState;
-import toughasnails.util.config.BlockStatePredicate;
 
 import javax.annotation.Nonnull;
 
