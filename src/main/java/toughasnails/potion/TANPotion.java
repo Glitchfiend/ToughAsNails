@@ -34,12 +34,29 @@ public abstract class TANPotion extends Potion
         super(isBadEffectIn, liquidColorIn);
         this.setIconIndex(x, y);
     }
-    
+
+    // We handle status icon rendering ourselves
     @Override
-    @SideOnly(Side.CLIENT)
     public boolean hasStatusIcon()
     {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(POTIONS_LOCATION);
-        return super.hasStatusIcon();
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc)
+    {
+        mc.getTextureManager().bindTexture(POTIONS_LOCATION);
+        int iconIndex = this.getStatusIconIndex();
+        mc.currentScreen.drawTexturedModalRect(x + 6, y + 7, 0 + iconIndex % 8 * 18, 198 + iconIndex / 8 * 18, 18, 18);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void renderHUDEffect(int x, int y, PotionEffect effect, Minecraft mc, float alpha)
+    {
+        mc.getTextureManager().bindTexture(POTIONS_LOCATION);
+        int iconIndex = this.getStatusIconIndex();
+        mc.ingameGUI.drawTexturedModalRect(x + 3, y + 3, iconIndex % 8 * 18, 198 + iconIndex / 8 * 18, 18, 18);
     }
 }
