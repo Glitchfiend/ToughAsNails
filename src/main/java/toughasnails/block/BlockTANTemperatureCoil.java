@@ -101,7 +101,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
                             double d0 = (double) ((float) regPos.getX() + 0.4F + rand.nextFloat() * 0.2F);
                             double d1 = (double) ((float) regPos.getY() + 0.7F + rand.nextFloat() * 0.3F);
                             double d2 = (double) ((float) regPos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
-                            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+                            world.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
                         }
                         else if (state.getValue(VARIANT) == CoilType.COOLING && (randVal < 0.0002F || regPos.equals(pos) && randVal < 0.1F))
                         {
