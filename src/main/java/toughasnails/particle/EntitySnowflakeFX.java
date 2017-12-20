@@ -11,7 +11,8 @@ import toughasnails.core.ClientProxy;
 
 public class EntitySnowflakeFX extends Particle
 {
-    
+    private float defaultParticleScale;
+
     public EntitySnowflakeFX(World world, double xCoordIn, double yCoordIn, double zCoordIn, double motionXIn, double motionYIn, double motionZIn)
     {
         this(world, xCoordIn, yCoordIn, zCoordIn, motionXIn, motionYIn, motionZIn, 1.0F);
@@ -32,9 +33,10 @@ public class EntitySnowflakeFX extends Particle
         this.motionZ += motionZIn;
         this.particleScale *= 0.75F;
         this.particleScale *= par14;
+        this.defaultParticleScale = this.particleScale;
         this.particleMaxAge = (int)((8.0D / (Math.random() * 0.8D + 0.2D)) * 8);
         this.particleMaxAge = (int)((float)this.particleMaxAge * par14);
-        this.particleAge = world.rand.nextInt(2);
+        this.particleAge = world.rand.nextInt(3); // Not all snowflakes should start off massive
         this.particleAlpha = 1.0F;
         this.particleGravity = 0.02F;
         this.canCollide = false;
@@ -49,13 +51,12 @@ public class EntitySnowflakeFX extends Particle
     @Override
     public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
     {
-        
         // EffectRenderer will by default bind the vanilla particles texture, override with our own
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(ClientProxy.particleTexturesLocation);
-        
+
         float scaleMultiplier = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge * 32.0F;
         scaleMultiplier = MathHelper.clamp(scaleMultiplier, 0.0F, 1.0F);
-        this.particleScale = this.particleScale * scaleMultiplier;
+        this.particleScale = this.defaultParticleScale * scaleMultiplier;
         
         GlStateManager.depthMask(false);
         GlStateManager.enableBlend();
@@ -80,7 +81,7 @@ public class EntitySnowflakeFX extends Particle
             this.setExpired();
         }
 
-        this.particleTextureIndexX = 7 - particleAge * 8 / particleMaxAge;
+        this.particleTextureIndexX = 7 - this.particleAge * 8 / this.particleMaxAge;
         this.move(motionX, motionY, motionZ);
 
         if (posY == prevPosY)
@@ -99,6 +100,4 @@ public class EntitySnowflakeFX extends Particle
             motionZ *= 0.699999988079071D;
         }
     }
-    
-    
 }
