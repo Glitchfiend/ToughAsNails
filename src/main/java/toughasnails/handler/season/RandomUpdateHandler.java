@@ -75,12 +75,12 @@ public class RandomUpdateHandler
                         BlockPos topPos = world.getPrecipitationHeight(new BlockPos(x + (randOffset & 15), 0, z + (randOffset >> 8 & 15)));
                         BlockPos groundPos = topPos.down();
 
-                        if (world.getBlockState(groundPos).getBlock() == Blocks.ICE && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiome(groundPos).getFloatTemperature(groundPos)))
+                        if (world.getBlockState(groundPos).getBlock() == Blocks.ICE && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiome(groundPos).getTemperature(groundPos)))
                         {
                             ((BlockIce)Blocks.ICE).turnIntoWater(world, groundPos);
                         }
 
-                        if (world.getBlockState(topPos).getBlock() == Blocks.SNOW_LAYER && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiome(topPos).getFloatTemperature(topPos)))
+                        if (world.getBlockState(topPos).getBlock() == Blocks.SNOW_LAYER && !SeasonHelper.canSnowAtTempInSeason(season, world.getBiome(topPos).getTemperature(topPos)))
                         {
                             world.setBlockToAir(topPos);
                         }

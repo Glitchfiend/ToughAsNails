@@ -37,7 +37,7 @@ public class SeasonASMHelper
     public static boolean canSnowAtInSeason(World world, BlockPos pos, boolean checkLight, Season season)
     {
         Biome biome = world.getBiome(pos);
-        float temperature = biome.getFloatTemperature(pos);
+        float temperature = biome.getTemperature(pos);
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
@@ -69,7 +69,7 @@ public class SeasonASMHelper
     public static boolean canBlockFreezeInSeason(World world, BlockPos pos, boolean noWaterAdj, Season season)
     {
         Biome Biome = world.getBiome(pos);
-        float temperature = Biome.getFloatTemperature(pos);
+        float temperature = Biome.getTemperature(pos);
         
         //If we're in winter, the temperature can be anything equal to or below 0.7
         if (!SeasonHelper.canSnowAtTempInSeason(season, temperature))
@@ -121,13 +121,13 @@ public class SeasonASMHelper
     {
         Season season = new SeasonTime(SeasonHandler.clientSeasonCycleTicks).getSubSeason().getSeason();
         
-        if (biome.getTemperature() <= 0.8F && season == Season.WINTER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
+        if (biome.getDefaultTemperature() <= 0.8F && season == Season.WINTER && SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
         {
             return 0.0F;
         }
         else
         {
-            return biome.getFloatTemperature(pos);
+            return biome.getTemperature(pos);
         }
     }
     

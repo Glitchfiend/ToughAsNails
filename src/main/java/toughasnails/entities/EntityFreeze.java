@@ -194,7 +194,7 @@ public class EntityFreeze extends EntityMob implements IMob
             {
                 --this.field_179468_c;
                 EntityLivingBase entitylivingbase = this.freeze.getAttackTarget();
-                double d0 = this.freeze.getDistanceSqToEntity(entitylivingbase);
+                double d0 = this.freeze.getDistanceSq(entitylivingbase);
 
                 if (d0 < 4.0D)
                 {
@@ -248,7 +248,7 @@ public class EntityFreeze extends EntityMob implements IMob
                 }
                 else
                 {
-                    this.freeze.getNavigator().clearPathEntity();
+                    this.freeze.getNavigator().clearPath();
                     this.freeze.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
                 }
 

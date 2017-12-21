@@ -27,7 +27,7 @@ public class EntityRendererTransformer implements IClassTransformer
     private static final String[] RENDER_RAIN_SNOW_NAMES = new String[] { "renderRainSnow", "func_78474_d", "c" };
     private static final String[] ADD_RAIN_PARTICLES_NAMES = new String[] { "addRainParticles", "func_78484_h", "q" };
     
-    private static final String[] GET_FLOAT_TEMPERATURE_NAMES = new String[] { "getFloatTemperature", "func_180626_a", "a" };
+    private static final String[] GET_FLOAT_TEMPERATURE_NAMES = new String[] { "getTemperature", "func_180626_a", "a" };
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)

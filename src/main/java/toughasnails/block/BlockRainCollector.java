@@ -167,7 +167,7 @@ public class BlockRainCollector extends Block implements ITANBlock
     {
     	if (worldIn.rand.nextInt(4) == 1)
         {
-	        float f = worldIn.getBiome(pos).getFloatTemperature(pos);
+	        float f = worldIn.getBiome(pos).getTemperature(pos);
 	
 	        if (worldIn.getBiomeProvider().getTemperatureAtHeight(f, pos.getY()) >= 0.15F)
 	        {

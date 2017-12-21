@@ -340,7 +340,7 @@ public class EntityIceball extends Entity implements IProjectile
         }
         else
         {
-            this.setBeenAttacked();
+            this.markVelocityChanged();
 
             if (source.getTrueSource() != null)
             {
@@ -371,9 +371,5 @@ public class EntityIceball extends Entity implements IProjectile
     }
 
 	@Override
-	public void setThrowableHeading(double x, double y, double z,
-			float velocity, float inaccuracy) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {}
 }
