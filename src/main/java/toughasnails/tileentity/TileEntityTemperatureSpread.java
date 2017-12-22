@@ -81,8 +81,9 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         //Verify every second
         if (++updateTicks % 20 == 0)
         {
-            // Ensure there has been no changes since last time
-            if (!verify())
+            // Attempt to fill again if no positions are being regulated
+            // Also refill if there has been any changes since last time
+            if (!this.isActive() || !this.verify())
             {
                 //Refill again
                 fill();
@@ -282,6 +283,16 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         }
 
         return true;
+    }
+
+    /**
+     * Returns true if any positions are being regulated by this coil
+     *
+     * @return True if active
+     */
+    public boolean isActive()
+    {
+        return !this.filledPositions[MAX_SPREAD_DISTANCE].isEmpty();
     }
     
     private boolean canFill(BlockPos pos)
