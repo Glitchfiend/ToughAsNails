@@ -135,8 +135,10 @@ public class SeasonASMHelper
     // BlockCrops methods //
     ////////////////////////
     
-    public static void onUpdateTick(Block block, World world, BlockPos pos)
+    public static void onRandomTick(Block block, World world, BlockPos pos)
     {
+        if (!(block instanceof IDecayableCrop) || !((IDecayableCrop)block).shouldDecay()) return;
+
         Season season = SeasonHelper.getSeasonData(world).getSubSeason().getSeason();
         
         if (season == Season.WINTER &&

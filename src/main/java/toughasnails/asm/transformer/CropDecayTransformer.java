@@ -24,21 +24,25 @@ import org.objectweb.asm.tree.VarInsnNode;
 import com.google.common.collect.Lists;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.classloading.FMLForgePlugin;
 import toughasnails.asm.ASMHelper;
 import toughasnails.asm.ObfHelper;
 
 public class CropDecayTransformer implements IClassTransformer
 {
-    private static final String[] UPDATE_TICK_NAMES = new String[] { "updateTick", "func_180650_b", "b" };
+    private static final String[] RANDOM_TICK_NAMES = new String[] { "randomTick", "func_180645_a", "a" };
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass)
     {
         if (transformedName.equals("net.minecraft.block.BlockCrops") || transformedName.equals("net.minecraft.block.BlockStem"))
         {
-            // This is a vanilla crop; let's implement the interface and inject the crop decay hook
+            // This is a vanilla crop; ; let's implement the interface
             return transformToDecay(basicClass, !transformedName.equals(name), transformedName, true);
+        }
+        else if (transformedName.equals("net.minecraft.block.Block") )
+        {
+            // Inject the hook used for crop decay
+            return addRandomTickHook(basicClass, !transformedName.equals(name), transformedName, true);
         }
         else
         {
@@ -66,33 +70,8 @@ public class CropDecayTransformer implements IClassTransformer
             classNode.interfaces.add("toughasnails/api/season/IDecayableCrop");
         }
         
-        List<String> successfulTransformations = Lists.newArrayList();
-        
-        //Iterate over the methods in the class
-        for (MethodNode methodNode : classNode.methods)
-        {
-            if (ASMHelper.methodEquals(methodNode, UPDATE_TICK_NAMES, ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "net/minecraft/block/state/IBlockState", "java/util/Random")))
-            { 
-                InsnList insnList = new InsnList();
-                
-                //Get the current season
-                insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
-                insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
-                insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
-                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "onUpdateTick", ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/block/Block", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
-            
-                //Insert our new instructions before returning
-                methodNode.instructions.insertBefore(methodNode.instructions.get(methodNode.instructions.indexOf(methodNode.instructions.getLast()) - 1), insnList);
-            
-                successfulTransformations.add(methodNode.name + " " + methodNode.desc);
-            }
-        }
-        
         if (isVanilla)
         {
-            // The vanilla method does not exist? What is this sorcery?!?
-            if (successfulTransformations.size() != 1) throw new RuntimeException("An error occurred transforming " + name + ". Applied transformations: " + successfulTransformations.toString());
-            
             //Implement shouldDecay() method, which simply returns true. The method allows subclasses to override behavior.
             MethodNode decayMethod = new MethodNode(Opcodes.ACC_PUBLIC, "shouldDecay", "()Z", null, null);
             InsnList decayInsns = new InsnList();
@@ -107,6 +86,46 @@ public class CropDecayTransformer implements IClassTransformer
         classNode.accept(writer);
         bytes = writer.toByteArray();
         
+        return bytes;
+    }
+
+    private byte[] addRandomTickHook(byte[] bytes, boolean obfuscatedClass, String name, boolean isVanilla)
+    {
+        //Decode the class from bytes
+        ClassNode classNode = new ClassNode();
+        ClassReader classReader = new ClassReader(bytes);
+        classReader.accept(classNode, 0);
+
+        List<String> successfulTransformations = Lists.newArrayList();
+
+        //Iterate over the methods in the class
+        for (MethodNode methodNode : classNode.methods)
+        {
+            if (ASMHelper.methodEquals(methodNode, RANDOM_TICK_NAMES, ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos", "net/minecraft/block/state/IBlockState", "java/util/Random")))
+            {
+                InsnList insnList = new InsnList();
+
+                //Get the current season
+                insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                insnList.add(new VarInsnNode(Opcodes.ALOAD, 1));
+                insnList.add(new VarInsnNode(Opcodes.ALOAD, 2));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "toughasnails/season/SeasonASMHelper", "onRandomTick", ObfHelper.createMethodDescriptor(obfuscatedClass, "V", "net/minecraft/block/Block", "net/minecraft/world/World", "net/minecraft/util/math/BlockPos"), false));
+
+                //Insert our new instructions before returning
+                methodNode.instructions.insertBefore(methodNode.instructions.get(methodNode.instructions.indexOf(methodNode.instructions.getLast()) - 1), insnList);
+
+                successfulTransformations.add(methodNode.name + " " + methodNode.desc);
+            }
+        }
+
+        // The vanilla method does not exist? What is this sorcery?!?
+        if (successfulTransformations.size() != 1) throw new RuntimeException("An error occurred transforming " + name + ". Applied transformations: " + successfulTransformations.toString());
+
+        //Encode the altered class back into bytes
+        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        classNode.accept(writer);
+        bytes = writer.toByteArray();
+
         return bytes;
     }
     
