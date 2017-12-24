@@ -38,6 +38,8 @@ public class TemperatureConfig extends ConfigHandler
 
     public int timeModifier;
     public float timeExtremityMultiplier;
+    public boolean enableDayTimeModifier;
+    public boolean enableNightTimeModifier;
 
     public int wetModifier;
     public int snowModifier;
@@ -80,6 +82,8 @@ public class TemperatureConfig extends ConfigHandler
 
             timeModifier = config.getInt("Time Modifier", MODIFIER_SETTINGS, 9, 0, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in the middle of the day/night");
             timeExtremityMultiplier = config.getFloat("Time Extremity Multiplier", MODIFIER_SETTINGS, 1.25F, 0, Float.MAX_VALUE, "The amount to multiply the temperature increment/decrement by in the middle of the day/night based on how extreme the biome temperature is");
+            enableDayTimeModifier = config.getBoolean("Enable Day Time Modifier", MODIFIER_SETTINGS, false, "Whether the player's temperature should increase closer to the middle of the day");
+            enableNightTimeModifier = config.getBoolean("Enable Night Time Modifier", MODIFIER_SETTINGS, true, "Whether the player's temperature should decrease closer to the middle of the night");
 
             wetModifier = config.getInt("Wet Modifier", MODIFIER_SETTINGS, -7, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by when wet");
             snowModifier = config.getInt("Snow Modifier", MODIFIER_SETTINGS, -10, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by when snowing");

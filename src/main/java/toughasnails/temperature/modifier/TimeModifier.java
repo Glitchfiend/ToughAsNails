@@ -28,7 +28,7 @@ public class TimeModifier extends TemperatureModifier
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
 
-        if (world.provider.isSurfaceWorld())
+        if (world.provider.isSurfaceWorld() && ((timeNorm < 0 && ModConfig.temperature.enableNightTimeModifier)|| (timeNorm > 0 && ModConfig.temperature.enableDayTimeModifier)))
         {
         	newTemperatureLevel += ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier));
         }
