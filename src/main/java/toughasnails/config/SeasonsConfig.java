@@ -25,7 +25,7 @@ public class SeasonsConfig extends ConfigHandler
 
     public SeasonsConfig(File configFile)
     {
-        super(configFile);
+        super(configFile, "Seasons Settings");
     }
 
     @Override

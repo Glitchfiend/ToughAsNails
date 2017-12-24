@@ -44,7 +44,7 @@ public class TemperatureConfig extends ConfigHandler
 
     public TemperatureConfig(File configFile)
     {
-        super(configFile);
+        super(configFile, "Temperature Settings");
     }
 
     @Override

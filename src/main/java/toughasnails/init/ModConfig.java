@@ -22,6 +22,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import toughasnails.api.TANBlocks;
 import toughasnails.block.BlockTANCampfire;
+import toughasnails.config.ConfigHandler;
 import toughasnails.config.GameplayConfig;
 import toughasnails.config.SeasonsConfig;
 import toughasnails.config.TemperatureConfig;
@@ -30,6 +31,8 @@ import toughasnails.util.config.JsonUtil;
 
 public class ModConfig
 {
+    public static List<ConfigHandler> configHandlers = Lists.newArrayList();
+
     public static Map<String, List<BlockTemperatureData>> blockTemperatureData = Maps.newHashMap();
     public static Map<String, List<DrinkData>> drinkData = Maps.newHashMap();
     public static MaterialTemperatureData materialTemperatureData;

@@ -14,19 +14,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.config.ISyncedOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.core.ToughAsNails;
+import toughasnails.init.ModConfig;
 
 import java.io.File;
 
 public abstract class ConfigHandler
 {
     public Configuration config;
+    public final String description;
 
-    protected ConfigHandler(File configFile)
+    protected ConfigHandler(File configFile, String description)
     {
         config = new Configuration(configFile);
         loadConfiguration();
 
         MinecraftForge.EVENT_BUS.register(this);
+        this.description = description;
+        ModConfig.configHandlers.add(this);
     }
 
     protected abstract void loadConfiguration();

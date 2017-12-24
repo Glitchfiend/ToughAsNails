@@ -24,7 +24,7 @@ public class GameplayConfig extends ConfigHandler
 
     public GameplayConfig(File configFile)
     {
-        super(configFile);
+        super(configFile, "Gameplay Settings");
     }
 
     @Override
