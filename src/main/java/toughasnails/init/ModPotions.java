@@ -10,12 +10,12 @@ import static toughasnails.api.TANPotions.hyperthermia;
 import static toughasnails.api.TANPotions.hypothermia;
 import static toughasnails.api.TANPotions.thirst;
 
+import glitchcore.potion.PotionHelper;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.TANPotions;
 import toughasnails.core.ToughAsNails;
 import toughasnails.potion.PotionColdResistance;
@@ -43,16 +43,14 @@ public class ModPotions
     public static Potion registerPotion(String name, Potion potion)
     {
         ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
-        potion.setRegistryName(location);
-        ForgeRegistries.POTIONS.register(potion);
+        PotionHelper.registerPotion(location, potion);
         return potion;
     }
     
     public static PotionType registerPotionType(String name, PotionType potionType)
     {
         ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
-        potionType.setRegistryName(location);
-        ForgeRegistries.POTION_TYPES.register(potionType);
+        PotionHelper.registerPotionType(location, potionType);
         return potionType;
     }
 }

@@ -1,6 +1,6 @@
 package toughasnails.block;
 
-import net.minecraft.block.Block;
+import glitchcore.block.GFBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -9,7 +9,7 @@ import net.minecraft.item.ItemBlock;
 import toughasnails.api.ITANBlock;
 import toughasnails.item.ItemTANBlock;
 
-public class BlockTANGeneric extends Block implements ITANBlock
+public class BlockTANGeneric extends GFBlock implements ITANBlock
 {
     
     // implement IBOPBlock

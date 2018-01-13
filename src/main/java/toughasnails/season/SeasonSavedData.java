@@ -7,10 +7,10 @@
  ******************************************************************************/
 package toughasnails.season;
 
+import glitchcore.world.GFSavedData;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.storage.WorldSavedData;
 
-public class SeasonSavedData extends WorldSavedData
+public class SeasonSavedData extends GFSavedData
 {
     public static final String DATA_IDENTIFIER = "seasons";
     

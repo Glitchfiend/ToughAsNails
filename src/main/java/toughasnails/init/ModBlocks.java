@@ -11,13 +11,14 @@ import static toughasnails.api.TANBlocks.torch_new;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
+import glitchcore.block.BlockHelper;
+import glitchcore.item.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
 import toughasnails.block.BlockGlowstoneTorch;
@@ -132,13 +133,11 @@ public class ModBlocks
             Item itemBlock = clazz != null ? (Item)clazz.getConstructor(Block.class).newInstance(block) : null;
             ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, blockName);
 
-            block.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, blockName));
+            BlockHelper.registerBlock(location, block);
 
-            ForgeRegistries.BLOCKS.register(block);
             if (itemBlock != null)
             {
-                itemBlock.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, blockName));
-                ForgeRegistries.ITEMS.register(itemBlock);
+                ItemHelper.registerItem(location, itemBlock);
             }
         }
         catch (Exception e)

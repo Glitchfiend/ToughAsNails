@@ -9,11 +9,10 @@ package toughasnails.item;
 
 import java.util.List;
 
+import glitchcore.util.GFNonNullList;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.item.ItemDrink;
@@ -38,7 +37,7 @@ public class ItemTANWaterBottle extends ItemDrink<WaterBottleType>
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, GFNonNullList<ItemStack> subItems)
     {
         if (this.isInCreativeTab(tab))
         {

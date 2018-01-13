@@ -9,8 +9,8 @@ package toughasnails.block;
 
 import java.util.Random;
 
+import glitchcore.block.IGFBlockContainer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -20,7 +20,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -37,7 +36,7 @@ import toughasnails.item.ItemTANBlock;
 import toughasnails.season.SeasonTime;
 import toughasnails.tileentity.TileEntitySeasonSensor;
 
-public class BlockSeasonSensor extends BlockContainer implements ITANBlock
+public class BlockSeasonSensor extends IGFBlockContainer implements ITANBlock
 {
     public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
     public static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D);

@@ -1,11 +1,12 @@
 package toughasnails.item;
 
+import glitchcore.item.GFItem;
+import glitchcore.item.StackHelper;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
@@ -15,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class ItemIceCharge extends Item
+public class ItemIceCharge extends GFItem
 {
 
     public ItemIceCharge()
@@ -65,7 +66,7 @@ public class ItemIceCharge extends Item
 
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        itemStackIn.setCount(itemStackIn.getCount() - 1);
+                        StackHelper.decrement(itemStackIn, 1);
                     }
 
                     playerIn.addStat(StatList.getObjectUseStats(this));

@@ -44,7 +44,7 @@ public class CropDecayTransformer implements IClassTransformer
             // Inject the hook used for crop decay
             return addRandomTickHook(basicClass, !transformedName.equals(name), transformedName, true);
         }
-        else
+        else if (basicClass != null)
         {
             // Check if some crop implements the interface, and if it does then inject the crop decay hook
             ClassReader classReader = new ClassReader(basicClass);

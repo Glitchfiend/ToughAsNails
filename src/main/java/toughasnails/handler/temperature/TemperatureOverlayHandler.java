@@ -1,17 +1,11 @@
 package toughasnails.handler.temperature;
 
-import static toughasnails.util.RenderUtils.drawTexturedModalRect;
-
-import java.util.Random;
-
-import net.minecraft.client.renderer.BufferBuilder;
-import org.lwjgl.opengl.GL11;
-
+import glitchcore.render.GFBufferBuilder;
+import glitchcore.render.GFTessellator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -21,14 +15,18 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.api.config.SyncedConfig;
+import org.lwjgl.opengl.GL11;
 import toughasnails.api.TANCapabilities;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.api.temperature.TemperatureScale.TemperatureRange;
-import toughasnails.api.config.GameplayOption;
 import toughasnails.temperature.TemperatureHandler;
+
+import java.util.Random;
+
+import static toughasnails.util.RenderUtils.drawTexturedModalRect;
 
 @SideOnly(Side.CLIENT)
 public class TemperatureOverlayHandler
@@ -200,13 +198,13 @@ public class TemperatureOverlayHandler
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
             GlStateManager.color(1.0F, 1.0F, 1.0F, opacityDelta);
             GlStateManager.disableAlpha();
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder buffer = tessellator.getBuffer();
+            GFTessellator tessellator = GFTessellator.getInstance();
+            GFBufferBuilder buffer = tessellator.getBufferBuilder();
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-            buffer.pos(0.0D, height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            buffer.pos(width, height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            buffer.pos(width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            buffer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+            buffer.gfPos(0.0D, height, -90.0D).gfTex(0.0D, 1.0D).endVertex();
+            buffer.gfPos(width, height, -90.0D).gfTex(1.0D, 1.0D).endVertex();
+            buffer.gfPos(width, 0.0D, -90.0D).gfTex(1.0D, 0.0D).endVertex();
+            buffer.gfPos(0.0D, 0.0D, -90.0D).gfTex(0.0D, 0.0D).endVertex();
             tessellator.draw();
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();

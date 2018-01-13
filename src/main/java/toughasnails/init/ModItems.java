@@ -25,6 +25,7 @@ import static toughasnails.api.item.TANItems.wool_chestplate;
 import static toughasnails.api.item.TANItems.wool_helmet;
 import static toughasnails.api.item.TANItems.wool_leggings;
 
+import glitchcore.item.ItemHelper;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -69,9 +70,9 @@ public class ModItems
         
         // Armor Materials
         wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
-        wool_armor_material.repairMaterial = new ItemStack(Blocks.WOOL);
+        ItemHelper.setRepairMaterial(wool_armor_material, new ItemStack(Blocks.WOOL));
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
-        jelled_slime_armor_material.repairMaterial = new ItemStack(TANItems.jelled_slime);
+        ItemHelper.setRepairMaterial(jelled_slime_armor_material, new ItemStack(TANItems.jelled_slime));
         respirator_material = EnumHelper.addArmorMaterial("RESPIRATOR", "toughasnails:respirator", -1, new int[]{0,0,0,0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         
         // Main Items
@@ -119,8 +120,7 @@ public class ModItems
             item.setCreativeTab(CreativeTabTAN.instance);
         }
 
-        item.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, name));
-        ForgeRegistries.ITEMS.register(item);
+        ItemHelper.registerItem(new ResourceLocation(ToughAsNails.MOD_ID, name), item);
         ToughAsNails.proxy.registerItemSided(item);
 
         return item;

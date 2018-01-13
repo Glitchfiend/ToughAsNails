@@ -2,6 +2,9 @@ package toughasnails.item;
 
 import java.util.List;
 
+import glitchcore.item.GFItem;
+import glitchcore.item.StackHelper;
+import glitchcore.util.GFNonNullList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.TANBlocks;
 
-public class ItemBottleOfGas extends Item
+public class ItemBottleOfGas extends GFItem
 {
 	private Block block;
     
@@ -52,7 +55,7 @@ public class ItemBottleOfGas extends Item
     // add all the contents types as separate items in the creative tab
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, GFNonNullList<ItemStack> subItems)
     {
         for (BottleContents contents : BottleContents.values())
         {
@@ -105,7 +108,7 @@ public class ItemBottleOfGas extends Item
         {
             return EnumActionResult.PASS;
         }
-        else if (stack.isEmpty())
+        else if (StackHelper.isEmpty(stack))
         {
             return EnumActionResult.PASS;
         }

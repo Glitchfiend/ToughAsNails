@@ -2,24 +2,16 @@ package toughasnails.client.gui;
 
 import java.util.Set;
 
+import glitchcore.gui.GFGuiFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
 
-public class GuiFactory implements IModGuiFactory {
-
+public class GuiFactory extends GFGuiFactory
+{
     @Override
-    public void initialize(Minecraft minecraftInstance) { }
-
-    @Override
-    public boolean hasConfigGui() { return true; }
-    
-    @Override
-    public GuiScreen createConfigGui(GuiScreen parentScreen)
+    public Class<? extends GuiScreen> getGuiClass()
     {
-        return new GuiTANConfig(parentScreen);
+        return GuiTANConfig.class;
     }
-
-    @Override
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() { return null; }
 }

@@ -7,11 +7,11 @@
  ******************************************************************************/
 package toughasnails.api.item;
 
+import glitchcore.item.GFItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
@@ -26,7 +26,7 @@ import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.thirst.ThirstHandler;
 
-public abstract class ItemDrink<T extends Enum<T> & IDrink> extends Item
+public abstract class ItemDrink<T extends Enum<T> & IDrink> extends GFItem
 {
     public ItemDrink()
     {

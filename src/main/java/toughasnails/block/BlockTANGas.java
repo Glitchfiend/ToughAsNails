@@ -2,6 +2,7 @@ package toughasnails.block;
 
 import java.util.Random;
 
+import glitchcore.block.GFBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -29,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.item.ItemTANBlock;
 
-public class BlockTANGas extends Block implements ITANBlock
+public class BlockTANGas extends GFBlock implements ITANBlock
 {
 	
     // add properties

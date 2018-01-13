@@ -1,6 +1,8 @@
 package toughasnails.core;
 
 import com.google.common.base.Preconditions;
+import glitchcore.item.ItemHelper;
+import glitchcore.util.GFNonNullList;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -49,7 +51,7 @@ public class ClientProxy extends CommonProxy
     public void registerItemVariantModel(Item item, String name, int metadata)
     {
         Preconditions.checkNotNull(item, "Cannot register models for null item " + name);
-        Preconditions.checkArgument(item != Items.AIR, "Cannot register models for air (" + name + ")");
+        Preconditions.checkArgument(!item.getRegistryName().equals(new ResourceLocation("minecraft:air")), "Cannot register models for air (" + name + ")");
 
         ModelLoader.registerItemVariants(item, new ResourceLocation("toughasnails:" + name));
         ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + name, "inventory"));
@@ -80,8 +82,7 @@ public class ClientProxy extends CommonProxy
         // register sub types if there are any
         if (item.getHasSubtypes())
         {
-            NonNullList<ItemStack> subItems = NonNullList.create();
-            item.getSubItems(CreativeTabTAN.instance, subItems);
+            GFNonNullList<ItemStack> subItems = ItemHelper.getSubItems(CreativeTabTAN.instance, item);
             for (ItemStack subItem : subItems)
             {
                 String subItemName = item.getUnlocalizedName(subItem);
@@ -93,7 +94,7 @@ public class ClientProxy extends CommonProxy
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + item.delegate.name().getResourcePath(), "inventory"));
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ToughAsNails.MOD_ID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
         }
     }
 

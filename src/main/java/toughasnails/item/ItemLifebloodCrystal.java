@@ -7,6 +7,8 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import glitchcore.item.GFItem;
+import glitchcore.item.StackHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -19,7 +21,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import toughasnails.api.HealthHelper;
 
-public class ItemLifebloodCrystal extends Item
+public class ItemLifebloodCrystal extends GFItem
 {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
@@ -35,7 +37,7 @@ public class ItemLifebloodCrystal extends Item
             	world.spawnParticle(EnumParticleTypes.HEART, player.posX + (double)(world.rand.nextFloat() * player.width * 2.0F) - (double)player.width, player.posY + 0.5D + (double)(world.rand.nextFloat() * player.height), player.posZ + (double)(world.rand.nextFloat() * player.width * 2.0F) - (double)player.width, d0, d1, d2, new int[0]);
     		}
     		world.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.75F, 1.0F);
-            stack.setCount(stack.getCount() - 1);
+			StackHelper.decrement(stack, 1);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     	}
     	else

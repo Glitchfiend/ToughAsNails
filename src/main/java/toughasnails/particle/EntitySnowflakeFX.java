@@ -1,7 +1,7 @@
 package toughasnails.particle;
 
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
+import glitchcore.particle.GFParticle;
+import glitchcore.render.GFBufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import toughasnails.core.ClientProxy;
 
-public class EntitySnowflakeFX extends Particle
+public class EntitySnowflakeFX extends GFParticle
 {
     private float defaultParticleScale;
 
@@ -49,7 +49,7 @@ public class EntitySnowflakeFX extends Particle
     }
     
     @Override
-    public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
+    public void renderParticle(GFBufferBuilder buffer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
     {
         // EffectRenderer will by default bind the vanilla particles texture, override with our own
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(ClientProxy.particleTexturesLocation);

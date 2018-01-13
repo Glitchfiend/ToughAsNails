@@ -1,12 +1,12 @@
 package toughasnails.item;
 
+import glitchcore.item.GFItem;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
@@ -28,7 +28,7 @@ import toughasnails.api.thirst.WaterType;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.thirst.ThirstHandler;
 
-public class ItemCanteen extends Item
+public class ItemCanteen extends GFItem
 {
     public ItemCanteen()
     {

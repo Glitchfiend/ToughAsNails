@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.handler.season;
 
+import glitchcore.world.WorldHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -99,13 +100,13 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
     public static SeasonSavedData getSeasonSavedData(World world)
     {
         MapStorage mapStorage = world.getPerWorldStorage();
-        SeasonSavedData savedData = (SeasonSavedData)mapStorage.getOrLoadData(SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
+        SeasonSavedData savedData = WorldHelper.getOrLoadSavedData(world, SeasonSavedData.class, SeasonSavedData.DATA_IDENTIFIER);
 
         //If the saved data file hasn't been created before, create it
         if (savedData == null)
         {
             savedData = new SeasonSavedData(SeasonSavedData.DATA_IDENTIFIER);
-            mapStorage.setData(SeasonSavedData.DATA_IDENTIFIER, savedData);
+            WorldHelper.setData(world, SeasonSavedData.DATA_IDENTIFIER, savedData);
             savedData.markDirty(); //Mark for saving
         }
         

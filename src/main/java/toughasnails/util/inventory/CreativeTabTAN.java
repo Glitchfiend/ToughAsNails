@@ -1,5 +1,8 @@
 package toughasnails.util.inventory;
 
+import glitchcore.entity.EntityHelper;
+import glitchcore.inventory.GFCreativeTab;
+import glitchcore.util.GFNonNullList;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Items;
@@ -11,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 
-public class CreativeTabTAN extends CreativeTabs
+public class CreativeTabTAN extends GFCreativeTab
 {
     public static final CreativeTabs instance = new CreativeTabTAN(CreativeTabs.getNextID(), "tabToughAsNails");
 
@@ -21,19 +24,19 @@ public class CreativeTabTAN extends CreativeTabs
     }
 
     @Override
-    public ItemStack getTabIconItem()
+    public ItemStack getIconItemStack()
     {
         return new ItemStack(TANItems.tan_icon);
     }
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(NonNullList<ItemStack> itemList)
+    public void displayAllRelevantItems(GFNonNullList<ItemStack> itemList)
     {
         super.displayAllRelevantItems(itemList);
         for (EntityList.EntityEggInfo eggInfo : EntityList.ENTITY_EGGS.values())
         {
-            if (eggInfo.spawnedID.getResourceDomain().equals(ToughAsNails.MOD_ID))
+            if (EntityHelper.getEntityEggOwner(eggInfo).equals(ToughAsNails.MOD_ID))
             {
                 ItemStack itemstack = new ItemStack(Items.SPAWN_EGG, 1);
                 ItemMonsterPlacer.applyEntityIdToItemStack(itemstack, eggInfo.spawnedID);

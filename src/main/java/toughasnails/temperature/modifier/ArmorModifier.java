@@ -1,5 +1,8 @@
 package toughasnails.temperature.modifier;
 
+import glitchcore.inventory.InventoryHelper;
+import glitchcore.inventory.InventorySlotType;
+import glitchcore.item.StackHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -25,54 +28,58 @@ public class ArmorModifier extends TemperatureModifier
         int newTemperatureLevel = temperatureLevel;
 
         InventoryPlayer inventory = ((EntityPlayer)player).inventory;
-        
+        ItemStack helmet = InventoryHelper.getSlot(player, InventorySlotType.ARMOR, 3);
+        ItemStack chestplate = InventoryHelper.getSlot(player, InventorySlotType.ARMOR, 2);
+        ItemStack leggings = InventoryHelper.getSlot(player, InventorySlotType.ARMOR, 1);
+        ItemStack boots = InventoryHelper.getSlot(player, InventorySlotType.ARMOR, 0);
+
         //Helmet
-        if (inventory.armorInventory.get(3) != ItemStack.EMPTY)
+        if (!StackHelper.isEmpty(helmet))
         {
-	        if (inventory.armorInventory.get(3).getItem() == TANItems.wool_helmet)
+	        if (helmet.getItem() == TANItems.wool_helmet)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
-	        if (inventory.armorInventory.get(3).getItem() == TANItems.jelled_slime_helmet)
+	        if (helmet.getItem() == TANItems.jelled_slime_helmet)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
         //Chestplate
-        if (inventory.armorInventory.get(2) != ItemStack.EMPTY)
+        if (!StackHelper.isEmpty(chestplate))
         {
-	        if (inventory.armorInventory.get(2).getItem() == TANItems.wool_chestplate)
+	        if (chestplate.getItem() == TANItems.wool_chestplate)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
-	        if (inventory.armorInventory.get(2).getItem() == TANItems.jelled_slime_chestplate)
+	        if (chestplate.getItem() == TANItems.jelled_slime_chestplate)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
         //Leggings
-        if (inventory.armorInventory.get(1) != ItemStack.EMPTY)
+        if (!StackHelper.isEmpty(leggings))
         {
-	        if (inventory.armorInventory.get(1).getItem() == TANItems.wool_leggings)
+	        if (leggings.getItem() == TANItems.wool_leggings)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
-	        if (inventory.armorInventory.get(1).getItem() == TANItems.jelled_slime_leggings)
+	        if (leggings.getItem() == TANItems.jelled_slime_leggings)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }
         }
         
         //Boots
-        if (inventory.armorInventory.get(0) != ItemStack.EMPTY)
+        if (!StackHelper.isEmpty(boots))
         {
-	        if (inventory.armorInventory.get(0).getItem() == TANItems.wool_boots)
+	        if (boots.getItem() == TANItems.wool_boots)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.woolArmorModifier;
 	        }
-	        if (inventory.armorInventory.get(0).getItem() == TANItems.jelled_slime_boots)
+	        if (boots.getItem() == TANItems.jelled_slime_boots)
 	        {
 	        	newTemperatureLevel += ModConfig.temperature.jelledSlimeArmorModifier;
 	        }

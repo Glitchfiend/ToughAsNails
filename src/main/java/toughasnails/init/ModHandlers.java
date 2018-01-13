@@ -81,24 +81,16 @@ public class ModHandlers
     @SideOnly(Side.CLIENT)
     private static void registerSeasonColourHandlers()
     {
-        BiomeColorHelper.GRASS_COLOR = new BiomeColorHelper.ColorResolver()
+        BiomeColorHelper.GRASS_COLOR = (biome, blockPosition) ->
         {
-            @Override
-            public int getColorAtPos(Biome biome, BlockPos blockPosition)
-            {
-                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
-                return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
-            }
+            SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
+            return SeasonColourUtil.applySeasonalGrassColouring(calendar.getSubSeason(), biome.getGrassColorAtPos(blockPosition));
         };
         
-        BiomeColorHelper.FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
+        BiomeColorHelper.FOLIAGE_COLOR = (biome, blockPosition) ->
         {
-            @Override
-            public int getColorAtPos(Biome biome, BlockPos blockPosition)
-            {
-                SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
-                return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));
-            }
+            SeasonTime calendar = new SeasonTime(SeasonHandler.clientSeasonCycleTicks);
+            return SeasonColourUtil.applySeasonalFoliageColouring(calendar.getSubSeason(), biome.getFoliageColorAtPos(blockPosition));
         };
     }
 }

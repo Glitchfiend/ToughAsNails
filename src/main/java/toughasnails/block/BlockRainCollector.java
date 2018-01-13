@@ -1,8 +1,7 @@
 package toughasnails.block;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.Block;
+import glitchcore.block.GFBlock;
+import glitchcore.item.StackHelper;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -17,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -30,7 +28,7 @@ import toughasnails.api.ITANBlock;
 import toughasnails.api.item.TANItems;
 import toughasnails.item.ItemTANBlock;
 
-public class BlockRainCollector extends Block implements ITANBlock
+public class BlockRainCollector extends GFBlock implements ITANBlock
 {
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 3);
     
@@ -89,9 +87,9 @@ public class BlockRainCollector extends Block implements ITANBlock
                 {
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
+                        StackHelper.decrement(playerIn.getHeldItem(hand), 1);
 
-                        if (playerIn.getHeldItem(hand).isEmpty())
+                        if (StackHelper.isEmpty(playerIn.getHeldItem(hand)))
                         {
                             playerIn.setHeldItem(hand, new ItemStack(Items.WATER_BUCKET));
                         }
@@ -114,9 +112,9 @@ public class BlockRainCollector extends Block implements ITANBlock
                     if (!playerIn.capabilities.isCreativeMode)
                     {
                         ItemStack itemstack1 = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
+                        StackHelper.decrement(playerIn.getHeldItem(hand), 1);
 
-                        playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
-                        if (playerIn.getHeldItem(hand).isEmpty())
+                        if (StackHelper.isEmpty(playerIn.getHeldItem(hand)))
                         {
                             playerIn.setHeldItem(hand, itemstack1);
                         }

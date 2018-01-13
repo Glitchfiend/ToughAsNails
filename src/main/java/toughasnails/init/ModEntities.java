@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import glitchcore.entity.EntityHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
@@ -39,7 +40,7 @@ public class ModEntities
     {
         int tanEntityId = nextTANEntityId;
         nextTANEntityId++;
-        EntityRegistry.registerModEntity(new ResourceLocation(ToughAsNails.MOD_ID, entityName), entityClass, entityName, tanEntityId, ToughAsNails.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+        EntityHelper.registerEntity(new ResourceLocation(ToughAsNails.MOD_ID, entityName), entityClass, entityName, tanEntityId, ToughAsNails.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
         idToTANEntityName.put(tanEntityId, entityName);
         return tanEntityId;
     }
@@ -48,7 +49,7 @@ public class ModEntities
     public static int registerTANEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, int spawnWeight, int spawnMin, int spawnMax, EnumCreatureType enumCreatureType, Biome... entityBiomes)
     {
         int tanEntityId = registerTANEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
-        EntityRegistry.registerEgg(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor);
+        EntityHelper.registerEgg(new ResourceLocation(ToughAsNails.MOD_ID, entityName), eggBackgroundColor, eggForegroundColor);
         EntityRegistry.addSpawn(entityClass, spawnWeight, spawnMin, spawnMax, enumCreatureType, entityBiomes);
         return tanEntityId;
     }

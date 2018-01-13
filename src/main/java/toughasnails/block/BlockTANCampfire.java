@@ -2,6 +2,8 @@ package toughasnails.block;
 
 import java.util.Random;
 
+import glitchcore.block.GFBlock;
+import glitchcore.item.StackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -32,7 +34,7 @@ import toughasnails.api.ITANBlock;
 import toughasnails.api.TANBlocks;
 import toughasnails.item.ItemTANBlock;
 
-public class BlockTANCampfire extends Block implements ITANBlock
+public class BlockTANCampfire extends GFBlock implements ITANBlock
 {
     protected static final AxisAlignedBB SELECTION_BOX = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.5D, 0.9D);
     
@@ -160,7 +162,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			
 			                if (item == Items.STICK)
 			                {
-                                playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
+                                StackHelper.decrement(playerIn.getHeldItem(hand), 1);
 			                }
 			
 			                return true;

@@ -4,19 +4,18 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableSet;
 
+import glitchcore.item.GFItemBlock;
+import glitchcore.util.GFNonNullList;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.util.BlockStateUtils;
 
-public class ItemTANBlock extends ItemBlock
+public class ItemTANBlock extends GFItemBlock
 {
     
     public ITANBlock tanBlock;
@@ -38,7 +37,7 @@ public class ItemTANBlock extends ItemBlock
     // define the items which will appear in the creative tab (called by ItemBlock class)
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, GFNonNullList<ItemStack> subItems)
     {
         if (this.isInCreativeTab(tab))
         {

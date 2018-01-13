@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 
+import glitchcore.block.GFBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -38,7 +39,7 @@ import toughasnails.api.ITANBlock;
 import toughasnails.api.TANBlocks;
 import toughasnails.item.ItemTANBlock;
 
-public class BlockTANTorchNew extends Block implements ITANBlock
+public class BlockTANTorchNew extends GFBlock implements ITANBlock
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
     {

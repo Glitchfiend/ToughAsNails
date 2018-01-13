@@ -26,7 +26,7 @@ import toughasnails.init.ModPotions;
 import toughasnails.init.ModStats;
 import toughasnails.init.ModVanillaCompat;
 
-@Mod(modid = ToughAsNails.MOD_ID, version = ToughAsNails.MOD_VERSION, name = ToughAsNails.MOD_NAME, dependencies = "required-after:forge@[1.0.0.0,)", guiFactory = ToughAsNails.GUI_FACTORY)
+@Mod(modid = ToughAsNails.MOD_ID, version = ToughAsNails.MOD_VERSION, name = ToughAsNails.MOD_NAME, guiFactory = ToughAsNails.GUI_FACTORY, acceptedMinecraftVersions="1.10.2,1.12.2")
 public class ToughAsNails
 {
     public static final String MOD_NAME = "Tough As Nails";
