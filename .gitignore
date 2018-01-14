@@ -8,6 +8,8 @@
 /.settings/
 /.classpath
 /.project
+/custom_mappings/.gradle/
+/custom_mappings/build/
 
 # OS generated files
 *.DS_Store

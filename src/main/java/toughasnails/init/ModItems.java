@@ -1,33 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.canteen;
-import static toughasnails.api.item.TANItems.charcoal_filter;
-import static toughasnails.api.item.TANItems.freeze_powder;
-import static toughasnails.api.item.TANItems.freeze_rod;
-import static toughasnails.api.item.TANItems.fruit_juice;
-import static toughasnails.api.item.TANItems.ice_charge;
-import static toughasnails.api.item.TANItems.ice_cube;
-import static toughasnails.api.item.TANItems.jelled_slime;
-import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.item.TANItems.jelled_slime_boots;
-import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.item.TANItems.jelled_slime_helmet;
-import static toughasnails.api.item.TANItems.jelled_slime_leggings;
-import static toughasnails.api.item.TANItems.lifeblood_crystal;
-import static toughasnails.api.item.TANItems.respirator_material;
-import static toughasnails.api.item.TANItems.season_clock;
-import static toughasnails.api.item.TANItems.tan_icon;
-import static toughasnails.api.item.TANItems.thermometer;
-import static toughasnails.api.item.TANItems.water_bottle;
-import static toughasnails.api.item.TANItems.wool_armor_material;
-import static toughasnails.api.item.TANItems.wool_boots;
-import static toughasnails.api.item.TANItems.wool_chestplate;
-import static toughasnails.api.item.TANItems.wool_helmet;
-import static toughasnails.api.item.TANItems.wool_leggings;
-
 import glitchcore.item.ItemHelper;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -35,24 +8,14 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.ItemCanteen;
-import toughasnails.item.ItemFruitJuice;
-import toughasnails.item.ItemIceCharge;
-import toughasnails.item.ItemLifebloodCrystal;
-import toughasnails.item.ItemSeasonClock;
-import toughasnails.item.ItemTANWaterBottle;
-import toughasnails.item.ItemThermometer;
+import toughasnails.item.*;
 import toughasnails.util.inventory.CreativeTabTAN;
+
+import static toughasnails.api.item.TANItems.*;
 
 public class ModItems
 {

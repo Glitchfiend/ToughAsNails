@@ -72,14 +72,23 @@ public class EntityFreeze extends EntityMob implements IMob
         return "mob.freeze.death";
     }*/
 
-    @Override
+
+    // 1.10.2
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender(float partialTicks)
+    {
+        return this.getBrightnessForRender();
+    }
+    // 1.12.2
     @SideOnly(Side.CLIENT)
     public int getBrightnessForRender()
     {
         return 15728880;
     }
-    
-    @Override
+
+    // 1.10.2
+    public float getBrightness(float partialTicks) { return this.getBrightness(); }
+    // 1.12.2
     public float getBrightness()
     {
         return 1.0F;

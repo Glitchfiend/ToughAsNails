@@ -7,6 +7,8 @@
  ******************************************************************************/
 package toughasnails.handler.thirst;
 
+import glitchcore.item.ItemHelper;
+import glitchcore.item.StackHelper;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,11 +41,11 @@ public class FillBottleHandler
 
         if (stack.getItem().equals(Items.GLASS_BOTTLE) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
-            int originalCount = stack.getCount();
+            int originalCount = StackHelper.getSize(stack);
             // Trick onItemRightClick into not adding any water bottles into the player's inventory
-            stack.setCount(1);
+            StackHelper.setSize(stack, 1);
 
-            ActionResult actionResult = stack.getItem().onItemRightClick(event.getWorld(), player, event.getHand());
+            ActionResult actionResult = ItemHelper.onItemRightClick(stack, event.getWorld(), player, event.getHand());
             ItemStack resultStack = ((ItemStack)actionResult.getResult());
 
             // Only substitute water bottles with dirty water bottles
@@ -54,7 +56,7 @@ public class FillBottleHandler
 
                 // A bottle has been consumed, so reduce the original count by one before it is restored
                 originalCount--;
-                stack.setCount(originalCount); // Restore original amount of bottles
+                StackHelper.setSize(stack, originalCount); // Restore original amount of bottles
 
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
                 ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
@@ -71,7 +73,7 @@ public class FillBottleHandler
             else
             {
                 // Restore original amount of bottles
-                stack.setCount(originalCount);
+                StackHelper.setSize(stack, originalCount);
             }
         }
     }
@@ -98,9 +100,9 @@ public class FillBottleHandler
                 {
                     ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
                     player.addStat(StatList.CAULDRON_USED);
-                    player.getHeldItem(event.getHand()).setCount(player.getHeldItem(event.getHand()).getCount() - 1);
+                    StackHelper.decrement(player.getHeldItem(event.getHand()), 1);
 
-                    if (player.getHeldItem(event.getHand()).isEmpty())
+                    if (StackHelper.isEmpty(player.getHeldItem(event.getHand())))
                     {
                         player.setHeldItem(event.getHand(), waterBottle);
                     }

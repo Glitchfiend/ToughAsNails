@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.handler.thirst;
 
+import glitchcore.item.StackHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -41,9 +42,9 @@ public class DrinkHandler
                 // As a workaround, we temporarily set it to 1
                 boolean zeroStack = false;
 
-                if (stack.getCount() <= 0)
+                if (StackHelper.getSize(stack) <= 0)
                 {
-                    stack.setCount(1);
+                    StackHelper.setSize(stack, 1);
                     zeroStack = true;
                 }
 
@@ -77,7 +78,7 @@ public class DrinkHandler
                     }
                 }
 
-                if (zeroStack) stack.setCount(0);
+                if (zeroStack) StackHelper.setSize(stack, 0);
             }
         }
     }
