@@ -1,0 +1,27 @@
+apply plugin: "java"
+apply plugin: "maven"
+
+// edit this area only.
+// the build.gradle would have the patttern   minecraft { mappings = "channel_dlVersion" }
+ext.channel = "retrofuture" 
+ext.dlVersion = "custom"
+ext.mcVersion = "1.10.2" // the targetted MC version
+
+group = "de.oceanlabs.mcp"
+version = dlVersion + "-" + mcVersion
+archivesBaseName = "mcp_"+ext.channel
+
+jar {
+    extension = "zip"
+
+    from "."
+    include "*.csv"
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.groupId = project.group;
+        pom.version = project.version
+        pom.artifactId = "mcp_"+project.channel
+    }
+}
