@@ -2,6 +2,7 @@ package toughasnails.particle;
 
 import glitchcore.particle.GFParticle;
 import glitchcore.render.GFBufferBuilder;
+import glitchcore.render.GFWrappedBufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -49,7 +50,7 @@ public class EntitySnowflakeFX extends GFParticle
     }
     
     @Override
-    public void renderParticle(GFBufferBuilder buffer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
+    public void renderParticle(GFWrappedBufferBuilder buffer, Entity entity, float partialTicks, float rotX, float rotXZ, float rotZ, float rotYZ, float rotXY)
     {
         // EffectRenderer will by default bind the vanilla particles texture, override with our own
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(ClientProxy.particleTexturesLocation);
