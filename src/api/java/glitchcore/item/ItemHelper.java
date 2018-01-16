@@ -9,10 +9,14 @@ package glitchcore.item;
 
 import glitchcore.util.GFNonNullList;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ItemHelper
@@ -33,5 +37,10 @@ public class ItemHelper
         GFNonNullList<ItemStack> list = GFNonNullList.create();
         item.getSubItems(tab, list);
         return list;
+    }
+
+    public static ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    {
+        return stack.getItem().onItemRightClick(world, player, hand);
     }
 }

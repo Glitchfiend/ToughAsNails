@@ -65,7 +65,7 @@ public class GFBufferBuilder extends BufferBuilder
     @Override
     public BufferBuilder pos(double x, double y, double z)
     {
-        return this.pos(x, y, z);
+        return this.gfPos(x, y, z);
     }
 
     public GFBufferBuilder gfPos(double x, double y, double z)
