@@ -150,4 +150,70 @@ public class SeasonASMHelper
             world.setBlockState(pos, TANBlocks.dead_crops.getDefaultState());
         }
     }
+    
+    // Calculates the sun duration in a day according to the current time of year (season)
+    public static long calculateSunDuration(float latitude)
+    {
+    	long minSunDuration = 2000; // TODO: Should depend on the given latitude
+    	long maxSunDuration = SeasonTime.ZERO.getDayDuration() - minSunDuration;
+    	long sunDuration = 0;
+    	long currentTime = SeasonHandler.clientSeasonCycleTicks;
+    	float phaseShift = (float) SeasonTime.ZERO.getSeasonDuration() * 2.5F;
+    	
+    	// Sun duration is maximised on the summer solstice and minimised on the winter solstice (for now it's a northern point of view)
+    	sunDuration = (long) ((Math.cos((currentTime + phaseShift) * Math.PI / (float) (SeasonTime.ZERO.getCycleDuration() / 2.0F)) + 1.0F) / 2.0F * (float) (maxSunDuration - minSunDuration) + minSunDuration);
+    	System.out.println("time:" + currentTime + "  sun duration:" + sunDuration);
+    	return sunDuration;
+    }
+    
+    // Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
+    public static float calculateCelestialAngle(long worldTime, float partialTicks)
+    {
+    	/* Values to return:
+    	 * midday: 0 (or 1 excluded)
+    	 * sunset: 0.25
+    	 * midnight: 0.5
+    	 * sunrise: 0.75
+    	 * etc.
+    	 */
+        
+        // Adapt celestial angle to chosen day/night duration centered on midday and midnight...
+    	// TODO: Vanilla code: WTF are "partial ticks"? What's the point of cos(f*pi)?
+    	// TODO: Smoother acceleration between celestial phases (on sunset and on sunrise)
+    	
+    	float latitude = 0;
+    	long sunDuration = calculateSunDuration(latitude);
+    	long zenithTime = 6000;
+    	float angle = 0;
+    	
+    	// Lock sun at its zenith
+    	if (sunDuration == 24000)
+    		return 0.0F;
+    	
+    	// Lock moon at its zenith
+    	if (sunDuration == 0)
+    		return 0.5F;
+    	
+    	// Normalisation: makes the day phase contiguous so that it's easier to process the different celestial phases
+    	long dayTime = (worldTime + 6000) % 24000;
+    	zenithTime += 6000;
+    	
+    	// Phase 1: daytime
+        if (dayTime >= zenithTime - sunDuration / 2 && dayTime <= zenithTime + sunDuration / 2)
+        	angle =  (float)(dayTime) / (float)(sunDuration) / 2.0F + 1.0F - 6000F / (float) sunDuration;
+        
+        // Phase 2: from sunset to midnight
+        else if (dayTime > zenithTime + sunDuration / 2)
+        	angle = 0.25F / (12000F - sunDuration / 2) * (float)(dayTime) + 1.5F - 6000F / (12000F - sunDuration / 2);
+        
+        // Phase 3: from midnight to sunrise (should be almost the same as phase 2)
+        else if (dayTime < zenithTime - sunDuration / 2)
+        	angle = 0.25F / (12000F - sunDuration / 2) * (float)(dayTime + 24000) + 1.5F - 6000F / (12000F - sunDuration / 2);
+        
+        if (angle > 1.0F)
+    		--angle;
+        
+    	//System.out.println("time=" + dayTime + " (real=" + worldTime + ") angle=" + angle);
+        return angle;
+    }
 }
