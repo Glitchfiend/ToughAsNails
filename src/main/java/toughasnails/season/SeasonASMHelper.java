@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -154,19 +155,19 @@ public class SeasonASMHelper
     // Calculates the sun duration in a day according to the current time of year (season)
     public static long calculateSunDuration(float latitude)
     {
-    	long minSunDuration = 2000; // TODO: Should depend on the given latitude
+    	long minSunDuration = 2000; // TODO: Should depend on the given latitude (or not)
     	long maxSunDuration = SeasonTime.ZERO.getDayDuration() - minSunDuration;
     	long sunDuration = 0;
     	long currentTime = SeasonHandler.clientSeasonCycleTicks;
     	float phaseShift = (float) SeasonTime.ZERO.getSeasonDuration() * 2.5F;
     	
-    	// Sun duration is maximised on the summer solstice and minimised on the winter solstice (for now it's a northern point of view)
-    	sunDuration = (long) ((Math.cos((currentTime + phaseShift) * Math.PI / (float) (SeasonTime.ZERO.getCycleDuration() / 2.0F)) + 1.0F) / 2.0F * (float) (maxSunDuration - minSunDuration) + minSunDuration);
-    	System.out.println("time:" + currentTime + "  sun duration:" + sunDuration);
+    	// The sun duration is maximised on the summer solstice and minimised on the winter solstice (for now it's a northern point of view)
+    	sunDuration = (long) ((MathHelper.cos((float) ((currentTime + phaseShift) * Math.PI / ((float) SeasonTime.ZERO.getCycleDuration() / 2.0F))) + 1.0F) / 2.0F * (float) (maxSunDuration - minSunDuration) + minSunDuration);
+    	//System.out.println("time:" + currentTime + "  sun duration:" + sunDuration);
     	return sunDuration;
     }
     
-    // Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
+    // Calculates the angle of the sun and the moon in the sky relative to a specified time (usually worldTime)
     public static float calculateCelestialAngle(long worldTime, float partialTicks)
     {
     	/* Values to return:
@@ -177,7 +178,7 @@ public class SeasonASMHelper
     	 * etc.
     	 */
         
-        // Adapt celestial angle to chosen day/night duration centered on midday and midnight...
+        // Adapt celestial angle to chosen day-night duration centered on midday and midnight
     	// TODO: Vanilla code: WTF are "partial ticks"? What's the point of cos(f*pi)?
     	// TODO: Smoother acceleration between celestial phases (on sunset and on sunrise)
     	
@@ -186,11 +187,11 @@ public class SeasonASMHelper
     	long zenithTime = 6000;
     	float angle = 0;
     	
-    	// Lock sun at its zenith
+    	// Lock the sun at its zenith
     	if (sunDuration == 24000)
     		return 0.0F;
     	
-    	// Lock moon at its zenith
+    	// Lock the moon at its zenith
     	if (sunDuration == 0)
     		return 0.5F;
     	
