@@ -11,7 +11,9 @@ public enum SeasonsOption implements ISyncedOption
 {
     ENABLE_SEASONS("Enable Seasons"),
     DAY_DURATION("Day Duration"),
-    SUB_SEASON_DURATION("Sub Season Duration");
+    SUB_SEASON_DURATION("Sub Season Duration"),
+    ENABLE_SEASON_DAYTIME("Enable Season-Based daytime"),
+	MIN_DAYTIME("Minimum Daytime");
 
     private final String optionName;
 

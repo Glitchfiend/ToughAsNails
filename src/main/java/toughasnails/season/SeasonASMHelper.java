@@ -155,11 +155,11 @@ public class SeasonASMHelper
     // Calculates the daytime according to the current time of year (season)
     public static long calculateDaytime(float latitude)
     {
-    	long minDaytime = 2000; // TODO: Should depend on the given latitude (or not)
+    	long minDaytime = SyncedConfig.getIntValue(SeasonsOption.MIN_DAYTIME); // TODO: Should depend on the given latitude (or not)
     	long maxDaytime = SeasonTime.ZERO.getDayDuration() - minDaytime;
     	long daytime = 0;
     	long currentTime = SeasonHandler.clientSeasonCycleTicks;
-    	float phaseShift = (float) SeasonTime.ZERO.getSeasonDuration() * 2.5F;
+    	float phaseShift = (float) SeasonTime.ZERO.getSeasonDuration() * 3.0F;
     	
     	// The daytime is maximised on the summer solstice and minimised on the winter solstice (for now it's a northern point of view)
     	daytime = (long) ((MathHelper.cos((float) ((currentTime + phaseShift) * Math.PI / ((float) SeasonTime.ZERO.getCycleDuration() / 2.0F))) + 1.0F) / 2.0F * (float) (maxDaytime - minDaytime) + minDaytime);
@@ -177,42 +177,63 @@ public class SeasonASMHelper
     	 * sunrise: 0.75
     	 * etc.
     	 */
-        
-        // Adapt celestial angle to chosen day-night duration centered on midday and midnight
-    	// TODO: Vanilla code: WTF are "partial ticks"? What's the point of cos(f*pi)?
-    	// TODO: Smoother acceleration between celestial phases (on sunset and on sunrise)
     	
-    	float latitude = 0;
-    	long daytime = calculateDaytime(latitude);
-    	long zenithTime = 6000;
     	float angle = 0;
     	
-    	// Lock the sun at its zenith
-    	if (daytime == 24000)
-    		return 0.0F;
-    	
-    	// Lock the moon at its zenith
-    	if (daytime == 0)
-    		return 0.5F;
-    	
-    	// Normalisation: makes the day phase contiguous so that it's easier to process the different celestial phases
-    	long time = (worldTime + 6000) % 24000;
-    	zenithTime += 6000;
-    	
-    	// Phase 1: daytime
-        if (time >= zenithTime - daytime / 2 && time <= zenithTime + daytime / 2)
-        	angle =  (float)(time) / (float)(daytime) / 2.0F + 1.0F - 6000F / (float) daytime;
-        
-        // Phase 2: from sunset to midnight
-        else if (time > zenithTime + daytime / 2)
-        	angle = 0.25F / (12000F - daytime / 2) * (float)(time) + 1.5F - 6000F / (12000F - daytime / 2);
-        
-        // Phase 3: from midnight to sunrise (should be almost the same as phase 2)
-        else if (time < zenithTime - daytime / 2)
-        	angle = 0.25F / (12000F - daytime / 2) * (float)(time + 24000) + 1.5F - 6000F / (12000F - daytime / 2);
-        
-        if (angle > 1.0F)
-    		--angle;
+    	// Checks whether season daytime is enabled
+    	if (SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASON_DAYTIME)) {
+    		// Adapt celestial angle to chosen day-night duration centered on midday and midnight
+        	// TODO: Vanilla code: WTF are "partial ticks"? What's the point of cos(f*pi)?
+        	// TODO: Smoother acceleration between celestial phases (on sunset and on sunrise)
+        	
+        	float latitude = 0;
+        	long daytime = calculateDaytime(latitude);
+        	long zenithTime = 6000;
+        	
+        	// Lock the sun at its zenith
+        	if (daytime == 24000)
+        		return 0.0F;
+        	
+        	// Lock the moon at its zenith
+        	if (daytime == 0)
+        		return 0.5F;
+        	
+        	// Normalisation: makes the day phase contiguous so that it's easier to process the different celestial phases
+        	long time = (worldTime + 6000) % 24000;
+        	zenithTime += 6000;
+        	
+        	// Phase 1: daytime
+            if (time >= zenithTime - daytime / 2 && time <= zenithTime + daytime / 2)
+            	angle =  (float)(time) / (float)(daytime) / 2.0F + 1.0F - 6000F / (float) daytime;
+            
+            // Phase 2: from sunset to midnight
+            else if (time > zenithTime + daytime / 2)
+            	angle = 0.25F / (12000F - daytime / 2) * (float)(time) + 1.5F - 6000F / (12000F - daytime / 2);
+            
+            // Phase 3: from midnight to sunrise (should be almost the same as phase 2)
+            else if (time < zenithTime - daytime / 2)
+            	angle = 0.25F / (12000F - daytime / 2) * (float)(time + 24000) + 1.5F - 6000F / (12000F - daytime / 2);
+            
+            if (angle > 1.0F)
+        		--angle;
+    	}
+    	else {
+    		int i = (int)(worldTime % 24000L);
+            angle = ((float)i + partialTicks) / 24000.0F - 0.25F;
+
+            if (angle < 0.0F)
+            {
+                ++angle;
+            }
+
+            if (angle > 1.0F)
+            {
+                --angle;
+            }
+
+            float f1 = 1.0F - (float)((Math.cos((double)angle * Math.PI) + 1.0D) / 2.0D);
+            angle = angle + (f1 - angle) / 3.0F;
+    	}
         
     	//System.out.println("time=" + dayTime + " (real=" + worldTime + ") angle=" + angle);
         return angle;
