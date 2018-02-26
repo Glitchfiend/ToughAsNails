@@ -180,10 +180,9 @@ public class SeasonASMHelper
 
         float angle = 0;
 
-        // Checks whether season daytime is enabled
-        if (SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASON_DAYTIME)) {
+        // Checks whether seasonal daytime is enabled
+        if (SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONAL_DAYTIME)) {
             // Adapt celestial angle to chosen day-night duration centered on midday and midnight
-            // TODO: Vanilla code: WTF are "partial ticks"? What's the point of cos(f*pi)?
             // TODO: Smoother acceleration between celestial phases (on sunset and on sunrise)
 
             float latitude = 0;
@@ -218,8 +217,9 @@ public class SeasonASMHelper
                 --angle;
         }
         else {
+            // This is vanilla
             int i = (int)(worldTime % 24000L);
-            angle = ((float)i + partialTicks) / 24000.0F - 0.25F;
+            angle = ((float)i + partialTicks) / 24000.0F - 0.25F; // WTF are "partial ticks"?
 
             if (angle < 0.0F)
             {
