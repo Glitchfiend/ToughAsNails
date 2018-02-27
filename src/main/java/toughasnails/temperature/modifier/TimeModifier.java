@@ -1,6 +1,7 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.IModifierMonitor;
@@ -23,7 +24,7 @@ public class TimeModifier extends TemperatureModifier
         
         float extremityModifier = BiomeUtils.getBiomeTempExtremity(biome);
         //Reaches the highest point during the middle of the day and at midnight. Normalized to be between -1 and 1
-        float timeNorm = (-Math.abs(((worldTime + 6000) % 24000.0F) - 12000.0F) + 6000.0F) / 6000.0F;
+        float timeNorm = MathHelper.cos((float) (world.getCelestialAngle(worldTime) * 2.0F * Math.PI));
         
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
