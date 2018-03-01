@@ -40,7 +40,7 @@ public class ThirstOverlayHandler
         }
     }
     
-    @SubscribeEvent(priority=EventPriority.HIGHEST)
+    @SubscribeEvent(priority=EventPriority.HIGHEST, receiveCanceled=true)
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
         if (event.getType() == ElementType.AIR && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
