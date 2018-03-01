@@ -36,6 +36,8 @@ public class SeasonsConfig extends ConfigHandler
             addSyncedValue(SeasonsOption.ENABLE_SEASONS, true, "Toggle", "Seasons progress as days increase");
             addSyncedValue(SeasonsOption.DAY_DURATION, 24000, TIME_SETTINGS,"The duration of a Minecraft day in ticks", 20, Integer.MAX_VALUE);
             addSyncedValue(SeasonsOption.SUB_SEASON_DURATION, 5, TIME_SETTINGS,"The duration of a sub season in days", 1, Integer.MAX_VALUE);
+            addSyncedValue(SeasonsOption.ENABLE_SEASONAL_DAYTIME, true, "Toggle", "Daytime changes as days increase");
+            addSyncedValue(SeasonsOption.MIN_DAYTIME, 2000, TIME_SETTINGS,"The minimum daytime in ticks (reached on the winter solstice)", 0, Integer.MAX_VALUE);
             
             // Only applicable server-side
             winterCropDeath = config.getBoolean("Enable Winter Crop Death", EVENT_SETTINGS, true, "Kill unheated crops during the winter");
