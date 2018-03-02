@@ -95,8 +95,8 @@ public class SeasonModifier extends TemperatureModifier
             }
         }
         
-        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Season", initialTemperature, new Temperature(temperatureLevel)));
-
+        monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Season (" + season.toString().toLowerCase() + ")", initialTemperature, new Temperature(temperatureLevel)));
+        
         return new Temperature(temperatureLevel);
     }
 

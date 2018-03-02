@@ -13,7 +13,7 @@ public class TemperatureDebugger implements IModifierMonitor
 {
     public Map<String, Context> modifiers = new LinkedHashMap();
     
-    private boolean showGui = false;
+    private static boolean showGui = false;
     public int debugTimer;
     
     public int temperatureTimer;
@@ -44,7 +44,7 @@ public class TemperatureDebugger implements IModifierMonitor
     {
         this.debugTimer = 0;
         
-        if (this.showGui)
+        if (showGui)
         {
             sortModifiers();
         }
@@ -76,7 +76,7 @@ public class TemperatureDebugger implements IModifierMonitor
     
     public void setGuiVisible(boolean state, EntityPlayerMP updatePlayer)
     {
-        this.showGui = state;
+        showGui = state;
         this.debugTimer = 0;
         
         if (updatePlayer != null)
@@ -92,6 +92,6 @@ public class TemperatureDebugger implements IModifierMonitor
     
     public boolean isGuiVisible()
     {
-        return this.showGui;
+        return showGui;
     }
 }
