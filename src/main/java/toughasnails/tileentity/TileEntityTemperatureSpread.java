@@ -10,7 +10,6 @@ package toughasnails.tileentity;
 import java.util.Set;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -32,8 +29,6 @@ import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.ITemperatureRegulator;
 import toughasnails.api.temperature.Temperature;
-
-import javax.annotation.Nullable;
 
 public class TileEntityTemperatureSpread extends TileEntity implements ITickable, ITemperatureRegulator
 {
@@ -359,19 +354,6 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         //This should function as it does in Vanilla, using Forges setup appears to break fireball spawning when the state is changed
         return oldState.getBlock() != newSate.getBlock();
     }
-
-    public ImmutableSet<BlockPos>[] getRegulatedPositions()
-    {
-        ImmutableSet<BlockPos>[] positions = new ImmutableSet[MAX_SPREAD_DISTANCE];
-
-        for (int i = 0; i < MAX_SPREAD_DISTANCE; i++)
-        {
-            Set<BlockPos> regulatedPositions = this.filledPositions[i];
-            positions[i] = ImmutableSet.copyOf(regulatedPositions);
-        }
-
-        return positions;
-    }
     
     private void writePosSet(NBTTagCompound compound, Set<BlockPos> posSet)
     {
@@ -400,24 +382,6 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         }
         
         return posSet;
-    }
-
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(this.pos, -1, this.getUpdateTag());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return this.writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.getNbtCompound());
     }
 
     @Override

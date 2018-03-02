@@ -86,33 +86,20 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
     {
     	if (state.getValue(POWERED) == true)
     	{
-            TileEntityTemperatureSpread tileEntity = (TileEntityTemperatureSpread)world.getTileEntity(pos);
-
-            if (tileEntity != null)
-            {
-                for (ImmutableSet<BlockPos> strengthPosSet : tileEntity.getRegulatedPositions())
-                {
-                    for (BlockPos regPos : strengthPosSet)
-                    {
-                        float randVal = rand.nextFloat();
-
-                        if (state.getValue(VARIANT) == CoilType.HEATING && (randVal < 0.0005F || regPos.equals(pos) && randVal < 0.25F))
-                        {
-                            double d0 = (double) ((float) regPos.getX() + 0.4F + rand.nextFloat() * 0.2F);
-                            double d1 = (double) ((float) regPos.getY() + 0.7F + rand.nextFloat() * 0.3F);
-                            double d2 = (double) ((float) regPos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
-                            world.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
-                        }
-                        else if (state.getValue(VARIANT) == CoilType.COOLING && (randVal < 0.0002F || regPos.equals(pos) && randVal < 0.1F))
-                        {
-                            double d0 = (double) ((float) regPos.getX() + 0.4F + rand.nextFloat() * 0.2F);
-                            double d1 = (double) ((float) regPos.getY() + 0.7F + rand.nextFloat() * 0.3F);
-                            double d2 = (double) ((float) regPos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
-                            ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, world, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
-                        }
-                    }
-                }
-            }
+    		if (state.getValue(VARIANT) == CoilType.HEATING)
+    		{
+    			double d0 = (double)((float)pos.getX() + 0.4F + rand.nextFloat() * 0.2F);
+    			double d1 = (double)((float)pos.getY() + 0.7F + rand.nextFloat() * 0.3F);
+    			double d2 = (double)((float)pos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
+    			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+    		}
+    		if (state.getValue(VARIANT) == CoilType.COOLING)
+    		{
+    			double d0 = (double)((float)pos.getX() + 0.4F + rand.nextFloat() * 0.2F);
+    			double d1 = (double)((float)pos.getY() + 0.7F + rand.nextFloat() * 0.3F);
+    			double d2 = (double)((float)pos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
+    			ToughAsNails.proxy.spawnParticle(TANParticleTypes.SNOWFLAKE, world, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+    		}
     	}
     }
     
