@@ -16,6 +16,7 @@ import toughasnails.api.season.SeasonHelper;
 import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
+import toughasnails.util.TerrainUtils;
 
 public class SeasonModifier extends TemperatureModifier
 {
@@ -37,7 +38,7 @@ public class SeasonModifier extends TemperatureModifier
 
         if (world.provider.isSurfaceWorld())
         {
-        	if (pos.getY() > 55)
+        	if (!(TerrainUtils.isUnderground(world, pos)))
             {
 	            switch (season)
 		        {

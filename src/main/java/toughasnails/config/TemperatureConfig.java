@@ -43,6 +43,8 @@ public class TemperatureConfig extends ConfigHandler
 
     public int wetModifier;
     public int snowModifier;
+    
+    public int undergroundDepth;
 
     public TemperatureConfig(File configFile)
     {
@@ -87,6 +89,8 @@ public class TemperatureConfig extends ConfigHandler
 
             wetModifier = config.getInt("Wet Modifier", MODIFIER_SETTINGS, -7, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by when wet");
             snowModifier = config.getInt("Snow Modifier", MODIFIER_SETTINGS, -10, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by when snowing");
+            
+            undergroundDepth = config.getInt("Underground Depth", MODIFIER_SETTINGS, 20, 0, Integer.MAX_VALUE, "The vertical distance between the surface and the underground level");
         }
         catch (Exception e)
         {

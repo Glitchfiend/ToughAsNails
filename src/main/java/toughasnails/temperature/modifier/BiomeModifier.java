@@ -7,6 +7,7 @@ import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
 import toughasnails.util.BiomeUtils;
+import toughasnails.util.TerrainUtils;
 
 public class BiomeModifier extends TemperatureModifier
 {
@@ -29,7 +30,7 @@ public class BiomeModifier extends TemperatureModifier
         //Denormalize, multiply by the max temp offset, add to the current temp
         int newTemperatureLevel = initialTemperature.getRawValue();
         
-        if (pos.getY() > 50)
+        if (!(TerrainUtils.isUnderground(world, pos)))
         {
 	        if (!(biomeTemp < 0.65F && biomeTemp > 0.15F))
 	        {
