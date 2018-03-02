@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import toughasnails.api.item.TANItems;
+import toughasnails.init.ModConfig;
 
 public class BlockHarvestEventHandler
 {
@@ -22,8 +23,11 @@ public class BlockHarvestEventHandler
 		
         if (state.getBlock() == Blocks.ICE && event.getHarvester() != null)
         {
-        	event.getDrops().clear();
-            event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
+        	if (ModConfig.gameplay.iceCubeDrops)
+        	{
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
+        	}
         }
     }
 }
