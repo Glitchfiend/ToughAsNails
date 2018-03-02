@@ -68,7 +68,7 @@ public class ModItems
         tan_icon.setCreativeTab(null);
         
         // Armor Materials
-        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 3, new int[]{2, 2, 2, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
+        wool_armor_material = EnumHelper.addArmorMaterial("WOOL", "toughasnails:wool_armor", 2, new int[]{1, 1, 1, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         wool_armor_material.repairMaterial = new ItemStack(Blocks.WOOL);
         jelled_slime_armor_material = EnumHelper.addArmorMaterial("JELLED_SLIME", "toughasnails:jelled_slime_armor", 9, new int[]{2, 5, 3, 2}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
         jelled_slime_armor_material.repairMaterial = new ItemStack(TANItems.jelled_slime);
