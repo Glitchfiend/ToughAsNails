@@ -21,7 +21,7 @@ public class GuiTANConfig extends GuiConfig
 {
     public GuiTANConfig(GuiScreen parentScreen)
     {
-        super(parentScreen, GuiTANConfig.getConfigElements(), ToughAsNails.MOD_ID, false, false, "/toughasnails");
+        super(parentScreen, GuiTANConfig.getConfigElements(), ToughAsNails.MOD_ID, false, false, "Tough As Nails");
     }
 
     private static List<IConfigElement> getConfigElements()

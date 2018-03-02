@@ -24,7 +24,7 @@ public class TimeModifier extends TemperatureModifier
         
         float extremityModifier = BiomeUtils.getBiomeTempExtremity(biome);
         //Reaches the highest point during the middle of the day and at midnight. Normalized to be between -1 and 1
-        float timeNorm = MathHelper.cos((float) (world.getCelestialAngle(worldTime) * 2.0F * Math.PI));
+        float timeNorm = (-Math.abs(((worldTime + 6000) % 24000.0F) - 12000.0F) + 6000.0F) / 6000.0F;
         
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;

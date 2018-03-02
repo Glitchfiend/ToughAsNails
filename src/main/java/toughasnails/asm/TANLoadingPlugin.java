@@ -16,7 +16,7 @@ public class TANLoadingPlugin implements IFMLLoadingPlugin
     @Override
     public String[] getASMTransformerClass()
     {
-        return new String[] { "toughasnails.asm.transformer.CropDecayTransformer", "toughasnails.asm.transformer.EntityRendererTransformer", "toughasnails.asm.transformer.WorldTransformer", "toughasnails.asm.transformer.WorldProviderTransformer" };
+        return new String[] { "toughasnails.asm.transformer.CropDecayTransformer", "toughasnails.asm.transformer.EntityRendererTransformer", "toughasnails.asm.transformer.WorldTransformer" };
     }
 
     @Override
