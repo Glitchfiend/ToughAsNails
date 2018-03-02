@@ -27,8 +27,17 @@ public class BiomeModifier extends TemperatureModifier
         float biomeTemp = ((BiomeUtils.getBiomeTempNorm(biome) + BiomeUtils.getBiomeTempNorm(biomeNorth) + BiomeUtils.getBiomeTempNorm(biomeSouth) + BiomeUtils.getBiomeTempNorm(biomeEast) + BiomeUtils.getBiomeTempNorm(biomeWest)) / 5.0F);
         
         //Denormalize, multiply by the max temp offset, add to the current temp
-        int newTemperatureLevel = initialTemperature.getRawValue() + (int)Math.round((biomeTemp * 2.0F - 1.0F) * ModConfig.temperature.maxBiomeTempOffset);
-
+        int newTemperatureLevel;
+        
+        if (biomeTemp < 0.65F && biomeTemp > 0.15F)
+        {	
+        	newTemperatureLevel = initialTemperature.getRawValue() + 0;
+        }
+        else
+        {
+        	newTemperatureLevel = initialTemperature.getRawValue() + (int)Math.round((biomeTemp * 2.0F - 1.0F) * ModConfig.temperature.maxBiomeTempOffset);
+        }
+        
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Biome Temperature", initialTemperature, new Temperature(newTemperatureLevel)));
         
         return new Temperature(newTemperatureLevel);
