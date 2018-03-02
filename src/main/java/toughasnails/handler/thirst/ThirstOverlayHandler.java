@@ -70,7 +70,7 @@ public class ThirstOverlayHandler
     private void drawThirst(int width, int height, int thirstLevel, float thirstHydrationLevel)
     {
         int left = width / 2 + 91;
-        int top = height - 49;
+        int top = height - GuiIngameForge.right_height;
         
         for (int i = 0; i < 10; i++)
         {
