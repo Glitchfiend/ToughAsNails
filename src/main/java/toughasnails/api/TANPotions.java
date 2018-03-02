@@ -10,6 +10,7 @@ public class TANPotions
     public static Potion thirst;
     public static Potion cold_resistance;
     public static Potion heat_resistance;
+    public static Potion hydration;
     
     public static PotionType cold_resistance_type;
     public static PotionType long_cold_resistance_type;

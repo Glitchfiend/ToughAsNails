@@ -2,12 +2,13 @@ package toughasnails.init;
 
 import static toughasnails.api.TANPotions.cold_resistance;
 import static toughasnails.api.TANPotions.cold_resistance_type;
-import static toughasnails.api.TANPotions.long_cold_resistance_type;
 import static toughasnails.api.TANPotions.heat_resistance;
 import static toughasnails.api.TANPotions.heat_resistance_type;
-import static toughasnails.api.TANPotions.long_heat_resistance_type;
+import static toughasnails.api.TANPotions.hydration;
 import static toughasnails.api.TANPotions.hyperthermia;
 import static toughasnails.api.TANPotions.hypothermia;
+import static toughasnails.api.TANPotions.long_cold_resistance_type;
+import static toughasnails.api.TANPotions.long_heat_resistance_type;
 import static toughasnails.api.TANPotions.thirst;
 
 import net.minecraft.potion.Potion;
@@ -15,11 +16,11 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.TANPotions;
 import toughasnails.core.ToughAsNails;
 import toughasnails.potion.PotionColdResistance;
 import toughasnails.potion.PotionHeatResistance;
+import toughasnails.potion.PotionHydration;
 import toughasnails.potion.PotionHyperthermia;
 import toughasnails.potion.PotionHypothermia;
 import toughasnails.potion.PotionThirst;
@@ -33,6 +34,7 @@ public class ModPotions
         thirst = registerPotion("thirst", new PotionThirst(26).setPotionName("potion.thirst"));
         cold_resistance = registerPotion("cold_resistance", new PotionColdResistance(27).setPotionName("potion.cold_resistance").setBeneficial());
         heat_resistance = registerPotion("heat_resistance", new PotionHeatResistance(28).setPotionName("potion.heat_resistance").setBeneficial());
+        hydration = registerPotion("hydration", new PotionHydration(29).setPotionName("potion.hydration").setBeneficial());
         
         cold_resistance_type = registerPotionType("cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 1200)}));
         long_cold_resistance_type = registerPotionType("long_cold_resistance_type", new PotionType(new PotionEffect[] {new PotionEffect(TANPotions.cold_resistance, 2400)}));

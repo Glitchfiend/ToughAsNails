@@ -5,11 +5,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.thirst.ThirstHandler;
 
-public class PotionThirst extends TANPotion
+public class PotionHydration extends TANPotion
 {
-    public PotionThirst(int id)
+    public PotionHydration(int id)
     {
-        super(true, 0x61D51A, 0, 0);
+        super(true, 0x1B5FD3, 1, 0);
     }
 
     @Override
@@ -20,12 +20,18 @@ public class PotionThirst extends TANPotion
             EntityPlayer player = (EntityPlayer)entity;
             ThirstHandler handler = (ThirstHandler)ThirstHelper.getThirstData(player);
 
-            handler.addExhaustion(0.025F * (float)(amplifier + 1));
+            handler.addStats(amplifier + 1, 1.0F);
         }
     }
     
     @Override
     public boolean isReady(int duration, int amplifier)
+    {
+        return duration >= 1;
+    }
+    
+    @Override
+    public boolean isInstant()
     {
         return true;
     }
