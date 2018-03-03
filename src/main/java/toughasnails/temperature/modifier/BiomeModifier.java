@@ -30,7 +30,7 @@ public class BiomeModifier extends TemperatureModifier
         //Denormalize, multiply by the max temp offset, add to the current temp
         int newTemperatureLevel = initialTemperature.getRawValue();
         
-        if (!(TerrainUtils.isUnderground(world, pos)))
+        if ((world.provider.isSurfaceWorld() && !(TerrainUtils.isUnderground(world, pos))) || !(world.provider.isSurfaceWorld()))
         {
 	        if (!(biomeTemp < 0.65F && biomeTemp > 0.15F))
 	        {
