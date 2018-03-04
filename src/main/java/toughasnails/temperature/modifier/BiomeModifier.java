@@ -37,7 +37,7 @@ public class BiomeModifier extends TemperatureModifier
             // Apply underground coefficient
             if (world.provider.isSurfaceWorld())
                 temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
-        	newTemperatureLevel += temperatureModifier;
+            newTemperatureLevel += temperatureModifier;
         }
         
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Biome Temperature", initialTemperature, new Temperature(newTemperatureLevel)));

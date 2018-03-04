@@ -93,7 +93,7 @@ public class SeasonModifier extends TemperatureModifier
                     break;
             }
             
-            // Apply underground equilibrium
+            // Apply underground coefficient
             temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
             temperatureLevel += temperatureModifier;
         }
