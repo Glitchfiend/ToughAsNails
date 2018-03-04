@@ -1,7 +1,6 @@
 package toughasnails.temperature.modifier;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import toughasnails.api.temperature.IModifierMonitor;
@@ -30,9 +29,12 @@ public class TimeModifier extends TemperatureModifier
         int temperatureLevel = initialTemperature.getRawValue();
         int newTemperatureLevel = temperatureLevel;
 
-        if (world.provider.isSurfaceWorld() && !(TerrainUtils.isUnderground(world, pos)) && ((timeNorm < 0 && ModConfig.temperature.enableNightTimeModifier)|| (timeNorm > 0 && ModConfig.temperature.enableDayTimeModifier)))
+        if (world.provider.isSurfaceWorld() && ((timeNorm < 0 && ModConfig.temperature.enableNightTimeModifier)|| (timeNorm > 0 && ModConfig.temperature.enableDayTimeModifier)))
         {
-        	newTemperatureLevel += ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier));
+            // Apply underground equilibrium
+            int temperatureModifier = (int)(ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier)));
+            temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
+        	newTemperatureLevel += temperatureModifier;
         }
 
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Time", initialTemperature, new Temperature(newTemperatureLevel)));
