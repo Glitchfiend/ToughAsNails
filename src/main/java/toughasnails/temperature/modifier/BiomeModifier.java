@@ -35,7 +35,7 @@ public class BiomeModifier extends TemperatureModifier
             int temperatureModifier = (int)Math.round((biomeTemp * 2.0F - 1.0F) * ModConfig.temperature.maxBiomeTempOffset);
             
             // Apply underground coefficient
-            if (world.provider.isSurfaceWorld())
+            if (world.provider.isSurfaceWorld() && ModConfig.temperature.enableUndergroundEffect)
                 temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
             newTemperatureLevel += temperatureModifier;
         }

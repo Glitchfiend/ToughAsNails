@@ -31,9 +31,11 @@ public class TimeModifier extends TemperatureModifier
 
         if (world.provider.isSurfaceWorld() && ((timeNorm < 0 && ModConfig.temperature.enableNightTimeModifier)|| (timeNorm > 0 && ModConfig.temperature.enableDayTimeModifier)))
         {
-            // Apply underground coefficient
             int temperatureModifier = (int)(ModConfig.temperature.timeModifier * timeNorm * (Math.max(1.0F, extremityModifier * ModConfig.temperature.timeExtremityMultiplier)));
-            temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
+            
+            // Apply underground coefficient
+            if (ModConfig.temperature.enableUndergroundEffect)
+                temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
             newTemperatureLevel += temperatureModifier;
         }
 

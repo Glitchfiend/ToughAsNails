@@ -94,7 +94,8 @@ public class SeasonModifier extends TemperatureModifier
             }
             
             // Apply underground coefficient
-            temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
+            if (ModConfig.temperature.enableUndergroundEffect)
+                temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
             temperatureLevel += temperatureModifier;
         }
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Season", initialTemperature, new Temperature(temperatureLevel)));

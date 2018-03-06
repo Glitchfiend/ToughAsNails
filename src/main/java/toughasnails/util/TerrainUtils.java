@@ -14,13 +14,13 @@ public class TerrainUtils
             return false;
         
         // Check horizontal axes
-        int horizontalUndergroundDepth = 5; // TODO: add to config
-        for (int x = pos.getX() - horizontalUndergroundDepth; x < pos.getX() + horizontalUndergroundDepth ; ++x)
+        int undergroundWidth = 5; // TODO: add to config
+        for (int x = pos.getX() - undergroundWidth; x < pos.getX() + undergroundWidth ; ++x)
         {
             if (world.canSeeSky(new BlockPos(x, pos.getY(), pos.getZ())))
                 return false;
         }
-        for (int z = pos.getZ() - horizontalUndergroundDepth; z < pos.getZ() + horizontalUndergroundDepth ; ++z)
+        for (int z = pos.getZ() - undergroundWidth; z < pos.getZ() + undergroundWidth ; ++z)
         {
             if (world.canSeeSky(new BlockPos(pos.getX(), pos.getY(), z)))
                 return false;
@@ -48,23 +48,29 @@ public class TerrainUtils
     public static float getAverageUndergroundCoefficient(World world, BlockPos pos)
     {
         float buffer = 0F;
-        int width = 3; // Square "radius" (should be smaller than "horizontalUndergroundDepth")
+        int width = 3; // Cube "radius" (should be smaller than "undergroundWidth")
         int divider = 2;
         int count = 0;
         
-        // Process nearby blocks
+        // Process nearby blocks belonging to a cube above the given position
         for (int x = pos.getX() - width; x <= pos.getX() + width; x++)
         {
-            for (int z = pos.getZ() - width; z <= pos.getZ() + width; z++)
+            for (int y = pos.getY(); y <= pos.getY() + 2 * width; y++)
             {
-                // Optimisation: process 1 block out of n
-                if (count % divider == 0)
-                    buffer += getUndergroundCoefficient(world, new BlockPos(x, pos.getY(), z));
-                count++;
+                for (int z = pos.getZ() - width; z <= pos.getZ() + width; z++)
+                {
+                    // Optimisation: process 1 block out of n
+                    if (count % divider == 0)
+                    {
+                        float coeff = getUndergroundCoefficient(world, new BlockPos(x, pos.getY(), z));
+                        buffer += coeff;
+                    }
+                    count++;
+                }
             }
         }
         
-        float avgCoeff = buffer / ((int)Math.pow(2F * width + 1, 2) / divider + 1F);
+        float avgCoeff = buffer / ((int)Math.pow(2F * width + 1, 3) / divider + 1F);
         return avgCoeff;
     }
 }
