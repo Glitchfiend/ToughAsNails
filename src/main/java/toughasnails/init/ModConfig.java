@@ -52,13 +52,13 @@ public class ModConfig
     {
         //Block json config:
         List<BlockTemperatureData> defaultBlockTemperatureData = Lists.newArrayList(
-                new BlockTemperatureData(new BlockStatePredicate(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), Sets.newHashSet(BlockTANCampfire.BURNING)), 15.0F),
-                new BlockTemperatureData(new BlockStatePredicate(Blocks.LIT_FURNACE), 10.0F),
-                new BlockTemperatureData(new BlockStatePredicate(Blocks.LAVA), 20.0F),
-                new BlockTemperatureData(new BlockStatePredicate(Blocks.FLOWING_LAVA), 20.0F),
-                new BlockTemperatureData(new BlockStatePredicate(Blocks.MAGMA), 17.0F));
+                new BlockTemperatureData(new BlockStatePredicate(TANBlocks.campfire.getDefaultState().withProperty(BlockTANCampfire.BURNING, true), Sets.newHashSet(BlockTANCampfire.BURNING)), 5.0F),
+                new BlockTemperatureData(new BlockStatePredicate(Blocks.LIT_FURNACE), 3.0F),
+                new BlockTemperatureData(new BlockStatePredicate(Blocks.LAVA), 15.0F),
+                new BlockTemperatureData(new BlockStatePredicate(Blocks.FLOWING_LAVA), 15.0F),
+                new BlockTemperatureData(new BlockStatePredicate(Blocks.MAGMA), 12.5F));
 
-        if (ModCompat.HOT_SPRING_WATER != null) defaultBlockTemperatureData.add(new BlockTemperatureData(new BlockStatePredicate(ModCompat.HOT_SPRING_WATER), 15.0F));
+        if (ModCompat.HOT_SPRING_WATER != null) defaultBlockTemperatureData.add(new BlockTemperatureData(new BlockStatePredicate(ModCompat.HOT_SPRING_WATER), 5.0F));
 
         List<BlockTemperatureData> blockTempDataList = JsonUtil.getOrCreateConfigFile(configDir, "block_temperature.json", defaultBlockTemperatureData, new TypeToken<List<BlockTemperatureData>>(){}.getType());
         populateDataMap(blockTempDataList, blockTemperatureData, tempData -> tempData.predicate.getBlock().getRegistryName().toString());

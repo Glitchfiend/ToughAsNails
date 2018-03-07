@@ -30,15 +30,12 @@ public class BiomeModifier extends TemperatureModifier
         //Denormalize, multiply by the max temp offset, add to the current temp
         int newTemperatureLevel = initialTemperature.getRawValue();
         
-        if (!(biomeTemp < 0.65F && biomeTemp > 0.15F))
-        {
-            int temperatureModifier = (int)Math.round((biomeTemp * 2.0F - 1.0F) * ModConfig.temperature.maxBiomeTempOffset);
-            
-            // Apply underground coefficient
-            if (world.provider.isSurfaceWorld() && ModConfig.temperature.enableUndergroundEffect)
-                temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
-            newTemperatureLevel += temperatureModifier;
-        }
+        int temperatureModifier = (int)Math.round((biomeTemp * 2.0F - 1.0F) * ModConfig.temperature.maxBiomeTempOffset);
+        
+        // Apply underground coefficient
+        if (world.provider.isSurfaceWorld() && ModConfig.temperature.enableUndergroundEffect)
+            temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
+        newTemperatureLevel += temperatureModifier;
         
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Biome Temperature", initialTemperature, new Temperature(newTemperatureLevel)));
         

@@ -67,21 +67,21 @@ public class TemperatureConfig extends ConfigHandler
             maxBiomeTempOffset = config.getInt("Max Biome Temperature Modifier", MODIFIER_SETTINGS, 10, 0, Integer.MAX_VALUE, "The maximum to increase/decrease temperature by depending on the biome");
             sprintingModifier = config.getInt("Sprinting Modifier", MODIFIER_SETTINGS, 3, 0, Integer.MAX_VALUE, "The amount to increase the temperature by when sprinting");
 
-            earlySpringModifier = config.getInt("Early Spring Modifier", MODIFIER_SETTINGS, -5, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            earlySpringModifier = config.getInt("Early Spring Modifier", MODIFIER_SETTINGS, -3, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
             midSpringModifier = config.getInt("Mid Spring Modifier", MODIFIER_SETTINGS, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
             lateSpringModifier = config.getInt("Late Spring Modifier", MODIFIER_SETTINGS, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
             
-            earlySummerModifier = config.getInt("Early Summer Modifier", MODIFIER_SETTINGS, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
-            midSummerModifier = config.getInt("Mid Summer Modifier", MODIFIER_SETTINGS, 6, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
-            lateSummerModifier = config.getInt("Late Summer Modifier", MODIFIER_SETTINGS, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            earlySummerModifier = config.getInt("Early Summer Modifier", MODIFIER_SETTINGS, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            midSummerModifier = config.getInt("Mid Summer Modifier", MODIFIER_SETTINGS, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            lateSummerModifier = config.getInt("Late Summer Modifier", MODIFIER_SETTINGS, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
 
             earlyAutumnModifier = config.getInt("Early Autumn Modifier", MODIFIER_SETTINGS, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
             midAutumnModifier = config.getInt("Mid Autumn Modifier", MODIFIER_SETTINGS, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
             lateAutumnModifier = config.getInt("Late Autumn Modifier", MODIFIER_SETTINGS, -3, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
 
-            earlyWinterModifier = config.getInt("Early Winter Modifier", MODIFIER_SETTINGS, -7, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
-            midWinterModifier = config.getInt("Mid Winter Modifier", MODIFIER_SETTINGS, -15, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
-            lateWinterModifier = config.getInt("Late Winter Modifier", MODIFIER_SETTINGS, -10, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            earlyWinterModifier = config.getInt("Early Winter Modifier", MODIFIER_SETTINGS, -6, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            midWinterModifier = config.getInt("Mid Winter Modifier", MODIFIER_SETTINGS, -12, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
+            lateWinterModifier = config.getInt("Late Winter Modifier", MODIFIER_SETTINGS, -6, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in this sub season");
 
             timeModifier = config.getInt("Time Modifier", MODIFIER_SETTINGS, 9, 0, Integer.MAX_VALUE, "The amount to increase/decrease the temperature by in the middle of the day/night");
             timeExtremityMultiplier = config.getFloat("Time Extremity Multiplier", MODIFIER_SETTINGS, 1.25F, 0, Float.MAX_VALUE, "The amount to multiply the temperature increment/decrement by in the middle of the day/night based on how extreme the biome temperature is");
@@ -92,7 +92,7 @@ public class TemperatureConfig extends ConfigHandler
             snowModifier = config.getInt("Snow Modifier", MODIFIER_SETTINGS, -10, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by when snowing");
             
             enableUndergroundEffect = config.getBoolean("Enable Underground Effect", MODIFIER_SETTINGS, true, "Whether surface modifiers should decrease with depth");
-            equilibriumDepth = config.getInt("Equilibrium Depth", MODIFIER_SETTINGS, 30, 0, Integer.MAX_VALUE, "The vertical distance between the surface and the level where surface modifiers are totally absorbed");
+            equilibriumDepth = config.getInt("Equilibrium Depth", MODIFIER_SETTINGS, 20, 0, Integer.MAX_VALUE, "The vertical distance between the surface and the level where surface modifiers are totally absorbed");
         }
         catch (Exception e)
         {
