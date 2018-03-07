@@ -36,63 +36,68 @@ public class SeasonModifier extends TemperatureModifier
             season = SubSeason.MID_SUMMER;
         }
 
-        if (world.provider.isSurfaceWorld() && !(TerrainUtils.isUnderground(world, pos)))
+        if (world.provider.isSurfaceWorld())
         {
+            int temperatureModifier = 0;
             switch (season)
-	        {
+            {
                 case EARLY_SPRING:
-                    temperatureLevel += ModConfig.temperature.earlySpringModifier;
+                    temperatureModifier = ModConfig.temperature.earlySpringModifier;
                     break;
-
+    
                 case MID_SPRING:
-                    temperatureLevel += ModConfig.temperature.midSpringModifier;
+                    temperatureModifier = ModConfig.temperature.midSpringModifier;
                     break;
-
+    
                 case LATE_SPRING:
-                    temperatureLevel += ModConfig.temperature.lateSpringModifier;
+                    temperatureModifier = ModConfig.temperature.lateSpringModifier;
                     break;
-
+    
                 case EARLY_SUMMER:
-                    temperatureLevel += ModConfig.temperature.earlySummerModifier;
+                    temperatureModifier = ModConfig.temperature.earlySummerModifier;
                     break;
-
+    
                 case MID_SUMMER:
-                    temperatureLevel += ModConfig.temperature.midSummerModifier;
+                    temperatureModifier = ModConfig.temperature.midSummerModifier;
                     break;
-
+    
                 case LATE_SUMMER:
-                    temperatureLevel += ModConfig.temperature.lateSummerModifier;
+                    temperatureModifier = ModConfig.temperature.lateSummerModifier;
                     break;
-
+    
                 case EARLY_AUTUMN:
-                    temperatureLevel += ModConfig.temperature.earlyAutumnModifier;
+                    temperatureModifier = ModConfig.temperature.earlyAutumnModifier;
                     break;
-
+    
                 case MID_AUTUMN:
-                    temperatureLevel += ModConfig.temperature.midAutumnModifier;
+                    temperatureModifier = ModConfig.temperature.midAutumnModifier;
                     break;
-
+    
                 case LATE_AUTUMN:
-                    temperatureLevel += ModConfig.temperature.lateAutumnModifier;
+                    temperatureModifier = ModConfig.temperature.lateAutumnModifier;
                     break;
-
+    
                 case EARLY_WINTER:
-                    temperatureLevel += ModConfig.temperature.earlyWinterModifier;
+                    temperatureModifier = ModConfig.temperature.earlyWinterModifier;
                     break;
-
+    
                 case MID_WINTER:
-                    temperatureLevel += ModConfig.temperature.midWinterModifier;
+                    temperatureModifier = ModConfig.temperature.midWinterModifier;
                     break;
-
+    
                 case LATE_WINTER:
-                    temperatureLevel += ModConfig.temperature.lateWinterModifier;
+                    temperatureModifier = ModConfig.temperature.lateWinterModifier;
                     break;
-
+    
                 default:
                     break;
             }
+            
+            // Apply underground coefficient
+            if (ModConfig.temperature.enableUndergroundEffect)
+                temperatureModifier = Math.round(TerrainUtils.getAverageUndergroundCoefficient(world, pos) * temperatureModifier);
+            temperatureLevel += temperatureModifier;
         }
-        
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Season", initialTemperature, new Temperature(temperatureLevel)));
 
         return new Temperature(temperatureLevel);
