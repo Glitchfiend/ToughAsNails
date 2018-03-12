@@ -183,7 +183,7 @@ public class BlockTANTemperatureCoil extends BlockContainer implements ITANBlock
         if (!world.isRemote && te != null && powered != (Boolean)world.getBlockState(pos).getValue(POWERED))
         {
             TileEntityTemperatureSpread tempFill = (TileEntityTemperatureSpread)te;
-            
+
             if (powered)
             {
                 tempFill.fill();

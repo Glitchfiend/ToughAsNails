@@ -29,12 +29,13 @@ import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.ITemperatureRegulator;
 import toughasnails.api.temperature.Temperature;
+import toughasnails.block.BlockTANTemperatureCoil;
 
 public class TileEntityTemperatureSpread extends TileEntity implements ITickable, ITemperatureRegulator
 {
     public static final int MAX_SPREAD_DISTANCE = 50;
     public static final int RATE_MODIFIER = -500;
-    public static final boolean ENABLE_DEBUG = false;
+    public static final boolean ENABLE_DEBUG = true;
     
     private Set<Entity> spawnedEntities;
     
@@ -72,6 +73,13 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     public void update() 
     {
         World world = this.getWorld();
+
+        // If the block isn't powered, we should reset
+        if (!world.getBlockState(this.getPos()).getValue(BlockTANTemperatureCoil.POWERED))
+        {
+            reset();
+            return;
+        }
 
         //Verify every second
         if (++updateTicks % 20 == 0)
