@@ -106,7 +106,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     @Override
     public int getPlayerTarget(EntityPlayer player)
     {
-        int targetTemperature = TemperatureHelper.getTargetAtPos(player.world, player.getPosition(), debugger).getRawValue();
+        int targetTemperature = TemperatureHelper.getTargetAtPosUnclamped(player.world, player.getPosition(), debugger).getRawValue();
 
         for (ITemperatureModifier modifier : TemperatureHelper.getTemperatureModifiers().values())
         {

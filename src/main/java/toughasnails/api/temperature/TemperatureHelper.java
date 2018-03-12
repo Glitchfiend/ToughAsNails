@@ -82,6 +82,19 @@ public class TemperatureHelper
      */
     public static Temperature getTargetAtPos(@Nonnull World world, @Nonnull BlockPos pos, @Nullable IModifierMonitor monitor)
     {
+        return new Temperature(MathHelper.clamp(getTargetAtPosUnclamped(world, pos, monitor).getRawValue(), 0, TemperatureScale.getScaleTotal()));
+    }
+
+    /**
+     * Get the unclamped target temperature based on the provided position.
+     *
+     * @param world The world to check the temperature of
+     * @param pos The position to check the temperature at
+     * @param monitor The modifier monitor (may be null)
+     * @return The temperature at the provided position
+     */
+    public static Temperature getTargetAtPosUnclamped(@Nonnull World world, @Nonnull BlockPos pos, @Nullable IModifierMonitor monitor)
+    {
         if (monitor == null) monitor = DUMMY_MONITOR;
 
         int targetTemperature = TemperatureScale.getScaleMidpoint();
@@ -94,7 +107,7 @@ public class TemperatureHelper
         }
 
         monitor.setTargetTemperature(new Temperature(targetTemperature));
-        return new Temperature(MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal()));
+        return new Temperature(targetTemperature);
     }
 
     /**
