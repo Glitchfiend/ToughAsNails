@@ -17,7 +17,9 @@ public class TemperatureConfig extends ConfigHandler
     public static final String RATE_SETTINGS = "Rate Settings";
     public static final String MODIFIER_SETTINGS = "Modifier Settings";
 
-    public int altitudeModifier;
+    public int altitudeModifierStep;
+    public int altitudeModifierOffset;
+    
     public int jelledSlimeArmorModifier;
     public int woolArmorModifier;
     public int maxBiomeTempOffset;
@@ -61,7 +63,9 @@ public class TemperatureConfig extends ConfigHandler
             addSyncedValue(TemperatureOption.BASE_TEMPERATURE_CHANGE_TICKS, 400, RATE_SETTINGS, "The maximum number of ticks before the temperature changes", 20, Integer.MAX_VALUE);
             addSyncedValue(TemperatureOption.MAX_RATE_MODIFIER, 380, RATE_SETTINGS,"The maximum number of ticks to reduce the base rate by", 20, Integer.MAX_VALUE);
 
-            altitudeModifier = config.getInt("Altitude Modifier", MODIFIER_SETTINGS, 3, 0, Integer.MAX_VALUE, "The maximum to increase/decrease temperature by depending on the altitude");
+            altitudeModifierStep = config.getInt("Altitude Modifier Step", MODIFIER_SETTINGS, 16, 0, Integer.MAX_VALUE, "The height between two successive temperature changes");
+            altitudeModifierOffset = config.getInt("Altitude Modifier Offset", MODIFIER_SETTINGS, 4, 0, Integer.MAX_VALUE, "The temperature at the lowest altitude");
+
             jelledSlimeArmorModifier = config.getInt("Jelled Slime Armor Modifier", MODIFIER_SETTINGS, -1, Integer.MIN_VALUE, 0, "The amount to decrease the temperature by per unit of jelled slime armor");
             woolArmorModifier = config.getInt("Wool Armor Modifier", MODIFIER_SETTINGS, 1, 0, Integer.MAX_VALUE, "The amount to increase the temperature by per unit of wool armor");
             maxBiomeTempOffset = config.getInt("Max Biome Temperature Modifier", MODIFIER_SETTINGS, 10, 0, Integer.MAX_VALUE, "The maximum to increase/decrease temperature by depending on the biome");

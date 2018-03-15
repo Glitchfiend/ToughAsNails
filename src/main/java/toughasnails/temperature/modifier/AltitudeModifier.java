@@ -22,7 +22,7 @@ public class AltitudeModifier extends TemperatureModifier
 
         if (world.provider.isSurfaceWorld())
         {
-        	newTemperatureLevel -= MathHelper.abs(MathHelper.floor(((64 - pos.getY()) / 64.0) * ModConfig.temperature.altitudeModifier) + 1);
+            newTemperatureLevel += -(MathHelper.floor(pos.getY() / ModConfig.temperature.altitudeModifierStep)) + ModConfig.temperature.altitudeModifierOffset;
         }
 
         monitor.addEntry(new IModifierMonitor.Context(this.getId(), "Altitude", initialTemperature, new Temperature(newTemperatureLevel)));
