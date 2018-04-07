@@ -14,14 +14,6 @@ public class LootTableEventHandler
 	@SubscribeEvent
     public void onLootTableLoad(LootTableLoadEvent event)
     {
-		if (event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE))
-		{
-            LootPool main = event.getTable().getPool("main");
-            if (main != null)
-            {
-                main.addEntry(new LootEntryItem(TANItems.lifeblood_crystal, 1, 0, new LootFunction[0], new LootCondition[0], "toughasnails:lifeblood_crystal"));
-            }
-		}
 		if (event.getName().equals(LootTableList.CHESTS_SPAWN_BONUS_CHEST))
 		{
             LootPool main = event.getTable().getPool("main");

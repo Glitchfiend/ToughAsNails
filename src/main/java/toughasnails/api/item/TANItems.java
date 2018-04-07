@@ -33,8 +33,6 @@ public class TANItems
     public static Item charcoal_filter;
     //public static Item air_filter;
     
-    public static Item lifeblood_crystal;
-    
     public static Item season_clock;
     
     public static ArmorMaterial wool_armor_material;

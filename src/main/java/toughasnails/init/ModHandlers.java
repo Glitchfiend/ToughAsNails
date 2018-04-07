@@ -7,14 +7,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import toughasnails.api.HealthHelper;
 import toughasnails.api.season.SeasonHelper;
 import toughasnails.config.SyncedConfigHandler;
 import toughasnails.handler.AchievementEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
-import toughasnails.handler.health.HealthOverlayHandler;
-import toughasnails.handler.health.MaxHealthHandler;
 import toughasnails.handler.season.ProviderIceHandler;
 import toughasnails.handler.season.RandomUpdateHandler;
 import toughasnails.handler.season.SeasonCropHandler;
@@ -22,12 +19,12 @@ import toughasnails.handler.season.SeasonHandler;
 import toughasnails.handler.season.SeasonSleepHandler;
 import toughasnails.handler.season.StopSpawnHandler;
 import toughasnails.handler.season.WeatherFrequencyHandler;
-import toughasnails.handler.temperature.TemperatureStatTableHandler;
 import toughasnails.handler.temperature.TemperatureOverlayHandler;
+import toughasnails.handler.temperature.TemperatureStatTableHandler;
+import toughasnails.handler.thirst.DrinkHandler;
 import toughasnails.handler.thirst.FillBottleHandler;
 import toughasnails.handler.thirst.ThirstOverlayHandler;
 import toughasnails.handler.thirst.ThirstStatHandler;
-import toughasnails.handler.thirst.DrinkHandler;
 import toughasnails.season.SeasonTime;
 import toughasnails.util.SeasonColourUtil;
 
@@ -45,9 +42,6 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new DrinkHandler());
 	    MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
-        MaxHealthHandler maxHealthHandler = new MaxHealthHandler();
-        MinecraftForge.EVENT_BUS.register(maxHealthHandler);
-        HealthHelper.heartProvider = maxHealthHandler;
 
         //Handlers for functionality related to seasons
         MinecraftForge.EVENT_BUS.register(SEASON_HANDLER);
@@ -72,7 +66,6 @@ public class ModHandlers
             MinecraftForge.EVENT_BUS.register(new TemperatureOverlayHandler());
             MinecraftForge.EVENT_BUS.register(new TemperatureStatTableHandler());
             MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
-            MinecraftForge.EVENT_BUS.register(new HealthOverlayHandler());
 
             registerSeasonColourHandlers();
         }
