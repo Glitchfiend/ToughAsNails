@@ -11,12 +11,14 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import toughasnails.command.TANCommand;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
+import toughasnails.init.ModCompat;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModCrafting;
 import toughasnails.init.ModEntities;
@@ -69,6 +71,12 @@ public class ToughAsNails
     public void init(FMLInitializationEvent event)
     {
         ModConfig.init(configDirectory);
+    }
+    
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        ModCompat.postInit();
     }
     
     @EventHandler
