@@ -9,7 +9,6 @@ package toughasnails.init;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -24,7 +23,6 @@ import toughasnails.api.TANBlocks;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.config.ConfigHandler;
 import toughasnails.config.GameplayConfig;
-import toughasnails.config.SeasonsConfig;
 import toughasnails.config.TemperatureConfig;
 import toughasnails.config.json.*;
 import toughasnails.util.config.JsonUtil;
@@ -38,13 +36,11 @@ public class ModConfig
     public static MaterialTemperatureData materialTemperatureData;
 
     public static GameplayConfig gameplay;
-    public static SeasonsConfig seasons;
     public static TemperatureConfig temperature;
 
     public static void preInit(File configDir)
     {
         gameplay = new GameplayConfig(new File(configDir, "gameplay.cfg"));
-        seasons = new SeasonsConfig(new File(configDir, "seasons.cfg"));
         temperature = new TemperatureConfig(new File(configDir, "temperature.cfg"));
     }
 

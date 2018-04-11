@@ -16,14 +16,8 @@ import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.config.TemperatureOption;
-import toughasnails.api.season.Season.SubSeason;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.api.config.GameplayOption;
-import toughasnails.api.config.SeasonsOption;
-import toughasnails.handler.season.SeasonHandler;
-import toughasnails.season.SeasonSavedData;
-import toughasnails.season.SeasonTime;
 import toughasnails.temperature.TemperatureDebugger;
 import toughasnails.temperature.TemperatureHandler;
 
@@ -68,10 +62,6 @@ public class TANCommand extends CommandBase
         {
             setTemperature(sender, args);
         }
-        else if ("setseason".equals(args[0]))
-        {
-            setSeason(sender, args);
-        }
     }
     
     private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
@@ -113,41 +103,6 @@ public class TANCommand extends CommandBase
         else
         {
         	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
-        }
-    }
-    
-    private void setSeason(ICommandSender sender, String[] args) throws CommandException
-    {
-        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        SubSeason newSeason = null;
-        
-        for (SubSeason season : SubSeason.values())
-        {
-            if (season.toString().toLowerCase().equals(args[1].toLowerCase()))
-            {
-                newSeason = season;
-                break;
-            }
-        }
-        
-        if (SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS))
-    	{
-	        if (newSeason != null)
-	        {
-		            SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(player.world);
-		            seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * newSeason.ordinal();
-		            seasonData.markDirty();
-		            SeasonHandler.sendSeasonUpdate(player.world);
-		            sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.success", args[1]));
-	        }
-	        else
-	        {
-	            sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.fail", args[1]));
-	        }
-    	}
-        else
-        {
-        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.setseason.disabled"));
         }
     }
     

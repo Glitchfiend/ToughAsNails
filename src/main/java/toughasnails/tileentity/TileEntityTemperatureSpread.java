@@ -25,7 +25,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import toughasnails.api.TANCapabilities;
-import toughasnails.api.season.IDecayableCrop;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.ITemperatureRegulator;
 import toughasnails.api.temperature.Temperature;
@@ -301,7 +300,7 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
     private boolean canFill(BlockPos pos)
     {
         //Only spread within enclosed areas, significantly reduces the impact on performance and suits the purpose of coils
-        return !this.getWorld().isBlockFullCube(pos) && (!this.getWorld().canSeeSky(pos) || this.getWorld().getBlockState(pos).getBlock() instanceof IDecayableCrop);
+        return !this.getWorld().isBlockFullCube(pos) && (!this.getWorld().canSeeSky(pos));
     }
     
     @Override

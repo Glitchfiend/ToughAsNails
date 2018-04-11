@@ -11,9 +11,13 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.entities.EntityFreeze;
+import toughasnails.temperature.TemperatureHandler;
+import toughasnails.temperature.modifier.SeasonModifier;
 
 public class ModCompat
 {
@@ -35,5 +39,10 @@ public class ModCompat
         polar_chasm = ForgeRegistries.BIOMES.getValue(new ResourceLocation("biomesoplenty:polar_chasm"));
         
         ModEntities.addSpawn(EntityFreeze.class, 10, 1, 3, EnumCreatureType.MONSTER, alps, cold_desert, alps_foothills, glacier, polar_chasm);
+
+        if (Loader.isModLoaded("sereneseasons"))
+        {
+            TemperatureHelper.registerTemperatureModifier(new SeasonModifier("season"));
+        }
     }
 }

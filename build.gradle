@@ -51,9 +51,6 @@ minecraft {
 
 def commonManifest = {
 		attributes (
-			"FMLCorePlugin": 'toughasnails.asm.TANLoadingPlugin',
-			"FMLCorePluginContainsFMLMod": 'true',
-			"ForceLoadAsMod": 'true',
 			"FMLAT": 'toughasnails_at.cfg'
 		)
 }

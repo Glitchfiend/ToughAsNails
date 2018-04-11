@@ -8,6 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import toughasnails.api.TANCapabilities;
@@ -45,7 +47,6 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         registerTemperatureModifier(new ObjectProximityModifier("object_proximity"));
         registerTemperatureModifier(new WeatherModifier("weather"));
         registerTemperatureModifier(new TimeModifier("time"));
-        registerTemperatureModifier(new SeasonModifier("season"));
     }
 
     public TemperatureHandler()

@@ -14,7 +14,6 @@ import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
 import static toughasnails.api.item.TANItems.jelled_slime_helmet;
 import static toughasnails.api.item.TANItems.jelled_slime_leggings;
 import static toughasnails.api.item.TANItems.respirator_material;
-import static toughasnails.api.item.TANItems.season_clock;
 import static toughasnails.api.item.TANItems.tan_icon;
 import static toughasnails.api.item.TANItems.thermometer;
 import static toughasnails.api.item.TANItems.water_bottle;
@@ -39,7 +38,6 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemCanteen;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
-import toughasnails.item.ItemSeasonClock;
 import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.item.ItemThermometer;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -67,7 +65,6 @@ public class ModItems
         
         // Main Items
         thermometer = registerItem(new ItemThermometer(), "thermometer");
-        season_clock = registerItem(new ItemSeasonClock(), "season_clock");
         canteen = registerItem(new ItemCanteen(), "canteen");
         water_bottle = registerItem(new ItemTANWaterBottle(), "water_bottle");
         fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");

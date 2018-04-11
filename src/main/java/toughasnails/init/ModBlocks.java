@@ -1,10 +1,8 @@
 package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
-import static toughasnails.api.TANBlocks.dead_crops;
 import static toughasnails.api.TANBlocks.glowstone_torch;
 import static toughasnails.api.TANBlocks.rain_collector;
-import static toughasnails.api.TANBlocks.season_sensors;
 import static toughasnails.api.TANBlocks.temperature_coil;
 import static toughasnails.api.TANBlocks.torch_new;
 
@@ -22,14 +20,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
 import toughasnails.block.BlockGlowstoneTorch;
 import toughasnails.block.BlockRainCollector;
-import toughasnails.block.BlockSeasonSensor;
-import toughasnails.block.BlockSeasonSensor.DetectorType;
 import toughasnails.block.BlockTANCampfire;
-import toughasnails.block.BlockTANDeadCrops;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.block.BlockTANTorchNew;
 import toughasnails.core.ToughAsNails;
-import toughasnails.tileentity.TileEntitySeasonSensor;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
 import toughasnails.util.BlockStateUtils;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -38,10 +32,6 @@ public class ModBlocks
 {
     public static void init()
     {
-        season_sensors[0] = registerBlock( new BlockSeasonSensor(DetectorType.SPRING), "season_sensor_spring" );
-        season_sensors[1] = registerBlock( new BlockSeasonSensor(DetectorType.SUMMER), "season_sensor_summer" ).setCreativeTab(null);
-        season_sensors[2] = registerBlock( new BlockSeasonSensor(DetectorType.AUTUMN), "season_sensor_autumn" ).setCreativeTab(null);
-        season_sensors[3] = registerBlock( new BlockSeasonSensor(DetectorType.WINTER), "season_sensor_winter" ).setCreativeTab(null); 
         campfire = registerBlock( new BlockTANCampfire(), "campfire" );
         rain_collector = registerBlock( new BlockRainCollector(), "rain_collector" );
         //gas = registerBlock( new BlockTANGas(), "gas" );
@@ -49,10 +39,8 @@ public class ModBlocks
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
         torch_new = registerBlock( new BlockTANTorchNew(), "torch_new" );
         glowstone_torch = registerBlock( new BlockGlowstoneTorch(), "glowstone_torch" );
-        dead_crops = registerBlock(new BlockTANDeadCrops(), "dead_crops").setCreativeTab(null);  
-        
+
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
-        GameRegistry.registerTileEntity(TileEntitySeasonSensor.class, "season_sensor");
     }
 
     public static void registerBlockItemModel(Block block, String stateName, int stateMeta)

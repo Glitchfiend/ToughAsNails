@@ -9,10 +9,8 @@ package toughasnails.temperature.modifier;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import toughasnails.api.config.SeasonsOption;
-import toughasnails.api.config.SyncedConfig;
-import toughasnails.api.season.Season.SubSeason;
-import toughasnails.api.season.SeasonHelper;
+import sereneseasons.api.season.Season;
+import sereneseasons.api.season.SeasonHelper;
 import toughasnails.api.temperature.IModifierMonitor;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.init.ModConfig;
@@ -29,12 +27,7 @@ public class SeasonModifier extends TemperatureModifier
     public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
-        SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
-
-        if (!(SyncedConfig.getBooleanValue(SeasonsOption.ENABLE_SEASONS)))
-        {
-            season = SubSeason.MID_SUMMER;
-        }
+        Season.SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
 
         if (world.provider.isSurfaceWorld())
         {
