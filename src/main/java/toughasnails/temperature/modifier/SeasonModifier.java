@@ -27,7 +27,7 @@ public class SeasonModifier extends TemperatureModifier
     public Temperature applyEnvironmentModifiers(World world, BlockPos pos, Temperature initialTemperature, IModifierMonitor monitor)
     {
         int temperatureLevel = initialTemperature.getRawValue();
-        Season.SubSeason season = SeasonHelper.getSeasonData(world).getSubSeason();
+        Season.SubSeason season = SeasonHelper.getSeasonState(world).getSubSeason();
 
         if (world.provider.isSurfaceWorld())
         {
