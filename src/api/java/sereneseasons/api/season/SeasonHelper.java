@@ -8,8 +8,6 @@
 package sereneseasons.api.season;
 
 import net.minecraft.world.World;
-import sereneseasons.api.config.SeasonsOption;
-import sereneseasons.api.config.SyncedConfig;
 
 public class SeasonHelper 
 {
@@ -19,17 +17,17 @@ public class SeasonHelper
      * Obtains data about the state of the season cycle in the world. This works both on
      * the client and the server.
      */
-    public static ISeasonData getSeasonData(World world)
+    public static ISeasonState getSeasonState(World world)
     {
-        ISeasonData data;
+        ISeasonState data;
 
         if (!world.isRemote)
         {
-            data = dataProvider.getServerSeasonData(world);
+            data = dataProvider.getServerSeasonState(world);
         }
         else
         {
-            data = dataProvider.getClientSeasonData();
+            data = dataProvider.getClientSeasonState();
         }
 
         return data;
@@ -51,7 +49,7 @@ public class SeasonHelper
 
     public interface ISeasonDataProvider
     {
-        ISeasonData getServerSeasonData(World world);
-        ISeasonData getClientSeasonData();
+        ISeasonState getServerSeasonState(World world);
+        ISeasonState getClientSeasonState();
     }
 }

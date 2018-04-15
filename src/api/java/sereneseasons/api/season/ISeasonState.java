@@ -9,7 +9,7 @@ package sereneseasons.api.season;
 
 import sereneseasons.api.season.Season.SubSeason;
 
-public interface ISeasonData 
+public interface ISeasonState
 {
     /**
      * Get the duration of a single day. Normally this is
@@ -70,4 +70,12 @@ public interface ISeasonData
      * @return The current season
      */
     Season getSeason();
+
+    /**
+     * Get the current tropical season. This method is
+     * mainly for convenience.
+     *
+     * @return The current tropical season
+     */
+    Season.TropicalSeason getTropicalSeason();
 }

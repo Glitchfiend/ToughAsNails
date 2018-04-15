@@ -8,11 +8,11 @@ public class WorldHooks
     /**
      * An override of {@link World#canSnowAt(BlockPos, boolean)}
      */
-    public static boolean canSnowAtInSeason(World world, BlockPos pos, boolean checkLight, Season season)
+    public static boolean canSnowAtInSeason(World world, BlockPos pos, boolean checkLight, ISeasonState seasonState)
     {
         try
         {
-            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("canSnowAtInSeason", World.class, BlockPos.class, Boolean.class, Season.class).invoke(null, world, pos, checkLight, season);
+            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("canSnowAtInSeason", World.class, BlockPos.class, Boolean.class, Season.class).invoke(null, world, pos, checkLight, seasonState);
         }
         catch (Exception e)
         {
@@ -23,11 +23,11 @@ public class WorldHooks
     /**
      * An override of {@link World#canBlockFreeze(BlockPos, boolean)}
      */
-    public static boolean canBlockFreezeInSeason(World world, BlockPos pos, boolean noWaterAdj, Season season)
+    public static boolean canBlockFreezeInSeason(World world, BlockPos pos, boolean noWaterAdj, ISeasonState seasonState)
     {
         try
         {
-            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("canBlockFreezeInSeason", World.class, BlockPos.class, Boolean.class, Season.class).invoke(null, world, pos, noWaterAdj, season);
+            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("canBlockFreezeInSeason", World.class, BlockPos.class, Boolean.class, Season.class).invoke(null, world, pos, noWaterAdj, seasonState);
         }
         catch (Exception e)
         {
@@ -38,11 +38,11 @@ public class WorldHooks
     /**
      * An override of {@link World#isRainingAt(BlockPos)}
      */
-    public static boolean isRainingAtInSeason(World world, BlockPos pos, Season season)
+    public static boolean isRainingAtInSeason(World world, BlockPos pos, ISeasonState seasonState)
     {
         try
         {
-            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("isRainingAtInSeason", World.class, BlockPos.class, Season.class).invoke(null, world, pos, season);
+            return (Boolean)Class.forName("sereneseasons.season.SeasonASMHelper").getMethod("isRainingAtInSeason", World.class, BlockPos.class, Season.class).invoke(null, world, pos, seasonState);
         }
         catch (Exception e)
         {
