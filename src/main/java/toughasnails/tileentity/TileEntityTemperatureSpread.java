@@ -83,6 +83,14 @@ public class TileEntityTemperatureSpread extends TileEntity implements ITickable
         //Verify every second
         if (++updateTicks % 20 == 0)
         {
+            // Skip checking and applying the climatisation modifier if the block is not powered
+            if(world.isBlockIndirectlyGettingPowered(pos) <= 0)
+            {
+                // Reset positions to prevent isPosRegulated() from returning true
+                reset();
+                return;
+            }
+
             // Attempt to fill again if no positions are being regulated
             // Also refill if there has been any changes since last time
             if (!this.isActive() || !this.verify())
