@@ -4,6 +4,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.EnumDifficulty;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 
 public class PotionHyperthermia extends TANPotion
 {
@@ -18,7 +20,7 @@ public class PotionHyperthermia extends TANPotion
     public void performEffect(EntityLivingBase entity, int amplifier)
     {
     	EnumDifficulty enumdifficulty = entity.getEntityWorld().getDifficulty();
-    	if (!(entity instanceof EntityPlayer) || (enumdifficulty == EnumDifficulty.EASY && entity.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && entity.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
+    	if (!(entity instanceof EntityPlayer) || (enumdifficulty == EnumDifficulty.PEACEFUL && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_PEACEFUL) && entity.getHealth() > 10.0F) ||  (enumdifficulty == EnumDifficulty.EASY && entity.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && entity.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
     	{
     		entity.attackEntityFrom(DamageSource.GENERIC, 0.5F);
     	}

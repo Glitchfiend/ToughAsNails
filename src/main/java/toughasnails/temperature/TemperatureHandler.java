@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.stat.StatHandlerBase;
@@ -87,8 +89,10 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
 
             if (incrementTemperature)
             {
-                if (!player.isCreative())
+                if (!player.isCreative() && (world.getDifficulty() != EnumDifficulty.PEACEFUL || SyncedConfig.getBooleanValue(GameplayOption.ENABLE_PEACEFUL)))
+                {
                     this.addTemperature(new Temperature((int)Math.signum(targetTemperature - this.temperatureLevel)));
+                }
                 // always reset the time when incrementing is supposed to happen
                 // even in creative mode
                 this.temperatureTimer = 0;

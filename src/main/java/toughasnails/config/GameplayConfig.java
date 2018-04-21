@@ -29,6 +29,7 @@ public class GameplayConfig extends ConfigHandler
         try
         {
             addSyncedValue(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst.");
+            addSyncedValue(GameplayOption.ENABLE_PEACEFUL, false, SURVIVAL_SETTINGS, "The effects of the mod will work on Peaceful difficulty.");
 
             iceCubeDrops = config.getBoolean("Ice Cube Drops", SURVIVAL_SETTINGS, true, "Ice Blocks drop Ice Cubes.");
         }

@@ -66,7 +66,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
                 {
                     this.thirstHydrationLevel = Math.max(this.thirstHydrationLevel - 1.0F, 0.0F);
                 }
-                else if (enumdifficulty != EnumDifficulty.PEACEFUL)
+                else if (enumdifficulty != EnumDifficulty.PEACEFUL || SyncedConfig.getBooleanValue(GameplayOption.ENABLE_PEACEFUL))
                 {
                     this.thirstLevel = Math.max(this.thirstLevel - 1, 0);
                 }
@@ -79,7 +79,7 @@ public class ThirstHandler extends StatHandlerBase implements IThirst
                 //Inflict thirst damage every 4 seconds
                 if (this.thirstTimer >= 80)
                 {
-                	if ((enumdifficulty == EnumDifficulty.EASY && player.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && player.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
+                	if ((enumdifficulty == EnumDifficulty.PEACEFUL && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_PEACEFUL) && player.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.EASY && player.getHealth() > 10.0F) || (enumdifficulty == EnumDifficulty.NORMAL && player.getHealth() > 1.0F) || enumdifficulty == EnumDifficulty.HARD)
                 	{
                         player.attackEntityFrom(DamageSource.STARVE, 1.0F);
                     }
