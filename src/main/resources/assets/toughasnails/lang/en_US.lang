@@ -1,11 +1,6 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
 commands.toughasnails.settemp.success=Set player temperature to %s
 commands.toughasnails.settemp.disabled=Body Temperature is currently disabled!
-commands.toughasnails.setseason.success=Set season to %s
-commands.toughasnails.setseason.fail=Invalid season %s
-commands.toughasnails.setseason.disabled=Seasons are currently disabled!
-
-config.category.survivalSettings.title=Survival Settings
 
 itemGroup.tabToughAsNails=Tough As Nails
 

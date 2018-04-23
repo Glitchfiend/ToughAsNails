@@ -9,7 +9,6 @@ package toughasnails.api.config;
 
 public enum TemperatureOption implements ISyncedOption
 {
-    ENABLE_TEMPERATURE("Enable Body Temperature"),
     BASE_TEMPERATURE_CHANGE_TICKS("Base Temperature Change Ticks"),
     MAX_RATE_MODIFIER("Max Rate Modifier");
 

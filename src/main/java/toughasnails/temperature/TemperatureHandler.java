@@ -61,7 +61,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
     @Override
     public void update(EntityPlayer player, World world, Phase phase)
     {
-        if (!SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
+        if (!SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
             return;
 
         if (phase == Phase.END && !world.isRemote)
@@ -144,7 +144,7 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
         int hyperRangeStart = (TemperatureScale.getScaleTotal() + 1) - hyperRangeSize;
         
         //Don't apply any negative effects whilst in creative mode
-        if (!player.capabilities.isCreativeMode && (SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE)))
+        if (!player.capabilities.isCreativeMode && (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE)))
         {
             if (this.temperatureLevel <= hypoRangeStart && (!player.isPotionActive(TANPotions.cold_resistance)) && (temperatureLevel < prevTemperatureLevel || !player.isPotionActive(TANPotions.hypothermia)))
             {

@@ -9,6 +9,7 @@ package toughasnails.api.config;
 
 public enum GameplayOption implements ISyncedOption
 {
+	ENABLE_TEMPERATURE("Enable Body Temperature"),
     ENABLE_THIRST("Enable Thirst"),
     ENABLE_PEACEFUL("Enable Peaceful");
     

@@ -12,9 +12,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
+import toughasnails.api.config.GameplayOption;
+import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
@@ -70,7 +71,7 @@ public class TANCommand extends CommandBase
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         TemperatureDebugger debugger = temperatureStats.debugger;
 
-        if (SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
         	debugger.setGuiVisible(!debugger.isGuiVisible(), player);
     	}
@@ -87,7 +88,7 @@ public class TANCommand extends CommandBase
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
         Temperature playerTemp = temperatureStats.getTemperature();
 
-        if (SyncedConfig.getBooleanValue(TemperatureOption.ENABLE_TEMPERATURE))
+        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
 	        //Remove any existing potion effects for hypo/hyperthermia
 	        player.removePotionEffect(TANPotions.hypothermia);

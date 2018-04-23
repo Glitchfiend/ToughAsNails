@@ -14,10 +14,9 @@ import toughasnails.core.ToughAsNails;
 
 public class GameplayConfig extends ConfigHandler
 {
-    public static final String SURVIVAL_SETTINGS = "Survival Settings";
-
     public boolean iceCubeDrops;
     public boolean magmaShardDrops;
+    public boolean lootTableTweaks;
 
     public GameplayConfig(File configFile)
     {
@@ -29,11 +28,13 @@ public class GameplayConfig extends ConfigHandler
     {
         try
         {
-            addSyncedValue(GameplayOption.ENABLE_THIRST, true, SURVIVAL_SETTINGS, "Players are affected by thirst.");
-            addSyncedValue(GameplayOption.ENABLE_PEACEFUL, false, SURVIVAL_SETTINGS, "The effects of the mod will work on Peaceful difficulty.");
+        	addSyncedValue(GameplayOption.ENABLE_TEMPERATURE, true, "Main Settings", "Players are affected by temperature");
+            addSyncedValue(GameplayOption.ENABLE_THIRST, true, "Main Settings", "Players are affected by thirst.");
+            addSyncedValue(GameplayOption.ENABLE_PEACEFUL, false, "Main Settings", "The effects of the mod will work on Peaceful difficulty.");
 
-            iceCubeDrops = config.getBoolean("Ice Cube Drops", SURVIVAL_SETTINGS, true, "Ice Blocks drop Ice Cubes.");
-            magmaShardDrops = config.getBoolean("Magma Shard Drops", SURVIVAL_SETTINGS, true, "Magma Blocks drop Magma Shards.");
+            iceCubeDrops = config.getBoolean("Ice Cube Drops", "Tweak Settings", true, "Ice Blocks drop Ice Cubes.");
+            magmaShardDrops = config.getBoolean("Magma Shard Drops", "Tweak Settings", true, "Magma Blocks drop Magma Shards.");
+            lootTableTweaks = config.getBoolean("Loot Table Tweaks", "Tweak Settings", true, "Loot tables are tweaked for balance.");
         }
         catch (Exception e)
         {

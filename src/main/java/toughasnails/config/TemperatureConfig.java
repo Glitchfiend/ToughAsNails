@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.config;
 
+import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.core.ToughAsNails;
 
@@ -55,7 +56,6 @@ public class TemperatureConfig extends ConfigHandler
     {
         try
         {
-            addSyncedValue(TemperatureOption.ENABLE_TEMPERATURE, true, "Toggle", "Players are affected by temperature");
             addSyncedValue(TemperatureOption.BASE_TEMPERATURE_CHANGE_TICKS, 400, RATE_SETTINGS, "The maximum number of ticks before the temperature changes", 20, Integer.MAX_VALUE);
             addSyncedValue(TemperatureOption.MAX_RATE_MODIFIER, 380, RATE_SETTINGS,"The maximum number of ticks to reduce the base rate by", 20, Integer.MAX_VALUE);
             altitudeModifier = config.getInt("Altitude Modifier", MODIFIER_SETTINGS, 3, 0, Integer.MAX_VALUE, "The maximum to increase/decrease temperature by depending on the altitude");
