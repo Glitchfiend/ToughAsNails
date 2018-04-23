@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.config.SyncedConfigHandler;
+import toughasnails.handler.BucketEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.temperature.TemperatureOverlayHandler;
@@ -20,7 +21,7 @@ public class ModHandlers
 
         MinecraftForge.EVENT_BUS.register(new ExtendedStatHandler());
         MinecraftForge.EVENT_BUS.register(new SyncedConfigHandler());
-        
+        MinecraftForge.EVENT_BUS.register(new BucketEventHandler());
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new DrinkHandler());
         

@@ -68,7 +68,7 @@ public class ToughAsNails
         ModVanillaCompat.init();
         ModHandlers.init();
         
-        ModCrafting.init();
+        ModCrafting.preInit();
         
         MinecraftForge.EVENT_BUS.register(new LootTableEventHandler());
         MinecraftForge.EVENT_BUS.register(new BlockHarvestEventHandler());
@@ -79,6 +79,7 @@ public class ToughAsNails
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+    	ModCrafting.init();
         ModConfig.init(configDirectory);
     }
     

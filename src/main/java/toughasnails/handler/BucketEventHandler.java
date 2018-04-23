@@ -35,7 +35,7 @@ public class BucketEventHandler
         if (!event.getWorld().isBlockModifiable(event.getEntityPlayer(), blockpos)) {return;}
         if (!event.getEntityPlayer().canPlayerEdit(blockpos.offset(event.getTarget().sideHit), event.getTarget().sideHit, event.getEmptyBucket())) {return;}
         
-        // determine if the block is one of our BOP fluids
+        // determine if the block is one of our TAN fluids
         IBlockState iblockstate = event.getWorld().getBlockState(blockpos);
         Fluid filled_fluid = null;
         if (iblockstate.getBlock() == TANBlocks.purified_water && iblockstate.getValue(BlockPurifiedWaterFluid.LEVEL).intValue() == 0)

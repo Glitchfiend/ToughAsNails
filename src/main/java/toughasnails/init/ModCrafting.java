@@ -19,10 +19,14 @@ import toughasnails.util.PotionBrewingRecipe;
 
 public class ModCrafting
 {
+	public static void preInit()
+    {
+		addOreRegistration();
+		addCraftingRecipies();
+    }
+	
     public static void init()
     {
-        addOreRegistration();
-        addCraftingRecipies();
         addSmeltingRecipes();
     }
     
@@ -48,7 +52,7 @@ public class ModCrafting
     {
     	// Register smelting recipes
     	// Purified Water Bucket
-    	//GameRegistry.addSmelting(Items.WATER_BUCKET, FluidUtil.getFilledBucket(new FluidStack(PurifiedWaterFluid.instance, Fluid.BUCKET_VOLUME)), 0F);
+    	GameRegistry.addSmelting(Items.WATER_BUCKET, UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, PurifiedWaterFluid.instance), 0F);
     	
     	// Purified Water Bottle
     	GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), new ItemStack(TANItems.purified_water_bottle, 1), 0F);
