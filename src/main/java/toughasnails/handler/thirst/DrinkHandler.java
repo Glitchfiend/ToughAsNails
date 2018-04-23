@@ -20,6 +20,7 @@ import toughasnails.api.config.SyncedConfig;
 import toughasnails.api.item.ItemDrink;
 import toughasnails.api.stat.capability.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.api.thirst.WaterType;
 import toughasnails.config.json.DrinkData;
 import toughasnails.init.ModConfig;
 import toughasnails.thirst.ThirstHandler;
@@ -50,9 +51,13 @@ public class DrinkHandler
                 // Special case potions because they use NBT
                 if (stack.getItem().equals(Items.POTIONITEM))
                 {
-                    if ( PotionUtils.getFullEffectsFromItem(stack).isEmpty())
+                    if (PotionUtils.getFullEffectsFromItem(stack).isEmpty())
                     {
-                        thirstHandler.addStats(7, 0.5F);
+                        thirstHandler.addStats(WaterType.NORMAL.getThirst(), WaterType.NORMAL.getHydration());
+                        if (player.world.rand.nextFloat() < WaterType.NORMAL.getPoisonChance() && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
+                        {
+                            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
+                        }
                     }
                     else
                     {

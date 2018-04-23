@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemCanteen;
-import toughasnails.item.ItemDirtyWaterBottle;
+import toughasnails.item.ItemPurifiedWaterBottle;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
 import toughasnails.item.ItemThermometer;
@@ -45,7 +45,7 @@ public class ModItems
         // Main Items
         thermometer = registerItem(new ItemThermometer(), "thermometer");
         canteen = registerItem(new ItemCanteen(), "canteen");
-        dirty_water_bottle = registerItem(new ItemDirtyWaterBottle(), "dirty_water_bottle");
+        purified_water_bottle = registerItem(new ItemPurifiedWaterBottle(), "purified_water_bottle");
         fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
         
         // Materials

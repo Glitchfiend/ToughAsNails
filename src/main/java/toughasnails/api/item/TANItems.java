@@ -9,7 +9,7 @@ public class TANItems
 	
     public static Item canteen;
     public static Item fruit_juice;
-    public static Item dirty_water_bottle;
+    public static Item purified_water_bottle;
     public static Item thermometer;
     
     //public static Item bottle_of_gas;

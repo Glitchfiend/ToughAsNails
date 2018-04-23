@@ -113,7 +113,7 @@ public class BlockRainCollector extends Block implements ITANBlock
                 {
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        ItemStack itemstack1 = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
+                        ItemStack itemstack1 = new ItemStack(TANItems.purified_water_bottle, 1);
 
                         playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
                         if (playerIn.getHeldItem(hand).isEmpty())

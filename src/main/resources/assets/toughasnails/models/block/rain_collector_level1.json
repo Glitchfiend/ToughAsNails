@@ -7,7 +7,7 @@
         "bottom": "toughasnails:blocks/rain_collector_bottom",
         "side": "toughasnails:blocks/rain_collector_side",
         "inside": "toughasnails:blocks/rain_collector_inner",
-        "water": "blocks/water_still"
+        "water": "toughasnails:blocks/purified_water_still"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

@@ -27,9 +27,9 @@ import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.WaterType;
 import toughasnails.thirst.ThirstHandler;
 
-public class ItemDirtyWaterBottle extends Item implements IDrink
+public class ItemPurifiedWaterBottle extends Item implements IDrink
 {
-    public ItemDirtyWaterBottle()
+    public ItemPurifiedWaterBottle()
     {
         this.setMaxStackSize(1);
         this.setHasSubtypes(true);
@@ -38,17 +38,17 @@ public class ItemDirtyWaterBottle extends Item implements IDrink
 	
     public int getThirst()
     {
-        return WaterType.DIRTY.getThirst();
+        return WaterType.PURIFIED.getThirst();
     }
 
     public float getHydration()
     {
-        return WaterType.DIRTY.getThirst();
+        return WaterType.PURIFIED.getThirst();
     }
 
     public float getPoisonChance()
     {
-        return WaterType.DIRTY.getThirst();
+        return WaterType.PURIFIED.getThirst();
     }
 
     @Override
@@ -86,19 +86,10 @@ public class ItemDirtyWaterBottle extends Item implements IDrink
             IThirst thirst = ThirstHelper.getThirstData(player);
             
             thirst.addStats(this.getThirst(), this.getHydration());
-            addEffects(player);
             
             return new ItemStack(Items.GLASS_BOTTLE);
         }
 
         return stack;
-    }
-    
-    public void addEffects(EntityPlayer player)
-    {
-        if (player.world.rand.nextFloat() < this.getPoisonChance() && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
-        {
-            player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
-        }
     }
 }

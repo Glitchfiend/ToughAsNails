@@ -4,13 +4,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import toughasnails.config.SyncedConfigHandler;
-import toughasnails.handler.AchievementEventHandler;
 import toughasnails.handler.ExtendedStatHandler;
 import toughasnails.handler.PacketHandler;
 import toughasnails.handler.temperature.TemperatureOverlayHandler;
 import toughasnails.handler.temperature.TemperatureStatTableHandler;
 import toughasnails.handler.thirst.DrinkHandler;
-import toughasnails.handler.thirst.FillBottleHandler;
 import toughasnails.handler.thirst.ThirstOverlayHandler;
 import toughasnails.handler.thirst.ThirstStatHandler;
 
@@ -25,9 +23,6 @@ public class ModHandlers
         
         MinecraftForge.EVENT_BUS.register(new ThirstStatHandler());
         MinecraftForge.EVENT_BUS.register(new DrinkHandler());
-	    MinecraftForge.EVENT_BUS.register(new FillBottleHandler());
-
-        MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
         
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {

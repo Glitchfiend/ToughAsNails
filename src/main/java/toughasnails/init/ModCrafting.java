@@ -42,8 +42,8 @@ public class ModCrafting
     {
     	// Register smelting recipes
     	
-    	// Clean Water Bottle
-    	GameRegistry.addSmelting(new ItemStack(TANItems.dirty_water_bottle, 1), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
+    	// Purified Water Bottle
+    	GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), new ItemStack(TANItems.purified_water_bottle, 1), 0F);
     }
     
     private static void addOreRegistration()
