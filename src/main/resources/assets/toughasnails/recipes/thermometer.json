@@ -1,18 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern": [
     " # ",
-    "#Q#",
+    "#R#",
     " # "
   ],
   "key": {
     "#": {
-      "item": "minecraft:diamond",
-      "data": 32767
+      "item": "minecraft:glass",
+      "data": 0
     },
-    "Q": {
-      "item": "minecraft:quartz",
-      "data": 32767
+    "R": {
+      "type": "forge:ore_dict",
+	  "ore": "dustRedstone"
     }
   },
   "result": {
