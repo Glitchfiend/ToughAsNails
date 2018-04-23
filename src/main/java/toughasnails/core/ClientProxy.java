@@ -1,12 +1,12 @@
 package toughasnails.core;
 
 import com.google.common.base.Preconditions;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -25,10 +25,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import toughasnails.api.ITANBlock;
-import toughasnails.entities.EntityFreeze;
-import toughasnails.entities.RenderFreeze;
-import toughasnails.entities.projectile.EntityIceball;
-import toughasnails.entities.projectile.RenderIceball;
 import toughasnails.particle.EntitySnowflakeFX;
 import toughasnails.particle.TANParticleTypes;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -40,9 +36,6 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderers()
     {
-        //Entity rendering and other stuff will go here in future
-        registerEntityRenderer(EntityIceball.class, RenderIceball.class);
-        registerEntityRenderer(EntityFreeze.class, RenderFreeze.class);
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -18,8 +17,6 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 import toughasnails.core.ToughAsNails;
-import toughasnails.entities.EntityFreeze;
-import toughasnails.entities.projectile.EntityIceball;
 
 public class ModEntities
 {
@@ -29,11 +26,6 @@ public class ModEntities
     
     public static void init()
     {
-        // projectiles
-        registerTANEntity(EntityIceball.class, "iceball", 64, 10, true);
-        
-        // mobs
-        registerTANEntityWithSpawnEgg(EntityFreeze.class, "freeze", 80, 3, true, 0xECFAF4, 0x439FC3, 10, 1, 3, EnumCreatureType.MONSTER, Biomes.ICE_PLAINS, Biomes.ICE_MOUNTAINS, Biomes.MUTATED_ICE_FLATS);
     }
     
     // register an entity

@@ -26,10 +26,8 @@ public class TANItems
     public static Item jelled_slime_boots;
     
     public static Item jelled_slime;
-    public static Item freeze_rod;
-    public static Item freeze_powder;
     public static Item ice_cube;
-    public static Item ice_charge;
+    public static Item magma_shard;
     public static Item charcoal_filter;
     //public static Item air_filter;
     

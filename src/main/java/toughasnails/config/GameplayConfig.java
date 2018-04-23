@@ -17,6 +17,7 @@ public class GameplayConfig extends ConfigHandler
     public static final String SURVIVAL_SETTINGS = "Survival Settings";
 
     public boolean iceCubeDrops;
+    public boolean magmaShardDrops;
 
     public GameplayConfig(File configFile)
     {
@@ -32,6 +33,7 @@ public class GameplayConfig extends ConfigHandler
             addSyncedValue(GameplayOption.ENABLE_PEACEFUL, false, SURVIVAL_SETTINGS, "The effects of the mod will work on Peaceful difficulty.");
 
             iceCubeDrops = config.getBoolean("Ice Cube Drops", SURVIVAL_SETTINGS, true, "Ice Blocks drop Ice Cubes.");
+            magmaShardDrops = config.getBoolean("Magma Shard Drops", SURVIVAL_SETTINGS, true, "Magma Blocks drop Magma Shards.");
         }
         catch (Exception e)
         {

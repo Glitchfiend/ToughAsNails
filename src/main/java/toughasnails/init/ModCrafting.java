@@ -24,8 +24,8 @@ public class ModCrafting
 		// Register crafting recipes
 		//Brewing
 		//Base
-		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(Items.FIRE_CHARGE), TANPotions.heat_resistance_type);
-		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.ice_charge), TANPotions.cold_resistance_type);
+		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.magma_shard), TANPotions.heat_resistance_type);
+		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(TANItems.ice_cube), TANPotions.cold_resistance_type);
 
 		//Extended
 		addBrewingRecipe(TANPotions.heat_resistance_type, new ItemStack(Items.REDSTONE), TANPotions.long_heat_resistance_type);

@@ -1,8 +1,0 @@
-{
-    "parent": "block/orientable",
-    "textures": {
-        "top": "blocks/furnace_top",
-        "front": "toughasnails:blocks/chiller",
-        "side": "blocks/furnace_side"
-    }
-}

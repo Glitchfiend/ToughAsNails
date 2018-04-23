@@ -1,6 +1,25 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.*;
+import static toughasnails.api.item.TANItems.canteen;
+import static toughasnails.api.item.TANItems.charcoal_filter;
+import static toughasnails.api.item.TANItems.fruit_juice;
+import static toughasnails.api.item.TANItems.ice_cube;
+import static toughasnails.api.item.TANItems.jelled_slime;
+import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
+import static toughasnails.api.item.TANItems.jelled_slime_boots;
+import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
+import static toughasnails.api.item.TANItems.jelled_slime_helmet;
+import static toughasnails.api.item.TANItems.jelled_slime_leggings;
+import static toughasnails.api.item.TANItems.magma_shard;
+import static toughasnails.api.item.TANItems.purified_water_bottle;
+import static toughasnails.api.item.TANItems.respirator_material;
+import static toughasnails.api.item.TANItems.tan_icon;
+import static toughasnails.api.item.TANItems.thermometer;
+import static toughasnails.api.item.TANItems.wool_armor_material;
+import static toughasnails.api.item.TANItems.wool_boots;
+import static toughasnails.api.item.TANItems.wool_chestplate;
+import static toughasnails.api.item.TANItems.wool_helmet;
+import static toughasnails.api.item.TANItems.wool_leggings;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -15,9 +34,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemCanteen;
-import toughasnails.item.ItemPurifiedWaterBottle;
 import toughasnails.item.ItemFruitJuice;
-import toughasnails.item.ItemIceCharge;
+import toughasnails.item.ItemPurifiedWaterBottle;
 import toughasnails.item.ItemThermometer;
 import toughasnails.util.inventory.CreativeTabTAN;
 
@@ -50,9 +68,7 @@ public class ModItems
         
         // Materials
         ice_cube = registerItem(new Item(), "ice_cube");
-        freeze_rod = registerItem(new Item(), "freeze_rod");
-        freeze_powder = registerItem(new Item(), "freeze_powder");
-        ice_charge = registerItem(new ItemIceCharge(), "ice_charge");
+        magma_shard = registerItem(new Item(), "magma_shard");
         jelled_slime = registerItem(new Item(), "jelled_slime");
         charcoal_filter = registerItem(new Item(), "charcoal_filter");
         //bottle_of_gas = registerItem(new ItemBottleOfGas(), "bottle_of_gas", null);

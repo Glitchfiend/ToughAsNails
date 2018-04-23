@@ -26,7 +26,16 @@ public class BlockHarvestEventHandler
         	if (ModConfig.gameplay.iceCubeDrops)
         	{
 	        	event.getDrops().clear();
-	            event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(2)));
+	            event.getDrops().add(new ItemStack(TANItems.ice_cube, new Random().nextInt(fortune + 1) + new Random().nextInt(2)));
+        	}
+        }
+        
+        if (state.getBlock() == Blocks.MAGMA && event.getHarvester() != null)
+        {
+        	if (ModConfig.gameplay.magmaShardDrops)
+        	{
+	        	event.getDrops().clear();
+	            event.getDrops().add(new ItemStack(TANItems.magma_shard, 1 + new Random().nextInt(fortune + 1) + new Random().nextInt(3)));
         	}
         }
     }

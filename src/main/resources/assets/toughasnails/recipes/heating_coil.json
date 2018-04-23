@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern": [
-    "###",
-    "###",
-    "CCC"
+    "# #",
+    "#C#",
+    "CRC"
   ],
   "key": {
     "#": {
-      "item": "minecraft:blaze_rod",
-      "data": 32767
+      "item": "toughasnails:magma_shard"
     },
     "C": {
       "item": "minecraft:cobblestone",
       "data": 32767
+    },
+	"R": {
+      "type": "forge:ore_dict",
+	  "ore": "dustRedstone"
     }
   },
   "result": {

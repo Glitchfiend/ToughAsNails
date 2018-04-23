@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern": [
-    "FFF",
-    "FFF",
-    "###"
+    "# #",
+    "#C#",
+    "CRC"
   ],
   "key": {
     "#": {
+      "item": "toughasnails:ice_cube"
+    },
+    "C": {
       "item": "minecraft:cobblestone",
       "data": 32767
     },
-    "F": {
-      "item": "toughasnails:freeze_rod",
-      "data": 32767
+	"R": {
+      "type": "forge:ore_dict",
+	  "ore": "dustRedstone"
     }
   },
   "result": {
