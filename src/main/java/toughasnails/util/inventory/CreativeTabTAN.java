@@ -6,6 +6,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.item.TANItems;
@@ -31,6 +35,16 @@ public class CreativeTabTAN extends CreativeTabs
     public void displayAllRelevantItems(NonNullList<ItemStack> itemList)
     {
         super.displayAllRelevantItems(itemList);
+        
+        for (Fluid bucketFluid : FluidRegistry.getBucketFluids())
+        {
+            if (bucketFluid.getBlock().getRegistryName().getResourceDomain().equals(ToughAsNails.MOD_ID))
+            {
+                ItemStack itemstack = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, bucketFluid);
+                itemList.add(itemstack);
+            }
+        }
+        
         for (EntityList.EntityEggInfo eggInfo : EntityList.ENTITY_EGGS.values())
         {
             if (eggInfo.spawnedID.getResourceDomain().equals(ToughAsNails.MOD_ID))
