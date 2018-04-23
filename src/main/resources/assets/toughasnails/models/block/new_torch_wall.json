@@ -1,6 +1,0 @@
-{
-    "parent": "block/torch_wall",
-    "textures": {
-        "torch": "toughasnails:blocks/torch_off"
-    }
-}

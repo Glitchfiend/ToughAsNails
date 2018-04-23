@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "toughasnails:dirty_water_bottle",
+      "data": 0
+    },
+    {
+      "item": "toughasnails:charcoal_filter"
+    }
+  ],
+  "result": {
+    "item": "minecraft:potion",
+	"nbt": {
+		"Potion": "minecraft:water"
+	}
+  }
+}

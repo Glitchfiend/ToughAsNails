@@ -2,15 +2,17 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:potion"
+	  "type": "minecraft:item_nbt",
+      "item": "minecraft:potion",
+	  "nbt": {
+			"Potion": "minecraft:water"
+	  }
     },
     {
-      "item": "minecraft:sugar",
-      "data": 32767
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:golden_carrot",
-      "data": 32767
+      "item": "minecraft:golden_carrot"
     }
   ],
   "result": {

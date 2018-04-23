@@ -57,7 +57,7 @@ public class FillBottleHandler
                 stack.setCount(originalCount); // Restore original amount of bottles
 
                 player.addStat(StatList.getObjectUseStats(stack.getItem()));
-                ItemStack bottleStack = new ItemStack(TANItems.water_bottle);
+                ItemStack bottleStack = new ItemStack(TANItems.dirty_water_bottle);
 
                 if (!player.inventory.addItemStackToInventory(bottleStack))
                 {
@@ -96,7 +96,7 @@ public class FillBottleHandler
             {
                 if (!player.capabilities.isCreativeMode)
                 {
-                    ItemStack waterBottle = new ItemStack(TANItems.water_bottle);
+                    ItemStack waterBottle = new ItemStack(TANItems.dirty_water_bottle);
                     player.addStat(StatList.CAULDRON_USED);
                     player.getHeldItem(event.getHand()).setCount(player.getHeldItem(event.getHand()).getCount() - 1);
 

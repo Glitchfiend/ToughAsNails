@@ -45,7 +45,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
     @Override
     public IProperty[] getPresetProperties() { return new IProperty[] {}; }
     @Override
-    public IProperty[] getNonRenderingProperties() { return null; }
+    public IProperty[] getNonRenderingProperties() { return new IProperty[] {BURNING}; }
     @Override
     public String getStateName(IBlockState state) {return "";}
 
@@ -76,7 +76,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
         {
         	if (worldIn.isRainingAt(pos))
         	{
-    			worldIn.setBlockState(pos, state.withProperty(BURNING, false).withProperty(AGE, 15), 2);
+    			worldIn.setBlockState(pos, state.withProperty(BURNING, false).withProperty(AGE, 7), 2);
     	        worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
     	        for (int i = 0; i < 8; ++i)
     	        {           
@@ -85,16 +85,13 @@ public class BlockTANCampfire extends Block implements ITANBlock
         	}
 	        if (age < 7)
 	        {
-	            if (rand.nextInt(8) == 0)
+	            if (rand.nextInt(1) == 0)
 	            {
 	                worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age + 1)), 2);
-	            }
-	        }
-	        if (age == 7)
-	        {
-	            if (rand.nextInt(8) == 0)
-	            {
-	                worldIn.setBlockState(pos, state.withProperty(BURNING, false), 2);
+	                if (age + 1 == 7)
+	                {
+	                	worldIn.setBlockState(pos, state.withProperty(BURNING, false), 2);
+	                }
 	            }
 	        }
         }
@@ -153,7 +150,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 	            	{
 			            if (item == Items.STICK)
 			            {
-			            	if (worldIn.rand.nextInt(12) == 0)
+			            	if (worldIn.rand.nextInt(10) == 0)
 			            	{
 			            		worldIn.setBlockState(pos, TANBlocks.campfire.getDefaultState().withProperty(BURNING, true));
 			            	}

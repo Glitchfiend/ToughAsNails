@@ -1,27 +1,6 @@
 package toughasnails.init;
 
-import static toughasnails.api.item.TANItems.canteen;
-import static toughasnails.api.item.TANItems.charcoal_filter;
-import static toughasnails.api.item.TANItems.freeze_powder;
-import static toughasnails.api.item.TANItems.freeze_rod;
-import static toughasnails.api.item.TANItems.fruit_juice;
-import static toughasnails.api.item.TANItems.ice_charge;
-import static toughasnails.api.item.TANItems.ice_cube;
-import static toughasnails.api.item.TANItems.jelled_slime;
-import static toughasnails.api.item.TANItems.jelled_slime_armor_material;
-import static toughasnails.api.item.TANItems.jelled_slime_boots;
-import static toughasnails.api.item.TANItems.jelled_slime_chestplate;
-import static toughasnails.api.item.TANItems.jelled_slime_helmet;
-import static toughasnails.api.item.TANItems.jelled_slime_leggings;
-import static toughasnails.api.item.TANItems.respirator_material;
-import static toughasnails.api.item.TANItems.tan_icon;
-import static toughasnails.api.item.TANItems.thermometer;
-import static toughasnails.api.item.TANItems.water_bottle;
-import static toughasnails.api.item.TANItems.wool_armor_material;
-import static toughasnails.api.item.TANItems.wool_boots;
-import static toughasnails.api.item.TANItems.wool_chestplate;
-import static toughasnails.api.item.TANItems.wool_helmet;
-import static toughasnails.api.item.TANItems.wool_leggings;
+import static toughasnails.api.item.TANItems.*;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -36,9 +15,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.ItemCanteen;
+import toughasnails.item.ItemDirtyWaterBottle;
 import toughasnails.item.ItemFruitJuice;
 import toughasnails.item.ItemIceCharge;
-import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.item.ItemThermometer;
 import toughasnails.util.inventory.CreativeTabTAN;
 
@@ -66,7 +45,7 @@ public class ModItems
         // Main Items
         thermometer = registerItem(new ItemThermometer(), "thermometer");
         canteen = registerItem(new ItemCanteen(), "canteen");
-        water_bottle = registerItem(new ItemTANWaterBottle(), "water_bottle");
+        dirty_water_bottle = registerItem(new ItemDirtyWaterBottle(), "dirty_water_bottle");
         fruit_juice = registerItem(new ItemFruitJuice(), "fruit_juice");
         
         // Materials

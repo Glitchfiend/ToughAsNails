@@ -1,6 +1,0 @@
-{
-    "parent": "block/crop",
-    "textures": {
-        "crop": "toughasnails:blocks/dead_crops"
-    }
-}

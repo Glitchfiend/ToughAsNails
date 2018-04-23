@@ -2,15 +2,17 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:potion"
+	  "type": "minecraft:item_nbt",
+      "item": "minecraft:potion",
+	  "nbt": {
+			"Potion": "minecraft:water"
+	  }
     },
     {
-      "item": "minecraft:sugar",
-      "data": 32767
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:speckled_melon",
-      "data": 32767
+      "item": "minecraft:speckled_melon"
     }
   ],
   "result": {

@@ -9,7 +9,6 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
-import toughasnails.item.ItemTANWaterBottle;
 import toughasnails.util.PotionBrewingRecipe;
 
 public class ModCrafting
@@ -19,12 +18,10 @@ public class ModCrafting
         addOreRegistration();
         addCraftingRecipies();
         addSmeltingRecipes();
-        //removeCraftingRecipes();
     }
     
     private static void addCraftingRecipies() {
 		// Register crafting recipes
-
 		//Brewing
 		//Base
 		addBrewingRecipe(PotionTypes.AWKWARD, new ItemStack(Items.FIRE_CHARGE), TANPotions.heat_resistance_type);
@@ -46,29 +43,13 @@ public class ModCrafting
     	// Register smelting recipes
     	
     	// Clean Water Bottle
-    	GameRegistry.addSmelting(new ItemStack(TANItems.water_bottle, 1, ItemTANWaterBottle.WaterBottleType.FILTERED.ordinal()), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
+    	GameRegistry.addSmelting(new ItemStack(TANItems.dirty_water_bottle, 1), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), 0F);
     }
     
     private static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
     }
-    
-    /*private static void removeCraftingRecipes()
-    {
-    	List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-    	
-    	Iterator<IRecipe> remover = recipes.iterator();
-    	
-    	while (remover.hasNext())
-    	{
-    		ItemStack itemstack = remover.next().getRecipeOutput();
-    		if (itemstack != null && Block.getBlockFromItem(itemstack.getItem()) == Blocks.torch)
-    		{
-    			remover.remove();
-    		}
-    	}
-    }*/
     
     /**
      * Adds a brewing recipe for each bottle to the specified potion type transformation

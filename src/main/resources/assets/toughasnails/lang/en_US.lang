@@ -10,12 +10,9 @@ config.category.survivalSettings.title=Survival Settings
 itemGroup.tabToughAsNails=Tough As Nails
 
 tile.campfire.name=Campfire
-tile.dead_crops.name=Dead Crops
-tile.glowstone_torch.name=Glowstone Torch
 tile.rain_collector.name=Rain Collector
 tile.temperature_coil.cooling_coil.name=Cooling Coil
 tile.temperature_coil.heating_coil.name=Heating Coil
-tile.torch_new.name=Torch
 
 item.air_filter.name=Air Filter
 item.bottle_of_blackdamp.name=Bottle of Blackdamp
@@ -27,8 +24,6 @@ item.charcoal_filter.name=Charcoal Filter
 item.dirty_water_canteen.name=Dirty Water Canteen
 item.dirty_water_bottle.name=Dirty Water Bottle
 item.empty_canteen.name=Empty Canteen
-item.filtered_water_canteen.name=Filtered Water Canteen
-item.filtered_water_bottle.name=Filtered Water Bottle
 item.freeze_powder.name=Freeze Powder
 item.freeze_rod.name=Freeze Rod
 item.ice_charge.name=Ice Charge

@@ -1,10 +1,8 @@
 package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
-import static toughasnails.api.TANBlocks.glowstone_torch;
 import static toughasnails.api.TANBlocks.rain_collector;
 import static toughasnails.api.TANBlocks.temperature_coil;
-import static toughasnails.api.TANBlocks.torch_new;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
@@ -18,11 +16,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
-import toughasnails.block.BlockGlowstoneTorch;
 import toughasnails.block.BlockRainCollector;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.block.BlockTANTemperatureCoil;
-import toughasnails.block.BlockTANTorchNew;
 import toughasnails.core.ToughAsNails;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
 import toughasnails.util.BlockStateUtils;
@@ -37,8 +33,6 @@ public class ModBlocks
         //gas = registerBlock( new BlockTANGas(), "gas" );
         //gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
-        torch_new = registerBlock( new BlockTANTorchNew(), "torch_new" );
-        glowstone_torch = registerBlock( new BlockGlowstoneTorch(), "glowstone_torch" );
 
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
     }
