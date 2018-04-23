@@ -5,10 +5,16 @@ import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
+import toughasnails.fluids.PurifiedWaterFluid;
 import toughasnails.util.PotionBrewingRecipe;
 
 public class ModCrafting
@@ -41,6 +47,8 @@ public class ModCrafting
     public static void addSmeltingRecipes()
     {
     	// Register smelting recipes
+    	// Purified Water Bucket
+    	//GameRegistry.addSmelting(Items.WATER_BUCKET, FluidUtil.getFilledBucket(new FluidStack(PurifiedWaterFluid.instance, Fluid.BUCKET_VOLUME)), 0F);
     	
     	// Purified Water Bottle
     	GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), new ItemStack(TANItems.purified_water_bottle, 1), 0F);

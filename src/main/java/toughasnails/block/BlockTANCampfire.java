@@ -83,17 +83,14 @@ public class BlockTANCampfire extends Block implements ITANBlock
     	            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)((float)pos.getX() + 0.75F - (rand.nextFloat() / 2.0F)), (double)((float)pos.getY() + 0.9F), (double)((float)pos.getZ() + 0.75F - (rand.nextFloat() / 2.0F)), 0.0D, 0.0D, 0.0D, new int[] {Block.getStateId(state)});
     	        }
         	}
-	        if (age < 7)
-	        {
-	            if (rand.nextInt(1) == 0)
-	            {
-	                worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age + 1)), 2);
-	                if (age + 1 == 7)
-	                {
-	                	worldIn.setBlockState(pos, state.withProperty(BURNING, false), 2);
-	                }
-	            }
-	        }
+            if (rand.nextInt(1) == 0)
+            {
+                worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age + 1)), 2);
+                if (age + 1 == 7)
+                {
+                	worldIn.setBlockState(pos, state.withProperty(BURNING, false), 2);
+                }
+            }
         }
     }
     

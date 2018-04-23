@@ -6,10 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -44,6 +46,13 @@ public class ToughAsNails
     
     public static Logger logger = LogManager.getLogger(MOD_ID);
     public static File configDirectory;
+    
+    @EventHandler
+    public void construction(FMLConstructionEvent event)
+    {
+        // Use forge universal bucket
+        FluidRegistry.enableUniversalBucket();
+    }
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)

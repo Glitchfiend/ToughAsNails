@@ -1,6 +1,8 @@
 package toughasnails.init;
 
 import static toughasnails.api.TANBlocks.campfire;
+import static toughasnails.api.TANBlocks.purified_water;
+import static toughasnails.api.TANBlocks.purified_water_fluid;
 import static toughasnails.api.TANBlocks.rain_collector;
 import static toughasnails.api.TANBlocks.temperature_coil;
 
@@ -13,6 +15,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import toughasnails.api.ITANBlock;
@@ -20,6 +24,8 @@ import toughasnails.block.BlockRainCollector;
 import toughasnails.block.BlockTANCampfire;
 import toughasnails.block.BlockTANTemperatureCoil;
 import toughasnails.core.ToughAsNails;
+import toughasnails.fluids.PurifiedWaterFluid;
+import toughasnails.fluids.blocks.BlockPurifiedWaterFluid;
 import toughasnails.tileentity.TileEntityTemperatureSpread;
 import toughasnails.util.BlockStateUtils;
 import toughasnails.util.inventory.CreativeTabTAN;
@@ -33,8 +39,21 @@ public class ModBlocks
         //gas = registerBlock( new BlockTANGas(), "gas" );
         //gas.setCreativeTab(null);
         temperature_coil = registerBlock(new BlockTANTemperatureCoil(), "temperature_coil");
+        
+        purified_water_fluid = PurifiedWaterFluid.instance;
+        FluidRegistry.addBucketForFluid(purified_water_fluid);
+        purified_water = registerFluidBlock(purified_water_fluid, new BlockPurifiedWaterFluid(purified_water_fluid), "purified_water");
 
         GameRegistry.registerTileEntity(TileEntityTemperatureSpread.class, "temperature_spread");
+    }
+    
+    public static Block registerFluidBlock(Fluid fluid, Block fluidBlock, String name)
+    {
+        fluidBlock.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, name));
+        ForgeRegistries.BLOCKS.register(fluidBlock);
+        ToughAsNails.proxy.registerFluidBlockRendering(fluidBlock, name);
+        fluid.setBlock(fluidBlock);
+        return fluidBlock;
     }
 
     public static void registerBlockItemModel(Block block, String stateName, int stateMeta)

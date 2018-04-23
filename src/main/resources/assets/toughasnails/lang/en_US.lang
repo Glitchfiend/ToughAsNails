@@ -9,6 +9,8 @@ config.category.survivalSettings.title=Survival Settings
 
 itemGroup.tabToughAsNails=Tough As Nails
 
+fluid.purified_water=Purified Water
+
 tile.campfire.name=Campfire
 tile.rain_collector.name=Rain Collector
 tile.temperature_coil.cooling_coil.name=Cooling Coil
