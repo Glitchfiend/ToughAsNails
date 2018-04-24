@@ -2,7 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-	  "item": "toughasnails:purified_water_bottle"
+	  "item": "toughasnails:purified_water_bottle",
+	  "data": 0
     },
     {
       "item": "minecraft:sugar"

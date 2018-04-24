@@ -144,7 +144,7 @@ public class BlockRainCollector extends Block implements ITANBlock
                 {
                     if (!playerIn.capabilities.isCreativeMode)
                     {
-                        heldItem.setItemDamage(3);
+                        heldItem.setItemDamage(2);
                     }
 
                     this.setWaterLevel(worldIn, pos, state, i - 1);

@@ -6,11 +6,11 @@
     },
     {
       "item": "toughasnails:canteen",
-      "data": 0
+      "data": 1
     }
   ],
   "result": {
     "item": "toughasnails:canteen",
-    "data": 1
+    "data": 2
   }
 }

@@ -12,6 +12,7 @@
     }
   ],
   "result": {
-    "item": "toughasnails:purified_water_bottle"
+    "item": "toughasnails:purified_water_bottle",
+	"data": 0
   }
 }
