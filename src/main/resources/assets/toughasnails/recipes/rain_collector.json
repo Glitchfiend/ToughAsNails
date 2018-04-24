@@ -2,13 +2,13 @@
   "type": "forge:ore_shaped",
   "pattern": [
     "I#I",
-    "C C",
+    "CBC",
     "CCC"
   ],
   "key": {
     "#": {
-      "item": "minecraft:iron_bars",
-      "data": 32767
+      "type": "forge:ore_dict",
+      "ore": "string"
     },
     "I": {
       "type": "forge:ore_dict",
@@ -17,6 +17,9 @@
     "C": {
       "item": "minecraft:cobblestone",
       "data": 32767
+    },
+	"B": {
+      "item": "minecraft:bucket"
     }
   },
   "result": {

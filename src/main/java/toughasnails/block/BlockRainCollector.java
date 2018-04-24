@@ -24,10 +24,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.ITANBlock;
 import toughasnails.api.item.TANItems;
+import toughasnails.fluids.PurifiedWaterFluid;
 import toughasnails.item.ItemTANBlock;
 
 public class BlockRainCollector extends Block implements ITANBlock
@@ -93,11 +96,11 @@ public class BlockRainCollector extends Block implements ITANBlock
 
                         if (playerIn.getHeldItem(hand).isEmpty())
                         {
-                            playerIn.setHeldItem(hand, new ItemStack(Items.WATER_BUCKET));
+                            playerIn.setHeldItem(hand, UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, PurifiedWaterFluid.instance));
                         }
-                        else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.WATER_BUCKET)))
+                        else if (!playerIn.inventory.addItemStackToInventory(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, PurifiedWaterFluid.instance)))
                         {
-                            playerIn.dropItem(new ItemStack(Items.WATER_BUCKET), false);
+                            playerIn.dropItem(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, PurifiedWaterFluid.instance), false);
                         }
                     }
 
@@ -165,7 +168,7 @@ public class BlockRainCollector extends Block implements ITANBlock
     @Override
     public void fillWithRain(World worldIn, BlockPos pos)
     {
-    	if (worldIn.rand.nextInt(4) == 1)
+    	if (worldIn.rand.nextInt(2) == 0)
         {
 	        float f = worldIn.getBiome(pos).getTemperature(pos);
 	

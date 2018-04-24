@@ -7,8 +7,8 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:glass",
-      "data": 0
+      "type": "forge:ore_dict",
+	  "ore": "blockGlassColorless"
     },
     "R": {
       "type": "forge:ore_dict",
