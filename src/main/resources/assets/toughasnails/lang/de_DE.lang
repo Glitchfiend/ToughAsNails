@@ -1,25 +1,14 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp|setseason> [args]
-commands.toughasnails.settemp.success=Spieler-Temperatur auf %s gesetzt
+commands.toughasnails.settemp.success=Spielertemperatur auf %s gesetzt
 commands.toughasnails.settemp.disabled=Körpertemperatur ist aktuell deaktiviert!
-commands.toughasnails.setseason.success=Jahreszeit auf %s gesetzt
-commands.toughasnails.setseason.fail=Jahreszeit %s ungültig
-commands.toughasnails.setseason.disabled=Jahreszeiten sind aktuell deaktiviert!
-
-config.category.survivalSettings.title=Überlebenseinstellungen
 
 itemGroup.tabToughAsNails=Tough As Nails
 
+fluid.purified_water=Gefiltertes Water
+
 tile.campfire.name=Lagerfeuer
-tile.dead_crops.name=Tote Nutzpflanzen
-tile.glowstone_torch.name=Glowstonefackel
 tile.rain_collector.name=Regenkollektor
 tile.temperature_coil.cooling_coil.name=Kühlspule
 tile.temperature_coil.heating_coil.name=Heizspule
-tile.season_sensor_spring.name=Jahreszeitensensor
-tile.season_sensor_summer.name=Jahreszeitensensor
-tile.season_sensor_autumn.name=Jahreszeitensensor
-tile.season_sensor_winter.name=Jahreszeitensensor
-tile.torch_new.name=Fackel
 
 item.air_filter.name=Luftfilter
 item.bottle_of_blackdamp.name=Flasche mit Schwarzdampf
@@ -28,14 +17,10 @@ item.bottle_of_firedamp.name=Flasche mit Feuerdampf
 item.bottle_of_stinkdamp.name=Flasche mit Stinkdampf
 item.clean_water_canteen.name=Saubere Wasserfeldflasche
 item.charcoal_filter.name=Holzkohlefilter
-item.dirty_water_canteen.name=Schmutzige Wasserfeldflasche
-item.dirty_water_bottle.name=Schmutzige Wasserflasche
+item.normal_water_canteen.name=Wasserfeldflasche
+item.purified_water_canteen.name=Gefilterte Wasserfeldflasche
+item.purified_water_bottle.name=Gefilterte Wasserflasche
 item.empty_canteen.name=Leere Feldflasche
-item.filtered_water_canteen.name=Gefilterte Wasserfeldflasche
-item.filtered_water_bottle.name=Gefilterte Wasserflasche
-item.freeze_powder.name=Froststaub
-item.freeze_rod.name=Frostrute
-item.ice_charge.name=Eiskugel
 item.ice_cube.name=Eiswürfel
 item.jelled_slime.name=Gelierter Schleim
 item.jelled_slime_helmet.name=Gelierter Schleimhelm
@@ -43,19 +28,17 @@ item.jelled_slime_chestplate.name=Gelierte Schleimbrustplatte
 item.jelled_slime_leggings.name=Gelierter Schleimbeinschutz
 item.jelled_slime_boots.name=Gelierte Schleimstiefel
 item.juice_apple.name=Apfelsaft
-item.juice_beetroot.name=Rote Beete-Saft
+item.juice_beetroot.name=Rote-Beete-Saft
 item.juice_cactus.name=Kaktussaft
 item.juice_carrot.name=Karottensaft
 item.juice_chorus_fruit.name=Chorusfruchtsaft
 item.juice_glistering_melon.name=Glitzernder Melonensaft
-item.juice_golden_apple.name=Goldapfelsaft
-item.juice_golden_carrot.name=Goldkarottensaft
+item.juice_golden_apple.name=Goldener Apfelsaft
+item.juice_golden_carrot.name=Goldener Karottensaft
 item.juice_melon.name=Melonensaft
 item.juice_pumpkin.name=Kürbissaft
-item.lifeblood_crystal.name=Lebensblut-Kristall
+item.magma_shard.name=Magmasplitter
 item.respirator.name=Atemschutz
-item.season_clock.name=Jahreszeitenuhr
-item.tan_icon.name=TAN-Icon
 item.thermometer.name=Thermometer
 item.wool_helmet.name=Wollhaube
 item.wool_chestplate.name=Wolljacke
@@ -67,6 +50,7 @@ potion.hyperthermia=Überhitzung
 potion.thirst=Durst
 potion.cold_resistance=Kälteresistenz
 potion.heat_resistance=Hitzeresistenz
+potion.hydration=Hydration
 
 potion.effect.cold_resistance_type=Trank der Kälteresistenz
 potion.effect.long_cold_resistance_type=Trank der Kälteresistenz
@@ -87,5 +71,3 @@ tipped_arrow.effect.cold_resistance_type=Pfeil der Kälteresistenz
 tipped_arrow.effect.long_cold_resistance_type=Pfeil der Kälteresistenz
 tipped_arrow.effect.heat_resistance_type=Pfeil der Hitzeresistenz
 tipped_arrow.effect.long_heat_resistance_type=Pfeil der Hitzeresistenz
-
-entity.freeze.name=Frost
