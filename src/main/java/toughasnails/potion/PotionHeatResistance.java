@@ -7,7 +7,7 @@ public class PotionHeatResistance extends TANPotion
 {
     public PotionHeatResistance(int id)
     {
-        super(true, 0xE54720, 1, 1);
+        super(false, 0xE54720, 1, 1);
     }
     
     @Override

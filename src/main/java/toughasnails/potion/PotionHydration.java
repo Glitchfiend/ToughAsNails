@@ -9,7 +9,7 @@ public class PotionHydration extends TANPotion
 {
     public PotionHydration(int id)
     {
-        super(true, 0x1B5FD3, 1, 0);
+        super(false, 0x1B5FD3, 1, 0);
     }
 
     @Override

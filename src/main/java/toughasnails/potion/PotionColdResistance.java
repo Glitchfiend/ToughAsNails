@@ -8,7 +8,7 @@ public class PotionColdResistance extends TANPotion
 {
     public PotionColdResistance(int id)
     {
-        super(true, 0x77A9FF, 2, 1);
+        super(false, 0x77A9FF, 2, 1);
     }
     
     @Override
