@@ -7,20 +7,17 @@
  ******************************************************************************/
 package toughasnails.item;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureScale;
-import toughasnails.temperature.TemperatureHandler;
 
 public class ItemThermometer extends Item
 {
@@ -30,18 +27,22 @@ public class ItemThermometer extends Item
         {
             @Override
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World world, EntityLivingBase entity)
+            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
             {
-                float targetTemperature = 0.0F;
+                float temperature = TemperatureScale.getScaleMidpoint();
 
-                if (entity instanceof EntityPlayer || (entity == null && (entity = Minecraft.getMinecraft().player) != null) )
-                {
-                    EntityPlayer player = (EntityPlayer) entity;
-                    TemperatureHandler tempHandler = (TemperatureHandler) TemperatureHelper.getTemperatureData(player);
-                    targetTemperature = tempHandler.debugger.targetTemperature;
-                }
+                Entity entity = entityIn;
+                if (stack.isOnItemFrame())
+                	entity = stack.getItemFrame();
 
-                return MathHelper.clamp(targetTemperature, 0, TemperatureScale.getScaleTotal()) / (float)TemperatureScale.getScaleTotal();
+                World world = worldIn;
+                if (world == null)
+                	world = entity.world;
+                
+                if (entity != null)
+                    temperature = (float) TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue();
+
+                return temperature / (float) TemperatureScale.getScaleTotal();
             }
         });
     }
