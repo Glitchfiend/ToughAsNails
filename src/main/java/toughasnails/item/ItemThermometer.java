@@ -29,7 +29,7 @@ public class ItemThermometer extends Item
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
             {
-                if (entity == null && !stack.isOnItemFrame())
+                if (entityIn == null && !stack.isOnItemFrame())
                     return TemperatureScale.getScaleMidpoint();
                     
                 Entity entity = entityIn;
