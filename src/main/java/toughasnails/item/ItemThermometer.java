@@ -33,11 +33,11 @@ public class ItemThermometer extends Item
 
                 Entity entity = entityIn;
                 if (stack.isOnItemFrame())
-                	entity = stack.getItemFrame();
+                    entity = stack.getItemFrame();
 
                 World world = worldIn;
                 if (world == null)
-                	world = entity.world;
+                    world = entity.world;
                 
                 if (entity != null)
                     temperature = (float) TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue();
