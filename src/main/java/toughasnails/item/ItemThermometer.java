@@ -29,6 +29,9 @@ public class ItemThermometer extends Item
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
             {
+                if (entity == null && !stack.isOnItemFrame())
+                    return TemperatureScale.getScaleMidpoint();
+                    
                 Entity entity = entityIn;
                 if (stack.isOnItemFrame())
                     entity = stack.getItemFrame();
@@ -37,11 +40,7 @@ public class ItemThermometer extends Item
                 if (world == null)
                     world = entity.world;
 
-                int temperature = TemperatureScale.getScaleMidpoint();
-                if (entity != null)
-                    temperature = TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue();
-
-                return (float) temperature / (float) TemperatureScale.getScaleTotal();
+                return (float) TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue() / (float) TemperatureScale.getScaleTotal();
             }
         });
     }
