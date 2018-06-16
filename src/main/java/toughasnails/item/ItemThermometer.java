@@ -38,9 +38,8 @@ public class ItemThermometer extends Item
                 World world = worldIn;
                 if (world == null)
                     world = entity.world;
-                
-                if (entity != null)
-                    temperature = (float) TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue();
+
+                temperature = (float) TemperatureHelper.getTargetAtPos(world, entity.getPosition(), null).getRawValue();
 
                 return temperature / (float) TemperatureScale.getScaleTotal();
             }
