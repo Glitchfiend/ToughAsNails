@@ -1,0 +1,73 @@
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.settemp.success=Ajuste la temperatura del jugador a %s
+commands.toughasnails.settemp.disabled=¡La temperatura del cuerpo se encuentra deshabilitada!
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+fluid.purified_water=Agua purificada
+
+tile.campfire.name=Fogata
+tile.rain_collector.name=Colector de lluvia
+tile.temperature_coil.cooling_coil.name=Bobina de refrigeración
+tile.temperature_coil.heating_coil.name=Bobina de calentamiento
+
+item.air_filter.name=Filtro de aire
+item.bottle_of_blackdamp.name=Botella con gas sofocante
+item.bottle_of_whitedamp.name=Botella con monóxido de carbono
+item.bottle_of_firedamp.name=Botella con metano
+item.bottle_of_stinkdamp.name=Botella con sulfato de hidrogéno
+item.charcoal_filter.name=Filtro de carbón vegetal
+item.normal_water_canteen.name=Cantimplora de agua
+item.purified_water_canteen.name=Cantimplora de agua purificada
+item.purified_water_bottle.name=Botella de agua purificada
+item.empty_canteen.name=Cantimplora vacía
+item.ice_cube.name=Cubo de hielo
+item.jelled_slime.name=Baba congelada
+item.jelled_slime_helmet.name=Casco de baba congelada
+item.jelled_slime_chestplate.name=Peto de baba congelada
+item.jelled_slime_leggings.name=Grebas de baba congelada
+item.jelled_slime_boots.name=Botas de baba congelada
+item.juice_apple.name=Jugo de manzana
+item.juice_beetroot.name=Jugo de remolacha
+item.juice_cactus.name=Jugo de cactus
+item.juice_carrot.name=Jugo de zanahoria
+item.juice_chorus_fruit.name=Jugo de fruta coral
+item.juice_glistering_melon.name=Jugo de melón brillante
+item.juice_golden_apple.name=Jugo de manzana dorada
+item.juice_golden_carrot.name=Jugo de zanahoria dorada
+item.juice_melon.name=Jugo de melón
+item.juice_pumpkin.name=Jugo de calabaza
+item.magma_shard.name=Fragmento de magma
+item.respirator.name=Respirador
+item.thermometer.name=Termómetro
+item.wool_helmet.name=Capucha de lana
+item.wool_chestplate.name=Chaqueta de lana
+item.wool_leggings.name=Pantalones de lana
+item.wool_boots.name=Botas de lana
+
+potion.hypothermia=Hipotermia
+potion.hyperthermia=Hipertermia
+potion.thirst=Sed
+potion.cold_resistance=Resistencia al frío
+potion.heat_resistance=Resistencia al calor
+potion.hydration=Hidratación
+
+potion.effect.cold_resistance_type=Poción de resistencia al frío
+potion.effect.long_cold_resistance_type=Poción de resistencia al frío
+potion.effect.heat_resistance_type=Poción de resistencia al calor
+potion.effect.long_heat_resistance_type=Poción de resistencia al calor
+
+splash_potion.effect.cold_resistance_type=Poción arrojadiza de resistencia al frío
+splash_potion.effect.long_cold_resistance_type=Poción arrojadiza de resistencia al frío
+splash_potion.effect.heat_resistance_type=Poción arrojadiza de resistencia al calor
+splash_potion.effect.long_heat_resistance_type=Poción arrojadiza de resistencia al calor
+
+lingering_potion.effect.cold_resistance_type=Poción persistente de resistencia al frío
+lingering_potion.effect.long_cold_resistance_type=Poción persistente de resistencia al frío
+lingering_potion.effect.heat_resistance_type=Poción persistente de resistencia al calor
+lingering_potion.effect.long_heat_resistance_type=Poción persistente de resistencia al calor
+
+tipped_arrow.effect.cold_resistance_type=Flecha de resistencia al frío
+tipped_arrow.effect.long_cold_resistance_type=Flecha de resistencia al frío
+tipped_arrow.effect.heat_resistance_type=Flecha de resistencia al calor
+tipped_arrow.effect.long_heat_resistance_type=Flecha de resistencia al calor
