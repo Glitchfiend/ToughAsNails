@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern": [
     "#",
     "C",
@@ -7,8 +7,8 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:paper",
-      "data": 32767
+      "type": "forge:ore_dict",
+      "ore": "paper"
     },
     "C": {
       "item": "minecraft:coal",

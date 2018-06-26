@@ -1,15 +1,17 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "forge:ore_shapeless",
   "ingredients": [
     {
-	  "item": "toughasnails:purified_water_bottle",
-	  "data": 0
+      "item": "toughasnails:purified_water_bottle",
+      "data": 0
     },
     {
-      "item": "minecraft:sugar"
+      "type": "forge:ore_dict",
+      "ore": "sugar"
     },
     {
-      "item": "minecraft:carrot"
+      "type": "forge:ore_dict",
+      "ore": "cropCarrot"
     }
   ],
   "result": {
