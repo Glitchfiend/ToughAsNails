@@ -8,11 +8,11 @@
   "key": {
     "#": {
       "type": "forge:ore_dict",
-	  "ore": "blockGlassColorless"
+      "ore": "blockGlassColorless"
     },
     "R": {
       "type": "forge:ore_dict",
-	  "ore": "dustRedstone"
+      "ore": "dustRedstone"
     }
   },
   "result": {

@@ -15,10 +15,10 @@
       "ore": "ingotIron"
     },
     "C": {
-      "item": "minecraft:cobblestone",
-      "data": 32767
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
     },
-	"B": {
+    "B": {
       "item": "minecraft:bucket"
     }
   },

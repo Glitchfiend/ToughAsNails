@@ -10,7 +10,6 @@
     }
   },
   "result": {
-    "item": "minecraft:ice",
-    "data": 0
+    "item": "minecraft:ice"
   }
 }
