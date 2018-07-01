@@ -143,7 +143,7 @@ public class DrinkHandler
         WaterType hitBlock = null;
         // first do rain check (cheaper)
         if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST_RAIN) &&
-                player.world.isRaining() &&
+                player.world.isRainingAt(player.getPosition()) &&
                 (-75.0f > player.rotationPitch) && // 75 degrees is mostly upwards
                 (player.world.canSeeSky(player.getPosition())))
         {
