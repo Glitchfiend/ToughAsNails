@@ -129,6 +129,8 @@ public class DrinkHandler
                 PacketHandler.instance.sendToServer(new MessageDrinkWaterInWorld());
                 // play drink sound
                 player.playSound(SoundEvents.ENTITY_GENERIC_DRINK, 0.5f, 1.0f);
+                // swing hand
+                player.swingArm(EnumHand.MAIN_HAND);
             } else {
                 // do thirst
                 applyDrinkFromWaterType(player, targetWater);
