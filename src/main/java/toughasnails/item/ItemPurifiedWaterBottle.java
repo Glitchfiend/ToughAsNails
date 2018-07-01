@@ -85,9 +85,22 @@ public class ItemPurifiedWaterBottle extends Item implements IDrink
             EntityPlayer player = (EntityPlayer)entity;
             IThirst thirst = ThirstHelper.getThirstData(player);
             
+            if (!player.capabilities.isCreativeMode)
+            {
+                stack.shrink(1);
+            }
+            
             thirst.addStats(this.getThirst(), this.getHydration());
             
-            return new ItemStack(Items.GLASS_BOTTLE);
+            if (!player.capabilities.isCreativeMode)
+            {
+                if (stack.isEmpty())
+                {
+                    return new ItemStack(Items.GLASS_BOTTLE);
+                }
+                
+                player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+            }
         }
 
         return stack;
