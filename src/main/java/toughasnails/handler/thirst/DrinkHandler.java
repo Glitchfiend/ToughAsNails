@@ -7,15 +7,18 @@
  ******************************************************************************/
 package toughasnails.handler.thirst;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import javax.annotation.Nullable;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -118,11 +121,13 @@ public class DrinkHandler
     private boolean canWorldDrink(final PlayerInteractEvent event) {
         return (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST_WORLD) || SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST_RAIN)) &&
                 (EnumHand.MAIN_HAND == event.getHand()) &&
+                (event.getEntityPlayer().getHeldItemMainhand().isEmpty()) &&
+                (ThirstHelper.getThirstData(event.getEntityPlayer()).getThirst() < 20) &&
                 (Side.CLIENT == event.getSide());
     }
 
     public static void tryDrinkWaterInWorld(final EntityPlayer player, final boolean isClient) {
-        final WaterType targetWater = getRightClickedWater(player);
+        final TargetWater targetWater = getRightClickedWater(player);
         if (null != targetWater) {
             if (isClient) {
                 // send server packet
@@ -133,37 +138,40 @@ public class DrinkHandler
                 player.swingArm(EnumHand.MAIN_HAND);
             } else {
                 // do thirst
-                applyDrinkFromWaterType(player, targetWater);
+                applyDrinkFromWaterType(player, targetWater.type);
+                if (targetWater.type == WaterType.PURIFIED) {
+                    player.world.setBlockToAir(targetWater.pos);
+                }
             }
         }
     }
 
     // used by both client (pre-packet) and server
-    private static WaterType getRightClickedWater(final EntityPlayer player) {
-        WaterType hitBlock = null;
+    private static TargetWater getRightClickedWater(final EntityPlayer player) {
         // first do rain check (cheaper)
         if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST_RAIN) &&
                 player.world.isRainingAt(player.getPosition()) &&
                 (-75.0f > player.rotationPitch) && // 75 degrees is mostly upwards
                 (player.world.canSeeSky(player.getPosition())))
         {
-            hitBlock = WaterType.RAIN;
+            return new TargetWater(null, WaterType.RAIN);
         } else if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST_WORLD)) {
             // do raytrace for liquid blocks within reach distance of player
             final Vec3d vecPlayerOrigin = player.getPositionEyes(1.0f);
             final Vec3d vecPlayerLook = player.getLook(1.0f);
-            final double playerReachDistance = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
+            final double playerReachDistance = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue() * 0.5D;
             final Vec3d vecPlayerSee = vecPlayerOrigin.addVector(vecPlayerLook.x * playerReachDistance, vecPlayerLook.y * playerReachDistance, vecPlayerLook.z * playerReachDistance);
             final RayTraceResult raytraceResult = player.getEntityWorld().rayTraceBlocks(vecPlayerOrigin, vecPlayerSee, true, false, false);
             if ((null != raytraceResult) && (RayTraceResult.Type.BLOCK == raytraceResult.typeOfHit)) {
-                final IBlockState iblockstate = player.getEntityWorld().getBlockState(raytraceResult.getBlockPos());
-                final Material material = iblockstate.getMaterial();
-                if (material.equals(Material.WATER)) {
-                    hitBlock = (iblockstate.getBlock() instanceof BlockPurifiedWaterFluid) ? WaterType.PURIFIED : WaterType.NORMAL;
+                final Block block = player.getEntityWorld().getBlockState(raytraceResult.getBlockPos()).getBlock();
+                if (block instanceof BlockPurifiedWaterFluid) {
+                    return new TargetWater(raytraceResult.getBlockPos(), WaterType.PURIFIED);
+                } else if (Blocks.WATER == block) {
+                    return new TargetWater(raytraceResult.getBlockPos(), WaterType.NORMAL);
                 }
             }
         }
-        return hitBlock;
+        return null;
     }
 
     private static void applyDrinkFromData(final EntityPlayer player, final DrinkData data)
@@ -184,6 +192,18 @@ public class DrinkHandler
         if (!player.world.isRemote && (player.world.rand.nextFloat() < poisonChance) && SyncedConfig.getBooleanValue(GameplayOption.ENABLE_THIRST))
         {
             player.addPotionEffect(new PotionEffect(TANPotions.thirst, 600));
+        }
+    }
+
+    private static class TargetWater
+    {
+        final BlockPos pos;
+        final WaterType type;
+        
+        TargetWater(@Nullable BlockPos pos, WaterType type)
+        {
+            this.pos = pos;
+            this.type = type;
         }
     }
 }
