@@ -31,6 +31,8 @@ public class GameplayConfig extends ConfigHandler
         	addSyncedValue(GameplayOption.ENABLE_TEMPERATURE, true, "Main Settings", "Players are affected by temperature");
             addSyncedValue(GameplayOption.ENABLE_THIRST, true, "Main Settings", "Players are affected by thirst.");
             addSyncedValue(GameplayOption.ENABLE_PEACEFUL, false, "Main Settings", "The effects of the mod will work on Peaceful difficulty.");
+            addSyncedValue(GameplayOption.ENABLE_THIRST_WORLD, true, "Main Settings", "Allows drinking directly from water-source blocks with sneak-rightclick and empty main hand");
+            addSyncedValue(GameplayOption.ENABLE_THIRST_RAIN, true, "Main Settings", "Allows drinking from rain by sneak-rightclick and empty main hand if looking up at raining sky.");
 
             iceCubeDrops = config.getBoolean("Ice Cube Drops", "Tweak Settings", true, "Ice Blocks drop Ice Cubes.");
             magmaShardDrops = config.getBoolean("Magma Shard Drops", "Tweak Settings", true, "Magma Blocks drop Magma Shards.");
