@@ -7,11 +7,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import toughasnails.api.TANPotions;
 import toughasnails.api.item.TANItems;
 import toughasnails.fluids.PurifiedWaterFluid;
@@ -61,6 +59,7 @@ public class ModCrafting
     private static void addOreRegistration()
     {
     	//Registration in Ore Dictionary
+    	OreDictionary.registerOre("sugar", new ItemStack(Items.SUGAR));
     }
     
     /**
