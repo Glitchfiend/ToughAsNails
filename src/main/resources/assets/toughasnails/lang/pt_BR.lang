@@ -12,12 +12,12 @@ tile.temperature_coil.cooling_coil.name=Serpetina de resfriamento
 tile.temperature_coil.heating_coil.name=Serpentina de aquecimento
 
 item.air_filter.name=Filtro de ar
-item.bottle_of_blackdamp.name=Frasco de Blackdamp
-item.bottle_of_whitedamp.name=Frasco de Whitedamp
-item.bottle_of_firedamp.name=Frasco de Firedamp
-item.bottle_of_stinkdamp.name=Frasco de Stinkdamp
+item.bottle_of_blackdamp.name=Frasco de blackdamp
+item.bottle_of_whitedamp.name=Frasco de whitedamp
+item.bottle_of_firedamp.name=Frasco de firedamp
+item.bottle_of_stinkdamp.name=Frasco de stinkdamp
 item.charcoal_filter.name=Filtro de carvão
-item.normal_water_canteen.name=Cantio com água
+item.normal_water_canteen.name=Cantil com água
 item.purified_water_canteen.name=Cantil de água purificada
 item.purified_water_bottle.name=Frasco de água purificada
 item.empty_canteen.name=Cantil vazio
@@ -46,7 +46,7 @@ item.wool_leggings.name=Calças de lã
 item.wool_boots.name=Botas de lã
 
 potion.hypothermia=Hipotermia
-potion.hyperthermia=Hipertemia
+potion.hyperthermia=Hipertermia
 potion.thirst=Sede
 potion.cold_resistance=Resistência ao frio
 potion.heat_resistance=Resistência ao calor
