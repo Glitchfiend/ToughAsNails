@@ -7,7 +7,7 @@
  ******************************************************************************/
 package toughasnails.api.thirst;
 
-public enum WaterType 
+public enum WaterType implements IDrink
 {
     NORMAL("Water", 3, 0.1F, 0.75F), 
     PURIFIED("Purified Water", 6, 0.5F, 0.0F),
@@ -31,16 +31,19 @@ public enum WaterType
         return this.description;
     }
     
+    @Override
     public int getThirst()
     {
         return this.thirst;
     }
     
+    @Override
     public float getHydration()
     {
         return this.hydration;
     }
     
+    @Override
     public float getPoisonChance()
     {
         return this.poisonChance;
