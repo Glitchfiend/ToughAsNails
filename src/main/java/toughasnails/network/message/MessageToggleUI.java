@@ -43,10 +43,13 @@ public class MessageToggleUI implements IMessage, IMessageHandler<MessageToggleU
 
             if (player != null)
             {
-                TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
-                TemperatureDebugger debugger = temperatureStats.debugger;
-                
-                debugger.setGuiVisible(message.showDebugGUI);
+                Minecraft.getMinecraft().addScheduledTask(() ->
+                {
+                    TemperatureHandler temperatureStats = (TemperatureHandler) player.getCapability(TANCapabilities.TEMPERATURE, null);
+                    TemperatureDebugger debugger = temperatureStats.debugger;
+
+                    debugger.setGuiVisible(message.showDebugGUI);
+                });
             }
         }
         

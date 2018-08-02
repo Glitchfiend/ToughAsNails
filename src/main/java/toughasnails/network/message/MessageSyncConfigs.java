@@ -50,7 +50,11 @@ public class MessageSyncConfigs implements IMessage, IMessageHandler<MessageSync
             {
                 SyncedConfigEntry entry = SyncedConfig.optionsToSync.get(key);
                 
-                if (entry == null) ToughAsNails.logger.error("Option " + key + " does not exist locally!");
+                if (entry == null)
+                {
+                    ToughAsNails.logger.error("Option " + key + " does not exist locally!");
+                    continue; // Don't try access non-exist option
+                }
                 
                 entry.value = message.nbtOptions.getString(key);
                 ToughAsNails.logger.info("TAN configuration synchronized with the server");

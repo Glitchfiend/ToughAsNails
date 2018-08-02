@@ -88,13 +88,16 @@ public class MessageTemperatureClient implements IMessage, IMessageHandler<Messa
 
             if (player != null)
             {
-                TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
-                TemperatureDebugger debugger = temperatureStats.debugger;
-                
-                debugger.temperatureTimer = message.temperatureTimer;
-                debugger.changeTicks = message.changeTicks;
-                debugger.targetTemperature = message.targetTemperature;
-                debugger.modifiers = message.modifiers;
+                Minecraft.getMinecraft().addScheduledTask(() ->
+                {
+                    TemperatureHandler temperatureStats = (TemperatureHandler) player.getCapability(TANCapabilities.TEMPERATURE, null);
+                    TemperatureDebugger debugger = temperatureStats.debugger;
+
+                    debugger.temperatureTimer = message.temperatureTimer;
+                    debugger.changeTicks = message.changeTicks;
+                    debugger.targetTemperature = message.targetTemperature;
+                    debugger.modifiers = message.modifiers;
+                });
             }
         }
         

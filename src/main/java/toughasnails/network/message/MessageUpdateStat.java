@@ -49,10 +49,13 @@ public class MessageUpdateStat implements IMessage, IMessageHandler<MessageUpdat
         
         if (player != null)
         {
-            Capability<IPlayerStat> capability = (Capability<IPlayerStat>)PlayerStatRegistry.getCapability(message.identifier);
-            StatHandlerBase stat = (StatHandlerBase)player.getCapability(capability, null);
-            
-            capability.getStorage().readNBT(capability, stat, null, message.data);
+            Minecraft.getMinecraft().addScheduledTask(() ->
+            {
+                Capability<IPlayerStat> capability = (Capability<IPlayerStat>) PlayerStatRegistry.getCapability(message.identifier);
+                StatHandlerBase stat = (StatHandlerBase) player.getCapability(capability, null);
+
+                capability.getStorage().readNBT(capability, stat, null, message.data);
+            });
         }
         
         return null;
