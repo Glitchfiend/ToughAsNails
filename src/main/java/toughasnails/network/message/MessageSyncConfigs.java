@@ -8,6 +8,7 @@
 package toughasnails.network.message;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -46,15 +47,20 @@ public class MessageSyncConfigs implements IMessage, IMessageHandler<MessageSync
     {
         if (ctx.side == Side.CLIENT)
         {
-            for (String key : message.nbtOptions.getKeySet())
+            Minecraft.getMinecraft().addScheduledTask(() ->
             {
-                SyncedConfigEntry entry = SyncedConfig.optionsToSync.get(key);
-                
-                if (entry == null) ToughAsNails.logger.error("Option " + key + " does not exist locally!");
-                
-                entry.value = message.nbtOptions.getString(key);
-                ToughAsNails.logger.info("TAN configuration synchronized with the server");
-            }
+                for (String key : message.nbtOptions.getKeySet()) {
+                    SyncedConfigEntry entry = SyncedConfig.optionsToSync.get(key);
+
+                    if (entry == null) {
+                        ToughAsNails.logger.error("Option " + key + " does not exist locally!");
+                        continue; // Don't try access non-exist option
+                    }
+
+                    entry.value = message.nbtOptions.getString(key);
+                    ToughAsNails.logger.info("TAN configuration synchronized with the server");
+                }
+            });
         }
         
         return null;

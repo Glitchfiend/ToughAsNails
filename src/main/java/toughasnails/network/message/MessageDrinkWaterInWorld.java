@@ -2,6 +2,7 @@ package toughasnails.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -28,7 +29,7 @@ public class MessageDrinkWaterInWorld implements IMessage, IMessageHandler<Messa
 		if (Side.SERVER == ctx.side)
 		{
 			final EntityPlayerMP player = ctx.getServerHandler().player;
-			DrinkHandler.tryDrinkWaterInWorld(player, false);
+			player.getServerWorld().addScheduledTask(() -> DrinkHandler.tryDrinkWaterInWorld(player, false));
 		}
 		return null;
 	}
