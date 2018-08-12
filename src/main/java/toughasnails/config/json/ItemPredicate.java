@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import toughasnails.core.ToughAsNails;
+import toughasnails.util.config.NBTUtilExt;
 
 import javax.annotation.Nullable;
 
@@ -53,7 +54,7 @@ public class ItemPredicate implements Predicate<ItemStack>
         boolean areItemsEqual = input.isItemEqual(stack);
         NBTTagCompound ourTag = stack.getTagCompound();
         NBTTagCompound theirTag = input.getTagCompound();
-        boolean areTagsEqual = (nbt == null && theirTag == null) || (nbt != null && ourTag.equals(theirTag));
+        boolean areTagsEqual = NBTUtilExt.areNBTsEqualOrNull(ourTag, theirTag);
 
         return areItemsEqual && areTagsEqual;
     }
