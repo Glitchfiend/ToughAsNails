@@ -22,13 +22,14 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import toughasnails.api.config.SyncedConfig;
+import toughasnails.api.item.ItemDrink;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.thirst.WaterType;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.thirst.ThirstHandler;
 
-public class ItemCanteen extends Item
+public class ItemCanteen extends ItemDrink<WaterType>
 {
     public ItemCanteen()
     {
@@ -38,22 +39,29 @@ public class ItemCanteen extends Item
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entity)
             {
-                WaterType waterType = getWaterType(stack);
+                WaterType waterType = this.getTypeFromMeta(stack.getMetadata());
                 
                 if (waterType == null) return 0.0F;
                 else return 1.0F;
             }
         });
         
-        this.maxStackSize = 1;
         this.setMaxDamage(3);
         this.setNoRepair();
     }
     
     @Override
+    public WaterType getTypeFromMeta(int meta)
+    {
+        int type = meta & 3;
+        
+        return type > 0 ? WaterType.values()[type - 1] : null;
+    }
+    
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity)
     {
-        WaterType waterType = getWaterType(stack);
+        WaterType waterType = this.getTypeFromMeta(stack.getMetadata());
         
         if (entity instanceof EntityPlayer && waterType != null)
         {
@@ -91,7 +99,7 @@ public class ItemCanteen extends Item
     {
         ItemStack stack = player.getHeldItem(hand);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
-        WaterType waterType = getWaterType(stack);
+        WaterType waterType = this.getTypeFromMeta(stack.getMetadata();
         
         if (!attemptCanteenFill(player, stack) && waterType != null && getTimesUsed(stack) < 3 && thirstStats.isThirsty())
         {
@@ -150,12 +158,6 @@ public class ItemCanteen extends Item
         
         return false;
     }
-
-    private WaterType getWaterType(ItemStack stack)
-    {
-        int type = stack.getMetadata() & 3;
-        return type > 0 ? WaterType.values()[type - 1] : null;
-    }
     
     private int getTimesUsed(ItemStack stack)
     {
@@ -163,21 +165,9 @@ public class ItemCanteen extends Item
     }
     
     @Override
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
-        return 32;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack)
-    {
-        return EnumAction.DRINK;
-    }
-    
-    @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        WaterType type = getWaterType(stack);
+        WaterType type = this.getTypeFromMeta(stack.getMetadata());
         
         if (type != null)
         {
