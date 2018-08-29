@@ -47,7 +47,7 @@ public class DrinkHandler
         if (event.getEntityLiving() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            ItemStack stack = player.getHeldItem(player.getActiveHand());
+            ItemStack stack = event.getItem();
             ThirstHandler thirstHandler = (ThirstHandler)ThirstHelper.getThirstData(player);
 
             if (thirstHandler.isThirsty())
