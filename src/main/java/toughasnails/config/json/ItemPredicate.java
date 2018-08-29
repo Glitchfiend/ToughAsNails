@@ -11,7 +11,12 @@ import com.google.common.base.Predicate;
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import toughasnails.core.ToughAsNails;
+import toughasnails.util.config.NBTUtilExt;
 
 import javax.annotation.Nullable;
 
@@ -20,11 +25,16 @@ public class ItemPredicate implements Predicate<ItemStack>
     @SerializedName("name")
     private String itemRegistryName;
     private int metadata;
+    private String nbt;
+
+    public ItemPredicate(ResourceLocation itemRegistryLoc, int metadata, String nbt) {
+        this.itemRegistryName = itemRegistryLoc.toString();
+        this.metadata = metadata;
+    }
 
     public ItemPredicate(ResourceLocation itemRegistryLoc, int metadata)
     {
-        this.itemRegistryName = itemRegistryLoc.toString();
-        this.metadata = metadata;
+        this(itemRegistryLoc, metadata, null);
     }
 
     public ItemPredicate(Item item, int metadata)
@@ -40,7 +50,13 @@ public class ItemPredicate implements Predicate<ItemStack>
     @Override
     public boolean apply(@Nullable ItemStack input)
     {
-        return input.isItemEqual(this.getItemStack());
+        ItemStack stack = this.getItemStack();
+        boolean areItemsEqual = input.isItemEqual(stack);
+        NBTTagCompound ourTag = stack.getTagCompound();
+        NBTTagCompound theirTag = input.getTagCompound();
+        boolean areTagsEqual = NBTUtilExt.areNBTsEqualOrNull(ourTag, theirTag);
+
+        return areItemsEqual && areTagsEqual;
     }
 
     public ItemStack getItemStack()
@@ -49,7 +65,16 @@ public class ItemPredicate implements Predicate<ItemStack>
 
         if (item != null)
         {
-            return new ItemStack(item, 1, this.metadata);
+            ItemStack stack = new ItemStack(item, 1, this.metadata);
+            if (nbt != null) {
+                try {
+                    stack.setTagCompound(JsonToNBT.getTagFromJson(nbt));
+                } catch (NBTException e) {
+                    ToughAsNails.logger.error("Failed to parse NBT tag for ItemPredicate: ignoring NBT.  " +
+                            "This is likely an error. (Item Name: " + itemRegistryName + ")");
+                }
+            }
+            return stack;
         }
 
         return null;
