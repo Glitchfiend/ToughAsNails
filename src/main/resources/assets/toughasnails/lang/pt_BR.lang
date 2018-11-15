@@ -1,4 +1,4 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [argumentos]
 commands.toughasnails.settemp.success=A temperatura do jogador foi definida para %s
 commands.toughasnails.settemp.disabled=A temperatura corporal está desativada agora!
 
@@ -37,7 +37,7 @@ item.juice_golden_apple.name=Suco de maçã dourada
 item.juice_golden_carrot.name=Suco de cenoura dourada
 item.juice_melon.name=Suco de melancia
 item.juice_pumpkin.name=Suco de abóbora
-item.magma_shard.name=Pedaço de magma
+item.magma_shard.name=Fragmento de magma
 item.respirator.name=Respirador
 item.thermometer.name=Termômetro
 item.wool_helmet.name=Capuz de lã
