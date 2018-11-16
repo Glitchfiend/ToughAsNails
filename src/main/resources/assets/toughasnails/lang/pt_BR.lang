@@ -1,4 +1,4 @@
-commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [argumentos]
 commands.toughasnails.settemp.success=A temperatura do jogador foi definida para %s
 commands.toughasnails.settemp.disabled=A temperatura corporal está desativada agora!
 
@@ -12,12 +12,12 @@ tile.temperature_coil.cooling_coil.name=Serpetina de resfriamento
 tile.temperature_coil.heating_coil.name=Serpentina de aquecimento
 
 item.air_filter.name=Filtro de ar
-item.bottle_of_blackdamp.name=Frasco de blackdamp
-item.bottle_of_whitedamp.name=Frasco de whitedamp
-item.bottle_of_firedamp.name=Frasco de firedamp
-item.bottle_of_stinkdamp.name=Frasco de stinkdamp
+item.bottle_of_blackdamp.name=Frasco de dióxido de carbono
+item.bottle_of_whitedamp.name=Frasco de monóxido de carbono
+item.bottle_of_firedamp.name=Frasco de gás metano
+item.bottle_of_stinkdamp.name=Frasco de sulfeto de hidrogênio
 item.charcoal_filter.name=Filtro de carvão
-item.normal_water_canteen.name=Cantil com água
+item.normal_water_canteen.name=Cantil de água
 item.purified_water_canteen.name=Cantil de água purificada
 item.purified_water_bottle.name=Frasco de água purificada
 item.empty_canteen.name=Cantil vazio
@@ -37,7 +37,7 @@ item.juice_golden_apple.name=Suco de maçã dourada
 item.juice_golden_carrot.name=Suco de cenoura dourada
 item.juice_melon.name=Suco de melancia
 item.juice_pumpkin.name=Suco de abóbora
-item.magma_shard.name=Pedaço de magma
+item.magma_shard.name=Fragmento de magma
 item.respirator.name=Respirador
 item.thermometer.name=Termômetro
 item.wool_helmet.name=Capuz de lã
