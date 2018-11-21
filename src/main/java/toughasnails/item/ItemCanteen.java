@@ -16,6 +16,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -44,6 +46,13 @@ public class ItemCanteen extends ItemDrink<WaterType>
                 if (waterType == null) return 0.0F;
                 else return 1.0F;
             }
+
+			private WaterType getTypeFromMeta(int meta)
+			{
+				int type = meta & 3;
+		        
+		        return type > 0 ? WaterType.values()[type - 1] : null;
+			}
         });
         
         this.setMaxDamage(3);
@@ -99,7 +108,7 @@ public class ItemCanteen extends ItemDrink<WaterType>
     {
         ItemStack stack = player.getHeldItem(hand);
         ThirstHandler thirstStats = (ThirstHandler)player.getCapability(TANCapabilities.THIRST, null);
-        WaterType waterType = this.getTypeFromMeta(stack.getMetadata();
+        WaterType waterType = this.getTypeFromMeta(stack.getMetadata());
         
         if (!attemptCanteenFill(player, stack) && waterType != null && getTimesUsed(stack) < 3 && thirstStats.isThirsty())
         {
@@ -165,17 +174,16 @@ public class ItemCanteen extends ItemDrink<WaterType>
     }
     
     @Override
-    public String getUnlocalizedName(ItemStack stack)
+    public String getItemStackDisplayName(ItemStack stack)
     {
-        WaterType type = this.getTypeFromMeta(stack.getMetadata());
-        
+		WaterType type = this.getTypeFromMeta(stack.getMetadata());
+		        
         if (type != null)
         {
-        	return "item." + type.toString().toLowerCase() + "_water_canteen";
+        	String name = type.getDescription();
+        	return name + " " + I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
         }
-        else
-        {
-        	return "item.empty_canteen";
-        }
+        
+        return I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
     }
 }
