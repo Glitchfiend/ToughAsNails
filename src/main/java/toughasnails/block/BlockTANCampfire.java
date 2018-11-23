@@ -17,17 +17,15 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import toughasnails.api.ITANBlock;
 import toughasnails.api.TANBlocks;
 import toughasnails.item.ItemTANBlock;
@@ -175,7 +173,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 	            	}
 	            }
             } else {
-	            if (item == Item.getItemFromBlock(Blocks.LOG) || item == Item.getItemFromBlock(Blocks.LOG2))
+                if (OreDictionary.getOres("logWood").stream().map(ItemStack::getItem).anyMatch(wood -> wood == item))
 	            {
 		            playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
 		            worldIn.setBlockState(pos, state.withProperty(AGE, Integer.max(age - 2, 0)), 2);
