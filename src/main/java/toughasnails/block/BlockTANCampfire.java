@@ -137,7 +137,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
             Item item = playerIn.getHeldItem(hand).getItem();
             int age = ((Integer)state.getValue(AGE)).intValue();
 
-            if (age < 7)
+            if (age == 0)
             {
 	            if (state.getValue(BURNING) == false)
 	            {
