@@ -137,7 +137,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
             Item item = playerIn.getHeldItem(hand).getItem();
             int age = ((Integer)state.getValue(AGE)).intValue();
 
-            if (age == 0)
+            if (age < 7)
             {
 	            if (state.getValue(BURNING) == false)
 	            {
@@ -173,7 +173,7 @@ public class BlockTANCampfire extends Block implements ITANBlock
 	            	}
 	            }
             } else {
-                if (OreDictionary.getOres("logWood").stream().map(ItemStack::getItem).anyMatch(wood -> wood == item))
+	            if (OreDictionary.getOres("logWood").stream().map(ItemStack::getItem).anyMatch(wood -> wood == item))
 	            {
 		            playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
 		            worldIn.setBlockState(pos, state.withProperty(AGE, Integer.max(age - 2, 0)), 2);
