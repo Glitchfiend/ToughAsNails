@@ -174,6 +174,14 @@ public class BlockTANCampfire extends Block implements ITANBlock
 			            }
 	            	}
 	            }
+            } else {
+	            if (item == Item.getItemFromBlock(Blocks.LOG) || item == Item.getItemFromBlock(Blocks.LOG2))
+	            {
+		            playerIn.getHeldItem(hand).setCount(playerIn.getHeldItem(hand).getCount() - 1);
+		            worldIn.setBlockState(pos, state.withProperty(AGE, Integer.max(age - 2, 0)), 2);
+
+		            return true;
+	            }
             }
         }
 
