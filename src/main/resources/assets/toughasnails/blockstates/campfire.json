@@ -1,12 +1,12 @@
 {
     "variants": {
 		"age=0": { "model": "toughasnails:campfire" },
-		"age=1": { "model": "toughasnails:campfire" },
-		"age=2": { "model": "toughasnails:campfire" },
-		"age=3": { "model": "toughasnails:campfire" },
-		"age=4": { "model": "toughasnails:campfire" },
-		"age=5": { "model": "toughasnails:campfire" },
-		"age=6": { "model": "toughasnails:campfire" },
+		"age=1": { "model": "toughasnails:campfire_1" },
+		"age=2": { "model": "toughasnails:campfire_1" },
+		"age=3": { "model": "toughasnails:campfire_3" },
+		"age=4": { "model": "toughasnails:campfire_3" },
+		"age=5": { "model": "toughasnails:campfire_5" },
+		"age=6": { "model": "toughasnails:campfire_5" },
 		"age=7": { "model": "toughasnails:campfire_out" }
     }
 }
