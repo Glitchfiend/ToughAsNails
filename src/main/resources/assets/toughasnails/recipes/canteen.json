@@ -12,6 +12,7 @@
     }
   },
   "result": {
-    "item": "toughasnails:canteen"
+    "item": "toughasnails:canteen",
+	"data": 0
   }
 }
