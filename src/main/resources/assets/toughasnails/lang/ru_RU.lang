@@ -89,3 +89,8 @@ tipped_arrow.effect.heat_resistance_type=Стрела защиты от жары
 tipped_arrow.effect.long_heat_resistance_type=Стрела защиты от жары
 
 entity.freeze.name=Ледяной дух
+
+enchantment.warming=Согревание
+enchantment.cooling=Охлаждение
+enchantment.toughasnails.warming.desc=Повышает температуру тела аналогично одежде из шерсти
+enchantment.toughasnails.cooling.desc=Уменьшает температуру тела аналогично желейной броне
