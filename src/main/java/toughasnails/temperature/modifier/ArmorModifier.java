@@ -26,6 +26,7 @@ public class ArmorModifier extends TemperatureModifier {
 
         InventoryPlayer inventory = player.inventory;
 
+        armorcycle:
         for(int i = 0; i < 4; i++) {
             ItemStack armor = inventory.armorInventory.get(i);
             //Checking armor from config file
@@ -37,7 +38,7 @@ public class ArmorModifier extends TemperatureModifier {
                     NBTTagCompound compare = atd.nbts == null ? null : atd.getNBTTagCompounds().get(index);
                     if(NBTUtilExt.areNBTsEqualOrNull(armor.getTagCompound(), compare)) {
                         newTemperatureLevel += atd.modifier;
-                        break;
+                        continue armorcycle;
                     }
                 }
             }
