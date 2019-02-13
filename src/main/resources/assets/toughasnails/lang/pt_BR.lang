@@ -1,6 +1,6 @@
 commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [argumentos]
-commands.toughasnails.settemp.success=A temperatura do jogador foi definida para %s
-commands.toughasnails.settemp.disabled=A temperatura corporal está desativada agora!
+commands.toughasnails.settemp.success=Temperatura do jogador definida para %s
+commands.toughasnails.settemp.disabled=Temperatura corporal desativada!
 
 itemGroup.tabToughAsNails=Tough As Nails
 
