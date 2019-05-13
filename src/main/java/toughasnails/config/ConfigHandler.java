@@ -35,7 +35,7 @@ public abstract class ConfigHandler
 
     protected abstract void loadConfiguration();
 
-    protected <T> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment, T... args)
+    protected <T> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment)
     {
         String value = "";
 
@@ -43,17 +43,25 @@ public abstract class ConfigHandler
         {
             value = config.getString(option.getOptionName(), category, defaultValue.toString(), comment);
         }
-        else if (defaultValue instanceof Integer)
-        {
-            value = "" + config.getInt(option.getOptionName(), category, (Integer)defaultValue, (Integer)args[0], (Integer)args[1], comment);
-        }
         else if (defaultValue instanceof Boolean)
         {
             value = "" + config.getBoolean(option.getOptionName(), category, (Boolean)defaultValue, comment);
         }
+
+        SyncedConfig.addOption(option, value);
+    }
+
+    protected <T> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment, T minValue, T maxValue)
+    {   	
+        String value = "";
+
+        if (defaultValue instanceof Integer)
+        {
+            value = "" + config.getInt(option.getOptionName(), category, (Integer)defaultValue, (Integer)minValue, (Integer)maxValue, comment);
+        }
         else if (defaultValue instanceof Float)
         {
-            value = "" + config.getFloat(option.getOptionName(), category, (Float)defaultValue, (Float)args[0], (Float)args[1], comment);
+            value = "" + config.getFloat(option.getOptionName(), category, (Float)defaultValue, (Float)minValue, (Float)maxValue, comment);
         }
 
         SyncedConfig.addOption(option, value);
