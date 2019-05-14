@@ -36,9 +36,9 @@ public abstract class ConfigHandler
     }
 
     public Set<String> getCategoryNames()
-	{
-		return config.getCategoryNames();
-	}
+    {
+    	return config.getCategoryNames();
+    }
     
     public ConfigCategory getCategory(String categoryName)
     {
