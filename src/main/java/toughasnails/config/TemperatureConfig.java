@@ -7,7 +7,6 @@
  ******************************************************************************/
 package toughasnails.config;
 
-import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.TemperatureOption;
 import toughasnails.core.ToughAsNails;
 
