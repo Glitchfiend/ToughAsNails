@@ -16,7 +16,6 @@ import toughasnails.api.TANCapabilities;
 import toughasnails.api.TANPotions;
 import toughasnails.api.config.GameplayOption;
 import toughasnails.api.config.SyncedConfig;
-import toughasnails.api.config.TemperatureOption;
 import toughasnails.api.temperature.Temperature;
 import toughasnails.api.temperature.TemperatureScale;
 import toughasnails.temperature.TemperatureDebugger;
@@ -31,7 +30,7 @@ public class TANCommand extends CommandBase
     }
     
     @Override
-    public List getAliases()
+    public List<String> getAliases()
     {
         return Lists.newArrayList("tan");
     }
@@ -86,7 +85,6 @@ public class TANCommand extends CommandBase
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
-        Temperature playerTemp = temperatureStats.getTemperature();
 
         if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
