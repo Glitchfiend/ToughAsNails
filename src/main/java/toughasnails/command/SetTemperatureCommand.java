@@ -48,7 +48,15 @@ public class SetTemperatureCommand extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-    	setTemperature(sender, args);
+    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+    	{
+    		setTemperature(sender, args);
+    	}
+        else
+        {
+        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
+        }
+    	
     }
         
     private void setTemperature(ICommandSender sender, String[] args) throws CommandException
@@ -57,23 +65,16 @@ public class SetTemperatureCommand extends CommandBase
         TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
         int newTemp = parseInt(args[1], 0, TemperatureScale.getScaleTotal());
 
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
-    	{
-	        // Remove any existing potion effects for hypo/hyperthermia
-	        player.removePotionEffect(TANPotions.hypothermia);
-	        player.removePotionEffect(TANPotions.hyperthermia);
-	
-	        // Reset the change timer to 0
-	        temperatureStats.setChangeTime(0);
-	        // Set to the new temperature
-	        temperatureStats.setTemperature(new Temperature(newTemp));
-	
-	        sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));
-    	}
-        else
-        {
-        	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
-        }
+        // Remove any existing potion effects for hypo/hyperthermia
+        player.removePotionEffect(TANPotions.hypothermia);
+        player.removePotionEffect(TANPotions.hyperthermia);
+
+        // Reset the change timer to 0
+        temperatureStats.setChangeTime(0);
+        // Set to the new temperature
+        temperatureStats.setTemperature(new Temperature(newTemp));
+
+        sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.success", newTemp));   
     }
     
     @Override
