@@ -46,23 +46,22 @@ public class TemperatureInfoCommand extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-    	displayTemperatureInfo(sender, args);
-    }
-    
-    private void displayTemperatureInfo(ICommandSender sender, String[] args) throws CommandException
-    {
-        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
-        TemperatureDebugger debugger = temperatureStats.debugger;
-
-        if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
+    	if (SyncedConfig.getBooleanValue(GameplayOption.ENABLE_TEMPERATURE))
     	{
-        	debugger.setGuiVisible(!debugger.isGuiVisible(), player);
+        	displayTemperatureInfo(sender);	
     	}
         else
         {
         	sender.sendMessage(new TextComponentTranslation("commands.toughasnails.settemp.disabled"));
         }
+    }
+    
+    private void displayTemperatureInfo(ICommandSender sender) throws CommandException
+    {
+        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+        TemperatureHandler temperatureStats = (TemperatureHandler)player.getCapability(TANCapabilities.TEMPERATURE, null);
+        TemperatureDebugger debugger = temperatureStats.debugger;
+        debugger.setGuiVisible(!debugger.isGuiVisible(), player);
     }
         
     @Override
