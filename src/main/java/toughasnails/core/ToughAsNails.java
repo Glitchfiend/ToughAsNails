@@ -16,7 +16,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import toughasnails.command.TANCommand;
+import toughasnails.command.SetTemperatureCommand;
+import toughasnails.command.TemperatureInfoCommand;
 import toughasnails.handler.BlockHarvestEventHandler;
 import toughasnails.handler.LootTableEventHandler;
 import toughasnails.init.ModBlocks;
@@ -92,6 +93,7 @@ public class ToughAsNails
     @EventHandler
     public void serverStarting(FMLServerStartingEvent event)
     {
-        event.registerServerCommand(new TANCommand());
+        event.registerServerCommand(new SetTemperatureCommand());
+        event.registerServerCommand(new TemperatureInfoCommand());
     }
 }
