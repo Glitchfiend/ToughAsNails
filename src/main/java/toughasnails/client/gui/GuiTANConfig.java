@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.DummyConfigElement;
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import org.apache.commons.lang3.text.WordUtils;
 import toughasnails.config.ConfigHandler;
-import toughasnails.config.GameplayConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
@@ -32,9 +30,9 @@ public class GuiTANConfig extends GuiConfig
         {
             List<IConfigElement> configChildCategories = Lists.newArrayList();
 
-            for (String categoryName : handler.config.getCategoryNames())
+            for (String categoryName : handler.getCategoryNames())
             {
-                ConfigCategory category = handler.config.getCategory(categoryName);
+                ConfigCategory category = handler.getCategory(categoryName);
                 List<IConfigElement> elements = new ConfigElement(category).getChildElements();
 
                 configChildCategories.add(new DummyConfigElement.DummyCategoryElement(WordUtils.capitalize(categoryName), "", elements));

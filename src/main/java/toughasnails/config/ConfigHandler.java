@@ -8,6 +8,7 @@
 package toughasnails.config;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,10 +18,11 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.io.File;
+import java.util.Set;
 
 public abstract class ConfigHandler
 {
-    public Configuration config;
+    protected final Configuration config;
     public final String description;
 
     protected ConfigHandler(File configFile, String description)
@@ -33,6 +35,16 @@ public abstract class ConfigHandler
         ModConfig.configHandlers.add(this);
     }
 
+    public Set<String> getCategoryNames()
+	{
+		return config.getCategoryNames();
+	}
+    
+    public ConfigCategory getCategory(String categoryName)
+    {
+    	return config.getCategory(categoryName);
+    }
+    
     protected abstract void loadConfiguration();
 
     protected <T> void addSyncedValue(ISyncedOption option, T defaultValue, String category, String comment)
