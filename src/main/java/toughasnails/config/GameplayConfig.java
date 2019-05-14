@@ -38,7 +38,7 @@ public class GameplayConfig extends ConfigHandler
             magmaShardDrops = config.getBoolean("Magma Shard Drops", "Tweak Settings", true, "Magma Blocks drop Magma Shards.");
             lootTableTweaks = config.getBoolean("Loot Table Tweaks", "Tweak Settings", true, "Loot tables are tweaked for balance.");
         }
-        catch (Exception e)
+        catch (UnsupportedOperationException | ClassCastException | NullPointerException | IllegalArgumentException e)
         {
             ToughAsNails.logger.error("Tough As Nails has encountered a problem loading gameplay.cfg", e);
         }

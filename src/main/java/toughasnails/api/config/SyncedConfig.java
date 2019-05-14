@@ -8,9 +8,9 @@ public class SyncedConfig
 {
     public static Map<String, SyncedConfigEntry> optionsToSync = Maps.newHashMap();
 
-    public static void addOption(ISyncedOption option, String defaultValue)
+    public static void addOption(ISyncedOption option, String defaultValue) throws UnsupportedOperationException, ClassCastException, NullPointerException, IllegalArgumentException
     {
-        optionsToSync.put(option.getOptionName(), new SyncedConfigEntry(defaultValue));
+    	optionsToSync.put(option.getOptionName(), new SyncedConfigEntry(defaultValue));
     }
 
     public static boolean getBooleanValue(ISyncedOption option)
