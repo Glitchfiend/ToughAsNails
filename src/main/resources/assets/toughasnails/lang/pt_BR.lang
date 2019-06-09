@@ -69,3 +69,8 @@ tipped_arrow.effect.cold_resistance_type=Flecha de resistência ao frio
 tipped_arrow.effect.long_cold_resistance_type=Flecha de resistência ao frio
 tipped_arrow.effect.heat_resistance_type=Flecha de resistência ao calor
 tipped_arrow.effect.long_heat_resistance_type=Flecha de resistência ao calor
+
+enchantment.warming=Calor
+enchantment.cooling=Frio
+enchantment.toughasnails.warming.desc=Aumenta a temperatura corporal como as roupas de lã
+enchantment.toughasnails.cooling.desc=Diminui a temperatura corporal como a armadura gelatinosa de slime
