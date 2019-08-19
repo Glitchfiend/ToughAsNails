@@ -1,0 +1,71 @@
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.settemp.success=Set player temperature to %s
+commands.toughasnails.settemp.disabled=현재 체온 기능은 비활성화 되어있습니다!
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+fluid.purified_water=정화된 물
+
+tile.campfire.name=캠프파이어
+tile.rain_collector.name=빗물 수집기
+tile.temperature_coil.cooling_coil.name=쿨링 코일
+tile.temperature_coil.heating_coil.name=히팅 코일
+
+item.air_filter.name=공기 필터
+item.bottle_of_blackdamp.name=Bottle of Blackdamp
+item.bottle_of_whitedamp.name=Bottle of Whitedamp
+item.bottle_of_firedamp.name=Bottle of Firedamp
+item.bottle_of_stinkdamp.name=Bottle of Stinkdamp
+item.canteen.name=Canteen
+item.charcoal_filter.name=숯 필터
+item.purified_water_bottle.name=정화된 물병
+item.ice_cube.name=아이스큐브
+item.jelled_slime.name=굳은 슬라임
+item.jelled_slime_helmet.name=굳은 슬라임 투구
+item.jelled_slime_chestplate.name=굳은 슬라임 흉갑
+item.jelled_slime_leggings.name=굳은 슬라임 각반
+item.jelled_slime_boots.name=굳은 슬라임 부츠
+item.juice_apple.name=사과 쥬스
+item.juice_beetroot.name=사탕무 쥬스
+item.juice_cactus.name=선인장 쥬스
+item.juice_carrot.name=당근 쥬스
+item.juice_chorus_fruit.name=후렴과 쥬스
+item.juice_glistering_melon.name=반짝이는 수박 쥬스
+item.juice_golden_apple.name=황금 사과 쥬스
+item.juice_golden_carrot.name=황금 당근 쥬스
+item.juice_melon.name=수박 쥬스
+item.juice_pumpkin.name=호박 쥬스
+item.magma_shard.name=마그마 조각
+item.respirator.name=호흡기
+item.thermometer.name=온도계
+item.wool_helmet.name=양모 후드
+item.wool_chestplate.name=양모 재킷
+item.wool_leggings.name=양모 바지
+item.wool_boots.name=양모 부추
+
+potion.hypothermia=저체온증
+potion.hyperthermia=고체온증
+potion.thirst=갈증
+potion.cold_resistance=냉기 저항
+potion.heat_resistance=열기 저항
+potion.hydration=수분
+
+potion.effect.cold_resistance_type=냉기 저항의 물약
+potion.effect.long_cold_resistance_type=냉기 저항의 물약
+potion.effect.heat_resistance_type=열기 저항의 물약
+potion.effect.long_heat_resistance_type=열기 저항의 물약
+
+splash_potion.effect.cold_resistance_type=투척용 냉기 저항의 물약
+splash_potion.effect.long_cold_resistance_type=투척용 냉기 저항의 물약
+splash_potion.effect.heat_resistance_type=투척용 열기 저항의 물약
+splash_potion.effect.long_heat_resistance_type=투척용 열기 저항의 물약
+
+lingering_potion.effect.cold_resistance_type=잔류형 냉기 저항의 물약
+lingering_potion.effect.long_cold_resistance_type=잔류형 냉기 저항의 물약
+lingering_potion.effect.heat_resistance_type=잔류형 열기 저항의 물약
+lingering_potion.effect.long_heat_resistance_type=잔류형 열기 저항의 물약
+
+tipped_arrow.effect.cold_resistance_type=냉기 저항의 화살
+tipped_arrow.effect.long_cold_resistance_type=냉기 저항의 화살
+tipped_arrow.effect.heat_resistance_type=열기 저항의 화살
+tipped_arrow.effect.long_heat_resistance_type=열기 저항의 화살
