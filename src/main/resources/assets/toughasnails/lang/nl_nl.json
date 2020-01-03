@@ -1,0 +1,76 @@
+commands.toughasnails.usage=/toughasnails <tempinfo|settemp> [args]
+commands.toughasnails.settemp.success=Zet speler temperatuur op %s
+commands.toughasnails.settemp.disabled=De lichaamstemperatuur is momenteel uitgeschakeld!
+
+itemGroup.tabToughAsNails=Tough As Nails
+
+fluid.purified_water=Gezuiverd water
+
+tile.campfire.name=Kampvuur
+tile.rain_collector.name=Regen verzamelaar
+tile.temperature_coil.cooling_coil.name=Koelspiraal
+tile.temperature_coil.heating_coil.name=Verwarmingselement
+
+item.air_filter.name=Luchtfilter
+item.bottle_of_blackdamp.name=Fles met zwartvocht
+item.bottle_of_whitedamp.name=Fles met witvocht
+item.bottle_of_firedamp.name=Fles met vuurvocht
+item.bottle_of_stinkdamp.name=Fles met stinkvocht
+item.canteen.name=Kantine
+item.charcoal_filter.name=Koolstoffilter
+item.purified_water_bottle.name=Gezuiverde waterfles
+item.ice_cube.name=IJsblokje
+item.jelled_slime.name=Jelled slijm
+item.jelled_slime_helmet.name=Jelled slijmhelm
+item.jelled_slime_chestplate.name=Jelled Slijmborstplaat
+item.jelled_slime_leggings.name=Jelled slijm broek
+item.jelled_slime_boots.name=Jelled slijm schoenen
+item.juice_apple.name=Appelsap
+item.juice_beetroot.name=Rode bietensap
+item.juice_cactus.name=Cactussap
+item.juice_carrot.name=Wortelsap
+item.juice_chorus_fruit.name=Koorvruchtensap
+item.juice_glistering_melon.name=Glinsterende meloen sap
+item.juice_golden_apple.name=Gouden appelsap
+item.juice_golden_carrot.name=Gouden wortelsap
+item.juice_melon.name=Meloen sap
+item.juice_pumpkin.name=Pompoensap
+item.magma_shard.name=Magma scherf
+item.respirator.name=Respirator
+item.thermometer.name=Thermometer
+item.wool_helmet.name=Wollen kap
+item.wool_chestplate.name=Wollen jas
+item.wool_leggings.name=Wollen broek
+item.wool_boots.name=Wollen laarzen
+
+potion.hypothermia=Hypothermie
+potion.hyperthermia=Hyperthermie
+potion.thirst=Dorst
+potion.cold_resistance=Koude weerstand
+potion.heat_resistance=Hittebestendig
+potion.hydration=Hydratatie
+
+potion.effect.cold_resistance_type=Drankje tegen koude weerstand
+potion.effect.long_cold_resistance_type=Drankje tegen koude weerstand
+potion.effect.heat_resistance_type=Drankje van hittebestendigheid
+potion.effect.long_heat_resistance_type=Drankje van hittebestendigheid
+
+splash_potion.effect.cold_resistance_type=Spattende drankje van koude weerstand
+splash_potion.effect.long_cold_resistance_type=Spattende drankje van koude weerstand
+splash_potion.effect.heat_resistance_type=Spattende drankje van hittebestendigheid
+splash_potion.effect.long_heat_resistance_type=Spattende drankje van hittebestendigheid
+
+lingering_potion.effect.cold_resistance_type=Aanhoudende drankje tegen koude weerstand
+lingering_potion.effect.long_cold_resistance_type=Aanhoudende drankje tegen koude weerstand
+lingering_potion.effect.heat_resistance_type=Aanhoudende drankje van hittebestendigheid
+lingering_potion.effect.long_heat_resistance_type=Aanhoudende drankje van hittebestendigheid
+
+tipped_arrow.effect.cold_resistance_type=Pijl van koude weerstand
+tipped_arrow.effect.long_cold_resistance_type=Pijl van koude weerstand
+tipped_arrow.effect.heat_resistance_type=Pijl van hittebestendigheid
+tipped_arrow.effect.long_heat_resistance_type=Pijl van hittebestendigheid
+
+enchantment.warming=Verwarming
+enchantment.cooling=Koeling
+enchantment.toughasnails.warming.desc=Verhoogt de lichaamstemperatuur, net als de wollen kleding
+enchantment.toughasnails.cooling.desc=Verlaagt de lichaamstemperatuur, net als het slijmerige pantser van Jelled
