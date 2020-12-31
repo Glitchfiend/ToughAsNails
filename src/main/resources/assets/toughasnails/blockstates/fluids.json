@@ -1,9 +1,0 @@
-{
-    "forge_marker": 1,
-    "variants": {
-		"purified_water": {
-            "model": "forge:fluid",
-            "custom": { "fluid": "purified_water" }
-        }
-    }
-}
