@@ -51,12 +51,12 @@ minecraft {
     runs {
         client = {
             workingDirectory = project.file("run").canonicalPath
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            arg "-mixin.config=toughasnails.mixins.json"
             source sourceSets.main
         }
         server = {
             workingDirectory = project.file("run").canonicalPath
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            arg "-mixin.config=toughasnails.mixins.json"
             source sourceSets.main
         }
     }

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "toughasnails.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "toughasnails.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
