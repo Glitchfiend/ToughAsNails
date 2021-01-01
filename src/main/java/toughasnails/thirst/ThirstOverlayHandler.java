@@ -19,7 +19,8 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-import toughasnails.core.ToughAsNails;
+import toughasnails.api.ThirstHelper;
+import toughasnails.api.capability.IThirst;
 
 import java.util.Random;
 
@@ -52,8 +53,9 @@ public class ThirstOverlayHandler
             int width = event.getWindow().getGuiScaledWidth();
             int height = event.getWindow().getGuiScaledHeight();
 
-            int thirstLevel = 11; //thirstStats.getThirst();
-            float thirstHydrationLevel = 0.0f; //thirstStats.getHydration();
+            IThirst thirst = ThirstHelper.getThirst(player);
+            int thirstLevel = thirst.getThirstLevel();
+            float thirstHydrationLevel = thirst.getHydrationLevel();
 
             // When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
             RANDOM.setSeed(updateCounter * 312871L);

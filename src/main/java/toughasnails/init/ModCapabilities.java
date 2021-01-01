@@ -7,21 +7,15 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import toughasnails.thirst.ThirstHandler;
-import toughasnails.thirst.ThirstOverlayHandler;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import toughasnails.api.capability.IThirst;
+import toughasnails.thirst.ThirstData;
+import toughasnails.thirst.ThirstStorage;
 
-public class ModHandlers
+public class ModCapabilities
 {
     public static void init()
     {
-        MinecraftForge.EVENT_BUS.register(new ThirstHandler());
-
-        if (FMLEnvironment.dist == Dist.CLIENT)
-        {
-            MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
-        }
+        CapabilityManager.INSTANCE.register(IThirst.class, new ThirstStorage(), () -> new ThirstData());
     }
 }

@@ -14,7 +14,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import toughasnails.init.ModCapabilities;
 import toughasnails.init.ModHandlers;
+import toughasnails.network.PacketHandler;
 
 @Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNails
@@ -32,11 +34,13 @@ public class ToughAsNails
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
 
+        PacketHandler.init();
         ModHandlers.init();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        ModCapabilities.init();
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
