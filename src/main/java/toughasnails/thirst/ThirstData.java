@@ -12,7 +12,7 @@ import toughasnails.api.capability.IThirst;
 public class ThirstData implements IThirst
 {
     private int thirstLevel = 20;
-    private float hydrationLevel;
+    private float hydrationLevel = 5.0F;
     private float exhaustionLevel;
     private int tickTimer;
 
