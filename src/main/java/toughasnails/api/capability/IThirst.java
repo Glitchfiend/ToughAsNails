@@ -13,7 +13,7 @@ public interface IThirst
      * Get the level of thirst ranging from 0 to 20.
      * @return The thirst level.
      */
-    int getThirstLevel();
+    int getThirst();
 
     /**
      * Get the number of thirst ticks.
@@ -22,28 +22,28 @@ public interface IThirst
     int getTickTimer();
 
     /**
-     * Add ticks to the tick timer
-     * @param ticks The number of thirst ticks.
-     */
-    void addTicks(int ticks);
-
-    /**
      * Get the current hydration level.
      * @return The hydration level.
      */
-    float getHydrationLevel();
+    float getHydration();
 
     /**
      * Get the level of thirst exhaustion ranging from 0 to 40.
      * @return The level of exhaustion.
      */
-    float getExhaustionLevel();
+    float getExhaustion();
 
     /**
      * Set the thirst level.
      * @param level thirst level
      */
-    void setThirstLevel(int level);
+    void setThirst(int level);
+
+    /**
+     * Add to the thirst level
+     * @param thirst amount to add to the thirst level.
+     */
+    void addThirst(int thirst);
 
     /**
      * Set the tick timer.
@@ -52,20 +52,38 @@ public interface IThirst
     void setTickTimer(int timer);
 
     /**
+     * Add ticks to the tick timer
+     * @param ticks The number of thirst ticks.
+     */
+    void addTicks(int ticks);
+
+    /**
      * Set the hydration level.
      * @param hydration hydration level.
      */
-    void setHydrationLevel(float hydration);
+    void setHydration(float hydration);
+
+    /**
+     * Add to the hydration level.
+     * @param hydration amount of hydration to add.
+     */
+    void addHydration(float hydration);
 
     /**
      * Set the exhaustion level.
      * @param exhaustion exhaustion level.
      */
-    void setExhaustionLevel(float exhaustion);
+    void setExhaustion(float exhaustion);
 
     /**
      * Add to the exhaustion level.
      * @param exhaustion amount of exhaustion to add.
      */
     void addExhaustion(float exhaustion);
+
+    /**
+     * Checks whether the player is thirsty or not.
+     * @return whether the player is thirsty.
+     */
+    boolean isThirsty();
 }

@@ -10,17 +10,15 @@ package toughasnails.thirst;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.play.server.SUpdateHealthPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
-import toughasnails.api.TANCapabilities;
+import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.ThirstHelper;
 import toughasnails.api.capability.IThirst;
 import toughasnails.core.ToughAsNails;
@@ -63,23 +61,23 @@ public class ThirstHandler
         IThirst thirst = ThirstHelper.getThirst(player);
         Difficulty difficulty = player.level.getDifficulty();
 
-        if (thirst.getExhaustionLevel() > THIRST_EXHAUSTION_THRESHOLD)
+        if (thirst.getExhaustion() > THIRST_EXHAUSTION_THRESHOLD)
         {
             thirst.addExhaustion(-THIRST_EXHAUSTION_THRESHOLD);
 
-            if (thirst.getHydrationLevel() > 0.0F)
+            if (thirst.getHydration() > 0.0F)
             {
                 // Deplete hydration
-                thirst.setHydrationLevel(Math.max(thirst.getHydrationLevel() - 1.0F, 0.0F));
+                thirst.setHydration(Math.max(thirst.getHydration() - 1.0F, 0.0F));
             }
             else if (difficulty != Difficulty.PEACEFUL)
             {
                 // Reduce thirst bar once hydration has been depleted
-                thirst.setThirstLevel(Math.max(thirst.getThirstLevel() - 1, 0));
+                thirst.setThirst(Math.max(thirst.getThirst() - 1, 0));
             }
         }
 
-        if (thirst.getThirstLevel() <= 0)
+        if (thirst.getThirst() <= 0)
         {
             thirst.addTicks(1);
 
@@ -99,17 +97,17 @@ public class ThirstHandler
             thirst.setTickTimer(0);
         }
 
-        if (this.lastSentThirst != thirst.getThirstLevel() || thirst.getHydrationLevel() == 0.0F != this.lastThirstHydrationZero)
+        if (this.lastSentThirst != thirst.getThirst() || thirst.getHydration() == 0.0F != this.lastThirstHydrationZero)
         {
             syncThirst(player);
-            this.lastSentThirst = thirst.getThirstLevel();
-            this.lastThirstHydrationZero = thirst.getHydrationLevel() == 0.0F;
+            this.lastSentThirst = thirst.getThirst();
+            this.lastThirstHydrationZero = thirst.getHydration() == 0.0F;
         }
     }
 
     private static void syncThirst(ServerPlayerEntity player)
     {
         IThirst thirst = ThirstHelper.getThirst(player);
-        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirstLevel(), thirst.getHydrationLevel()));
+        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()));
     }
 }

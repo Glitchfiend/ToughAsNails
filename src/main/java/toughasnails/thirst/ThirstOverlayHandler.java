@@ -54,8 +54,8 @@ public class ThirstOverlayHandler
             int height = event.getWindow().getGuiScaledHeight();
 
             IThirst thirst = ThirstHelper.getThirst(player);
-            int thirstLevel = thirst.getThirstLevel();
-            float thirstHydrationLevel = thirst.getHydrationLevel();
+            int thirstLevel = thirst.getThirst();
+            float thirstHydrationLevel = thirst.getHydration();
 
             // When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
             RANDOM.setSeed(updateCounter * 312871L);

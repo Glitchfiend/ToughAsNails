@@ -47,8 +47,8 @@ public class MessageUpdateThirst
                 PlayerEntity player = Minecraft.getInstance().player;
                 IThirst thirst = ThirstHelper.getThirst(player);
 
-                thirst.setThirstLevel(packet.thirstLevel);
-                thirst.setHydrationLevel(packet.hydrationLevel);
+                thirst.setThirst(packet.thirstLevel);
+                thirst.setHydration(packet.hydrationLevel);
             });
             context.get().setPacketHandled(true);
         }

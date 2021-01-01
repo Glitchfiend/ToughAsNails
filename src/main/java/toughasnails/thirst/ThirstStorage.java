@@ -22,10 +22,10 @@ public class ThirstStorage implements Capability.IStorage<IThirst>
     public INBT writeNBT(Capability<IThirst> capability, IThirst instance, Direction side)
     {
         CompoundNBT compound = new CompoundNBT();
-        compound.putInt("thirstLevel", instance.getThirstLevel());
+        compound.putInt("thirstLevel", instance.getThirst());
         compound.putInt("thirstTickTimer", instance.getTickTimer());
-        compound.putFloat("thirstHydrationLevel", instance.getHydrationLevel());
-        compound.putFloat("thirstExhaustionLevel", instance.getExhaustionLevel());
+        compound.putFloat("thirstHydrationLevel", instance.getHydration());
+        compound.putFloat("thirstExhaustionLevel", instance.getExhaustion());
 
         return compound;
     }
@@ -40,10 +40,10 @@ public class ThirstStorage implements Capability.IStorage<IThirst>
 
         if (compound.contains("thirstLevel", 99))
         {
-            instance.setThirstLevel(compound.getInt("thirstLevel"));
+            instance.setThirst(compound.getInt("thirstLevel"));
             instance.setTickTimer(compound.getInt("thirstTickTimer"));
-            instance.setHydrationLevel(compound.getFloat("thirstHydrationLevel"));
-            instance.setExhaustionLevel(compound.getFloat("thirstExhaustionLevel"));
+            instance.setHydration(compound.getFloat("thirstHydrationLevel"));
+            instance.setExhaustion(compound.getFloat("thirstExhaustionLevel"));
         }
     }
 }
