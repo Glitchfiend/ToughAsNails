@@ -9,12 +9,28 @@ package toughasnails.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.server.ServerWorld;
+import toughasnails.api.item.TANItems;
+
+import java.util.Random;
 
 public class RainCollectorBlock extends Block
 {
@@ -27,36 +43,80 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+    {
+        ItemStack stack = player.getItemInHand(hand);
+
+        if (stack.isEmpty() || stack.getItem() != Items.GLASS_BOTTLE)
+            return ActionResultType.PASS;
+
+        int waterLevel = state.getValue(LEVEL);
+
+        if (waterLevel > 0 && !worldIn.isClientSide)
+        {
+            if (!player.abilities.instabuild)
+            {
+                ItemStack newStack = new ItemStack(TANItems.purified_water_bottle);
+                player.awardStat(Stats.USE_CAULDRON);
+                stack.shrink(1);
+
+                if (stack.isEmpty()) player.setItemInHand(hand, newStack);
+                else if (!player.inventory.add(newStack)) player.drop(newStack, false);
+                else if (player instanceof ServerPlayerEntity) ((ServerPlayerEntity)player).refreshContainer(player.inventoryMenu);
+            }
+
+            worldIn.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            this.setWaterLevel(worldIn, pos, state, waterLevel - 1);
+        }
+
+        return ActionResultType.sidedSuccess(worldIn.isClientSide);
     }
 
-    @Override
-    public void handleRain(World worldIn, BlockPos pos) {
-        if (worldIn.random.nextInt(8) == 1) {
-            float f = worldIn.getBiome(pos).getTemperature(pos);
-            if (!(f < 0.15F)) {
-                BlockState blockstate = worldIn.getBlockState(pos);
-                if (blockstate.getValue(LEVEL) < 3) {
-                    worldIn.setBlock(pos, blockstate.cycle(LEVEL), 2);
-                }
+    public void setWaterLevel(World world, BlockPos pos, BlockState state, int level)
+    {
+        world.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(MathHelper.clamp(level, 0, 3))), 2);
+        world.updateNeighbourForOutputSignal(pos, this);
+    }
 
+    // NOTE: We use tick rather than handleRain as handleRain is too slow
+    @Override
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
+    {
+        if (world.isRaining() && world.getBiome(pos).getPrecipitation() == Biome.RainType.RAIN)
+        {
+            float temp = world.getBiome(pos).getTemperature(pos);
+
+            if (!(temp < 0.15F))
+            {
+                if (state.getValue(LEVEL) < 3)
+                {
+                    world.setBlock(pos, state.cycle(LEVEL), 2);
+                }
             }
         }
     }
 
-    public void setWaterLevel(World worldIn, BlockPos pos, BlockState state, int level) {
-        worldIn.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(MathHelper.clamp(level, 0, 3))), 2);
-        worldIn.updateNeighbourForOutputSignal(pos, this);
-    }
-
     @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state)
+    {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
-        return blockState.getValue(LEVEL);
+    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos)
+    {
+        return state.getValue(LEVEL);
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, IBlockReader world, BlockPos pos, PathType type)
+    {
+        return false;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    {
+        builder.add(LEVEL);
     }
 }

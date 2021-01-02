@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I#I",
+    "CPC",
+    " U "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:charcoal"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "U": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "result": {
+    "item": "toughasnails:rain_collector"
+  }
+}
