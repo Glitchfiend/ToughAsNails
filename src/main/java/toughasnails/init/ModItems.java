@@ -12,11 +12,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import toughasnails.item.DirtyWaterBottleItem;
 import toughasnails.item.PurifiedWaterBottleItem;
 import toughasnails.util.inventory.ItemGroupTAN;
 
-import static toughasnails.api.item.TANItems.purified_water_bottle;
-import static toughasnails.api.item.TANItems.tan_icon;
+import static toughasnails.api.item.TANItems.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems
@@ -24,6 +24,7 @@ public class ModItems
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
+        dirty_water_bottle = registerItem(new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "dirty_water_bottle");
         purified_water_bottle = registerItem(new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "purified_water_bottle");
 
         tan_icon = registerItem(new Item(new Item.Properties()), "tan_icon");

@@ -10,6 +10,7 @@ package toughasnails.api.item;
 import net.minecraft.item.Item;
 public class TANItems
 {
+    public static Item dirty_water_bottle;
     public static Item purified_water_bottle;
 
     public static Item tan_icon;
