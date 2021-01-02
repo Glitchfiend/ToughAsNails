@@ -13,7 +13,8 @@ public class TANItems
 {
     public static Item dirty_water_bottle;
     public static Item empty_canteen;
-    public static Item normal_water_canteen;
+    public static Item water_canteen;
+    public static Item dirty_water_canteen;
     public static Item purified_water_canteen;
     public static Item purified_water_bottle;
     public static Item tan_icon;

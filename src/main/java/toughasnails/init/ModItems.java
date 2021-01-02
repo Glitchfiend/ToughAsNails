@@ -28,7 +28,7 @@ public class ModItems
     {
         dirty_water_bottle = registerItem(new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "dirty_water_bottle");
         empty_canteen = registerItem(new EmptyCanteenItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "empty_canteen");
-        normal_water_canteen = registerItem(new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "normal_water_canteen");
+        water_canteen = registerItem(new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "water_canteen");
         purified_water_bottle = registerItem(new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "purified_water_bottle");
 
         tan_icon = registerItem(new Item(new Item.Properties()), "tan_icon");

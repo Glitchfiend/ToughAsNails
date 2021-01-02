@@ -2,7 +2,10 @@
   "itemGroup.toughasnails": "Tough As Nails",
 
   "item.toughasnails.tan_icon": "TAN Icon",
-  "item.toughasnails.canteen": "Canteen",
+  "item.toughasnails.empty_canteen": "Empty Canteen",
+  "item.toughasnails.water_canteen": "Water Canteen",
+  "item.toughasnails.dirty_water_canteen": "Dirty Water Canteen",
+  "item.toughasnails.purified_water_canteen": "Purified Water Canteen",
   "item.toughasnails.dirty_water_bottle": "Dirty Water Bottle",
   "item.toughasnails.purified_water_bottle": "Purified Water Bottle",
   
