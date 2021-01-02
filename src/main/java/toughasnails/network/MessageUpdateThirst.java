@@ -11,8 +11,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-import toughasnails.api.ThirstHelper;
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.api.thirst.IThirst;
 
 import java.util.function.Supplier;
 

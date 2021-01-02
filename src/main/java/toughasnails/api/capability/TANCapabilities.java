@@ -9,7 +9,7 @@ package toughasnails.api.capability;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.IThirst;
 
 public class TANCapabilities
 {

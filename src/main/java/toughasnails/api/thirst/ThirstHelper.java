@@ -5,10 +5,10 @@
  *
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.api;
+package toughasnails.api.thirst;
 
 import net.minecraft.entity.player.PlayerEntity;
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.IThirst;
 import toughasnails.api.capability.TANCapabilities;
 
 public class ThirstHelper

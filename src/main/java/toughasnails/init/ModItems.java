@@ -13,6 +13,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import toughasnails.item.DirtyWaterBottleItem;
+import toughasnails.api.thirst.WaterType;
+import toughasnails.item.CanteenItem;
 import toughasnails.item.PurifiedWaterBottleItem;
 import toughasnails.util.inventory.ItemGroupTAN;
 
@@ -25,6 +27,8 @@ public class ModItems
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
         dirty_water_bottle = registerItem(new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "dirty_water_bottle");
+        empty_canteen = registerItem(new CanteenItem(WaterType.UNKNOWN, (new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "empty_canteen");
+        normal_water_canteen = registerItem(new CanteenItem(WaterType.NORMAL, (new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "normal_water_canteen");
         purified_water_bottle = registerItem(new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "purified_water_bottle");
 
         tan_icon = registerItem(new Item(new Item.Properties()), "tan_icon");

@@ -8,7 +8,7 @@
 package toughasnails.init;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.IThirst;
 import toughasnails.thirst.ThirstData;
 import toughasnails.thirst.ThirstStorage;
 

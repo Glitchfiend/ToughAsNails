@@ -19,8 +19,8 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-import toughasnails.api.ThirstHelper;
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.api.thirst.IThirst;
 
 import java.util.Random;
 

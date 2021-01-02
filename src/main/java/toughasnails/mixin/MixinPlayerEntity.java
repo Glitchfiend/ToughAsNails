@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import toughasnails.api.ThirstHelper;
+import toughasnails.api.thirst.ThirstHelper;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerEntity

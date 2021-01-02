@@ -5,16 +5,12 @@
  *
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
-package toughasnails.api.item;
+package toughasnails.api.thirst;
 
-import net.minecraft.item.Item;
-
-public class TANItems
+public enum WaterType
 {
-    public static Item dirty_water_bottle;
-    public static Item empty_canteen;
-    public static Item normal_water_canteen;
-    public static Item purified_water_canteen;
-    public static Item purified_water_bottle;
-    public static Item tan_icon;
+    DIRTY,
+    NORMAL,
+    PURIFIED,
+    UNKNOWN,
 }

@@ -7,7 +7,7 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import toughasnails.api.capability.IThirst;
+import toughasnails.api.thirst.IThirst;
 
 public class ThirstData implements IThirst
 {
