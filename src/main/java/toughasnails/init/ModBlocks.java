@@ -32,7 +32,7 @@ public class ModBlocks
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event)
     {
-        rain_collector = registerBlock(new RainCollectorBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).randomTicks().requiresCorrectToolForDrops().strength(2.0F).noOcclusion()), "rain_collector");
+        rain_collector = registerBlock(new RainCollectorBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()), "rain_collector");
 
         if (FMLEnvironment.dist == Dist.CLIENT)
         {

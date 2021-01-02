@@ -79,14 +79,16 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public void handleRain(World worldIn, BlockPos pos) {
-        float f = worldIn.getBiome(pos).getTemperature(pos);
-        if (!(f < 0.15F)) {
-            BlockState blockstate = worldIn.getBlockState(pos);
-            if (blockstate.getValue(LEVEL) < 3) {
-                worldIn.setBlock(pos, blockstate.cycle(LEVEL), 2);
+    public void handleRain(World worldIn, BlockPos pos)
+    {
+        float temp = worldIn.getBiome(pos).getTemperature(pos);
+        if (!(temp < 0.15F))
+        {
+            BlockState state = worldIn.getBlockState(pos);
+            if (state.getValue(LEVEL) < 3)
+            {
+                worldIn.setBlock(pos, state.cycle(LEVEL), 2);
             }
-
         }
     }
 
