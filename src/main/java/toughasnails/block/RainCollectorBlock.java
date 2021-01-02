@@ -9,8 +9,12 @@ package toughasnails.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 public class RainCollectorBlock extends Block
 {
@@ -25,5 +29,34 @@ public class RainCollectorBlock extends Block
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(LEVEL);
+    }
+
+    @Override
+    public void handleRain(World worldIn, BlockPos pos) {
+        if (worldIn.random.nextInt(8) == 1) {
+            float f = worldIn.getBiome(pos).getTemperature(pos);
+            if (!(f < 0.15F)) {
+                BlockState blockstate = worldIn.getBlockState(pos);
+                if (blockstate.getValue(LEVEL) < 3) {
+                    worldIn.setBlock(pos, blockstate.cycle(LEVEL), 2);
+                }
+
+            }
+        }
+    }
+
+    public void setWaterLevel(World worldIn, BlockPos pos, BlockState state, int level) {
+        worldIn.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(MathHelper.clamp(level, 0, 3))), 2);
+        worldIn.updateNeighbourForOutputSignal(pos, this);
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
+        return blockState.getValue(LEVEL);
     }
 }

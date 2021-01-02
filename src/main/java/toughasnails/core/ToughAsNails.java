@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.core;
 
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -24,6 +25,8 @@ public class ToughAsNails
     public static final String MOD_ID = "toughasnails";
 
     public static ToughAsNails instance;
+    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
     public static Logger logger = LogManager.getLogger(MOD_ID);
 
     public ToughAsNails()
@@ -49,5 +52,6 @@ public class ToughAsNails
 
     private void loadComplete(final FMLLoadCompleteEvent event)
     {
+        proxy.init();
     }
 }

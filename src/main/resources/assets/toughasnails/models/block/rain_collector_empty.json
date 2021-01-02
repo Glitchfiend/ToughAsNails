@@ -4,9 +4,9 @@
     "textures": {
         "particle": "toughasnails:block/rain_collector_side",
         "top": "toughasnails:block/rain_collector_top",
-        "bottom": "toughasnails:block/rain_collector_bottom",
+        "bottom": "minecraft:block/smoker_bottom",
         "side": "toughasnails:block/rain_collector_side",
-        "inside": "toughasnails:block/rain_collector_inner"
+        "inside": "minecraft:block/cauldron_inner"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],
