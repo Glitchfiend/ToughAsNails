@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "toughasnails:rain_collector"
+    ]
+  },
+  "criteria": {
+    "has_barrel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:barrel"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "toughasnails:rain_collector"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_barrel",
+      "has_the_recipe"
+    ]
+  ]
+}

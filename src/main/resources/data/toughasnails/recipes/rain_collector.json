@@ -1,25 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I#I",
-    "CPC",
-    " U "
+    "ISI",
+    "IBI"
   ],
   "key": {
-    "#": {
+    "S": {
       "item": "minecraft:string"
     },
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "C": {
-      "item": "minecraft:charcoal"
-    },
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "U": {
-      "item": "minecraft:cauldron"
+    "B": {
+      "item": "minecraft:barrel"
     }
   },
   "result": {

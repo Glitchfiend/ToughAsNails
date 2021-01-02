@@ -78,21 +78,15 @@ public class RainCollectorBlock extends Block
         world.updateNeighbourForOutputSignal(pos, this);
     }
 
-    // NOTE: We use tick rather than handleRain as handleRain is too slow
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
-    {
-        if (world.isRaining() && world.getBiome(pos).getPrecipitation() == Biome.RainType.RAIN)
-        {
-            float temp = world.getBiome(pos).getTemperature(pos);
-
-            if (!(temp < 0.15F))
-            {
-                if (state.getValue(LEVEL) < 3)
-                {
-                    world.setBlock(pos, state.cycle(LEVEL), 2);
-                }
+    public void handleRain(World worldIn, BlockPos pos) {
+        float f = worldIn.getBiome(pos).getTemperature(pos);
+        if (!(f < 0.15F)) {
+            BlockState blockstate = worldIn.getBlockState(pos);
+            if (blockstate.getValue(LEVEL) < 3) {
+                worldIn.setBlock(pos, blockstate.cycle(LEVEL), 2);
             }
+
         }
     }
 

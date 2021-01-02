@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:potion",
+	"nbt": {
+		"Potion": "minecraft:water"
+	  }
+  },
+  "result": "toughasnails:purified_water_bottle",
+  "experience": 0.35,
+  "cookingtime": 200
+}
