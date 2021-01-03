@@ -19,6 +19,7 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
+import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
 
@@ -72,6 +73,9 @@ public class ThirstOverlayHandler
 
     private void drawThirst(MatrixStack matrixStack, int width, int height, int thirstLevel, float thirstHydrationLevel)
     {
+        Minecraft minecraft = Minecraft.getInstance();
+        PlayerEntity player = minecraft.player;
+
         int left = width / 2 + 91;
         int top = height - ForgeIngameGui.right_height;
 
@@ -85,7 +89,7 @@ public class ThirstOverlayHandler
 
             int backgroundU = 0;
 
-            if (false)//minecraft.player.isPotionActive(TANPotions.thirst))
+            if (player.hasEffect(TANEffects.thirst))
             {
                 iconIndex += 4;
                 backgroundU += 117;
