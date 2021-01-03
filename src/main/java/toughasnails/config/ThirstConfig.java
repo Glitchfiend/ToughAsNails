@@ -12,6 +12,7 @@ import com.electronwill.nightconfig.core.InMemoryFormat;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -29,6 +30,8 @@ public class ThirstConfig
     public static final ForgeConfigSpec SPEC;
 
     private static ForgeConfigSpec.ConfigValue<List<Config>> drinkEntries;
+
+    public static ForgeConfigSpec.DoubleValue thirstExhaustionThreshold;
 
     private static List<Config> defaultDrinks = Lists.newArrayList(
         new DrinkEntry(new ResourceLocation("minecraft:potion"), 4, 0.1F, 0.25F),
@@ -60,8 +63,8 @@ public class ThirstConfig
 
             // Validate values
             int thirst = config.getInt("thirst");
-            double hydration = config.get("hydration");
-            double poisonChance = config.get("poison_chance");
+            float hydration = config.<Number>get("hydration").floatValue();
+            float poisonChance = config.<Number>get("poison_chance").floatValue();
 
             if (thirst < 0 || thirst > 20) return false;
             if (hydration < 0.0D) return false;
@@ -73,6 +76,10 @@ public class ThirstConfig
 
     static
     {
+        BUILDER.push("general");
+        thirstExhaustionThreshold = BUILDER.comment("The threshold at which exhaustion causes a reduction in hydration and the thirst bar.").defineInRange("exhaustion_threshold", 8.0D, 0.0D, Double.MAX_VALUE);
+        BUILDER.pop();
+
         BUILDER.push("drink_options");
         drinkEntries = BUILDER.comment("Effects of drinks from Vanilla, Tough As Nails and other mods.").define("drink_entries", defaultDrinks, DRINK_VALIDATOR);
         BUILDER.pop();
@@ -112,10 +119,10 @@ public class ThirstConfig
             if (!ForgeRegistries.ITEMS.containsKey(location))
                 continue;
 
-            double hydration = config.get("hydration");
-            double poisonChance = config.get("poison_chance");
+            float hydration = config.<Number>get("hydration").floatValue();
+            float poisonChance = config.<Number>get("poison_chance").floatValue();
 
-            tmp.put(location, new DrinkEntry(location, config.getInt("thirst"), (float)hydration, (float)poisonChance));
+            tmp.put(location, new DrinkEntry(location, config.getInt("thirst"), hydration, poisonChance));
         }
 
         drinkEntryCache = ImmutableMap.copyOf(tmp);

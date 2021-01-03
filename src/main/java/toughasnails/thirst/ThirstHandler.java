@@ -34,8 +34,6 @@ import toughasnails.util.capability.SimpleCapabilityProvider;
 
 public class ThirstHandler
 {
-    private static final float THIRST_EXHAUSTION_THRESHOLD = 8.0F;
-
     private int lastSentThirst = -99999999;
     private boolean lastThirstHydrationZero = true;
 
@@ -66,10 +64,11 @@ public class ThirstHandler
         ServerPlayerEntity player = (ServerPlayerEntity)event.player;
         IThirst thirst = ThirstHelper.getThirst(player);
         Difficulty difficulty = player.level.getDifficulty();
+        double exhaustionThreshold = ThirstConfig.thirstExhaustionThreshold.get();
 
-        if (thirst.getExhaustion() > THIRST_EXHAUSTION_THRESHOLD)
+        if (thirst.getExhaustion() > exhaustionThreshold)
         {
-            thirst.addExhaustion(-THIRST_EXHAUSTION_THRESHOLD);
+            thirst.addExhaustion((float)-exhaustionThreshold);
 
             if (thirst.getHydration() > 0.0F)
             {
