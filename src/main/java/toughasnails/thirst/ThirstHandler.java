@@ -15,6 +15,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameRules;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -100,6 +101,15 @@ public class ThirstHandler
         else
         {
             thirst.setTickTimer(0);
+        }
+
+        // Increment thirst if on peaceful mode
+        if (difficulty == Difficulty.PEACEFUL && player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION))
+        {
+            if (thirst.isThirsty() && player.tickCount % 10 == 0)
+            {
+                thirst.setThirst(thirst.getThirst() + 1);
+            }
         }
 
         if (this.lastSentThirst != thirst.getThirst() || thirst.getHydration() == 0.0F != this.lastThirstHydrationZero)
