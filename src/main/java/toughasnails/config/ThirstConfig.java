@@ -34,12 +34,12 @@ public class ThirstConfig
     public static ForgeConfigSpec.DoubleValue thirstExhaustionThreshold;
 
     private static List<Config> defaultDrinks = Lists.newArrayList(
-        new DrinkEntry(new ResourceLocation("minecraft:potion"), 4, 0.1F, 0.25F),
-        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_bottle"), 3, 0.25F, 0.75F),
-        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_canteen"), 2, 0.25F, 0.75F),
-        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_bottle"), 6, 0.5F, 0.0F),
-        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_canteen"), 5, 0.5F, 0.0F),
-        new DrinkEntry(new ResourceLocation("toughasnails:water_canteen"), 3, 0.1F, 0.25F))
+        new DrinkEntry(new ResourceLocation("minecraft:potion"), 2, 0.2F, 0.25F),
+        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_bottle"), 1, 0.1F, 0.75F),
+        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_canteen"), 1, 0.1F, 0.75F),
+        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_bottle"), 3, 0.4F, 0.0F),
+        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_canteen"), 3, 0.4F, 0.0F),
+        new DrinkEntry(new ResourceLocation("toughasnails:water_canteen"), 2, 0.2F, 0.25F))
         .stream().map(ThirstConfig::drinkToConfig).collect(Collectors.toList());
 
     private static final Predicate<Object> DRINK_VALIDATOR = (obj) ->

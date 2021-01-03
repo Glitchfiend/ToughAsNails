@@ -135,7 +135,7 @@ public class ThirstHandler
             thirst.addThirst(entry.getThirst());
             thirst.addHydration(entry.getHydration());
 
-            if (player.level.random.nextFloat() > entry.getPoisonChance())
+            if (player.level.random.nextFloat() < entry.getPoisonChance())
             {
                 player.addEffect(new EffectInstance(TANEffects.thirst, 600));
             }
