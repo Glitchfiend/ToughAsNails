@@ -112,7 +112,7 @@ public class ThirstConfig
             if (!ForgeRegistries.ITEMS.containsKey(location))
                 continue;
 
-            tmp.put(location, new DrinkEntry(location, config.getInt("thirst"), (float)(double)config.get("hydration"), (float)(double)config.get("poison_chance")));
+            tmp.put(location, new DrinkEntry(location, config.getInt("thirst"), (float)((double)config.get("hydration")), (float)((double)config.get("poison_chance"))));
         }
 
         drinkEntryCache = ImmutableMap.copyOf(tmp);
