@@ -10,17 +10,22 @@ package toughasnails.thirst;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
+import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.config.ThirstConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
@@ -102,6 +107,29 @@ public class ThirstHandler
             syncThirst(player);
             this.lastSentThirst = thirst.getThirst();
             this.lastThirstHydrationZero = thirst.getHydration() == 0.0F;
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
+    {
+        if (!(event.getEntityLiving() instanceof PlayerEntity))
+            return;
+
+        PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+        Item item = event.getItem().getItem();
+        IThirst thirst = ThirstHelper.getThirst(player);
+        ThirstConfig.DrinkEntry entry = ThirstConfig.getDrinkEntry(item.getRegistryName());
+
+        if (entry != null)
+        {
+            thirst.addThirst(entry.getThirst());
+            thirst.addHydration(entry.getHydration());
+
+            if (player.level.random.nextFloat() > entry.getPoisonChance())
+            {
+                player.addEffect(new EffectInstance(TANEffects.thirst, 600));
+            }
         }
     }
 

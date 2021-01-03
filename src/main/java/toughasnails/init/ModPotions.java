@@ -7,17 +7,15 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import toughasnails.core.ToughAsNails;
 import toughasnails.potion.ThirstEffect;
 
-import static toughasnails.api.potion.TANEffects.*;
+import static toughasnails.api.potion.TANEffects.thirst;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModPotions

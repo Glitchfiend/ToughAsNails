@@ -86,6 +86,4 @@ public abstract class DrinkItem extends Item
     }
 
     public abstract boolean canAlwaysDrink();
-    public abstract int getReplenishedThirst();
-    public abstract float getReplenishedHydration();
 }

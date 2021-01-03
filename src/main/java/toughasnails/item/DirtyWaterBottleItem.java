@@ -19,16 +19,4 @@ public class DirtyWaterBottleItem extends DrinkItem
     {
         return false;
     }
-
-    @Override
-    public int getReplenishedThirst()
-    {
-        return 3;
-    }
-
-    @Override
-    public float getReplenishedHydration()
-    {
-        return 0.25F;
-    }
 }
