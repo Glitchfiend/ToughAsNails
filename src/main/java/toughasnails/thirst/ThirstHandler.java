@@ -34,7 +34,7 @@ import toughasnails.util.capability.SimpleCapabilityProvider;
 
 public class ThirstHandler
 {
-    private static final float THIRST_EXHAUSTION_THRESHOLD = 4.0F;
+    private static final float THIRST_EXHAUSTION_THRESHOLD = 8.0F;
 
     private int lastSentThirst = -99999999;
     private boolean lastThirstHydrationZero = true;

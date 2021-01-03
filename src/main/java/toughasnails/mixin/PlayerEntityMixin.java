@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.thirst.ThirstHelper;
 
 @Mixin(PlayerEntity.class)
-public abstract class MixinPlayerEntity
+public abstract class PlayerEntityMixin
 {
     @Inject(method = "causeFoodExhaustion", at = @At("HEAD"))
     protected void onCauseFoodExhaustion(float exhaustion, CallbackInfo ci)

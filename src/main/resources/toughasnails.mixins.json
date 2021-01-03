@@ -4,9 +4,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "MixinPlayerEntity"
+    "PlayerEntityMixin"
   ],
   "client": [
+    "client.ClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
