@@ -15,11 +15,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 
 public abstract class DrinkItem extends Item
@@ -41,12 +43,6 @@ public abstract class DrinkItem extends Item
         if (player instanceof ServerPlayerEntity)
         {
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)player, stack);
-        }
-
-        if (!worldIn.isClientSide)
-        {
-            ThirstHelper.getThirst(player).addThirst(this.getReplenishedThirst());
-            ThirstHelper.getThirst(player).addHydration(this.getReplenishedHydration());
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));

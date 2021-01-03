@@ -7,6 +7,7 @@
  ******************************************************************************/
 package toughasnails.core;
 
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -53,5 +54,6 @@ public class ToughAsNails
     private void loadComplete(final FMLLoadCompleteEvent event)
     {
         proxy.init();
+        ToughAsNails.logger.info(Registry.MOB_EFFECT.keySet());
     }
 }
