@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
+    "FoodStatsMixin",
     "PlayerEntityMixin"
   ],
   "client": [
