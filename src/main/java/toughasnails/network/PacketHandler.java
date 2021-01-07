@@ -32,6 +32,7 @@ public class PacketHandler
     public static void init()
     {
         registerMessage(MessageUpdateThirst.class, MessageUpdateThirst::encode, MessageUpdateThirst::decode, MessageUpdateThirst.Handler::handle);
+        registerMessage(MessageDrinkInWorld.class, MessageDrinkInWorld::encode, MessageDrinkInWorld::decode, MessageDrinkInWorld.Handler::handle);
     }
 
     private static <T> void registerMessage(Class<T> type, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer)

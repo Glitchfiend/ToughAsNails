@@ -32,6 +32,9 @@ public class ThirstConfig
     private static ForgeConfigSpec.ConfigValue<List<Config>> drinkEntries;
 
     public static ForgeConfigSpec.DoubleValue thirstExhaustionThreshold;
+    public static ForgeConfigSpec.IntValue handDrinkingThirst;
+    public static ForgeConfigSpec.DoubleValue handDrinkingHydration;
+    public static ForgeConfigSpec.DoubleValue handDrinkingPoisonChance;
 
     private static List<Config> defaultDrinks = Lists.newArrayList(
         new DrinkEntry(new ResourceLocation("minecraft:potion"), 2, 0.2F, 0.25F),
@@ -81,6 +84,9 @@ public class ThirstConfig
         BUILDER.pop();
 
         BUILDER.push("drink_options");
+        handDrinkingThirst = BUILDER.comment("Thirst restored from drinking with hands.").defineInRange("hand_drinking_thirst", 1, 0, 20);
+        handDrinkingHydration = BUILDER.comment("Hydration restored from drinking with hands.").defineInRange("hand_drinking_hydration", 0.1D, 0.0D, Double.MAX_VALUE);
+        handDrinkingPoisonChance = BUILDER.comment("Chance of poisoning when drinking with hands.").defineInRange("hand_drinking_poison_chance", 0.75D, 0.0D, 1.0D);
         drinkEntries = BUILDER.comment("Effects of drinks from Vanilla, Tough As Nails and other mods.").define("drink_entries", defaultDrinks, DRINK_VALIDATOR);
         BUILDER.pop();
 

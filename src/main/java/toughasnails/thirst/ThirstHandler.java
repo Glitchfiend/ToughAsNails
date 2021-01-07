@@ -12,14 +12,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
@@ -28,6 +37,7 @@ import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ThirstConfig;
 import toughasnails.core.ToughAsNails;
+import toughasnails.network.MessageDrinkInWorld;
 import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
 import toughasnails.util.capability.SimpleCapabilityProvider;
@@ -119,6 +129,12 @@ public class ThirstHandler
         }
     }
 
+    private static void syncThirst(ServerPlayerEntity player)
+    {
+        IThirst thirst = ThirstHelper.getThirst(player);
+        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()));
+    }
+
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
@@ -142,9 +158,40 @@ public class ThirstHandler
         }
     }
 
-    private static void syncThirst(ServerPlayerEntity player)
+    @SubscribeEvent
+    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
     {
-        IThirst thirst = ThirstHelper.getThirst(player);
-        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()));
+        if (canDrinkInWorld(event.getPlayer(), event.getHand()))
+            tryDrinkWaterInWorld(event.getPlayer());
+    }
+
+    @SubscribeEvent
+    public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event)
+    {
+        if (canDrinkInWorld(event.getPlayer(), event.getHand()))
+            tryDrinkWaterInWorld(event.getPlayer());
+    }
+
+    private static boolean canDrinkInWorld(PlayerEntity player, Hand hand)
+    {
+        return Hand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide();
+    }
+
+    private static void tryDrinkWaterInWorld(PlayerEntity player)
+    {
+        World world = player.level;
+        BlockRayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(player.level, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+
+        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+        {
+            BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
+
+            if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
+            {
+                PacketHandler.HANDLER.send(PacketDistributor.SERVER.noArg(), new MessageDrinkInWorld(pos));
+                player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);
+                player.swing(Hand.MAIN_HAND);
+            }
+        }
     }
 }

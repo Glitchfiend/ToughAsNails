@@ -49,7 +49,7 @@ public class ThirstData implements IThirst
     @Override
     public void addThirst(int thirst)
     {
-        this.thirstLevel += thirst;
+        this.thirstLevel = Math.min(this.thirstLevel + thirst, 20);
     }
 
     @Override
