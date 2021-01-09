@@ -22,6 +22,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.config.ServerConfig;
 
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class ThirstOverlayHandler
     {
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (event.phase == TickEvent.Phase.END && !minecraft.isPaused())
+        if (ServerConfig.enableThirst.get() && event.phase == TickEvent.Phase.END && !minecraft.isPaused())
         {
             updateCounter++;
         }
@@ -47,6 +48,10 @@ public class ThirstOverlayHandler
     @SubscribeEvent
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
+        // Do nothing if thirst is disabled
+        if (!ServerConfig.enableThirst.get())
+            return;
+
         if (event.getType() == RenderGameOverlayEvent.ElementType.AIR)
         {
             Minecraft minecraft = Minecraft.getInstance();

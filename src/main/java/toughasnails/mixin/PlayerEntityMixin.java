@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.config.ServerConfig;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin
@@ -20,6 +21,9 @@ public abstract class PlayerEntityMixin
     @Inject(method = "causeFoodExhaustion", at = @At("HEAD"))
     protected void onCauseFoodExhaustion(float exhaustion, CallbackInfo ci)
     {
-        ThirstHelper.getThirst((PlayerEntity)(Object)this).addExhaustion(exhaustion);
+        if (ServerConfig.enableThirst.get())
+        {
+            ThirstHelper.getThirst((PlayerEntity) (Object) this).addExhaustion(exhaustion);
+        }
     }
 }

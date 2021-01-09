@@ -11,8 +11,11 @@ import toughasnails.api.thirst.IThirst;
 
 public class ThirstData implements IThirst
 {
-    private int thirstLevel = 20;
-    private float hydrationLevel = 5.0F;
+    public static final int DEFAULT_THIRST = 20;
+    public static final float DEFAULT_HYDRATION = 5.0F;
+
+    private int thirstLevel = DEFAULT_THIRST;
+    private float hydrationLevel = DEFAULT_HYDRATION;
     private float exhaustionLevel;
     private int tickTimer;
 

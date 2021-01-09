@@ -35,6 +35,7 @@ import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.config.ServerConfig;
 import toughasnails.config.ThirstConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.network.MessageDrinkInWorld;
@@ -50,6 +51,8 @@ public class ThirstHandler
     @SubscribeEvent
     public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
     {
+        // NOTE: We always attach the thirst capability, regardless of the thirst enabled config option.
+        // This is mainly to ensure a consistent working environment
         if (event.getObject() instanceof PlayerEntity)
         {
             event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "thirst"), new SimpleCapabilityProvider<IThirst>(TANCapabilities.THIRST, new ThirstData()));
@@ -68,7 +71,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-        if (event.player.level.isClientSide())
+        if (!ServerConfig.enableThirst.get() || event.player.level.isClientSide())
             return;
 
         ServerPlayerEntity player = (ServerPlayerEntity)event.player;
@@ -138,7 +141,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!(event.getEntityLiving() instanceof PlayerEntity))
+        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof PlayerEntity))
             return;
 
         PlayerEntity player = (PlayerEntity)event.getEntityLiving();
@@ -161,14 +164,14 @@ public class ThirstHandler
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
     {
-        if (canDrinkInWorld(event.getPlayer(), event.getHand()))
+        if (ServerConfig.enableThirst.get() && canDrinkInWorld(event.getPlayer(), event.getHand()))
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
     @SubscribeEvent
     public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event)
     {
-        if (canDrinkInWorld(event.getPlayer(), event.getHand()))
+        if (ServerConfig.enableThirst.get() && canDrinkInWorld(event.getPlayer(), event.getHand()))
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
@@ -186,7 +189,7 @@ public class ThirstHandler
         {
             BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
 
-            if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
+            if (ThirstHelper.canDrink(player, false) && world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 PacketHandler.HANDLER.send(PacketDistributor.SERVER.noArg(), new MessageDrinkInWorld(pos));
                 player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);

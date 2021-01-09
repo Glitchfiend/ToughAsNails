@@ -10,6 +10,8 @@ package toughasnails.api.thirst;
 import net.minecraft.entity.player.PlayerEntity;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.capability.TANCapabilities;
+import toughasnails.config.ServerConfig;
+import toughasnails.config.ThirstConfig;
 
 public class ThirstHelper
 {
@@ -32,6 +34,6 @@ public class ThirstHelper
     public static boolean canDrink(PlayerEntity player, boolean ignoreThirst)
     {
         IThirst thirst = getThirst(player);
-        return player.abilities.invulnerable || ignoreThirst || thirst.isThirsty();
+        return (player.abilities.invulnerable || ignoreThirst || thirst.isThirsty()) && ServerConfig.enableThirst.get();
     }
 }
