@@ -77,14 +77,19 @@ public class TemperatureHandler extends StatHandlerBase implements ITemperature
 
             Iterator<Map.Entry<String, ExternalModifier>> it = externalModifiers.entrySet().iterator();
 
+            List<String> toRemove=new ArrayList<String>();
+
             while (it.hasNext())
             {
                 Map.Entry<String, ExternalModifier> entry = it.next();
 
                 if (entry.getValue().getEndTime() < this.temperatureTimer)
                 {
-                    this.externalModifiers.remove(entry.getKey());
+                    toRemove.add(entry.getKey());
                 }
+            }
+            for(String removeEntry: toRemove) {
+                this.externalModifiers.remove(removeEntry);
             }
 
             if (incrementTemperature)
