@@ -37,6 +37,6 @@ public class ModConfig
         }
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ThirstConfig.SPEC, "toughasnails/thirst.toml");
-        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ServerConfig.SPEC, "toughasnails_server.toml");
+        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ServerConfig.SPEC, "toughasnails-server.toml");
     }
 }

@@ -168,6 +168,9 @@ public class ThirstHandler
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
+    private static final int IN_WORLD_DRINK_COOLDOWN = 3 * 20;
+    private static int inWorldDrinkTimer = 0;
+
     @SubscribeEvent
     public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event)
     {
@@ -175,9 +178,16 @@ public class ThirstHandler
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (inWorldDrinkTimer > 0)
+            inWorldDrinkTimer--;
+    }
+
     private static boolean canDrinkInWorld(PlayerEntity player, Hand hand)
     {
-        return Hand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide();
+        return Hand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide() && inWorldDrinkTimer <= 0;
     }
 
     private static void tryDrinkWaterInWorld(PlayerEntity player)
@@ -191,6 +201,7 @@ public class ThirstHandler
 
             if (ThirstHelper.canDrink(player, false) && world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
+                inWorldDrinkTimer = IN_WORLD_DRINK_COOLDOWN;
                 PacketHandler.HANDLER.send(PacketDistributor.SERVER.noArg(), new MessageDrinkInWorld(pos));
                 player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);
                 player.swing(Hand.MAIN_HAND);
