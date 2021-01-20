@@ -15,6 +15,8 @@ import toughasnails.config.ThirstConfig;
 
 public class ThirstHelper
 {
+    private static IThirst lastThirst;
+
     /**
      * Obtains the thirst data for a player.
      * @param player the player to obtain thirst data for
@@ -22,7 +24,9 @@ public class ThirstHelper
      */
     public static IThirst getThirst(PlayerEntity player)
     {
-        return player.getCapability(TANCapabilities.THIRST).orElseThrow(NullPointerException::new);
+        IThirst thirst = player.getCapability(TANCapabilities.THIRST).orElse(lastThirst);
+        lastThirst = thirst;
+        return thirst;
     }
 
     /**
