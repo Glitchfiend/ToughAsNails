@@ -13,8 +13,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.fml.network.NetworkEvent;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.IThirst;
@@ -58,7 +61,9 @@ public class MessageDrinkInWorld
                     thirst.addThirst(ThirstConfig.handDrinkingThirst.get());
                     thirst.addHydration(ThirstConfig.handDrinkingHydration.get().floatValue());
 
-                    if (player.level.random.nextFloat() < ThirstConfig.handDrinkingPoisonChance.get().floatValue())
+                    RegistryKey<Biome> biome = player.level.getBiomeName(packet.pos).orElse(Biomes.PLAINS);
+
+                    if (player.level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {
                         player.addEffect(new EffectInstance(TANEffects.thirst, 600));
                     }

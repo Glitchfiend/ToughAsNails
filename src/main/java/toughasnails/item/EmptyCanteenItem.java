@@ -20,7 +20,10 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import toughasnails.api.item.TANItems;
+import toughasnails.config.ThirstConfig;
 
 public class EmptyCanteenItem extends Item
 {
@@ -42,7 +45,27 @@ public class EmptyCanteenItem extends Item
             if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                return ActionResult.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(TANItems.water_canteen)), world.isClientSide());
+
+                RegistryKey<Biome> biome = player.level.getBiomeName(player.blockPosition()).orElse(Biomes.PLAINS);
+                Item canteenItem;
+
+                switch (ThirstConfig.getBiomeWaterType(biome))
+                {
+                    case PURIFIED:
+                        canteenItem = TANItems.purified_water_canteen;
+                        break;
+
+                    case DIRTY:
+                        canteenItem = TANItems.dirty_water_canteen;
+                        break;
+
+                    case NORMAL:
+                    default:
+                        canteenItem = TANItems.water_canteen;
+                        break;
+                }
+
+                return ActionResult.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());
             }
         }
 
