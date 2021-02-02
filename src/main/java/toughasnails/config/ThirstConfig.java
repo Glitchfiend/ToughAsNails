@@ -49,7 +49,36 @@ public class ThirstConfig
 
     private static List<Config> defaultWaterInfos = Lists.newArrayList(
         new BiomeWaterInfo(new ResourceLocation("minecraft:swamp"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:alps"), WaterType.PURIFIED)
+        new BiomeWaterInfo(new ResourceLocation("minecraft:swamp_hills"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("minecraft:mushroom_fields"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("minecraft:mushroom_field_shore"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:bayou"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:bayou_mangrove"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:dead_swamp"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:deep_bayou"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:fungal_field"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:fungal_jungle"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:highland_moor"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:jade_cliffs"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:jade_grassland"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:ominous_mire"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:ominous_woods"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:overgrown_fungal_jungle"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest_cliffs"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest_floodplain"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:silkglade"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:silkglade_nest"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:tundra_bog"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:volcanic_plains"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:volcano"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wasteland"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wetland"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wetland_marsh"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wooded_wasteland"), WaterType.DIRTY),
+
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:alps"), WaterType.PURIFIED),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainbow_hills"), WaterType.PURIFIED)
     ).stream().map(ThirstConfig::waterInfoToConfig).collect(Collectors.toList());
 
     private static final Predicate<Object> DRINK_VALIDATOR = (obj) ->
