@@ -7,9 +7,7 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -50,8 +48,6 @@ import toughasnails.network.MessageDrinkInWorld;
 import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
 import toughasnails.util.capability.SimpleCapabilityProvider;
-
-import java.util.List;
 
 public class ThirstHandler
 {
@@ -167,7 +163,7 @@ public class ThirstHandler
 
             if (player.level.random.nextFloat() < entry.getPoisonChance())
             {
-                player.addEffect(new EffectInstance(TANEffects.thirst, 600));
+                player.addEffect(new EffectInstance(TANEffects.THIRST, 600));
             }
         }
     }
@@ -207,11 +203,11 @@ public class ThirstHandler
         switch (ThirstConfig.getBiomeWaterType(biome))
         {
             case PURIFIED:
-                filledStack = new ItemStack(TANItems.purified_water_bottle);
+                filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
                 break;
 
             case DIRTY:
-                filledStack = new ItemStack(TANItems.dirty_water_bottle);
+                filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE);
                 break;
 
             case NORMAL:

@@ -16,6 +16,6 @@ public class ClientProxy extends CommonProxy
     {
         BlockColors blockColors = Minecraft.getInstance().getBlockColors();
 
-        blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.rain_collector);
+        blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
     }
 }

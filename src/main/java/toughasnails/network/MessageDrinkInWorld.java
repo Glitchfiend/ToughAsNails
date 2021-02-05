@@ -7,8 +7,6 @@
  ******************************************************************************/
 package toughasnails.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.EffectInstance;
@@ -65,7 +63,7 @@ public class MessageDrinkInWorld
 
                     if (player.level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {
-                        player.addEffect(new EffectInstance(TANEffects.thirst, 600));
+                        player.addEffect(new EffectInstance(TANEffects.THIRST, 600));
                     }
                 }
             });

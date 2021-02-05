@@ -94,7 +94,7 @@ public class ThirstOverlayHandler
 
             int backgroundU = 0;
 
-            if (player.hasEffect(TANEffects.thirst))
+            if (player.hasEffect(TANEffects.THIRST))
             {
                 iconIndex += 4;
                 backgroundU += 117;

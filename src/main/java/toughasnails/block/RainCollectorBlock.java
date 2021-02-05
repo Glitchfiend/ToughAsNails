@@ -26,11 +26,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.server.ServerWorld;
 import toughasnails.api.item.TANItems;
-
-import java.util.Random;
 
 public class RainCollectorBlock extends Block
 {
@@ -56,7 +52,7 @@ public class RainCollectorBlock extends Block
         {
             if (!player.abilities.instabuild)
             {
-                ItemStack newStack = new ItemStack(TANItems.purified_water_bottle);
+                ItemStack newStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
                 player.awardStat(Stats.USE_CAULDRON);
                 stack.shrink(1);
 

@@ -23,6 +23,6 @@ public class ItemGroupTAN extends ItemGroup
     @Override
     public ItemStack makeIcon()
     {
-        return new ItemStack(TANItems.tan_icon);
+        return new ItemStack(TANItems.TAN_ICON);
     }
 }

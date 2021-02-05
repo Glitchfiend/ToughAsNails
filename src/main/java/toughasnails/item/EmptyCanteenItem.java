@@ -7,11 +7,9 @@
  ******************************************************************************/
 package toughasnails.item;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
@@ -52,16 +50,16 @@ public class EmptyCanteenItem extends Item
                 switch (ThirstConfig.getBiomeWaterType(biome))
                 {
                     case PURIFIED:
-                        canteenItem = TANItems.purified_water_canteen;
+                        canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
                         break;
 
                     case DIRTY:
-                        canteenItem = TANItems.dirty_water_canteen;
+                        canteenItem = TANItems.DIRTY_WATER_CANTEEN;
                         break;
 
                     case NORMAL:
                     default:
-                        canteenItem = TANItems.water_canteen;
+                        canteenItem = TANItems.WATER_CANTEEN;
                         break;
                 }
 
