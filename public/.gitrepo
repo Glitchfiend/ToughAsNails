@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/Glitchfiend/ToughAsNails.git
+	branch = TAN-public
+	commit = 7283c224136b808996c883944bece7db4830ad28
+	parent = 5af6fc3f121a973ecad12c889c6273f0c580e1f0
+	method = merge
+	cmdver = 0.4.3
