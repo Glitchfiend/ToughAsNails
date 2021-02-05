@@ -6,4 +6,10 @@ This repository contains the mod's API and language files. Issues can also be re
 
 -----------------
 
+## Source access
+
+If you are a reputable modder, or we know you well, please reach out to us on Discord if you require source access.
+
+## License
+
 Tough As Nails is All Rights Reserved.
