@@ -233,7 +233,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
     {
-        if (ServerConfig.enableThirst.get() && canDrinkInWorld(event.getPlayer(), event.getHand()))
+        if (canHandDrink() && canHandDrinkInWorld(event.getPlayer(), event.getHand()))
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
@@ -243,7 +243,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event)
     {
-        if (ServerConfig.enableThirst.get() && canDrinkInWorld(event.getPlayer(), event.getHand()))
+        if (canHandDrink() && canHandDrinkInWorld(event.getPlayer(), event.getHand()))
             tryDrinkWaterInWorld(event.getPlayer());
     }
 
@@ -254,7 +254,12 @@ public class ThirstHandler
             inWorldDrinkTimer--;
     }
 
-    private static boolean canDrinkInWorld(PlayerEntity player, Hand hand)
+    private static boolean canHandDrink()
+    {
+        return ServerConfig.enableThirst.get() && ServerConfig.enableHandDrinking.get();
+    }
+
+    private static boolean canHandDrinkInWorld(PlayerEntity player, Hand hand)
     {
         return Hand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide() && inWorldDrinkTimer <= 0;
     }
