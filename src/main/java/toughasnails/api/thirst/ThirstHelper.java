@@ -1,7 +1,6 @@
 /*******************************************************************************
  * Copyright 2021, the Glitchfiend Team.
- *
- * All Rights Reserved.
+ * All rights reserved.
  ******************************************************************************/
 package toughasnails.api.thirst;
 
@@ -16,7 +15,7 @@ public class ThirstHelper
      */
     public static IThirst getThirst(PlayerEntity player)
     {
-        return IThirstHelper.impl.getThirst();
+        return Impl.INSTANCE.getThirst(player);
     }
 
     /**
@@ -27,15 +26,28 @@ public class ThirstHelper
      */
     public static boolean canDrink(PlayerEntity player, boolean ignoreThirst)
     {
-        return IThirstHelper.impl.canDrink(player, ignoreThirst);
+        return Impl.INSTANCE.canDrink(player, ignoreThirst);
     }
 
-    // Internal implementation details
-    public interface IThirstHelper
+    /**
+     * Checks whether thirst is enabled.
+     * @return whether thirst is enabled.
+     */
+    public static boolean isThirstEnabled()
     {
-        IThirstHelper impl = null;
+        return Impl.INSTANCE.isThirstEnabled();
+    }
 
-        IThirst getThirst();
-        boolean canDrink(PlayerEntity player, boolean ignoreThirst);
+    /** Internal implementation details */
+    public static class Impl
+    {
+        public static IThirstHelper INSTANCE = null;
+
+        public interface IThirstHelper
+        {
+            IThirst getThirst(PlayerEntity player);
+            boolean canDrink(PlayerEntity player, boolean ignoreThirst);
+            boolean isThirstEnabled();
+        }
     }
 }

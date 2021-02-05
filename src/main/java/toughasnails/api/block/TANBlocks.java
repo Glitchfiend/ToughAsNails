@@ -1,7 +1,6 @@
 /*******************************************************************************
  * Copyright 2021, the Glitchfiend Team.
- *
- * All Rights Reserved.
+ * All rights reserved.
  ******************************************************************************/
 package toughasnails.api.block;
 
@@ -11,5 +10,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder("toughasnails")
 public class TANBlocks
 {
-    public static final Block rain_collector = null;
+    public static final Block RAIN_COLLECTOR = null;
 }

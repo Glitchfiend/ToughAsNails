@@ -1,7 +1,6 @@
 /*******************************************************************************
  * Copyright 2021, the Glitchfiend Team.
- *
- * All Rights Reserved.
+ * All rights reserved.
  ******************************************************************************/
 package toughasnails.api.potion;
 
@@ -11,5 +10,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder("toughasnails")
 public class TANEffects
 {
-    public static final Effect thirst = null;
+    public static final Effect THIRST = null;
 }

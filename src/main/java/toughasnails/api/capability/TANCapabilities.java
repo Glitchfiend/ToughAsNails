@@ -1,7 +1,6 @@
 /*******************************************************************************
  * Copyright 2021, the Glitchfiend Team.
- *
- * All Rights Reserved.
+ * All rights reserved.
  ******************************************************************************/
 package toughasnails.api.capability;
 
