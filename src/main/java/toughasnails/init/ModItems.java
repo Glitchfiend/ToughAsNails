@@ -18,27 +18,24 @@ import toughasnails.item.EmptyCanteenItem;
 import toughasnails.item.PurifiedWaterBottleItem;
 import toughasnails.util.inventory.ItemGroupTAN;
 
-import static toughasnails.api.item.TANItems.*;
-
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems
 {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        registerItem(new EmptyCanteenItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "empty_canteen");
-        registerItem(new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "dirty_water_canteen");
-        registerItem(new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "water_canteen");
-        registerItem(new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)), "purified_water_canteen");
-        registerItem(new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "dirty_water_bottle");
-        registerItem(new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)), "purified_water_bottle");
-        registerItem(new Item(new Item.Properties()), "tan_icon");
+        register("empty_canteen", new EmptyCanteenItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
+        register("dirty_water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)));
+        register("water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)));
+        register("purified_water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)));
+        register("dirty_water_bottle", new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
+        register("purified_water_bottle", new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
+        register("tan_icon", new Item(new Item.Properties()));
     }
 
-    public static Item registerItem(Item item, String name)
+    public static void register(String name, Item item)
     {
         item.setRegistryName(name);
         ForgeRegistries.ITEMS.register(item);
-        return item;
     }
 }

@@ -18,13 +18,12 @@ public class ModPotions
     @SubscribeEvent
     public static void registerEffects(RegistryEvent.Register<Effect> event)
     {
-        registerEffect(new ThirstEffect(EffectType.HARMFUL, 0x76DB4C), "thirst");
+        register("thirst", new ThirstEffect(EffectType.HARMFUL, 0x76DB4C));
     }
 
-    public static Effect registerEffect(Effect effect, String name)
+    public static void register(String name, Effect effect)
     {
         effect.setRegistryName(name);
         ForgeRegistries.POTIONS.register(effect);
-        return effect;
     }
 }
