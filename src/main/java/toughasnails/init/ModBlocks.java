@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import toughasnails.block.RainCollectorBlock;
+import toughasnails.block.WaterPurifierBlock;
 import toughasnails.util.inventory.ItemGroupTAN;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -23,17 +24,17 @@ public class ModBlocks
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event)
     {
-        registerBlock(new RainCollectorBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()), "rain_collector");
+        register("rain_collector", new RainCollectorBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
+        register("water_purifier", new WaterPurifierBlock(AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F)));
     }
 
-    public static Block registerBlock(Block block, String name)
+    public static void register(String name, Block block)
     {
         BlockItem itemBlock = new BlockItem(block, new Item.Properties().tab(ItemGroupTAN.INSTANCE));
         block.setRegistryName(name);
         itemBlock.setRegistryName(name);
         ForgeRegistries.BLOCKS.register(block);
         ForgeRegistries.ITEMS.register(itemBlock);
-        return block;
     }
 }
 
