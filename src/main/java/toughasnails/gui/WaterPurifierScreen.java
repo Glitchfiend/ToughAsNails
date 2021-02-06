@@ -27,30 +27,33 @@ public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
     public void init()
     {
         super.init();
-        this.leftPos = 0;
+        this.leftPos = (this.width - this.imageWidth) / 2;
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
+    @Override
     public void tick()
     {
         super.tick();
     }
 
-    public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_)
+    @Override
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks)
     {
-        this.renderBackground(p_230430_1_);
-        super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-        this.renderTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
+        this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(stack, mouseX, mouseY);
     }
 
-    protected void renderBg(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_)
+    @Override
+    protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
         int i = this.leftPos;
         int j = this.topPos;
-        this.blit(p_230450_1_, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
         int l = 0;
-        this.blit(p_230450_1_, i + 79, j + 34, 176, 14, l + 1, 16);
+        this.blit(stack, i + 79, j + 34, 176, 14, l + 1, 16);
     }
 }

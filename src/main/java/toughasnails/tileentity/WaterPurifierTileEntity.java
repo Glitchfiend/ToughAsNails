@@ -84,7 +84,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     @Override
     protected ITextComponent getDefaultName()
     {
-        return new TranslationTextComponent("container.sereneseasons.purifier");
+        return new TranslationTextComponent("container.toughasnails.water_purifier");
     }
 
     @Override
