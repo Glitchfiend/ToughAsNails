@@ -28,6 +28,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         super(world, profile);
     }
 
+    // Stop existing sprinting if there is insufficient thirst
     @Inject(method = "aiStep", at = @At("HEAD"))
     protected void onAiStep(CallbackInfo ci)
     {
@@ -61,6 +62,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     private boolean canSprintWithThirst(ClientPlayerEntity player)
     {
-        return ThirstHelper.getThirst(player).getThirst() > 6;
+        return ThirstHelper.getThirst(player).getThirst() > 6 || player.abilities.mayfly;
     }
 }
