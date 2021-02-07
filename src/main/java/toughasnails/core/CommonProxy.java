@@ -8,4 +8,6 @@ public class CommonProxy
     }
 
     public void init() {}
+
+    public void updateThirstClient(int thirst, float hydration) {}
 }

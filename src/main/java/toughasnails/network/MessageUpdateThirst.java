@@ -7,9 +7,12 @@ package toughasnails.network;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.core.ToughAsNails;
 
 import java.util.function.Supplier;
 
@@ -41,11 +44,7 @@ public class MessageUpdateThirst
         {
             context.get().enqueueWork(() ->
             {
-                PlayerEntity player = Minecraft.getInstance().player;
-                IThirst thirst = ThirstHelper.getThirst(player);
-
-                thirst.setThirst(packet.thirstLevel);
-                thirst.setHydration(packet.hydrationLevel);
+                ToughAsNails.proxy.updateThirstClient(packet.thirstLevel, packet.hydrationLevel);
             });
             context.get().setPacketHandled(true);
         }
