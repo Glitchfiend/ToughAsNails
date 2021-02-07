@@ -143,6 +143,7 @@ public class ThirstConfig
 
     static
     {
+        BUILDER.comment("Please be advised that certain thirst-related options are world-specific and are located in <Path to your world folder>/serverconfig/toughasnails-server.toml.");
         BUILDER.push("general");
         thirstExhaustionThreshold = BUILDER.comment("The threshold at which exhaustion causes a reduction in hydration and the thirst bar.").defineInRange("exhaustion_threshold", 8.0D, 0.0D, Double.MAX_VALUE);
         BUILDER.pop();
