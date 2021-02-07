@@ -13,11 +13,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.container.WaterPurifierContainer;
+import toughasnails.core.ToughAsNails;
 
 @OnlyIn(Dist.CLIENT)
 public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/furnace.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(ToughAsNails.MOD_ID, "textures/gui/container/water_purifier.png");
 
     public WaterPurifierScreen(WaterPurifierContainer screenContainer, PlayerInventory inv, ITextComponent titleIn)
     {
