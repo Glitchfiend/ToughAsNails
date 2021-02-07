@@ -58,4 +58,6 @@ public class WaterPurifierContainer extends Container
     {
         return this.container.stillValid(player);
     }
+
+    // TODO: Add quick-moving (shift-clicking)
 }

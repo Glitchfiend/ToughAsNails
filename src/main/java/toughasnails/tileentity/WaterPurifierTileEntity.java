@@ -12,6 +12,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
@@ -28,24 +29,60 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
 {
     private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
+    /** The time remaining from the previously used filter */
+    private int filterTimeRemaining;
+
+    /** The total duration associated with the previously used filter */
+    private int filterDuration;
+
+    /** The progress towards meeting the total purify time. */
+    private int purifyProgress;
+
+    /** The total time needed to complete purification. */
+    private int purifyTotalTime;
+
     protected final IIntArray dataAccess = new IIntArray()
     {
         @Override
         public int get(int index)
         {
-            return 0;
+            switch(index) {
+                case 0:
+                    return WaterPurifierTileEntity.this.filterTimeRemaining;
+                case 1:
+                    return WaterPurifierTileEntity.this.filterDuration;
+                case 2:
+                    return WaterPurifierTileEntity.this.purifyProgress;
+                case 3:
+                    return WaterPurifierTileEntity.this.purifyTotalTime;
+                default:
+                    return 0;
+            }
         }
 
         @Override
         public void set(int index, int value)
         {
+            switch(index) {
+                case 0:
+                    WaterPurifierTileEntity.this.filterTimeRemaining = value;
+                    break;
+                case 1:
+                    WaterPurifierTileEntity.this.filterDuration = value;
+                    break;
+                case 2:
+                    WaterPurifierTileEntity.this.purifyProgress = value;
+                    break;
+                case 3:
+                    WaterPurifierTileEntity.this.purifyTotalTime = value;
+            }
 
         }
 
         @Override
         public int getCount()
         {
-            return 0;
+            return 4;
         }
     };
 
