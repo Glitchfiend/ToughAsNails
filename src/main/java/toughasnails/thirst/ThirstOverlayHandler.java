@@ -22,6 +22,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.config.ClientConfig;
 import toughasnails.config.ServerConfig;
 
 import java.util.Random;
@@ -81,8 +82,8 @@ public class ThirstOverlayHandler
         Minecraft minecraft = Minecraft.getInstance();
         PlayerEntity player = minecraft.player;
 
-        int left = width / 2 + 91;
-        int top = height - ForgeIngameGui.right_height;
+        int left = width / 2 + 91 + ClientConfig.thirstLeftOffset.get();
+        int top = height - ForgeIngameGui.right_height + ClientConfig.thirstTopOffset.get();
 
         for (int i = 0; i < 10; i++)
         {
