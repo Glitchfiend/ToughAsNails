@@ -45,7 +45,7 @@ public class ThirstOverlayHandler
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(receiveCanceled = true)
     public void onPreRenderOverlay(RenderGameOverlayEvent.Pre event)
     {
         // Do nothing if thirst is disabled
