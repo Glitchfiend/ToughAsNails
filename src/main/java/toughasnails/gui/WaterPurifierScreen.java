@@ -60,7 +60,8 @@ public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
             int filterProgress = this.menu.getFilterProgress();
 
             // NOTE: This is moved over right by 1 compared to the furnace
-            this.blit(stack, leftPos + 56 + 1, topPos + 36 + 12 - filterProgress, 176, 12 - filterProgress, 14, filterProgress + 1);
+            // stack, x, y, u, v, width, height
+            this.blit(stack, leftPos + 56 + 1, topPos + 36 + 13 - filterProgress, 176, 13 - filterProgress, 14, filterProgress + 1);
         }
 
         int purifyProgress = this.menu.getPurifyProgress();
