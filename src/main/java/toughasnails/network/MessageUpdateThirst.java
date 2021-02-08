@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.network.NetworkEvent;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
@@ -44,9 +45,22 @@ public class MessageUpdateThirst
         {
             context.get().enqueueWork(() ->
             {
-                ToughAsNails.proxy.updateThirstClient(packet.thirstLevel, packet.hydrationLevel);
+                if (FMLEnvironment.dist != Dist.CLIENT)
+                    return;
+
+                updateThirst(packet.thirstLevel, packet.hydrationLevel);
             });
             context.get().setPacketHandled(true);
+        }
+
+        @OnlyIn(Dist.CLIENT)
+        private static void updateThirst(int thirstLevel, float hydration)
+        {
+            PlayerEntity player = Minecraft.getInstance().player;
+            IThirst thirst = ThirstHelper.getThirst(player);
+
+            thirst.setThirst(thirstLevel);
+            thirst.setHydration(hydration);
         }
     }
 }

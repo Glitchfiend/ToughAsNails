@@ -21,14 +21,4 @@ public class ClientProxy extends CommonProxy
 
         blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
     }
-
-    @Override
-    public void updateThirstClient(int thirstLevel, float hydration)
-    {
-        PlayerEntity player = Minecraft.getInstance().player;
-        IThirst thirst = ThirstHelper.getThirst(player);
-
-        thirst.setThirst(thirstLevel);
-        thirst.setHydration(hydration);
-    }
 }

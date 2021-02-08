@@ -115,7 +115,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     @Override
     protected Container createMenu(int id, PlayerInventory player)
     {
-        return new WaterPurifierContainer(id, player, this);
+        return new WaterPurifierContainer(id, player, this, this.dataAccess);
     }
 
     @Override

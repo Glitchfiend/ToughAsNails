@@ -51,10 +51,19 @@ public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
-        int i = this.leftPos;
-        int j = this.topPos;
-        this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-        int l = 0;
-        this.blit(stack, i + 79, j + 34, 176, 14, l + 1, 16);
+        int leftPos = this.leftPos;
+        int topPos = this.topPos;
+        this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+
+        if (this.menu.isFiltering())
+        {
+            int filterProgress = this.menu.getFilterProgress();
+
+            // NOTE: This is moved over right by 1 compared to the furnace
+            this.blit(stack, leftPos + 56 + 1, topPos + 36 + 12 - filterProgress, 176, 12 - filterProgress, 14, filterProgress + 1);
+        }
+
+        int purifyProgress = this.menu.getPurifyProgress();
+        this.blit(stack, leftPos + 79, topPos + 34, 176, 14, purifyProgress + 1, 16);
     }
 }
