@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,filtering=false": {
+      "model": "toughasnails:block/water_purifier",
+      "y": 90
+    },
+    "facing=east,filtering=true": {
+      "model": "toughasnails:block/water_purifier_filtering",
+      "y": 90
+    },
+    "facing=north,filtering=false": {
+      "model": "toughasnails:block/water_purifier"
+    },
+    "facing=north,filtering=true": {
+      "model": "toughasnails:block/water_purifier_filtering"
+    },
+    "facing=south,filtering=false": {
+      "model": "toughasnails:block/water_purifier",
+      "y": 180
+    },
+    "facing=south,filtering=true": {
+      "model": "toughasnails:block/water_purifier_filtering",
+      "y": 180
+    },
+    "facing=west,filtering=false": {
+      "model": "toughasnails:block/water_purifier",
+      "y": 270
+    },
+    "facing=west,filtering=true": {
+      "model": "toughasnails:block/water_purifier_filtering",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "toughasnails:block/water_purifier_top_filtering",
+    "front": "toughasnails:block/water_purifier_front_filtering",
+    "side": "toughasnails:block/water_purifier_side_filtering",
+	"bottom": "toughasnails:block/water_purifier_bottom_filtering"
+  }
+}
