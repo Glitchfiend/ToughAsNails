@@ -194,7 +194,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
             {
                 this.purifyProgress = MathHelper.clamp(this.purifyProgress - 2, 0, this.purifyTotalTime);
             }
-            
+
             if (previouslyFiltering != this.currentlyFiltering())
             {
                 changed = true;
