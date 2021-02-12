@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.block;
+package toughasnails.api.inventory.container;
 
-import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANBlocks
+public class TANContainerTypes
 {
-    public static final Block RAIN_COLLECTOR = null;
-    public static final Block WATER_PURIFIER = null;
+    public static final ContainerType<?> WATER_PURIFIER = null;
 }
