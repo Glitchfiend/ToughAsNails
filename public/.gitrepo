@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/Glitchfiend/ToughAsNails.git
 	branch = TAN-public
-	commit = 93368bd17c2e337fc9eae9da39bc1883dc407456
-	parent = 81562b39cadd5884dd2baa872147e14ed90b92d2
+	commit = f6ac1095d5e3bd375e7813b62b1de3bca7242f66
+	parent = aefc6cac92fae5458ad99a35bba1d694141ac693
 	method = merge
 	cmdver = 0.4.3
