@@ -17,10 +17,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import toughasnails.init.ModApi;
-import toughasnails.init.ModCapabilities;
-import toughasnails.init.ModConfig;
-import toughasnails.init.ModHandlers;
+import toughasnails.init.*;
 import toughasnails.network.PacketHandler;
 
 import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
@@ -56,11 +53,7 @@ public class ToughAsNails
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        RenderType transparentRenderType = RenderType.cutoutMipped();
-        RenderType cutoutRenderType = RenderType.cutout();
-        RenderType translucentRenderType = RenderType.translucent();
-
-        RenderTypeLookup.setRenderLayer(RAIN_COLLECTOR, cutoutRenderType);
+        ModContainerTypes.registerScreens();
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event)

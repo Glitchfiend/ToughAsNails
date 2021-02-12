@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.block;
+package toughasnails.api.crafting;
 
-import net.minecraft.block.Block;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANBlocks
+public class TANRecipeSerializers
 {
-    public static final Block RAIN_COLLECTOR = null;
-    public static final Block WATER_PURIFIER = null;
+    public static final IRecipeSerializer<?> WATER_PURIFYING = null;
 }

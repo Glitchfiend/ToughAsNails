@@ -2,19 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "toughasnails:purified_water_bottle"
+      "toughasnails:water_purifier"
     ]
   },
   "criteria": {
-    "has_water_bottle": {
+    "has_charcoal": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:potion",
-			"nbt": {
-				"Potion": "minecraft:water"
-			  }
+            "item": "minecraft:charcoal"
           }
         ]
       }
@@ -22,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "toughasnails:purified_water_bottle"
+        "recipe": "toughasnails:water_purifier"
       }
     }
   },
   "requirements": [
     [
-      "has_water_bottle",
+      "has_charcoal",
       "has_the_recipe"
     ]
   ]
