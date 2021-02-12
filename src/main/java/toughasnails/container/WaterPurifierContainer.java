@@ -41,7 +41,7 @@ public class WaterPurifierContainer extends Container
         this.addSlot(new Slot(container, 1, 56, 53));
 
         // Add output item slot
-        this.addSlot(new Slot(container, 2, 116, 35));
+        this.addSlot(new WaterPurifierResultSlot(container, 2, 116, 35));
 
         // Add inventory slots
         for (int row = 0; row < 3; ++row)
@@ -57,6 +57,9 @@ public class WaterPurifierContainer extends Container
         {
             this.addSlot(new Slot(playerInventory, slot, 8 + slot * 18, 142));
         }
+
+        // Add data slots
+        this.addDataSlots(data);
     }
 
     @Override
