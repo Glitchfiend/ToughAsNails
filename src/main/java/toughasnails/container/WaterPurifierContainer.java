@@ -9,19 +9,24 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.FurnaceFuelSlot;
-import net.minecraft.inventory.container.FurnaceResultSlot;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.inventory.container.TANContainerTypes;
+import toughasnails.crafting.WaterPurifierRecipe;
+import toughasnails.tileentity.WaterPurifierTileEntity;
 
 public class WaterPurifierContainer extends Container
 {
     private final IInventory container;
     private final IIntArray data;
+    private final World level;
 
     public WaterPurifierContainer(int id, PlayerInventory playerInventory)
     {
@@ -33,12 +38,13 @@ public class WaterPurifierContainer extends Container
         super(TANContainerTypes.WATER_PURIFIER, id);
         this.container = container;
         this.data = data;
+        this.level = playerInventory.player.level;
 
         // Add input item slot
         this.addSlot(new Slot(container, 0, 56, 17));
 
         // Add filter item slot
-        this.addSlot(new Slot(container, 1, 56, 53));
+        this.addSlot(new WaterPurifierFilterSlot(this, container, 1, 56, 53));
 
         // Add output item slot
         this.addSlot(new WaterPurifierResultSlot(container, 2, 116, 35));
@@ -68,7 +74,87 @@ public class WaterPurifierContainer extends Container
         return this.container.stillValid(player);
     }
 
-    // TODO: Add quick-moving (shift-clicking)
+    @Override
+    public ItemStack quickMoveStack(PlayerEntity player, int index)
+    {
+        ItemStack prevItem = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem())
+        {
+            ItemStack slotItem = slot.getItem();
+            prevItem = slotItem.copy();
+
+            // Output
+            if (index == 2)
+            {
+                if (!this.moveItemStackTo(slotItem, 3, 39, true))
+                {
+                    return ItemStack.EMPTY;
+                }
+
+                slot.onQuickCraft(slotItem, prevItem);
+            }
+            else if (index != 1 && index != 0) // Moving from inventory to the purifier
+            {
+                if (this.canPurify(slotItem))
+                {
+                    if (!this.moveItemStackTo(slotItem, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (this.isFilter(slotItem))
+                {
+                    if (!this.moveItemStackTo(slotItem, 1, 2, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (index >= 3 && index < 30)
+                {
+                    if (!this.moveItemStackTo(slotItem, 30, 39, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (index >= 30 && index < 39 && !this.moveItemStackTo(slotItem, 3, 30, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else if (!this.moveItemStackTo(slotItem, 3, 39, false)) // Move from purifier to inventory
+            {
+                return ItemStack.EMPTY;
+            }
+
+            if (slotItem.isEmpty())
+            {
+                slot.set(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.setChanged();
+            }
+
+            // No change
+            if (slotItem.getCount() == prevItem.getCount())
+            {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, slotItem);
+        }
+
+        return prevItem;
+    }
+
+    protected boolean canPurify(ItemStack stack)
+    {
+        return this.level.getRecipeManager().getRecipeFor((IRecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new Inventory(stack), this.level).isPresent();
+    }
+
+    protected boolean isFilter(ItemStack stack)
+    {
+        return WaterPurifierTileEntity.isFilter(stack);
+    }
 
     @OnlyIn(Dist.CLIENT)
     public int getPurifyProgress()

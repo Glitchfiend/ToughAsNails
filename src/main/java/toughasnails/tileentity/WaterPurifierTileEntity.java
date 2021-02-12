@@ -29,6 +29,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.tileentity.TANTileEntityTypes;
+import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
 import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
@@ -37,6 +38,10 @@ import javax.annotation.Nullable;
 
 public class WaterPurifierTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity
 {
+    private static final int[] SLOTS_FOR_UP = new int[]{0};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{1};
+
     private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
     /** The time remaining from the previously used filter */
@@ -189,11 +194,11 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
             {
                 this.purifyProgress = MathHelper.clamp(this.purifyProgress - 2, 0, this.purifyTotalTime);
             }
-
+            
             if (previouslyFiltering != this.currentlyFiltering())
             {
                 changed = true;
-                // TODO: this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, Boolean.valueOf(this.currentlyFiltering())), 3);
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(WaterPurifierBlock.PURIFYING, Boolean.valueOf(this.currentlyFiltering())), 3);
             }
         }
 
@@ -216,19 +221,27 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     @Override
     public int[] getSlotsForFace(Direction side)
     {
-        return new int[0];
+        switch (side)
+        {
+            case DOWN:
+                return SLOTS_FOR_DOWN;
+            case UP:
+                return SLOTS_FOR_UP;
+            default:
+                return SLOTS_FOR_SIDES;
+        }
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @Nullable Direction direction)
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
     {
-        return false;
+        return this.canPlaceItem(index, stack);
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
     {
-        return false;
+        return !(direction == Direction.DOWN && index == 1);
     }
 
     @Override
@@ -374,7 +387,12 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
         }
     }
 
-    protected int getFilterDuration(ItemStack filter)
+    public static boolean isFilter(ItemStack stack)
+    {
+        return getFilterDuration(stack) > 0;
+    }
+
+    public static int getFilterDuration(ItemStack filter)
     {
         if (filter.isEmpty())
             return 0;

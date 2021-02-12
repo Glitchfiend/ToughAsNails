@@ -54,12 +54,6 @@ public class ToughAsNails
     private void clientSetup(final FMLClientSetupEvent event)
     {
         ModContainerTypes.registerScreens();
-
-        RenderType transparentRenderType = RenderType.cutoutMipped();
-        RenderType cutoutRenderType = RenderType.cutout();
-        RenderType translucentRenderType = RenderType.translucent();
-
-        RenderTypeLookup.setRenderLayer(RAIN_COLLECTOR, cutoutRenderType);
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event)
