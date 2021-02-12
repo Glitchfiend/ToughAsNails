@@ -9,7 +9,7 @@ import toughasnails.api.thirst.IThirst;
 public class ThirstData implements IThirst
 {
     public static final int DEFAULT_THIRST = 20;
-    public static final float DEFAULT_HYDRATION = 5.0F;
+    public static final float DEFAULT_HYDRATION = 2.0F;
 
     private int thirstLevel = DEFAULT_THIRST;
     private float hydrationLevel = DEFAULT_HYDRATION;
