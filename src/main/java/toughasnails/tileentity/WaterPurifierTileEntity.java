@@ -394,10 +394,10 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
 
     public static int getFilterDuration(ItemStack filter)
     {
-        if (filter.isEmpty())
+        if (filter == null || filter.isEmpty())
             return 0;
 
-        return getFilterDurations().get(filter.getItem());
+        return getFilterDurations().getOrDefault(filter.getItem(), 0);
     }
 
     private static ImmutableMap<Item, Integer> getFilterDurations()
