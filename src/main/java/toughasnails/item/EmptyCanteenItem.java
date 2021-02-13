@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
+import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
+import toughasnails.block.RainCollectorBlock;
 import toughasnails.config.ThirstConfig;
 
 public class EmptyCanteenItem extends Item
@@ -37,30 +40,48 @@ public class EmptyCanteenItem extends Item
         {
             BlockPos pos = ((BlockRayTraceResult)rayTraceResult).getBlockPos();
 
-            if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
+            if (world.mayInteract(player, pos))
             {
-                world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                BlockState state = world.getBlockState(pos);
 
-                RegistryKey<Biome> biome = player.level.getBiomeName(player.blockPosition()).orElse(Biomes.PLAINS);
-                Item canteenItem;
-
-                switch (ThirstConfig.getBiomeWaterType(biome))
+                if (state.getBlock() instanceof RainCollectorBlock)
                 {
-                    case PURIFIED:
-                        canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
-                        break;
+                    // Fill the canteen from purified water from a rain collector
+                    int waterLevel = state.getValue(RainCollectorBlock.LEVEL);
 
-                    case DIRTY:
-                        canteenItem = TANItems.DIRTY_WATER_CANTEEN;
-                        break;
-
-                    case NORMAL:
-                    default:
-                        canteenItem = TANItems.WATER_CANTEEN;
-                        break;
+                    if (waterLevel > 0 && !world.isClientSide())
+                    {
+                        world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                        ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR).setWaterLevel(world, pos, state, waterLevel - 1);
+                        return ActionResult.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.PURIFIED_WATER_CANTEEN)));
+                    }
                 }
+                else if (world.getFluidState(pos).is(FluidTags.WATER))
+                {
+                    // Fill the canteen with water in the world
+                    world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-                return ActionResult.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());
+                    RegistryKey<Biome> biome = player.level.getBiomeName(player.blockPosition()).orElse(Biomes.PLAINS);
+                    Item canteenItem;
+
+                    switch (ThirstConfig.getBiomeWaterType(biome))
+                    {
+                        case PURIFIED:
+                            canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
+                            break;
+
+                        case DIRTY:
+                            canteenItem = TANItems.DIRTY_WATER_CANTEEN;
+                            break;
+
+                        case NORMAL:
+                        default:
+                            canteenItem = TANItems.WATER_CANTEEN;
+                            break;
+                    }
+
+                    return ActionResult.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());
+                }
             }
         }
 
