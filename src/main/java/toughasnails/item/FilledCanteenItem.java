@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -87,5 +88,17 @@ public class FilledCanteenItem extends Item
     public UseAction getUseAnimation(ItemStack stack)
     {
         return UseAction.DRINK;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment)
+    {
+        return false;
     }
 }
