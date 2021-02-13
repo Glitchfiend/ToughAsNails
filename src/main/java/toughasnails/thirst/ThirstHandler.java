@@ -145,7 +145,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof PlayerEntity))
+        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof PlayerEntity) || event.getEntity().level.isClientSide())
             return;
 
         PlayerEntity player = (PlayerEntity)event.getEntityLiving();
