@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "정수기",
+  "effect.toughasnails.thirst": "갈증",
+
+  "item.toughasnails.tan_icon": "TAN 아이콘",
+  "item.toughasnails.empty_canteen": "빈통",
+  "item.toughasnails.water_canteen": "물통",
+  "item.toughasnails.dirty_water_canteen": "오염된 물통",
+  "item.toughasnails.purified_water_canteen": "정제된 물통",
+  "item.toughasnails.dirty_water_bottle": "오염된 물병",
+  "item.toughasnails.purified_water_bottle": "정제된 물병",
+
+  "block.toughasnails.rain_collector": "빗물받이",
+  "block.toughasnails.water_purifier": "정수기"
+}
