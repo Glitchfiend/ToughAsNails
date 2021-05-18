@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "Su Arıtıcısı",
+  "effect.toughasnails.thirst": "Susama",
+
+  "item.toughasnails.tan_icon": "TAN Simgesi",
+  "item.toughasnails.empty_canteen": "Boş Matara",
+  "item.toughasnails.water_canteen": "Su Matarası",
+  "item.toughasnails.dirty_water_canteen": "Kirli Su Matarası",
+  "item.toughasnails.purified_water_canteen": "Arıtılmış Su Matarası",
+  "item.toughasnails.dirty_water_bottle": "Kirli Su Şişesi",
+  "item.toughasnails.purified_water_bottle": "Arıtılmış Su Şişesi",
+
+  "block.toughasnails.rain_collector": "Yağmur Toplayıcısı",
+  "block.toughasnails.water_purifier": "Su Arıtıcısı"
+}
