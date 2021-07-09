@@ -195,6 +195,7 @@ public class TemperatureOverlayHandler
         {
             minecraft.getTextureManager().bindTexture(vignetteLocation);
 
+            GlStateManager.enableBlend();
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
