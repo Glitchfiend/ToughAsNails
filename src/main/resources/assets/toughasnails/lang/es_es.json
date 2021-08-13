@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "Purificador de agua",
+  "effect.toughasnails.thirst": "Sed",
+
+  "item.toughasnails.tan_icon": "Icono TAN",
+  "item.toughasnails.empty_canteen": "Cantimplora vacía",
+  "item.toughasnails.water_canteen": "Cantimplora con agua",
+  "item.toughasnails.dirty_water_canteen": "Cantimplora con agua sucia",
+  "item.toughasnails.purified_water_canteen": "Cantimplora con agua purificada",
+  "item.toughasnails.dirty_water_bottle": "Botella con agua sucia",
+  "item.toughasnails.purified_water_bottle": "Botella con agua purificada",
+
+  "block.toughasnails.rain_collector": "Colector de lluvia",
+  "block.toughasnails.water_purifier": "Purificador de agua"
+}
