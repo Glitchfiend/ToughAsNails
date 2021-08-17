@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "Épurateur d'Eau",
+  "effect.toughasnails.thirst": "Soif",
+
+  "item.toughasnails.tan_icon": "TAN Icon",
+  "item.toughasnails.empty_canteen": "Gourde Vide",
+  "item.toughasnails.water_canteen": "Gourde d'Eau",
+  "item.toughasnails.dirty_water_canteen": "Gourde d'Eau Sale",
+  "item.toughasnails.purified_water_canteen": "Gourde d'Eau Purifié",
+  "item.toughasnails.dirty_water_bottle": "Fiole d'Eau Sale",
+  "item.toughasnails.purified_water_bottle": "Fiole d'Eau Purifié",
+
+  "block.toughasnails.rain_collector": "Collecteur de Pluie",
+  "block.toughasnails.water_purifier": "Purifieur d'Eau"
+}
