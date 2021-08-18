@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "Oczyszczacz Wody",
+  "effect.toughasnails.thirst": "Spragnienie",
+
+  "item.toughasnails.tan_icon": "TAN Icon",
+  "item.toughasnails.empty_canteen": "Pusta Manierka",
+  "item.toughasnails.water_canteen": "Manierka z Wodą",
+  "item.toughasnails.dirty_water_canteen": "Manierka z Brudną Wodą",
+  "item.toughasnails.purified_water_canteen": "Manierka z Oczyszczoną Wodą",
+  "item.toughasnails.dirty_water_bottle": "Butelka z Brudną Wodą",
+  "item.toughasnails.purified_water_bottle": "Butelka z Oczyszczoną Wodą",
+
+  "block.toughasnails.rain_collector": "Kolektor Deszczu",
+  "block.toughasnails.water_purifier": "Oczyszczacz Wody"
+}
