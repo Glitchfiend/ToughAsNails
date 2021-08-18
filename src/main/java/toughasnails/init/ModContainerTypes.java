@@ -4,10 +4,10 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
@@ -22,7 +22,7 @@ import toughasnails.container.WaterPurifierContainer;
 public class ModContainerTypes
 {
     @SubscribeEvent
-    public static void registerContainers(RegistryEvent.Register<TileEntityType<?>> event)
+    public static void registerContainers(RegistryEvent.Register<BlockEntityType<?>> event)
     {
         register("water_purifier", WaterPurifierContainer::new);
     }
@@ -30,12 +30,12 @@ public class ModContainerTypes
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens()
     {
-        ScreenManager.register((ContainerType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
+        MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
     }
 
-    public static <T extends Container> void register(String name, ContainerType.IFactory<T> factory)
+    public static <T extends AbstractContainerMenu> void register(String name, MenuType.MenuSupplier<T> factory)
     {
-        ContainerType<T> containerType = new ContainerType<>(factory);
+        MenuType<T> containerType = new MenuType<>(factory);
         containerType.setRegistryName(name);
         ForgeRegistries.CONTAINERS.register(containerType);
     }

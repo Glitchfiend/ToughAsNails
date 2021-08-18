@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
@@ -15,7 +15,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     private IThirst lastThirst;
 
     @Override
-    public IThirst getThirst(PlayerEntity player)
+    public IThirst getThirst(Player player)
     {
         IThirst thirst = player.getCapability(TANCapabilities.THIRST).orElse(lastThirst);
         lastThirst = thirst;
@@ -23,7 +23,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     }
 
     @Override
-    public boolean canDrink(PlayerEntity player, boolean ignoreThirst)
+    public boolean canDrink(Player player, boolean ignoreThirst)
     {
         IThirst thirst = getThirst(player);
         return (player.abilities.invulnerable || ignoreThirst || thirst.isThirsty()) && isThirstEnabled();

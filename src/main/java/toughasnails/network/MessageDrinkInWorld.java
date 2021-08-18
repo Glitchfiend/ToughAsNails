@@ -4,15 +4,15 @@
  ******************************************************************************/
 package toughasnails.network;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.fml.network.NetworkEvent;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.IThirst;
@@ -30,12 +30,12 @@ public class MessageDrinkInWorld
         this.pos = pos;
     }
 
-    public static void encode(MessageDrinkInWorld packet, PacketBuffer buf)
+    public static void encode(MessageDrinkInWorld packet, FriendlyByteBuf buf)
     {
         buf.writeBlockPos(packet.pos);
     }
 
-    public static MessageDrinkInWorld decode(PacketBuffer buf)
+    public static MessageDrinkInWorld decode(FriendlyByteBuf buf)
     {
         return new MessageDrinkInWorld(buf.readBlockPos());
     }
@@ -46,8 +46,8 @@ public class MessageDrinkInWorld
         {
             context.get().enqueueWork(() ->
             {
-                ServerPlayerEntity player = context.get().getSender();
-                World world = player.level;
+                ServerPlayer player = context.get().getSender();
+                Level world = player.level;
                 IThirst thirst = ThirstHelper.getThirst(player);
 
                 // Whilst we already checked on the client, check again to be sure
@@ -56,11 +56,11 @@ public class MessageDrinkInWorld
                     thirst.addThirst(ThirstConfig.handDrinkingThirst.get());
                     thirst.addHydration(ThirstConfig.handDrinkingHydration.get().floatValue());
 
-                    RegistryKey<Biome> biome = player.level.getBiomeName(packet.pos).orElse(Biomes.PLAINS);
+                    ResourceKey<Biome> biome = player.level.getBiomeName(packet.pos).orElse(Biomes.PLAINS);
 
                     if (player.level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {
-                        player.addEffect(new EffectInstance(TANEffects.THIRST, 600));
+                        player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
                     }
                 }
             });

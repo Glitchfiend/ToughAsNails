@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.api.potion;
 
-import net.minecraft.potion.Effect;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
 public class TANEffects
 {
-    public static final Effect THIRST = null;
+    public static final MobEffect THIRST = null;
 }

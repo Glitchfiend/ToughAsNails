@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.api.crafting;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
 public class TANRecipeSerializers
 {
-    public static final IRecipeSerializer<?> WATER_PURIFYING = null;
+    public static final RecipeSerializer<?> WATER_PURIFYING = null;
 }

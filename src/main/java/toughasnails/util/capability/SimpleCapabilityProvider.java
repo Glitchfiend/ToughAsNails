@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.util.capability;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SimpleCapabilityProvider<T> implements INBTSerializable<CompoundNBT>, ICapabilityProvider
+public class SimpleCapabilityProvider<T> implements INBTSerializable<CompoundTag>, ICapabilityProvider
 {
     private Capability<T> capability;
     private T instance;
@@ -33,13 +33,13 @@ public class SimpleCapabilityProvider<T> implements INBTSerializable<CompoundNBT
     }
 
     @Override
-    public CompoundNBT serializeNBT()
+    public CompoundTag serializeNBT()
     {
-        return (CompoundNBT)this.capability.getStorage().writeNBT(this.capability, this.instance, null);
+        return (CompoundTag)this.capability.getStorage().writeNBT(this.capability, this.instance, null);
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt)
+    public void deserializeNBT(CompoundTag nbt)
     {
         this.capability.getStorage().readNBT(this.capability, this.instance, null, nbt);
     }

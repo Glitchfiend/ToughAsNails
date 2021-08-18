@@ -4,21 +4,28 @@
  ******************************************************************************/
 package toughasnails.item;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import toughasnails.api.item.TANItems;
+
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemUtils;
 
 public class FilledCanteenItem extends Item
 {
@@ -28,35 +35,35 @@ public class FilledCanteenItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
     {
         ItemStack stack = player.getItemInHand(hand);
-        RayTraceResult rayTraceResult = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+        HitResult rayTraceResult = getPlayerPOVHitResult(world, player, ClipContext.Fluid.SOURCE_ONLY);
 
-        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+        if (rayTraceResult.getType() == HitResult.Type.BLOCK)
         {
-            BlockPos pos = ((BlockRayTraceResult)rayTraceResult).getBlockPos();
+            BlockPos pos = ((BlockHitResult)rayTraceResult).getBlockPos();
 
             if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
-                world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                return ActionResult.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(TANItems.WATER_CANTEEN)), world.isClientSide());
+                world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(TANItems.WATER_CANTEEN)), world.isClientSide());
             }
         }
 
-        return DrinkHelper.useDrink(world, player, hand);
+        return ItemUtils.useDrink(world, player, hand);
     }
 
-    protected ItemStack replaceCanteen(ItemStack oldStack, PlayerEntity player, ItemStack newStack)
+    protected ItemStack replaceCanteen(ItemStack oldStack, Player player, ItemStack newStack)
     {
         player.awardStat(Stats.ITEM_USED.get(this));
-        return DrinkHelper.createFilledResult(oldStack, player, newStack);
+        return ItemUtils.createFilledResult(oldStack, player, newStack);
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving)
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving)
     {
-        PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
+        Player player = entityLiving instanceof Player ? (Player)entityLiving : null;
 
         // Do nothing if this isn't a player
         if (player == null)
@@ -85,9 +92,9 @@ public class FilledCanteenItem extends Item
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack stack)
+    public UseAnim getUseAnimation(ItemStack stack)
     {
-        return UseAction.DRINK;
+        return UseAnim.DRINK;
     }
 
     @Override

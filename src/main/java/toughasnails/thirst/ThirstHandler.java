@@ -4,27 +4,27 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.TickEvent;
@@ -46,6 +46,15 @@ import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
 import toughasnails.util.capability.SimpleCapabilityProvider;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemUtils;
+
 public class ThirstHandler
 {
     private int lastSentThirst = -99999999;
@@ -56,7 +65,7 @@ public class ThirstHandler
     {
         // NOTE: We always attach the thirst capability, regardless of the thirst enabled config option.
         // This is mainly to ensure a consistent working environment
-        if (event.getObject() instanceof PlayerEntity)
+        if (event.getObject() instanceof Player)
         {
             event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "thirst"), new SimpleCapabilityProvider<IThirst>(TANCapabilities.THIRST, new ThirstData()));
         }
@@ -68,7 +77,7 @@ public class ThirstHandler
         if (event.getPlayer().level.isClientSide())
             return;
 
-        syncThirst((ServerPlayerEntity)event.getPlayer());
+        syncThirst((ServerPlayer)event.getPlayer());
     }
 
     @SubscribeEvent
@@ -77,7 +86,7 @@ public class ThirstHandler
         if (!ServerConfig.enableThirst.get() || event.player.level.isClientSide())
             return;
 
-        ServerPlayerEntity player = (ServerPlayerEntity)event.player;
+        ServerPlayer player = (ServerPlayer)event.player;
         IThirst thirst = ThirstHelper.getThirst(player);
         Difficulty difficulty = player.level.getDifficulty();
         double exhaustionThreshold = ThirstConfig.thirstExhaustionThreshold.get();
@@ -135,7 +144,7 @@ public class ThirstHandler
         }
     }
 
-    private static void syncThirst(ServerPlayerEntity player)
+    private static void syncThirst(ServerPlayer player)
     {
         IThirst thirst = ThirstHelper.getThirst(player);
         PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()));
@@ -145,10 +154,10 @@ public class ThirstHandler
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof PlayerEntity) || event.getEntity().level.isClientSide())
+        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof Player) || event.getEntity().level.isClientSide())
             return;
 
-        PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+        Player player = (Player)event.getEntityLiving();
         Item item = event.getItem().getItem();
         IThirst thirst = ThirstHelper.getThirst(player);
         ThirstConfig.DrinkEntry entry = ThirstConfig.getDrinkEntry(item.getRegistryName());
@@ -160,7 +169,7 @@ public class ThirstHandler
 
             if (player.level.random.nextFloat() < entry.getPoisonChance())
             {
-                player.addEffect(new EffectInstance(TANEffects.THIRST, 600));
+                player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
             }
         }
     }
@@ -169,9 +178,9 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerInteractItem(PlayerInteractEvent.RightClickItem event)
     {
-        PlayerEntity player = event.getPlayer();
-        World world = player.level;
-        Hand hand = event.getHand();
+        Player player = event.getPlayer();
+        Level world = player.level;
+        InteractionHand hand = event.getHand();
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
@@ -179,21 +188,21 @@ public class ThirstHandler
         if (item != Items.GLASS_BOTTLE)
             return;
 
-        RayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+        HitResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, ClipContext.Fluid.SOURCE_ONLY);
 
         // Defer to the default glass bottle use implementation
-        if (rayTraceResult.getType() != RayTraceResult.Type.BLOCK)
+        if (rayTraceResult.getType() != HitResult.Type.BLOCK)
             return;
 
-        BlockPos pos = ((BlockRayTraceResult)rayTraceResult).getBlockPos();
+        BlockPos pos = ((BlockHitResult)rayTraceResult).getBlockPos();
 
         if (!world.mayInteract(player, pos) || !world.getFluidState(pos).is(FluidTags.WATER))
             return;
 
         // Play the filling sound
-        world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+        world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-        RegistryKey<Biome> biome = player.level.getBiomeName(pos).orElse(Biomes.PLAINS);
+        ResourceKey<Biome> biome = player.level.getBiomeName(pos).orElse(Biomes.PLAINS);
         ItemStack filledStack;
 
         // Set the filled stack based on the biome's water type
@@ -214,7 +223,7 @@ public class ThirstHandler
         }
 
         player.awardStat(Stats.ITEM_USED.get(item));
-        ItemStack replacementStack = DrinkHelper.createFilledResult(stack, player, filledStack);
+        ItemStack replacementStack = ItemUtils.createFilledResult(stack, player, filledStack);
 
         // Replace the glass bottle
         if (stack != replacementStack)
@@ -226,7 +235,7 @@ public class ThirstHandler
 
         // Cancel the event, we've taken responsibility for bottle filling
         event.setCanceled(true);
-        event.setCancellationResult(ActionResult.sidedSuccess(replacementStack, world.isClientSide()).getResult());
+        event.setCancellationResult(InteractionResultHolder.sidedSuccess(replacementStack, world.isClientSide()).getResult());
     }
 
     // Hand drinking
@@ -259,26 +268,26 @@ public class ThirstHandler
         return ServerConfig.enableThirst.get() && ServerConfig.enableHandDrinking.get();
     }
 
-    private static boolean canHandDrinkInWorld(PlayerEntity player, Hand hand)
+    private static boolean canHandDrinkInWorld(Player player, InteractionHand hand)
     {
-        return Hand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide() && inWorldDrinkTimer <= 0;
+        return InteractionHand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide() && inWorldDrinkTimer <= 0;
     }
 
-    private static void tryDrinkWaterInWorld(PlayerEntity player)
+    private static void tryDrinkWaterInWorld(Player player)
     {
-        World world = player.level;
-        BlockRayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(player.level, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+        Level world = player.level;
+        BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.SOURCE_ONLY);
 
-        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+        if (rayTraceResult.getType() == HitResult.Type.BLOCK)
         {
-            BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
+            BlockPos pos = ((BlockHitResult) rayTraceResult).getBlockPos();
 
             if (ThirstHelper.canDrink(player, false) && world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 inWorldDrinkTimer = IN_WORLD_DRINK_COOLDOWN;
                 PacketHandler.HANDLER.send(PacketDistributor.SERVER.noArg(), new MessageDrinkInWorld(pos));
                 player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);
-                player.swing(Hand.MAIN_HAND);
+                player.swing(InteractionHand.MAIN_HAND);
             }
         }
     }

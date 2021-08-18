@@ -4,10 +4,10 @@
  ******************************************************************************/
 package toughasnails.api.crafting;
 
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class TANRecipeTypes
 {
-    public static IRecipeType<?> WATER_PURIFYING = null;
+    public static RecipeType<?> WATER_PURIFYING = null;
 }

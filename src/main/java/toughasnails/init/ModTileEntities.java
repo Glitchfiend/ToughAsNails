@@ -5,10 +5,10 @@
 package toughasnails.init;
 
 import com.mojang.datafixers.types.Type;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Util;
-import net.minecraft.util.datafix.TypeReferences;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.Util;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,15 +20,15 @@ import toughasnails.tileentity.WaterPurifierTileEntity;
 public class ModTileEntities
 {
     @SubscribeEvent
-    public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+    public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event)
     {
-        register("water_purifier", TileEntityType.Builder.of(WaterPurifierTileEntity::new, TANBlocks.WATER_PURIFIER));
+        register("water_purifier", BlockEntityType.Builder.of(WaterPurifierTileEntity::new, TANBlocks.WATER_PURIFIER));
     }
 
-    public static <T extends TileEntity> void register(String name, TileEntityType.Builder<T> builder)
+    public static <T extends BlockEntity> void register(String name, BlockEntityType.Builder<T> builder)
     {
-        Type<?> type = Util.fetchChoiceType(TypeReferences.BLOCK_ENTITY, name);
-        TileEntityType<?> tileEntityType = builder.build(type);
+        Type<?> type = Util.fetchChoiceType(References.BLOCK_ENTITY, name);
+        BlockEntityType<?> tileEntityType = builder.build(type);
         tileEntityType.setRegistryName(name);
         ForgeRegistries.TILE_ENTITIES.register(tileEntityType);
     }

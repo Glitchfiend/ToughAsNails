@@ -4,9 +4,9 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.logging.log4j.core.jmx.Server;
 import toughasnails.api.thirst.IThirst;
@@ -18,9 +18,9 @@ public class ThirstStorage implements Capability.IStorage<IThirst>
 {
     @Nullable
     @Override
-    public INBT writeNBT(Capability<IThirst> capability, IThirst instance, Direction side)
+    public Tag writeNBT(Capability<IThirst> capability, IThirst instance, Direction side)
     {
-        CompoundNBT compound = new CompoundNBT();
+        CompoundTag compound = new CompoundTag();
 
         if (ServerConfig.enableThirst.get())
         {
@@ -42,12 +42,12 @@ public class ThirstStorage implements Capability.IStorage<IThirst>
     }
 
     @Override
-    public void readNBT(Capability<IThirst> capability, IThirst instance, Direction side, INBT nbt)
+    public void readNBT(Capability<IThirst> capability, IThirst instance, Direction side, Tag nbt)
     {
-        if (!(nbt instanceof CompoundNBT))
+        if (!(nbt instanceof CompoundTag))
             throw new IllegalArgumentException("Thirst data must be a CompoundNBT!");
 
-        CompoundNBT compound = (CompoundNBT)nbt;
+        CompoundTag compound = (CompoundTag)nbt;
 
         if (compound.contains("thirstLevel", 99))
         {

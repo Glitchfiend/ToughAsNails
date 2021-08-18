@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.mixin;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.FoodStats;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.level.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 
-@Mixin(FoodStats.class)
+@Mixin(FoodData.class)
 public abstract class FoodStatsMixin
 {
     @Shadow
@@ -36,7 +36,7 @@ public abstract class FoodStatsMixin
 
     // Modify tick to also check for thirst before healing
     @Overwrite
-    public void tick(PlayerEntity player)
+    public void tick(Player player)
     {
         Difficulty difficulty = player.level.getDifficulty();
         IThirst thirst = ThirstHelper.getThirst(player);

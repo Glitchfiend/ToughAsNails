@@ -4,17 +4,17 @@
  ******************************************************************************/
 package toughasnails.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.crafting.TANRecipeTypes;
@@ -22,18 +22,18 @@ import toughasnails.api.inventory.container.TANContainerTypes;
 import toughasnails.crafting.WaterPurifierRecipe;
 import toughasnails.tileentity.WaterPurifierTileEntity;
 
-public class WaterPurifierContainer extends Container
+public class WaterPurifierContainer extends AbstractContainerMenu
 {
-    private final IInventory container;
-    private final IIntArray data;
-    private final World level;
+    private final Container container;
+    private final ContainerData data;
+    private final Level level;
 
-    public WaterPurifierContainer(int id, PlayerInventory playerInventory)
+    public WaterPurifierContainer(int id, Inventory playerInventory)
     {
-        this(id, playerInventory, new Inventory(3), new IntArray(4));
+        this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
-    public WaterPurifierContainer(int id, PlayerInventory playerInventory, IInventory container, IIntArray data)
+    public WaterPurifierContainer(int id, Inventory playerInventory, Container container, ContainerData data)
     {
         super(TANContainerTypes.WATER_PURIFIER, id);
         this.container = container;
@@ -69,13 +69,13 @@ public class WaterPurifierContainer extends Container
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player)
+    public boolean stillValid(Player player)
     {
         return this.container.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index)
+    public ItemStack quickMoveStack(Player player, int index)
     {
         ItemStack prevItem = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
@@ -148,7 +148,7 @@ public class WaterPurifierContainer extends Container
 
     protected boolean canPurify(ItemStack stack)
     {
-        return this.level.getRecipeManager().getRecipeFor((IRecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new Inventory(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new SimpleContainer(stack), this.level).isPresent();
     }
 
     protected boolean isFilter(ItemStack stack)

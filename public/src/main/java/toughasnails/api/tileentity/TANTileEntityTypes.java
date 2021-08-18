@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.api.tileentity;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
 public class TANTileEntityTypes
 {
-    public static final TileEntityType WATER_PURIFIER = null;
+    public static final BlockEntityType WATER_PURIFIER = null;
 }

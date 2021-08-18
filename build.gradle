@@ -1,12 +1,10 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
-        maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
     }
 }
 
@@ -15,15 +13,15 @@ plugins {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 repositories { mavenLocal() }
 
 group = "com.github.glitchfiend"
 archivesBaseName = "ToughAsNails"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 def getGitHash = {
     def stdout = new ByteArrayOutputStream()
@@ -44,19 +42,13 @@ minecraft {
     runs {
         client = {
             workingDirectory = project.file("run").canonicalPath
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
             source sourceSets.main
         }
         server = {
             workingDirectory = project.file("run").canonicalPath
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
             source sourceSets.main
         }
     }
-}
-
-mixin {
-    add sourceSets.main, "main.refmap.json"
 }
 
 // configure  the source folders
@@ -74,34 +66,20 @@ sourceSets {
 }
 
 processResources {
-    from (sourceSets.main.resources.srcDirs) {
-        include 'META-INF/mods.toml'
-        expand 'version': project.version
-    }
-	
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 jar {
     classifier = 'universal'
-    
     manifest {
         attributes([
-            "Specification-Title": "toughasnails",
-            "Specification-Vendor": "Tough As Nails",
-            "Specification-Version": "1.1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"toughasnails",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "toughasnails.mixins.json"
+            "Implementation-Version": project.version
         ])
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
 
 task deobfJar(type: Jar) {

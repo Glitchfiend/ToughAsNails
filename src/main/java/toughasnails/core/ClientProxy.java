@@ -2,8 +2,8 @@ package toughasnails.core;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.entity.player.PlayerEntity;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.thirst.IThirst;
@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy
         RenderType cutoutRenderType = RenderType.cutout();
         RenderType translucentRenderType = RenderType.translucent();
 
-        RenderTypeLookup.setRenderLayer(RAIN_COLLECTOR, cutoutRenderType);
-        RenderTypeLookup.setRenderLayer(WATER_PURIFIER, cutoutRenderType);
+        ItemBlockRenderTypes.setRenderLayer(RAIN_COLLECTOR, cutoutRenderType);
+        ItemBlockRenderTypes.setRenderLayer(WATER_PURIFIER, cutoutRenderType);
     }
 }

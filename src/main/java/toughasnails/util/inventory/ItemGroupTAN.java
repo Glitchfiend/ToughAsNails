@@ -4,13 +4,13 @@
  ******************************************************************************/
 package toughasnails.util.inventory;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import toughasnails.api.item.TANItems;
 
-public class ItemGroupTAN extends ItemGroup
+public class ItemGroupTAN extends CreativeModeTab
 {
-    public static final ItemGroupTAN INSTANCE = new ItemGroupTAN(ItemGroup.TABS.length, "toughasnails");
+    public static final ItemGroupTAN INSTANCE = new ItemGroupTAN(CreativeModeTab.TABS.length, "toughasnails");
 
     private ItemGroupTAN(int index, String label)
     {

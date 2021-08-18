@@ -4,15 +4,15 @@
  ******************************************************************************/
 package toughasnails.container;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class WaterPurifierFilterSlot extends Slot
 {
     private final WaterPurifierContainer menu;
 
-    public WaterPurifierFilterSlot(WaterPurifierContainer container, IInventory inventory, int index, int xPosition, int yPosition)
+    public WaterPurifierFilterSlot(WaterPurifierContainer container, Container inventory, int index, int xPosition, int yPosition)
     {
         super(inventory, index, xPosition, yPosition);
         this.menu = container;

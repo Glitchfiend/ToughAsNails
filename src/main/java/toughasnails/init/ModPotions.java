@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,12 +16,12 @@ import toughasnails.potion.ThirstEffect;
 public class ModPotions
 {
     @SubscribeEvent
-    public static void registerEffects(RegistryEvent.Register<Effect> event)
+    public static void registerEffects(RegistryEvent.Register<MobEffect> event)
     {
-        register("thirst", new ThirstEffect(EffectType.HARMFUL, 0x76DB4C));
+        register("thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
     }
 
-    public static void register(String name, Effect effect)
+    public static void register(String name, MobEffect effect)
     {
         effect.setRegistryName(name);
         ForgeRegistries.POTIONS.register(effect);

@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.mixin;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.config.ServerConfig;
 
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 public abstract class PlayerEntityMixin
 {
     @Inject(method = "causeFoodExhaustion", at = @At("HEAD"))
@@ -20,7 +20,7 @@ public abstract class PlayerEntityMixin
     {
         if (ServerConfig.enableThirst.get())
         {
-            ThirstHelper.getThirst((PlayerEntity) (Object) this).addExhaustion(exhaustion);
+            ThirstHelper.getThirst((Player) (Object) this).addExhaustion(exhaustion);
         }
     }
 }

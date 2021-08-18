@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.api.thirst;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class ThirstHelper
 {
@@ -13,7 +13,7 @@ public class ThirstHelper
      * @param player the player to obtain thirst data for
      * @return the player's thirst data
      */
-    public static IThirst getThirst(PlayerEntity player)
+    public static IThirst getThirst(Player player)
     {
         return Impl.INSTANCE.getThirst(player);
     }
@@ -24,7 +24,7 @@ public class ThirstHelper
      * @param ignoreThirst allow drinking regardless of the player's thirst level
      * @return whether the player can drink
      */
-    public static boolean canDrink(PlayerEntity player, boolean ignoreThirst)
+    public static boolean canDrink(Player player, boolean ignoreThirst)
     {
         return Impl.INSTANCE.canDrink(player, ignoreThirst);
     }
@@ -45,8 +45,8 @@ public class ThirstHelper
 
         public interface IThirstHelper
         {
-            IThirst getThirst(PlayerEntity player);
-            boolean canDrink(PlayerEntity player, boolean ignoreThirst);
+            IThirst getThirst(Player player);
+            boolean canDrink(Player player, boolean ignoreThirst);
             boolean isThirstEnabled();
         }
     }

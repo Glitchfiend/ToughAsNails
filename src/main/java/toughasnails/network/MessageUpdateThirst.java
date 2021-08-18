@@ -5,8 +5,8 @@
 package toughasnails.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -27,13 +27,13 @@ public class MessageUpdateThirst
         this.hydrationLevel = hydrationLevel;
     }
 
-    public static void encode(MessageUpdateThirst packet, PacketBuffer buf)
+    public static void encode(MessageUpdateThirst packet, FriendlyByteBuf buf)
     {
         buf.writeInt(packet.thirstLevel);
         buf.writeFloat(packet.hydrationLevel);
     }
 
-    public static MessageUpdateThirst decode(PacketBuffer buf)
+    public static MessageUpdateThirst decode(FriendlyByteBuf buf)
     {
         return new MessageUpdateThirst(buf.readInt(), buf.readFloat());
     }
@@ -55,7 +55,7 @@ public class MessageUpdateThirst
         @OnlyIn(Dist.CLIENT)
         private static void updateThirst(int thirstLevel, float hydration)
         {
-            PlayerEntity player = Minecraft.getInstance().player;
+            Player player = Minecraft.getInstance().player;
             IThirst thirst = ThirstHelper.getThirst(player);
 
             thirst.setThirst(thirstLevel);

@@ -5,10 +5,10 @@
 package toughasnails.mixin.client;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.MovementInput;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.Input;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,13 +17,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.thirst.ThirstHelper;
 
-@Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
+@Mixin(LocalPlayer.class)
+public abstract class ClientPlayerEntityMixin extends AbstractClientPlayer
 {
     @Shadow
-    public MovementInput input;
+    public Input input;
 
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile)
+    public ClientPlayerEntityMixin(ClientLevel world, GameProfile profile)
     {
         super(world, profile);
     }
@@ -34,7 +34,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     {
         if (this.isSprinting())
         {
-            boolean sprintingAllowable = canSprintWithThirst((ClientPlayerEntity)(Object)this);
+            boolean sprintingAllowable = canSprintWithThirst((LocalPlayer)(Object)this);
 
             if (this.isSwimming())
             {
@@ -51,7 +51,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     }
 
     @Redirect(method={"aiStep"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/entity/player/ClientPlayerEntity;setSprinting(Z)V"))
-    protected void aiStep_setSprinting(ClientPlayerEntity player, boolean sprinting)
+    protected void aiStep_setSprinting(LocalPlayer player, boolean sprinting)
     {
         // Don't allow sprinting if the player has insufficient thirst
         if (sprinting && !canSprintWithThirst(player))
@@ -60,7 +60,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         player.setSprinting(sprinting);
     }
 
-    private boolean canSprintWithThirst(ClientPlayerEntity player)
+    private boolean canSprintWithThirst(LocalPlayer player)
     {
         return ThirstHelper.getThirst(player).getThirst() > 6 || player.abilities.mayfly;
     }

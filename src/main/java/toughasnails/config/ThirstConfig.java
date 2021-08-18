@@ -9,9 +9,9 @@ import com.electronwill.nightconfig.core.InMemoryFormat;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 import toughasnails.api.thirst.WaterType;
@@ -188,7 +188,7 @@ public class ThirstConfig
         return getDrinkEntries().get(location);
     }
 
-    public static WaterType getBiomeWaterType(RegistryKey<Biome> key)
+    public static WaterType getBiomeWaterType(ResourceKey<Biome> key)
     {
         BiomeWaterInfo info = getWaterInfo(key.location());
         return info == null ? WaterType.NORMAL : info.getType();

@@ -1,6 +1,6 @@
 modLoader="javafml"
-license="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0"
-loaderVersion="[24,)"
+license="All Rights Reserved"
+loaderVersion="[37,)"
 issueTrackerURL="https://github.com/Glitchfiend/ToughAsNails/issues"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/tough-as-nails"
 logoFile="tan_logo.png"
@@ -17,6 +17,6 @@ logoFile="tan_logo.png"
 [[dependencies.toughasnails]]
     modId="forge"
     mandatory=true
-    versionRange="[24,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"

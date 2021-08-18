@@ -5,28 +5,28 @@
 package toughasnails.tileentity;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.tileentity.TANTileEntityTypes;
 import toughasnails.block.WaterPurifierBlock;
@@ -36,7 +36,7 @@ import toughasnails.crafting.WaterPurifierRecipe;
 
 import javax.annotation.Nullable;
 
-public class WaterPurifierTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity
+public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements WorldlyContainer, TickableBlockEntity
 {
     private static final int[] SLOTS_FOR_UP = new int[]{0};
     private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
@@ -56,7 +56,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     /** The total time needed to complete purification. */
     private int purifyTotalTime;
 
-    protected final IIntArray dataAccess = new IIntArray()
+    protected final ContainerData dataAccess = new ContainerData()
     {
         @Override
         public int get(int index)
@@ -107,11 +107,11 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt)
+    public void load(BlockState state, CompoundTag nbt)
     {
         super.load(state, nbt);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(nbt, this.items);
+        ContainerHelper.loadAllItems(nbt, this.items);
         this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining");
         this.filterDuration = nbt.getInt("FilterDuration");
         this.purifyProgress = nbt.getInt("PurifyProgress");
@@ -119,14 +119,14 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt)
+    public CompoundTag save(CompoundTag nbt)
     {
         super.save(nbt);
         nbt.putInt("FilterTimeRemaining", this.filterTimeRemaining);
         nbt.putInt("FilterDuration", this.filterDuration);
         nbt.putInt("PurifyProgress", this.purifyProgress);
         nbt.putInt("PurifyTotalTime", this.purifyTotalTime);
-        ItemStackHelper.saveAllItems(nbt, this.items);
+        ContainerHelper.saveAllItems(nbt, this.items);
         return nbt;
     }
 
@@ -147,7 +147,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
             ItemStack filterStack = this.items.get(1);
             if (this.currentlyFiltering() || !filterStack.isEmpty() && !this.items.get(0).isEmpty())
             {
-                IRecipe<?> irecipe = this.level.getRecipeManager().getRecipeFor((IRecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, this, this.level).orElse(null);
+                Recipe<?> irecipe = this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, this, this.level).orElse(null);
                 if (!this.currentlyFiltering() && this.canFilter(irecipe))
                 {
                     this.filterTimeRemaining = this.getFilterDuration(filterStack);
@@ -192,7 +192,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
             }
             else if (!this.currentlyFiltering() && this.purifyProgress > 0)
             {
-                this.purifyProgress = MathHelper.clamp(this.purifyProgress - 2, 0, this.purifyTotalTime);
+                this.purifyProgress = Mth.clamp(this.purifyProgress - 2, 0, this.purifyTotalTime);
             }
 
             if (previouslyFiltering != this.currentlyFiltering())
@@ -207,15 +207,15 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player)
+    protected AbstractContainerMenu createMenu(int id, Inventory player)
     {
         return new WaterPurifierContainer(id, player, this, this.dataAccess);
     }
 
     @Override
-    protected ITextComponent getDefaultName()
+    protected Component getDefaultName()
     {
-        return new TranslationTextComponent("container.toughasnails.water_purifier");
+        return new TranslatableComponent("container.toughasnails.water_purifier");
     }
 
     @Override
@@ -272,13 +272,13 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     @Override
     public ItemStack removeItem(int index, int count)
     {
-        return ItemStackHelper.removeItem(this.items, index, count);
+        return ContainerHelper.removeItem(this.items, index, count);
     }
 
     @Override
     public ItemStack removeItemNoUpdate(int index)
     {
-        return ItemStackHelper.takeItem(this.items, index);
+        return ContainerHelper.takeItem(this.items, index);
     }
 
     @Override
@@ -303,7 +303,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player)
+    public boolean stillValid(Player player)
     {
         if (this.level.getBlockEntity(this.worldPosition) != this)
         {
@@ -326,7 +326,7 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
         return this.filterTimeRemaining > 0;
     }
 
-    protected boolean canFilter(@Nullable IRecipe<?> recipe)
+    protected boolean canFilter(@Nullable Recipe<?> recipe)
     {
         if (!this.items.get(0).isEmpty() && recipe != null)
         {
@@ -361,10 +361,10 @@ public class WaterPurifierTileEntity extends LockableTileEntity implements ISide
     /** Get the time taken for an input item to be purified. */
     protected int getTotalPurifyTime()
     {
-        return this.level.getRecipeManager().getRecipeFor((IRecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(WaterPurifierRecipe::getPurifyTime).orElse(200);
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(WaterPurifierRecipe::getPurifyTime).orElse(200);
     }
 
-    private void filter(@Nullable IRecipe<?> recipe)
+    private void filter(@Nullable Recipe<?> recipe)
     {
         if (recipe != null && this.canFilter(recipe))
         {

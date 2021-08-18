@@ -4,26 +4,28 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import toughasnails.api.item.TANItems;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class RainCollectorBlock extends Block
 {
@@ -36,12 +38,12 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
     {
         ItemStack stack = player.getItemInHand(hand);
 
         if (stack.isEmpty() || stack.getItem() != Items.GLASS_BOTTLE)
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
 
         int waterLevel = state.getValue(LEVEL);
 
@@ -55,24 +57,24 @@ public class RainCollectorBlock extends Block
 
                 if (stack.isEmpty()) player.setItemInHand(hand, newStack);
                 else if (!player.inventory.add(newStack)) player.drop(newStack, false);
-                else if (player instanceof ServerPlayerEntity) ((ServerPlayerEntity)player).refreshContainer(player.inventoryMenu);
+                else if (player instanceof ServerPlayer) ((ServerPlayer)player).refreshContainer(player.inventoryMenu);
             }
 
-            worldIn.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            worldIn.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             this.setWaterLevel(worldIn, pos, state, waterLevel - 1);
         }
 
-        return ActionResultType.sidedSuccess(worldIn.isClientSide);
+        return InteractionResult.sidedSuccess(worldIn.isClientSide);
     }
 
-    public void setWaterLevel(World world, BlockPos pos, BlockState state, int level)
+    public void setWaterLevel(Level world, BlockPos pos, BlockState state, int level)
     {
-        world.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(MathHelper.clamp(level, 0, 3))), 2);
+        world.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(Mth.clamp(level, 0, 3))), 2);
         world.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override
-    public void handleRain(World worldIn, BlockPos pos)
+    public void handleRain(Level worldIn, BlockPos pos)
     {
         float temp = worldIn.getBiome(pos).getTemperature(pos);
         if (!(temp < 0.15F))
@@ -92,19 +94,19 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos)
     {
         return state.getValue(LEVEL);
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, IBlockReader world, BlockPos pos, PathType type)
+    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type)
     {
         return false;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(LEVEL);
     }

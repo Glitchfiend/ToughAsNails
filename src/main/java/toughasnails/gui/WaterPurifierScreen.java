@@ -4,23 +4,23 @@
  ******************************************************************************/
 package toughasnails.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.container.WaterPurifierContainer;
 import toughasnails.core.ToughAsNails;
 
 @OnlyIn(Dist.CLIENT)
-public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
+public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierContainer>
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(ToughAsNails.MOD_ID, "textures/gui/container/water_purifier.png");
 
-    public WaterPurifierScreen(WaterPurifierContainer screenContainer, PlayerInventory inv, ITextComponent titleIn)
+    public WaterPurifierScreen(WaterPurifierContainer screenContainer, Inventory inv, Component titleIn)
     {
         super(screenContainer, inv, titleIn);
     }
@@ -39,7 +39,7 @@ public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
     }
 
     @Override
-    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks)
+    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks)
     {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, partialTicks);
@@ -47,7 +47,7 @@ public class WaterPurifierScreen extends ContainerScreen<WaterPurifierContainer>
     }
 
     @Override
-    protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+    protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);

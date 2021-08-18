@@ -7,11 +7,11 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -56,7 +56,7 @@ public class ThirstOverlayHandler
         if (event.getType() == RenderGameOverlayEvent.ElementType.AIR)
         {
             Minecraft minecraft = Minecraft.getInstance();
-            PlayerEntity player = minecraft.player;
+            Player player = minecraft.player;
             int width = event.getWindow().getGuiScaledWidth();
             int height = event.getWindow().getGuiScaledHeight();
 
@@ -72,15 +72,15 @@ public class ThirstOverlayHandler
                 minecraft.getTextureManager().bind(OVERLAY);
                 drawThirst(event.getMatrixStack(), width, height, thirstLevel, thirstHydrationLevel);
                 ForgeIngameGui.right_height += 10;
-                minecraft.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
+                minecraft.getTextureManager().bind(GuiComponent.GUI_ICONS_LOCATION);
             }
         }
     }
 
-    private void drawThirst(MatrixStack matrixStack, int width, int height, int thirstLevel, float thirstHydrationLevel)
+    private void drawThirst(PoseStack matrixStack, int width, int height, int thirstLevel, float thirstHydrationLevel)
     {
         Minecraft minecraft = Minecraft.getInstance();
-        PlayerEntity player = minecraft.player;
+        Player player = minecraft.player;
 
         int left = width / 2 + 91 + ClientConfig.thirstLeftOffset.get();
         int top = height - ForgeIngameGui.right_height + ClientConfig.thirstTopOffset.get();

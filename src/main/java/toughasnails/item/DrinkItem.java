@@ -5,21 +5,23 @@
 package toughasnails.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
+
+import net.minecraft.world.item.Item.Properties;
 
 public abstract class DrinkItem extends Item
 {
@@ -29,17 +31,17 @@ public abstract class DrinkItem extends Item
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving)
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving)
     {
-        PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
+        Player player = entityLiving instanceof Player ? (Player)entityLiving : null;
 
         // Do nothing if this isn't a player
         if (player == null)
             return stack;
 
-        if (player instanceof ServerPlayerEntity)
+        if (player instanceof ServerPlayer)
         {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)player, stack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
@@ -66,20 +68,20 @@ public abstract class DrinkItem extends Item
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack stack)
+    public UseAnim getUseAnimation(ItemStack stack)
     {
-        return UseAction.DRINK;
+        return UseAnim.DRINK;
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
     {
         if (ThirstHelper.canDrink(player, this.canAlwaysDrink()))
         {
-            return DrinkHelper.useDrink(world, player, hand);
+            return ItemUtils.useDrink(world, player, hand);
         }
 
-        return ActionResult.fail(player.getItemInHand(hand));
+        return InteractionResultHolder.fail(player.getItemInHand(hand));
     }
 
     public abstract boolean canAlwaysDrink();

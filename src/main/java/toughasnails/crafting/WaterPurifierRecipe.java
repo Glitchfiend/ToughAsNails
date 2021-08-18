@@ -5,16 +5,16 @@
 package toughasnails.crafting;
 
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -22,7 +22,7 @@ import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.core.ToughAsNails;
 
-public class WaterPurifierRecipe implements IRecipe<IInventory>
+public class WaterPurifierRecipe implements Recipe<Container>
 {
     protected final ResourceLocation id;
     protected final NBTIngredient ingredient;
@@ -38,13 +38,13 @@ public class WaterPurifierRecipe implements IRecipe<IInventory>
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn)
+    public boolean matches(Container inv, Level worldIn)
     {
         return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(IInventory inv)
+    public ItemStack assemble(Container inv)
     {
         return this.result.copy();
     }
@@ -68,13 +68,13 @@ public class WaterPurifierRecipe implements IRecipe<IInventory>
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer()
+    public RecipeSerializer<?> getSerializer()
     {
         return TANRecipeSerializers.WATER_PURIFYING;
     }
 
     @Override
-    public IRecipeType<?> getType()
+    public RecipeType<?> getType()
     {
         return TANRecipeTypes.WATER_PURIFYING;
     }
@@ -84,19 +84,19 @@ public class WaterPurifierRecipe implements IRecipe<IInventory>
         return this.purifyTime;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<WaterPurifierRecipe>
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<WaterPurifierRecipe>
     {
         @Override
         public WaterPurifierRecipe fromJson(ResourceLocation recipeId, JsonObject json)
         {
-            NBTIngredient ingredient = NBTIngredient.Serializer.INSTANCE.parse(JSONUtils.getAsJsonObject(json, "ingredient"));
-            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
-            int purifyTime = JSONUtils.getAsInt(json, "purifytime", 200);
+            NBTIngredient ingredient = NBTIngredient.Serializer.INSTANCE.parse(GsonHelper.getAsJsonObject(json, "ingredient"));
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
+            int purifyTime = GsonHelper.getAsInt(json, "purifytime", 200);
             return new WaterPurifierRecipe(recipeId, ingredient, result, purifyTime);
         }
 
         @Override
-        public WaterPurifierRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
+        public WaterPurifierRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
         {
             NBTIngredient ingredient = (NBTIngredient)Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
@@ -105,7 +105,7 @@ public class WaterPurifierRecipe implements IRecipe<IInventory>
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, WaterPurifierRecipe recipe)
+        public void toNetwork(FriendlyByteBuf buffer, WaterPurifierRecipe recipe)
         {
             recipe.ingredient.toNetwork(buffer);
             buffer.writeItem(recipe.result);
