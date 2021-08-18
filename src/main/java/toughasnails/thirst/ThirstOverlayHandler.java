@@ -111,16 +111,16 @@ public class ThirstOverlayHandler
             }
 
             // Draw the background of each thirst droplet
-            GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, backgroundU, 0, 9, 9, 9);
+            GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, backgroundU, 32, 9, 9, 9);
 
             // Draw a full droplet
             if (thirstLevel > dropletHalf)
             {
-                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 4) * 9, 0, 9, 9, 9);
+                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 9);
             }
             else if (thirstLevel == dropletHalf) // Draw a half droplet
             {
-                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 5) * 9, 0, 9, 9, 9);
+                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 9);
             }
         }
     }
