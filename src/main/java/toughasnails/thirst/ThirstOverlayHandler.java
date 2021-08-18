@@ -33,7 +33,7 @@ public class ThirstOverlayHandler
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
 
-    public static final IIngameOverlay THIRST_LEVEL_ELEMENT = OverlayRegistry.registerOverlayTop("Thirst Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+    public static final IIngameOverlay THIRST_LEVEL_ELEMENT = OverlayRegistry.registerOverlayBelow(ForgeIngameGui.AIR_LEVEL_ELEMENT, "Thirst Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
         Minecraft minecraft = Minecraft.getInstance();
         if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
         {
