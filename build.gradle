@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -23,7 +23,7 @@ repositories { mavenLocal() }
 group = "com.github.glitchfiend"
 archivesBaseName = "ToughAsNails"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 def getGitHash = {
     def stdout = new ByteArrayOutputStream()
@@ -101,8 +101,7 @@ jar {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
-    implementation('cpw.mods:securejarhandler') { version { strictly '0.9.45' } } // TODO: Remove this
+    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
 
 task deobfJar(type: Jar) {
