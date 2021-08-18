@@ -38,7 +38,7 @@ pipeline {
                 }
             }
             steps {
-                writeChangelog(currentBuild, "build/BiomesOPlenty-${env.MYVERSION}-changelog.txt")
+                writeChangelog(currentBuild, "build/ToughAsNails-${env.MYVERSION}-changelog.txt")
             }
         }
         stage('publish') {
