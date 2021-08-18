@@ -7,12 +7,11 @@ package toughasnails.init;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.thirst.ThirstData;
-import toughasnails.thirst.ThirstStorage;
 
 public class ModCapabilities
 {
     public static void init()
     {
-        CapabilityManager.INSTANCE.register(IThirst.class, new ThirstStorage(), () -> new ThirstData());
+        CapabilityManager.INSTANCE.register(IThirst.class);
     }
 }

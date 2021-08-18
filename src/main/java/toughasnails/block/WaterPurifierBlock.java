@@ -4,41 +4,32 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import net.minecraft.block.*;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Containers;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import toughasnails.tileentity.WaterPurifierTileEntity;
-
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import toughasnails.api.block.TANBlocks;
+import toughasnails.api.tileentity.TANTileEntityTypes;
+import toughasnails.block.entity.WaterPurifierBlockEntity;
+
+import javax.annotation.Nullable;
 
 public class WaterPurifierBlock extends BaseEntityBlock
 {
@@ -66,9 +57,16 @@ public class WaterPurifierBlock extends BaseEntityBlock
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockGetter worldIn)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return new WaterPurifierTileEntity();
+        return new WaterPurifierBlockEntity(pos, state);
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
+    {
+        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<WaterPurifierBlockEntity>)TANTileEntityTypes.WATER_PURIFIER, WaterPurifierBlockEntity::serverTick);
     }
 
     @Override
@@ -83,9 +81,9 @@ public class WaterPurifierBlock extends BaseEntityBlock
         if (stack.hasCustomHoverName())
         {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof WaterPurifierTileEntity)
+            if (tile instanceof WaterPurifierBlockEntity)
             {
-                ((WaterPurifierTileEntity)tile).setCustomName(stack.getHoverName());
+                ((WaterPurifierBlockEntity)tile).setCustomName(stack.getHoverName());
             }
         }
 
@@ -97,9 +95,9 @@ public class WaterPurifierBlock extends BaseEntityBlock
         if (!state.is(newState.getBlock()))
         {
             BlockEntity tileentity = worldIn.getBlockEntity(pos);
-            if (tileentity instanceof WaterPurifierTileEntity)
+            if (tileentity instanceof WaterPurifierBlockEntity)
             {
-                Containers.dropContents(worldIn, pos, (WaterPurifierTileEntity)tileentity);
+                Containers.dropContents(worldIn, pos, (WaterPurifierBlockEntity)tileentity);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
 

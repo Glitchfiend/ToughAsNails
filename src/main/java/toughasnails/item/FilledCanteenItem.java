@@ -51,7 +51,7 @@ public class FilledCanteenItem extends Item
             }
         }
 
-        return ItemUtils.useDrink(world, player, hand);
+        return ItemUtils.startUsingInstantly(world, player, hand);
     }
 
     protected ItemStack replaceCanteen(ItemStack oldStack, Player player, ItemStack newStack)
@@ -72,7 +72,7 @@ public class FilledCanteenItem extends Item
         player.awardStat(Stats.ITEM_USED.get(this));
 
         // Damage the item if we're on the server and the player isn't in creative mode
-        if (!worldIn.isClientSide && !player.abilities.instabuild)
+        if (!worldIn.isClientSide && !player.getAbilities().instabuild)
         {
             boolean[] broken = new boolean[]{false};
             stack.hurtAndBreak(1, player, (entity) -> broken[0] = true);

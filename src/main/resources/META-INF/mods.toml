@@ -7,7 +7,7 @@ logoFile="tan_logo.png"
 
 [[mods]]
     modId="toughasnails"
-    version="${version}"
+    version="${file.jarVersion}"
     displayName="Tough As Nails"
 	authors="Adubbz, Forstride"
     description='''

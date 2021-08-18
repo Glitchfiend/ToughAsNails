@@ -5,20 +5,38 @@
 package toughasnails.thirst;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import org.apache.logging.log4j.core.jmx.Server;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
+import toughasnails.thirst.ThirstData;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ThirstStorage implements Capability.IStorage<IThirst>
+public class ThirstCapabilityProvider implements INBTSerializable<CompoundTag>, ICapabilityProvider
 {
-    @Nullable
+    private Capability<IThirst> capability;
+    private IThirst instance;
+
+    public ThirstCapabilityProvider(Capability capability, IThirst instance)
+    {
+        this.capability = capability;
+        this.instance = instance;
+    }
+
+    @Nonnull
     @Override
-    public Tag writeNBT(Capability<IThirst> capability, IThirst instance, Direction side)
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side)
+    {
+        return cap == this.capability ? LazyOptional.of(() -> instance).cast() : LazyOptional.empty();
+    }
+
+    @Override
+    public CompoundTag serializeNBT()
     {
         CompoundTag compound = new CompoundTag();
 
@@ -42,7 +60,7 @@ public class ThirstStorage implements Capability.IStorage<IThirst>
     }
 
     @Override
-    public void readNBT(Capability<IThirst> capability, IThirst instance, Direction side, Tag nbt)
+    public void deserializeNBT(CompoundTag nbt)
     {
         if (!(nbt instanceof CompoundTag))
             throw new IllegalArgumentException("Thirst data must be a CompoundNBT!");

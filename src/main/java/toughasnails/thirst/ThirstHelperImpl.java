@@ -26,7 +26,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     public boolean canDrink(Player player, boolean ignoreThirst)
     {
         IThirst thirst = getThirst(player);
-        return (player.abilities.invulnerable || ignoreThirst || thirst.isThirsty()) && isThirstEnabled();
+        return (player.getAbilities().invulnerable || ignoreThirst || thirst.isThirsty()) && isThirstEnabled();
     }
 
     @Override

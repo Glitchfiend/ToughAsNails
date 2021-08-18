@@ -7,8 +7,6 @@
  ******************************************************************************/
 package toughasnails.core;
 
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -19,8 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.init.*;
 import toughasnails.network.PacketHandler;
-
-import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
 
 @Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNails

@@ -24,6 +24,6 @@ public class ModPotions
     public static void register(String name, MobEffect effect)
     {
         effect.setRegistryName(name);
-        ForgeRegistries.POTIONS.register(effect);
+        ForgeRegistries.MOB_EFFECTS.register(effect);
     }
 }

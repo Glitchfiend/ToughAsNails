@@ -2,41 +2,39 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.tileentity;
+package toughasnails.block.entity;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.tileentity.TANTileEntityTypes;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
-import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 import javax.annotation.Nullable;
 
-public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements WorldlyContainer, TickableBlockEntity
+public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {
     private static final int[] SLOTS_FOR_UP = new int[]{0};
     private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
@@ -63,13 +61,13 @@ public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements
         {
             switch(index) {
                 case 0:
-                    return WaterPurifierTileEntity.this.filterTimeRemaining;
+                    return WaterPurifierBlockEntity.this.filterTimeRemaining;
                 case 1:
-                    return WaterPurifierTileEntity.this.filterDuration;
+                    return WaterPurifierBlockEntity.this.filterDuration;
                 case 2:
-                    return WaterPurifierTileEntity.this.purifyProgress;
+                    return WaterPurifierBlockEntity.this.purifyProgress;
                 case 3:
-                    return WaterPurifierTileEntity.this.purifyTotalTime;
+                    return WaterPurifierBlockEntity.this.purifyTotalTime;
                 default:
                     return 0;
             }
@@ -80,16 +78,16 @@ public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements
         {
             switch(index) {
                 case 0:
-                    WaterPurifierTileEntity.this.filterTimeRemaining = value;
+                    WaterPurifierBlockEntity.this.filterTimeRemaining = value;
                     break;
                 case 1:
-                    WaterPurifierTileEntity.this.filterDuration = value;
+                    WaterPurifierBlockEntity.this.filterDuration = value;
                     break;
                 case 2:
-                    WaterPurifierTileEntity.this.purifyProgress = value;
+                    WaterPurifierBlockEntity.this.purifyProgress = value;
                     break;
                 case 3:
-                    WaterPurifierTileEntity.this.purifyTotalTime = value;
+                    WaterPurifierBlockEntity.this.purifyTotalTime = value;
             }
 
         }
@@ -101,15 +99,15 @@ public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements
         }
     };
 
-    public WaterPurifierTileEntity()
+    public WaterPurifierBlockEntity(BlockPos pos, BlockState state)
     {
-        super(TANTileEntityTypes.WATER_PURIFIER);
+        super(TANTileEntityTypes.WATER_PURIFIER, pos, state);
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt)
+    public void load(CompoundTag nbt)
     {
-        super.load(state, nbt);
+        super.load(nbt);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(nbt, this.items);
         this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining");
@@ -130,35 +128,34 @@ public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements
         return nbt;
     }
 
-    @Override
-    public void tick()
+    public static void serverTick(Level level, BlockPos pos, BlockState state, WaterPurifierBlockEntity blockEntity)
     {
-        boolean previouslyFiltering = this.currentlyFiltering();
+        boolean previouslyFiltering = blockEntity.currentlyFiltering();
         boolean changed = false;
 
         // Reduce the time remaining on the filter whilst purification is occurring
-        if (this.currentlyFiltering() && this.purifyProgress > 0)
+        if (blockEntity.currentlyFiltering() && blockEntity.purifyProgress > 0)
         {
-            --this.filterTimeRemaining;
+            --blockEntity.filterTimeRemaining;
         }
 
-        if (!this.level.isClientSide)
+        if (!blockEntity.level.isClientSide)
         {
-            ItemStack filterStack = this.items.get(1);
-            if (this.currentlyFiltering() || !filterStack.isEmpty() && !this.items.get(0).isEmpty())
+            ItemStack filterStack = blockEntity.items.get(1);
+            if (blockEntity.currentlyFiltering() || !filterStack.isEmpty() && !blockEntity.items.get(0).isEmpty())
             {
-                Recipe<?> irecipe = this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, this, this.level).orElse(null);
-                if (!this.currentlyFiltering() && this.canFilter(irecipe))
+                Recipe<?> irecipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
+                if (!blockEntity.currentlyFiltering() && blockEntity.canFilter(irecipe))
                 {
-                    this.filterTimeRemaining = this.getFilterDuration(filterStack);
-                    this.filterDuration = this.filterTimeRemaining;
+                    blockEntity.filterTimeRemaining = blockEntity.getFilterDuration(filterStack);
+                    blockEntity.filterDuration = blockEntity.filterTimeRemaining;
 
                     // If we are now filtering, consume the filter item
-                    if (this.currentlyFiltering())
+                    if (blockEntity.currentlyFiltering())
                     {
                         changed = true;
                         if (filterStack.hasContainerItem())
-                            this.items.set(1, filterStack.getContainerItem());
+                            blockEntity.items.set(1, filterStack.getContainerItem());
                         else if (!filterStack.isEmpty())
                         {
                             filterStack.shrink(1);
@@ -167,43 +164,43 @@ public class WaterPurifierTileEntity extends BaseContainerBlockEntity implements
                             // Normally this would be something like an empty bucket
                             if (filterStack.isEmpty())
                             {
-                                this.items.set(1, filterStack.getContainerItem());
+                                blockEntity.items.set(1, filterStack.getContainerItem());
                             }
                         }
                     }
                 }
 
-                if (this.currentlyFiltering() && this.canFilter(irecipe))
+                if (blockEntity.currentlyFiltering() && blockEntity.canFilter(irecipe))
                 {
-                    ++this.purifyProgress;
+                    ++blockEntity.purifyProgress;
 
-                    if (this.purifyProgress == this.purifyTotalTime)
+                    if (blockEntity.purifyProgress == blockEntity.purifyTotalTime)
                     {
-                        this.purifyProgress = 0;
-                        this.purifyTotalTime = this.getTotalPurifyTime();
-                        this.filter(irecipe);
+                        blockEntity.purifyProgress = 0;
+                        blockEntity.purifyTotalTime = blockEntity.getTotalPurifyTime();
+                        blockEntity.filter(irecipe);
                         changed = true;
                     }
                 }
                 else
                 {
-                    this.purifyProgress = 0;
+                    blockEntity.purifyProgress = 0;
                 }
             }
-            else if (!this.currentlyFiltering() && this.purifyProgress > 0)
+            else if (!blockEntity.currentlyFiltering() && blockEntity.purifyProgress > 0)
             {
-                this.purifyProgress = Mth.clamp(this.purifyProgress - 2, 0, this.purifyTotalTime);
+                blockEntity.purifyProgress = Mth.clamp(blockEntity.purifyProgress - 2, 0, blockEntity.purifyTotalTime);
             }
 
-            if (previouslyFiltering != this.currentlyFiltering())
+            if (previouslyFiltering != blockEntity.currentlyFiltering())
             {
                 changed = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(WaterPurifierBlock.PURIFYING, Boolean.valueOf(this.currentlyFiltering())), 3);
+                blockEntity.level.setBlock(blockEntity.worldPosition, blockEntity.level.getBlockState(blockEntity.worldPosition).setValue(WaterPurifierBlock.PURIFYING, Boolean.valueOf(blockEntity.currentlyFiltering())), 3);
             }
         }
 
         // Mark as changed
-        if (changed) this.setChanged();
+        if (changed) blockEntity.setChanged();
     }
 
     @Override

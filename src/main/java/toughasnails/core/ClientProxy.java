@@ -1,13 +1,10 @@
 package toughasnails.core;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import toughasnails.api.block.TANBlocks;
-import toughasnails.api.thirst.IThirst;
-import toughasnails.api.thirst.ThirstHelper;
 
 import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
 import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;

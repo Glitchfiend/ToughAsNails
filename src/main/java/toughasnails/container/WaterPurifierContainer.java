@@ -19,8 +19,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.inventory.container.TANContainerTypes;
+import toughasnails.block.entity.WaterPurifierBlockEntity;
 import toughasnails.crafting.WaterPurifierRecipe;
-import toughasnails.tileentity.WaterPurifierTileEntity;
 
 public class WaterPurifierContainer extends AbstractContainerMenu
 {
@@ -153,7 +153,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     protected boolean isFilter(ItemStack stack)
     {
-        return WaterPurifierTileEntity.isFilter(stack);
+        return WaterPurifierBlockEntity.isFilter(stack);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.block;
 
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -49,15 +50,15 @@ public class RainCollectorBlock extends Block
 
         if (waterLevel > 0 && !worldIn.isClientSide)
         {
-            if (!player.abilities.instabuild)
+            if (!player.getAbilities().instabuild)
             {
                 ItemStack newStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
                 player.awardStat(Stats.USE_CAULDRON);
                 stack.shrink(1);
 
                 if (stack.isEmpty()) player.setItemInHand(hand, newStack);
-                else if (!player.inventory.add(newStack)) player.drop(newStack, false);
-                else if (player instanceof ServerPlayer) ((ServerPlayer)player).refreshContainer(player.inventoryMenu);
+                else if (!player.getInventory().add(newStack)) player.drop(newStack, false);
+                else player.inventoryMenu.sendAllDataToRemote();
             }
 
             worldIn.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -74,15 +75,14 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public void handleRain(Level worldIn, BlockPos pos)
+    public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation)
     {
-        float temp = worldIn.getBiome(pos).getTemperature(pos);
+        float temp = level.getBiome(pos).getTemperature(pos);
         if (!(temp < 0.15F))
         {
-            BlockState state = worldIn.getBlockState(pos);
             if (state.getValue(LEVEL) < 3)
             {
-                worldIn.setBlock(pos, state.cycle(LEVEL), 2);
+                level.setBlock(pos, state.cycle(LEVEL), 2);
             }
         }
     }

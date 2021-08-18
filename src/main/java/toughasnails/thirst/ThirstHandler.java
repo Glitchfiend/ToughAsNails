@@ -15,7 +15,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
@@ -32,7 +31,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.potion.TANEffects;
@@ -44,7 +43,6 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.network.MessageDrinkInWorld;
 import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
-import toughasnails.util.capability.SimpleCapabilityProvider;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -67,7 +65,7 @@ public class ThirstHandler
         // This is mainly to ensure a consistent working environment
         if (event.getObject() instanceof Player)
         {
-            event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "thirst"), new SimpleCapabilityProvider<IThirst>(TANCapabilities.THIRST, new ThirstData()));
+            event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "thirst"), new ThirstCapabilityProvider(TANCapabilities.THIRST, new ThirstData()));
         }
     }
 

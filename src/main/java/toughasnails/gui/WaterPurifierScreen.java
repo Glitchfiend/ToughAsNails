@@ -7,6 +7,7 @@ package toughasnails.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -33,12 +34,6 @@ public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierCo
     }
 
     @Override
-    public void tick()
-    {
-        super.tick();
-    }
-
-    @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks)
     {
         this.renderBackground(stack);
@@ -49,8 +44,9 @@ public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierCo
     @Override
     protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
     {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         int leftPos = this.leftPos;
         int topPos = this.topPos;
         this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);

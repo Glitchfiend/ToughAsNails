@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemUtils;
@@ -46,7 +45,7 @@ public abstract class DrinkItem extends Item
 
         player.awardStat(Stats.ITEM_USED.get(this));
 
-        if (!player.abilities.instabuild)
+        if (!player.getAbilities().instabuild)
         {
             stack.shrink(1);
 
@@ -55,7 +54,7 @@ public abstract class DrinkItem extends Item
                 return new ItemStack(Items.GLASS_BOTTLE);
             }
 
-            player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+            player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
         }
 
         return stack;
@@ -78,7 +77,7 @@ public abstract class DrinkItem extends Item
     {
         if (ThirstHelper.canDrink(player, this.canAlwaysDrink()))
         {
-            return ItemUtils.useDrink(world, player, hand);
+            return ItemUtils.startUsingInstantly(world, player, hand);
         }
 
         return InteractionResultHolder.fail(player.getItemInHand(hand));

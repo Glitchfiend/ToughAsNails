@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import toughasnails.api.block.TANBlocks;
-import toughasnails.tileentity.WaterPurifierTileEntity;
+import toughasnails.block.entity.WaterPurifierBlockEntity;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModTileEntities
@@ -22,7 +22,7 @@ public class ModTileEntities
     @SubscribeEvent
     public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event)
     {
-        register("water_purifier", BlockEntityType.Builder.of(WaterPurifierTileEntity::new, TANBlocks.WATER_PURIFIER));
+        register("water_purifier", BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER));
     }
 
     public static <T extends BlockEntity> void register(String name, BlockEntityType.Builder<T> builder)
@@ -30,6 +30,6 @@ public class ModTileEntities
         Type<?> type = Util.fetchChoiceType(References.BLOCK_ENTITY, name);
         BlockEntityType<?> tileEntityType = builder.build(type);
         tileEntityType.setRegistryName(name);
-        ForgeRegistries.TILE_ENTITIES.register(tileEntityType);
+        ForgeRegistries.BLOCK_ENTITIES.register(tileEntityType);
     }
 }
