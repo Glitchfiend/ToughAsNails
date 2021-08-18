@@ -13,8 +13,8 @@ import toughasnails.config.ServerConfig;
 public class ThirstHooks
 {
     /*
-       Hooks called by ASM
-    */
+     * Hooks called by ASM
+     */
     public static void onCauseFoodExhaustion(Player player, float exhaustion)
     {
         if (ServerConfig.enableThirst.get())

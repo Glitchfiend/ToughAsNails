@@ -115,7 +115,7 @@ var SET_SPRINTING = ASM.mapMethod("m_6858_");
         ASM.MethodType.STATIC
     ));
     node.instructions.insertBefore(node.instructions.getFirst(), insns);
-    log("Successfully inserted hook into aiStep");
+    log("Successfully inserted hook into Player aiStep");
 
     var startIndex = 0;
     var patchedCount = 0;
