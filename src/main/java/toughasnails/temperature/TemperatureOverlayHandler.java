@@ -41,6 +41,7 @@ public class TemperatureOverlayHandler
 
     private static long updateCounter;
     private static long flashCounter;
+    private static long changeDelay;
     private static TemperatureLevel prevTemperatureLevel;
 
     @SubscribeEvent
@@ -84,6 +85,24 @@ public class TemperatureOverlayHandler
         if (prevTemperatureLevel == null)
             prevTemperatureLevel = temperature;
 
+        if (updateCounter > changeDelay)
+        {
+            // Flash for 16 ticks when the temperature changes
+            if (prevTemperatureLevel != temperature)
+            {
+                flashCounter = updateCounter + 3;
+                changeDelay = updateCounter + 20; // Delay further changes by 1 second
+            }
+
+            // Update the prevTemperatureLevel to the current temperature level
+            prevTemperatureLevel = temperature;
+        }
+        else
+        {
+            // Revert to the previous temperature level whilst the delay is in effect
+            temperature = prevTemperatureLevel;
+        }
+
         // Shake the temperature meter when ICY or HOT
         if (temperature == TemperatureLevel.ICY || temperature == TemperatureLevel.HOT)
         {
@@ -94,18 +113,11 @@ public class TemperatureOverlayHandler
             }
         }
 
-        // Flash for 16 ticks when the temperature changes
-        if (prevTemperatureLevel != temperature)
-            flashCounter = updateCounter + 10;
-
-        // Update the prevTemperatureLevel to the current temperature level
-        prevTemperatureLevel = temperature;
-
         int iconIndex = temperature.ordinal() * 16;
         int v = 0;
 
         // Adjust v for flashing
-        if (flashCounter > updateCounter && (flashCounter - updateCounter) / 3L % 2L == 1L)
+        if (flashCounter > updateCounter)
             v += 16;
 
         GuiUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, v, 16, 16, 9);

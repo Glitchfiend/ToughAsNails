@@ -42,8 +42,6 @@ public class TemperatureHandler
     // TODO: Potion effects
     // TODO: Armor enchantments
 
-
-
     @SubscribeEvent
     public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
     {
