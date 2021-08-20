@@ -30,6 +30,7 @@ public class PacketHandler
     {
         registerMessage(MessageUpdateThirst.class, MessageUpdateThirst::encode, MessageUpdateThirst::decode, MessageUpdateThirst.Handler::handle);
         registerMessage(MessageDrinkInWorld.class, MessageDrinkInWorld::encode, MessageDrinkInWorld::decode, MessageDrinkInWorld.Handler::handle);
+        registerMessage(MessageUpdateTemperature.class, MessageUpdateTemperature::encode, MessageUpdateTemperature::decode, MessageUpdateTemperature.Handler::handle);
     }
 
     private static <T> void registerMessage(Class<T> type, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer)

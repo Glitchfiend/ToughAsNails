@@ -20,8 +20,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fmlclient.gui.GuiUtils;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.api.thirst.IThirst;
-import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.config.ServerConfig;
 
 import java.util.Random;
@@ -65,7 +63,7 @@ public class TemperatureOverlayHandler
             return;
 
         Player player = minecraft.player;
-        TemperatureLevel temperature = TemperatureHelper.getPlayerTemperature(player);
+        TemperatureLevel temperature = TemperatureHelper.getTemperatureForPlayer(player);
 
         // When the update counter isn't incrementing, ensure the same numbers are produced (freezes moving gui elements)
         RANDOM.setSeed(updateCounter * 312871L);

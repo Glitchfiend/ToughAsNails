@@ -9,18 +9,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.temperature.IPositionalTemperatureModifier;
+import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.api.thirst.IThirst;
+import toughasnails.config.ServerConfig;
 import toughasnails.core.ToughAsNails;
 
 import java.util.List;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
-    // TODO: Offset by nearby heat sources
-    // TODO: Offset by weather
-
     private static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
 
     @Override
@@ -37,18 +38,20 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return temperature;
     }
 
+    private static ITemperature lastTemperature;
+
     @Override
-    public TemperatureLevel getPlayerTemperature(Player player)
+    public ITemperature getPlayerTemperature(Player player)
     {
-        TemperatureLevel temperature = getTemperatureAtPos(player.level, new BlockPos(player.position()));
-
-        // TODO: Offset by clothing
-        // TODO: Offset by in water
-        // TODO: Offset when on fire
-        // TODO: Potion effects
-        // TODO: Armor enchantments
-
+        ITemperature temperature = player.getCapability(TANCapabilities.TEMPERATURE).orElse(lastTemperature);
+        lastTemperature = temperature;
         return temperature;
+    }
+
+    @Override
+    public boolean isTemperatureEnabled()
+    {
+        return ServerConfig.enableTemperature.get();
     }
 
     private static TemperatureLevel getBiomeTemperatureLevel(Biome biome, BlockPos pos)
@@ -67,7 +70,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
         // Drop the temperature during the night
-        if (level.getDayTime() % 24000L > 13000L)
+        if (level.isNight())
         {
             if (current == TemperatureLevel.HOT)
                 current = current.decrement(2);
@@ -77,6 +80,4 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
         return current;
     }
-
-
 }

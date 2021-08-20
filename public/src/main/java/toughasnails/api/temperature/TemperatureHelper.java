@@ -7,8 +7,6 @@ package toughasnails.api.temperature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import toughasnails.api.thirst.IThirst;
-import toughasnails.api.thirst.ThirstHelper;
 
 public class TemperatureHelper
 {
@@ -23,9 +21,33 @@ public class TemperatureHelper
         return Impl.INSTANCE.getTemperatureAtPos(level, pos);
     }
 
-    public static TemperatureLevel getPlayerTemperature(Player player)
+    /**
+     * Get the temperature for a player.
+     * @param player the player.
+     * @return temperature level.
+     */
+    public static TemperatureLevel getTemperatureForPlayer(Player player)
+    {
+        return getTemperatureData(player).getLevel();
+    }
+
+    /**
+     * Obtains the temperature data for a player.
+     * @param player the player to obtain temperature data for
+     * @return the player's temperature data
+     */
+    public static ITemperature getTemperatureData(Player player)
     {
         return Impl.INSTANCE.getPlayerTemperature(player);
+    }
+
+    /**
+     * Checks whether temperature is enabled.
+     * @return whether temperature is enabled.
+     */
+    public static boolean isTemperatureEnabled()
+    {
+        return Impl.INSTANCE.isTemperatureEnabled();
     }
 
     /** Internal implementation details */
@@ -36,7 +58,8 @@ public class TemperatureHelper
         public interface ITemperatureHelper
         {
             TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos);
-            TemperatureLevel getPlayerTemperature(Player player);
+            ITemperature getPlayerTemperature(Player player);
+            boolean isTemperatureEnabled();
         }
     }
 }

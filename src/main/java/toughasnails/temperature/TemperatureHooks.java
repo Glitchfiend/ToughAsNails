@@ -21,7 +21,7 @@ public class TemperatureHooks
             Player player = (Player)entity;
             if (!entity.isInPowderSnow || !entity.canFreeze())
             {
-                if (TemperatureHelper.getPlayerTemperature(player) == TemperatureLevel.ICY)
+                if (TemperatureHelper.getTemperatureForPlayer(player) == TemperatureLevel.ICY)
                 {
                     // Add 3 ticks to negate the 2 subtracted earlier in aiStep
                     player.setTicksFrozen(entity.getTicksFrozen() + 3);

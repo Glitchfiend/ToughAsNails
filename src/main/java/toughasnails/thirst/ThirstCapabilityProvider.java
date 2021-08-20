@@ -62,19 +62,14 @@ public class ThirstCapabilityProvider implements INBTSerializable<CompoundTag>, 
     @Override
     public void deserializeNBT(CompoundTag nbt)
     {
-        if (!(nbt instanceof CompoundTag))
-            throw new IllegalArgumentException("Thirst data must be a CompoundNBT!");
-
-        CompoundTag compound = (CompoundTag)nbt;
-
-        if (compound.contains("thirstLevel", 99))
+        if (nbt.contains("thirstLevel", 99))
         {
             if (ServerConfig.enableThirst.get())
             {
-                instance.setThirst(compound.getInt("thirstLevel"));
-                instance.setTickTimer(compound.getInt("thirstTickTimer"));
-                instance.setHydration(compound.getFloat("thirstHydrationLevel"));
-                instance.setExhaustion(compound.getFloat("thirstExhaustionLevel"));
+                instance.setThirst(nbt.getInt("thirstLevel"));
+                instance.setTickTimer(nbt.getInt("thirstTickTimer"));
+                instance.setHydration(nbt.getFloat("thirstHydrationLevel"));
+                instance.setExhaustion(nbt.getFloat("thirstExhaustionLevel"));
             }
             else
             {
