@@ -22,6 +22,10 @@ import java.util.List;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
+    // Positional:
+    // TODO: Offset by nearby heat sources
+    // TODO: Offset by season
+
     private static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
 
     @Override

@@ -9,36 +9,33 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
-import toughasnails.api.temperature.IPositionalTemperatureModifier;
-import toughasnails.api.temperature.ITemperature;
-import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.api.temperature.*;
 import toughasnails.config.ServerConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.network.MessageUpdateTemperature;
 import toughasnails.network.PacketHandler;
-import toughasnails.thirst.ThirstCapabilityProvider;
-import toughasnails.thirst.ThirstData;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHandler
 {
+    private static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHandler::immersionModifier, TemperatureHandler::armorModifier);
+
+    // TODO: Adjust these to be reasonable items
+    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET);
+    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
+
     private static TemperatureLevel lastSentTemperature = null;
 
-    // Positional:
-    // TODO: Offset by nearby heat sources
-    // Player:
-    // TODO: Offset by weather
-    // TODO: Offset by clothing
-    // TODO: Offset by in water
-    // TODO: Offset when on fire
     // TODO: Potion effects
     // TODO: Armor enchantments
 
@@ -72,6 +69,11 @@ public class TemperatureHandler
         ITemperature data = TemperatureHelper.getTemperatureData(player);
         TemperatureLevel newLevel = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
 
+        for (IPlayerTemperatureModifier modifier : playerModifiers)
+        {
+            newLevel = modifier.modify(player, newLevel);
+        }
+
         // Update the player's temperature to the new level
         data.setLevel(newLevel);
 
@@ -96,5 +98,26 @@ public class TemperatureHandler
     {
         TemperatureLevel temperature = TemperatureHelper.getTemperatureForPlayer(player);
         PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateTemperature(temperature));
+    }
+
+    private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
+    {
+        if (player.isOnFire()) current = current.increment(2);
+        if (player.isInPowderSnow) current = current.decrement(2);
+        if (player.isInWaterOrRain()) current = current.decrement(1);
+        return current;
+    }
+
+    private static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
+    {
+        AtomicInteger coolingPieces = new AtomicInteger();
+        AtomicInteger heatingPieces = new AtomicInteger();
+
+        player.getArmorSlots().forEach((stack -> {
+            if (coolingArmorPieces.contains(stack.getItem())) coolingPieces.getAndIncrement();
+            if (heatingArmorPieces.contains(stack.getItem())) heatingPieces.getAndIncrement();
+        }));
+
+        return current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
     }
 }

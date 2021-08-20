@@ -12,7 +12,7 @@ public enum TemperatureLevel
 
     public TemperatureLevel increment(int amount)
     {
-        return TemperatureLevel.values()[Mth.clamp(this.ordinal() + amount, 0, TemperatureLevel.values().length)];
+        return TemperatureLevel.values()[Mth.clamp(this.ordinal() + amount, 0, TemperatureLevel.values().length - 1)];
     }
 
     public TemperatureLevel decrement(int amount)
