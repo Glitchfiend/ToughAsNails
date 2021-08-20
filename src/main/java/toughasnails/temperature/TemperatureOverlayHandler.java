@@ -41,7 +41,9 @@ public class TemperatureOverlayHandler
         }
     });
 
-    private static int updateCounter;
+    private static long updateCounter;
+    private static long flashCounter;
+    private static TemperatureLevel prevTemperatureLevel;
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
@@ -81,6 +83,10 @@ public class TemperatureOverlayHandler
         int left = width / 2 - 8;
         int top = height - 52;
 
+        if (prevTemperatureLevel == null)
+            prevTemperatureLevel = temperature;
+
+        // Shake the temperature meter when ICY or HOT
         if (temperature == TemperatureLevel.ICY || temperature == TemperatureLevel.HOT)
         {
             if ((updateCounter % 1) == 0)
@@ -90,7 +96,20 @@ public class TemperatureOverlayHandler
             }
         }
 
+        // Flash for 16 ticks when the temperature changes
+        if (prevTemperatureLevel != temperature)
+            flashCounter = updateCounter + 10;
+
+        // Update the prevTemperatureLevel to the current temperature level
+        prevTemperatureLevel = temperature;
+
         int iconIndex = temperature.ordinal() * 16;
-        GuiUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, 0, 16, 16, 9);
+        int v = 0;
+
+        // Adjust v for flashing
+        if (flashCounter > updateCounter && (flashCounter - updateCounter) / 3L % 2L == 1L)
+            v += 16;
+
+        GuiUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, v, 16, 16, 9);
     }
 }
