@@ -30,8 +30,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
-    protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier, TemperatureHelperImpl::armorModifier);
 
@@ -69,20 +67,20 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public void setTicksHyperthermic(Player player, int ticks)
     {
-        player.getEntityData().set(DATA_TICKS_HYPERTHERMIC, ticks);
+        this.getPlayerTemperature(player).setTicksHyperthermic(ticks);
     }
 
     @Override
     public float getPercentHyperthermic(Player player)
     {
-        int i = getTicksRequiredForHyperthermia();
+        int i = this.getTicksRequiredForHyperthermia();
         return (float)Math.min(getTicksHyperthermic(player), i) / (float)i;
     }
 
     @Override
     public boolean isFullyHyperthermic(Player player)
     {
-        return getTicksHyperthermic(player) >= getTicksRequiredForHyperthermia();
+        return this.getTicksHyperthermic(player) >= this.getTicksRequiredForHyperthermia();
     }
 
     @Override
@@ -94,7 +92,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public int getTicksHyperthermic(Player player)
     {
-        return player.getEntityData().get(DATA_TICKS_HYPERTHERMIC);
+        return this.getPlayerTemperature(player).getTicksHyperthermic();
     }
 
     @Override

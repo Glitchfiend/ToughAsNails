@@ -12,6 +12,7 @@ public class TemperatureData implements ITemperature
     public static final TemperatureLevel DEFAULT_LEVEL = TemperatureLevel.NEUTRAL;
 
     private TemperatureLevel level = DEFAULT_LEVEL;
+    private int ticksHyperthermic;
 
     @Override
     public TemperatureLevel getLevel()
@@ -20,8 +21,20 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
+    public int getTicksHyperthermic()
+    {
+        return this.ticksHyperthermic;
+    }
+
+    @Override
     public void setLevel(TemperatureLevel level)
     {
         this.level = level;
+    }
+
+    @Override
+    public void setTicksHyperthermic(int ticks)
+    {
+        this.ticksHyperthermic = ticks;
     }
 }

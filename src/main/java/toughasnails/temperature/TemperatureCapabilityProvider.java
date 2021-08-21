@@ -43,11 +43,13 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
         if (ServerConfig.enableTemperature.get())
         {
             compound.putInt("temperatureLevel", instance.getLevel().ordinal());
+            compound.putInt("hyperthermiaTicks", instance.getTicksHyperthermic());
         }
         else
         {
             // Save default values
             compound.putInt("temperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            compound.putInt("hyperthermiaTicks", 0);
         }
 
         return compound;
@@ -61,11 +63,13 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
             if (ServerConfig.enableTemperature.get())
             {
                 instance.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
+                instance.setTicksHyperthermic(nbt.getInt("hyperthermiaTicks"));
             }
             else
             {
                 // Use default values if temperature is disabled
                 instance.setLevel(TemperatureData.DEFAULT_LEVEL);
+                instance.setTicksHyperthermic(0);
             }
         }
     }

@@ -20,20 +20,23 @@ import java.util.function.Supplier;
 public class MessageUpdateTemperature
 {
     public TemperatureLevel temperatureLevel;
+    public int hyperthermiaTicks;
 
-    public MessageUpdateTemperature(TemperatureLevel temperatureLevel)
+    public MessageUpdateTemperature(TemperatureLevel temperatureLevel, int hyperthermiaTicks)
     {
         this.temperatureLevel = temperatureLevel;
+        this.hyperthermiaTicks = hyperthermiaTicks;
     }
 
     public static void encode(MessageUpdateTemperature packet, FriendlyByteBuf buf)
     {
         buf.writeEnum(packet.temperatureLevel);
+        buf.writeInt(packet.hyperthermiaTicks);
     }
 
     public static MessageUpdateTemperature decode(FriendlyByteBuf buf)
     {
-        return new MessageUpdateTemperature(buf.readEnum(TemperatureLevel.class));
+        return new MessageUpdateTemperature(buf.readEnum(TemperatureLevel.class), buf.readInt());
     }
 
     public static class Handler
@@ -45,17 +48,18 @@ public class MessageUpdateTemperature
                 if (FMLEnvironment.dist != Dist.CLIENT)
                     return;
 
-                updateTemperature(packet.temperatureLevel);
+                updateTemperature(packet.temperatureLevel, packet.hyperthermiaTicks);
             });
             context.get().setPacketHandled(true);
         }
 
         @OnlyIn(Dist.CLIENT)
-        private static void updateTemperature(TemperatureLevel temperature)
+        private static void updateTemperature(TemperatureLevel temperature, int hyperthermiaTicks)
         {
             Player player = Minecraft.getInstance().player;
             ITemperature data = TemperatureHelper.getTemperatureData(player);
             data.setLevel(temperature);
+            data.setTicksHyperthermic(hyperthermiaTicks);
         }
     }
 }
