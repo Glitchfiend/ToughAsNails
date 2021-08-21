@@ -5,12 +5,14 @@
 package toughasnails.api.potion;
 
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANEffects
+public class TANPotions
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect COLD_RESISTANCE = null;
-    public static final MobEffect HEAT_RESISTANCE = null;
+    public static final Potion COLD_RESISTANCE = null;
+    public static final Potion LONG_COLD_RESISTANCE = null;
+    public static final Potion HEAT_RESISTANCE = null;
+    public static final Potion LONG_HEAT_RESISTANCE = null;
 }

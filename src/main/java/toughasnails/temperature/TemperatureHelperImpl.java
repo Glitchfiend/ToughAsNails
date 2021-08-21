@@ -30,7 +30,6 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
     // Player:
-    // TODO: Potion effects
     // TODO: Armor enchantments
 
     private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET);
