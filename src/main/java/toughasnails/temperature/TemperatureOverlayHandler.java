@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,11 +17,13 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fmlclient.gui.GuiUtils;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.ServerConfig;
+import toughasnails.core.ToughAsNails;
 
 import java.util.Random;
 
@@ -29,6 +32,7 @@ public class TemperatureOverlayHandler
 {
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
+    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNails.MOD_ID, "textures/misc/hyperthermia_outline.png");
 
     public static final IIngameOverlay TEMPERATURE_LEVEL_ELEMENT = OverlayRegistry.registerOverlayTop("Temperature Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
         Minecraft minecraft = Minecraft.getInstance();
@@ -37,6 +41,11 @@ public class TemperatureOverlayHandler
             gui.setupOverlayRenderState(true, false);
             renderTemperature(gui, mStack, partialTicks, screenWidth, screenHeight);
         }
+    });
+
+    public static final IIngameOverlay HYPERTHERMIA_ELEMENT = OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FROSTBITE_ELEMENT, "Hyperthermia", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        gui.setupOverlayRenderState(true, false);
+        renderHyperthermia(gui, mStack);
     });
 
     private static long updateCounter;
@@ -75,6 +84,14 @@ public class TemperatureOverlayHandler
             drawTemperature(mStack, width, height, temperature);
             RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
         }
+    }
+
+    private static void renderHyperthermia(ForgeIngameGui gui, PoseStack pStack)
+    {
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (TemperatureHelper.getTicksHyperthermic(player) > 0)
+            gui.renderTextureOverlay(HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
     }
 
     private static void drawTemperature(PoseStack matrixStack, int width, int height, TemperatureLevel temperature)

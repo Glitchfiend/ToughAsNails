@@ -42,6 +42,55 @@ public class TemperatureHelper
     }
 
     /**
+     * Sets the number of ticks a player is experiencing hyperthermia.
+     * @param player the player.
+     * @param ticks number of ticks.
+     */
+    public static void setTicksHyperthermic(Player player, int ticks)
+    {
+        Impl.INSTANCE.setTicksHyperthermic(player, ticks);
+    }
+
+    /**
+     * Get the percentage at which the player is hyperthermic.
+     * @param player the player.
+     * @return percentage hyperthermic.
+     */
+    public static float getPercentHyperthermic(Player player)
+    {
+        return Impl.INSTANCE.getPercentHyperthermic(player);
+    }
+
+    /**
+     * Check whether the player is fully hyperthermic
+     * @param player the player.
+     * @return fully hyperthermic.
+     */
+    public static boolean isFullyHyperthermic(Player player)
+    {
+        return Impl.INSTANCE.isFullyHyperthermic(player);
+    }
+
+    /**
+     * Gets the number of ticks required to experience hyperthermia.
+     * @return The number of ticks required for hyperthermia.
+     */
+    public static int getTicksRequiredForHyperthermia()
+    {
+        return Impl.INSTANCE.getTicksRequiredForHyperthermia();
+    }
+
+    /**
+     * Gets the ticks at which the player is hyperthermic.
+     * @param player the player.
+     * @return number of ticks.
+     */
+    public static int getTicksHyperthermic(Player player)
+    {
+        return Impl.INSTANCE.getTicksHyperthermic(player);
+    }
+
+    /**
      * Checks whether temperature is enabled.
      * @return whether temperature is enabled.
      */
@@ -59,6 +108,11 @@ public class TemperatureHelper
         {
             TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos);
             ITemperature getPlayerTemperature(Player player);
+            void setTicksHyperthermic(Player player, int ticks);
+            float getPercentHyperthermic(Player player);
+            boolean isFullyHyperthermic(Player player);
+            int getTicksRequiredForHyperthermia();
+            int getTicksHyperthermic(Player player);
             boolean isTemperatureEnabled();
         }
     }

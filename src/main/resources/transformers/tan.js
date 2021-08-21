@@ -11,7 +11,7 @@
  
 var SET_SPRINTING = ASM.mapMethod("m_6858_");
 
- function Transformation(name, desc) {
+function Transformation(name, desc) {
      this.name = name;
      this.desc = desc;
      this.funcs = [];

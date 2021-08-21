@@ -6,6 +6,9 @@ package toughasnails.temperature;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -22,6 +25,8 @@ import java.util.List;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
+    protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+
     // Positional:
     // TODO: Offset by nearby heat sources
     // TODO: Offset by season
@@ -56,6 +61,37 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     public boolean isTemperatureEnabled()
     {
         return ServerConfig.enableTemperature.get();
+    }
+
+    @Override
+    public void setTicksHyperthermic(Player player, int ticks)
+    {
+        player.getEntityData().set(DATA_TICKS_HYPERTHERMIC, ticks);
+    }
+
+    @Override
+    public float getPercentHyperthermic(Player player)
+    {
+        int i = getTicksRequiredForHyperthermia();
+        return (float)Math.min(getTicksHyperthermic(player), i) / (float)i;
+    }
+
+    @Override
+    public boolean isFullyHyperthermic(Player player)
+    {
+        return getTicksHyperthermic(player) >= getTicksRequiredForHyperthermia();
+    }
+
+    @Override
+    public int getTicksRequiredForHyperthermia()
+    {
+        return 140;
+    }
+
+    @Override
+    public int getTicksHyperthermic(Player player)
+    {
+        return player.getEntityData().get(DATA_TICKS_HYPERTHERMIC);
     }
 
     private static TemperatureLevel getBiomeTemperatureLevel(Biome biome, BlockPos pos)
