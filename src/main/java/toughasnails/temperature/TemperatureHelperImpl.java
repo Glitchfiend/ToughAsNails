@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
-    protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier, TemperatureHelperImpl::armorModifier);
+    protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
 
     @Override
     public TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos)
@@ -182,7 +182,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return current;
     }
 
-    private static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
+    protected static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
     {
         AtomicInteger coolingPieces = new AtomicInteger();
         AtomicInteger heatingPieces = new AtomicInteger();
@@ -195,9 +195,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
 
         // Armor enchantments
-        int coolingLevel = EnchantmentHelper.getEnchantmentLevel(TANEnchantments.COOLING, player);
-        int warmingLevel = EnchantmentHelper.getEnchantmentLevel(TANEnchantments.WARMING, player);
+        if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.TEMPERATURE_TUNING, player) > 0)
+            current = TemperatureLevel.NEUTRAL;
 
-        return current.increment(warmingLevel - coolingLevel);
+        return current;
     }
 }

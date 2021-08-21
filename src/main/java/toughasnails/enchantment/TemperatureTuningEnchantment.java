@@ -9,16 +9,16 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import toughasnails.api.enchantment.TANEnchantments;
 
-public class CoolingEnchantment extends Enchantment
+public class TemperatureTuningEnchantment extends Enchantment
 {
-    public CoolingEnchantment()
+    public TemperatureTuningEnchantment()
     {
-        super(Rarity.COMMON, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET } );
+        super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST } );
     }
 
     @Override
-    protected boolean checkCompatibility(Enchantment enchantment)
+    public boolean isTreasureOnly()
     {
-        return this != enchantment && enchantment != TANEnchantments.WARMING;
+        return true;
     }
 }

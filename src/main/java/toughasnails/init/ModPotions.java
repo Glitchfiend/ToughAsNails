@@ -23,17 +23,14 @@ public class ModPotions
     public static void registerEffects(RegistryEvent.Register<MobEffect> event)
     {
         register("thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
-        register("cold_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
-        register("heat_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0xE54720));
+        register("ice_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
     }
 
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event)
     {
-        register("cold_resistance", new Potion(new MobEffectInstance(TANEffects.COLD_RESISTANCE, 1200)));
-        register("long_cold_resistance", new Potion(new MobEffectInstance(TANEffects.COLD_RESISTANCE, 2400)));
-        register("heat_resistance", new Potion(new MobEffectInstance(TANEffects.HEAT_RESISTANCE, 1200)));
-        register("long_heat_resistance", new Potion(new MobEffectInstance(TANEffects.HEAT_RESISTANCE, 2400)));
+        register("ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 1200)));
+        register("long_ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 2400)));
     }
 
     public static void register(String name, MobEffect effect)

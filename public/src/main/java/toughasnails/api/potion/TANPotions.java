@@ -11,8 +11,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder("toughasnails")
 public class TANPotions
 {
-    public static final Potion COLD_RESISTANCE = null;
-    public static final Potion LONG_COLD_RESISTANCE = null;
-    public static final Potion HEAT_RESISTANCE = null;
-    public static final Potion LONG_HEAT_RESISTANCE = null;
+    public static final Potion ICE_RESISTANCE = null;
+    public static final Potion LONG_ICE_RESISTANCE = null;
 }

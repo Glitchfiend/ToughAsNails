@@ -45,18 +45,14 @@ public class ModCrafting
 
         // Brewing
         // Base
-        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Blocks.MAGMA_BLOCK), TANPotions.HEAT_RESISTANCE);
-        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Blocks.ICE), TANPotions.COLD_RESISTANCE);
+        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Items.SNOWBALL), TANPotions.ICE_RESISTANCE);
 
         // Extended
-        addBrewingRecipe(TANPotions.HEAT_RESISTANCE, new ItemStack(Items.REDSTONE), TANPotions.LONG_HEAT_RESISTANCE);
-        addBrewingRecipe(TANPotions.COLD_RESISTANCE, new ItemStack(Items.REDSTONE), TANPotions.LONG_COLD_RESISTANCE);
+        addBrewingRecipe(TANPotions.ICE_RESISTANCE, new ItemStack(Items.REDSTONE), TANPotions.LONG_ICE_RESISTANCE);
 
         // Splash and lingering
-        addPotionTransforms(TANPotions.HEAT_RESISTANCE);
-        addPotionTransforms(TANPotions.COLD_RESISTANCE);
-        addPotionTransforms(TANPotions.LONG_HEAT_RESISTANCE);
-        addPotionTransforms(TANPotions.LONG_COLD_RESISTANCE);
+        addPotionTransforms(TANPotions.ICE_RESISTANCE);
+        addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE);
     }
 
     public static void register(String name, RecipeSerializer serializer)

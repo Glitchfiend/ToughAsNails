@@ -6,6 +6,8 @@ package toughasnails.temperature;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -83,13 +85,16 @@ public class TemperatureHandler
             newLevel = modifier.modify(player, newLevel);
         }
 
+        // Manually do the armor modifier to ensure it is last
+        newLevel = TemperatureHelperImpl.armorModifier(player, newLevel);
+
         // Update the player's temperature to the new level
         data.setLevel(newLevel);
 
         int frozenTicks = player.getTicksFrozen();
         int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
 
-        if (!player.isCreative() && !player.hasEffect(TANEffects.COLD_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && frozenTicks < ticksToFreeze)
+        if (!player.isCreative() && !player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && frozenTicks < ticksToFreeze)
         {
             player.setTicksFrozen(Math.min(ticksToFreeze, player.getTicksFrozen() + 2));
         }
@@ -98,7 +103,7 @@ public class TemperatureHandler
         int ticksToHyperthermia = TemperatureHelper.getTicksRequiredForHyperthermia();
 
         // Increase hyperthermia ticks if hot
-        if (!player.isCreative() && !player.hasEffect(TANEffects.HEAT_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT)
+        if (!player.isCreative() && !player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT)
         {
             TemperatureHelper.setTicksHyperthermic(player, Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
 

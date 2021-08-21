@@ -10,6 +10,5 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder("toughasnails")
 public class TANEnchantments
 {
-    public static final Enchantment COOLING = null;
-    public static final Enchantment WARMING = null;
+    public static final Enchantment TEMPERATURE_TUNING = null;
 }

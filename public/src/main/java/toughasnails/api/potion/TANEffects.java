@@ -11,6 +11,5 @@ import net.minecraftforge.registries.ObjectHolder;
 public class TANEffects
 {
     public static final MobEffect THIRST = null;
-    public static final MobEffect COLD_RESISTANCE = null;
-    public static final MobEffect HEAT_RESISTANCE = null;
+    public static final MobEffect ICE_RESISTANCE = null;
 }
