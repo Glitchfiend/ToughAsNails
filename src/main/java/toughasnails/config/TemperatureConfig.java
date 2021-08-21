@@ -28,6 +28,8 @@ public class TemperatureConfig
     private static ForgeConfigSpec.ConfigValue<List<String>> coolingBlocks;
     private static ForgeConfigSpec.ConfigValue<List<String>> warmingBlocks;
 
+    public static ForgeConfigSpec.IntValue nearBlockRange;
+
     public static ForgeConfigSpec.IntValue nightWarmTemperatureChange;
     public static ForgeConfigSpec.IntValue nightCoolTemperatureChange;
 
@@ -80,6 +82,7 @@ public class TemperatureConfig
         BUILDER.push("blocks");
         coolingBlocks = BUILDER.comment("Blocks that cool the player when nearby.").define("cooling_blocks", new ArrayList(), RESOURCE_LOC_LIST_VALIDATOR);
         warmingBlocks = BUILDER.comment("Blocks that warm the player when nearby.").define("warming_blocks", new ArrayList(), RESOURCE_LOC_LIST_VALIDATOR);
+        nearBlockRange = BUILDER.comment("The range which constitutes near a heat or cool source").defineInRange("near_block_range", 2, 1, 7);
         BUILDER.pop();
         BUILDER.push("immersion");
         onFireTemperatureChange = BUILDER.comment("Amount to change the temperature by when on fire.").defineInRange("on_fire_temperature_change", 2, -4, 4);

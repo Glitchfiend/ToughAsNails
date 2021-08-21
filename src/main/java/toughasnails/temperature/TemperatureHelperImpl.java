@@ -135,7 +135,6 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     }
 
     private static final int PROXIMITY_RADIUS = 7;
-    private static final double CLOSE_THRESHOLD = 3*3;
 
     private static TemperatureLevel proximityModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
@@ -152,7 +151,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                 {
                     BlockPos newPos = pos.offset(x, y, z);
                     BlockState state = level.getBlockState(newPos);
-                    boolean isClose = newPos.distSqr(pos) <= CLOSE_THRESHOLD;
+                    boolean isClose = newPos.distSqr(pos) <= (Math.pow(TemperatureConfig.nearBlockRange.get(), 2) + 1.0D);
 
                     if (state.getMaterial() == Material.FIRE || state.getMaterial() == Material.LAVA || TemperatureConfig.isWarmingBlock(state.getBlock()))
                     {
