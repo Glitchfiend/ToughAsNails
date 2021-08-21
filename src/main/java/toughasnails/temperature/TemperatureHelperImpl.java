@@ -195,7 +195,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
 
         // Armor enchantments
-        if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.TEMPERATURE_TUNING, player) > 0)
+        if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.THERMAL_TUNING, player) > 0)
             current = TemperatureLevel.NEUTRAL;
 
         return current;

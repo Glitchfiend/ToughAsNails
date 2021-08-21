@@ -113,6 +113,11 @@ public class TemperatureHandler
         else
             TemperatureHelper.setTicksHyperthermic(player, Math.max(0, hyperthermicTicks - 2));
 
+        if (player.hasEffect(TANEffects.ICE_RESISTANCE) && player.getTicksFrozen() > 0)
+        {
+            player.setTicksFrozen(0);
+        }
+
         // Update the temperature if it has changed
         if (lastSentTemperature != data.getLevel() || lastSentHyperthermiaTicks != data.getTicksHyperthermic())
         {
