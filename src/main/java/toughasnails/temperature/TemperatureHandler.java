@@ -94,7 +94,7 @@ public class TemperatureHandler
         int frozenTicks = player.getTicksFrozen();
         int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
 
-        if (!player.isCreative() && !player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && frozenTicks < ticksToFreeze)
+        if (!player.isCreative() && !player.isSpectator() && !player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && frozenTicks < ticksToFreeze)
         {
             player.setTicksFrozen(Math.min(ticksToFreeze, player.getTicksFrozen() + 2));
         }
@@ -103,7 +103,7 @@ public class TemperatureHandler
         int ticksToHyperthermia = TemperatureHelper.getTicksRequiredForHyperthermia();
 
         // Increase hyperthermia ticks if hot
-        if (!player.isCreative() && !player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT)
+        if (!player.isCreative() && !player.isSpectator() && !player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT)
         {
             TemperatureHelper.setTicksHyperthermic(player, Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
 
