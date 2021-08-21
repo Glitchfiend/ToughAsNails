@@ -7,6 +7,8 @@
   "effect.toughasnails.thirst": "Thirst",
   "effect.toughasnails.cold_resistance": "Cold Resistance",
   "effect.toughasnails.heat_resistance": "Heat Resistance",
+  "enchantment.toughasnails.cooling": "Cooling",
+  "enchantment.toughasnails.warming": "Warming",
   "item.minecraft.lingering_potion.effect.cold_resistance": "Lingering Potion of Cold Resistance",
   "item.minecraft.lingering_potion.effect.long_cold_resistance": "Lingering Potion of Cold Resistance",
   "item.minecraft.lingering_potion.effect.heat_resistance": "Lingering Potion of Heat Resistance",

@@ -12,11 +12,13 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import toughasnails.api.capability.TANCapabilities;
+import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
@@ -28,9 +30,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
     protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-
-    // Player:
-    // TODO: Armor enchantments
 
     private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET);
     private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET, Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
@@ -192,6 +191,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             if (heatingArmorPieces.contains(stack.getItem())) heatingPieces.getAndIncrement();
         }));
 
-        return current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
+        current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
+
+        // Armor enchantments
+        int coolingLevel = EnchantmentHelper.getEnchantmentLevel(TANEnchantments.COOLING, player);
+        int warmingLevel = EnchantmentHelper.getEnchantmentLevel(TANEnchantments.WARMING, player);
+
+        return current.increment(warmingLevel - coolingLevel);
     }
 }
