@@ -10,6 +10,7 @@
  var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
  
 var SET_SPRINTING = ASM.mapMethod("m_6858_");
+var BLIT = ASM.mapMethod("m_93228_");
 
 function Transformation(name, desc) {
      this.name = name;
@@ -30,6 +31,9 @@ function Transformation(name, desc) {
     ],
     "net/minecraft/client/player/LocalPlayer": [
         new Transformation(ASM.mapMethod("m_8107_"), "()V", patchLocalPlayerAiStep) //aiStep
+    ],
+    "net/minecraft/client/gui/Gui": [
+        new Transformation(ASM.mapMethod("m_168700_"), "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/gui/Gui$HeartType;IIIZZ)V", patchRenderHeart) //renderHeart
     ]
  };
  
@@ -149,4 +153,26 @@ function Transformation(name, desc) {
     } else {
         log('Patched ' + patchedCount + ' calls');
     }
+ }
+
+ function patchRenderHeart(node) {
+    var call = ASM.findFirstMethodCall(node,
+        ASM.MethodType.VIRTUAL,
+        "net/minecraft/client/gui/Gui",
+        BLIT,
+        "(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V");
+
+    if (call == null) {
+        log("Failed to locate call to blit");
+        return;
+    }
+
+    node.instructions.insertBefore(call, ASM.buildMethodCall(
+        "toughasnails/temperature/TemperatureHooks",
+        "heartBlit",
+        "(Lnet/minecraft/client/gui/Gui;Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V",
+        ASM.MethodType.STATIC
+    ));
+    node.instructions.remove(call);
+    log("Successfully patched renderHeart");
  }

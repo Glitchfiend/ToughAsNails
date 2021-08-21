@@ -129,7 +129,12 @@ public class TemperatureHandler
 
         // Increase hyperthermia ticks if hot
         if (data.getLevel() == TemperatureLevel.HOT)
+        {
             TemperatureHelper.setTicksHyperthermic(player, Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
+
+            if (player.getTicksFrozen() > 0)
+                player.setTicksFrozen(Math.max(0, player.getTicksFrozen() - 2));
+        }
         else
             TemperatureHelper.setTicksHyperthermic(player, Math.max(0, hyperthermicTicks - 2));
 
