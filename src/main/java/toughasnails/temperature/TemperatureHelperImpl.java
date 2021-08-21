@@ -22,6 +22,7 @@ import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
+import toughasnails.config.TemperatureConfig;
 import toughasnails.core.ToughAsNails;
 
 import java.util.List;
@@ -31,8 +32,6 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 {
     protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
-    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET);
-    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET, Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier, TemperatureHelperImpl::armorModifier);
 
@@ -129,9 +128,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (level.isNight())
         {
             if (current == TemperatureLevel.HOT)
-                current = current.decrement(2);
+                current = current.increment(TemperatureConfig.nightWarmTemperatureChange.get());
             else if (current != TemperatureLevel.NEUTRAL)
-                current = current.decrement(1);
+                current = current.increment(TemperatureConfig.nightCoolTemperatureChange.get());
         }
 
         return current;
@@ -155,13 +154,17 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                 {
                     BlockPos newPos = pos.offset(x, y, z);
                     BlockState state = level.getBlockState(newPos);
+                    boolean isClose = newPos.distSqr(pos) <= CLOSE_THRESHOLD;
 
-                    if (state.getMaterial() == Material.FIRE || state.getMaterial() == Material.LAVA)
+                    if (state.getMaterial() == Material.FIRE || state.getMaterial() == Material.LAVA || TemperatureConfig.isWarmingBlock(state.getBlock()))
                     {
-                        if (newPos.distSqr(pos) <= CLOSE_THRESHOLD)
-                            numCloseHeatSources++;
-                        else
-                            numFarHeatSources++;
+                        if (isClose) numCloseHeatSources++;
+                        else numFarHeatSources++;
+                    }
+                    else if (TemperatureConfig.isCoolingBlock(state.getBlock()))
+                    {
+                        if (isClose) numCloseCoolSources++;
+                        else numFarCoolSources++;
                     }
                 }
             }
@@ -175,9 +178,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
     {
-        if (player.isOnFire()) current = current.increment(2);
-        if (player.isInPowderSnow) current = current.decrement(2);
-        if (player.isInWaterOrRain()) current = current.decrement(1);
+        if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
+        if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
+        if (player.isInWaterOrRain()) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
         return current;
     }
 
@@ -187,8 +190,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger heatingPieces = new AtomicInteger();
 
         player.getArmorSlots().forEach((stack -> {
-            if (coolingArmorPieces.contains(stack.getItem())) coolingPieces.getAndIncrement();
-            if (heatingArmorPieces.contains(stack.getItem())) heatingPieces.getAndIncrement();
+            if (TemperatureConfig.isCoolingArmor(stack.getItem())) coolingPieces.getAndIncrement();
+            if (TemperatureConfig.isWarmingArmor(stack.getItem())) heatingPieces.getAndIncrement();
         }));
 
         current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
