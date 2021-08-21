@@ -14,6 +14,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.temperature.*;
 import toughasnails.api.thirst.IThirst;
@@ -27,16 +29,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 {
     protected static final EntityDataAccessor<Integer> DATA_TICKS_HYPERTHERMIC = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
-    // Positional:
-    // TODO: Offset by nearby heat sources
-
     // Player:
     // TODO: Potion effects
     // TODO: Armor enchantments
 
-    // TODO: Adjust these to be reasonable items
-    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET);
-    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
+    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET);
+    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET, Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier, TemperatureHelperImpl::armorModifier);
 
@@ -51,7 +49,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             temperature = modifier.modify(level, pos, temperature);
         }
 
-        return temperature;
+        // Manually do the proximity modifier to ensure it is always last
+        return proximityModifier(level, pos, temperature);
     }
 
     private static ITemperature lastTemperature;
@@ -137,6 +136,42 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                 current = current.decrement(1);
         }
 
+        return current;
+    }
+
+    private static final int PROXIMITY_RADIUS = 7;
+    private static final double CLOSE_THRESHOLD = 3*3;
+
+    private static TemperatureLevel proximityModifier(Level level, BlockPos pos, TemperatureLevel current)
+    {
+        int numCloseCoolSources = 0;
+        int numFarCoolSources = 0;
+        int numCloseHeatSources = 0;
+        int numFarHeatSources = 0;
+
+        for (int x = -PROXIMITY_RADIUS; x <= PROXIMITY_RADIUS; x++)
+        {
+            for (int y = -PROXIMITY_RADIUS; y <= PROXIMITY_RADIUS; y++)
+            {
+                for (int z = -PROXIMITY_RADIUS; z <= PROXIMITY_RADIUS; z++)
+                {
+                    BlockPos newPos = pos.offset(x, y, z);
+                    BlockState state = level.getBlockState(newPos);
+
+                    if (state.getMaterial() == Material.FIRE || state.getMaterial() == Material.LAVA)
+                    {
+                        if (newPos.distSqr(pos) <= CLOSE_THRESHOLD)
+                            numCloseHeatSources++;
+                        else
+                            numFarHeatSources++;
+                    }
+                }
+            }
+        }
+
+        int sum = numCloseHeatSources * 2 + numFarHeatSources - (numCloseCoolSources * 2 + numFarCoolSources);
+        if (sum > 0) current = current.increment(sum > 1 ? 2 : 1);
+        else if (sum < 0) current = current.decrement(sum < 1 ? 2 : 1);
         return current;
     }
 
