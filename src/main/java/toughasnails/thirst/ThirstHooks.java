@@ -114,6 +114,7 @@ public class ThirstHooks
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void onAiStepSetSprinting(LocalPlayer player, boolean sprinting)
     {
         // Don't allow sprinting if the player has insufficient thirst
@@ -123,6 +124,7 @@ public class ThirstHooks
         player.setSprinting(sprinting);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private static boolean canSprintWithThirst(LocalPlayer player)
     {
         return ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;
