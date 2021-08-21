@@ -9,9 +9,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import toughasnails.api.enchantment.TANEnchantments;
 
-public class TemperatureTuningEnchantment extends Enchantment
+public class ThermalTuningEnchantment extends Enchantment
 {
-    public TemperatureTuningEnchantment()
+    public ThermalTuningEnchantment()
     {
         super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST } );
     }

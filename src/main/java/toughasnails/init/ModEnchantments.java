@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import toughasnails.enchantment.TemperatureTuningEnchantment;
+import toughasnails.enchantment.ThermalTuningEnchantment;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEnchantments
@@ -17,7 +17,7 @@ public class ModEnchantments
     @SubscribeEvent
     public static void registerEnchantments(RegistryEvent.Register<Enchantment> event)
     {
-        register("temperature_tuning", new TemperatureTuningEnchantment());
+        register("thermal_tuning", new ThermalTuningEnchantment());
     }
 
     public static void register(String name, Enchantment enchantment)
