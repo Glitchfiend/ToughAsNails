@@ -50,7 +50,6 @@ public class TemperatureOverlayHandler
 
     private static long updateCounter;
     private static long flashCounter;
-    private static long changeDelay;
     private static TemperatureLevel prevTemperatureLevel;
 
     @SubscribeEvent
@@ -102,23 +101,14 @@ public class TemperatureOverlayHandler
         if (prevTemperatureLevel == null)
             prevTemperatureLevel = temperature;
 
-        if (updateCounter > changeDelay)
+        // Flash for 16 ticks when the temperature changes
+        if (prevTemperatureLevel != temperature)
         {
-            // Flash for 16 ticks when the temperature changes
-            if (prevTemperatureLevel != temperature)
-            {
-                flashCounter = updateCounter + 3;
-                changeDelay = updateCounter + 20; // Delay further changes by 1 second
-            }
+            flashCounter = updateCounter + 3;
+        }
 
-            // Update the prevTemperatureLevel to the current temperature level
-            prevTemperatureLevel = temperature;
-        }
-        else
-        {
-            // Revert to the previous temperature level whilst the delay is in effect
-            temperature = prevTemperatureLevel;
-        }
+        // Update the prevTemperatureLevel to the current temperature level
+        prevTemperatureLevel = temperature;
 
         // Shake the temperature meter when ICY or HOT
         if (temperature == TemperatureLevel.ICY || temperature == TemperatureLevel.HOT)
