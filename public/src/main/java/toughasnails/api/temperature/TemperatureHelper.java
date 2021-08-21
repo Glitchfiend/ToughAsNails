@@ -91,6 +91,24 @@ public class TemperatureHelper
     }
 
     /**
+     * Register a player temperature modifier.
+     * @param modifier the modifier.
+     */
+    public static void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier)
+    {
+        Impl.INSTANCE.registerPlayerTemperatureModifier(modifier);
+    }
+
+    /**
+     * Register a positional temperature modifier.
+     * @param modifier the modifier.
+     */
+    public static void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier)
+    {
+        Impl.INSTANCE.registerPositionalTemperatureModifier(modifier);
+    }
+
+    /**
      * Checks whether temperature is enabled.
      * @return whether temperature is enabled.
      */
@@ -113,6 +131,8 @@ public class TemperatureHelper
             boolean isFullyHyperthermic(Player player);
             int getTicksRequiredForHyperthermia();
             int getTicksHyperthermic(Player player);
+            void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier);
+            void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier);
             boolean isTemperatureEnabled();
         }
     }

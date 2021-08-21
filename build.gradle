@@ -16,7 +16,15 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-repositories { mavenLocal() }
+repositories {
+    mavenLocal()
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
 
 group = "com.github.glitchfiend"
 archivesBaseName = "ToughAsNails"
@@ -80,6 +88,7 @@ jar {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
+    implementation 'curse.maven:SereneSeasons-291874:3430063'
 }
 
 task deobfJar(type: Jar) {

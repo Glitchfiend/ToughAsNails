@@ -10,18 +10,18 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import toughasnails.api.capability.TANCapabilities;
-import toughasnails.api.temperature.IPositionalTemperatureModifier;
-import toughasnails.api.temperature.ITemperature;
-import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.api.temperature.*;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
 import toughasnails.core.ToughAsNails;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
@@ -29,9 +29,16 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     // Positional:
     // TODO: Offset by nearby heat sources
-    // TODO: Offset by season
 
-    private static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
+    // Player:
+    // TODO: Potion effects
+    // TODO: Armor enchantments
+
+    // TODO: Adjust these to be reasonable items
+    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET);
+    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
+    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
+    protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier, TemperatureHelperImpl::armorModifier);
 
     @Override
     public TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos)
@@ -94,6 +101,18 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return player.getEntityData().get(DATA_TICKS_HYPERTHERMIC);
     }
 
+    @Override
+    public void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier)
+    {
+        playerModifiers.add(modifier);
+    }
+
+    @Override
+    public void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier)
+    {
+        positionalModifiers.add(modifier);
+    }
+
     private static TemperatureLevel getBiomeTemperatureLevel(Biome biome, BlockPos pos)
     {
         float biomeTemperature = biome.getTemperature(pos);
@@ -119,5 +138,26 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         }
 
         return current;
+    }
+
+    private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
+    {
+        if (player.isOnFire()) current = current.increment(2);
+        if (player.isInPowderSnow) current = current.decrement(2);
+        if (player.isInWaterOrRain()) current = current.decrement(1);
+        return current;
+    }
+
+    private static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
+    {
+        AtomicInteger coolingPieces = new AtomicInteger();
+        AtomicInteger heatingPieces = new AtomicInteger();
+
+        player.getArmorSlots().forEach((stack -> {
+            if (coolingArmorPieces.contains(stack.getItem())) coolingPieces.getAndIncrement();
+            if (heatingArmorPieces.contains(stack.getItem())) heatingPieces.getAndIncrement();
+        }));
+
+        return current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
     }
 }

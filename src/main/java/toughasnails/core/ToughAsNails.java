@@ -52,5 +52,6 @@ public class ToughAsNails
     private void loadComplete(final FMLLoadCompleteEvent event)
     {
         proxy.init();
+        ModCompatibility.init();
     }
 }

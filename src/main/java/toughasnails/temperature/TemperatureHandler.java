@@ -37,21 +37,13 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static toughasnails.temperature.TemperatureHelperImpl.DATA_TICKS_HYPERTHERMIC;
+import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
 
 public class TemperatureHandler
 {
     private static final UUID SPEED_MODIFIER_HYPERTHERMIA_UUID = UUID.fromString("30b6ca4e-c6df-4532-80db-1d024765b56b");
 
-    private static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHandler::immersionModifier, TemperatureHandler::armorModifier);
-
-    // TODO: Adjust these to be reasonable items
-    private static List<Item> coolingArmorPieces = Lists.newArrayList(Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET);
-    private static List<Item> heatingArmorPieces = Lists.newArrayList(Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET);
-
     private static TemperatureLevel lastSentTemperature = null;
-
-    // TODO: Potion effects
-    // TODO: Armor enchantments
 
     @SubscribeEvent
     public void onEntityConstructing(EntityEvent.EntityConstructing event)
@@ -181,26 +173,5 @@ public class TemperatureHandler
                 attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID, "Hyperthermia slow", (double)f, AttributeModifier.Operation.ADDITION));
             }
         }
-    }
-
-    private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
-    {
-        if (player.isOnFire()) current = current.increment(2);
-        if (player.isInPowderSnow) current = current.decrement(2);
-        if (player.isInWaterOrRain()) current = current.decrement(1);
-        return current;
-    }
-
-    private static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
-    {
-        AtomicInteger coolingPieces = new AtomicInteger();
-        AtomicInteger heatingPieces = new AtomicInteger();
-
-        player.getArmorSlots().forEach((stack -> {
-            if (coolingArmorPieces.contains(stack.getItem())) coolingPieces.getAndIncrement();
-            if (heatingArmorPieces.contains(stack.getItem())) heatingPieces.getAndIncrement();
-        }));
-
-        return current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
     }
 }
