@@ -6,6 +6,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.GameRules;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.config.ServerConfig;
@@ -91,6 +93,7 @@ public class ThirstHooks
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void onAiStep(LocalPlayer player)
     {
         if (player.isSprinting())
