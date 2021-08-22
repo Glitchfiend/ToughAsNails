@@ -10,7 +10,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.ModList;
+import sereneseasons.season.SeasonHooks;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
@@ -29,8 +32,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos)
     {
-        Biome biome = level.getBiome(pos);
-        TemperatureLevel temperature = getBiomeTemperatureLevel(biome, pos);
+        TemperatureLevel temperature = getBiomeTemperatureLevel(level, pos);
 
         for (IPositionalTemperatureModifier modifier : positionalModifiers)
         {
@@ -100,11 +102,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         positionalModifiers.add(modifier);
     }
 
-    private static TemperatureLevel getBiomeTemperatureLevel(Biome biome, BlockPos pos)
+    private static TemperatureLevel getBiomeTemperatureLevel(Level level, BlockPos pos)
     {
+        Biome biome = level.getBiome(pos);
         float biomeTemperature = biome.getBaseTemperature();
 
-        if (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get())
+        if (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get() || level.canSeeSky(pos))
         {
             if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
             else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
@@ -126,7 +129,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
         // Drop the temperature during the night
-        if (level.isNight() && pos.getY() > TemperatureConfig.environmentalModifierAltitude.get())
+        if (level.isNight() && (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get() || level.canSeeSky(pos)))
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(TemperatureConfig.nightHotTemperatureChange.get());
@@ -156,7 +159,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                     BlockState state = level.getBlockState(newPos);
                     boolean isClose = newPos.distSqr(pos) <= (Math.pow(TemperatureConfig.nearBlockRange.get(), 2) + 1.0D);
 
-                    if (state.is(ModTags.Blocks.HEATING_BLOCKS))
+                    if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT)))
                     {
                         if (isClose) numCloseHeatSources++;
                         else numFarHeatSources++;
@@ -186,6 +189,19 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
         if (player.isInWaterOrRain()) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+        if (player.level.isRaining() && player.level.canSeeSky(player.blockPosition()))
+        {
+            Biome biome = player.level.getBiome(player.blockPosition());
+
+            if (ModList.get().isLoaded("sereneseasons"))
+            {
+                if (SeasonHooks.isColdEnoughToSnowHook(biome, player.blockPosition(), player.level))
+                    current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+            }
+            else if (biome.isColdEnoughToSnow(player.blockPosition()))
+                current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+        }
+
         return current;
     }
 
