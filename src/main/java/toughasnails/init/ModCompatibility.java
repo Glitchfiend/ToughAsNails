@@ -34,7 +34,7 @@ public class ModCompatibility
         ResourceKey<Biome> biomeKey = level.getBiomeName(pos).orElse(null);
 
         // Only adjust if above the environmental modifier altitude
-        if (pos.getY() <= TemperatureConfig.environmentalModifierAltitude.get())
+        if (pos.getY() <= TemperatureConfig.environmentalModifierAltitude.get() && !level.canSeeSky(pos))
             return current;
 
         //Check if biome uses seasonal effects
