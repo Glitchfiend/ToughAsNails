@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 import sereneseasons.season.SeasonHooks;
@@ -158,7 +159,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                     BlockState state = level.getBlockState(newPos);
                     boolean isClose = newPos.distSqr(pos) <= (Math.pow(TemperatureConfig.nearBlockRange.get(), 2) + 1.0D);
 
-                    if (state.is(ModTags.Blocks.HEATING_BLOCKS))
+                    if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT)))
                     {
                         if (isClose) numCloseHeatSources++;
                         else numFarHeatSources++;
