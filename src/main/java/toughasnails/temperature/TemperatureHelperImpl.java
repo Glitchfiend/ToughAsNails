@@ -160,9 +160,14 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             }
         }
 
-        int sum = numCloseHeatSources * 2 + numFarHeatSources - (numCloseCoolSources * 2 + numFarCoolSources);
-        if (sum > 0) current = current.increment(sum > 1 ? 2 : 1);
-        else if (sum < 0) current = current.decrement(sum < 1 ? 2 : 1);
+        int closeSum = numCloseHeatSources - numCloseCoolSources;
+        int farSum = numFarHeatSources - numFarCoolSources;
+
+        if (closeSum > 0) current = current.increment(2);
+        else if (closeSum < 0) current = current.decrement(2);
+        else if (farSum > 0) current = current.increment(1);
+        else if (farSum < 0) current = current.decrement(1);
+        
         return current;
     }
 
