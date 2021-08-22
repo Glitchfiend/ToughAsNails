@@ -189,7 +189,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             if (stack.is(ModTags.Items.HEATING_ARMOR)) heatingPieces.getAndIncrement();
         }));
 
-        current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
+        // Prevent armor from sending players over the edge into hot or icy temperature levels
+        TemperatureLevel armorAdjTemp = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
+        if (armorAdjTemp == TemperatureLevel.HOT && current != TemperatureLevel.HOT) current = armorAdjTemp.decrement(1);
+        else if (armorAdjTemp == TemperatureLevel.ICY && current != TemperatureLevel.ICY) current = armorAdjTemp.increment(1);
 
         // Armor enchantments
         if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.THERMAL_TUNING, player) > 0)
