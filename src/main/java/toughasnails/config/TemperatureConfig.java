@@ -36,7 +36,7 @@ public class TemperatureConfig
         BUILDER.push("altitude");
         temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 96, -64, 256);
         temperatureRiseAltitude = BUILDER.comment("Y level to rise the temperature at when below").defineInRange("temperature_rise_altitude", 32, -64, 256);
-        environmentalModifierAltitude = BUILDER.comment("Y level above which environmental modifiers are applied").defineInRange("environmental_modifier_altitude", 64, -64, 256);
+        environmentalModifierAltitude = BUILDER.comment("Y level above which environmental modifiers are applied").defineInRange("environmental_modifier_altitude", 55, -64, 256);
         BUILDER.pop();
         BUILDER.push("blocks");
         nearBlockRange = BUILDER.comment("The range which constitutes near a heat or cool source").defineInRange("near_block_range", 2, 1, 7);
