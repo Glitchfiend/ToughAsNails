@@ -13,6 +13,10 @@ public class TemperatureConfig
 
     public static ForgeConfigSpec.IntValue extremityDamageDelay;
 
+    public static ForgeConfigSpec.IntValue temperatureDropAltitude;
+    public static ForgeConfigSpec.IntValue temperatureRiseAltitude;
+    public static ForgeConfigSpec.IntValue environmentalModifierAltitude;
+
     public static ForgeConfigSpec.IntValue nearBlockRange;
 
     public static ForgeConfigSpec.IntValue nightHotTemperatureChange;
@@ -27,6 +31,11 @@ public class TemperatureConfig
         BUILDER.comment("Please be advised that certain temperature-related options are world-specific and are located in <Path to your world folder>/serverconfig/toughasnails-server.toml.");
         BUILDER.push("general");
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 200, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
+        BUILDER.push("altitude");
+        temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 96, -64, 256);
+        temperatureRiseAltitude = BUILDER.comment("Y level to rise the temperature at when below").defineInRange("temperature_rise_altitude", 32, -64, 256);
+        environmentalModifierAltitude = BUILDER.comment("Y level above which environmental modifiers are applied").defineInRange("environmental_modifier_altitude", 64, -64, 256);
         BUILDER.pop();
         BUILDER.push("blocks");
         nearBlockRange = BUILDER.comment("The range which constitutes near a heat or cool source").defineInRange("near_block_range", 2, 1, 7);

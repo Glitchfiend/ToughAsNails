@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
-    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::nightModifier);
+    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier, TemperatureHelperImpl::nightModifier);
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
 
     @Override
@@ -104,19 +104,29 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         float biomeTemperature = biome.getBaseTemperature();
 
-        if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
-        else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
-        else if (biomeTemperature >= 0.45F && biomeTemperature < 0.75F) return TemperatureLevel.NEUTRAL;
-        else if (biomeTemperature >= 0.75F && biomeTemperature < 0.9F) return TemperatureLevel.WARM;
-        else if (biomeTemperature >= 0.9F) return TemperatureLevel.HOT;
+        if (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get())
+        {
+            if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
+            else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
+            else if (biomeTemperature >= 0.45F && biomeTemperature < 0.75F) return TemperatureLevel.NEUTRAL;
+            else if (biomeTemperature >= 0.75F && biomeTemperature < 0.9F) return TemperatureLevel.WARM;
+            else if (biomeTemperature >= 0.9F) return TemperatureLevel.HOT;
+        }
 
         return TemperatureLevel.NEUTRAL;
+    }
+
+    private static TemperatureLevel altitudeModifier(Level level, BlockPos pos, TemperatureLevel current)
+    {
+        if (pos.getY() > TemperatureConfig.temperatureDropAltitude.get()) current = current.decrement(1);
+        else if (pos.getY() < TemperatureConfig.temperatureRiseAltitude.get()) current = current.increment(1);
+        return current;
     }
 
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
         // Drop the temperature during the night
-        if (level.isNight())
+        if (level.isNight() && pos.getY() > TemperatureConfig.environmentalModifierAltitude.get())
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(TemperatureConfig.nightHotTemperatureChange.get());
