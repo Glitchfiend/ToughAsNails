@@ -34,7 +34,7 @@ public class TemperatureOverlayHandler
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
     private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNails.MOD_ID, "textures/misc/hyperthermia_outline.png");
 
-    public static final IIngameOverlay TEMPERATURE_LEVEL_ELEMENT = OverlayRegistry.registerOverlayTop("Temperature Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+    public static final IIngameOverlay TEMPERATURE_LEVEL_ELEMENT = OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Temperature Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
         Minecraft minecraft = Minecraft.getInstance();
         if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
         {
