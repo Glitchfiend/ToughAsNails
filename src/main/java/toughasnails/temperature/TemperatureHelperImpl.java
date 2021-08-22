@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
-    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier, TemperatureHelperImpl::nightModifier);
+    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier);
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
 
     @Override
@@ -39,7 +39,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             temperature = modifier.modify(level, pos, temperature);
         }
 
-        // Manually do the proximity modifier to ensure it is always last
+        // Manually do the night and proximity modifiers as they must be after any others
+        temperature = nightModifier(level, pos, temperature);
         return proximityModifier(level, pos, temperature);
     }
 
