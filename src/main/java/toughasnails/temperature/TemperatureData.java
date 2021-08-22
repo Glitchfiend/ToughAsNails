@@ -13,6 +13,9 @@ public class TemperatureData implements ITemperature
 
     private TemperatureLevel level = DEFAULT_LEVEL;
     private int ticksHyperthermic;
+    private int extremityDelayTicks;
+    private TemperatureLevel lastTemperature = DEFAULT_LEVEL;
+    private int lastHyperthermiaTicks;
 
     @Override
     public TemperatureLevel getLevel()
@@ -21,9 +24,27 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
-    public int getTicksHyperthermic()
+    public int getHyperthermiaTicks()
     {
         return this.ticksHyperthermic;
+    }
+
+    @Override
+    public int getExtremityDelayTicks()
+    {
+        return this.extremityDelayTicks;
+    }
+
+    @Override
+    public TemperatureLevel getLastLevel()
+    {
+        return this.lastTemperature;
+    }
+
+    @Override
+    public int getLastHyperthermiaTicks()
+    {
+        return this.lastHyperthermiaTicks;
     }
 
     @Override
@@ -33,8 +54,26 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
-    public void setTicksHyperthermic(int ticks)
+    public void setHyperthermiaTicks(int ticks)
     {
         this.ticksHyperthermic = ticks;
+    }
+
+    @Override
+    public void setExtremityDelayTicks(int ticks)
+    {
+        this.extremityDelayTicks = ticks;
+    }
+
+    @Override
+    public void setLastLevel(TemperatureLevel level)
+    {
+        this.lastTemperature = level;
+    }
+
+    @Override
+    public void setLastHyperthermiaTicks(int ticks)
+    {
+        this.lastHyperthermiaTicks = ticks;
     }
 }

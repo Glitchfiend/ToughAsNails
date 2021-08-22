@@ -8,7 +8,7 @@ public interface ITemperature
 {
     /**
      * Get the temperature level.
-     * @return The temperature level.
+     * @return temperature level.
      */
     TemperatureLevel getLevel();
 
@@ -16,7 +16,25 @@ public interface ITemperature
      * Get the number of ticks of hyperthermia.
      * @return number of ticks.
      */
-    int getTicksHyperthermic();
+    int getHyperthermiaTicks();
+
+    /**
+     * Get the number of extremity delay ticks.
+     * @return number of ticks.
+     */
+    int getExtremityDelayTicks();
+
+    /**
+     * Get the last temperature level.
+     * @return temperature level.
+     */
+    TemperatureLevel getLastLevel();
+
+    /**
+     * Get the last number of ticks of hyperthermia.
+     * @return number of ticks.
+     */
+    int getLastHyperthermiaTicks();
 
     /**
      * Set the temperature level.
@@ -28,5 +46,23 @@ public interface ITemperature
      * Set the number of ticks of hyperthermia.
      * @param ticks number of ticks.
      */
-    void setTicksHyperthermic(int ticks);
+    void setHyperthermiaTicks(int ticks);
+
+    /**
+     * Set the number of extremity delay ticks.
+     * @param ticks number of ticks.
+     */
+    void setExtremityDelayTicks(int ticks);
+
+    /**
+     * Set the last temperature level.
+     * @param level temperature level.
+     */
+    void setLastLevel(TemperatureLevel level);
+
+    /**
+     * Set the last number of hyperthermia ticks.
+     * @param ticks number of ticks.
+     */
+    void setLastHyperthermiaTicks(int ticks);
 }

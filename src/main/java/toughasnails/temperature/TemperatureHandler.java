@@ -6,7 +6,6 @@ package toughasnails.temperature;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -26,6 +25,7 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.ServerConfig;
+import toughasnails.config.TemperatureConfig;
 import toughasnails.core.ToughAsNails;
 import toughasnails.network.MessageUpdateTemperature;
 import toughasnails.network.PacketHandler;
@@ -37,9 +37,6 @@ import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
 public class TemperatureHandler
 {
     private static final UUID SPEED_MODIFIER_HYPERTHERMIA_UUID = UUID.fromString("30b6ca4e-c6df-4532-80db-1d024765b56b");
-
-    private static TemperatureLevel lastSentTemperature = null;
-    private static int lastSentHyperthermiaTicks;
 
     @SubscribeEvent
     public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
@@ -91,35 +88,56 @@ public class TemperatureHandler
         // Update the player's temperature to the new level
         data.setLevel(newLevel);
 
-        int frozenTicks = player.getTicksFrozen();
-        int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
+        // Decrement the extremity delay ticks
+        data.setExtremityDelayTicks(Math.max(0, data.getExtremityDelayTicks() - 1));
 
-        if (!player.isCreative() && !player.isSpectator() && !player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && frozenTicks < ticksToFreeze)
+        // If we are entering an extreme temperature, add to the extremity delay
+        if (data.getLastLevel() != data.getLevel() && (data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT))
         {
-            player.setTicksFrozen(Math.min(ticksToFreeze, player.getTicksFrozen() + 2));
+            data.setExtremityDelayTicks(TemperatureConfig.extremityDamageDelay.get());
         }
 
-        int hyperthermicTicks = TemperatureHelper.getTicksHyperthermic(player);
+        int hyperthermicTicks = data.getHyperthermiaTicks();
         int ticksToHyperthermia = TemperatureHelper.getTicksRequiredForHyperthermia();
 
-        // Increase hyperthermia ticks if hot
-        if (!player.isCreative() && !player.isSpectator() && !player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT)
+        // Don't perform extremity effects in creative or spectator modes
+        if (!player.isCreative() && !player.isSpectator())
         {
-            TemperatureHelper.setTicksHyperthermic(player, Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
+            // Freeze the player if they're icy
+            if (!player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
+            {
+                int frozenTicks = player.getTicksFrozen();
+                int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
 
-            if (player.getTicksFrozen() > 0)
-                player.setTicksFrozen(Math.max(0, player.getTicksFrozen() - 2));
+                if (frozenTicks < ticksToFreeze)
+                    player.setTicksFrozen(Math.min(ticksToFreeze, player.getTicksFrozen() + 2));
+            }
+
+            // Increase hyperthermia ticks if hot
+            if (!player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT && data.getExtremityDelayTicks() == 0)
+            {
+                data.setHyperthermiaTicks(Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
+
+                if (player.getTicksFrozen() > 0)
+                    player.setTicksFrozen(Math.max(0, player.getTicksFrozen() - 2));
+            }
+            else data.setHyperthermiaTicks(Math.max(0, hyperthermicTicks - 2));
         }
         else
-            TemperatureHelper.setTicksHyperthermic(player, Math.max(0, hyperthermicTicks - 2));
+        {
+            // Decrease hyperthermia, if present
+            if (data.getHyperthermiaTicks() > 0)
+                data.setHyperthermiaTicks(Math.max(0, hyperthermicTicks - 2));
+        }
 
+        // Reset frozen ticks with ice resistance. This is mainly to avoid the effects of powdered snow.
         if (player.hasEffect(TANEffects.ICE_RESISTANCE) && player.getTicksFrozen() > 0)
         {
             player.setTicksFrozen(0);
         }
 
         // Update the temperature if it has changed
-        if (lastSentTemperature != data.getLevel() || lastSentHyperthermiaTicks != data.getTicksHyperthermic())
+        if (data.getLastLevel() != data.getLevel() || data.getLastHyperthermiaTicks() != data.getHyperthermiaTicks())
         {
             syncTemperature(player);
         }
@@ -135,9 +153,9 @@ public class TemperatureHandler
     private static void syncTemperature(ServerPlayer player)
     {
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
-        lastSentTemperature = temperature.getLevel();
-        lastSentHyperthermiaTicks = temperature.getTicksHyperthermic();
-        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateTemperature(temperature.getLevel(), temperature.getTicksHyperthermic()));
+        temperature.setLastLevel(temperature.getLevel());
+        temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
+        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateTemperature(temperature.getLevel(), temperature.getHyperthermiaTicks()));
     }
 
     private static void removeHeatExhaustion(ServerPlayer player)

@@ -11,6 +11,8 @@ public class TemperatureConfig
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
+    public static ForgeConfigSpec.IntValue extremityDamageDelay;
+
     public static ForgeConfigSpec.IntValue nearBlockRange;
 
     public static ForgeConfigSpec.IntValue nightHotTemperatureChange;
@@ -23,6 +25,9 @@ public class TemperatureConfig
     static
     {
         BUILDER.comment("Please be advised that certain temperature-related options are world-specific and are located in <Path to your world folder>/serverconfig/toughasnails-server.toml.");
+        BUILDER.push("general");
+        extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 200, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
         BUILDER.push("blocks");
         nearBlockRange = BUILDER.comment("The range which constitutes near a heat or cool source").defineInRange("near_block_range", 2, 1, 7);
         BUILDER.pop();

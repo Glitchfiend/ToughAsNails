@@ -60,7 +60,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public void setTicksHyperthermic(Player player, int ticks)
     {
-        this.getPlayerTemperature(player).setTicksHyperthermic(ticks);
+        this.getPlayerTemperature(player).setHyperthermiaTicks(ticks);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public int getTicksHyperthermic(Player player)
     {
-        return this.getPlayerTemperature(player).getTicksHyperthermic();
+        return this.getPlayerTemperature(player).getHyperthermiaTicks();
     }
 
     @Override

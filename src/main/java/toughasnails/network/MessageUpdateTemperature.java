@@ -59,7 +59,7 @@ public class MessageUpdateTemperature
             Player player = Minecraft.getInstance().player;
             ITemperature data = TemperatureHelper.getTemperatureData(player);
             data.setLevel(temperature);
-            data.setTicksHyperthermic(hyperthermiaTicks);
+            data.setHyperthermiaTicks(hyperthermiaTicks);
         }
     }
 }
