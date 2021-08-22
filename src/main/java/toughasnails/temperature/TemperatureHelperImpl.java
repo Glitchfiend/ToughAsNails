@@ -11,6 +11,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.ModList;
+import sereneseasons.season.SeasonHooks;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
@@ -186,6 +188,19 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
         if (player.isInWaterOrRain()) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+        if (player.level.isRaining() && player.level.canSeeSky(player.blockPosition()))
+        {
+            Biome biome = player.level.getBiome(player.blockPosition());
+
+            if (ModList.get().isLoaded("sereneseasons"))
+            {
+                if (SeasonHooks.isColdEnoughToSnowHook(biome, player.blockPosition(), player.level))
+                    current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+            }
+            else if (biome.isColdEnoughToSnow(player.blockPosition()))
+                current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+        }
+
         return current;
     }
 
