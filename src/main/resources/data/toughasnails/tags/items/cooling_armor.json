@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:diamond_helmet",
+	"minecraft:diamond_chestplate",
+	"minecraft:diamond_leggings",
+	"minecraft:diamond_boots"
+  ]
+}

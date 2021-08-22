@@ -6,24 +6,17 @@ package toughasnails.temperature;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
-import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
-import toughasnails.core.ToughAsNails;
+import toughasnails.init.ModTags;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -153,12 +146,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                     BlockState state = level.getBlockState(newPos);
                     boolean isClose = newPos.distSqr(pos) <= (Math.pow(TemperatureConfig.nearBlockRange.get(), 2) + 1.0D);
 
-                    if (state.getMaterial() == Material.FIRE || state.getMaterial() == Material.LAVA || TemperatureConfig.isWarmingBlock(state.getBlock()))
+                    if (state.is(ModTags.Blocks.HEATING_BLOCKS))
                     {
                         if (isClose) numCloseHeatSources++;
                         else numFarHeatSources++;
                     }
-                    else if (TemperatureConfig.isCoolingBlock(state.getBlock()))
+                    else if (state.is(ModTags.Blocks.COOLING_BLOCKS))
                     {
                         if (isClose) numCloseCoolSources++;
                         else numFarCoolSources++;
@@ -187,8 +180,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger heatingPieces = new AtomicInteger();
 
         player.getArmorSlots().forEach((stack -> {
-            if (TemperatureConfig.isCoolingArmor(stack.getItem())) coolingPieces.getAndIncrement();
-            if (TemperatureConfig.isWarmingArmor(stack.getItem())) heatingPieces.getAndIncrement();
+            if (stack.is(ModTags.Items.COOLING_ARMOR)) coolingPieces.getAndIncrement();
+            if (stack.is(ModTags.Items.HEATING_ARMOR)) heatingPieces.getAndIncrement();
         }));
 
         current = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
