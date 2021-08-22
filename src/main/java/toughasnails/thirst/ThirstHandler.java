@@ -55,9 +55,6 @@ import net.minecraft.world.item.ItemUtils;
 
 public class ThirstHandler
 {
-    private int lastSentThirst = -99999999;
-    private boolean lastThirstHydrationZero = true;
-
     @SubscribeEvent
     public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
     {
@@ -134,11 +131,11 @@ public class ThirstHandler
             }
         }
 
-        if (this.lastSentThirst != thirst.getThirst() || thirst.getHydration() == 0.0F != this.lastThirstHydrationZero)
+        if (thirst.getLastThirst() != thirst.getThirst() || thirst.getHydration() == 0.0F != thirst.getLastHydrationZero())
         {
             syncThirst(player);
-            this.lastSentThirst = thirst.getThirst();
-            this.lastThirstHydrationZero = thirst.getHydration() == 0.0F;
+            thirst.setLastThirst(thirst.getThirst());
+            thirst.setLastHydrationZero(thirst.getHydration() == 0.0F);
         }
     }
 

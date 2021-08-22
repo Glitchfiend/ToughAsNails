@@ -15,11 +15,19 @@ public class ThirstData implements IThirst
     private float hydrationLevel = DEFAULT_HYDRATION;
     private float exhaustionLevel;
     private int tickTimer;
+    private int lastThirst = -99999999;
+    private boolean lastHydrationZero = true;
 
     @Override
     public int getThirst()
     {
         return this.thirstLevel;
+    }
+
+    @Override
+    public int getLastThirst()
+    {
+        return this.lastThirst;
     }
 
     @Override
@@ -32,6 +40,12 @@ public class ThirstData implements IThirst
     public float getHydration()
     {
         return this.hydrationLevel;
+    }
+
+    @Override
+    public boolean getLastHydrationZero()
+    {
+        return this.lastHydrationZero;
     }
 
     @Override
@@ -53,6 +67,12 @@ public class ThirstData implements IThirst
     }
 
     @Override
+    public void setLastThirst(int thirst)
+    {
+        this.lastThirst = thirst;
+    }
+
+    @Override
     public void setTickTimer(int timer)
     {
         this.tickTimer = timer;
@@ -68,6 +88,12 @@ public class ThirstData implements IThirst
     public void setHydration(float hydration)
     {
         this.hydrationLevel = hydration;
+    }
+
+    @Override
+    public void setLastHydrationZero(boolean value)
+    {
+        this.lastHydrationZero = value;
     }
 
     @Override

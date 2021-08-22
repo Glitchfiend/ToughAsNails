@@ -13,6 +13,12 @@ public interface IThirst
     int getThirst();
 
     /**
+     * Get the last level of thirst ranging from 0 to 20.
+     * @return The thirst level.
+     */
+    int getLastThirst();
+
+    /**
      * Get the number of thirst ticks.
      * @return The number of thirst ticks.
      */
@@ -23,6 +29,12 @@ public interface IThirst
      * @return The hydration level.
      */
     float getHydration();
+
+    /**
+     * Get whether the last hydration value was zero.
+     * @return Whether the last hydration was zero.
+     */
+    boolean getLastHydrationZero();
 
     /**
      * Get the level of thirst exhaustion ranging from 0 to 40.
@@ -43,6 +55,12 @@ public interface IThirst
     void addThirst(int thirst);
 
     /**
+     * Set the last thirst level.
+     * @param thirst thirst level
+     */
+    void setLastThirst(int thirst);
+
+    /**
      * Set the tick timer.
      * @param timer tick timer
      */
@@ -59,6 +77,12 @@ public interface IThirst
      * @param hydration hydration level.
      */
     void setHydration(float hydration);
+
+    /**
+     * Set whether the last hydration value was zero.
+     * @param val value.
+     */
+    void setLastHydrationZero(boolean value);
 
     /**
      * Add to the hydration level.
