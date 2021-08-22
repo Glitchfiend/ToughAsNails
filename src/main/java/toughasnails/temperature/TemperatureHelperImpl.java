@@ -119,9 +119,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (level.isNight())
         {
             if (current == TemperatureLevel.HOT)
-                current = current.increment(TemperatureConfig.nightWarmTemperatureChange.get());
+                current = current.increment(TemperatureConfig.nightHotTemperatureChange.get());
             else if (current != TemperatureLevel.NEUTRAL)
-                current = current.increment(TemperatureConfig.nightCoolTemperatureChange.get());
+                current = current.increment(TemperatureConfig.nightTemperatureChange.get());
         }
 
         return current;

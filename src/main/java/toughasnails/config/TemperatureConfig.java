@@ -13,8 +13,8 @@ public class TemperatureConfig
 
     public static ForgeConfigSpec.IntValue nearBlockRange;
 
-    public static ForgeConfigSpec.IntValue nightWarmTemperatureChange;
-    public static ForgeConfigSpec.IntValue nightCoolTemperatureChange;
+    public static ForgeConfigSpec.IntValue nightHotTemperatureChange;
+    public static ForgeConfigSpec.IntValue nightTemperatureChange;
 
     public static ForgeConfigSpec.IntValue onFireTemperatureChange;
     public static ForgeConfigSpec.IntValue powderSnowTemperatureChange;
@@ -32,8 +32,8 @@ public class TemperatureConfig
         wetTemperatureChange = BUILDER.comment("Amount to change the temperature by when wet.").defineInRange("wet_temperature_change", -1, -4, 4);
         BUILDER.pop();
         BUILDER.push("time");
-        nightCoolTemperatureChange = BUILDER.comment("Amount to change the temperature at night when the original temperature is cool or icy.").defineInRange("night_cool_temperature_change", -1, -4, 4);
-        nightWarmTemperatureChange = BUILDER.comment("Amount to change the temperature at night when the original temperature is warm or hot.").defineInRange("night_warm_temperature_change", -2, -4, 4);
+        nightTemperatureChange = BUILDER.comment("Amount to change the temperature at night when the original temperature is not hot.").defineInRange("night_temperature_change", -1, -4, 4);
+        nightHotTemperatureChange = BUILDER.comment("Amount to change the temperature at night when the original temperature is hot.").defineInRange("night_hot_temperature_change", -2, -4, 4);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }
