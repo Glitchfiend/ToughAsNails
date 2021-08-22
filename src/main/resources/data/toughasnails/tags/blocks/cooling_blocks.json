@@ -1,7 +1,8 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:ice",
+    "minecraft:packed_ice",
+	"minecraft:blue_ice",
 	"minecraft:prismarine",
 	"minecraft:prismarine_bricks",
 	"minecraft:dark_prismarine",
