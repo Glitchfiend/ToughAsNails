@@ -32,6 +32,10 @@ public class ModCompatibility
     {
         ResourceKey<Biome> biomeKey = level.getBiomeName(pos).orElse(null);
 
+        //Check if biome uses seasonal effects
+        if (!BiomeConfig.enablesSeasonalEffects(biomeKey))
+            return current;
+
         // Don't adjust the season if tropical seasons are in use
         if (BiomeConfig.usesTropicalSeasons(biomeKey))
             return current;

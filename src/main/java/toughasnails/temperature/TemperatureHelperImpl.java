@@ -105,10 +105,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         float biomeTemperature = biome.getTemperature(pos);
 
         if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
-        else if (biomeTemperature >= 0.15F && biomeTemperature <= 0.5F) return TemperatureLevel.COLD;
-        else if (biomeTemperature > 0.5F && biomeTemperature <= 0.75F) return TemperatureLevel.NEUTRAL;
-        else if (biomeTemperature > 0.75F && biomeTemperature <= 0.9F) return TemperatureLevel.WARM;
-        else if (biomeTemperature > 0.9F) return TemperatureLevel.HOT;
+        else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
+        else if (biomeTemperature >= 0.45F && biomeTemperature < 0.75F) return TemperatureLevel.NEUTRAL;
+        else if (biomeTemperature >= 0.75F && biomeTemperature < 0.9F) return TemperatureLevel.WARM;
+        else if (biomeTemperature >= 0.9F) return TemperatureLevel.HOT;
 
         return TemperatureLevel.NEUTRAL;
     }
