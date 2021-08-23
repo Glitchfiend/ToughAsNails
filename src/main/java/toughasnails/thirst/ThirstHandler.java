@@ -40,6 +40,7 @@ import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.ThirstConfig;
 import toughasnails.core.ToughAsNails;
+import toughasnails.init.ModTags;
 import toughasnails.network.MessageDrinkInWorld;
 import toughasnails.network.MessageUpdateThirst;
 import toughasnails.network.PacketHandler;
@@ -153,16 +154,64 @@ public class ThirstHandler
             return;
 
         Player player = (Player)event.getEntityLiving();
-        Item item = event.getItem().getItem();
+        ItemStack drink = event.getItem();
         IThirst thirst = ThirstHelper.getThirst(player);
-        ThirstConfig.DrinkEntry entry = ThirstConfig.getDrinkEntry(item.getRegistryName());
 
-        if (entry != null)
+        if (drink.is(ModTags.Items.DRINKS))
         {
-            thirst.addThirst(entry.getThirst());
-            thirst.addHydration(entry.getHydration());
+            int drink_thirst = 0;
+            float drink_hydration = 0.0F;
+            float drink_poison_chance = 0.0F;
 
-            if (player.level.random.nextFloat() < entry.getPoisonChance())
+            ///////////////////
+
+            if (drink.is(ModTags.Items.ONE_THIRST_DRINKS)) { drink_thirst = 1; }
+            if (drink.is(ModTags.Items.TWO_THIRST_DRINKS)) { drink_thirst = 2; }
+            if (drink.is(ModTags.Items.THREE_THIRST_DRINKS)) { drink_thirst = 3; }
+            if (drink.is(ModTags.Items.FOUR_THIRST_DRINKS)) { drink_thirst = 4; }
+            if (drink.is(ModTags.Items.FIVE_THIRST_DRINKS)) { drink_thirst = 5; }
+            if (drink.is(ModTags.Items.SIX_THIRST_DRINKS)) { drink_thirst = 6; }
+            if (drink.is(ModTags.Items.SEVEN_THIRST_DRINKS)) { drink_thirst = 7; }
+            if (drink.is(ModTags.Items.EIGHT_THIRST_DRINKS)) { drink_thirst = 8; }
+            if (drink.is(ModTags.Items.NINE_THIRST_DRINKS)) { drink_thirst = 9; }
+            if (drink.is(ModTags.Items.TEN_THIRST_DRINKS)) { drink_thirst = 10; }
+            if (drink.is(ModTags.Items.ELEVEN_THIRST_DRINKS)) { drink_thirst = 11; }
+            if (drink.is(ModTags.Items.TWELVE_THIRST_DRINKS)) { drink_thirst = 12; }
+            if (drink.is(ModTags.Items.THIRTEEN_THIRST_DRINKS)) { drink_thirst = 13; }
+            if (drink.is(ModTags.Items.FOURTEEN_THIRST_DRINKS)) { drink_thirst = 14; }
+            if (drink.is(ModTags.Items.FIFTEEN_THIRST_DRINKS)) { drink_thirst = 15; }
+            if (drink.is(ModTags.Items.SIXTEEN_THIRST_DRINKS)) { drink_thirst = 16; }
+            if (drink.is(ModTags.Items.SEVENTEEN_THIRST_DRINKS)) { drink_thirst = 17; }
+            if (drink.is(ModTags.Items.EIGHTEEN_THIRST_DRINKS)) { drink_thirst = 18; }
+            if (drink.is(ModTags.Items.NINETEEN_THIRST_DRINKS)) { drink_thirst = 19; }
+            if (drink.is(ModTags.Items.TWENTY_THIRST_DRINKS)) { drink_thirst = 20; }
+
+            ///////////////////
+
+            if (drink.is(ModTags.Items.TEN_HYDRATION_DRINKS)) { drink_hydration = 0.1F; }
+            if (drink.is(ModTags.Items.TWENTY_HYDRATION_DRINKS)) { drink_hydration = 0.2F; }
+            if (drink.is(ModTags.Items.THIRTY_HYDRATION_DRINKS)) { drink_hydration = 0.3F; }
+            if (drink.is(ModTags.Items.FOURTY_HYDRATION_DRINKS)) { drink_hydration = 0.4F; }
+            if (drink.is(ModTags.Items.FIFTY_HYDRATION_DRINKS)) { drink_hydration = 0.5F; }
+            if (drink.is(ModTags.Items.SIXTY_HYDRATION_DRINKS)) { drink_hydration = 0.6F; }
+            if (drink.is(ModTags.Items.SEVENTY_HYDRATION_DRINKS)) { drink_hydration = 0.7F; }
+            if (drink.is(ModTags.Items.EIGHTY_HYDRATION_DRINKS)) { drink_hydration = 0.8F; }
+            if (drink.is(ModTags.Items.NINETY_HYDRATION_DRINKS)) { drink_hydration = 0.9F; }
+            if (drink.is(ModTags.Items.ONE_HUNDRED_HYDRATION_DRINKS)) { drink_hydration = 1.0F; }
+
+            ///////////////////
+
+            if (drink.is(ModTags.Items.TWENTY_FIVE_POISON_CHANCE_DRINKS)) { drink_poison_chance = 0.25F; }
+            if (drink.is(ModTags.Items.FIFTY_POISON_CHANCE_DRINKS)) { drink_poison_chance = 0.5F; }
+            if (drink.is(ModTags.Items.SEVENTY_FIVE_POISON_CHANCE_DRINKS)) { drink_poison_chance = 0.75F; }
+            if (drink.is(ModTags.Items.ONE_HUNDRED_POISON_CHANCE_DRINKS)) { drink_poison_chance = 1.0F; }
+
+            ///////////////////
+
+            thirst.addThirst(drink_thirst);
+            thirst.addHydration(drink_hydration);
+
+            if (player.level.random.nextFloat() < drink_poison_chance)
             {
                 player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
             }

@@ -28,21 +28,11 @@ public class ThirstConfig
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
-    private static ForgeConfigSpec.ConfigValue<List<Config>> drinkEntries;
     private static ForgeConfigSpec.ConfigValue<List<Config>> waterInfoEntries;
 
     public static ForgeConfigSpec.DoubleValue thirstExhaustionThreshold;
     public static ForgeConfigSpec.IntValue handDrinkingThirst;
     public static ForgeConfigSpec.DoubleValue handDrinkingHydration;
-
-    private static List<Config> defaultDrinks = Lists.newArrayList(
-        new DrinkEntry(new ResourceLocation("minecraft:potion"), 2, 0.2F, 0.25F),
-        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_bottle"), 1, 0.1F, 0.75F),
-        new DrinkEntry(new ResourceLocation("toughasnails:dirty_water_canteen"), 1, 0.1F, 0.75F),
-        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_bottle"), 3, 0.4F, 0.0F),
-        new DrinkEntry(new ResourceLocation("toughasnails:purified_water_canteen"), 3, 0.4F, 0.0F),
-        new DrinkEntry(new ResourceLocation("toughasnails:water_canteen"), 2, 0.2F, 0.25F)
-    ).stream().map(ThirstConfig::drinkToConfig).collect(Collectors.toList());
 
     private static List<Config> defaultWaterInfos = Lists.newArrayList(
         new BiomeWaterInfo(new ResourceLocation("minecraft:swamp"), WaterType.DIRTY),
@@ -51,64 +41,31 @@ public class ThirstConfig
         new BiomeWaterInfo(new ResourceLocation("minecraft:mushroom_field_shore"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:bayou"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:bayou_mangrove"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:dead_swamp"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:burnt_forest"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:deep_bayou"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:dense_marsh"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:fungal_field"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:fungal_jungle"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:highland_moor"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:jade_cliffs"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:jade_grassland"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:marsh"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:muskeg"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:ominous_mire"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:ominous_woods"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:overgrown_fungal_jungle"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest_cliffs"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainforest_floodplain"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:silkglade"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:silkglade_nest"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:shroomy_wetland"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:tundra_bog"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:volcanic_plains"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:volcano"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wasteland"), WaterType.DIRTY),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wetland"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wetland_marsh"), WaterType.DIRTY),
-        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wooded_wasteland"), WaterType.DIRTY),
+        new BiomeWaterInfo(new ResourceLocation("biomesoplenty:wetland_forest"), WaterType.DIRTY),
 
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:alps"), WaterType.PURIFIED),
         new BiomeWaterInfo(new ResourceLocation("biomesoplenty:rainbow_hills"), WaterType.PURIFIED)
     ).stream().map(ThirstConfig::waterInfoToConfig).collect(Collectors.toList());
-
-    private static final Predicate<Object> DRINK_VALIDATOR = (obj) ->
-    {
-        if (!(obj instanceof List)) return false;
-
-        for (Object i : (List)obj)
-        {
-            if (!(i instanceof Config)) return false;
-
-            Config config = (Config)i;
-
-            // Ensure config contains required values
-            if (!config.contains("location")) return false;
-            if (!config.contains("thirst")) return false;
-            if (!config.contains("hydration")) return false;
-            if (!config.contains("poison_chance")) return false;
-
-            // Validate the resource location
-            if (ResourceLocation.tryParse(config.get("location")) == null) return false;
-
-            // Validate values
-            int thirst = config.getInt("thirst");
-            float hydration = config.<Number>get("hydration").floatValue();
-            float poisonChance = config.<Number>get("poison_chance").floatValue();
-
-            if (thirst < 0 || thirst > 20) return false;
-            if (hydration < 0.0D) return false;
-            if (poisonChance < 0.0D || poisonChance > 1.0D) return false;
-        }
-
-        return true;
-    };
 
     private static final Predicate<Object> WATER_INFO_VALIDATOR = (obj) ->
     {
@@ -151,7 +108,6 @@ public class ThirstConfig
         BUILDER.push("drink_options");
         handDrinkingThirst = BUILDER.comment("Thirst restored from drinking with hands.").defineInRange("hand_drinking_thirst", 1, 0, 20);
         handDrinkingHydration = BUILDER.comment("Hydration restored from drinking with hands.").defineInRange("hand_drinking_hydration", 0.1D, 0.0D, Double.MAX_VALUE);
-        drinkEntries = BUILDER.comment("Effects of drinks from Vanilla, Tough As Nails and other mods.").define("drink_entries", defaultDrinks, DRINK_VALIDATOR);
         BUILDER.pop();
 
         BUILDER.push("biome_options");
@@ -159,16 +115,6 @@ public class ThirstConfig
         BUILDER.pop();
 
         SPEC = BUILDER.build();
-    }
-
-    private static Config drinkToConfig(DrinkEntry drinkEntry)
-    {
-        Config config = Config.of(LinkedHashMap::new, InMemoryFormat.withUniversalSupport());
-        config.add("location", drinkEntry.getLocation().toString());
-        config.add("thirst", drinkEntry.getThirst());
-        config.add("hydration", drinkEntry.getHydration());
-        config.add("poison_chance", drinkEntry.getPoisonChance());
-        return config;
     }
 
     private static Config waterInfoToConfig(BiomeWaterInfo waterInfo)
@@ -179,14 +125,7 @@ public class ThirstConfig
         return config;
     }
 
-    private static ImmutableMap<ResourceLocation, DrinkEntry> drinkEntryCache;
     private static ImmutableMap<ResourceLocation, BiomeWaterInfo> waterInfoCache;
-
-    @Nullable
-    public static DrinkEntry getDrinkEntry(ResourceLocation location)
-    {
-        return getDrinkEntries().get(location);
-    }
 
     public static WaterType getBiomeWaterType(ResourceKey<Biome> key)
     {
@@ -198,30 +137,6 @@ public class ThirstConfig
     public static BiomeWaterInfo getWaterInfo(ResourceLocation location)
     {
         return getWaterInfos().get(location);
-    }
-
-    private static ImmutableMap<ResourceLocation, DrinkEntry> getDrinkEntries()
-    {
-        if (drinkEntryCache != null) return drinkEntryCache;
-
-        Map<ResourceLocation, DrinkEntry> tmp = Maps.newHashMap();
-
-        for (Config config : drinkEntries.get())
-        {
-            ResourceLocation location = new ResourceLocation(config.get("location"));
-
-            // Skip entries with invalid locations
-            if (!ForgeRegistries.ITEMS.containsKey(location))
-                continue;
-
-            float hydration = config.<Number>get("hydration").floatValue();
-            float poisonChance = config.<Number>get("poison_chance").floatValue();
-
-            tmp.put(location, new DrinkEntry(location, config.getInt("thirst"), hydration, poisonChance));
-        }
-
-        drinkEntryCache = ImmutableMap.copyOf(tmp);
-        return drinkEntryCache;
     }
 
     private static ImmutableMap<ResourceLocation, BiomeWaterInfo> getWaterInfos()
@@ -244,42 +159,6 @@ public class ThirstConfig
 
         waterInfoCache = ImmutableMap.copyOf(tmp);
         return waterInfoCache;
-    }
-
-    public static class DrinkEntry
-    {
-        private ResourceLocation location;
-        private int thirst;
-        private float hydration;
-        private float poisonChance;
-
-        private DrinkEntry(ResourceLocation location, int thirst, float hydration, float poisonChance)
-        {
-            this.location = location;
-            this.thirst = thirst;
-            this.hydration = hydration;
-            this.poisonChance = poisonChance;
-        }
-
-        public ResourceLocation getLocation()
-        {
-            return location;
-        }
-
-        public int getThirst()
-        {
-            return thirst;
-        }
-
-        public float getHydration()
-        {
-            return hydration;
-        }
-
-        public float getPoisonChance()
-        {
-            return poisonChance;
-        }
     }
 
     public static class BiomeWaterInfo
