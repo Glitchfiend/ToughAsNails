@@ -1,0 +1,17 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+
+  "container.toughasnails.water_purifier": "淨水器",
+  "effect.toughasnails.thirst": "口渴",
+
+  "item.toughasnails.tan_icon": "TAN 圖示",
+  "item.toughasnails.empty_canteen": "空水壺",
+  "item.toughasnails.water_canteen": "水壺",
+  "item.toughasnails.dirty_water_canteen": "汙水壺",
+  "item.toughasnails.purified_water_canteen": "淨水壺",
+  "item.toughasnails.dirty_water_bottle": "汙水瓶",
+  "item.toughasnails.purified_water_bottle": "淨水瓶",
+
+  "block.toughasnails.rain_collector": "雨水收集器",
+  "block.toughasnails.water_purifier": "淨水器"
+}
