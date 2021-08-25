@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.potion;
+package toughasnails.api.crafting;
 
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANEffects
+public class TANRecipeSerializers
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect ICE_RESISTANCE = null;
+    public static final RecipeSerializer<?> WATER_PURIFYING = null;
 }

@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.potion;
+package toughasnails.api.inventory.container;
 
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANEffects
+public class TANContainerTypes
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect ICE_RESISTANCE = null;
+    public static final MenuType<?> WATER_PURIFIER = null;
 }

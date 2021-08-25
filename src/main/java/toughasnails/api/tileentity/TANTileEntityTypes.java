@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.potion;
+package toughasnails.api.tileentity;
 
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANEffects
+public class TANTileEntityTypes
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect ICE_RESISTANCE = null;
+    public static final BlockEntityType WATER_PURIFIER = null;
 }

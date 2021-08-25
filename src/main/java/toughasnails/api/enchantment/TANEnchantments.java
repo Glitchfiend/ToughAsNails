@@ -2,14 +2,13 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.potion;
+package toughasnails.api.enchantment;
 
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("toughasnails")
-public class TANEffects
+public class TANEnchantments
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect ICE_RESISTANCE = null;
+    public static final Enchantment THERMAL_TUNING = null;
 }
