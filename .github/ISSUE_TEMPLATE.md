@@ -1,6 +1,6 @@
 ---
-name: 1.16.4 Standalone Bug
-about: For issues that occur with Serene Sesaons for 1.16.4.  We do not support older versions!
+name: 1.17.1 Standalone Bug
+about: For issues that occur with Serene Sesaons for 1.17.1.  We do not support older versions!
 title: ''
 assignees: ''
 

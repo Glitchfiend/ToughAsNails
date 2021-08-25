@@ -1,6 +1,6 @@
 ---
-name: 1.16.4 Feature Request
-about: Feature requests for Tough As Nails for 1.16.4.  We do not support older versions!
+name: 1.17.1 Feature Request
+about: Feature requests for Tough As Nails for 1.17.1.  We do not support older versions!
 title: ''
 labels: feature
 assignees: ''
