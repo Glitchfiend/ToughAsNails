@@ -20,6 +20,9 @@ public class LeafArmorItem extends ArmorItem implements DyeableLeatherItem
     @Override
     public void onArmorTick(ItemStack stack, Level world, Player player)
     {
+        if (!world.isClientSide())
+            return;
+
         int color = FoliageColor.getDefaultColor();
 
         if (world != null && player != null)
