@@ -32,10 +32,10 @@ public class ModItems
         register("wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
         register("wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
 
-        register("leaf_helmet", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.HEAD, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
-        register("leaf_chestplate", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
-        register("leaf_leggings", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
-        register("leaf_boots", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_helmet", new LeafArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.HEAD, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_chestplate", new LeafArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
 
         register("tan_icon", new Item(new Item.Properties()));
     }
