@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:item/wool_leggings",
+        "layer1": "toughasnails:item/wool_leggings_overlay"
+    }
+}

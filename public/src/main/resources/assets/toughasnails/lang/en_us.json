@@ -1,20 +1,18 @@
 {
-  "block.toughasnails.rain_collector": "Rain Collector",
-  "block.toughasnails.water_purifier": "Water Purifier",
+  "itemGroup.toughasnails": "Tough As Nails",
+  
   "container.toughasnails.water_purifier": "Water Purifier",
-  "death.attack.toughasnails.hyperthermia": "%1$s died from hyperthermia",
-  "death.attack.toughasnails.hyperthermia.player": "%1$s died from hyperthermia whilst trying to escape %2$s",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s pverheated to death whilst trying to escape %2$s",
+  
   "effect.toughasnails.thirst": "Thirst",
   "effect.toughasnails.ice_resistance": "Ice Resistance",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
-  "item.minecraft.lingering_potion.effect.ice_resistance": "Lingering Potion of Ice Resistance",
-  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Lingering Potion of Ice Resistance",
-  "item.minecraft.potion.effect.ice_resistance": "Potion of Ice Resistance",
-  "item.minecraft.potion.effect.long_ice_resistance": "Potion of Ice Resistance",
-  "item.minecraft.splash_potion.effect.ice_resistance": "Splash Potion of Ice Resistance",
-  "item.minecraft.splash_potion.effect.long_ice_resistance": "Splash Potion of Ice Resistance",
-  "item.minecraft.tipped_arrow.effect.ice_resistance": "Arrow of Ice Resistance",
-  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Arrow of Ice Resistance",
+  
+  "block.toughasnails.rain_collector": "Rain Collector",
+  "block.toughasnails.water_purifier": "Water Purifier",
+  
   "item.toughasnails.tan_icon": "TAN Icon",
   "item.toughasnails.empty_canteen": "Empty Canteen",
   "item.toughasnails.water_canteen": "Water Canteen",
@@ -22,5 +20,17 @@
   "item.toughasnails.purified_water_canteen": "Purified Water Canteen",
   "item.toughasnails.dirty_water_bottle": "Dirty Water Bottle",
   "item.toughasnails.purified_water_bottle": "Purified Water Bottle",
-  "itemGroup.toughasnails": "Tough As Nails"
+  "item.toughasnails.wool_helmet": "Wool Hood",
+  "item.toughasnails.wool_chestplate": "Wool Parka",
+  "item.toughasnails.wool_leggings": "Wool Pants",
+  "item.toughasnails.wool_boots": "Wool Boots",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Lingering Potion of Ice Resistance",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Lingering Potion of Ice Resistance",
+  "item.minecraft.potion.effect.ice_resistance": "Potion of Ice Resistance",
+  "item.minecraft.potion.effect.long_ice_resistance": "Potion of Ice Resistance",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Splash Potion of Ice Resistance",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Splash Potion of Ice Resistance",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Arrow of Ice Resistance",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Arrow of Ice Resistance"
 }

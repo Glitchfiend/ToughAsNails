@@ -4,15 +4,17 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import cpw.mods.modlauncher.EnumerationHelper;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeableArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import toughasnails.item.DirtyWaterBottleItem;
-import toughasnails.item.FilledCanteenItem;
-import toughasnails.item.EmptyCanteenItem;
-import toughasnails.item.PurifiedWaterBottleItem;
+import toughasnails.item.*;
 import toughasnails.util.inventory.ItemGroupTAN;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -27,6 +29,12 @@ public class ModItems
         register("purified_water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5).tab(ItemGroupTAN.INSTANCE)));
         register("dirty_water_bottle", new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
         register("purified_water_bottle", new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
+
+        register("wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.HEAD, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+
         register("tan_icon", new Item(new Item.Properties()));
     }
 
