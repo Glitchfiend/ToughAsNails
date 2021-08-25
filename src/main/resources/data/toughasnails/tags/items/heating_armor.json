@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-	"minecraft:leather_helmet",
-	"minecraft:leather_chestplate",
-	"minecraft:leather_leggings",
-	"minecraft:leather_boots",
     "toughasnails:wool_helmet",
 	"toughasnails:wool_chestplate",
 	"toughasnails:wool_leggings",

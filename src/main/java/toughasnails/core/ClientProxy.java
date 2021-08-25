@@ -5,6 +5,7 @@ import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.FoliageColor;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.item.DyeableWoolItem;
@@ -27,9 +28,12 @@ public class ClientProxy extends CommonProxy
 
         blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
 
-        itemColors.register((p_92708_, p_92709_) -> {
-            return p_92709_ > 0 ? -1 : ((DyeableWoolItem)p_92708_.getItem()).getColor(p_92708_);
+        itemColors.register((stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ((DyeableWoolItem)stack.getItem()).getColor(stack);
         }, TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
+
+        itemColors.register((stack, tintIndex) -> { return FoliageColor.getDefaultColor();
+        }, TANItems.LEAF_HELMET, TANItems.LEAF_CHESTPLATE, TANItems.LEAF_LEGGINGS, TANItems.LEAF_BOOTS);
 
         RenderType transparentRenderType = RenderType.cutoutMipped();
         RenderType cutoutRenderType = RenderType.cutout();

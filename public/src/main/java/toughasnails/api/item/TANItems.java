@@ -22,5 +22,10 @@ public class TANItems
     public static final Item WOOL_LEGGINGS = null;
     public static final Item WOOL_BOOTS = null;
 
+    public static final Item LEAF_HELMET = null;
+    public static final Item LEAF_CHESTPLATE = null;
+    public static final Item LEAF_LEGGINGS = null;
+    public static final Item LEAF_BOOTS = null;
+
     public static final Item TAN_ICON = null;
 }

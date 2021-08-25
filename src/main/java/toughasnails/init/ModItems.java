@@ -6,10 +6,7 @@ package toughasnails.init;
 
 import cpw.mods.modlauncher.EnumerationHelper;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeableArmorItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +31,11 @@ public class ModItems
         register("wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
         register("wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
         register("wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+
+        register("leaf_helmet", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.HEAD, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_chestplate", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_leggings", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
+        register("leaf_boots", new ArmorItem(ModArmorMaterials.LEAF, EquipmentSlot.FEET, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
 
         register("tan_icon", new Item(new Item.Properties()));
     }

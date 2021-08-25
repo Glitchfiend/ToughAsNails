@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "minecraft:diamond_helmet",
-	"minecraft:diamond_chestplate",
-	"minecraft:diamond_leggings",
-	"minecraft:diamond_boots"
+    "toughasnails:leaf_helmet",
+	"toughasnails:leaf_chestplate",
+	"toughasnails:leaf_leggings",
+	"toughasnails:leaf_boots"
   ]
 }

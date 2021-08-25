@@ -12,7 +12,8 @@ import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial
 {
-    WOOL("wool", 2, new int[]{1, 1, 1, 1}, 5, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> { return Ingredient.of(ItemTags.WOOL); });
+    WOOL("wool", 1, new int[]{1, 1, 1, 1}, 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> { return Ingredient.of(ItemTags.WOOL); }),
+    LEAF("leaf", 1, new int[]{1, 1, 1, 1}, 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> { return Ingredient.of(ItemTags.LEAVES); });
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     private final String name;
