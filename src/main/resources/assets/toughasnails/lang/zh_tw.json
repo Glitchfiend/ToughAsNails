@@ -1,9 +1,18 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-
+  
   "container.toughasnails.water_purifier": "淨水器",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s 因高熱而死",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s 在試圖逃離 %2$s 時因高熱而死",
+  
   "effect.toughasnails.thirst": "口渴",
-
+  "effect.toughasnails.ice_resistance": "耐寒",
+  "enchantment.toughasnails.thermal_tuning": "調溫",
+  
+  "block.toughasnails.rain_collector": "雨水收集器",
+  "block.toughasnails.water_purifier": "淨水器",
+  
   "item.toughasnails.tan_icon": "TAN 圖示",
   "item.toughasnails.empty_canteen": "空水壺",
   "item.toughasnails.water_canteen": "水壺",
@@ -11,7 +20,17 @@
   "item.toughasnails.purified_water_canteen": "淨水壺",
   "item.toughasnails.dirty_water_bottle": "汙水瓶",
   "item.toughasnails.purified_water_bottle": "淨水瓶",
-
-  "block.toughasnails.rain_collector": "雨水收集器",
-  "block.toughasnails.water_purifier": "淨水器"
+  "item.toughasnails.wool_helmet": "羊毛帽",
+  "item.toughasnails.wool_chestplate": "羊毛大衣",
+  "item.toughasnails.wool_leggings": "羊毛褲子",
+  "item.toughasnails.wool_boots": "羊毛靴子",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "滯留 耐寒藥水",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "滯留 耐寒藥水",
+  "item.minecraft.potion.effect.ice_resistance": "耐寒藥水",
+  "item.minecraft.potion.effect.long_ice_resistance": "耐寒藥水",
+  "item.minecraft.splash_potion.effect.ice_resistance": "飛濺 耐寒藥水",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "飛濺 耐寒藥水",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "耐寒之箭",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "耐寒之箭"
 }
