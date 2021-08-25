@@ -19,6 +19,7 @@ import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 
 import java.util.List;
@@ -220,6 +221,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         TemperatureLevel armorAdjTemp = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);
         if (armorAdjTemp == TemperatureLevel.HOT && current != TemperatureLevel.HOT) current = armorAdjTemp.decrement(1);
         else if (armorAdjTemp == TemperatureLevel.ICY && current != TemperatureLevel.ICY) current = armorAdjTemp.increment(1);
+        else current = armorAdjTemp;
 
         // Armor enchantments
         if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.THERMAL_TUNING, player) > 0)
