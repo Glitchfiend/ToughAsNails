@@ -1,17 +1,36 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-
-  "container.toughasnails.water_purifier": "Oczyszczacz Wody",
-  "effect.toughasnails.thirst": "Spragnienie",
-
+  
+  "container.toughasnails.water_purifier": "Oczyszczacz wody",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s przegrzał się na śmierć",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s rozgrzał się do śmierci podczas próby ucieczki od %2$s",
+  
+  "effect.toughasnails.thirst": "Pragnienie",
+  "effect.toughasnails.ice_resistance": "Odporność na lód",
+  "enchantment.toughasnails.thermal_tuning": "Ulepszenie Termiczne",
+  
+  "block.toughasnails.rain_collector": "Kolektor deszczu",
+  "block.toughasnails.water_purifier": "Oczyszczacz wody",
+  
   "item.toughasnails.tan_icon": "TAN Icon",
-  "item.toughasnails.empty_canteen": "Pusta Manierka",
-  "item.toughasnails.water_canteen": "Manierka z Wodą",
-  "item.toughasnails.dirty_water_canteen": "Manierka z Brudną Wodą",
-  "item.toughasnails.purified_water_canteen": "Manierka z Oczyszczoną Wodą",
-  "item.toughasnails.dirty_water_bottle": "Butelka z Brudną Wodą",
-  "item.toughasnails.purified_water_bottle": "Butelka z Oczyszczoną Wodą",
-
-  "block.toughasnails.rain_collector": "Kolektor Deszczu",
-  "block.toughasnails.water_purifier": "Oczyszczacz Wody"
+  "item.toughasnails.empty_canteen": "Pusta manierka",
+  "item.toughasnails.water_canteen": "Manierka z wodą",
+  "item.toughasnails.dirty_water_canteen": "Brudna manierka z wodą",
+  "item.toughasnails.purified_water_canteen": "Manierka z wodą oczyszczoną",
+  "item.toughasnails.dirty_water_bottle": "Brudna butelka wody",
+  "item.toughasnails.purified_water_bottle": "Oczyszczona butelka wody",
+  "item.toughasnails.wool_helmet": "Wełniany kaptur",
+  "item.toughasnails.wool_chestplate": "Wełniana kurtka",
+  "item.toughasnails.wool_leggings": "Wełniane spodnie",
+  "item.toughasnails.wool_boots": "Wełniane buty",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Trwała Mikstura odporności na lód",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Trwała Mikstura odporności na lód",
+  "item.minecraft.potion.effect.ice_resistance": "Mikstura odporności na lód",
+  "item.minecraft.potion.effect.long_ice_resistance": "Mikstura odporności na lód",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Miotana mikstura odporności na lód",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Miotana mikstura odporności na lód",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Strzała odporności na lód",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Strzała odporności na lód"
 }
