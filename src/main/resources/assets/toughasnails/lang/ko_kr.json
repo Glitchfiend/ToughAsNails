@@ -2,16 +2,35 @@
   "itemGroup.toughasnails": "Tough As Nails",
 
   "container.toughasnails.water_purifier": "정수기",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s이(가) 열사병으로 사망했습니다",
+  "death.attack.toughasnails.hyperthermia.player": "%2$s를 탈출하려고 시도하는 동안 %1$s이(가) 열사병으로 사망했습니다.",
+
   "effect.toughasnails.thirst": "갈증",
+  "effect.toughasnails.ice_resistance": "얼음 저항",
+  "enchantment.toughasnails.thermal_tuning": "온도 조절",
+  
+  "block.toughasnails.rain_collector": "빗물받이",
+  "block.toughasnails.water_purifier": "정수기",
 
   "item.toughasnails.tan_icon": "TAN 아이콘",
-  "item.toughasnails.empty_canteen": "빈 물통",
+  "item.toughasnails.empty_canteen": "빈통",
   "item.toughasnails.water_canteen": "물통",
   "item.toughasnails.dirty_water_canteen": "오염된 물통",
   "item.toughasnails.purified_water_canteen": "정제된 물통",
   "item.toughasnails.dirty_water_bottle": "오염된 물병",
   "item.toughasnails.purified_water_bottle": "정제된 물병",
-
-  "block.toughasnails.rain_collector": "빗물받이",
-  "block.toughasnails.water_purifier": "정수기"
+  "item.toughasnails.wool_helmet": "양털 모자",
+  "item.toughasnails.wool_chestplate": "양털 파카",
+  "item.toughasnails.wool_leggings": "양털 바지",
+  "item.toughasnails.wool_boots": "양털 부츠",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "얼음 저항의 잔류형 물약",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "얼음 저항의 잔류형 물약 II",
+  "item.minecraft.potion.effect.ice_resistance": "얼음 저항 물약",
+  "item.minecraft.potion.effect.long_ice_resistance": "얼음 저항 물약 II",
+  "item.minecraft.splash_potion.effect.ice_resistance": "얼음 저항 투척용 물약 II",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "얼음 저항 투척용 물약 II",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "얼음 저항의 화살",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "얼음 저항의 화살 II"
 }
