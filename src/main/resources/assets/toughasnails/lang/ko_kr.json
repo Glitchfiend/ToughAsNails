@@ -14,7 +14,7 @@
   "block.toughasnails.water_purifier": "정수기",
 
   "item.toughasnails.tan_icon": "TAN 아이콘",
-  "item.toughasnails.empty_canteen": "빈 통",
+  "item.toughasnails.empty_canteen": "빈 물통",
   "item.toughasnails.water_canteen": "물통",
   "item.toughasnails.dirty_water_canteen": "오염된 물통",
   "item.toughasnails.purified_water_canteen": "정제된 물통",
@@ -27,10 +27,10 @@
   
   "item.minecraft.lingering_potion.effect.ice_resistance": "잔류형 얼음 저항의 물약",
   "item.minecraft.lingering_potion.effect.long_ice_resistance": "잔류형 얼음 저항의 물약 II",
-  "item.minecraft.potion.effect.ice_resistance": "얼음 저항 물약",
-  "item.minecraft.potion.effect.long_ice_resistance": "얼음 저항 물약 II",
-  "item.minecraft.splash_potion.effect.ice_resistance": "투척용 얼음 저항 물약",
-  "item.minecraft.splash_potion.effect.long_ice_resistance": "투척용 얼음 저항 물약 II",
+  "item.minecraft.potion.effect.ice_resistance": "얼음 저항의 물약",
+  "item.minecraft.potion.effect.long_ice_resistance": "얼음 저항의 물약 II",
+  "item.minecraft.splash_potion.effect.ice_resistance": "투척용 얼음 저항의 물약",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "투척용 얼음 저항의 물약 II",
   "item.minecraft.tipped_arrow.effect.ice_resistance": "얼음 저항의 화살",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "얼음 저항의 화살 II"
 }
