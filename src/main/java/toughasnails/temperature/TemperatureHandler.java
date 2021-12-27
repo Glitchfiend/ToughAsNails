@@ -16,7 +16,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.damagesource.TANDamageSources;
 import toughasnails.api.potion.TANEffects;

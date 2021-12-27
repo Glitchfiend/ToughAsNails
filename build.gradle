@@ -14,22 +14,13 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-repositories {
-    mavenLocal()
-    maven {
-        url "https://www.cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-}
+repositories { mavenLocal() }
 
 group = "com.github.glitchfiend"
 archivesBaseName = "ToughAsNails"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 def getGitHash = {
     def stdout = new ByteArrayOutputStream()
@@ -55,6 +46,14 @@ minecraft {
         server = {
             workingDirectory = project.file("run").canonicalPath
             source sourceSets.main
+        }
+    }
+}
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xmaxerrs" << "10000"
         }
     }
 }
@@ -88,7 +87,6 @@ jar {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    implementation 'curse.maven:SereneSeasons-291874:3430063'
 }
 
 task deobfJar(type: Jar) {
@@ -125,7 +123,7 @@ curseforge {
             addGameVersion minecraft_version
 
             mainArtifact(jar) {
-                displayName = "Tough As Nails ${version}"
+                displayName = "Serene Seasons ${version}"
             }
 
             addArtifact deobfJar

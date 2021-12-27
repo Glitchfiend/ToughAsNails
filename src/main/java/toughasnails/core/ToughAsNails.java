@@ -4,14 +4,21 @@
  ******************************************************************************/
 package toughasnails.core;
 
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.items.CapabilityItemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import toughasnails.api.capability.TANCapabilities;
+import toughasnails.api.temperature.ITemperature;
+import toughasnails.api.thirst.IThirst;
 import toughasnails.init.*;
 import toughasnails.network.PacketHandler;
 
@@ -29,6 +36,7 @@ public class ToughAsNails
     {
         instance = this;
 
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerCapabilities);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
@@ -39,9 +47,14 @@ public class ToughAsNails
         ModHandlers.init();
     }
 
+    private void registerCapabilities(RegisterCapabilitiesEvent event)
+    {
+        event.register(IThirst.class);
+        event.register(ITemperature.class);
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        ModCapabilities.init();
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
