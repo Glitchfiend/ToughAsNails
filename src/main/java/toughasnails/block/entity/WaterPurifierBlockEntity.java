@@ -26,19 +26,28 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.tileentity.TANTileEntityTypes;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
+import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 import javax.annotation.Nullable;
 
 public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {
-    private static final int[] SLOTS_FOR_UP = new int[]{0};
-    private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
-    private static final int[] SLOTS_FOR_SIDES = new int[]{1};
+    protected static final int SLOT_INPUT = 0;
+    protected static final int SLOT_FILTER = 1;
+    protected static final int SLOT_RESULT = 2;
+    private static final int[] SLOTS_FOR_UP = new int[]{SLOT_INPUT};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{SLOT_RESULT, SLOT_FILTER};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{SLOT_FILTER};
 
     private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
@@ -117,15 +126,14 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt)
+    public void saveAdditional(CompoundTag nbt)
     {
-        super.save(nbt);
+        super.saveAdditional(nbt);
         nbt.putInt("FilterTimeRemaining", this.filterTimeRemaining);
         nbt.putInt("FilterDuration", this.filterDuration);
         nbt.putInt("PurifyProgress", this.purifyProgress);
         nbt.putInt("PurifyTotalTime", this.purifyTotalTime);
         ContainerHelper.saveAllItems(nbt, this.items);
-        return nbt;
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, WaterPurifierBlockEntity blockEntity)
@@ -230,6 +238,17 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
+    public boolean canPlaceItem(int slot, ItemStack stack)
+    {
+        if (slot == SLOT_RESULT) return false;
+        else if (slot != SLOT_FILTER) return true;
+        else
+        {
+            return isFilter(stack);
+        }
+    }
+
+    @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
     {
         return this.canPlaceItem(index, stack);
@@ -238,7 +257,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
     {
-        return !(direction == Direction.DOWN && index == 1);
+        return !(direction == Direction.DOWN && index == SLOT_FILTER);
     }
 
     @Override
@@ -402,5 +421,36 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         ImmutableMap.Builder<Item, Integer> builder = ImmutableMap.builder();
         builder.put(Items.CHARCOAL, 1200);
         return builder.build();
+    }
+
+    LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (facing == Direction.UP)
+                return handlers[0].cast();
+            else if (facing == Direction.DOWN)
+                return handlers[1].cast();
+            else
+                return handlers[2].cast();
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void invalidateCaps()
+    {
+        super.invalidateCaps();
+        for (int x = 0; x < handlers.length; x++)
+            handlers[x].invalidate();
+    }
+
+    @Override
+    public void reviveCaps()
+    {
+        super.reviveCaps();
+        this.handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     }
 }
