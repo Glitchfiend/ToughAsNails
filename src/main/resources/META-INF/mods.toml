@@ -1,6 +1,6 @@
 modLoader="javafml"
 license="All Rights Reserved"
-loaderVersion="[37,)"
+loaderVersion="[39,)"
 issueTrackerURL="https://github.com/Glitchfiend/ToughAsNails/issues"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/tough-as-nails"
 logoFile="tan_logo.png"
@@ -10,13 +10,11 @@ logoFile="tan_logo.png"
     version="${file.jarVersion}"
     displayName="Tough As Nails"
 	authors="Adubbz, Forstride"
-    description='''
-    Adds features to enhance survival mode and increase the game's difficulty.
-    '''
+    description="Adds features to enhance survival mode and increase the game's difficulty."
 
 [[dependencies.toughasnails]]
     modId="forge"
     mandatory=true
-    versionRange="[37,)"
+    versionRange="[39.0.8,)"
     ordering="NONE"
     side="BOTH"
