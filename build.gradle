@@ -124,7 +124,7 @@ curseforge {
             addGameVersion minecraft_version
 
             mainArtifact(jar) {
-                displayName = "Serene Seasons ${version}"
+                displayName = "Tough As Nails ${version}"
             }
 
             addArtifact deobfJar
