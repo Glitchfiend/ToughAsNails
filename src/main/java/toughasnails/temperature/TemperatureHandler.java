@@ -6,6 +6,7 @@ package toughasnails.temperature;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -75,7 +76,27 @@ public class TemperatureHandler
 
         ServerPlayer player = (ServerPlayer)event.player;
         ITemperature data = TemperatureHelper.getTemperatureData(player);
-        TemperatureLevel newLevel = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
+        TemperatureLevel targetPositionalTemperature = data.getTargetPositionalLevel();
+        TemperatureLevel newTargetPositionalTemperature = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
+
+        // Decrement the positional change delay ticks
+        data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
+
+        // If necessary, change the target positional level and reset the timer
+        // for changing the player's positional temperature.
+        if (newTargetPositionalTemperature != targetPositionalTemperature)
+        {
+            data.setTargetPositionalLevel(newTargetPositionalTemperature);
+            data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
+        }
+
+        // If the delay timer is complete, move the player's positional temperature level to move towards the target.
+        if (data.getPositionalChangeDelayTicks() == 0)
+        {
+            data.setPositionalLevel(data.getPositionalLevel().increment(Mth.sign(data.getTargetPositionalLevel().ordinal() - data.getPositionalLevel().ordinal())));
+        }
+
+        TemperatureLevel newLevel = data.getPositionalLevel();
 
         for (IPlayerTemperatureModifier modifier : playerModifiers)
         {
@@ -87,6 +108,12 @@ public class TemperatureHandler
 
         // Update the player's temperature to the new level
         data.setLevel(newLevel);
+
+        // Reset the positional delay ticks if the temperature changes for any reason
+        if (data.getLastLevel() != data.getLevel())
+        {
+            data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
+        }
 
         // Decrement the extremity delay ticks
         data.setExtremityDelayTicks(Math.max(0, data.getExtremityDelayTicks() - 1));

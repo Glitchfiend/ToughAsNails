@@ -43,6 +43,9 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
         if (ServerConfig.enableTemperature.get())
         {
             compound.putInt("temperatureLevel", instance.getLevel().ordinal());
+            compound.putInt("positionalTemperatureLevel", instance.getPositionalLevel().ordinal());
+            compound.putInt("targetPositionalTemperatureLevel", instance.getTargetPositionalLevel().ordinal());
+            compound.putInt("positionalChangeDelayTicks", instance.getPositionalChangeDelayTicks());
             compound.putInt("hyperthermiaTicks", instance.getHyperthermiaTicks());
             compound.putInt("extremityDelayTicks", instance.getExtremityDelayTicks());
         }
@@ -50,6 +53,9 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
         {
             // Save default values
             compound.putInt("temperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            compound.putInt("positionalTemperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            compound.putInt("targetPositionalTemperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            compound.putInt("positionalChangeDelayTicks", 0);
             compound.putInt("hyperthermiaTicks", 0);
             compound.putInt("extremityDelayTicks", 0);
         }
@@ -65,6 +71,9 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
             if (ServerConfig.enableTemperature.get())
             {
                 instance.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
+                instance.setPositionalLevel(TemperatureLevel.values()[nbt.getInt("positionalTemperatureLevel")]);
+                instance.setTargetPositionalLevel(TemperatureLevel.values()[nbt.getInt("targetPositionalTemperatureLevel")]);
+                instance.setPositionalChangeDelayTicks(nbt.getInt("positionalChangeDelayTicks"));
                 instance.setHyperthermiaTicks(nbt.getInt("hyperthermiaTicks"));
                 instance.setExtremityDelayTicks(nbt.getInt("extremityDelayTicks"));
             }
@@ -72,6 +81,9 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
             {
                 // Use default values if temperature is disabled
                 instance.setLevel(TemperatureData.DEFAULT_LEVEL);
+                instance.setPositionalLevel(TemperatureData.DEFAULT_LEVEL);
+                instance.setTargetPositionalLevel(TemperatureData.DEFAULT_LEVEL);
+                instance.setPositionalChangeDelayTicks(0);
                 instance.setHyperthermiaTicks(0);
                 instance.setExtremityDelayTicks(0);
             }

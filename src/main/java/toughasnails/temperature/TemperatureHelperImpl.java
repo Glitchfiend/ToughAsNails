@@ -6,6 +6,7 @@ package toughasnails.temperature;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -187,19 +188,22 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
     {
+        Level level = player.level;
+        BlockPos pos = player.blockPosition();
+
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
-        if (player.isInWaterOrRain()) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
-        if (player.level.isRaining() && player.level.canSeeSky(player.blockPosition()))
+        if (player.isInWaterOrRain() || level.getFluidState(pos).is(FluidTags.WATER)) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+        if (player.level.isRaining() && player.level.canSeeSky(pos))
         {
-            Biome biome = player.level.getBiome(player.blockPosition());
+            Biome biome = player.level.getBiome(pos);
 
             if (ModList.get().isLoaded("sereneseasons"))
             {
-                if (SeasonHooks.coldEnoughToSnowHook(biome, player.blockPosition(), player.level))
+                if (SeasonHooks.coldEnoughToSnowHook(biome, pos, player.level))
                     current = current.increment(TemperatureConfig.snowTemperatureChange.get());
             }
-            else if (biome.coldEnoughToSnow(player.blockPosition()))
+            else if (biome.coldEnoughToSnow(pos))
                 current = current.increment(TemperatureConfig.snowTemperatureChange.get());
         }
 

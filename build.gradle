@@ -87,7 +87,7 @@ jar {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    implementation files('libs/SereneSeasons-1.18.1-6.0.0.null-deobf.jar')
+    implementation files('libs/SereneSeasons-1.18.1-6.0.0.10-deobf.jar')
 }
 
 task deobfJar(type: Jar) {

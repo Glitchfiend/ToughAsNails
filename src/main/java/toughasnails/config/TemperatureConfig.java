@@ -11,6 +11,7 @@ public class TemperatureConfig
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
+    public static ForgeConfigSpec.IntValue positionalTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue extremityDamageDelay;
 
     public static ForgeConfigSpec.IntValue temperatureDropAltitude;
@@ -31,11 +32,12 @@ public class TemperatureConfig
     {
         BUILDER.comment("Please be advised that certain temperature-related options are world-specific and are located in <Path to your world folder>/serverconfig/toughasnails-server.toml.");
         BUILDER.push("general");
+        positionalTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their positional temperature changes.").defineInRange("positional_temperature_change_delay", 200, 0, Integer.MAX_VALUE);
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 200, 0, Integer.MAX_VALUE);
         BUILDER.pop();
         BUILDER.push("altitude");
-        temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 96, -64, 256);
-        temperatureRiseAltitude = BUILDER.comment("Y level to rise the temperature at when below").defineInRange("temperature_rise_altitude", 32, -64, 256);
+        temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 1024, -64, 1024);
+        temperatureRiseAltitude = BUILDER.comment("Y level to rise the temperature at when below").defineInRange("temperature_rise_altitude", -64, -64, 1024);
         environmentalModifierAltitude = BUILDER.comment("Y level above which environmental modifiers are applied").defineInRange("environmental_modifier_altitude", 55, -64, 256);
         BUILDER.pop();
         BUILDER.push("blocks");
