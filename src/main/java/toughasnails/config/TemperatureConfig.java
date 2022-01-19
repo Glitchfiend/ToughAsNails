@@ -18,7 +18,7 @@ public class TemperatureConfig
     public static ForgeConfigSpec.IntValue temperatureRiseAltitude;
     public static ForgeConfigSpec.IntValue environmentalModifierAltitude;
 
-    public static ForgeConfigSpec.IntValue nearBlockRange;
+    public static ForgeConfigSpec.IntValue nearHeatCoolProximity;
 
     public static ForgeConfigSpec.IntValue nightHotTemperatureChange;
     public static ForgeConfigSpec.IntValue nightTemperatureChange;
@@ -41,7 +41,7 @@ public class TemperatureConfig
         environmentalModifierAltitude = BUILDER.comment("Y level above which environmental modifiers are applied").defineInRange("environmental_modifier_altitude", 55, -64, 256);
         BUILDER.pop();
         BUILDER.push("blocks");
-        nearBlockRange = BUILDER.comment("The range which constitutes near a heat or cool source").defineInRange("near_block_range", 2, 1, 7);
+        nearHeatCoolProximity = BUILDER.comment("The proximity which constitutes near a heat or cool source").defineInRange("near_heat_cool_proximity", 7, 1, 16);
         BUILDER.pop();
         BUILDER.push("immersion");
         onFireTemperatureChange = BUILDER.comment("Amount to change the temperature by when on fire.").defineInRange("on_fire_temperature_change", 2, -4, 4);
