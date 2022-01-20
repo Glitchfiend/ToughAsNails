@@ -7,6 +7,7 @@ package toughasnails.temperature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -68,6 +70,20 @@ public class TemperatureHandler
         syncTemperature((ServerPlayer)event.getPlayer());
     }
 
+    /*@SubscribeEvent
+    public void onPlayerSpawn(EntityJoinWorldEvent event)
+    {
+        if (event.getWorld().isClientSide() || !(event.getEntity() instanceof ServerPlayer))
+            return;
+
+        ServerPlayer player = (ServerPlayer)event.getEntity();
+        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !player.isCreative() && !player.getPersistentData().getBoolean("climateClemencyGranted"))
+        {
+            player.getPersistentData().putBoolean("climateClemencyGranted", true);
+            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));
+        }
+    }*/
+
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
@@ -79,21 +95,24 @@ public class TemperatureHandler
         TemperatureLevel targetPositionalTemperature = data.getTargetPositionalLevel();
         TemperatureLevel newTargetPositionalTemperature = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
 
-        // Decrement the positional change delay ticks
-        data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
-
-        // If necessary, change the target positional level and reset the timer
-        // for changing the player's positional temperature.
-        if (newTargetPositionalTemperature != targetPositionalTemperature)
+        if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
         {
-            data.setTargetPositionalLevel(newTargetPositionalTemperature);
-            data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
-        }
+            // Decrement the positional change delay ticks
+            data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
 
-        // If the delay timer is complete, move the player's positional temperature level to move towards the target.
-        if (data.getPositionalChangeDelayTicks() == 0)
-        {
-            data.setPositionalLevel(data.getPositionalLevel().increment(Mth.sign(data.getTargetPositionalLevel().ordinal() - data.getPositionalLevel().ordinal())));
+            // If necessary, change the target positional level and reset the timer
+            // for changing the player's positional temperature.
+            if (newTargetPositionalTemperature != targetPositionalTemperature)
+            {
+                data.setTargetPositionalLevel(newTargetPositionalTemperature);
+                data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
+            }
+
+            // If the delay timer is complete, move the player's positional temperature level to move towards the target.
+            if (data.getPositionalChangeDelayTicks() == 0)
+            {
+                data.setPositionalLevel(data.getPositionalLevel().increment(Mth.sign(data.getTargetPositionalLevel().ordinal() - data.getPositionalLevel().ordinal())));
+            }
         }
 
         TemperatureLevel newLevel = data.getPositionalLevel();
