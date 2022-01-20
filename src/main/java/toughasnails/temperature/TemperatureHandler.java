@@ -103,8 +103,14 @@ public class TemperatureHandler
             newLevel = modifier.modify(player, newLevel);
         }
 
-        // Manually do the armor modifier to ensure it is last
+        // Armor modifier
         newLevel = TemperatureHelperImpl.armorModifier(player, newLevel);
+
+        // Climate Control modifier
+        if (player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
+        {
+            newLevel = TemperatureLevel.NEUTRAL;
+        }
 
         // Update the player's temperature to the new level
         data.setLevel(newLevel);

@@ -24,7 +24,7 @@ public class ModPotions
     {
         register("thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
         register("ice_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
-        register("climate_control", new MobEffect(MobEffectCategory.NEUTRAL, 0xB6B6B6));
+        register("climate_clemency", new MobEffect(MobEffectCategory.NEUTRAL, 0xB6B6B6));
     }
 
     @SubscribeEvent

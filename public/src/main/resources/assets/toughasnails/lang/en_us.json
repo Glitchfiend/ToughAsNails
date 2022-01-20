@@ -6,9 +6,9 @@
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
   "death.attack.toughasnails.hyperthermia.player": "%1$s pverheated to death whilst trying to escape %2$s",
   
-  "effect.toughasnails.climate_control": "Climate Control",
-  "effect.toughasnails.thirst": "Thirst",
+  "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.ice_resistance": "Ice Resistance",
+  "effect.toughasnails.thirst": "Thirst",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
   
   "block.toughasnails.rain_collector": "Rain Collector",
