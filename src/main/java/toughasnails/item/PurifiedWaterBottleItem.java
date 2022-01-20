@@ -4,8 +4,6 @@
  ******************************************************************************/
 package toughasnails.item;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class PurifiedWaterBottleItem extends DrinkItem
 {
     public PurifiedWaterBottleItem(Properties properties)

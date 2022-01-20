@@ -12,4 +12,5 @@ public class TANEffects
 {
     public static final MobEffect THIRST = null;
     public static final MobEffect ICE_RESISTANCE = null;
+    public static final MobEffect CLIMATE_CONTROL = null;
 }
