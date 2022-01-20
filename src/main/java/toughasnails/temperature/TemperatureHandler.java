@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -68,21 +69,28 @@ public class TemperatureHandler
             return;
 
         syncTemperature((ServerPlayer)event.getPlayer());
+
+        if (!TemperatureConfig.climateClemencyRespawning.get())
+        {
+            event.getPlayer().getPersistentData().putBoolean("climateClemencyGranted", event.getOriginal().getPersistentData().getBoolean("climateClemencyGranted"));
+        }
     }
 
-    /*@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerSpawn(EntityJoinWorldEvent event)
     {
-        if (event.getWorld().isClientSide() || !(event.getEntity() instanceof ServerPlayer))
+        if (event.getWorld().isClientSide() || !(event.getEntity() instanceof Player))
             return;
 
-        ServerPlayer player = (ServerPlayer)event.getEntity();
-        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !player.isCreative() && !player.getPersistentData().getBoolean("climateClemencyGranted"))
+        Player player = (Player)event.getEntity();
+        CompoundTag data = player.getPersistentData();
+
+        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !data.getBoolean("climateClemencyGranted"))
         {
-            player.getPersistentData().putBoolean("climateClemencyGranted", true);
+            data.putBoolean("climateClemencyGranted", true);
             player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));
         }
-    }*/
+    }
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)

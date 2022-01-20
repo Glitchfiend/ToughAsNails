@@ -14,6 +14,7 @@ public class TemperatureConfig
     public static ForgeConfigSpec.IntValue positionalTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue extremityDamageDelay;
     public static ForgeConfigSpec.IntValue climateClemencyDuration;
+    public static ForgeConfigSpec.BooleanValue climateClemencyRespawning;
 
     public static ForgeConfigSpec.IntValue temperatureDropAltitude;
     public static ForgeConfigSpec.IntValue temperatureRiseAltitude;
@@ -36,6 +37,7 @@ public class TemperatureConfig
         positionalTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their positional temperature changes.").defineInRange("positional_temperature_change_delay", 500, 0, Integer.MAX_VALUE);
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 500, 0, Integer.MAX_VALUE);
         climateClemencyDuration = BUILDER.comment("Number of ticks for the duration of Climate Clemency.").defineInRange("climate_clemency_duration", 6000, 0, Integer.MAX_VALUE);
+        climateClemencyRespawning = BUILDER.comment("Whether or not Climate Clemency should be granted when respawning.").define("climate_clemency_respawning", false);
         BUILDER.pop();
         BUILDER.push("altitude");
         temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 1024, -64, 1024);
