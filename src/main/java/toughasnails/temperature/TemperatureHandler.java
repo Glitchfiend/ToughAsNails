@@ -103,23 +103,33 @@ public class TemperatureHandler
         TemperatureLevel targetPositionalTemperature = data.getTargetPositionalLevel();
         TemperatureLevel newTargetPositionalTemperature = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
 
+        // Decrement the positional change delay ticks
+        data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
+
         if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
         {
-            // Decrement the positional change delay ticks
-            data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
-
             // If necessary, change the target positional level and reset the timer
             // for changing the player's positional temperature.
             if (newTargetPositionalTemperature != targetPositionalTemperature)
             {
                 data.setTargetPositionalLevel(newTargetPositionalTemperature);
-                data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
+                int delay = TemperatureConfig.positionalTemperatureChangeDelay.get();
+
+                // Rebound quickly from extremes
+                if ((data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT) && newTargetPositionalTemperature != TemperatureLevel.ICY && newTargetPositionalTemperature != TemperatureLevel.HOT)
+                {
+                    delay = TemperatureConfig.extremityReboundPositionalTemperatureChangeDelay.get();
+                }
+
+                data.setPositionalChangeDelayTicks(delay);
             }
 
-            // If the delay timer is complete, move the player's positional temperature level to move towards the target.
-            if (data.getPositionalChangeDelayTicks() == 0)
+            // If the delay timer is complete, and the target temperature isn't the same as the player's current temperature,
+            // move the player's positional temperature level to move towards the target.
+            if (data.getPositionalChangeDelayTicks() == 0 && targetPositionalTemperature != data.getLevel())
             {
                 data.setPositionalLevel(data.getPositionalLevel().increment(Mth.sign(data.getTargetPositionalLevel().ordinal() - data.getPositionalLevel().ordinal())));
+                data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
             }
         }
 
@@ -141,12 +151,6 @@ public class TemperatureHandler
 
         // Update the player's temperature to the new level
         data.setLevel(newLevel);
-
-        // Reset the positional delay ticks if the temperature changes for any reason
-        if (data.getLastLevel() != data.getLevel())
-        {
-            data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
-        }
 
         // Decrement the extremity delay ticks
         data.setExtremityDelayTicks(Math.max(0, data.getExtremityDelayTicks() - 1));

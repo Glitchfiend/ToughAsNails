@@ -12,6 +12,7 @@ public class TemperatureConfig
     public static final ForgeConfigSpec SPEC;
 
     public static ForgeConfigSpec.IntValue positionalTemperatureChangeDelay;
+    public static ForgeConfigSpec.IntValue extremityReboundPositionalTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue extremityDamageDelay;
     public static ForgeConfigSpec.IntValue climateClemencyDuration;
     public static ForgeConfigSpec.BooleanValue climateClemencyRespawning;
@@ -35,6 +36,7 @@ public class TemperatureConfig
         BUILDER.comment("Please be advised that certain temperature-related options are world-specific and are located in <Path to your world folder>/serverconfig/toughasnails-server.toml.");
         BUILDER.push("general");
         positionalTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their positional temperature changes.").defineInRange("positional_temperature_change_delay", 500, 0, Integer.MAX_VALUE);
+        extremityReboundPositionalTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their positional temperature changes when rebounding from an extreme temperature.").defineInRange("extremity_rebound_positional_temperature_change_delay", 100, 0, Integer.MAX_VALUE);
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 500, 0, Integer.MAX_VALUE);
         climateClemencyDuration = BUILDER.comment("Number of ticks for the duration of Climate Clemency.").defineInRange("climate_clemency_duration", 6000, 0, Integer.MAX_VALUE);
         climateClemencyRespawning = BUILDER.comment("Whether or not Climate Clemency should be granted when respawning.").define("climate_clemency_respawning", false);
