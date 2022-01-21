@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "toughasnails:item/sweet_berry_juice"
+    }
+}

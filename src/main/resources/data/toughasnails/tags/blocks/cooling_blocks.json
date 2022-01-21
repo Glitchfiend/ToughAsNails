@@ -3,14 +3,9 @@
   "values": [
 	"minecraft:soul_fire",
 	"minecraft:soul_campfire",
+	"minecraft:soul_lantern",
     "minecraft:packed_ice",
 	"minecraft:blue_ice",
-	"minecraft:prismarine",
-	"minecraft:prismarine_bricks",
-	"minecraft:dark_prismarine",
-	"minecraft:prismarine_stairs",
-	"minecraft:prismarine_brick_stairs",
-	"minecraft:dark_prismarine_stairs",
 	"minecraft:powder_snow_cauldron"
   ]
 }

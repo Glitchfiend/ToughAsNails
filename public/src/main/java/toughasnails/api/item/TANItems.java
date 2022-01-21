@@ -18,6 +18,14 @@ public class TANItems
     public static final Item DIRTY_WATER_BOTTLE = null;
     public static final Item PURIFIED_WATER_BOTTLE = null;
 
+    public static final Item APPLE_JUICE = null;
+    public static final Item CACTUS_JUICE = null;
+    public static final Item CHORUS_FRUIT_JUICE = null;
+    public static final Item GLOW_BERRY_JUICE = null;
+    public static final Item MELON_JUICE = null;
+    public static final Item PUMPKIN_JUICE = null;
+    public static final Item SWEET_BERRY_JUICE = null;
+
     public static final Item WOOL_HELMET = null;
     public static final Item WOOL_CHESTPLATE = null;
     public static final Item WOOL_LEGGINGS = null;

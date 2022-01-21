@@ -1,5 +1,7 @@
 {
   "replace": false,
   "values": [
+    "toughasnails:purified_water_bottle",
+	"toughasnails:purified_water_canteen"
   ]
 }

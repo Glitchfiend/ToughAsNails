@@ -27,6 +27,14 @@ public class ModItems
         register("dirty_water_bottle", new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
         register("purified_water_bottle", new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1).tab(ItemGroupTAN.INSTANCE)));
 
+        register("apple_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("cactus_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("chorus_fruit_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("glow_berry_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("melon_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("pumpkin_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+        register("sweet_berry_juice", new JuiceItem((new Item.Properties()).stacksTo(16).tab(ItemGroupTAN.INSTANCE)));
+
         register("wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.HEAD, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
         register("wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.CHEST, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));
         register("wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ItemGroupTAN.INSTANCE)));

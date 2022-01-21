@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "juice",
+  "ingredients": [
+    {
+      "item": "toughasnails:purified_water_bottle"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    }
+  ],
+  "result": {
+    "item": "toughasnails:glow_berry_juice"
+  }
+}

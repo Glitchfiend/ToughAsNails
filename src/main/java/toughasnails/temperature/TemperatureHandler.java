@@ -85,7 +85,7 @@ public class TemperatureHandler
         Player player = (Player)event.getEntity();
         CompoundTag data = player.getPersistentData();
 
-        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !data.getBoolean("climateClemencyGranted"))
+        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !data.getBoolean("climateClemencyGranted") && !player.isCreative())
         {
             data.putBoolean("climateClemencyGranted", true);
             player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));

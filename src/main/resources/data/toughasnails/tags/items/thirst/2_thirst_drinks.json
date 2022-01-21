@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-	"minecraft:potion",
-	"toughasnails:water_canteen"
+	"minecraft:milk_bucket"
   ]
 }

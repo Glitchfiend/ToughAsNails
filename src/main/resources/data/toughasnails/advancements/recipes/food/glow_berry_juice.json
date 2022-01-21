@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "toughasnails:glow_berry_juice"
+    ]
+  },
+  "criteria": {
+    "has_glow_berries": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glow_berries"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "toughasnails:glow_berry_juice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glow_berries",
+      "has_the_recipe"
+    ]
+  ]
+}
