@@ -119,6 +119,11 @@ public class TemperatureHandler
 
             if (newTargetLevel != positionalTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.playerTemperatureChangeDelay.get());
 
+            // Item modifier
+            TemperatureLevel itemTargetLevel = TemperatureHelperImpl.handheldModifier(player, newTargetLevel);
+            if (itemTargetLevel != newTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.handheldTemperatureChangeDelay.get());
+            newTargetLevel = itemTargetLevel;
+
             // Armor modifier
             TemperatureLevel armorTargetLevel = TemperatureHelperImpl.armorModifier(player, newTargetLevel);
             if (armorTargetLevel != newTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.armorTemperatureChangeDelay.get());

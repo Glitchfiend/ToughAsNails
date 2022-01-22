@@ -73,7 +73,7 @@ public interface ITemperature
     void setLastLevel(TemperatureLevel level);
 
     /**
-     * Set the target positional temperature level.
+     * Set the target temperature level.
      * @param level temperature level.
      */
     void setTargetLevel(TemperatureLevel level);

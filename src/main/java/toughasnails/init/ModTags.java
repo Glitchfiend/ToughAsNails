@@ -28,6 +28,8 @@ public class ModTags
 
         public static final Tag.Named<Item> COOLING_ARMOR = ItemTags.bind("toughasnails:cooling_armor");
         public static final Tag.Named<Item> HEATING_ARMOR = ItemTags.bind("toughasnails:heating_armor");
+        public static final Tag.Named<Item> COOLING_ITEMS = ItemTags.bind("toughasnails:cooling_items");
+        public static final Tag.Named<Item> HEATING_ITEMS = ItemTags.bind("toughasnails:heating_items");
 
         public static final Tag.Named<Item> ONE_THIRST_DRINKS = ItemTags.bind("toughasnails:thirst/1_thirst_drinks");
         public static final Tag.Named<Item> TWO_THIRST_DRINKS = ItemTags.bind("toughasnails:thirst/2_thirst_drinks");

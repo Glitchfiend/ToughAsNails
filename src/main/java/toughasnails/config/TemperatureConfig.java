@@ -13,6 +13,7 @@ public class TemperatureConfig
 
     public static ForgeConfigSpec.IntValue temperatureChangeDelay;
     public static ForgeConfigSpec.IntValue armorTemperatureChangeDelay;
+    public static ForgeConfigSpec.IntValue handheldTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue playerTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue extremityReboundTemperatureChangeDelay;
     public static ForgeConfigSpec.IntValue extremityDamageDelay;
@@ -39,6 +40,7 @@ public class TemperatureConfig
         BUILDER.push("general");
         temperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their temperature changes.").defineInRange("temperature_change_delay", 500, 0, Integer.MAX_VALUE);
         armorTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their temperature changes when wearing armor.").defineInRange("armor_temperature_change_delay", 300, 0, Integer.MAX_VALUE);
+        handheldTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their temperature changes when holding an item.").defineInRange("handheld_temperature_change_delay", 300, 0, Integer.MAX_VALUE);
         playerTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their temperature changes when affected by a player-based temperature modifier.").defineInRange("player_temperature_change_delay", 200, 0, Integer.MAX_VALUE);
         extremityReboundTemperatureChangeDelay = BUILDER.comment("Number of ticks to delay changing the player's temperature after their temperature changes when rebounding from an extreme temperature.").defineInRange("extremity_rebound_temperature_change_delay", 100, 0, Integer.MAX_VALUE);
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 500, 0, Integer.MAX_VALUE);

@@ -287,6 +287,19 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return current;
     }
 
+    protected static TemperatureLevel handheldModifier(Player player, TemperatureLevel current)
+    {
+        AtomicInteger coolingItems = new AtomicInteger();
+        AtomicInteger heatingItems = new AtomicInteger();
+
+        player.getHandSlots().forEach((stack -> {
+            if (stack.is(ModTags.Items.COOLING_ITEMS)) coolingItems.getAndIncrement();
+            if (stack.is(ModTags.Items.HEATING_ITEMS)) heatingItems.getAndIncrement();
+        }));
+
+        return current.increment(heatingItems.get() / 2 - coolingItems.get() / 2);
+    }
+
     protected static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
     {
         AtomicInteger coolingPieces = new AtomicInteger();
