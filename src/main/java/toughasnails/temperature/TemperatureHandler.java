@@ -100,57 +100,57 @@ public class TemperatureHandler
 
         ServerPlayer player = (ServerPlayer)event.player;
         ITemperature data = TemperatureHelper.getTemperatureData(player);
-        TemperatureLevel targetPositionalTemperature = data.getTargetPositionalLevel();
-        TemperatureLevel newTargetPositionalTemperature = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
 
         // Decrement the positional change delay ticks
-        data.setPositionalChangeDelayTicks(Math.max(0, data.getPositionalChangeDelayTicks() - 1));
+        data.setChangeDelayTicks(Math.max(0, data.getChangeDelayTicks() - 1));
 
+        // Use the positional temperature as the new target level if the player doesn't have climate clemency active
         if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
         {
-            // If necessary, change the target positional level and reset the timer
-            // for changing the player's positional temperature.
-            if (newTargetPositionalTemperature != targetPositionalTemperature)
+            int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
+            TemperatureLevel currentTargetLevel = data.getTargetLevel();
+            TemperatureLevel positionalTargetLevel = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
+            TemperatureLevel newTargetLevel = positionalTargetLevel;
+
+            for (IPlayerTemperatureModifier modifier : playerModifiers)
             {
-                data.setTargetPositionalLevel(newTargetPositionalTemperature);
-                int delay = TemperatureConfig.positionalTemperatureChangeDelay.get();
+                newTargetLevel = modifier.modify(player, newTargetLevel);
+            }
+
+            if (newTargetLevel != positionalTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.playerTemperatureChangeDelay.get());
+
+            // Armor modifier
+            TemperatureLevel armorTargetLevel = TemperatureHelperImpl.armorModifier(player, newTargetLevel);
+            if (armorTargetLevel != newTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.armorTemperatureChangeDelay.get());
+            newTargetLevel = armorTargetLevel;
+
+            // If necessary, change the target level and reset the timer
+            if (newTargetLevel != currentTargetLevel)
+            {
+                data.setTargetLevel(newTargetLevel);
 
                 // Rebound quickly from extremes
-                if ((data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT) && newTargetPositionalTemperature != TemperatureLevel.ICY && newTargetPositionalTemperature != TemperatureLevel.HOT)
+                if ((data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT) && newTargetLevel != TemperatureLevel.ICY && newTargetLevel != TemperatureLevel.HOT)
                 {
-                    delay = TemperatureConfig.extremityReboundPositionalTemperatureChangeDelay.get();
+                    changeDelay = Math.min(changeDelay, TemperatureConfig.extremityReboundTemperatureChangeDelay.get());
                 }
 
-                data.setPositionalChangeDelayTicks(delay);
+                data.setChangeDelayTicks(changeDelay);
             }
 
             // If the delay timer is complete, and the target temperature isn't the same as the player's current temperature,
             // move the player's positional temperature level to move towards the target.
-            if (data.getPositionalChangeDelayTicks() == 0 && targetPositionalTemperature != data.getLevel())
+            if (data.getChangeDelayTicks() == 0 && currentTargetLevel != data.getLevel())
             {
-                data.setPositionalLevel(data.getPositionalLevel().increment(Mth.sign(data.getTargetPositionalLevel().ordinal() - data.getPositionalLevel().ordinal())));
-                data.setPositionalChangeDelayTicks(TemperatureConfig.positionalTemperatureChangeDelay.get());
+                data.setLevel(data.getLevel().increment(Mth.sign(data.getTargetLevel().ordinal() - data.getLevel().ordinal())));
+                data.setChangeDelayTicks(changeDelay);
             }
         }
-
-        TemperatureLevel newLevel = data.getPositionalLevel();
-
-        for (IPlayerTemperatureModifier modifier : playerModifiers)
+        else
         {
-            newLevel = modifier.modify(player, newLevel);
+            // Always set the temperature to neutral when climate clemency is active
+            data.setLevel(TemperatureLevel.NEUTRAL);
         }
-
-        // Armor modifier
-        newLevel = TemperatureHelperImpl.armorModifier(player, newLevel);
-
-        // Climate Control modifier
-        if (player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
-        {
-            newLevel = TemperatureLevel.NEUTRAL;
-        }
-
-        // Update the player's temperature to the new level
-        data.setLevel(newLevel);
 
         // Decrement the extremity delay ticks
         data.setExtremityDelayTicks(Math.max(0, data.getExtremityDelayTicks() - 1));

@@ -270,7 +270,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
-        if (player.isInWaterOrRain() || level.getFluidState(pos).is(FluidTags.WATER)) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+        if (player.isInWaterOrRain() || level.getFluidState(pos).is(FluidTags.WATER) || level.getFluidState(pos.below()).is(FluidTags.WATER)) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
         if (player.level.isRaining() && player.level.canSeeSky(pos))
         {
             Biome biome = player.level.getBiome(pos);

@@ -12,8 +12,7 @@ public class TemperatureData implements ITemperature
     public static final TemperatureLevel DEFAULT_LEVEL = TemperatureLevel.NEUTRAL;
 
     private TemperatureLevel level = DEFAULT_LEVEL;
-    private TemperatureLevel positionalLevel = DEFAULT_LEVEL;
-    private TemperatureLevel targetPositionalLevel = DEFAULT_LEVEL;
+    private TemperatureLevel targetLevel = DEFAULT_LEVEL;
     private int positionalChangeDelayTicks;
     private int ticksHyperthermic;
     private int extremityDelayTicks;
@@ -46,19 +45,13 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
-    public TemperatureLevel getPositionalLevel()
+    public TemperatureLevel getTargetLevel()
     {
-        return this.positionalLevel;
+        return this.targetLevel;
     }
 
     @Override
-    public TemperatureLevel getTargetPositionalLevel()
-    {
-        return this.targetPositionalLevel;
-    }
-
-    @Override
-    public int getPositionalChangeDelayTicks()
+    public int getChangeDelayTicks()
     {
         return this.positionalChangeDelayTicks;
     }
@@ -94,19 +87,13 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
-    public void setPositionalLevel(TemperatureLevel level)
+    public void setTargetLevel(TemperatureLevel level)
     {
-        this.positionalLevel = level;
+        this.targetLevel = level;
     }
 
     @Override
-    public void setTargetPositionalLevel(TemperatureLevel level)
-    {
-        this.targetPositionalLevel = level;
-    }
-
-    @Override
-    public void setPositionalChangeDelayTicks(int ticks)
+    public void setChangeDelayTicks(int ticks)
     {
         this.positionalChangeDelayTicks = ticks;
     }
