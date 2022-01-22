@@ -297,7 +297,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             if (stack.is(ModTags.Items.HEATING_ITEMS)) heatingItems.getAndIncrement();
         }));
 
-        return current.increment(heatingItems.get() / 2 - coolingItems.get() / 2);
+        return current.increment(heatingItems.get() - coolingItems.get());
     }
 
     protected static TemperatureLevel armorModifier(Player player, TemperatureLevel current)
