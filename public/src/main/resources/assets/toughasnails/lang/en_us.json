@@ -4,7 +4,7 @@
   "container.toughasnails.water_purifier": "Water Purifier",
   
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
-  "death.attack.toughasnails.hyperthermia.player": "%1$s pverheated to death whilst trying to escape %2$s",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death whilst trying to escape %2$s",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.ice_resistance": "Ice Resistance",
