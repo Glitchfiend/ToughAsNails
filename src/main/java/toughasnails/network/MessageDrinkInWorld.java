@@ -56,7 +56,7 @@ public class MessageDrinkInWorld
                     thirst.addThirst(ThirstConfig.handDrinkingThirst.get());
                     thirst.addHydration(ThirstConfig.handDrinkingHydration.get().floatValue());
 
-                    ResourceKey<Biome> biome = player.level.getBiomeName(packet.pos).orElse(Biomes.PLAINS);
+                    ResourceKey<Biome> biome = player.level.getBiome(packet.pos).unwrapKey().orElse(Biomes.PLAINS);
 
                     if (player.level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {

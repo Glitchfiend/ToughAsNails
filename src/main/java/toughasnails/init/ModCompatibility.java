@@ -5,7 +5,7 @@
 package toughasnails.init;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.fml.ModList;
@@ -23,25 +23,25 @@ public class ModCompatibility
     {
         if (ModList.get().isLoaded("sereneseasons"))
         {
-            ToughAsNails.logger.info("Serene Seasons detected. Enabling season modifier.");
+            ToughAsNails.LOGGER.info("Serene Seasons detected. Enabling season modifier.");
             TemperatureHelper.registerPositionalTemperatureModifier(ModCompatibility::seasonModifier);
         }
     }
 
     private static TemperatureLevel seasonModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
-        ResourceKey<Biome> biomeKey = level.getBiomeName(pos).orElse(null);
+        Holder<Biome> biome = level.getBiome(pos);
 
         // Only adjust if above the environmental modifier altitude
         if (pos.getY() <= TemperatureConfig.environmentalModifierAltitude.get() && !level.canSeeSky(pos))
             return current;
 
         //Check if biome uses seasonal effects
-        if (!BiomeConfig.enablesSeasonalEffects(biomeKey))
+        if (!BiomeConfig.enablesSeasonalEffects(biome))
             return current;
 
         // Don't adjust the season if tropical seasons are in use
-        if (BiomeConfig.usesTropicalSeasons(biomeKey))
+        if (BiomeConfig.usesTropicalSeasons(biome))
             return current;
 
         Season season = SeasonHelper.getSeasonState(level).getSeason();

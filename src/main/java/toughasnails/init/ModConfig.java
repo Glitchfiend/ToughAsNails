@@ -32,7 +32,7 @@ public class ModConfig
         catch (FileAlreadyExistsException e) {}
         catch (IOException e)
         {
-            ToughAsNails.logger.error("Failed to create toughasnails config directory", e);
+            ToughAsNails.LOGGER.error("Failed to create toughasnails config directory", e);
         }
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ThirstConfig.SPEC, "toughasnails/thirst.toml");

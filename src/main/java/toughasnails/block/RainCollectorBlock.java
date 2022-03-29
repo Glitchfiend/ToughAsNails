@@ -74,7 +74,7 @@ public class RainCollectorBlock extends Block
     @Override
     public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation)
     {
-        if (level.getBiome(pos).warmEnoughToRain(pos))
+        if (level.getBiome(pos).value().warmEnoughToRain(pos))
         {
             if (state.getValue(LEVEL) < 3)
             {

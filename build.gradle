@@ -1,10 +1,12 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
@@ -14,22 +16,14 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
+apply plugin: 'org.spongepowered.mixin'
 
 repositories { mavenLocal() }
 
 group = "com.github.glitchfiend"
-archivesBaseName = "ToughAsNails"
+archivesBaseName = project.mod_name
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-def getGitHash = {
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--short', 'HEAD'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
 
 version = "${minecraft_version}-${mod_version}.${System.getenv().BUILD_NUMBER}"
 
@@ -41,10 +35,12 @@ minecraft {
     runs {
         client = {
             workingDirectory = project.file("run").canonicalPath
+            args "-mixin.config=${mod_id}.mixins.json", "-mixin.config=${mod_id}.mixins.json"
             source sourceSets.main
         }
         server = {
             workingDirectory = project.file("run").canonicalPath
+            args "-mixin.config=${mod_id}.mixins.json", "-mixin.config=${mod_id}.mixins.json"
             source sourceSets.main
         }
     }
@@ -77,17 +73,28 @@ processResources {
 }
 
 jar {
-    classifier = 'universal'
     manifest {
         attributes([
-            "Implementation-Version": project.version
+            "Specification-Title": project.mod_id,
+            "Specification-Vendor": project.mod_name,
+            "Specification-Version": "1.1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Implementation-Vendor" :"${mod_id}",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
         ])
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    implementation files('libs/SereneSeasons-1.18.1-6.0.0.10-deobf.jar')
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation files('libs/Serene+Seasons-1.18.2-7.0.0.13-deobf.jar')
+}
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
 }
 
 task deobfJar(type: Jar) {
@@ -97,18 +104,18 @@ task deobfJar(type: Jar) {
 
 task apiJar(type: Jar) {
     from(sourceSets.main.allJava) {
-        include 'toughasnails/api/**'
+        include "${mod_id}/api/**"
     }
     from (sourceSets.main.output) {
         include 'LICENSE.txt'
-        include 'toughasnails/api/**'
+        include "${mod_id}/api/**"
     }
 
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     classifier = 'api'
 }
 
-def changelog_file = rootProject.file("build/ToughAsNails-${version}-changelog.txt")
+def changelog_file = rootProject.file("build/${mod_name}-${version}-changelog.txt")
 
 curseforge {
     if (project.hasProperty('curseApiKey')) {
@@ -124,7 +131,7 @@ curseforge {
             addGameVersion minecraft_version
 
             mainArtifact(jar) {
-                displayName = "Tough As Nails ${version}"
+                displayName = "${mod_name} ${version}"
             }
 
             addArtifact deobfJar

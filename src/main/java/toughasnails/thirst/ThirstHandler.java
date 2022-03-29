@@ -246,7 +246,7 @@ public class ThirstHandler
         // Play the filling sound
         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-        ResourceKey<Biome> biome = player.level.getBiomeName(pos).orElse(Biomes.PLAINS);
+        ResourceKey<Biome> biome = player.level.getBiome(pos).unwrapKey().orElse(Biomes.PLAINS);
         ItemStack filledStack;
 
         // Set the filled stack based on the biome's water type

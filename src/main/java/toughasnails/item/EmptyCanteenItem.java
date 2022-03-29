@@ -5,6 +5,7 @@
 package toughasnails.item;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -66,10 +67,10 @@ public class EmptyCanteenItem extends Item
                     // Fill the canteen with water in the world
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-                    ResourceKey<Biome> biome = player.level.getBiomeName(player.blockPosition()).orElse(Biomes.PLAINS);
+                    Holder<Biome> biome = player.level.getBiome(player.blockPosition());
                     Item canteenItem;
 
-                    switch (ThirstConfig.getBiomeWaterType(biome))
+                    switch (ThirstConfig.getBiomeWaterType(biome.unwrapKey().orElse(Biomes.PLAINS)))
                     {
                         case PURIFIED:
                             canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
