@@ -17,7 +17,6 @@ public class MixinLocalPlayer
     @Redirect(method="aiStep", at=@At(value="INVOKE", target="Lnet/minecraft/client/player/LocalPlayer;setSprinting(Z)V"))
     public void aiStep_setSprinting(LocalPlayer player, boolean sprinting)
     {
-        ToughAsNails.LOGGER.info("Set sprinting");
         ThirstHooks.onAiStepSetSprinting(player, sprinting);
     }
 }
