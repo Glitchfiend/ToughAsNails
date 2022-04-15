@@ -21,7 +21,7 @@ apply plugin: 'org.spongepowered.mixin'
 repositories { mavenLocal() }
 
 group = "com.github.glitchfiend"
-archivesBaseName = project.mod_name
+archivesBaseName = "ToughAsNails"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -115,7 +115,7 @@ task apiJar(type: Jar) {
     classifier = 'api'
 }
 
-def changelog_file = rootProject.file("build/${mod_name}-${version}-changelog.txt")
+def changelog_file = rootProject.file("build/ToughAsNails-${version}-changelog.txt")
 
 curseforge {
     if (project.hasProperty('curseApiKey')) {
