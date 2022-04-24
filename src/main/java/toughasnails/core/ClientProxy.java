@@ -24,19 +24,6 @@ public class ClientProxy extends CommonProxy
     @Override
     public void init()
     {
-        BlockColors blockColors = Minecraft.getInstance().getBlockColors();
-        ItemColors itemColors = Minecraft.getInstance().getItemColors();
-
-        blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
-
-        itemColors.register((stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ((DyeableWoolItem)stack.getItem()).getColor(stack);
-        }, TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
-
-        itemColors.register((stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ((LeafArmorItem)stack.getItem()).getColor(stack);
-        }, TANItems.LEAF_HELMET, TANItems.LEAF_CHESTPLATE, TANItems.LEAF_LEGGINGS, TANItems.LEAF_BOOTS);
-
         RenderType transparentRenderType = RenderType.cutoutMipped();
         RenderType cutoutRenderType = RenderType.cutout();
         RenderType translucentRenderType = RenderType.translucent();
