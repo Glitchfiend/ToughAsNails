@@ -1,0 +1,36 @@
+{
+  "itemGroup.toughasnails": "Tof as nayls",
+  
+  "container.toughasnails.water_purifier": "Watr cleanr",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s got 2 hot",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s got 2 hot wile runin from %2$s",
+  
+  "effect.toughasnails.thirst": "Thirst",
+  "effect.toughasnails.ice_resistance": "Ice resistanse",
+  "enchantment.toughasnails.thermal_tuning": "Not hot or cold",
+  
+  "block.toughasnails.rain_collector": "Watr from sky colectr",
+  "block.toughasnails.water_purifier": "Watr cleanr",
+  
+  "item.toughasnails.tan_icon": "TAN Icon",
+  "item.toughasnails.empty_canteen": "Watr holdr wif nofin innit",
+  "item.toughasnails.water_canteen": "Watr holdr wif watr innit",
+  "item.toughasnails.dirty_water_canteen": "Dirty watr holdr",
+  "item.toughasnails.purified_water_canteen": "Cleen watr holdr",
+  "item.toughasnails.dirty_water_bottle": "Dirty watr botle",
+  "item.toughasnails.purified_water_bottle": "Cleen watr botle",
+  "item.toughasnails.wool_helmet": "Fluffy hood",
+  "item.toughasnails.wool_chestplate": "Fluffy coat",
+  "item.toughasnails.wool_leggings": "Fluffy pantz",
+  "item.toughasnails.wool_boots": "Fluffy pawz",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Lastin ice resistanse poshun",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Lastin ice resistanse poshun",
+  "item.minecraft.potion.effect.ice_resistance": "Ice resistanse poshun",
+  "item.minecraft.potion.effect.long_ice_resistance": "Ice resistanse poshun",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Splash ice resistanse poshun",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Splash ice resistanse poshun",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Pointy thing of ice resistanse",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Pointy thing of ice resistanse"
+}
