@@ -5,9 +5,9 @@
 package toughasnails.api.crafting;
 
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TANRecipeTypes
 {
-    public static RecipeType<?> WATER_PURIFYING = null;
+    public static RegistryObject<RecipeType<?>> WATER_PURIFYING;
 }

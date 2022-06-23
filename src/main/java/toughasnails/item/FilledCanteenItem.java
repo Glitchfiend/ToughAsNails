@@ -44,7 +44,7 @@ public class FilledCanteenItem extends Item
             if (world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(TANItems.WATER_CANTEEN)), world.isClientSide());
+                return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(TANItems.WATER_CANTEEN.get())), world.isClientSide());
             }
         }
 
@@ -75,7 +75,7 @@ public class FilledCanteenItem extends Item
             stack.hurtAndBreak(1, player, (entity) -> broken[0] = true);
             if (broken[0])
             {
-                return new ItemStack(TANItems.EMPTY_CANTEEN);
+                return new ItemStack(TANItems.EMPTY_CANTEEN.get());
             }
         }
 

@@ -35,7 +35,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     public WaterPurifierContainer(int id, Inventory playerInventory, Container container, ContainerData data)
     {
-        super(TANContainerTypes.WATER_PURIFIER, id);
+        super(TANContainerTypes.WATER_PURIFIER.get(), id);
         this.container = container;
         this.data = data;
         this.level = playerInventory.player.level;
@@ -148,7 +148,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     protected boolean canPurify(ItemStack stack)
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING.get(), new SimpleContainer(stack), this.level).isPresent();
     }
 
     protected boolean isFilter(ItemStack stack)

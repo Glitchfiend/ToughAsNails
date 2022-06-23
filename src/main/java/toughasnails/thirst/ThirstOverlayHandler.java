@@ -8,25 +8,25 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.GuiUtils;
 import net.minecraftforge.client.gui.IIngameOverlay;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.potion.TANEffects;
-import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.ServerConfig;
 
 import java.util.Random;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class ThirstOverlayHandler
 {
     private static final Random RANDOM = new Random();
@@ -44,11 +44,11 @@ public class ThirstOverlayHandler
     private static int updateCounter;
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event)
+    public static void onClientTick(TickEvent.ClientTickEvent event)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (ServerConfig.enableThirst.get() && event.phase == TickEvent.Phase.END && !minecraft.isPaused())
+        if (event.phase == TickEvent.Phase.END && !minecraft.isPaused())
         {
             updateCounter++;
         }
@@ -98,7 +98,7 @@ public class ThirstOverlayHandler
 
             int backgroundU = 0;
 
-            if (player.hasEffect(TANEffects.THIRST))
+            if (player.hasEffect(TANEffects.THIRST.get()))
             {
                 iconIndex += 4;
                 backgroundU += 117;

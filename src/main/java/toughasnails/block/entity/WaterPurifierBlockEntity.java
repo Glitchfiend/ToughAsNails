@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -32,10 +31,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import toughasnails.api.crafting.TANRecipeTypes;
-import toughasnails.api.tileentity.TANTileEntityTypes;
+import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
-import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 import javax.annotation.Nullable;
@@ -110,7 +108,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
 
     public WaterPurifierBlockEntity(BlockPos pos, BlockState state)
     {
-        super(TANTileEntityTypes.WATER_PURIFIER, pos, state);
+        super(TANBlockEntityTypes.WATER_PURIFIER.get(), pos, state);
     }
 
     @Override
@@ -152,7 +150,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
             ItemStack filterStack = blockEntity.items.get(1);
             if (blockEntity.currentlyFiltering() || !filterStack.isEmpty() && !blockEntity.items.get(0).isEmpty())
             {
-                Recipe<?> irecipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
+                Recipe<?> irecipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING.get(), blockEntity, blockEntity.level).orElse(null);
                 if (!blockEntity.currentlyFiltering() && blockEntity.canFilter(irecipe))
                 {
                     blockEntity.filterTimeRemaining = blockEntity.getFilterDuration(filterStack);
@@ -220,7 +218,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     @Override
     protected Component getDefaultName()
     {
-        return new TranslatableComponent("container.toughasnails.water_purifier");
+        return Component.translatable("container.toughasnails.water_purifier");
     }
 
     @Override
@@ -377,7 +375,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     /** Get the time taken for an input item to be purified. */
     protected int getTotalPurifyTime()
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(WaterPurifierRecipe::getPurifyTime).orElse(200);
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING.get(), this, this.level).map(WaterPurifierRecipe::getPurifyTime).orElse(200);
     }
 
     private void filter(@Nullable Recipe<?> recipe)

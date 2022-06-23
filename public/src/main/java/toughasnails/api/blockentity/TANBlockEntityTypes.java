@@ -2,13 +2,12 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.api.tileentity;
+package toughasnails.api.blockentity;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder("toughasnails")
-public class TANTileEntityTypes
+public class TANBlockEntityTypes
 {
-    public static final BlockEntityType WATER_PURIFIER = null;
+    public static RegistryObject<BlockEntityType<?>> WATER_PURIFIER;
 }

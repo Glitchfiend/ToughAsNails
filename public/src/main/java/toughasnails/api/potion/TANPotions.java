@@ -4,13 +4,11 @@
  ******************************************************************************/
 package toughasnails.api.potion;
 
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder("toughasnails")
 public class TANPotions
 {
-    public static final Potion ICE_RESISTANCE = null;
-    public static final Potion LONG_ICE_RESISTANCE = null;
+    public static RegistryObject<Potion> ICE_RESISTANCE;
+    public static RegistryObject<Potion> LONG_ICE_RESISTANCE;
 }

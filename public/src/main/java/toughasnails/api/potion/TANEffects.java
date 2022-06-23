@@ -5,12 +5,11 @@
 package toughasnails.api.potion;
 
 import net.minecraft.world.effect.MobEffect;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder("toughasnails")
 public class TANEffects
 {
-    public static final MobEffect THIRST = null;
-    public static final MobEffect ICE_RESISTANCE = null;
-    public static final MobEffect CLIMATE_CLEMENCY = null;
+    public static RegistryObject<MobEffect> THIRST;
+    public static RegistryObject<MobEffect> ICE_RESISTANCE;
+    public static RegistryObject<MobEffect> CLIMATE_CLEMENCY;
 }

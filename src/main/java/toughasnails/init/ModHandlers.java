@@ -23,12 +23,5 @@ public class ModHandlers
 
         MinecraftForge.EVENT_BUS.register(new ThirstHandler());
         MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
-
-        if (FMLEnvironment.dist == Dist.CLIENT)
-        {
-            bus.register(new ColorHandler());
-            MinecraftForge.EVENT_BUS.register(new ThirstOverlayHandler());
-            MinecraftForge.EVENT_BUS.register(new TemperatureOverlayHandler());
-        }
     }
 }

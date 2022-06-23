@@ -18,6 +18,7 @@ import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.ServerConfig;
@@ -25,7 +26,7 @@ import toughasnails.core.ToughAsNails;
 
 import java.util.Random;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class TemperatureOverlayHandler
 {
     private static final Random RANDOM = new Random();
@@ -51,11 +52,11 @@ public class TemperatureOverlayHandler
     private static TemperatureLevel prevTemperatureLevel;
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event)
+    public static void onClientTick(TickEvent.ClientTickEvent event)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (ServerConfig.enableTemperature.get() && event.phase == TickEvent.Phase.END && !minecraft.isPaused())
+        if (event.phase == TickEvent.Phase.END && !minecraft.isPaused())
         {
             updateCounter++;
         }

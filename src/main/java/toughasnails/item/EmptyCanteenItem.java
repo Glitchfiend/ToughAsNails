@@ -58,8 +58,8 @@ public class EmptyCanteenItem extends Item
                     if (waterLevel > 0 && !world.isClientSide())
                     {
                         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                        ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR).setWaterLevel(world, pos, state, waterLevel - 1);
-                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.PURIFIED_WATER_CANTEEN)));
+                        ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR.get()).setWaterLevel(world, pos, state, waterLevel - 1);
+                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.PURIFIED_WATER_CANTEEN.get())));
                     }
                 }
                 else if (world.getFluidState(pos).is(FluidTags.WATER))
@@ -73,16 +73,16 @@ public class EmptyCanteenItem extends Item
                     switch (ThirstConfig.getBiomeWaterType(biome.unwrapKey().orElse(Biomes.PLAINS)))
                     {
                         case PURIFIED:
-                            canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
+                            canteenItem = TANItems.PURIFIED_WATER_CANTEEN.get();
                             break;
 
                         case DIRTY:
-                            canteenItem = TANItems.DIRTY_WATER_CANTEEN;
+                            canteenItem = TANItems.DIRTY_WATER_CANTEEN.get();
                             break;
 
                         case NORMAL:
                         default:
-                            canteenItem = TANItems.WATER_CANTEEN;
+                            canteenItem = TANItems.WATER_CANTEEN.get();
                             break;
                     }
 

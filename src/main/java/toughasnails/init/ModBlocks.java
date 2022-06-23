@@ -4,37 +4,39 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.registries.RegistryObject;
+import toughasnails.api.block.TANBlocks;
 import toughasnails.block.RainCollectorBlock;
 import toughasnails.block.WaterPurifierBlock;
+import toughasnails.core.ToughAsNails;
 import toughasnails.util.inventory.ItemGroupTAN;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Supplier;
+
 public class ModBlocks
 {
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event)
+    public static void init()
     {
-        register("rain_collector", new RainCollectorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
-        register("water_purifier", new WaterPurifierBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
+        registerBlocks();
     }
 
-    public static void register(String name, Block block)
+    private static void registerBlocks()
     {
-        BlockItem itemBlock = new BlockItem(block, new Item.Properties().tab(ItemGroupTAN.INSTANCE));
-        block.setRegistryName(name);
-        itemBlock.setRegistryName(name);
-        ForgeRegistries.BLOCKS.register(block);
-        ForgeRegistries.ITEMS.register(itemBlock);
+        TANBlocks.RAIN_COLLECTOR = register("rain_collector", () -> new RainCollectorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
+        TANBlocks.WATER_PURIFIER = register("water_purifier", () -> new WaterPurifierBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
+    }
+
+    public static RegistryObject<Block> register(String name, Supplier<Block> block)
+    {
+        RegistryObject<Block> blockRegistryObject = ToughAsNails.BLOCK_REGISTER.register(name, block);
+        ToughAsNails.ITEM_REGISTER.register(name, () -> new BlockItem(blockRegistryObject.get(), new Item.Properties().tab(ItemGroupTAN.INSTANCE)));
+        return blockRegistryObject;
     }
 }
 

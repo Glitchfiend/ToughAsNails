@@ -7,42 +7,43 @@ package toughasnails.init;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.potion.TANEffects;
+import toughasnails.api.potion.TANPotions;
+import toughasnails.core.ToughAsNails;
 import toughasnails.potion.ThirstEffect;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Supplier;
+
 public class ModPotions
 {
-    @SubscribeEvent
-    public static void registerEffects(RegistryEvent.Register<MobEffect> event)
+    public static void init()
     {
-        register("thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
-        register("ice_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
-        register("climate_clemency", new MobEffect(MobEffectCategory.NEUTRAL, 0xB6B6B6));
+        registerEffects();
+        registerPotions();
     }
 
-    @SubscribeEvent
-    public static void registerPotions(RegistryEvent.Register<Potion> event)
+    public static void registerEffects()
     {
-        register("ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 1200)));
-        register("long_ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 2400)));
+        TANEffects.THIRST = registerEffect("thirst", () -> new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
+        TANEffects.ICE_RESISTANCE = registerEffect("ice_resistance", () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
+        TANEffects.CLIMATE_CLEMENCY = registerEffect("climate_clemency", () -> new MobEffect(MobEffectCategory.NEUTRAL, 0xB6B6B6));
     }
 
-    public static void register(String name, MobEffect effect)
+    public static void registerPotions()
     {
-        effect.setRegistryName(name);
-        ForgeRegistries.MOB_EFFECTS.register(effect);
+        TANPotions.ICE_RESISTANCE = registerPotion("ice_resistance", () -> new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE.get(), 1200)));
+        TANPotions.LONG_ICE_RESISTANCE = registerPotion("long_ice_resistance", () -> new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE.get(), 2400)));
     }
 
-    public static void register(String name, Potion potion)
+    public static RegistryObject<MobEffect> registerEffect(String name, Supplier<MobEffect> effect)
     {
-        potion.setRegistryName(name);
-        ForgeRegistries.POTIONS.register(potion);
+        return ToughAsNails.MOB_EFFECT_REGISTER.register(name, effect);
+    }
+
+    public static RegistryObject<Potion> registerPotion(String name, Supplier<Potion> potion)
+    {
+        return ToughAsNails.POTION_REGISTER.register(name, potion);
     }
 }

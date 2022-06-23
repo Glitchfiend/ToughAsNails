@@ -88,7 +88,7 @@ public class TemperatureHandler
         if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !data.getBoolean("climateClemencyGranted") && !player.isCreative())
         {
             data.putBoolean("climateClemencyGranted", true);
-            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));
+            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY.get(), TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));
         }
     }
 
@@ -105,7 +105,7 @@ public class TemperatureHandler
         data.setChangeDelayTicks(Math.max(0, data.getChangeDelayTicks() - 1));
 
         // Use the positional temperature as the new target level if the player doesn't have climate clemency active
-        if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
+        if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY.get()))
         {
             int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
@@ -173,7 +173,7 @@ public class TemperatureHandler
         if (!player.isCreative() && !player.isSpectator())
         {
             // Freeze the player if they're icy
-            if (!player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
+            if (!player.hasEffect(TANEffects.ICE_RESISTANCE.get()) && data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
             {
                 int frozenTicks = player.getTicksFrozen();
                 int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
@@ -200,7 +200,7 @@ public class TemperatureHandler
         }
 
         // Reset frozen ticks with ice resistance. This is mainly to avoid the effects of powdered snow.
-        if (player.hasEffect(TANEffects.ICE_RESISTANCE) && player.getTicksFrozen() > 0)
+        if (player.hasEffect(TANEffects.ICE_RESISTANCE.get()) && player.getTicksFrozen() > 0)
         {
             player.setTicksFrozen(0);
         }

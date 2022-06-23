@@ -49,7 +49,7 @@ public class RainCollectorBlock extends Block
         {
             if (!player.getAbilities().instabuild)
             {
-                ItemStack newStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
+                ItemStack newStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get());
                 player.awardStat(Stats.USE_CAULDRON);
                 stack.shrink(1);
 

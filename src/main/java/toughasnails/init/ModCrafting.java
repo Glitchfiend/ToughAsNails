@@ -4,37 +4,36 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.potion.TANPotions;
 import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Supplier;
+
 public class ModCrafting
 {
-    @SubscribeEvent
-    public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event)
+    public static void init()
     {
-        register("water_purifying", new WaterPurifierRecipe.Serializer());
+        registerRecipeSerializers();
+    }
 
-        TANRecipeTypes.WATER_PURIFYING = register("water_purifying", new RecipeType<WaterPurifierRecipe>()
+    private static void registerRecipeSerializers()
+    {
+        TANRecipeSerializers.WATER_PURIFYING = registerSerializer("water_purifying", () -> new WaterPurifierRecipe.Serializer());
+
+        TANRecipeTypes.WATER_PURIFYING = registerRecipe("water_purifying", () -> new RecipeType<WaterPurifierRecipe>()
         {
             @Override
             public String toString()
@@ -42,28 +41,30 @@ public class ModCrafting
                 return "water_purifying";
             }
         });
+    }
 
+    public static void registerPotionRecipes()
+    {
         // Brewing
         // Base
-        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Items.SNOWBALL), TANPotions.ICE_RESISTANCE);
+        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Items.SNOWBALL), TANPotions.ICE_RESISTANCE.get());
 
         // Extended
-        addBrewingRecipe(TANPotions.ICE_RESISTANCE, new ItemStack(Items.REDSTONE), TANPotions.LONG_ICE_RESISTANCE);
+        addBrewingRecipe(TANPotions.ICE_RESISTANCE.get(), new ItemStack(Items.REDSTONE), TANPotions.LONG_ICE_RESISTANCE.get());
 
         // Splash and lingering
-        addPotionTransforms(TANPotions.ICE_RESISTANCE);
-        addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE);
+        addPotionTransforms(TANPotions.ICE_RESISTANCE.get());
+        addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE.get());
     }
 
-    public static void register(String name, RecipeSerializer serializer)
+    public static RegistryObject<RecipeSerializer<?>> registerSerializer(String name, Supplier<RecipeSerializer<?>> serializer)
     {
-        serializer.setRegistryName(new ResourceLocation(ToughAsNails.MOD_ID, name));
-        ForgeRegistries.RECIPE_SERIALIZERS.register(serializer);
+        return ToughAsNails.RECIPE_SERIALIZER_REGISTER.register(name, serializer);
     }
 
-    public static <T extends Recipe<?>> RecipeType<T> register(String name, RecipeType type)
+    public static RegistryObject<RecipeType<?>> registerRecipe(String name, Supplier<RecipeType<?>> type)
     {
-        return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(ToughAsNails.MOD_ID, name), type);
+        return ToughAsNails.RECIPE_TYPE_REGISTER.register(name, type);
     }
 
     private static void addBrewingRecipe(Potion input, ItemStack ingredient, Potion output)

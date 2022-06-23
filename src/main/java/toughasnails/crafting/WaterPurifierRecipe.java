@@ -5,22 +5,20 @@
 package toughasnails.crafting;
 
 import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.NBTIngredient;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
-import toughasnails.core.ToughAsNails;
 
 public class WaterPurifierRecipe implements Recipe<Container>
 {
@@ -70,13 +68,13 @@ public class WaterPurifierRecipe implements Recipe<Container>
     @Override
     public RecipeSerializer<?> getSerializer()
     {
-        return TANRecipeSerializers.WATER_PURIFYING;
+        return TANRecipeSerializers.WATER_PURIFYING.get();
     }
 
     @Override
     public RecipeType<?> getType()
     {
-        return TANRecipeTypes.WATER_PURIFYING;
+        return TANRecipeTypes.WATER_PURIFYING.get();
     }
 
     public int getPurifyTime()
@@ -84,7 +82,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
         return this.purifyTime;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<WaterPurifierRecipe>
+    public static class Serializer implements RecipeSerializer<WaterPurifierRecipe>
     {
         @Override
         public WaterPurifierRecipe fromJson(ResourceLocation recipeId, JsonObject json)

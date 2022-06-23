@@ -5,24 +5,28 @@
 package toughasnails.init;
 
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import toughasnails.api.enchantment.TANEnchantments;
+import toughasnails.core.ToughAsNails;
 import toughasnails.enchantment.ThermalTuningEnchantment;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Supplier;
+
 public class ModEnchantments
 {
-    @SubscribeEvent
-    public static void registerEnchantments(RegistryEvent.Register<Enchantment> event)
+    public static void init()
     {
-        register("thermal_tuning", new ThermalTuningEnchantment());
+        registerEnchantments();
     }
 
-    public static void register(String name, Enchantment enchantment)
+    private static void registerEnchantments()
     {
-        enchantment.setRegistryName(name);
-        ForgeRegistries.ENCHANTMENTS.register(enchantment);
+        TANEnchantments.THERMAL_TUNING = register("thermal_tuning", () -> new ThermalTuningEnchantment());
+    }
+
+    public static RegistryObject<Enchantment> register(String name, Supplier<Enchantment> enchantment)
+    {
+        return ToughAsNails.ENCHANTMENT_REGISTER.register(name, enchantment);
     }
 }

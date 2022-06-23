@@ -7,36 +7,34 @@ package toughasnails.init;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.inventory.container.TANContainerTypes;
-import toughasnails.gui.WaterPurifierScreen;
 import toughasnails.container.WaterPurifierContainer;
+import toughasnails.core.ToughAsNails;
+import toughasnails.gui.WaterPurifierScreen;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModContainerTypes
 {
-    @SubscribeEvent
-    public static void registerContainers(RegistryEvent.Register<BlockEntityType<?>> event)
+    public static void init()
     {
-        register("water_purifier", WaterPurifierContainer::new);
+        registerContainers();
+    }
+
+    private static void registerContainers()
+    {
+        TANContainerTypes.WATER_PURIFIER = register("water_purifier", WaterPurifierContainer::new);
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens()
     {
-        MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
+        MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER.get(), WaterPurifierScreen::new);
     }
 
-    public static <T extends AbstractContainerMenu> void register(String name, MenuType.MenuSupplier<T> factory)
+    public static <T extends AbstractContainerMenu> RegistryObject<MenuType<?>> register(String name, MenuType.MenuSupplier<T> factory)
     {
-        MenuType<T> containerType = new MenuType<>(factory);
-        containerType.setRegistryName(name);
-        ForgeRegistries.CONTAINERS.register(containerType);
+        return ToughAsNails.MENU_REGISTER.register(name, () -> new MenuType<>(factory));
     }
 }

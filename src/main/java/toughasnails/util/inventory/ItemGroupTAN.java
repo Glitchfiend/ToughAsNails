@@ -20,6 +20,6 @@ public class ItemGroupTAN extends CreativeModeTab
     @Override
     public ItemStack makeIcon()
     {
-        return new ItemStack(TANItems.TAN_ICON);
+        return new ItemStack(TANItems.TAN_ICON.get());
     }
 }

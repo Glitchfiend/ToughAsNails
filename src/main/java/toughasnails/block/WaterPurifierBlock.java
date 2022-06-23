@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import toughasnails.api.tileentity.TANTileEntityTypes;
+import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 
 import javax.annotation.Nullable;
@@ -64,7 +64,7 @@ public class WaterPurifierBlock extends BaseEntityBlock
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
     {
-        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<WaterPurifierBlockEntity>)TANTileEntityTypes.WATER_PURIFIER, WaterPurifierBlockEntity::serverTick);
+        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<WaterPurifierBlockEntity>) TANBlockEntityTypes.WATER_PURIFIER.get(), WaterPurifierBlockEntity::serverTick);
     }
 
     @Override

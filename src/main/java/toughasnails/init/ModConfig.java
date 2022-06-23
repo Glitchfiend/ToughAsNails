@@ -6,6 +6,7 @@ package toughasnails.init;
 
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.core.jmx.Server;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;

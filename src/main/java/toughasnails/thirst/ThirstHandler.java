@@ -213,7 +213,7 @@ public class ThirstHandler
 
             if (player.level.random.nextFloat() < drink_poison_chance)
             {
-                player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
+                player.addEffect(new MobEffectInstance(TANEffects.THIRST.get(), 600));
             }
         }
     }
@@ -253,11 +253,11 @@ public class ThirstHandler
         switch (ThirstConfig.getBiomeWaterType(biome))
         {
             case PURIFIED:
-                filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
+                filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get());
                 break;
 
             case DIRTY:
-                filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE);
+                filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get());
                 break;
 
             case NORMAL:
