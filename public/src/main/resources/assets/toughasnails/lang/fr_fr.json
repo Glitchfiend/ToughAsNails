@@ -1,9 +1,17 @@
 {
-  "itemGroup.toughasnails": "Tough As Nails",
-
-  "container.toughasnails.water_purifier": "Épurateur d'Eau",
-  "effect.toughasnails.thirst": "Soif",
-
+  //Blocks
+  "block.toughasnails.rain_collector": "Collecteur de Pluie",
+  "block.toughasnails.water_purifier": "Épurateur d'Eau",
+  
+  //Items
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Potion Persistante de Résistance au Gel",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Potion Persistante de Résistance au Gel",
+  "item.minecraft.potion.effect.ice_resistance": "Potion de Résistance au Gel",
+  "item.minecraft.potion.effect.long_ice_resistance": "Potion de Résistance au Gel",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Potion Jetable de Résistance au Gel",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Potion Jetable de Résistance au Gel",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Flèche de Résistance au Gel",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Flèche de Résistance au Gel",
   "item.toughasnails.tan_icon": "TAN Icon",
   "item.toughasnails.empty_canteen": "Gourde Vide",
   "item.toughasnails.water_canteen": "Gourde d'Eau",
@@ -11,7 +19,25 @@
   "item.toughasnails.purified_water_canteen": "Gourde d'Eau Purifié",
   "item.toughasnails.dirty_water_bottle": "Fiole d'Eau Sale",
   "item.toughasnails.purified_water_bottle": "Fiole d'Eau Purifié",
+  "item.toughasnails.wool_helmet": "Capuche en Laine",
+  "item.toughasnails.wool_chestplate": "Polaire en Laine",
+  "item.toughasnails.wool_leggings": "Pantalon en Laine",
+  "item.toughasnails.wool_boots": "Bottes en Laine",
 
-  "block.toughasnails.rain_collector": "Collecteur de Pluie",
-  "block.toughasnails.water_purifier": "Purifieur d'Eau"
+  //Containers
+  "container.toughasnails.water_purifier": "Épurateur d'Eau",
+
+  //Death Messages
+  "death.attack.toughasnails.hyperthermia": "%1$s est mort d'hyperthermie",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s est mort d'hyperthermie en essayant de s'échapper d'un ou une %2$s",
+  
+  //Effects
+  "effect.toughasnails.thirst": "Thirst",
+  "effect.toughasnails.ice_resistance": "Résistance au Gel",
+  
+  //Enchantments
+  "enchantment.toughasnails.thermal_tuning": "Réglage Thermique",
+
+  //Tabs
+  "itemGroup.toughasnails": "Tough As Nails"
 }

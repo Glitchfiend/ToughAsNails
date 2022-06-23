@@ -1,17 +1,36 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-
+  
   "container.toughasnails.water_purifier": "Водоочиститель",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s перегрелся насмерть.",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s перегрелся насмерть пока пытался избежать %2$s.",
+  
   "effect.toughasnails.thirst": "Жажда",
-
-  "item.toughasnails.tan_icon": "TAN Icon",
-  "item.toughasnails.empty_canteen": "Пустая фляга",
-  "item.toughasnails.water_canteen": "Фляга с водой",
-  "item.toughasnails.dirty_water_canteen": "Фляга с грязной водой",
-  "item.toughasnails.purified_water_canteen": "Фляга с чистой водой",
+  "effect.toughasnails.ice_resistance": "Ледостойкость",
+  "enchantment.toughasnails.thermal_tuning": "Терморегуляция",
+  
+  "block.toughasnails.rain_collector": "Сборник осадков",
+  "block.toughasnails.water_purifier": "Водоочиститель",
+  
+  "item.toughasnails.tan_icon": "Иконка «TAN»",
+  "item.toughasnails.empty_canteen": "Пустая фляжка",
+  "item.toughasnails.water_canteen": "Фляжка воды",
+  "item.toughasnails.dirty_water_canteen": "Фляжка грязной воды",
+  "item.toughasnails.purified_water_canteen": "Фляжка очищенной воды",
   "item.toughasnails.dirty_water_bottle": "Бутылка грязной воды",
-  "item.toughasnails.purified_water_bottle": "Бутылка чистой воды",
-
-  "block.toughasnails.rain_collector": "Дождесборник",
-  "block.toughasnails.water_purifier": "Водоочиститель"
+  "item.toughasnails.purified_water_bottle": "Бутылка очищенной воды",
+  "item.toughasnails.wool_helmet": "Шерстяной капюшон",
+  "item.toughasnails.wool_chestplate": "Шерстяной совик",
+  "item.toughasnails.wool_leggings": "Шерстяные штаны",
+  "item.toughasnails.wool_boots": "Шерстяные ботинки",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Туманное зелье ледостойкости",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Туманное зелье ледостойкости",
+  "item.minecraft.potion.effect.ice_resistance": "Зелье ледостойкости",
+  "item.minecraft.potion.effect.long_ice_resistance": "Зелье ледостойкости",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Взрывное зелье ледостойкости",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Взрывное зелье ледостойкости",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Стрела ледостойкости",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стрела ледостойкости"
 }
