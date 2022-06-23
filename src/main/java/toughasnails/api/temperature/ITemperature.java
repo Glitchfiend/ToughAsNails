@@ -31,6 +31,18 @@ public interface ITemperature
     TemperatureLevel getLastLevel();
 
     /**
+     * Get the target temperature level.
+     * @return temperature level.
+     */
+    TemperatureLevel getTargetLevel();
+
+    /**
+     * Get the number of ticks to delay changing the temperature.
+     * @return number of ticks.
+     */
+    int getChangeDelayTicks();
+
+    /**
      * Get the last number of ticks of hyperthermia.
      * @return number of ticks.
      */
@@ -38,7 +50,7 @@ public interface ITemperature
 
     /**
      * Set the temperature level.
-     * @param temperature temperature level
+     * @param level temperature level
      */
     void setLevel(TemperatureLevel level);
 
@@ -59,6 +71,17 @@ public interface ITemperature
      * @param level temperature level.
      */
     void setLastLevel(TemperatureLevel level);
+
+    /**
+     * Set the target temperature level.
+     * @param level temperature level.
+     */
+    void setTargetLevel(TemperatureLevel level);
+
+    /**
+     * Set the number of ticks to delay changing the temperature.
+     */
+    void setChangeDelayTicks(int ticks);
 
     /**
      * Set the last number of hyperthermia ticks.
