@@ -5,22 +5,35 @@
 package toughasnails.api.item;
 
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder("toughasnails")
 public class TANItems
 {
-    public static final Item DIRTY_WATER_BOTTLE = null;
-    public static final Item EMPTY_CANTEEN = null;
-    public static final Item WATER_CANTEEN = null;
-    public static final Item DIRTY_WATER_CANTEEN = null;
-    public static final Item PURIFIED_WATER_CANTEEN = null;
-    public static final Item PURIFIED_WATER_BOTTLE = null;
+    public static RegistryObject<Item> EMPTY_CANTEEN;
+    public static RegistryObject<Item> WATER_CANTEEN;
+    public static RegistryObject<Item> DIRTY_WATER_CANTEEN;
+    public static RegistryObject<Item> PURIFIED_WATER_CANTEEN;
 
-    public static final Item WOOL_HELMET = null;
-    public static final Item WOOL_CHESTPLATE = null;
-    public static final Item WOOL_LEGGINGS = null;
-    public static final Item WOOL_BOOTS = null;
+    public static RegistryObject<Item> DIRTY_WATER_BOTTLE;
+    public static RegistryObject<Item> PURIFIED_WATER_BOTTLE;
 
-    public static final Item TAN_ICON = null;
+    public static RegistryObject<Item> APPLE_JUICE;
+    public static RegistryObject<Item> CACTUS_JUICE;
+    public static RegistryObject<Item> CHORUS_FRUIT_JUICE;
+    public static RegistryObject<Item> GLOW_BERRY_JUICE;
+    public static RegistryObject<Item> MELON_JUICE;
+    public static RegistryObject<Item> PUMPKIN_JUICE;
+    public static RegistryObject<Item> SWEET_BERRY_JUICE;
+
+    public static RegistryObject<Item> WOOL_HELMET;
+    public static RegistryObject<Item> WOOL_CHESTPLATE;
+    public static RegistryObject<Item> WOOL_LEGGINGS;
+    public static RegistryObject<Item> WOOL_BOOTS;
+
+    public static RegistryObject<Item> LEAF_HELMET;
+    public static RegistryObject<Item> LEAF_CHESTPLATE;
+    public static RegistryObject<Item> LEAF_LEGGINGS;
+    public static RegistryObject<Item> LEAF_BOOTS;
+
+    public static RegistryObject<Item> TAN_ICON;
 }
