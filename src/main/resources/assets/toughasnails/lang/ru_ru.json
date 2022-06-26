@@ -2,29 +2,41 @@
   "itemGroup.toughasnails": "Tough As Nails",
   
   "container.toughasnails.water_purifier": "Водоочиститель",
-  
+
   "death.attack.toughasnails.hyperthermia": "%1$s перегрелся насмерть.",
   "death.attack.toughasnails.hyperthermia.player": "%1$s перегрелся насмерть пока пытался избежать %2$s.",
-  
-  "effect.toughasnails.thirst": "Жажда",
+
+  "effect.toughasnails.climate_clemency": "Мягкость климата",
   "effect.toughasnails.ice_resistance": "Ледостойкость",
+  "effect.toughasnails.thirst": "Жажда",
   "enchantment.toughasnails.thermal_tuning": "Терморегуляция",
-  
+
   "block.toughasnails.rain_collector": "Сборник осадков",
   "block.toughasnails.water_purifier": "Водоочиститель",
-  
-  "item.toughasnails.tan_icon": "Иконка «TAN»",
-  "item.toughasnails.empty_canteen": "Пустая фляжка",
-  "item.toughasnails.water_canteen": "Фляжка воды",
-  "item.toughasnails.dirty_water_canteen": "Фляжка грязной воды",
-  "item.toughasnails.purified_water_canteen": "Фляжка очищенной воды",
+
+  "item.toughasnails.apple_juice": "Яблочный сок",
+  "item.toughasnails.cactus_juice": "Кактусовый сок",
+  "item.toughasnails.chorus_fruit_juice": "Сок из плода хоруса",
   "item.toughasnails.dirty_water_bottle": "Бутылка грязной воды",
+  "item.toughasnails.dirty_water_canteen": "Фляжка грязной воды",
+  "item.toughasnails.empty_canteen": "Пустая фляжка",
+  "item.toughasnails.glow_berry_juice": "Сок из светящихся ягод",
+  "item.toughasnails.leaf_boots": "Лиственные ботинки",
+  "item.toughasnails.leaf_chestplate": "Лиственная непромокаемая накидка",
+  "item.toughasnails.leaf_helmet": "Лиственный флёр",
+  "item.toughasnails.leaf_leggings": "Лиственные штаны",
+  "item.toughasnails.melon_juice": "Арбузный сок",
+  "item.toughasnails.pumpkin_juice": "Тыквенный сок",
   "item.toughasnails.purified_water_bottle": "Бутылка очищенной воды",
-  "item.toughasnails.wool_helmet": "Шерстяной капюшон",
-  "item.toughasnails.wool_chestplate": "Шерстяной совик",
-  "item.toughasnails.wool_leggings": "Шерстяные штаны",
+  "item.toughasnails.purified_water_canteen": "Фляжка очищенной воды",
+  "item.toughasnails.sweet_berry_juice": "Сок из сладкой ягоды",
+  "item.toughasnails.tan_icon": "Иконка «TAN»",
+  "item.toughasnails.water_canteen": "Фляжка воды",
   "item.toughasnails.wool_boots": "Шерстяные ботинки",
-  
+  "item.toughasnails.wool_chestplate": "Шерстяные совик",
+  "item.toughasnails.wool_helmet": "Шерстяные капюшон",
+  "item.toughasnails.wool_leggings": "Шерстяные штаны",
+
   "item.minecraft.lingering_potion.effect.ice_resistance": "Туманное зелье ледостойкости",
   "item.minecraft.lingering_potion.effect.long_ice_resistance": "Туманное зелье ледостойкости",
   "item.minecraft.potion.effect.ice_resistance": "Зелье ледостойкости",
