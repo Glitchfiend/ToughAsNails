@@ -1,0 +1,40 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails",
+  
+  "container.toughasnails.water_purifier": "Vodní filtr",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s se přehřál k smrti",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s se přehřál k smrti, zatímco utíkal před %2$s",
+  
+  "effect.toughasnails.thirst": "Žízeň",
+  "effect.toughasnails.ice_resistance": "Leduvzdornost",
+  "enchantment.toughasnails.thermal_tuning": "Tepelné vylepšení",
+  
+  "block.toughasnails.rain_collector": "Sběrač dešťové vody",
+  "block.toughasnails.water_purifier": "Vodní filtr",
+  
+  "item.toughasnails.tan_icon": "Ikona TAN",
+  "item.toughasnails.empty_canteen": "Prázdná polní láhev",
+  "item.toughasnails.water_canteen": "Polní láhev s vodou",
+  "item.toughasnails.dirty_water_canteen": "Polní láhev s nepřefiltrovanou vodou",
+  "item.toughasnails.purified_water_canteen": "Polní láhev s přefiltrovanou vodou",
+  "item.toughasnails.dirty_water_bottle": "Lahvička s nepřefiltrovanou vodou",
+  "item.toughasnails.purified_water_bottle": "Lahvička s přefiltrovanou vodou",
+  "item.toughasnails.wool_helmet": "Kápě z vlny",
+  "item.toughasnails.wool_chestplate": "Kabát z vlny",
+  "item.toughasnails.wool_leggings": "Kalhoty z vlny",
+  "item.toughasnails.wool_boots": "Boty z vlny",
+  "item.toughasnails.leaf_helmet": "Kápě z listí",
+  "item.toughasnails.leaf_chestplate": "Pončo z listí",
+  "item.toughasnails.leaf_leggings": "Kalhoty z listí",
+  "item.toughasnails.leaf_boots": "Boty z listí",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Doznívající lektvar leduvzdornosti",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Doznívající lektvar leduvzdornosti",
+  "item.minecraft.potion.effect.ice_resistance": "Lektvar leduvzdornosti",
+  "item.minecraft.potion.effect.long_ice_resistance": "Lektvar leduvzdornosti",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Vrhací lektvar leduvzdornosti",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Vrhací lektvar leduvzdornosti",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Šíp leduvzdornosti",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Šíp leduvzdornosti"
+}

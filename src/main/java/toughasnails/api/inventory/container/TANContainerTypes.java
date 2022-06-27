@@ -6,9 +6,9 @@ package toughasnails.api.inventory.container;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder("toughasnails")
 public class TANContainerTypes
 {
-    public static final MenuType<?> WATER_PURIFIER = null;
+    public static RegistryObject<MenuType<?>> WATER_PURIFIER;
 }
