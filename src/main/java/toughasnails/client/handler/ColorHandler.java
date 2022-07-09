@@ -7,7 +7,7 @@ package toughasnails.client.handler;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.block.TANBlocks;
@@ -19,7 +19,7 @@ import toughasnails.item.LeafArmorItem;
 public class ColorHandler
 {
     @SubscribeEvent
-    public static void registerItemColors(ColorHandlerEvent.Item event)
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event)
     {
         ItemColors itemColors = event.getItemColors();
 
@@ -33,7 +33,7 @@ public class ColorHandler
     }
 
     @SubscribeEvent
-    public static void registerBlockColors(ColorHandlerEvent.Block event)
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event)
     {
         BlockColors blockColors = event.getBlockColors();
         blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR.get());

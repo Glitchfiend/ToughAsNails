@@ -11,13 +11,12 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.ScreenUtils;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
@@ -26,26 +25,12 @@ import toughasnails.core.ToughAsNails;
 
 import java.util.Random;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class TemperatureOverlayHandler
 {
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
     private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNails.MOD_ID, "textures/misc/hyperthermia_outline.png");
-
-    public static final IIngameOverlay TEMPERATURE_LEVEL_ELEMENT = OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Temperature Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
-        {
-            gui.setupOverlayRenderState(true, false);
-            renderTemperature(gui, mStack, partialTicks, screenWidth, screenHeight);
-        }
-    });
-
-    public static final IIngameOverlay HYPERTHERMIA_ELEMENT = OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FROSTBITE_ELEMENT, "Hyperthermia", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-        gui.setupOverlayRenderState(true, false);
-        renderHyperthermia(gui, mStack);
-    });
 
     private static long updateCounter;
     private static long flashCounter;
@@ -62,7 +47,7 @@ public class TemperatureOverlayHandler
         }
     }
 
-    private static void renderTemperature(ForgeIngameGui gui, PoseStack mStack, float partialTicks, int width, int height)
+    private static void renderTemperature(ForgeGui gui, PoseStack mStack, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -84,7 +69,7 @@ public class TemperatureOverlayHandler
         }
     }
 
-    private static void renderHyperthermia(ForgeIngameGui gui, PoseStack pStack)
+    private static void renderHyperthermia(ForgeGui gui, PoseStack pStack)
     {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
@@ -126,6 +111,30 @@ public class TemperatureOverlayHandler
         if (flashCounter > updateCounter)
             v += 16;
 
-        GuiUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, v, 16, 16, 9);
+        ScreenUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, v, 16, 16, 9);
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    private static class OverlayRegister
+    {
+        @SubscribeEvent
+        public static void registerOverlays(RegisterGuiOverlaysEvent event)
+        {
+            event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "temperature_level", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
+            {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
+                {
+                    gui.setupOverlayRenderState(true, false);
+                    renderTemperature(gui, poseStack, partialTick, screenWidth, screenHeight);
+                }
+            });
+
+            event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), "hyperthermia", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
+            {
+                gui.setupOverlayRenderState(true, false);
+                renderHyperthermia(gui, poseStack);
+            });
+        }
     }
 }

@@ -11,10 +11,10 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.GuiUtils;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.ScreenUtils;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,15 +32,6 @@ public class ThirstOverlayHandler
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
 
-    public static final IIngameOverlay THIRST_LEVEL_ELEMENT = OverlayRegistry.registerOverlayBelow(ForgeIngameGui.AIR_LEVEL_ELEMENT, "Thirst Level", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
-        {
-            gui.setupOverlayRenderState(true, false);
-            renderThirst(gui, mStack, partialTicks, screenWidth, screenHeight);
-        }
-    });
-
     private static int updateCounter;
 
     @SubscribeEvent
@@ -54,7 +45,7 @@ public class ThirstOverlayHandler
         }
     }
 
-    private static void renderThirst(ForgeIngameGui gui, PoseStack mStack, float partialTicks, int width, int height)
+    private static void renderThirst(ForgeGui gui, PoseStack mStack, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -75,7 +66,7 @@ public class ThirstOverlayHandler
         {
             RenderSystem.setShaderTexture(0, OVERLAY);
             drawThirst(mStack, width, height, thirstLevel, thirstHydrationLevel);
-            gui.right_height += 10;
+            gui.rightHeight += 10;
             RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
         }
     }
@@ -86,7 +77,7 @@ public class ThirstOverlayHandler
         Player player = minecraft.player;
 
         int left = width / 2 + 91 + ClientConfig.thirstLeftOffset.get();
-        int top = height - ((ForgeIngameGui)Minecraft.getInstance().gui).right_height + ClientConfig.thirstTopOffset.get();
+        int top = height - ((ForgeGui)Minecraft.getInstance().gui).rightHeight + ClientConfig.thirstTopOffset.get();
 
         for (int i = 0; i < 10; i++)
         {
@@ -110,17 +101,36 @@ public class ThirstOverlayHandler
             }
 
             // Draw the background of each thirst droplet
-            GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, backgroundU, 32, 9, 9, 9);
+            ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, backgroundU, 32, 9, 9, 9);
 
             // Draw a full droplet
             if (thirstLevel > dropletHalf)
             {
-                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 9);
+                ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 9);
             }
             else if (thirstLevel == dropletHalf) // Draw a half droplet
             {
-                GuiUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 9);
+                ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 9);
             }
+        }
+    }
+
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    private static class OverlayRegister
+    {
+        @SubscribeEvent
+        public static void registerOverlays(RegisterGuiOverlaysEvent event)
+        {
+            event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "thirst_level", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
+            {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
+                {
+                    gui.setupOverlayRenderState(true, false);
+                    renderThirst(gui, poseStack, partialTick, screenWidth, screenHeight);
+                }
+            });
         }
     }
 }
