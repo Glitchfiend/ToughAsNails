@@ -17,7 +17,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -56,30 +56,30 @@ public class TemperatureHandler
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getPlayer().level.isClientSide())
+        if (event.getEntity().level.isClientSide())
             return;
 
-        syncTemperature((ServerPlayer)event.getPlayer());
+        syncTemperature((ServerPlayer)event.getEntity());
     }
 
     @SubscribeEvent
     public void onPlayerCloned(PlayerEvent.Clone event)
     {
-        if (event.getPlayer().level.isClientSide())
+        if (event.getEntity().level.isClientSide())
             return;
 
-        syncTemperature((ServerPlayer)event.getPlayer());
+        syncTemperature((ServerPlayer)event.getEntity());
 
         if (!TemperatureConfig.climateClemencyRespawning.get())
         {
-            event.getPlayer().getPersistentData().putBoolean("climateClemencyGranted", event.getOriginal().getPersistentData().getBoolean("climateClemencyGranted"));
+            event.getEntity().getPersistentData().putBoolean("climateClemencyGranted", event.getOriginal().getPersistentData().getBoolean("climateClemencyGranted"));
         }
     }
 
     @SubscribeEvent
-    public void onPlayerSpawn(EntityJoinWorldEvent event)
+    public void onPlayerSpawn(EntityJoinLevelEvent event)
     {
-        if (event.getWorld().isClientSide() || !(event.getEntity() instanceof Player))
+        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Player))
             return;
 
         Player player = (Player)event.getEntity();

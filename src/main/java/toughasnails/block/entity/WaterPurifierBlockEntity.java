@@ -160,8 +160,8 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                     if (blockEntity.currentlyFiltering())
                     {
                         changed = true;
-                        if (filterStack.hasContainerItem())
-                            blockEntity.items.set(1, filterStack.getContainerItem());
+                        if (filterStack.hasCraftingRemainingItem())
+                            blockEntity.items.set(1, filterStack.getCraftingRemainingItem());
                         else if (!filterStack.isEmpty())
                         {
                             filterStack.shrink(1);
@@ -170,7 +170,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                             // Normally this would be something like an empty bucket
                             if (filterStack.isEmpty())
                             {
-                                blockEntity.items.set(1, filterStack.getContainerItem());
+                                blockEntity.items.set(1, filterStack.getCraftingRemainingItem());
                             }
                         }
                     }

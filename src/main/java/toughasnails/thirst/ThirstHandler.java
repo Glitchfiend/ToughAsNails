@@ -70,10 +70,10 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getPlayer().level.isClientSide())
+        if (event.getEntity().level.isClientSide())
             return;
 
-        syncThirst((ServerPlayer)event.getPlayer());
+        syncThirst((ServerPlayer)event.getEntity());
     }
 
     @SubscribeEvent
@@ -150,10 +150,10 @@ public class ThirstHandler
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ServerConfig.enableThirst.get() || !(event.getEntityLiving() instanceof Player) || event.getEntity().level.isClientSide())
+        if (!ServerConfig.enableThirst.get() || !(event.getEntity() instanceof Player) || event.getEntity().level.isClientSide())
             return;
 
-        Player player = (Player)event.getEntityLiving();
+        Player player = (Player)event.getEntity();
         ItemStack drink = event.getItem();
         IThirst thirst = ThirstHelper.getThirst(player);
 
@@ -222,7 +222,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerInteractItem(PlayerInteractEvent.RightClickItem event)
     {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Level world = player.level;
         InteractionHand hand = event.getHand();
         ItemStack stack = player.getItemInHand(hand);
@@ -286,8 +286,8 @@ public class ThirstHandler
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
     {
-        if (canHandDrink() && canHandDrinkInWorld(event.getPlayer(), event.getHand()))
-            tryDrinkWaterInWorld(event.getPlayer());
+        if (canHandDrink() && canHandDrinkInWorld(event.getEntity(), event.getHand()))
+            tryDrinkWaterInWorld(event.getEntity());
     }
 
     private static final int IN_WORLD_DRINK_COOLDOWN = 3 * 20;
@@ -296,8 +296,8 @@ public class ThirstHandler
     @SubscribeEvent
     public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event)
     {
-        if (canHandDrink() && canHandDrinkInWorld(event.getPlayer(), event.getHand()))
-            tryDrinkWaterInWorld(event.getPlayer());
+        if (canHandDrink() && canHandDrinkInWorld(event.getEntity(), event.getHand()))
+            tryDrinkWaterInWorld(event.getEntity());
     }
 
     @SubscribeEvent

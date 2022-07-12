@@ -16,18 +16,18 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 
 public class WaterPurifierRecipe implements Recipe<Container>
 {
     protected final ResourceLocation id;
-    protected final NBTIngredient ingredient;
+    protected final StrictNBTIngredient ingredient;
     protected final ItemStack result;
     protected final int purifyTime;
 
-    public WaterPurifierRecipe(ResourceLocation id, NBTIngredient ingredient, ItemStack result, int purifyTime)
+    public WaterPurifierRecipe(ResourceLocation id, StrictNBTIngredient ingredient, ItemStack result, int purifyTime)
     {
         this.id = id;
         this.ingredient = ingredient;
@@ -87,7 +87,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
         @Override
         public WaterPurifierRecipe fromJson(ResourceLocation recipeId, JsonObject json)
         {
-            NBTIngredient ingredient = NBTIngredient.Serializer.INSTANCE.parse(GsonHelper.getAsJsonObject(json, "ingredient"));
+            StrictNBTIngredient ingredient = StrictNBTIngredient.Serializer.INSTANCE.parse(GsonHelper.getAsJsonObject(json, "ingredient"));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             int purifyTime = GsonHelper.getAsInt(json, "purifytime", 200);
             return new WaterPurifierRecipe(recipeId, ingredient, result, purifyTime);
@@ -96,7 +96,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
         @Override
         public WaterPurifierRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
         {
-            NBTIngredient ingredient = (NBTIngredient)Ingredient.fromNetwork(buffer);
+            StrictNBTIngredient ingredient = (StrictNBTIngredient)Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
             int purifyTime = buffer.readInt();
             return new WaterPurifierRecipe(recipeId, ingredient, result, purifyTime);
