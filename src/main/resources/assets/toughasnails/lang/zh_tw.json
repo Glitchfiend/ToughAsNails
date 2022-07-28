@@ -12,7 +12,14 @@
   
   "block.toughasnails.rain_collector": "雨水收集器",
   "block.toughasnails.water_purifier": "淨水器",
-  
+    
+  "item.toughasnails.apple_juice": "蘋果汁",
+  "item.toughasnails.cactus_juice": "仙人掌汁",
+  "item.toughasnails.chorus_fruit_juice": "歌萊果汁",
+  "item.toughasnails.glow_berry_juice": "螢光莓汁",
+  "item.toughasnails.melon_juice": "甜瓜汁",
+  "item.toughasnails.pumpkin_juice": "南瓜汁",
+  "item.toughasnails.sweet_berry_juice": "甜莓汁",
   "item.toughasnails.tan_icon": "TAN 圖示",
   "item.toughasnails.empty_canteen": "空水壺",
   "item.toughasnails.water_canteen": "水壺",
@@ -24,6 +31,11 @@
   "item.toughasnails.wool_chestplate": "羊毛大衣",
   "item.toughasnails.wool_leggings": "羊毛褲子",
   "item.toughasnails.wool_boots": "羊毛靴子",
+
+  "item.toughasnails.leaf_boots": "葉子靴",
+  "item.toughasnails.leaf_chestplate": "葉子大衣",
+  "item.toughasnails.leaf_helmet": "葉子帽",
+  "item.toughasnails.leaf_leggings": "葉子褲",
   
   "item.minecraft.lingering_potion.effect.ice_resistance": "滯留 耐寒藥水",
   "item.minecraft.lingering_potion.effect.long_ice_resistance": "滯留 耐寒藥水",
