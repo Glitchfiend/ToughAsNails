@@ -15,7 +15,6 @@ import toughasnails.api.block.TANBlocks;
 import toughasnails.block.RainCollectorBlock;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.core.ToughAsNails;
-import toughasnails.util.inventory.ItemGroupTAN;
 
 import java.util.function.Supplier;
 
@@ -35,7 +34,7 @@ public class ModBlocks
     public static RegistryObject<Block> register(String name, Supplier<Block> block)
     {
         RegistryObject<Block> blockRegistryObject = ToughAsNails.BLOCK_REGISTER.register(name, block);
-        ToughAsNails.ITEM_REGISTER.register(name, () -> new BlockItem(blockRegistryObject.get(), new Item.Properties().tab(ItemGroupTAN.INSTANCE)));
+        ToughAsNails.ITEM_REGISTER.register(name, () -> new BlockItem(blockRegistryObject.get(), new Item.Properties()));
         return blockRegistryObject;
     }
 }
