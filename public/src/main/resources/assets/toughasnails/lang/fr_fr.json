@@ -23,7 +23,17 @@
   "item.toughasnails.wool_chestplate": "Polaire en Laine",
   "item.toughasnails.wool_leggings": "Pantalon en Laine",
   "item.toughasnails.wool_boots": "Bottes en Laine",
-
+  "item.toughasnails.apple_juice": "Jus de Pomme",
+  "item.toughasnails.cactus_juice": "Jus de Cactus",
+  "item.toughasnails.chorus_fruit_juice": "Jus de Chorus",
+  "item.toughasnails.glow_berry_juice": "Jus de Baies Lumineuses",
+  "item.toughasnails.leaf_boots": "Bottes Feuilleté",
+  "item.toughasnails.leaf_chestplate": "Poncho Feuilleté",
+  "item.toughasnails.leaf_helmet": "Voile Feuilleté",
+  "item.toughasnails.leaf_leggings": "Pantalon Feuilleté",
+  "item.toughasnails.melon_juice": "Jus de Pasteque",
+  "item.toughasnails.pumpkin_juice": "Jus de Citrouille",
+  
   //Containers
   "container.toughasnails.water_purifier": "Épurateur d'Eau",
 
@@ -32,11 +42,12 @@
   "death.attack.toughasnails.hyperthermia.player": "%1$s est mort d'hyperthermie en essayant de s'échapper d'un ou une %2$s",
   
   //Effects
-  "effect.toughasnails.thirst": "Thirst",
+  "effect.toughasnails.thirst": "Soif",
   "effect.toughasnails.ice_resistance": "Résistance au Gel",
-  
+   "effect.toughasnails.climate_clemency": "Clémence climatique",
+
   //Enchantments
-  "enchantment.toughasnails.thermal_tuning": "Réglage Thermique",
+  "enchantment.toughasnails.thermal_tuning": "Thermiglage",
 
   //Tabs
   "itemGroup.toughasnails": "Tough As Nails"
