@@ -159,32 +159,9 @@ public class ThirstHandler
 
         if (drink.is(ModTags.Items.DRINKS))
         {
-            int drink_thirst = 0;
+            int drink_thirst = ModTags.Items.getThirstRestored(drink);
             float drink_hydration = 0.0F;
             float drink_poison_chance = 0.0F;
-
-            ///////////////////
-
-            if (drink.is(ModTags.Items.ONE_THIRST_DRINKS)) { drink_thirst = 1; }
-            if (drink.is(ModTags.Items.TWO_THIRST_DRINKS)) { drink_thirst = 2; }
-            if (drink.is(ModTags.Items.THREE_THIRST_DRINKS)) { drink_thirst = 3; }
-            if (drink.is(ModTags.Items.FOUR_THIRST_DRINKS)) { drink_thirst = 4; }
-            if (drink.is(ModTags.Items.FIVE_THIRST_DRINKS)) { drink_thirst = 5; }
-            if (drink.is(ModTags.Items.SIX_THIRST_DRINKS)) { drink_thirst = 6; }
-            if (drink.is(ModTags.Items.SEVEN_THIRST_DRINKS)) { drink_thirst = 7; }
-            if (drink.is(ModTags.Items.EIGHT_THIRST_DRINKS)) { drink_thirst = 8; }
-            if (drink.is(ModTags.Items.NINE_THIRST_DRINKS)) { drink_thirst = 9; }
-            if (drink.is(ModTags.Items.TEN_THIRST_DRINKS)) { drink_thirst = 10; }
-            if (drink.is(ModTags.Items.ELEVEN_THIRST_DRINKS)) { drink_thirst = 11; }
-            if (drink.is(ModTags.Items.TWELVE_THIRST_DRINKS)) { drink_thirst = 12; }
-            if (drink.is(ModTags.Items.THIRTEEN_THIRST_DRINKS)) { drink_thirst = 13; }
-            if (drink.is(ModTags.Items.FOURTEEN_THIRST_DRINKS)) { drink_thirst = 14; }
-            if (drink.is(ModTags.Items.FIFTEEN_THIRST_DRINKS)) { drink_thirst = 15; }
-            if (drink.is(ModTags.Items.SIXTEEN_THIRST_DRINKS)) { drink_thirst = 16; }
-            if (drink.is(ModTags.Items.SEVENTEEN_THIRST_DRINKS)) { drink_thirst = 17; }
-            if (drink.is(ModTags.Items.EIGHTEEN_THIRST_DRINKS)) { drink_thirst = 18; }
-            if (drink.is(ModTags.Items.NINETEEN_THIRST_DRINKS)) { drink_thirst = 19; }
-            if (drink.is(ModTags.Items.TWENTY_THIRST_DRINKS)) { drink_thirst = 20; }
 
             ///////////////////
 

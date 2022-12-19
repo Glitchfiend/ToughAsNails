@@ -15,6 +15,6 @@ logoFile="tan_logo.png"
 [[dependencies.toughasnails]]
     modId="forge"
     mandatory=true
-    versionRange="[44.0.6,)"
+    versionRange="[44.0.30,)"
     ordering="NONE"
     side="BOTH"

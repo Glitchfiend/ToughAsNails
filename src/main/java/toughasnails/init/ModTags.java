@@ -5,6 +5,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import toughasnails.core.ToughAsNails;
 
@@ -71,5 +72,30 @@ public class ModTags
         public static final TagKey<Item> ONE_HUNDRED_POISON_CHANCE_DRINKS = ItemTags.create(new ResourceLocation(ToughAsNails.MOD_ID, "poison_chance/100_poison_chance_drinks"));
 
         public static final TagKey<Item> DRINKS = ItemTags.create(new ResourceLocation(ToughAsNails.MOD_ID, "drinks"));
+        
+        public static int getThirstRestored(ItemStack drink)
+        {
+            if (drink.is(ModTags.Items.ONE_THIRST_DRINKS)) { return 1; }
+            if (drink.is(ModTags.Items.TWO_THIRST_DRINKS)) { return 2; }
+            if (drink.is(ModTags.Items.THREE_THIRST_DRINKS)) { return 3; }
+            if (drink.is(ModTags.Items.FOUR_THIRST_DRINKS)) { return 4; }
+            if (drink.is(ModTags.Items.FIVE_THIRST_DRINKS)) { return 5; }
+            if (drink.is(ModTags.Items.SIX_THIRST_DRINKS)) { return 6; }
+            if (drink.is(ModTags.Items.SEVEN_THIRST_DRINKS)) { return 7; }
+            if (drink.is(ModTags.Items.EIGHT_THIRST_DRINKS)) { return 8; }
+            if (drink.is(ModTags.Items.NINE_THIRST_DRINKS)) { return 9; }
+            if (drink.is(ModTags.Items.TEN_THIRST_DRINKS)) { return 10; }
+            if (drink.is(ModTags.Items.ELEVEN_THIRST_DRINKS)) { return 11; }
+            if (drink.is(ModTags.Items.TWELVE_THIRST_DRINKS)) { return 12; }
+            if (drink.is(ModTags.Items.THIRTEEN_THIRST_DRINKS)) { return 13; }
+            if (drink.is(ModTags.Items.FOURTEEN_THIRST_DRINKS)) { return 14; }
+            if (drink.is(ModTags.Items.FIFTEEN_THIRST_DRINKS)) { return 15; }
+            if (drink.is(ModTags.Items.SIXTEEN_THIRST_DRINKS)) { return 16; }
+            if (drink.is(ModTags.Items.SEVENTEEN_THIRST_DRINKS)) { return 17; }
+            if (drink.is(ModTags.Items.EIGHTEEN_THIRST_DRINKS)) { return 18; }
+            if (drink.is(ModTags.Items.NINETEEN_THIRST_DRINKS)) { return 19; }
+            if (drink.is(ModTags.Items.TWENTY_THIRST_DRINKS)) { return 20; }
+            return 0;
+        }
     }
 }
