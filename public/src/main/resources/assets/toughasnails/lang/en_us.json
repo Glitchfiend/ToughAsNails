@@ -5,6 +5,8 @@
   
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
   "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death whilst trying to escape %2$s",
+  "desc.toughasnails.heating": "Heating",
+  "desc.toughasnails.cooling": "Cooling",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.ice_resistance": "Ice Resistance",
