@@ -46,15 +46,12 @@ public class TooltipHandler
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
 
-        if (block == Blocks.AIR)
-            return;
-
-        if (state.is(ModTags.Blocks.HEATING_BLOCKS))
+        if (stack.is(ModTags.Items.HEATING_ITEMS) || stack.is(ModTags.Items.HEATING_ARMOR) || state.is(ModTags.Blocks.HEATING_BLOCKS))
         {
             event.getToolTip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.RED));
         }
 
-        if (state.is(ModTags.Blocks.COOLING_BLOCKS))
+        if (stack.is(ModTags.Items.COOLING_ITEMS) || stack.is(ModTags.Items.COOLING_ARMOR) || state.is(ModTags.Blocks.COOLING_BLOCKS))
         {
             event.getToolTip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
         }
