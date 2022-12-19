@@ -22,6 +22,7 @@ import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 
 import java.util.LinkedList;
@@ -151,6 +152,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         Set<BlockPos> heating = Sets.newHashSet();
         Set<BlockPos> cooling = Sets.newHashSet();
+
+        // If the player's position is obstructed (for example, when mounted or inside a block), use the position above instead
+        if (!level.isEmptyBlock(pos))
+            pos = pos.above();
 
         fill(heating, cooling, level, pos);
 
