@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
@@ -87,6 +88,6 @@ public class ModCrafting
 
     private static void addBrewingRecipe(ItemStack inBottle, Potion inPotion, ItemStack ingredient, ItemStack outBottle, Potion outPotion)
     {
-        BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(inBottle, inPotion)), Ingredient.of(ingredient), PotionUtils.setPotion(outBottle, outPotion));
+        BrewingRecipeRegistry.addRecipe(StrictNBTIngredient.of(PotionUtils.setPotion(inBottle, inPotion)), StrictNBTIngredient.of(ingredient), PotionUtils.setPotion(outBottle, outPotion));
     }
 }
