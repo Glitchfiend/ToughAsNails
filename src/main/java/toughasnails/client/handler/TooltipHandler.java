@@ -125,7 +125,7 @@ public class TooltipHandler
             {
                 int dropletHalf = i * 2 + 1;
 
-                int startX = x + i * 8;
+                int startX = x + i * 8 - 1;
                 int startY = y;
 
                 // Draw the background of each thirst droplet
