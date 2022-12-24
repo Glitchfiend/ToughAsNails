@@ -117,7 +117,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
         if (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get() || level.canSeeSky(pos))
         {
-            if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
+            if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
+            else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;
+            else if (biome.is(ModTags.Biomes.NEUTRAL_BIOMES)) return TemperatureLevel.NEUTRAL;
+            else if (biome.is(ModTags.Biomes.WARM_BIOMES)) return TemperatureLevel.WARM;
+            else if (biome.is(ModTags.Biomes.HOT_BIOMES)) return TemperatureLevel.HOT;
+            else if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
             else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
             else if (biomeTemperature >= 0.45F && biomeTemperature < 0.75F) return TemperatureLevel.NEUTRAL;
             else if (biomeTemperature >= 0.75F && biomeTemperature < 0.9F) return TemperatureLevel.WARM;

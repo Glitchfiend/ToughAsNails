@@ -1,11 +1,14 @@
 package toughasnails.init;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import toughasnails.core.ToughAsNails;
 
@@ -15,6 +18,7 @@ public class ModTags
     {
         Blocks.init();
         Items.init();
+        Biomes.init();
     }
 
     public static class Blocks
@@ -96,6 +100,22 @@ public class ModTags
             if (drink.is(ModTags.Items.NINETEEN_THIRST_DRINKS)) { return 19; }
             if (drink.is(ModTags.Items.TWENTY_THIRST_DRINKS)) { return 20; }
             return 0;
+        }
+    }
+
+    public static class Biomes
+    {
+        private static void init() {}
+
+        public static final TagKey<Biome> ICY_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "icy_biomes"));
+        public static final TagKey<Biome> COLD_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "cold_biomes"));
+        public static final TagKey<Biome> NEUTRAL_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "neutral_biomes"));
+        public static final TagKey<Biome> WARM_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "warm_biomes"));
+        public static final TagKey<Biome> HOT_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "hot_biomes"));
+
+        private static TagKey<Biome> create(ResourceLocation loc)
+        {
+            return TagKey.create(Registries.BIOME, loc);
         }
     }
 }
