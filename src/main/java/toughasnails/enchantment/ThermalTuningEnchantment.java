@@ -7,13 +7,12 @@ package toughasnails.enchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import toughasnails.api.enchantment.TANEnchantments;
 
 public class ThermalTuningEnchantment extends Enchantment
 {
     public ThermalTuningEnchantment()
     {
-        super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST } );
+        super(Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST } );
     }
 
     @Override

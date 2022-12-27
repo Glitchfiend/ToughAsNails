@@ -22,7 +22,7 @@ public class ModEnchantments
 
     private static void registerEnchantments()
     {
-        TANEnchantments.THERMAL_TUNING = register("thermal_tuning", () -> new ThermalTuningEnchantment());
+        TANEnchantments.THERMAL_TUNING = register("thermal_tuning", ThermalTuningEnchantment::new);
     }
 
     public static RegistryObject<Enchantment> register(String name, Supplier<Enchantment> enchantment)
