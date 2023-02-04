@@ -1,0 +1,50 @@
+{
+    "itemGroup.toughasnails": "Tough As Nails",
+
+    "container.toughasnails.water_purifier": "浄水器",
+
+    "death.attack.toughasnails.hyperthermia": "1$s は、過熱死した。",
+    "death.attack.toughasnails.hyperthermia.player": "1$s は %2$s から逃げようとして過熱死した。",
+    "desc.toughasnails.heating": "過熱",
+    "desc.toughasnails.cooling": "冷却",
+
+    "effect.toughasnails.climate_clemency": "気候クレメンス",
+    "effect.toughasnails.ice_resistance": "氷耐性",
+    "effect.toughasnails.thirst": "のどの渇き",
+    "enchantment.toughasnails.thermal_tuning": "温度調整",
+
+    "block.toughasnails.rain_collector": "雨水回収装置",
+    "block.toughasnails.water_purifier": "浄水器",
+
+    "item.toughasnails.apple_juice": "リンゴジュース",
+    "item.toughasnails.cactus_juice": "サボテンジュース",
+    "item.toughasnails.chorus_fruit_juice": "コーラスフルーツジュース",
+    "item.toughasnails.dirty_water_bottle": "汚れた水筒",
+    "item.toughasnails.dirty_water_canteen": "汚れた水の水筒",
+    "item.toughasnails.empty_canteen": "空の水筒",
+    "item.toughasnails.glow_berry_juice": "グローベリージュース",
+    "item.toughasnails.leaf_boots": "葉っぱのブーツ",
+    "item.toughasnails.leaf_chestplate": "葉っぱのポンチョ",
+    "item.toughasnails.leaf_helmet": "葉っぱのベール",
+    "item.toughasnails.leaf_leggings": "葉っぱのパンツ",
+    "item.toughasnails.melon_juice": "メロンジュース",
+    "item.toughasnails.pumpkin_juice": "カボチャジュース",
+    "item.toughasnails.purified_water_bottle": "精製水ボトル",
+    "item.toughasnails.purified_water_canteen": "精製水水筒",
+    "item.toughasnails.sweet_berry_juice": "スイートベリージュース",
+    "item.toughasnails.tan_icon": "TAN Icon",
+    "item.toughasnails.water_canteen": "Water Canteen",
+    "item.toughasnails.wool_boots": "羊毛のブーツ",
+    "item.toughasnails.wool_chestplate": "羊毛のパーカー",
+    "item.toughasnails.wool_helmet": "羊毛のフード",
+    "item.toughasnails.wool_leggings": "羊毛のパンツ",
+
+    "item.minecraft.lingering_potion.effect.ice_resistance": "氷耐性の残留ポーション",
+    "item.minecraft.lingering_potion.effect.long_ice_resistance": "氷耐性の残留ポーション",
+    "item.minecraft.potion.effect.ice_resistance": "氷耐性のポーション",
+    "item.minecraft.potion.effect.long_ice_resistance": "氷耐性のポーション",
+    "item.minecraft.splash_potion.effect.ice_resistance": "氷耐性のスプラッシュポーション",
+    "item.minecraft.splash_potion.effect.long_ice_resistance": "氷耐性のスプラッシュポーション",
+    "item.minecraft.tipped_arrow.effect.ice_resistance": "氷耐性の矢",
+    "item.minecraft.tipped_arrow.effect.long_ice_resistance": "氷耐性の矢"
+}
