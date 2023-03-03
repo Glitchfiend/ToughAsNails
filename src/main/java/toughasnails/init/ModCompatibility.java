@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonHelper;
-import sereneseasons.config.BiomeConfig;
+import sereneseasons.init.ModTags;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.TemperatureConfig;
@@ -37,11 +37,11 @@ public class ModCompatibility
             return current;
 
         //Check if biome uses seasonal effects
-        if (!BiomeConfig.enablesSeasonalEffects(biome))
+        if (biome.is(ModTags.Biomes.BLACKLISTED_BIOMES))
             return current;
 
         // Don't adjust the season if tropical seasons are in use
-        if (BiomeConfig.usesTropicalSeasons(biome))
+        if (biome.is(ModTags.Biomes.TROPICAL_BIOMES))
             return current;
 
         Season season = SeasonHelper.getSeasonState(level).getSeason();
