@@ -22,7 +22,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
-import toughasnails.api.damagesource.TANDamageSources;
+import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.ITemperature;
@@ -216,7 +216,7 @@ public class TemperatureHandler
 
         // Hurt the player if hyperthermic
         if (player.tickCount % 40 == 0 && TemperatureHelper.isFullyHyperthermic(player))
-            player.hurt(TANDamageSources.HYPERTHERMIA, 1);
+            player.hurt(player.damageSources().source(TANDamageTypes.HYPERTHERMIA), 1);
     }
 
     private static void syncTemperature(ServerPlayer player)

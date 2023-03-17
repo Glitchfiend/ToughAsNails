@@ -27,9 +27,6 @@ function Transformation(name, desc) {
     ],
     "net/minecraft/world/food/FoodData": [
         new Transformation(ASM.mapMethod("m_38710_"), "(Lnet/minecraft/world/entity/player/Player;)V", patchFoodDataTick) //tick
-    ],
-    "net/minecraft/client/gui/Gui": [
-        new Transformation(ASM.mapMethod("m_168700_"), "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/gui/Gui$HeartType;IIIZZ)V", patchRenderHeart) //renderHeart
     ]
  };
  
@@ -103,26 +100,4 @@ function Transformation(name, desc) {
     insns.add(new InsnNode(Opcodes.RETURN));
     node.instructions.insertBefore(node.instructions.getFirst(), insns);
     log("Successfully patched tick");
- }
-
- function patchRenderHeart(node) {
-    var call = ASM.findFirstMethodCall(node,
-        ASM.MethodType.VIRTUAL,
-        "net/minecraft/client/gui/Gui",
-        BLIT,
-        "(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V");
-
-    if (call == null) {
-        log("Failed to locate call to blit");
-        return;
-    }
-
-    node.instructions.insertBefore(call, ASM.buildMethodCall(
-        "toughasnails/temperature/TemperatureHooks",
-        "heartBlit",
-        "(Lnet/minecraft/client/gui/Gui;Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V",
-        ASM.MethodType.STATIC
-    ));
-    node.instructions.remove(call);
-    log("Successfully patched renderHeart");
  }

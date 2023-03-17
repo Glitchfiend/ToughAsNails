@@ -106,7 +106,7 @@ public class TooltipHandler
         }
 
         @Override
-        public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer, int blitOffset)
+        public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer)
         {
             poseStack.pushPose();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

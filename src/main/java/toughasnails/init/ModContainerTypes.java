@@ -5,6 +5,7 @@
 package toughasnails.init;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,6 +36,6 @@ public class ModContainerTypes
 
     public static <T extends AbstractContainerMenu> RegistryObject<MenuType<?>> register(String name, MenuType.MenuSupplier<T> factory)
     {
-        return ToughAsNails.MENU_REGISTER.register(name, () -> new MenuType<>(factory));
+        return ToughAsNails.MENU_REGISTER.register(name, () -> new MenuType<>(factory, FeatureFlags.DEFAULT_FLAGS));
     }
 }

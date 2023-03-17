@@ -26,8 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import toughasnails.api.crafting.TANRecipeTypes;
@@ -344,7 +344,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     {
         if (!this.items.get(0).isEmpty() && recipe != null)
         {
-            ItemStack recipeResult = recipe.getResultItem();
+            ItemStack recipeResult = recipe.getResultItem(this.level.registryAccess());
 
             // Invalid recipe result
             if (recipeResult.isEmpty())
@@ -383,7 +383,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         if (recipe != null && this.canFilter(recipe))
         {
             ItemStack input = this.items.get(0);
-            ItemStack recipeResult = recipe.getResultItem();
+            ItemStack recipeResult = recipe.getResultItem(this.level.registryAccess());
             ItemStack currentResult = this.items.get(2);
 
             // Update the result stuck
@@ -426,7 +426,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
     {
-        if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
             if (facing == Direction.UP)
                 return handlers[0].cast();
             else if (facing == Direction.DOWN)

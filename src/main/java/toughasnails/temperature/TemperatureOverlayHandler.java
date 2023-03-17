@@ -74,7 +74,7 @@ public class TemperatureOverlayHandler
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (TemperatureHelper.getTicksHyperthermic(player) > 0)
-            gui.renderTextureOverlay(HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
+            gui.renderTextureOverlay(pStack, HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
     }
 
     private static void drawTemperature(PoseStack matrixStack, int width, int height, TemperatureLevel temperature)

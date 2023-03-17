@@ -7,8 +7,8 @@ import net.minecraft.world.item.Item;
 
 public class DyeableWoolArmorItem extends ArmorItem implements DyeableWoolItem
 {
-    public DyeableWoolArmorItem(ArmorMaterial p_41091_, EquipmentSlot p_41092_, Item.Properties p_41093_)
+    public DyeableWoolArmorItem(ArmorMaterial p_41091_, ArmorItem.Type type, Item.Properties p_41093_)
     {
-        super(p_41091_, p_41092_, p_41093_);
+        super(p_41091_, type, p_41093_);
     }
 }

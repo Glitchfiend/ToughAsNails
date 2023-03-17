@@ -6,6 +6,7 @@
   "mixins": [
   ],
   "client": [
+    "client.MixinGui",
     "client.MixinLocalPlayer"
   ],
   "injectors": {

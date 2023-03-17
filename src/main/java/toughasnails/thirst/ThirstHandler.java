@@ -112,7 +112,7 @@ public class ThirstHandler
             {
                 if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL)
                 {
-                    player.hurt(DamageSource.STARVE, 1.0F);
+                    player.hurt(player.damageSources().starve(), 1.0F);
                 }
 
                 thirst.setTickTimer(0);

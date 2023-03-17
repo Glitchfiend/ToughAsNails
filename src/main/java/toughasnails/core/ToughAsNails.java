@@ -138,7 +138,7 @@ public class ToughAsNails
         {
             builder.icon(() -> new ItemStack(TANItems.TAN_ICON.get()))
                 .title(Component.translatable("itemGroup.toughasnails"))
-                .displayItems((featureFlags, output, hasOp) -> {
+                .displayItems((itemDisplayParameters, output) -> {
                     // Add items
                     for (Field field : TANItems.class.getFields())
                     {

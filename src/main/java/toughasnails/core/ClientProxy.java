@@ -1,15 +1,7 @@
 package toughasnails.core;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.level.FoliageColor;
-import toughasnails.api.block.TANBlocks;
-import toughasnails.api.item.TANItems;
-import toughasnails.item.DyeableWoolItem;
-import toughasnails.item.LeafArmorItem;
 
 import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
 import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;

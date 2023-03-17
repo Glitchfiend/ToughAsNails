@@ -5,6 +5,7 @@
 package toughasnails.crafting;
 
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -42,7 +43,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
     }
 
     @Override
-    public ItemStack assemble(Container inv)
+    public ItemStack assemble(Container inv, RegistryAccess registryAccess)
     {
         return this.result.copy();
     }
@@ -54,7 +55,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
     }
 
     @Override
-    public ItemStack getResultItem()
+    public ItemStack getResultItem(RegistryAccess registryAccess)
     {
         return this.result;
     }

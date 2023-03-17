@@ -288,7 +288,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
             if (ModList.get().isLoaded("sereneseasons"))
             {
-                if (!SeasonHooks.warmEnoughToRainHook(biome, pos, player.level))
+                if (!SeasonHooks.warmEnoughToRainSeasonal(player.level, biome, pos))
                     current = current.increment(TemperatureConfig.snowTemperatureChange.get());
             }
             else if (biome.value().coldEnoughToSnow(pos))
