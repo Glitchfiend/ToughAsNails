@@ -11,7 +11,7 @@
   "effect.toughasnails.thirst": "Жажда",
   "enchantment.toughasnails.thermal_tuning": "Терморегуляция",
   
-  "block.toughasnails.rain_collector": "Дождесборник"
+  "block.toughasnails.rain_collector": "Дождесборник",
   "block.toughasnails.water_purifier": "Водоочиститель",
   
   "item.toughasnails.apple_juice": "Яблочный сок",
@@ -24,16 +24,16 @@
   "item.toughasnails.leaf_boots": "Сапоги из листьев",
   "item.toughasnails.leaf_chestplate": "Пончо из листьев",
   "item.toughasnails.leaf_helmet": "Вуаль из листьев",
-  "item.toughasnails.leaf_leggings": "Штаны из листьев"
-  "item.toughasnails.melon_juice": "Арбузный сок"
-  "item.toughasnails.pumpkin_juice": "Тыквенный сок"
+  "item.toughasnails.leaf_leggings": "Штаны из листьев",
+  "item.toughasnails.melon_juice": "Арбузный сок",
+  "item.toughasnails.pumpkin_juice": "Тыквенный сок",
   "item.toughasnails.purified_water_bottle": "Бутылка чистой воды",
   "item.toughasnails.purified_water_canteen": "Фляга с чистой водой",
-  "item.toughasnails.sweet_berry_juice": "Сок из сладких ягод"
+  "item.toughasnails.sweet_berry_juice": "Сок из сладких ягод",
   "item.toughasnails.tan_icon": "TAN Icon",
   "item.toughasnails.water_canteen": "Фляга с водой",
-  "item.toughasnails.wool_boots": "Шерстяные ботинки"
-  "item.toughasnails.wool_chestplate": "Шерстяная куртка"
+  "item.toughasnails.wool_boots": "Шерстяные ботинки",
+  "item.toughasnails.wool_chestplate": "Шерстяная куртка",
   "item.toughasnails.wool_helmet": "Шерстяной капюшон",
   "item.toughasnails.wool_leggings": "Шерстяные штаны",
   
@@ -41,7 +41,7 @@
   "item.minecraft.lingering_potion.effect.long_ice_resistance": "Туманное зелье лёдостойкости",
   "item.minecraft.potion.effect.ice_resistance": "Зелье лёдостойкости",
   "item.minecraft.potion.effect.long_ice_resistance": "Зелье лёдостойкости",
-  "item.minecraft.splash_potion.effect.ice_resistance": "Взрывное зелье лёдостойкости"
+  "item.minecraft.splash_potion.effect.ice_resistance": "Взрывное зелье лёдостойкости",
   "item.minecraft.splash_potion.effect.long_ice_resistance": "Взрывное зелье лёдостойкости",
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Стрела лёдостойкости",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стрела лёдостойкости"
