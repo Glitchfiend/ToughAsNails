@@ -4,14 +4,11 @@
  ******************************************************************************/
 package toughasnails.client.handler;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -106,11 +103,9 @@ public class TooltipHandler
         }
 
         @Override
-        public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer)
+        public void renderImage(Font font, int x, int y, GuiGraphics gui)
         {
-            poseStack.pushPose();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, ThirstOverlayHandler.OVERLAY);
+            gui.pose().pushPose();
 
             for (int i = 0; i < Mth.ceil(this.amount / 2.0F); i++)
             {
@@ -121,20 +116,20 @@ public class TooltipHandler
 
                 // Draw the background of each thirst droplet
                 // Args: poseStack, x, y, u, v, width, height, texWidth, texHeight
-                GuiComponent.blit(poseStack, startX, startY, 9, 32, 9, 9, 256, 256);
+                gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 9, 32, 9, 9, 256, 256);
 
                 // Draw a full droplet
                 if (this.amount > dropletHalf)
                 {
-                    GuiComponent.blit(poseStack, startX, startY, 4 * 9, 32, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 4 * 9, 32, 9, 9, 256, 256);
                 }
                 else if (this.amount == dropletHalf) // Draw a half droplet
                 {
-                    GuiComponent.blit(poseStack, startX, startY, 9, 32 + 9, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 9, 32 + 9, 9, 9, 256, 256);
                 }
             }
 
-            poseStack.popPose();
+            gui.pose().popPose();
         }
     }
 }

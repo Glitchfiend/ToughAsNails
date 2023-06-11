@@ -56,7 +56,7 @@ public class TemperatureHandler
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getEntity().level.isClientSide())
+        if (event.getEntity().level().isClientSide())
             return;
 
         syncTemperature((ServerPlayer)event.getEntity());
@@ -65,7 +65,7 @@ public class TemperatureHandler
     @SubscribeEvent
     public void onPlayerCloned(PlayerEvent.Clone event)
     {
-        if (event.getEntity().level.isClientSide())
+        if (event.getEntity().level().isClientSide())
             return;
 
         syncTemperature((ServerPlayer)event.getEntity());
@@ -95,7 +95,7 @@ public class TemperatureHandler
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-        if (!ServerConfig.enableTemperature.get() || event.player.level.isClientSide())
+        if (!ServerConfig.enableTemperature.get() || event.player.level().isClientSide())
             return;
 
         ServerPlayer player = (ServerPlayer)event.player;
@@ -109,7 +109,7 @@ public class TemperatureHandler
         {
             int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
-            TemperatureLevel positionalTargetLevel = TemperatureHelper.getTemperatureAtPos(player.getLevel(), player.blockPosition());
+            TemperatureLevel positionalTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
             TemperatureLevel newTargetLevel = positionalTargetLevel;
 
             for (IPlayerTemperatureModifier modifier : playerModifiers)
@@ -242,7 +242,7 @@ public class TemperatureHandler
 
     protected void tryAddHeatExhaustion(ServerPlayer player)
     {
-        if (!player.level.getBlockState(player.getOnPos()).isAir())
+        if (!player.level().getBlockState(player.getOnPos()).isAir())
         {
             int ticks = TemperatureHelper.getTicksHyperthermic(player);
             if (ticks > 0)

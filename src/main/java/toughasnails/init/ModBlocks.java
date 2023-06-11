@@ -8,8 +8,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.block.RainCollectorBlock;
@@ -27,8 +26,8 @@ public class ModBlocks
 
     private static void registerBlocks()
     {
-        TANBlocks.RAIN_COLLECTOR = register("rain_collector", () -> new RainCollectorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
-        TANBlocks.WATER_PURIFIER = register("water_purifier", () -> new WaterPurifierBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
+        TANBlocks.RAIN_COLLECTOR = register("rain_collector", () -> new RainCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
+        TANBlocks.WATER_PURIFIER = register("water_purifier", () -> new WaterPurifierBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
     }
 
     public static RegistryObject<Block> register(String name, Supplier<Block> block)

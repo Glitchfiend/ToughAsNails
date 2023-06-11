@@ -4,15 +4,12 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.ScreenUtils;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
@@ -45,7 +42,7 @@ public class ThirstOverlayHandler
         }
     }
 
-    private static void renderThirst(ForgeGui gui, PoseStack mStack, float partialTicks, int width, int height)
+    private static void renderThirst(ForgeGui forgeGui, GuiGraphics guiGraphics, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -64,14 +61,12 @@ public class ThirstOverlayHandler
 
         if (minecraft.gameMode.getPlayerMode().isSurvival())
         {
-            RenderSystem.setShaderTexture(0, OVERLAY);
-            drawThirst(mStack, width, height, thirstLevel, thirstHydrationLevel);
-            gui.rightHeight += 10;
-            RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
+            drawThirst(guiGraphics, width, height, thirstLevel, thirstHydrationLevel);
+            forgeGui.rightHeight += 10;
         }
     }
 
-    private static void drawThirst(PoseStack matrixStack, int width, int height, int thirstLevel, float thirstHydrationLevel)
+    private static void drawThirst(GuiGraphics gui, int width, int height, int thirstLevel, float thirstHydrationLevel)
     {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
@@ -101,16 +96,16 @@ public class ThirstOverlayHandler
             }
 
             // Draw the background of each thirst droplet
-            ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, backgroundU, 32, 9, 9, 9);
+            gui.blit(OVERLAY, startX, startY, backgroundU, 32, 9, 9);
 
             // Draw a full droplet
             if (thirstLevel > dropletHalf)
             {
-                ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 9);
+                gui.blit(OVERLAY, startX, startY, (iconIndex + 4) * 9, 32, 9, 9);
             }
             else if (thirstLevel == dropletHalf) // Draw a half droplet
             {
-                ScreenUtils.drawTexturedModalRect(matrixStack, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 9);
+                gui.blit(OVERLAY, startX, startY, (iconIndex + 5) * 9, 32, 9, 9);
             }
         }
     }
@@ -122,13 +117,13 @@ public class ThirstOverlayHandler
         @SubscribeEvent
         public static void registerOverlays(RegisterGuiOverlaysEvent event)
         {
-            event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "thirst_level", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
+            event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "thirst_level", (forgeGui, guiGraphics, partialTick, screenWidth, screenHeight) ->
             {
                 Minecraft minecraft = Minecraft.getInstance();
-                if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
+                if (!minecraft.options.hideGui && forgeGui.shouldDrawSurvivalElements())
                 {
-                    gui.setupOverlayRenderState(true, false);
-                    renderThirst(gui, poseStack, partialTick, screenWidth, screenHeight);
+                    forgeGui.setupOverlayRenderState(true, false);
+                    renderThirst(forgeGui, guiGraphics, partialTick, screenWidth, screenHeight);
                 }
             });
         }

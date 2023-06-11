@@ -299,7 +299,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     public void setItem(int index, ItemStack stack)
     {
         ItemStack currentStack = this.items.get(index);
-        boolean sameItem = !stack.isEmpty() && stack.sameItem(currentStack) && ItemStack.tagMatches(stack, currentStack);
+        boolean sameItem = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, currentStack);
         this.items.set(index, stack);
 
         if (stack.getCount() > this.getMaxStackSize())
@@ -357,7 +357,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                 return true;
 
             // The item can't be filtered if the existing item in the result slot isn't the same as this
-            if (!currentResult.sameItem(recipeResult))
+            if (!ItemStack.isSameItem(currentResult, recipeResult))
                 return false;
 
             if (currentResult.getCount() + recipeResult.getCount() <= this.getMaxStackSize() && currentResult.getCount() + recipeResult.getCount() <= currentResult.getMaxStackSize())

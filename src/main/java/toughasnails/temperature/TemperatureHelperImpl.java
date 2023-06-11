@@ -276,19 +276,19 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
     {
-        Level level = player.level;
+        Level level = player.level();
         BlockPos pos = player.blockPosition();
 
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
         if (player.isInWaterOrRain() || level.getFluidState(pos).is(FluidTags.WATER) || level.getFluidState(pos.below()).is(FluidTags.WATER)) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
-        if (player.level.isRaining() && player.level.canSeeSky(pos))
+        if (player.level().isRaining() && player.level().canSeeSky(pos))
         {
-            Holder<Biome> biome = player.level.getBiome(pos);
+            Holder<Biome> biome = player.level().getBiome(pos);
 
             if (ModList.get().isLoaded("sereneseasons"))
             {
-                if (!SeasonHooks.warmEnoughToRainSeasonal(player.level, biome, pos))
+                if (!SeasonHooks.warmEnoughToRainSeasonal(player.level(), biome, pos))
                     current = current.increment(TemperatureConfig.snowTemperatureChange.get());
             }
             else if (biome.value().coldEnoughToSnow(pos))

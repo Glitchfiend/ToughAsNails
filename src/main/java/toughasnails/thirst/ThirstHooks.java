@@ -27,7 +27,7 @@ public class ThirstHooks
 
     public static void doFoodDataTick(FoodData data, Player player)
     {
-        Difficulty difficulty = player.level.getDifficulty();
+        Difficulty difficulty = player.level().getDifficulty();
         IThirst thirst = ThirstHelper.getThirst(player);
 
         data.lastFoodLevel = data.foodLevel;
@@ -46,7 +46,7 @@ public class ThirstHooks
             }
         }
 
-        boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
+        boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 
         if (naturalRegen && data.saturationLevel > 0.0F && thirst.getHydration() > 0.0F && player.isHurt() && data.foodLevel >= 20 && thirst.getThirst() >= 20)
         {
@@ -102,7 +102,7 @@ public class ThirstHooks
 
             if (player.isSwimming())
             {
-                if (!player.isOnGround() && !player.input.shiftKeyDown && !sprintingAllowable || !player.isInWater())
+                if (!player.onGround() && !player.input.shiftKeyDown && !sprintingAllowable || !player.isInWater())
                 {
                     player.setSprinting(false);
                 }

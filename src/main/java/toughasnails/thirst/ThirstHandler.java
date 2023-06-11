@@ -70,7 +70,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getEntity().level.isClientSide())
+        if (event.getEntity().level().isClientSide())
             return;
 
         syncThirst((ServerPlayer)event.getEntity());
@@ -79,12 +79,12 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-        if (!ServerConfig.enableThirst.get() || event.player.level.isClientSide())
+        if (!ServerConfig.enableThirst.get() || event.player.level().isClientSide())
             return;
 
         ServerPlayer player = (ServerPlayer)event.player;
         IThirst thirst = ThirstHelper.getThirst(player);
-        Difficulty difficulty = player.level.getDifficulty();
+        Difficulty difficulty = player.level().getDifficulty();
         double exhaustionThreshold = ThirstConfig.thirstExhaustionThreshold.get();
 
         if (thirst.getExhaustion() > exhaustionThreshold)
@@ -124,7 +124,7 @@ public class ThirstHandler
         }
 
         // Increment thirst if on peaceful mode
-        if (difficulty == Difficulty.PEACEFUL && player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION))
+        if (difficulty == Difficulty.PEACEFUL && player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION))
         {
             if (thirst.isThirsty() && player.tickCount % 10 == 0)
             {
@@ -150,7 +150,7 @@ public class ThirstHandler
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ServerConfig.enableThirst.get() || !(event.getEntity() instanceof Player) || event.getEntity().level.isClientSide())
+        if (!ServerConfig.enableThirst.get() || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
             return;
 
         Player player = (Player)event.getEntity();
@@ -188,7 +188,7 @@ public class ThirstHandler
             thirst.addThirst(drink_thirst);
             thirst.addHydration(drink_hydration);
 
-            if (player.level.random.nextFloat() < drink_poison_chance)
+            if (player.level().random.nextFloat() < drink_poison_chance)
             {
                 player.addEffect(new MobEffectInstance(TANEffects.THIRST.get(), 600));
             }
@@ -200,7 +200,7 @@ public class ThirstHandler
     public void onPlayerInteractItem(PlayerInteractEvent.RightClickItem event)
     {
         Player player = event.getEntity();
-        Level world = player.level;
+        Level world = player.level();
         InteractionHand hand = event.getHand();
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
@@ -223,7 +223,7 @@ public class ThirstHandler
         // Play the filling sound
         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-        ResourceKey<Biome> biome = player.level.getBiome(pos).unwrapKey().orElse(Biomes.PLAINS);
+        ResourceKey<Biome> biome = player.level().getBiome(pos).unwrapKey().orElse(Biomes.PLAINS);
         ItemStack filledStack;
 
         // Set the filled stack based on the biome's water type
@@ -291,13 +291,13 @@ public class ThirstHandler
 
     private static boolean canHandDrinkInWorld(Player player, InteractionHand hand)
     {
-        return InteractionHand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level.isClientSide() && inWorldDrinkTimer <= 0;
+        return InteractionHand.MAIN_HAND == hand && player.getMainHandItem().isEmpty() && player.isCrouching() && ThirstHelper.getThirst(player).getThirst() < 20 && player.level().isClientSide() && inWorldDrinkTimer <= 0;
     }
 
     private static void tryDrinkWaterInWorld(Player player)
     {
-        Level world = player.level;
-        BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.SOURCE_ONLY);
+        Level world = player.level();
+        BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.SOURCE_ONLY);
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK)
         {

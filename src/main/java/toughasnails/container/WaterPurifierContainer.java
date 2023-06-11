@@ -38,7 +38,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
         super(TANContainerTypes.WATER_PURIFIER.get(), id);
         this.container = container;
         this.data = data;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
 
         // Add input item slot
         this.addSlot(new Slot(container, 0, 56, 17));

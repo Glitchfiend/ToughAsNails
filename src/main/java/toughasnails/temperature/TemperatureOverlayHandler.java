@@ -7,7 +7,7 @@ package toughasnails.temperature;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,7 +47,7 @@ public class TemperatureOverlayHandler
         }
     }
 
-    private static void renderTemperature(ForgeGui gui, PoseStack mStack, float partialTicks, int width, int height)
+    private static void renderTemperature(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -63,21 +63,19 @@ public class TemperatureOverlayHandler
 
         if (minecraft.gameMode.getPlayerMode().isSurvival())
         {
-            RenderSystem.setShaderTexture(0, OVERLAY);
-            drawTemperature(mStack, width, height, temperature);
-            RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
+            drawTemperature(guiGraphics, width, height, temperature);
         }
     }
 
-    private static void renderHyperthermia(ForgeGui gui, PoseStack pStack)
+    private static void renderHyperthermia(ForgeGui gui, GuiGraphics guiGraphics)
     {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (TemperatureHelper.getTicksHyperthermic(player) > 0)
-            gui.renderTextureOverlay(pStack, HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
+            gui.renderTextureOverlay(guiGraphics, HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
     }
 
-    private static void drawTemperature(PoseStack matrixStack, int width, int height, TemperatureLevel temperature)
+    private static void drawTemperature(GuiGraphics gui, int width, int height, TemperatureLevel temperature)
     {
         int left = width / 2 - 8;
         int top = height - 52;
@@ -111,7 +109,7 @@ public class TemperatureOverlayHandler
         if (flashCounter > updateCounter)
             v += 16;
 
-        ScreenUtils.drawTexturedModalRect(matrixStack, left, top, iconIndex, v, 16, 16, 9);
+        gui.blit(OVERLAY, left, top, iconIndex, v, 16, 16);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

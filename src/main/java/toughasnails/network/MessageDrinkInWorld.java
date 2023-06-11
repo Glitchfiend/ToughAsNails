@@ -47,7 +47,7 @@ public class MessageDrinkInWorld
             context.get().enqueueWork(() ->
             {
                 ServerPlayer player = context.get().getSender();
-                Level world = player.level;
+                Level world = player.level();
                 IThirst thirst = ThirstHelper.getThirst(player);
 
                 // Whilst we already checked on the client, check again to be sure
@@ -56,9 +56,9 @@ public class MessageDrinkInWorld
                     thirst.addThirst(ThirstConfig.handDrinkingThirst.get());
                     thirst.addHydration(ThirstConfig.handDrinkingHydration.get().floatValue());
 
-                    ResourceKey<Biome> biome = player.level.getBiome(packet.pos).unwrapKey().orElse(Biomes.PLAINS);
+                    ResourceKey<Biome> biome = player.level().getBiome(packet.pos).unwrapKey().orElse(Biomes.PLAINS);
 
-                    if (player.level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
+                    if (player.level().random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {
                         player.addEffect(new MobEffectInstance(TANEffects.THIRST.get(), 600));
                     }

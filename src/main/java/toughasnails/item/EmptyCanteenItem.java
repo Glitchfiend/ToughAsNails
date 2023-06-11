@@ -67,7 +67,7 @@ public class EmptyCanteenItem extends Item
                     // Fill the canteen with water in the world
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-                    Holder<Biome> biome = player.level.getBiome(player.blockPosition());
+                    Holder<Biome> biome = player.level().getBiome(player.blockPosition());
                     Item canteenItem;
 
                     switch (ThirstConfig.getBiomeWaterType(biome.unwrapKey().orElse(Biomes.PLAINS)))
