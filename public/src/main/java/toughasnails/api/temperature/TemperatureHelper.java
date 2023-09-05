@@ -109,6 +109,15 @@ public class TemperatureHelper
     }
 
     /**
+     * Register a proximity temperature modifier.
+     * @param modifier the modifier.
+     */
+    public static void registerProximityBlockModifier(IProximityBlockModifier modifier)
+    {
+        Impl.INSTANCE.registerProximityBlockModifier(modifier);
+    }
+
+    /**
      * Checks whether temperature is enabled.
      * @return whether temperature is enabled.
      */
@@ -133,6 +142,7 @@ public class TemperatureHelper
             int getTicksHyperthermic(Player player);
             void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier);
             void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier);
+            void registerProximityBlockModifier(IProximityBlockModifier modifier);
             boolean isTemperatureEnabled();
         }
     }

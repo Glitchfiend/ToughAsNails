@@ -20,20 +20,18 @@ import sereneseasons.season.SeasonHooks;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
+import toughasnails.api.temperature.IProximityBlockModifier.Type;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier);
+    protected static List<IProximityBlockModifier> proximityModifiers = new ArrayList<>();
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
 
     @Override
@@ -108,6 +106,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     public void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier)
     {
         positionalModifiers.add(modifier);
+    }
+
+    @Override
+    public void registerProximityBlockModifier(IProximityBlockModifier modifier)
+    {
+        proximityModifiers.add(modifier);
     }
 
     private static TemperatureLevel getBiomeTemperatureLevel(Level level, BlockPos pos)
@@ -271,6 +275,22 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         else if (state.is(ModTags.Blocks.COOLING_BLOCKS))
         {
             cooling.add(pos);
+        }
+        else
+        {
+            for(IProximityBlockModifier modifier : proximityModifiers)
+            {
+                Type sourceType = modifier.getProximityType(level, pos, state);
+
+                if(sourceType == Type.HEATING)
+                {
+                    heating.add(pos);
+                }
+                else if(sourceType == Type.COOLING)
+                {
+                    cooling.add(pos);
+                }
+            }
         }
     }
 
