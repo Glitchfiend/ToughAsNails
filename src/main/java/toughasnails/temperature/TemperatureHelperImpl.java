@@ -331,7 +331,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             // Looks scuffed but should actually be safe, cap is always attached to player.
             ITemperature cap = player.getCapability(TANCapabilities.TEMPERATURE).orElse(null);
 
-            if(cap.getDryTicks() < TemperatureConfig.wetTicks.get())
+            if(cap != null && cap.getDryTicks() < TemperatureConfig.wetTicks.get())
                 current.increment(TemperatureConfig.wetTemperatureChange.get());
         }
 
