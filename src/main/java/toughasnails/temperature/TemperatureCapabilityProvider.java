@@ -47,6 +47,7 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
             compound.putInt("changeDelayTicks", instance.getChangeDelayTicks());
             compound.putInt("hyperthermiaTicks", instance.getHyperthermiaTicks());
             compound.putInt("extremityDelayTicks", instance.getExtremityDelayTicks());
+            compound.putInt("dryTicks", instance.getDryTicks());
         }
         else
         {
@@ -56,6 +57,7 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
             compound.putInt("changeDelayTicks", 0);
             compound.putInt("hyperthermiaTicks", 0);
             compound.putInt("extremityDelayTicks", 0);
+            compound.putInt("dryTicks", 0);
         }
 
         return compound;
@@ -82,6 +84,7 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
                 instance.setChangeDelayTicks(0);
                 instance.setHyperthermiaTicks(0);
                 instance.setExtremityDelayTicks(0);
+                instance.setDryTicks(0);
             }
         }
     }

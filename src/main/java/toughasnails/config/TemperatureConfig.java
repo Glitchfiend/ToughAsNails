@@ -33,6 +33,7 @@ public class TemperatureConfig
     public static ForgeConfigSpec.IntValue powderSnowTemperatureChange;
     public static ForgeConfigSpec.IntValue wetTemperatureChange;
     public static ForgeConfigSpec.IntValue snowTemperatureChange;
+    public static ForgeConfigSpec.IntValue wetTicks;
 
     static
     {
@@ -60,6 +61,7 @@ public class TemperatureConfig
         powderSnowTemperatureChange = BUILDER.comment("Amount to change the temperature by when in powdered snow.").defineInRange("powdered_snow_temperature_change", -2, -4, 4);
         wetTemperatureChange = BUILDER.comment("Amount to change the temperature by when wet.").defineInRange("wet_temperature_change", -1, -4, 4);
         snowTemperatureChange = BUILDER.comment("Amount to change the temperature by when snowing.").defineInRange("snow_temperature_change", -1, -4, 4);
+        wetTicks = BUILDER.comment("Number of ticks a player stays wet for after touching water, rain or snow.").defineInRange("wet_ticks", 40, 0, Integer.MAX_VALUE);
         BUILDER.pop();
         BUILDER.push("time");
         nightTemperatureChange = BUILDER.comment("Amount to change the temperature at night when the original temperature is not hot.").defineInRange("night_temperature_change", -1, -4, 4);

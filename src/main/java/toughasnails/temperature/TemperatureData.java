@@ -15,6 +15,7 @@ public class TemperatureData implements ITemperature
     private TemperatureLevel targetLevel = DEFAULT_LEVEL;
     private int positionalChangeDelayTicks;
     private int ticksHyperthermic;
+    private int ticksDry;
     private int extremityDelayTicks;
 
     private TemperatureLevel lastTemperature = DEFAULT_LEVEL;
@@ -36,6 +37,11 @@ public class TemperatureData implements ITemperature
     public int getExtremityDelayTicks()
     {
         return this.extremityDelayTicks;
+    }
+
+    @Override
+    public int getDryTicks() {
+        return ticksDry;
     }
 
     @Override
@@ -78,6 +84,11 @@ public class TemperatureData implements ITemperature
     public void setExtremityDelayTicks(int ticks)
     {
         this.extremityDelayTicks = ticks;
+    }
+
+    @Override
+    public void setDryTicks(int ticks) {
+        ticksDry = ticks;
     }
 
     @Override

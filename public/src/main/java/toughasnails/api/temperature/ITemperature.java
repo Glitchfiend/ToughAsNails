@@ -25,6 +25,12 @@ public interface ITemperature
     int getExtremityDelayTicks();
 
     /**
+     * Get the number of ticks since water was touched.
+     * @return number of ticks.
+     */
+    int getDryTicks();
+
+    /**
      * Get the last temperature level.
      * @return temperature level.
      */
@@ -65,6 +71,13 @@ public interface ITemperature
      * @param ticks number of ticks.
      */
     void setExtremityDelayTicks(int ticks);
+
+    /**
+     * Set the number of ticks since water was touched.
+     * @return number of ticks.
+     */
+    void setDryTicks(int ticks);
+
 
     /**
      * Set the last temperature level.

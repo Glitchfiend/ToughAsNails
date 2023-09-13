@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -301,18 +302,37 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
         if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
         if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
-        if (player.isInWaterOrRain() || level.getFluidState(pos).is(FluidTags.WATER) || level.getFluidState(pos.below()).is(FluidTags.WATER)) current = current.increment(TemperatureConfig.wetTemperatureChange.get());
-        if (player.level().isRaining() && player.level().canSeeSky(pos))
-        {
+        if (player.level().isRaining() && player.level().canSeeSky(pos)) {
+            player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
             Holder<Biome> biome = player.level().getBiome(pos);
 
             if (ModList.get().isLoaded("sereneseasons"))
             {
                 if (!SeasonHooks.warmEnoughToRainSeasonal(player.level(), biome, pos))
                     current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+                else
+                    current.increment(TemperatureConfig.wetTemperatureChange.get());
             }
-            else if (biome.value().coldEnoughToSnow(pos))
-                current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+            else
+            {
+                if (biome.value().coldEnoughToSnow(pos))
+                    current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+                else
+                    current.increment(TemperatureConfig.wetTemperatureChange.get());
+            }
+        }
+        else if(!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
+        {
+            player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
+            current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+        }
+        else
+        {
+            // Looks scuffed but should actually be safe, cap is always attached to player.
+            ITemperature cap = player.getCapability(TANCapabilities.TEMPERATURE).orElse(null);
+
+            if(cap.getDryTicks() < TemperatureConfig.wetTicks.get())
+                current.increment(TemperatureConfig.wetTemperatureChange.get());
         }
 
         return current;

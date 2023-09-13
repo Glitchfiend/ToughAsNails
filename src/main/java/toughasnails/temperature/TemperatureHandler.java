@@ -103,6 +103,8 @@ public class TemperatureHandler
 
         // Decrement the positional change delay ticks
         data.setChangeDelayTicks(Math.max(0, data.getChangeDelayTicks() - 1));
+        // Increment dry ticks
+        data.setDryTicks(data.getDryTicks() + 1);
 
         // Use the positional temperature as the new target level if the player doesn't have climate clemency active
         if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY.get()))
