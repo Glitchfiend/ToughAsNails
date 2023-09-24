@@ -112,6 +112,8 @@ public class ModTags
         public static final TagKey<Biome> NEUTRAL_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "neutral_biomes"));
         public static final TagKey<Biome> WARM_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "warm_biomes"));
         public static final TagKey<Biome> HOT_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "hot_biomes"));
+        public static final TagKey<Biome> DIRTY_WATER_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "dirty_water_biomes"));
+        public static final TagKey<Biome> PURIFIED_WATER_BIOMES = create(new ResourceLocation(ToughAsNails.MOD_ID, "purified_water_biomes"));
 
         private static TagKey<Biome> create(ResourceLocation loc)
         {

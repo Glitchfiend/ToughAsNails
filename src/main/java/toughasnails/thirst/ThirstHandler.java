@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -223,24 +224,21 @@ public class ThirstHandler
         // Play the filling sound
         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-        ResourceKey<Biome> biome = player.level().getBiome(pos).unwrapKey().orElse(Biomes.PLAINS);
+        Holder<Biome> biome = player.level().getBiome(pos);
         ItemStack filledStack;
 
         // Set the filled stack based on the biome's water type
-        switch (ThirstConfig.getBiomeWaterType(biome))
+        if (biome.is(ModTags.Biomes.DIRTY_WATER_BIOMES))
         {
-            case PURIFIED:
-                filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get());
-                break;
-
-            case DIRTY:
-                filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get());
-                break;
-
-            case NORMAL:
-            default:
-                filledStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-                break;
+            filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get());
+        }
+        else if (biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
+        {
+            filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get());
+        }
+        else
+        {
+            filledStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
         }
 
         player.awardStat(Stats.ITEM_USED.get(item));

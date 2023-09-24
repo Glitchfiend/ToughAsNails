@@ -17,6 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -28,6 +31,7 @@ import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.RainCollectorBlock;
 import toughasnails.config.ThirstConfig;
+import toughasnails.init.ModTags;
 
 public class EmptyCanteenItem extends Item
 {
@@ -70,20 +74,17 @@ public class EmptyCanteenItem extends Item
                     Holder<Biome> biome = player.level().getBiome(player.blockPosition());
                     Item canteenItem;
 
-                    switch (ThirstConfig.getBiomeWaterType(biome.unwrapKey().orElse(Biomes.PLAINS)))
+                    if (biome.is(ModTags.Biomes.DIRTY_WATER_BIOMES))
                     {
-                        case PURIFIED:
-                            canteenItem = TANItems.PURIFIED_WATER_CANTEEN.get();
-                            break;
-
-                        case DIRTY:
-                            canteenItem = TANItems.DIRTY_WATER_CANTEEN.get();
-                            break;
-
-                        case NORMAL:
-                        default:
-                            canteenItem = TANItems.WATER_CANTEEN.get();
-                            break;
+                        canteenItem = TANItems.DIRTY_WATER_CANTEEN.get();
+                    }
+                    else if (biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
+                    {
+                        canteenItem = TANItems.PURIFIED_WATER_CANTEEN.get();
+                    }
+                    else
+                    {
+                        canteenItem = TANItems.WATER_CANTEEN.get();
                     }
 
                     return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());
