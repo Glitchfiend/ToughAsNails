@@ -7,6 +7,7 @@ package toughasnails.mixin.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,9 +18,9 @@ import toughasnails.temperature.TemperatureHooks;
 public abstract class MixinGui
 {
     @Inject(method="renderHeart", at=@At(value="HEAD"), cancellable = true)
-    public void onRenderHeart(GuiGraphics gui, Gui.HeartType heartType, int left, int top, int v, boolean isBlinking, boolean isHalf, CallbackInfo ci)
+    public void onRenderHeart(GuiGraphics gui, Gui.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf, CallbackInfo ci)
     {
-        TemperatureHooks.heartBlit(gui, left, top, heartType.getX(isHalf, isBlinking), v, 9, 9);
+        TemperatureHooks.heartBlit(gui, heartType, x, y, isHardcore, isBlinking, isHalf);
         ci.cancel();
     }
 }

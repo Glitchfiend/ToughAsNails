@@ -5,32 +5,32 @@
 package toughasnails.crafting;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
+import org.jetbrains.annotations.Nullable;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 
 public class WaterPurifierRecipe implements Recipe<Container>
 {
-    protected final ResourceLocation id;
     protected final StrictNBTIngredient ingredient;
     protected final ItemStack result;
     protected final int purifyTime;
 
-    public WaterPurifierRecipe(ResourceLocation id, StrictNBTIngredient ingredient, ItemStack result, int purifyTime)
+    public WaterPurifierRecipe(StrictNBTIngredient ingredient, ItemStack result, int purifyTime)
     {
-        this.id = id;
         this.ingredient = ingredient;
         this.result = result;
         this.purifyTime = purifyTime;
@@ -61,12 +61,6 @@ public class WaterPurifierRecipe implements Recipe<Container>
     }
 
     @Override
-    public ResourceLocation getId()
-    {
-        return this.id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer()
     {
         return TANRecipeSerializers.WATER_PURIFYING.get();
@@ -85,23 +79,31 @@ public class WaterPurifierRecipe implements Recipe<Container>
 
     public static class Serializer implements RecipeSerializer<WaterPurifierRecipe>
     {
-        @Override
-        public WaterPurifierRecipe fromJson(ResourceLocation recipeId, JsonObject json)
-        {
-            StrictNBTIngredient ingredient = StrictNBTIngredient.Serializer.INSTANCE.parse(GsonHelper.getAsJsonObject(json, "ingredient"));
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            int purifyTime = GsonHelper.getAsInt(json, "purifytime", 200);
-            return new WaterPurifierRecipe(recipeId, ingredient, result, purifyTime);
-        }
+        private static final Codec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.create((builder) -> {
+            return builder.group(StrictNBTIngredient.CODEC.fieldOf("ingredient").forGetter((p_296920_) -> {
+                return p_296920_.ingredient;
+            }), ItemStack.CODEC.fieldOf("result").forGetter((p_296923_) -> {
+                return p_296923_.result;
+            }), Codec.INT.fieldOf("purifytime").orElse(200).forGetter((p_296919_) -> {
+                return p_296919_.purifyTime;
+            })).apply(builder, WaterPurifierRecipe::new);
+        });
 
         @Override
-        public WaterPurifierRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
+        public WaterPurifierRecipe fromNetwork(FriendlyByteBuf buffer)
         {
             StrictNBTIngredient ingredient = (StrictNBTIngredient)Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
             int purifyTime = buffer.readInt();
-            return new WaterPurifierRecipe(recipeId, ingredient, result, purifyTime);
+            return new WaterPurifierRecipe(ingredient, result, purifyTime);
         }
+
+        @Override
+        public Codec<WaterPurifierRecipe> codec()
+        {
+            return CODEC;
+        }
+
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, WaterPurifierRecipe recipe)

@@ -143,7 +143,7 @@ public class ThirstHandler
     private static void syncThirst(ServerPlayer player)
     {
         IThirst thirst = ThirstHelper.getThirst(player);
-        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()));
+        PacketHandler.HANDLER.send(new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()), PacketDistributor.PLAYER.with(player));
     }
 
     // Replenish thirst after drinking from items in the config file
@@ -306,7 +306,7 @@ public class ThirstHandler
             if (ThirstHelper.canDrink(player, false) && world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 inWorldDrinkTimer = IN_WORLD_DRINK_COOLDOWN;
-                PacketHandler.HANDLER.send(PacketDistributor.SERVER.noArg(), new MessageDrinkInWorld(pos));
+                PacketHandler.HANDLER.send(new MessageDrinkInWorld(pos), PacketDistributor.SERVER.noArg());
                 player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);
                 player.swing(InteractionHand.MAIN_HAND);
             }

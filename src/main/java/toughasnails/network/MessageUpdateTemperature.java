@@ -9,8 +9,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
@@ -41,16 +41,16 @@ public class MessageUpdateTemperature
 
     public static class Handler
     {
-        public static void handle(final MessageUpdateTemperature packet, Supplier<NetworkEvent.Context> context)
+        public static void handle(final MessageUpdateTemperature packet, CustomPayloadEvent.Context context)
         {
-            context.get().enqueueWork(() ->
+            context.enqueueWork(() ->
             {
                 if (FMLEnvironment.dist != Dist.CLIENT)
                     return;
 
                 updateTemperature(packet.temperatureLevel, packet.hyperthermiaTicks);
             });
-            context.get().setPacketHandled(true);
+            context.setPacketHandled(true);
         }
 
         @OnlyIn(Dist.CLIENT)

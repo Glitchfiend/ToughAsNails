@@ -6,23 +6,20 @@ package toughasnails.network;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.SimpleChannel;
 import toughasnails.core.ToughAsNails;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class PacketHandler
 {
-    public static final String PROTOCOL_VERSION = Integer.toString(0);
-    public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
+    public static final int PROTOCOL_VERSION = 0;
+    public static final SimpleChannel HANDLER = ChannelBuilder
             .named(new ResourceLocation(ToughAsNails.MOD_ID, "main_channel"))
-            .clientAcceptedVersions(PROTOCOL_VERSION::equals)
-            .serverAcceptedVersions(PROTOCOL_VERSION::equals)
-            .networkProtocolVersion(() -> PROTOCOL_VERSION)
+            .networkProtocolVersion(PROTOCOL_VERSION)
             .simpleChannel();
     private static int nextFreeIndex;
 
@@ -33,8 +30,8 @@ public class PacketHandler
         registerMessage(MessageUpdateTemperature.class, MessageUpdateTemperature::encode, MessageUpdateTemperature::decode, MessageUpdateTemperature.Handler::handle);
     }
 
-    private static <T> void registerMessage(Class<T> type, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer)
+    private static <T> void registerMessage(Class<T> type, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, CustomPayloadEvent.Context> consumer)
     {
-        HANDLER.registerMessage(nextFreeIndex++, type, encoder, decoder, consumer);
+        HANDLER.messageBuilder(type).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
     }
 }

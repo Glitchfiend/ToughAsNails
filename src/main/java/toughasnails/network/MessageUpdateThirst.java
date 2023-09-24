@@ -5,16 +5,14 @@
 package toughasnails.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-
-import java.util.function.Supplier;
 
 public class MessageUpdateThirst
 {
@@ -40,16 +38,16 @@ public class MessageUpdateThirst
 
     public static class Handler
     {
-        public static void handle(final MessageUpdateThirst packet, Supplier<NetworkEvent.Context> context)
+        public static void handle(final MessageUpdateThirst packet, CustomPayloadEvent.Context context)
         {
-            context.get().enqueueWork(() ->
+            context.enqueueWork(() ->
             {
                 if (FMLEnvironment.dist != Dist.CLIENT)
                     return;
 
                 updateThirst(packet.thirstLevel, packet.hydrationLevel);
             });
-            context.get().setPacketHandled(true);
+            context.setPacketHandled(true);
         }
 
         @OnlyIn(Dist.CLIENT)

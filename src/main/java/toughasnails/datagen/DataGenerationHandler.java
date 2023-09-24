@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import toughasnails.core.ToughAsNails;
 import toughasnails.datagen.provider.TANBlockTagsProvider;
 import toughasnails.datagen.provider.TANDamageTypeTagsProvider;
+import toughasnails.datagen.provider.TANRecipeProvider;
 
 import java.util.Set;
 
@@ -33,6 +34,9 @@ public class DataGenerationHandler
         PackOutput output = generator.getPackOutput();
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(output, event.getLookupProvider(), REG_BUILDER, Set.of(ToughAsNails.MOD_ID)));
+
+        // Recipes
+        generator.addProvider(event.includeServer(), new TANRecipeProvider(output));
 
         // Tags
         generator.addProvider(event.includeServer(), new TANBlockTagsProvider(output, event.getLookupProvider(), existingFileHelper));

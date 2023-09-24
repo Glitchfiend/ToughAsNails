@@ -4,22 +4,20 @@
  ******************************************************************************/
 package toughasnails.network;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.config.ThirstConfig;
-
-import java.util.function.Supplier;
 
 public class MessageDrinkInWorld
 {
@@ -42,11 +40,11 @@ public class MessageDrinkInWorld
 
     public static class Handler
     {
-        public static void handle(final MessageDrinkInWorld packet, Supplier<NetworkEvent.Context> context)
+        public static void handle(final MessageDrinkInWorld packet, CustomPayloadEvent.Context context)
         {
-            context.get().enqueueWork(() ->
+            context.enqueueWork(() ->
             {
-                ServerPlayer player = context.get().getSender();
+                ServerPlayer player = context.getSender();
                 Level world = player.level();
                 IThirst thirst = ThirstHelper.getThirst(player);
 
@@ -64,7 +62,7 @@ public class MessageDrinkInWorld
                     }
                 }
             });
-            context.get().setPacketHandled(true);
+            context.setPacketHandled(true);
         }
     }
 }

@@ -226,7 +226,7 @@ public class TemperatureHandler
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
         temperature.setLastLevel(temperature.getLevel());
         temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
-        PacketHandler.HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new MessageUpdateTemperature(temperature.getLevel(), temperature.getHyperthermiaTicks()));
+        PacketHandler.HANDLER.send(new MessageUpdateTemperature(temperature.getLevel(), temperature.getHyperthermiaTicks()), PacketDistributor.PLAYER.with(player));
     }
 
     private static void removeHeatExhaustion(ServerPlayer player)
