@@ -1,10 +1,8 @@
 {
   "type": "toughasnails:water_purifying",
-  "ingredient": {
-    "stack": {
-      "Count": 1,
-      "id": "toughasnails:dirty_water_bottle"
-    }
+  "input": {
+    "Count": 1,
+    "id": "toughasnails:dirty_water_bottle"
   },
   "purifytime": 400,
   "result": {

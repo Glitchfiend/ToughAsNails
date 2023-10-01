@@ -32,7 +32,7 @@ public class ModCrafting
 
     private static void registerRecipeSerializers()
     {
-        TANRecipeSerializers.WATER_PURIFYING = registerSerializer("water_purifying", () -> new WaterPurifierRecipe.Serializer());
+        TANRecipeSerializers.WATER_PURIFYING = registerSerializer("water_purifying", WaterPurifierRecipe.Serializer::new);
 
         TANRecipeTypes.WATER_PURIFYING = registerRecipe("water_purifying", () -> new RecipeType<WaterPurifierRecipe>()
         {

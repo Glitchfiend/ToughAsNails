@@ -24,16 +24,16 @@ public class TANRecipeProvider extends RecipeProvider
     protected void buildRecipes(RecipeOutput output)
     {
         // Water bottle
-        waterPurifier(output, StrictNBTIngredient.of(new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get())), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), 400);
-        waterPurifier(output, StrictNBTIngredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER)), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get()), 200);
+        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get()), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), 400);
+        waterPurifier(output, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get()), 200);
 
         // Canteens
-        waterPurifier(output, StrictNBTIngredient.of(new ItemStack(TANItems.DIRTY_WATER_CANTEEN.get())), new ItemStack(TANItems.WATER_CANTEEN.get()), 400);
-        waterPurifier(output, StrictNBTIngredient.of(new ItemStack(TANItems.WATER_CANTEEN.get())), new ItemStack(TANItems.PURIFIED_WATER_CANTEEN.get()), 200);
+        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_CANTEEN.get()), new ItemStack(TANItems.WATER_CANTEEN.get()), 400);
+        waterPurifier(output, new ItemStack(TANItems.WATER_CANTEEN.get()), new ItemStack(TANItems.PURIFIED_WATER_CANTEEN.get()), 200);
     }
 
-    public static void waterPurifier(RecipeOutput output, StrictNBTIngredient ingredient, ItemStack result, int purifyTime)
+    public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
     {
-        WaterPurifierRecipeBuilder.waterPurifier(ingredient, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())));
+        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())));
     }
 }

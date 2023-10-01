@@ -25,13 +25,13 @@ import toughasnails.api.crafting.TANRecipeTypes;
 
 public class WaterPurifierRecipe implements Recipe<Container>
 {
-    protected final StrictNBTIngredient ingredient;
+    protected final ItemStack input;
     protected final ItemStack result;
     protected final int purifyTime;
 
-    public WaterPurifierRecipe(StrictNBTIngredient ingredient, ItemStack result, int purifyTime)
+    public WaterPurifierRecipe(ItemStack input, ItemStack result, int purifyTime)
     {
-        this.ingredient = ingredient;
+        this.input = input;
         this.result = result;
         this.purifyTime = purifyTime;
     }
@@ -39,7 +39,12 @@ public class WaterPurifierRecipe implements Recipe<Container>
     @Override
     public boolean matches(Container inv, Level worldIn)
     {
-        return this.ingredient.test(inv.getItem(0));
+        if (this.input == null)
+            return false;
+
+        ItemStack containerInput = inv.getItem(0);
+
+        return this.input.getItem() == containerInput.getItem() && this.input.getDamageValue() == containerInput.getDamageValue() && this.input.areShareTagsEqual(containerInput);
     }
 
     @Override
@@ -80,8 +85,8 @@ public class WaterPurifierRecipe implements Recipe<Container>
     public static class Serializer implements RecipeSerializer<WaterPurifierRecipe>
     {
         private static final Codec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.create((builder) -> {
-            return builder.group(StrictNBTIngredient.CODEC.fieldOf("ingredient").forGetter((p_296920_) -> {
-                return p_296920_.ingredient;
+            return builder.group(ItemStack.CODEC.fieldOf("input").forGetter((p_296920_) -> {
+                return p_296920_.input;
             }), ItemStack.CODEC.fieldOf("result").forGetter((p_296923_) -> {
                 return p_296923_.result;
             }), Codec.INT.fieldOf("purifytime").orElse(200).forGetter((p_296919_) -> {
@@ -92,10 +97,10 @@ public class WaterPurifierRecipe implements Recipe<Container>
         @Override
         public WaterPurifierRecipe fromNetwork(FriendlyByteBuf buffer)
         {
-            StrictNBTIngredient ingredient = (StrictNBTIngredient)Ingredient.fromNetwork(buffer);
+            ItemStack input = buffer.readItem();
             ItemStack result = buffer.readItem();
             int purifyTime = buffer.readInt();
-            return new WaterPurifierRecipe(ingredient, result, purifyTime);
+            return new WaterPurifierRecipe(input, result, purifyTime);
         }
 
         @Override
@@ -108,7 +113,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
         @Override
         public void toNetwork(FriendlyByteBuf buffer, WaterPurifierRecipe recipe)
         {
-            recipe.ingredient.toNetwork(buffer);
+            buffer.writeItem(recipe.input);
             buffer.writeItem(recipe.result);
             buffer.writeInt(recipe.purifyTime);
         }

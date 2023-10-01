@@ -1,12 +1,10 @@
 {
   "type": "toughasnails:water_purifying",
-  "ingredient": {
-    "stack": {
-      "Count": 1,
-      "id": "minecraft:potion",
-      "tag": {
-        "Potion": "minecraft:water"
-      }
+  "input": {
+    "Count": 1,
+    "id": "minecraft:potion",
+    "tag": {
+      "Potion": "minecraft:water"
     }
   },
   "purifytime": 200,
