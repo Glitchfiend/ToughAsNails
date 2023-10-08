@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.datagen.recipes.WaterPurifierRecipeBuilder;

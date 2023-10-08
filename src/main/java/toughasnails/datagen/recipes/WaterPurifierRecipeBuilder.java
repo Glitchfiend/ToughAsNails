@@ -9,7 +9,6 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import toughasnails.api.crafting.TANRecipeSerializers;
 
 public class WaterPurifierRecipeBuilder
