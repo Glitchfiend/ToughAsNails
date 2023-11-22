@@ -15,8 +15,6 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 
-import java.util.function.Supplier;
-
 public class MessageUpdateTemperature
 {
     public TemperatureLevel temperatureLevel;

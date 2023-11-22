@@ -5,7 +5,6 @@
 package toughasnails.init;
 
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.core.ToughAsNails;

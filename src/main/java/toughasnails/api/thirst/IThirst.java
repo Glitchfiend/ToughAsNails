@@ -80,7 +80,7 @@ public interface IThirst
 
     /**
      * Set whether the last hydration value was zero.
-     * @param val value.
+     * @param value value.
      */
     void setLastHydrationZero(boolean value);
 

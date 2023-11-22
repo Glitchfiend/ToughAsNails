@@ -10,7 +10,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.core.ToughAsNails;
 
 public class ThirstEffect extends MobEffect
 {

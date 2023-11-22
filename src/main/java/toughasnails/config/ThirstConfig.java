@@ -4,26 +4,11 @@
  ******************************************************************************/
 package toughasnails.config;
 
-import com.electronwill.nightconfig.core.Config;
-import com.electronwill.nightconfig.core.InMemoryFormat;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.registries.ForgeRegistries;
 import toughasnails.api.thirst.WaterType;
 import toughasnails.init.ModTags;
-
-import javax.annotation.Nullable;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ThirstConfig
 {

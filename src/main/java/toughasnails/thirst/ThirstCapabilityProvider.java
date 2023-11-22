@@ -12,7 +12,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
-import toughasnails.thirst.ThirstData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
