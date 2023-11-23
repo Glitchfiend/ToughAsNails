@@ -1,17 +1,50 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-
+  
   "container.toughasnails.water_purifier": "Su Arıtıcısı",
-  "effect.toughasnails.thirst": "Susama",
-
-  "item.toughasnails.tan_icon": "TAN Simgesi",
-  "item.toughasnails.empty_canteen": "Boş Matara",
-  "item.toughasnails.water_canteen": "Su Matarası",
-  "item.toughasnails.dirty_water_canteen": "Kirli Su Matarası",
-  "item.toughasnails.purified_water_canteen": "Arıtılmış Su Matarası",
-  "item.toughasnails.dirty_water_bottle": "Kirli Su Şişesi",
-  "item.toughasnails.purified_water_bottle": "Arıtılmış Su Şişesi",
-
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s ölümüne ısındı",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s,  %2$s'ten kaçmaya çalışırken ölümüne ısındı",
+  "desc.toughasnails.heating": "Isıtan",
+  "desc.toughasnails.cooling": "Soğutan",
+  
+  "effect.toughasnails.climate_clemency": "İklim Merhameti",
+  "effect.toughasnails.ice_resistance": "Buz Direnci",
+  "effect.toughasnails.thirst": "Susuzluk",
+  "enchantment.toughasnails.thermal_tuning": "Termal Ayar",
+  
   "block.toughasnails.rain_collector": "Yağmur Toplayıcısı",
-  "block.toughasnails.water_purifier": "Su Arıtıcısı"
+  "block.toughasnails.water_purifier": "Su Arıtıcısı",
+  
+  "item.toughasnails.apple_juice": "Elma Suyu",
+  "item.toughasnails.cactus_juice": "Kaktüs Suyu",
+  "item.toughasnails.chorus_fruit_juice": "Nakarat Meyvesi Suyu",
+  "item.toughasnails.dirty_water_bottle": "Kirli Su Şişesi",
+  "item.toughasnails.dirty_water_canteen": "Kirli Su Matarası",
+  "item.toughasnails.empty_canteen": "Boş Matara",
+  "item.toughasnails.glow_berry_juice": "Parlayan Meyve Suyu",
+  "item.toughasnails.leaf_boots": "Yaprak Çizme",
+  "item.toughasnails.leaf_chestplate": "Yaprak Panço",
+  "item.toughasnails.leaf_helmet": "Yaprak Duvak",
+  "item.toughasnails.leaf_leggings": "Yaprak Pantolon",
+  "item.toughasnails.melon_juice": "Karpuz Suyu",
+  "item.toughasnails.pumpkin_juice": "Bal Kabağı Suyu",
+  "item.toughasnails.purified_water_bottle": "Arıtılmış Su Şişesi",
+  "item.toughasnails.purified_water_canteen": "Arıtılmış Su Matarası",
+  "item.toughasnails.sweet_berry_juice": "Tatlı Orman Meyvesi Suyu",
+  "item.toughasnails.tan_icon": "TAN Simgesi",
+  "item.toughasnails.water_canteen": "Su Matarası",
+  "item.toughasnails.wool_boots": "Yün Çizme",
+  "item.toughasnails.wool_chestplate": "Yün Kaban",
+  "item.toughasnails.wool_helmet": "Yün Kapüşon",
+  "item.toughasnails.wool_leggings": "Yün Pantolon",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Kalıcı Buz Direnci İksiri",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Kalıcı Buz Direnci İksiri",
+  "item.minecraft.potion.effect.ice_resistance": "Buz Direnci İksiri",
+  "item.minecraft.potion.effect.long_ice_resistance": "Buz Direnci İksiri",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Patlayıcı Buz Direnci İksiri",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Patlayıcı Buz Direnci İksiri",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Buz Direnci Oku",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Buz Direnci Oku"
 }
