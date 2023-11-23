@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
+    "MixinFoodData",
+    "MixinPlayer"
   ],
   "client": [
     "client.MixinGui",
