@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -111,25 +112,15 @@ public class TemperatureHandler
         {
             int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
-            TemperatureLevel positionalTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
-            TemperatureLevel newTargetLevel = positionalTargetLevel;
-
-            for (IPlayerTemperatureModifier modifier : playerModifiers)
+            TemperatureLevel newTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
+            
+            // Apply modifiers in the configured order
+            for (BuiltInTemperatureModifier modifier : TemperatureConfig.getTemperatureModifierOrder())
             {
-                newTargetLevel = modifier.modify(player, newTargetLevel);
+                Tuple<TemperatureLevel, Integer> output = modifier.apply(player, newTargetLevel, changeDelay);
+                newTargetLevel = output.getA();
+                changeDelay = output.getB();
             }
-
-            if (newTargetLevel != positionalTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.playerTemperatureChangeDelay.get());
-
-            // Item modifier
-            TemperatureLevel itemTargetLevel = TemperatureHelperImpl.handheldModifier(player, newTargetLevel);
-            if (itemTargetLevel != newTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.handheldTemperatureChangeDelay.get());
-            newTargetLevel = itemTargetLevel;
-
-            // Armor modifier
-            TemperatureLevel armorTargetLevel = TemperatureHelperImpl.armorModifier(player, newTargetLevel);
-            if (armorTargetLevel != newTargetLevel) changeDelay = Math.min(changeDelay, TemperatureConfig.armorTemperatureChangeDelay.get());
-            newTargetLevel = armorTargetLevel;
 
             // If necessary, change the target level and reset the timer
             if (newTargetLevel != currentTargetLevel)

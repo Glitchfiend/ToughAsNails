@@ -4,7 +4,14 @@
  ******************************************************************************/
 package toughasnails.config;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
+import toughasnails.core.ToughAsNails;
+import toughasnails.temperature.BuiltInTemperatureModifier;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class TemperatureConfig
 {
@@ -34,6 +41,25 @@ public class TemperatureConfig
     public static ForgeConfigSpec.IntValue wetTemperatureChange;
     public static ForgeConfigSpec.IntValue snowTemperatureChange;
     public static ForgeConfigSpec.IntValue wetTicks;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> temperatureModifierOrder;
+
+    private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER)
+        .stream().map(e -> e.toString().toLowerCase()).toList();
+
+    private static final Predicate<Object> TEMPERATURE_MODIFIER_VALIDATOR = o -> {
+        return o instanceof String && Arrays.stream(BuiltInTemperatureModifier.values()).map(BuiltInTemperatureModifier::toString).anyMatch(s -> s.equalsIgnoreCase((String)o));
+    };
+
+
+    private static List<BuiltInTemperatureModifier> temperatureModifierOrderCache;
+    public static List<BuiltInTemperatureModifier> getTemperatureModifierOrder()
+    {
+        if (temperatureModifierOrderCache == null)
+        {
+            temperatureModifierOrderCache = temperatureModifierOrder.get().stream().map(s -> BuiltInTemperatureModifier.valueOf(s.toUpperCase())).toList();
+        }
+        return temperatureModifierOrderCache;
+    }
 
     static
     {
@@ -47,6 +73,7 @@ public class TemperatureConfig
         extremityDamageDelay = BUILDER.comment("Number of ticks to delay taking damage when icy or hot.").defineInRange("extremity_damage_delay", 500, 0, Integer.MAX_VALUE);
         climateClemencyDuration = BUILDER.comment("Number of ticks for the duration of Climate Clemency.").defineInRange("climate_clemency_duration", 6000, 0, Integer.MAX_VALUE);
         climateClemencyRespawning = BUILDER.comment("Whether or not Climate Clemency should be granted when respawning.").define("climate_clemency_respawning", false);
+        temperatureModifierOrder = BUILDER.comment("The order in which to apply built-in temperature modifiers").defineList("temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, TEMPERATURE_MODIFIER_VALIDATOR);
         BUILDER.pop();
         BUILDER.push("altitude");
         temperatureDropAltitude = BUILDER.comment("Y level to drop the temperature at when above").defineInRange("temperature_drop_altitude", 1024, -64, 1024);
