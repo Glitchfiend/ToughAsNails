@@ -75,6 +75,15 @@ public class ThirstHandler
     }
 
     @SubscribeEvent
+    public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
+    {
+        if (event.getEntity().level().isClientSide())
+            return;
+
+        syncThirst((ServerPlayer)event.getEntity());
+    }
+
+    @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
         if (!ServerConfig.enableThirst.get() || event.player.level().isClientSide())

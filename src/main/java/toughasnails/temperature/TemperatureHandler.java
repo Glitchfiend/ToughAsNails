@@ -64,6 +64,15 @@ public class TemperatureHandler
     }
 
     @SubscribeEvent
+    public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
+    {
+        if (event.getEntity().level().isClientSide())
+            return;
+
+        syncTemperature((ServerPlayer)event.getEntity());
+    }
+
+    @SubscribeEvent
     public void onPlayerCloned(PlayerEvent.Clone event)
     {
         if (event.getEntity().level().isClientSide())
@@ -113,7 +122,7 @@ public class TemperatureHandler
             int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
             TemperatureLevel newTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
-            
+
             // Apply modifiers in the configured order
             for (BuiltInTemperatureModifier modifier : TemperatureConfig.getTemperatureModifierOrder())
             {
