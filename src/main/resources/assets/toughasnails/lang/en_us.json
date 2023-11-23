@@ -4,13 +4,16 @@
   "container.toughasnails.water_purifier": "Water Purifier",
   
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
-  "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death whilst trying to escape %2$s",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death while trying to escape %2$s",
   "desc.toughasnails.heating": "Heating",
   "desc.toughasnails.cooling": "Cooling",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
+  "effect.toughasnails.climate_clemency.description": "Neutralizes body temperature for the duration. Only granted temporarily when creating a new world (Or when respawning if enabled in the config).",
   "effect.toughasnails.ice_resistance": "Ice Resistance",
+  "effect.toughasnails.ice_resistance.description": "Grants immunity to freezing damage.",
   "effect.toughasnails.thirst": "Thirst",
+  "effect.toughasnails.thirst.description": "Lowers thirst at a faster rate than normal.",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
   
   "block.toughasnails.rain_collector": "Rain Collector",
