@@ -7,6 +7,7 @@ package toughasnails.datagen;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.world.damagesource.DamageType;
 import toughasnails.api.damagesource.TANDamageTypes;
+import toughasnails.core.ToughAsNails;
 
 public class ModDamageTypes
 {

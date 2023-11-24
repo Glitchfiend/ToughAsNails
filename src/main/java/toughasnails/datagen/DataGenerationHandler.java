@@ -14,9 +14,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.core.ToughAsNails;
-import toughasnails.datagen.provider.TANBlockTagsProvider;
-import toughasnails.datagen.provider.TANDamageTypeTagsProvider;
-import toughasnails.datagen.provider.TANRecipeProvider;
+import toughasnails.datagen.loot.TANLootTableProvider;
+import toughasnails.datagen.provider.*;
 
 import java.util.Set;
 
@@ -33,13 +32,18 @@ public class DataGenerationHandler
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         PackOutput output = generator.getPackOutput();
 
-        generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(output, event.getLookupProvider(), REG_BUILDER, Set.of(ToughAsNails.MOD_ID)));
+        var datapackProvider = generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(output, event.getLookupProvider(), REG_BUILDER, Set.of(ToughAsNails.MOD_ID)));
 
         // Recipes
         generator.addProvider(event.includeServer(), new TANRecipeProvider(output));
 
+        // Loot
+        generator.addProvider(event.includeServer(), TANLootTableProvider.create(output));
+
         // Tags
-        generator.addProvider(event.includeServer(), new TANBlockTagsProvider(output, event.getLookupProvider(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new TANDamageTypeTagsProvider(output, event.getLookupProvider(), existingFileHelper));
+        var blocksTagProvider = generator.addProvider(event.includeServer(), new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new TANItemTagsProvider(output, datapackProvider.getRegistryProvider(), blocksTagProvider.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new TANBiomeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
     }
 }
