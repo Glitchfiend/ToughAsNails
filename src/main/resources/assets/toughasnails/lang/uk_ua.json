@@ -1,36 +1,53 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-  
+
   "container.toughasnails.water_purifier": "Водоочисник",
-  
-  "death.attack.toughasnails.hyperthermia": "%1$s перегрівся до смерті",
-  "death.attack.toughasnails.hyperthermia.player": "%1$s перегрівся до смерті під час спроби втечі від %2$s",
-  
-  "effect.toughasnails.thirst": "Cпрага",
-  "effect.toughasnails.ice_resistance": "Стійкість до льоду",
-  "enchantment.toughasnails.thermal_tuning": "Термооновлення",
-  
-  "block.toughasnails.rain_collector": "Дощовий колектор",
+
+  "death.attack.toughasnails.hyperthermia": "%1$s перегріто до смерті",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s перегріто до смерті при спробі втекти від %2$s",
+  "desc.toughasnails.heating": "Нагрівання",
+  "desc.toughasnails.cooling": "Охолодження",
+
+  "effect.toughasnails.climate_clemency": "Кліматичне милосердя",
+  "effect.toughasnails.climate_clemency.description": "Нейтралізує температуру тіла протягом часу. Отримується лише тимчасово при створенні нового світу (або при відродженні, які ввімкнено в конфігурації).",
+  "effect.toughasnails.ice_resistance": "Льдостійкість",
+  "effect.toughasnails.ice_resistance.description": "Надає імунітет до заморожувальної шкоди.",
+  "effect.toughasnails.thirst": "Спрага",
+  "effect.toughasnails.thirst.description": "Знижує спрагу швидше за норму.",
+  "enchantment.toughasnails.thermal_tuning": "Теплоутримання",
+
+  "block.toughasnails.rain_collector": "Дощоприймач",
   "block.toughasnails.water_purifier": "Водоочисник",
-  
-  "item.toughasnails.tan_icon": "Значок TAN",
-  "item.toughasnails.empty_canteen": "Порожня фляга",
-  "item.toughasnails.water_canteen": "Фляга води",
+
+  "item.toughasnails.apple_juice": "Яблучний сік",
+  "item.toughasnails.cactus_juice": "Кактусовий сік",
+  "item.toughasnails.chorus_fruit_juice": "Сік із фрукта хорусу",
+  "item.toughasnails.dirty_water_bottle": "Пляшка брудної води",
   "item.toughasnails.dirty_water_canteen": "Фляга брудної води",
+  "item.toughasnails.empty_canteen": "Порожня фляга",
+  "item.toughasnails.glow_berry_juice": "Сік із сяйних ягід",
+  "item.toughasnails.leaf_boots": "Листяні чоботи",
+  "item.toughasnails.leaf_chestplate": "Листяне пончо",
+  "item.toughasnails.leaf_helmet": "Листяна вуаль",
+  "item.toughasnails.leaf_leggings": "Листяні штани",
+  "item.toughasnails.melon_juice": "Кавуновий сік",
+  "item.toughasnails.pumpkin_juice": "Гарбузовий сік",
+  "item.toughasnails.purified_water_bottle": "Пляшка очищеної води",
   "item.toughasnails.purified_water_canteen": "Фляга очищеної води",
-  "item.toughasnails.dirty_water_bottle": "Пляшка грязної води",
-  "item.toughasnails.purified_water_bottle": "Пляшка чистої води",
-  "item.toughasnails.wool_helmet": "Вовняний капюшон",
-  "item.toughasnails.wool_chestplate": "Вовняна парка",
-  "item.toughasnails.wool_leggings": "Вовняні штани",
+  "item.toughasnails.sweet_berry_juice": "Сік із солодких ягід",
+  "item.toughasnails.tan_icon": "Іконка TAN",
+  "item.toughasnails.water_canteen": "Фляга води",
   "item.toughasnails.wool_boots": "Вовняні чоботи",
-  
-  "item.minecraft.lingering_potion.effect.ice_resistance": "Осідаюче зілля стійкості до льоду",
-  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Осідаюче зілля стійкості до льоду",
-  "item.minecraft.potion.effect.ice_resistance": "Зілля стійкості до льоду",
-  "item.minecraft.potion.effect.long_ice_resistance": "Зілля стійкості до льоду",
-  "item.minecraft.splash_potion.effect.ice_resistance": "Вибухове зілля стійкості до льоду",
-  "item.minecraft.splash_potion.effect.long_ice_resistance": "Вибухове зілля стійкості до льоду",
-  "item.minecraft.tipped_arrow.effect.ice_resistance": "Стріла стійкості до льоду",
-  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стрілла стійкості до льоду"
+  "item.toughasnails.wool_chestplate": "Вовняна парка",
+  "item.toughasnails.wool_helmet": "Вовняний каптур",
+  "item.toughasnails.wool_leggings": "Вовняні штани",
+
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Осідальне зілля льодостікості",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Осідальне зілля льодостікості",
+  "item.minecraft.potion.effect.ice_resistance": "Зілля льодостікості",
+  "item.minecraft.potion.effect.long_ice_resistance": "Зілля льодостікості",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Вибухове зілля льодостікості",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Вибухове зілля льодостікості",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Стріла льодостікості",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стріла льодостікості"
 }
