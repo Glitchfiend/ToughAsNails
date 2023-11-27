@@ -4,16 +4,13 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraftforge.api.distmarker.Dist;
+import glitchcore.event.Events;
+import glitchcore.forge.GlitchCoreForge;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import toughasnails.client.handler.ColorHandler;
 import toughasnails.temperature.TemperatureHandler;
-import toughasnails.temperature.TemperatureOverlayHandler;
 import toughasnails.thirst.ThirstHandler;
-import toughasnails.thirst.ThirstOverlayHandler;
 
 public class ModHandlers
 {
@@ -23,5 +20,10 @@ public class ModHandlers
 
         MinecraftForge.EVENT_BUS.register(new ThirstHandler());
         MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
+
+        Events.BLOCK_REGISTRY_EVENT.addListener(ModBlocks::registerBlocks);
+        Events.ITEM_REGISTRY_EVENT.addListener(ModItems::registerItems);
+
+        GlitchCoreForge.prepareEventHandlers(bus);
     }
 }

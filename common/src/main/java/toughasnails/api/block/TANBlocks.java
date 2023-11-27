@@ -5,10 +5,9 @@
 package toughasnails.api.block;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
 
 public class TANBlocks
 {
-    public static RegistryObject<Block> RAIN_COLLECTOR;
-    public static RegistryObject<Block> WATER_PURIFIER;
+    public static Block RAIN_COLLECTOR;
+    public static Block WATER_PURIFIER;
 }

@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy
         RenderType cutoutRenderType = RenderType.cutout();
         RenderType translucentRenderType = RenderType.translucent();
 
-        ItemBlockRenderTypes.setRenderLayer(RAIN_COLLECTOR.get(), cutoutRenderType);
-        ItemBlockRenderTypes.setRenderLayer(WATER_PURIFIER.get(), cutoutRenderType);
+        ItemBlockRenderTypes.setRenderLayer(RAIN_COLLECTOR, cutoutRenderType);
+        ItemBlockRenderTypes.setRenderLayer(WATER_PURIFIER, cutoutRenderType);
     }
 }

@@ -56,8 +56,8 @@ public class EmptyCanteenItem extends Item
                     if (waterLevel > 0 && !world.isClientSide())
                     {
                         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                        ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR.get()).setWaterLevel(world, pos, state, waterLevel - 1);
-                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.PURIFIED_WATER_CANTEEN.get())));
+                        ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR).setWaterLevel(world, pos, state, waterLevel - 1);
+                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.PURIFIED_WATER_CANTEEN)));
                     }
                 }
                 else if (world.getFluidState(pos).is(FluidTags.WATER))
@@ -70,15 +70,15 @@ public class EmptyCanteenItem extends Item
 
                     if (biome.is(ModTags.Biomes.DIRTY_WATER_BIOMES))
                     {
-                        canteenItem = TANItems.DIRTY_WATER_CANTEEN.get();
+                        canteenItem = TANItems.DIRTY_WATER_CANTEEN;
                     }
                     else if (biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
                     {
-                        canteenItem = TANItems.PURIFIED_WATER_CANTEEN.get();
+                        canteenItem = TANItems.PURIFIED_WATER_CANTEEN;
                     }
                     else
                     {
-                        canteenItem = TANItems.WATER_CANTEEN.get();
+                        canteenItem = TANItems.WATER_CANTEEN;
                     }
 
                     return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());

@@ -20,7 +20,7 @@ pluginManagement.repositories {
     }
 }
 
-rootProject.name = "Tough As Nails"
+rootProject.name = "ToughAsNails"
 
 // We want lowercase folder names but uppercase project names
 project(":common").name = "Common"

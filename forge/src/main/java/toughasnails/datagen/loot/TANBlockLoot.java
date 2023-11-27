@@ -27,8 +27,8 @@ public class TANBlockLoot extends BlockLootSubProvider
     @Override
     protected void generate()
     {
-        this.dropSelf(TANBlocks.RAIN_COLLECTOR.get());
-        this.dropSelf(TANBlocks.WATER_PURIFIER.get());
+        this.dropSelf(TANBlocks.RAIN_COLLECTOR);
+        this.dropSelf(TANBlocks.WATER_PURIFIER);
     }
 
     @Override

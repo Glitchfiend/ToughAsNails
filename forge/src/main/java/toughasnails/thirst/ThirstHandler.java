@@ -236,11 +236,11 @@ public class ThirstHandler
         // Set the filled stack based on the biome's water type
         if (biome.is(ModTags.Biomes.DIRTY_WATER_BIOMES))
         {
-            filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE.get());
+            filledStack = new ItemStack(TANItems.DIRTY_WATER_BOTTLE);
         }
         else if (biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
         {
-            filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE.get());
+            filledStack = new ItemStack(TANItems.PURIFIED_WATER_BOTTLE);
         }
         else
         {

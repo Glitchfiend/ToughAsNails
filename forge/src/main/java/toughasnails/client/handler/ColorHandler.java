@@ -25,17 +25,17 @@ public class ColorHandler
 
         itemColors.register((stack, tintIndex) -> {
             return tintIndex > 0 ? -1 : ((DyeableWoolItem)stack.getItem()).getColor(stack);
-        }, TANItems.WOOL_HELMET.get(), TANItems.WOOL_CHESTPLATE.get(), TANItems.WOOL_LEGGINGS.get(), TANItems.WOOL_BOOTS.get());
+        }, TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
 
         itemColors.register((stack, tintIndex) -> {
             return tintIndex > 0 ? -1 : ((LeafArmorItem)stack.getItem()).getColor(stack);
-        }, TANItems.LEAF_HELMET.get(), TANItems.LEAF_CHESTPLATE.get(), TANItems.LEAF_LEGGINGS.get(), TANItems.LEAF_BOOTS.get());
+        }, TANItems.LEAF_HELMET, TANItems.LEAF_CHESTPLATE, TANItems.LEAF_LEGGINGS, TANItems.LEAF_BOOTS);
     }
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event)
     {
         BlockColors blockColors = event.getBlockColors();
-        blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR.get());
+        blockColors.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
     }
 }

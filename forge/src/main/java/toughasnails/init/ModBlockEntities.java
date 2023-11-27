@@ -26,7 +26,7 @@ public class ModBlockEntities
 
     private static void registerTileEntities()
     {
-        TANBlockEntityTypes.WATER_PURIFIER = register("water_purifier", () -> BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER.get()));
+        TANBlockEntityTypes.WATER_PURIFIER = register("water_purifier", () -> BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER));
     }
 
     public static <T extends BlockEntity> RegistryObject<BlockEntityType<?>> register(String name, Supplier<BlockEntityType.Builder<T>> builder)

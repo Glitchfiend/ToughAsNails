@@ -2,7 +2,6 @@ package toughasnails.item;
 
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.FoliageColor;
