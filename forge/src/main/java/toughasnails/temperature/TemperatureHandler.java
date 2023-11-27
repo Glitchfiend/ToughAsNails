@@ -25,7 +25,6 @@ import net.minecraftforge.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
-import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
@@ -36,8 +35,6 @@ import toughasnails.network.MessageUpdateTemperature;
 import toughasnails.network.PacketHandler;
 
 import java.util.UUID;
-
-import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
 
 public class TemperatureHandler
 {
