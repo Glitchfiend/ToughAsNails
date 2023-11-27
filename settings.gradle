@@ -1,3 +1,5 @@
+include("common", "forge")
+
 pluginManagement.repositories {
     gradlePluginPortal()
     maven {
@@ -17,3 +19,9 @@ pluginManagement.repositories {
         url = "https://repo.spongepowered.org/repository/maven-public/"
     }
 }
+
+rootProject.name = "Tough As Nails"
+
+// We want lowercase folder names but uppercase project names
+project(":common").name = "Common"
+project(":forge").name = "Forge"
