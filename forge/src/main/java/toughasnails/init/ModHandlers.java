@@ -23,6 +23,10 @@ public class ModHandlers
 
         Events.BLOCK_REGISTRY_EVENT.addListener(ModBlocks::registerBlocks);
         Events.ITEM_REGISTRY_EVENT.addListener(ModItems::registerItems);
+        Events.MENU_REGISTRY_EVENT.addListener(ModContainerTypes::registerContainers);
+        Events.BLOCK_ENTITY_REGISTRY_EVENT.addListener(ModBlockEntities::registerTileEntities);
+        Events.RECIPE_SERIALIZER_REGISTRY_EVENT.addListener(ModCrafting::registerRecipeSerializers);
+        Events.RECIPE_TYPE_REGISTRY_EVENT.addListener(ModCrafting::registerRecipeTypes);
 
         GlitchCoreForge.prepareEventHandlers(bus);
     }

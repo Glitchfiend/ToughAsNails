@@ -2,25 +2,19 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.gui;
+package toughasnails.client.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import toughasnails.api.TANAPI;
 import toughasnails.container.WaterPurifierContainer;
-import toughasnails.core.ToughAsNails;
 
-@OnlyIn(Dist.CLIENT)
 public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierContainer>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(ToughAsNails.MOD_ID, "textures/gui/container/water_purifier.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(TANAPI.MOD_ID, "textures/gui/container/water_purifier.png");
 
     public WaterPurifierScreen(WaterPurifierContainer screenContainer, Inventory inv, Component titleIn)
     {

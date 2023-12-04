@@ -2,7 +2,7 @@ package toughasnails.item;
 
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.Level;
@@ -17,16 +17,16 @@ public class LeafArmorItem extends ArmorItem implements DyeableLeatherItem
     }
 
     @Override
-    public void onArmorTick(ItemStack stack, Level world, Player player)
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected)
     {
         if (!world.isClientSide())
             return;
 
         int color = FoliageColor.getDefaultColor();
 
-        if (world != null && player != null)
+        if (world != null && entity != null)
         {
-            color = BiomeColors.getAverageFoliageColor(world, player.blockPosition());
+            color = BiomeColors.getAverageFoliageColor(world, entity.blockPosition());
         }
 
         this.setColor(stack, color);

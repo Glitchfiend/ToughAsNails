@@ -37,8 +37,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
             return false;
 
         ItemStack containerInput = inv.getItem(0);
-
-        return this.input.getItem() == containerInput.getItem() && this.input.getDamageValue() == containerInput.getDamageValue() && this.input.areShareTagsEqual(containerInput);
+        return ItemStack.isSameItemSameTags(this.input, containerInput) && this.input.getDamageValue() == containerInput.getDamageValue();
     }
 
     @Override
@@ -62,13 +61,13 @@ public class WaterPurifierRecipe implements Recipe<Container>
     @Override
     public RecipeSerializer<?> getSerializer()
     {
-        return TANRecipeSerializers.WATER_PURIFYING.get();
+        return TANRecipeSerializers.WATER_PURIFYING;
     }
 
     @Override
     public RecipeType<?> getType()
     {
-        return TANRecipeTypes.WATER_PURIFYING.get();
+        return TANRecipeTypes.WATER_PURIFYING;
     }
 
     public int getPurifyTime()

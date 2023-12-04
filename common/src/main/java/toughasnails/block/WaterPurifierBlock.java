@@ -64,7 +64,7 @@ public class WaterPurifierBlock extends BaseEntityBlock
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
     {
-        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<WaterPurifierBlockEntity>) TANBlockEntityTypes.WATER_PURIFIER.get(), WaterPurifierBlockEntity::serverTick);
+        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<WaterPurifierBlockEntity>) TANBlockEntityTypes.WATER_PURIFIER, WaterPurifierBlockEntity::serverTick);
     }
 
     @Override

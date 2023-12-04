@@ -22,10 +22,7 @@ public class RegistryEventHandler
 
     public static void setup(IEventBus modEventBus)
     {
-        if (EVENT_MAPPINGS.values().stream().anyMatch(Event::hasListeners))
-        {
-            modEventBus.addListener(RegistryEventHandler::onRegister);
-        }
+        modEventBus.addListener(RegistryEventHandler::onRegister);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -46,6 +43,10 @@ public class RegistryEventHandler
     {
         EVENT_MAPPINGS = new ImmutableMap.Builder<ResourceKey<? extends Registry<?>>, Event<? extends IRegistryEventContext<?>>>()
                 .put(Registries.BLOCK, Events.BLOCK_REGISTRY_EVENT)
-                .put(Registries.ITEM, Events.ITEM_REGISTRY_EVENT).build();
+                .put(Registries.ITEM, Events.ITEM_REGISTRY_EVENT)
+                .put(Registries.MENU, Events.MENU_REGISTRY_EVENT)
+                .put(Registries.BLOCK_ENTITY_TYPE, Events.BLOCK_ENTITY_REGISTRY_EVENT)
+                .put(Registries.RECIPE_SERIALIZER, Events.RECIPE_SERIALIZER_REGISTRY_EVENT)
+                .put(Registries.RECIPE_TYPE, Events.RECIPE_TYPE_REGISTRY_EVENT).build();
     }
 }

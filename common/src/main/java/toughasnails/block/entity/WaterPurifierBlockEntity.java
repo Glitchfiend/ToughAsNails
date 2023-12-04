@@ -26,11 +26,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.WaterPurifierBlock;
@@ -109,7 +104,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
 
     public WaterPurifierBlockEntity(BlockPos pos, BlockState state)
     {
-        super(TANBlockEntityTypes.WATER_PURIFIER.get(), pos, state);
+        super(TANBlockEntityTypes.WATER_PURIFIER, pos, state);
     }
 
     @Override
@@ -150,7 +145,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         {
             ItemStack filterStack = blockEntity.items.get(1);
             if (blockEntity.currentlyFiltering() || !filterStack.isEmpty() && !blockEntity.items.get(0).isEmpty()) {
-                RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING.get(), blockEntity, blockEntity.level).orElse(null);
+                RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
 
                 if (recipe != null)
                 {
@@ -161,15 +156,15 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                         // If we are now filtering, consume the filter item
                         if (blockEntity.currentlyFiltering()) {
                             changed = true;
-                            if (filterStack.hasCraftingRemainingItem())
-                                blockEntity.items.set(1, filterStack.getCraftingRemainingItem());
+                            if (filterStack.getItem().hasCraftingRemainingItem())
+                                blockEntity.items.set(1, new ItemStack(filterStack.getItem().getCraftingRemainingItem()));
                             else if (!filterStack.isEmpty()) {
                                 filterStack.shrink(1);
 
                                 // Replace the filter with the containing item (if there is one)
                                 // Normally this would be something like an empty bucket
                                 if (filterStack.isEmpty()) {
-                                    blockEntity.items.set(1, filterStack.getCraftingRemainingItem());
+                                    blockEntity.items.set(1, new ItemStack(filterStack.getItem().getCraftingRemainingItem()));
                                 }
                             }
                         }
@@ -368,7 +363,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     /** Get the time taken for an input item to be purified. */
     protected int getTotalPurifyTime()
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING.get(), this, this.level).map(r -> r.value().getPurifyTime()).orElse(200);
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(r -> r.value().getPurifyTime()).orElse(200);
     }
 
     private void filter(@Nullable Recipe<?> recipe)
@@ -412,36 +407,5 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         ImmutableMap.Builder<Item, Integer> builder = ImmutableMap.builder();
         builder.put(Items.CHARCOAL, 1200);
         return builder.build();
-    }
-
-    LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
-    {
-        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
-            if (facing == Direction.UP)
-                return handlers[0].cast();
-            else if (facing == Direction.DOWN)
-                return handlers[1].cast();
-            else
-                return handlers[2].cast();
-        }
-        return super.getCapability(capability, facing);
-    }
-
-    @Override
-    public void invalidateCaps()
-    {
-        super.invalidateCaps();
-        for (int x = 0; x < handlers.length; x++)
-            handlers[x].invalidate();
-    }
-
-    @Override
-    public void reviveCaps()
-    {
-        super.reviveCaps();
-        this.handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     }
 }

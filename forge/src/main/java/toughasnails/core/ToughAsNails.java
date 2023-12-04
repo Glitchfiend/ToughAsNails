@@ -75,11 +75,8 @@ public class ToughAsNails
         ModConfig.init();
 
         // Initialize content
-        ModContainerTypes.init();
-        ModBlockEntities.init();
         ModEnchantments.init();
         ModPotions.init();
-        ModCrafting.init();
 
         PacketHandler.init();
         ModHandlers.init();

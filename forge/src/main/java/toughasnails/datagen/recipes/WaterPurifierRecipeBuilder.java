@@ -36,7 +36,7 @@ public class WaterPurifierRecipeBuilder
 
     public void save(RecipeOutput output, ResourceLocation location)
     {
-        output.accept(new WaterPurifierRecipeBuilder.Result(location, TANRecipeSerializers.WATER_PURIFYING.get(), this.input, this.result, this.purifyTime));
+        output.accept(new WaterPurifierRecipeBuilder.Result(location, TANRecipeSerializers.WATER_PURIFYING, this.input, this.result, this.purifyTime));
     }
 
     public record Result(ResourceLocation id, RecipeSerializer<?> type, ItemStack input, ItemStack result, int purifyTime) implements FinishedRecipe {

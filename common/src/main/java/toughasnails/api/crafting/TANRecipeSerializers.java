@@ -4,10 +4,9 @@
  ******************************************************************************/
 package toughasnails.api.crafting;
 
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 
-public class TANRecipeTypes
+public class TANRecipeSerializers
 {
-    public static RegistryObject<RecipeType<?>> WATER_PURIFYING;
+    public static RecipeSerializer<?> WATER_PURIFYING;
 }

@@ -4,6 +4,8 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.event.IRegistryEventContext;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -13,27 +15,22 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.ingredients.StrictNBTIngredient;
-import net.minecraftforge.registries.RegistryObject;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.potion.TANPotions;
 import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
-import java.util.function.Supplier;
-
 public class ModCrafting
 {
-    public static void init()
+    public static void registerRecipeSerializers(IRegistryEventContext<RecipeSerializer<?>> context)
     {
-        registerRecipeSerializers();
+        TANRecipeSerializers.WATER_PURIFYING = registerSerializer(context, "water_purifying", new WaterPurifierRecipe.Serializer());
     }
 
-    private static void registerRecipeSerializers()
+    public static void registerRecipeTypes(IRegistryEventContext<RecipeType<?>> context)
     {
-        TANRecipeSerializers.WATER_PURIFYING = registerSerializer("water_purifying", WaterPurifierRecipe.Serializer::new);
-
-        TANRecipeTypes.WATER_PURIFYING = registerRecipe("water_purifying", () -> new RecipeType<WaterPurifierRecipe>()
+        TANRecipeTypes.WATER_PURIFYING = registerRecipe(context, "water_purifying", new RecipeType<WaterPurifierRecipe>()
         {
             @Override
             public String toString()
@@ -57,14 +54,14 @@ public class ModCrafting
         addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE.get());
     }
 
-    public static RegistryObject<RecipeSerializer<?>> registerSerializer(String name, Supplier<RecipeSerializer<?>> serializer)
+    private static RecipeSerializer<?> registerSerializer(IRegistryEventContext<RecipeSerializer<?>> context, String name, RecipeSerializer<?> serializer)
     {
-        return ToughAsNails.RECIPE_SERIALIZER_REGISTER.register(name, serializer);
+        return context.register(new ResourceLocation(ToughAsNails.MOD_ID, name), serializer);
     }
 
-    public static RegistryObject<RecipeType<?>> registerRecipe(String name, Supplier<RecipeType<?>> type)
+    private static RecipeType<?> registerRecipe(IRegistryEventContext<RecipeType<?>> context, String name, RecipeType<?> type)
     {
-        return ToughAsNails.RECIPE_TYPE_REGISTER.register(name, type);
+        return context.register(new ResourceLocation(ToughAsNails.MOD_ID, name), type);
     }
 
     private static void addBrewingRecipe(Potion input, ItemStack ingredient, Potion output)

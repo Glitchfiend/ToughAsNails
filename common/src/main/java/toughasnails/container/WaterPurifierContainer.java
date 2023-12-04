@@ -4,21 +4,19 @@
  ******************************************************************************/
 package toughasnails.container;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.crafting.TANRecipeTypes;
-import toughasnails.api.inventory.container.TANContainerTypes;
+import toughasnails.api.container.TANContainerTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 import toughasnails.crafting.WaterPurifierRecipe;
 
@@ -35,7 +33,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     public WaterPurifierContainer(int id, Inventory playerInventory, Container container, ContainerData data)
     {
-        super(TANContainerTypes.WATER_PURIFIER.get(), id);
+        super(TANContainerTypes.WATER_PURIFIER, id);
         this.container = container;
         this.data = data;
         this.level = playerInventory.player.level();
@@ -148,7 +146,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     protected boolean canPurify(ItemStack stack)
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING.get(), new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new SimpleContainer(stack), this.level).isPresent();
     }
 
     protected boolean isFilter(ItemStack stack)
@@ -156,7 +154,6 @@ public class WaterPurifierContainer extends AbstractContainerMenu
         return WaterPurifierBlockEntity.isFilter(stack);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getPurifyProgress()
     {
         int progress = this.data.get(2);
@@ -164,7 +161,6 @@ public class WaterPurifierContainer extends AbstractContainerMenu
         return totalTime != 0 && progress != 0 ? progress * 24 / totalTime : 0;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getFilterProgress()
     {
         int filterDuration = this.data.get(1);
@@ -178,7 +174,6 @@ public class WaterPurifierContainer extends AbstractContainerMenu
         return this.data.get(0) * 13 / filterDuration;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean isFiltering()
     {
         return this.data.get(0) > 0;

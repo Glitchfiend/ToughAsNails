@@ -5,37 +5,27 @@
 package toughasnails.init;
 
 import com.mojang.datafixers.types.Type;
+import glitchcore.event.IRegistryEventContext;
 import net.minecraft.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.RegistryObject;
+import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
-import toughasnails.core.ToughAsNails;
-
-import java.util.function.Supplier;
 
 public class ModBlockEntities
 {
-    public static void init()
+    public static void registerTileEntities(IRegistryEventContext<BlockEntityType<?>> context)
     {
-        registerTileEntities();
+        TANBlockEntityTypes.WATER_PURIFIER = register(context, "water_purifier", BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER));
     }
 
-    private static void registerTileEntities()
+    private static <T extends BlockEntity> BlockEntityType<?> register(IRegistryEventContext<BlockEntityType<?>> context, String name, BlockEntityType.Builder<T> builder)
     {
-        TANBlockEntityTypes.WATER_PURIFIER = register("water_purifier", () -> BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER));
-    }
-
-    public static <T extends BlockEntity> RegistryObject<BlockEntityType<?>> register(String name, Supplier<BlockEntityType.Builder<T>> builder)
-    {
-        Supplier<BlockEntityType<?>> supplier = () -> {
-            Type<?> type = Util.fetchChoiceType(References.BLOCK_ENTITY, name);
-            return builder.get().build(type);
-        };
-
-        return ToughAsNails.BLOCK_ENTITY_REGISTER.register(name, supplier);
+        Type<?> type = Util.fetchChoiceType(References.BLOCK_ENTITY, name);
+        return context.register(new ResourceLocation(TANAPI.MOD_ID, name), builder.build(type));
     }
 }

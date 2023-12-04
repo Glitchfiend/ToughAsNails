@@ -99,10 +99,4 @@ public class FilledCanteenItem extends Item
     {
         return false;
     }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment)
-    {
-        return false;
-    }
 }
