@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.event.IRegistryEventContext;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -21,16 +20,18 @@ import toughasnails.api.potion.TANPotions;
 import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
+import java.util.function.BiConsumer;
+
 public class ModCrafting
 {
-    public static void registerRecipeSerializers(IRegistryEventContext<RecipeSerializer<?>> context)
+    public static void registerRecipeSerializers(BiConsumer<ResourceLocation, RecipeSerializer<?>> func)
     {
-        TANRecipeSerializers.WATER_PURIFYING = registerSerializer(context, "water_purifying", new WaterPurifierRecipe.Serializer());
+        TANRecipeSerializers.WATER_PURIFYING = registerSerializer(func, "water_purifying", new WaterPurifierRecipe.Serializer());
     }
 
-    public static void registerRecipeTypes(IRegistryEventContext<RecipeType<?>> context)
+    public static void registerRecipeTypes(BiConsumer<ResourceLocation, RecipeType<?>> func)
     {
-        TANRecipeTypes.WATER_PURIFYING = registerRecipe(context, "water_purifying", new RecipeType<WaterPurifierRecipe>()
+        TANRecipeTypes.WATER_PURIFYING = registerRecipe(func, "water_purifying", new RecipeType<WaterPurifierRecipe>()
         {
             @Override
             public String toString()
@@ -44,24 +45,26 @@ public class ModCrafting
     {
         // Brewing
         // Base
-        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Items.SNOWBALL), TANPotions.ICE_RESISTANCE.get());
+        addBrewingRecipe(Potions.AWKWARD, new ItemStack(Items.SNOWBALL), TANPotions.ICE_RESISTANCE);
 
         // Extended
-        addBrewingRecipe(TANPotions.ICE_RESISTANCE.get(), new ItemStack(Items.REDSTONE), TANPotions.LONG_ICE_RESISTANCE.get());
+        addBrewingRecipe(TANPotions.ICE_RESISTANCE, new ItemStack(Items.REDSTONE), TANPotions.LONG_ICE_RESISTANCE);
 
         // Splash and lingering
-        addPotionTransforms(TANPotions.ICE_RESISTANCE.get());
-        addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE.get());
+        addPotionTransforms(TANPotions.ICE_RESISTANCE);
+        addPotionTransforms(TANPotions.LONG_ICE_RESISTANCE);
     }
 
-    private static RecipeSerializer<?> registerSerializer(IRegistryEventContext<RecipeSerializer<?>> context, String name, RecipeSerializer<?> serializer)
+    private static RecipeSerializer<?> registerSerializer(BiConsumer<ResourceLocation, RecipeSerializer<?>> func, String name, RecipeSerializer<?> serializer)
     {
-        return context.register(new ResourceLocation(ToughAsNails.MOD_ID, name), serializer);
+        func.accept(new ResourceLocation(ToughAsNails.MOD_ID, name), serializer);
+        return serializer;
     }
 
-    private static RecipeType<?> registerRecipe(IRegistryEventContext<RecipeType<?>> context, String name, RecipeType<?> type)
+    private static RecipeType<?> registerRecipe(BiConsumer<ResourceLocation, RecipeType<?>> func, String name, RecipeType<?> type)
     {
-        return context.register(new ResourceLocation(ToughAsNails.MOD_ID, name), type);
+        func.accept(new ResourceLocation(ToughAsNails.MOD_ID, name), type);
+        return type;
     }
 
     private static void addBrewingRecipe(Potion input, ItemStack ingredient, Potion output)

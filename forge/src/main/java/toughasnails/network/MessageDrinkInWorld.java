@@ -57,7 +57,7 @@ public class MessageDrinkInWorld
 
                     if (level.random.nextFloat() < ThirstConfig.getBiomeWaterType(biome).getPoisonChance())
                     {
-                        player.addEffect(new MobEffectInstance(TANEffects.THIRST.get(), 600));
+                        player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
                     }
                 }
             });

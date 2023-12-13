@@ -4,8 +4,9 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.event.Events;
 import glitchcore.forge.GlitchCoreForge;
+import glitchcore.util.RegistryHelper;
+import net.minecraft.core.registries.Registries;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,12 +22,17 @@ public class ModHandlers
         MinecraftForge.EVENT_BUS.register(new ThirstHandler());
         MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
 
-        Events.BLOCK_REGISTRY_EVENT.addListener(ModBlocks::registerBlocks);
-        Events.ITEM_REGISTRY_EVENT.addListener(ModItems::registerItems);
-        Events.MENU_REGISTRY_EVENT.addListener(ModContainerTypes::registerContainers);
-        Events.BLOCK_ENTITY_REGISTRY_EVENT.addListener(ModBlockEntities::registerTileEntities);
-        Events.RECIPE_SERIALIZER_REGISTRY_EVENT.addListener(ModCrafting::registerRecipeSerializers);
-        Events.RECIPE_TYPE_REGISTRY_EVENT.addListener(ModCrafting::registerRecipeTypes);
+        var regHelper = RegistryHelper.create();
+        regHelper.addRegistrar(Registries.BLOCK, ModBlocks::registerBlocks);
+        regHelper.addRegistrar(Registries.ITEM, ModItems::registerItems);
+        regHelper.addRegistrar(Registries.MENU, ModContainerTypes::registerContainers);
+        regHelper.addRegistrar(Registries.BLOCK_ENTITY_TYPE, ModBlockEntities::registerBlockEntities);
+        regHelper.addRegistrar(Registries.RECIPE_SERIALIZER, ModCrafting::registerRecipeSerializers);
+        regHelper.addRegistrar(Registries.RECIPE_TYPE, ModCrafting::registerRecipeTypes);
+        regHelper.addRegistrar(Registries.ENCHANTMENT, ModEnchantments::registerEnchantments);
+        regHelper.addRegistrar(Registries.MOB_EFFECT, ModPotions::registerEffects);
+        regHelper.addRegistrar(Registries.POTION, ModPotions::registerPotions);
+        regHelper.addRegistrar(Registries.CREATIVE_MODE_TAB, ModCreativeTab::registerCreativeTabs);
 
         GlitchCoreForge.prepareEventHandlers(bus);
     }

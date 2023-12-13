@@ -36,17 +36,6 @@ public class ToughAsNails
 {
     public static final String MOD_ID = "toughasnails";
 
-    public static final DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(Registries.BLOCK, MOD_ID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_REGISTER = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_TAB_REGISTER = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-    public static final DeferredRegister<MenuType<?>> MENU_REGISTER = DeferredRegister.create(Registries.MENU, MOD_ID);
-    public static final DeferredRegister<Enchantment> ENCHANTMENT_REGISTER = DeferredRegister.create(Registries.ENCHANTMENT, MOD_ID);
-    public static final DeferredRegister<Item> ITEM_REGISTER = DeferredRegister.create(Registries.ITEM, MOD_ID);
-    public static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTER = DeferredRegister.create(Registries.MOB_EFFECT, MOD_ID);
-    public static final DeferredRegister<Potion> POTION_REGISTER = DeferredRegister.create(Registries.POTION, MOD_ID);
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER_REGISTER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MOD_ID);
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, MOD_ID);
-
     public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
@@ -59,30 +48,11 @@ public class ToughAsNails
         bus.addListener(this::clientSetup);
         bus.addListener(this::loadComplete);
 
-        // Register events for deferred registers
-        BLOCK_REGISTER.register(bus);
-        BLOCK_ENTITY_REGISTER.register(bus);
-        CREATIVE_TAB_REGISTER.register(bus);
-        ENCHANTMENT_REGISTER.register(bus);
-        ITEM_REGISTER.register(bus);
-        MENU_REGISTER.register(bus);
-        MOB_EFFECT_REGISTER.register(bus);
-        POTION_REGISTER.register(bus);
-        RECIPE_SERIALIZER_REGISTER.register(bus);
-        RECIPE_TYPE_REGISTER.register(bus);
-
         // Initialize the config file first so other things can rely on it
         ModConfig.init();
 
-        // Initialize content
-        ModEnchantments.init();
-        ModPotions.init();
-
         PacketHandler.init();
         ModHandlers.init();
-
-        // Initialize the creative tab last after blocks and items have been setup
-        ModCreativeTab.setup();
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event)

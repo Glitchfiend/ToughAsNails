@@ -4,38 +4,25 @@
  ******************************************************************************/
 package glitchcore.event;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
-public class Event<T extends IEventContext>
+public abstract class Event
 {
-    Consumer<T>[] listeners = new Consumer[0];
+    private boolean cancelled = false;
 
-    public static <T extends IEventContext> Event<T> create()
+    public boolean isCancellable()
     {
-        return new Event<>();
+        return false;
     }
 
-    public void addListener(Consumer<T> listener)
+    public boolean isCancelled()
     {
-        int len = this.listeners.length;
-        this.listeners = Arrays.copyOf(this.listeners, len + 1);
-        this.listeners[len] = listener;
+        return this.cancelled;
     }
 
-    public boolean hasListeners()
+    public void setCancelled(boolean value)
     {
-        return this.listeners.length > 0;
-    }
+        if (!this.isCancellable())
+            throw new UnsupportedOperationException("Attempted to cancel event which cannot be cancelled!");
 
-    public void fire(T context)
-    {
-        for (var listener : this.listeners)
-        {
-            listener.accept(context);
-
-            if (listener instanceof ICancellableEventContext && ((ICancellableEventContext)listener).isCancelled())
-                break;
-        }
+        this.cancelled = cancelled;
     }
 }

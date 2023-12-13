@@ -4,49 +4,32 @@
  ******************************************************************************/
 package glitchcore.forge.handlers;
 
-import com.google.common.collect.ImmutableMap;
 import glitchcore.event.Event;
-import glitchcore.event.Events;
-import glitchcore.event.IRegistryEventContext;
+import glitchcore.event.EventManager;
+import glitchcore.event.RegistryEvent;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegisterEvent;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class RegistryEventHandler
 {
-    private static final ImmutableMap<ResourceKey<? extends Registry<?>>, Event<? extends IRegistryEventContext<?>>> EVENT_MAPPINGS;
-
     public static void setup(IEventBus modEventBus)
     {
         modEventBus.addListener(RegistryEventHandler::onRegister);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static void onRegister(RegisterEvent event)
+    private static void onRegister(RegisterEvent forgeEvent)
     {
-        var key = event.getRegistryKey();
-        if (!EVENT_MAPPINGS.containsKey(key))
-            return;
-
-        var gcEvent = (Event<IRegistryEventContext<?>>)Objects.requireNonNull(EVENT_MAPPINGS.get(key));
-        gcEvent.fire(((location, value) -> {
-            event.register((ResourceKey)key, location, () -> value);
-            return value;
-        }));
-    }
-
-    static
-    {
-        EVENT_MAPPINGS = new ImmutableMap.Builder<ResourceKey<? extends Registry<?>>, Event<? extends IRegistryEventContext<?>>>()
-                .put(Registries.BLOCK, Events.BLOCK_REGISTRY_EVENT)
-                .put(Registries.ITEM, Events.ITEM_REGISTRY_EVENT)
-                .put(Registries.MENU, Events.MENU_REGISTRY_EVENT)
-                .put(Registries.BLOCK_ENTITY_TYPE, Events.BLOCK_ENTITY_REGISTRY_EVENT)
-                .put(Registries.RECIPE_SERIALIZER, Events.RECIPE_SERIALIZER_REGISTRY_EVENT)
-                .put(Registries.RECIPE_TYPE, Events.RECIPE_TYPE_REGISTRY_EVENT).build();
+        var registryKey = forgeEvent.getRegistryKey();
+        EventManager.fire(new RegistryEvent(registryKey, (location, value) -> forgeEvent.register((ResourceKey<? extends Registry<Object>>)registryKey, location, () -> value)));
     }
 }

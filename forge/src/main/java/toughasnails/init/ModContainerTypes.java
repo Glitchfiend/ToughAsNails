@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.event.IRegistryEventContext;
+import glitchcore.event.RegistryEvent;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
@@ -17,11 +17,13 @@ import toughasnails.api.container.TANContainerTypes;
 import toughasnails.container.WaterPurifierContainer;
 import toughasnails.client.gui.WaterPurifierScreen;
 
+import java.util.function.BiConsumer;
+
 public class ModContainerTypes
 {
-    public static void registerContainers(IRegistryEventContext<MenuType<?>> context)
+    public static void registerContainers(BiConsumer<ResourceLocation, MenuType<?>> func)
     {
-        TANContainerTypes.WATER_PURIFIER = register(context, "water_purifier", WaterPurifierContainer::new);
+        TANContainerTypes.WATER_PURIFIER = register(func, "water_purifier", WaterPurifierContainer::new);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -30,8 +32,10 @@ public class ModContainerTypes
         MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
     }
 
-    public static <T extends AbstractContainerMenu> MenuType<?> register(IRegistryEventContext<MenuType<?>> context, String name, MenuType.MenuSupplier<T> factory)
+    public static <T extends AbstractContainerMenu> MenuType<?> register(BiConsumer<ResourceLocation, MenuType<?>> func, String name, MenuType.MenuSupplier<T> factory)
     {
-        return context.register(new ResourceLocation(TANAPI.MOD_ID, name), new MenuType<>(factory, FeatureFlags.DEFAULT_FLAGS));
+        var menuType = new MenuType<>(factory, FeatureFlags.DEFAULT_FLAGS);
+        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), menuType);
+        return menuType;
     }
 }
