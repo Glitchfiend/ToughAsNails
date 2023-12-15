@@ -12,6 +12,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class GlitchCoreForge
 {
+    public static void init()
+    {
+
+    }
+
     public static void prepareEventHandlers(IEventBus modEventBus)
     {
         for (Class<? extends Event> eventClass : EventManager.getRequiredEvents())

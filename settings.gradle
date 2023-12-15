@@ -1,4 +1,4 @@
-include("common", "forge")
+include("common", "forge", "fabric")
 
 pluginManagement.repositories {
     gradlePluginPortal()
@@ -25,3 +25,4 @@ rootProject.name = "ToughAsNails"
 // We want lowercase folder names but uppercase project names
 project(":common").name = "Common"
 project(":forge").name = "Forge"
+project(":fabric").name = "Fabric"

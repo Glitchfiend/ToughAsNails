@@ -8,10 +8,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +19,7 @@ public class TANBiomeTagsProvider extends BiomeTagsProvider
 {
     public TANBiomeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper)
     {
-        super(output, lookupProvider, ToughAsNails.MOD_ID, existingFileHelper);
+        super(output, lookupProvider, ToughAsNailsForge.MOD_ID, existingFileHelper);
     }
 
     @Override

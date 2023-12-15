@@ -7,7 +7,6 @@ package glitchcore.event;
 import net.jodah.typetools.TypeResolver;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class EventManager

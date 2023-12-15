@@ -19,7 +19,7 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.ServerConfig;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 
 import java.util.Random;
 
@@ -28,7 +28,7 @@ public class TemperatureOverlayHandler
 {
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
-    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNails.MOD_ID, "textures/misc/hyperthermia_outline.png");
+    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNailsForge.MOD_ID, "textures/misc/hyperthermia_outline.png");
 
     private static long updateCounter;
     private static long flashCounter;

@@ -6,7 +6,6 @@ package toughasnails.config;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
-import toughasnails.core.ToughAsNails;
 import toughasnails.temperature.BuiltInTemperatureModifier;
 
 import java.util.Arrays;

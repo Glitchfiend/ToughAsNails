@@ -39,11 +39,10 @@ import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.ThirstConfig;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
-import toughasnails.network.MessageDrinkInWorld;
-import toughasnails.network.MessageUpdateThirst;
-import toughasnails.network.PacketHandler;
+import toughasnails.network.*;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -61,7 +60,7 @@ public class ThirstHandler
         // This is mainly to ensure a consistent working environment
         if (event.getObject() instanceof Player)
         {
-            event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "thirst"), new ThirstCapabilityProvider(TANCapabilities.THIRST, new ThirstData()));
+            event.addCapability(new ResourceLocation(ToughAsNailsForge.MOD_ID, "thirst"), new ThirstCapabilityProvider(TANCapabilities.THIRST, new ThirstData()));
         }
     }
 
@@ -150,7 +149,7 @@ public class ThirstHandler
     private static void syncThirst(ServerPlayer player)
     {
         IThirst thirst = ThirstHelper.getThirst(player);
-        PacketHandler.HANDLER.send(new MessageUpdateThirst(thirst.getThirst(), thirst.getHydration()), PacketDistributor.PLAYER.with(player));
+        ModPackets.HANDLER.sendToPlayer(new UpdateThirstPacket.Data(thirst.getThirst(), thirst.getHydration()), player);
     }
 
     // Replenish thirst after drinking from items in the config file

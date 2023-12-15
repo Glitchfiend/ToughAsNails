@@ -30,9 +30,10 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
-import toughasnails.core.ToughAsNails;
-import toughasnails.network.MessageUpdateTemperature;
+import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModPackets;
 import toughasnails.network.PacketHandler;
+import toughasnails.network.UpdateTemperaturePacket;
 
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class TemperatureHandler
         // This is mainly to ensure a consistent working environment
         if (event.getObject() instanceof Player)
         {
-            event.addCapability(new ResourceLocation(ToughAsNails.MOD_ID, "temperature"), new TemperatureCapabilityProvider(TANCapabilities.TEMPERATURE, new TemperatureData()));
+            event.addCapability(new ResourceLocation(ToughAsNailsForge.MOD_ID, "temperature"), new TemperatureCapabilityProvider(TANCapabilities.TEMPERATURE, new TemperatureData()));
         }
     }
 
@@ -223,7 +224,7 @@ public class TemperatureHandler
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
         temperature.setLastLevel(temperature.getLevel());
         temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
-        PacketHandler.HANDLER.send(new MessageUpdateTemperature(temperature.getLevel(), temperature.getHyperthermiaTicks()), PacketDistributor.PLAYER.with(player));
+        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket.Data(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
     }
 
     private static void removeHeatExhaustion(ServerPlayer player)

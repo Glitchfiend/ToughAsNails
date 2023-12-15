@@ -15,7 +15,7 @@ import sereneseasons.init.ModTags;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.config.TemperatureConfig;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 
 public class ModCompatibility
 {
@@ -23,7 +23,7 @@ public class ModCompatibility
     {
         if (ModList.get().isLoaded("sereneseasons"))
         {
-            ToughAsNails.LOGGER.info("Serene Seasons detected. Enabling season modifier.");
+            ToughAsNailsForge.LOGGER.info("Serene Seasons detected. Enabling season modifier.");
             TemperatureHelper.registerPositionalTemperatureModifier(ModCompatibility::seasonModifier);
         }
     }

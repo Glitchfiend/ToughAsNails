@@ -1,1 +1,16 @@
 accessWidener v1 named
+
+# MenuType registration
+accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
+accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible method net/minecraft/world/inventory/MenuType <init> (Lnet/minecraft/world/inventory/MenuType$MenuSupplier;Lnet/minecraft/world/flag/FeatureFlagSet;)V
+
+# Mob effect registration
+accessible method net/minecraft/world/effect/MobEffect <init> (Lnet/minecraft/world/effect/MobEffectCategory;I)V
+
+# Block entity registration
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+
+# Registry ordering (Glitch Core)
+accessible field net/minecraft/core/registries/BuiltInRegistries LOADERS Ljava/util/Map;

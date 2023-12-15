@@ -4,15 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "glitchcore.impl.MixinEnvironment",
-    "glitchcore.impl.MixinPacketHandler",
-    "glitchcore.impl.MixinRecipeHelper",
-    "MixinFoodData",
-    "MixinPlayer"
+    "glitchcore.impl.MixinEnvironment"
   ],
   "client": [
-    "client.MixinGui",
-    "client.MixinLocalPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

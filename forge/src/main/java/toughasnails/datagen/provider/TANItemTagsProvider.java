@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.item.TANItems;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +22,7 @@ public class TANItemTagsProvider extends ItemTagsProvider
 {
     public TANItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockLookup, @Nullable ExistingFileHelper existingFileHelper)
     {
-        super(output, lookupProvider, blockLookup, ToughAsNails.MOD_ID, existingFileHelper);
+        super(output, lookupProvider, blockLookup, ToughAsNailsForge.MOD_ID, existingFileHelper);
     }
 
     @Override

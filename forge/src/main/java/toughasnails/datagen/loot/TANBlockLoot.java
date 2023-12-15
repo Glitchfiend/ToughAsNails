@@ -10,7 +10,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import toughasnails.api.block.TANBlocks;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +34,6 @@ public class TANBlockLoot extends BlockLootSubProvider
     @Override
     protected Iterable<Block> getKnownBlocks()
     {
-        return BuiltInRegistries.BLOCK.entrySet().stream().filter(e -> e.getKey().location().getNamespace().equals(ToughAsNails.MOD_ID)).map(Map.Entry::getValue).toList();
+        return BuiltInRegistries.BLOCK.entrySet().stream().filter(e -> e.getKey().location().getNamespace().equals(ToughAsNailsForge.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 }

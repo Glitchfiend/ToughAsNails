@@ -4,17 +4,6 @@
  ******************************************************************************/
 package toughasnails.core;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -23,7 +12,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.temperature.ITemperature;
@@ -31,8 +19,8 @@ import toughasnails.api.thirst.IThirst;
 import toughasnails.init.*;
 import toughasnails.network.PacketHandler;
 
-@Mod(value = ToughAsNails.MOD_ID)
-public class ToughAsNails
+@Mod(value = ToughAsNailsForge.MOD_ID)
+public class ToughAsNailsForge
 {
     public static final String MOD_ID = "toughasnails";
 
@@ -40,7 +28,7 @@ public class ToughAsNails
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public ToughAsNails()
+    public ToughAsNailsForge()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::registerCapabilities);
@@ -52,6 +40,8 @@ public class ToughAsNails
         ModConfig.init();
 
         PacketHandler.init();
+
+        ToughAsNails.init();
         ModHandlers.init();
     }
 

@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.util.RecipeHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -12,12 +13,10 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.crafting.ingredients.StrictNBTIngredient;
+import toughasnails.api.TANAPI;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.potion.TANPotions;
-import toughasnails.core.ToughAsNails;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 import java.util.function.BiConsumer;
@@ -57,13 +56,13 @@ public class ModCrafting
 
     private static RecipeSerializer<?> registerSerializer(BiConsumer<ResourceLocation, RecipeSerializer<?>> func, String name, RecipeSerializer<?> serializer)
     {
-        func.accept(new ResourceLocation(ToughAsNails.MOD_ID, name), serializer);
+        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), serializer);
         return serializer;
     }
 
     private static RecipeType<?> registerRecipe(BiConsumer<ResourceLocation, RecipeType<?>> func, String name, RecipeType<?> type)
     {
-        func.accept(new ResourceLocation(ToughAsNails.MOD_ID, name), type);
+        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), type);
         return type;
     }
 
@@ -85,8 +84,8 @@ public class ModCrafting
         addBrewingRecipe(new ItemStack(Items.SPLASH_POTION), potion, new ItemStack(Items.DRAGON_BREATH), new ItemStack(Items.LINGERING_POTION), potion);
     }
 
-    private static void addBrewingRecipe(ItemStack inBottle, Potion inPotion, ItemStack ingredient, ItemStack outBottle, Potion outPotion)
+    private static void addBrewingRecipe(ItemStack bottleIn, Potion potionIn, ItemStack ingredient, ItemStack bottleOut, Potion potionOut)
     {
-        BrewingRecipeRegistry.addRecipe(StrictNBTIngredient.of(PotionUtils.setPotion(inBottle, inPotion)), StrictNBTIngredient.of(ingredient), PotionUtils.setPotion(outBottle, outPotion));
+        RecipeHelper.addBrewingRecipe(bottleIn, potionIn, ingredient, bottleOut, potionOut);
     }
 }

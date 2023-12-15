@@ -6,12 +6,11 @@ package toughasnails.init;
 
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import org.apache.logging.log4j.core.jmx.Server;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
 import toughasnails.config.ThirstConfig;
-import toughasnails.core.ToughAsNails;
+import toughasnails.core.ToughAsNailsForge;
 
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -33,7 +32,7 @@ public class ModConfig
         catch (FileAlreadyExistsException e) {}
         catch (IOException e)
         {
-            ToughAsNails.LOGGER.error("Failed to create toughasnails config directory", e);
+            ToughAsNailsForge.LOGGER.error("Failed to create toughasnails config directory", e);
         }
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ThirstConfig.SPEC, "toughasnails/thirst.toml");
