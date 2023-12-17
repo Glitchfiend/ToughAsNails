@@ -14,23 +14,34 @@ import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 
-public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket.Data>
+public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket>
 {
-    @Override
-    public void encode(Data data, FriendlyByteBuf buf)
+    private TemperatureLevel temperatureLevel;
+    private int hyperthermiaTicks;
+
+    public UpdateTemperaturePacket(TemperatureLevel temperatureLevel, int hyperthermiaTicks)
     {
-        buf.writeEnum(data.temperatureLevel());
-        buf.writeInt(data.hyperthermiaTicks());
+        this.temperatureLevel = temperatureLevel;
+        this.hyperthermiaTicks = hyperthermiaTicks;
+    }
+
+    public UpdateTemperaturePacket() {}
+
+    @Override
+    public void encode(FriendlyByteBuf buf)
+    {
+        buf.writeEnum(this.temperatureLevel);
+        buf.writeInt(this.hyperthermiaTicks);
     }
 
     @Override
-    public Data decode(FriendlyByteBuf buf)
+    public UpdateTemperaturePacket decode(FriendlyByteBuf buf)
     {
-        return new Data(buf.readEnum(TemperatureLevel.class), buf.readInt());
+        return new UpdateTemperaturePacket(buf.readEnum(TemperatureLevel.class), buf.readInt());
     }
 
     @Override
-    public void handle(Data data, Context context)
+    public void handle(UpdateTemperaturePacket packet, Context context)
     {
         if (context.isServerSide())
             return;
@@ -38,9 +49,7 @@ public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePa
         Player player = Minecraft.getInstance().player;
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
 
-        temperature.setLevel(data.temperatureLevel());
-        temperature.setHyperthermiaTicks(data.hyperthermiaTicks());
+        temperature.setLevel(packet.temperatureLevel);
+        temperature.setHyperthermiaTicks(packet.hyperthermiaTicks);
     }
-
-    public record Data(TemperatureLevel temperatureLevel, int hyperthermiaTicks) {}
 }

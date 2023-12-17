@@ -14,7 +14,6 @@ import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.init.ModTags;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.config.TemperatureConfig;
 import toughasnails.core.ToughAsNailsForge;
 
 public class ModCompatibility
@@ -33,7 +32,7 @@ public class ModCompatibility
         Holder<Biome> biome = level.getBiome(pos);
 
         // Only adjust if above the environmental modifier altitude
-        if (pos.getY() <= TemperatureConfig.environmentalModifierAltitude.get() && !level.canSeeSky(pos))
+        if (pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && !level.canSeeSky(pos))
             return current;
 
         //Check if biome uses seasonal effects

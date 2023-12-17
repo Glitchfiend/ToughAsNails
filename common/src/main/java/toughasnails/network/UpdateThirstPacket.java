@@ -11,23 +11,34 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 
-public class UpdateThirstPacket implements CustomPacket<UpdateThirstPacket.Data>
+public class UpdateThirstPacket implements CustomPacket<UpdateThirstPacket>
 {
-    @Override
-    public void encode(Data data, FriendlyByteBuf buf)
+    private int thirstLevel;
+    private float hydrationLevel;
+
+    public UpdateThirstPacket(int thirstLevel, float hydrationLevel)
     {
-        buf.writeInt(data.thirstLevel());
-        buf.writeFloat(data.hydrationLevel());
+        this.thirstLevel = thirstLevel;
+        this.hydrationLevel = hydrationLevel;
+    }
+
+    public UpdateThirstPacket() {}
+
+    @Override
+    public void encode(FriendlyByteBuf buf)
+    {
+        buf.writeInt(this.thirstLevel);
+        buf.writeFloat(this.hydrationLevel);
     }
 
     @Override
-    public Data decode(FriendlyByteBuf buf)
+    public UpdateThirstPacket decode(FriendlyByteBuf buf)
     {
-        return new Data(buf.readInt(), buf.readFloat());
+        return new UpdateThirstPacket(buf.readInt(), buf.readFloat());
     }
 
     @Override
-    public void handle(Data data, Context context)
+    public void handle(UpdateThirstPacket packet, Context context)
     {
         if (context.isServerSide())
             return;
@@ -35,9 +46,7 @@ public class UpdateThirstPacket implements CustomPacket<UpdateThirstPacket.Data>
         Player player = Minecraft.getInstance().player;
         IThirst thirst = ThirstHelper.getThirst(player);
 
-        thirst.setThirst(data.thirstLevel());
-        thirst.setHydration(data.hydrationLevel());
+        thirst.setThirst(packet.thirstLevel);
+        thirst.setHydration(packet.hydrationLevel);
     }
-
-    public record Data(int thirstLevel, float hydrationLevel) {}
 }

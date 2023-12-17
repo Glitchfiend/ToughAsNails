@@ -9,6 +9,13 @@ import net.fabricmc.api.ModInitializer;
 
 public class ToughAsNailsFabric implements ModInitializer
 {
+    /** Fabric TODOs
+     * Fix brewing recipes
+     * Add config synchronization for thirst/temperature
+     * Implement an equivalent to capabilities
+     * Fix temperatureModifierOrder
+      */
+
     @Override
     public void onInitialize()
     {

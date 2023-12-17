@@ -1,10 +1,11 @@
 package glitchcore.network;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 
-public interface CustomPacket<T>
+public interface CustomPacket<T extends CustomPacket<T>>
 {
-    void encode(T data, FriendlyByteBuf buf);
+    void encode(FriendlyByteBuf buf);
 
     T decode(FriendlyByteBuf buf);
 
@@ -14,5 +15,6 @@ public interface CustomPacket<T>
     {
         boolean isClientSide();
         boolean isServerSide();
+        ServerPlayer getSender();
     }
 }

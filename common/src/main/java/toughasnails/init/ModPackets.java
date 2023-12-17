@@ -7,6 +7,7 @@ package toughasnails.init;
 import glitchcore.network.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.TANAPI;
+import toughasnails.network.DrinkInWorldPacket;
 import toughasnails.network.UpdateTemperaturePacket;
 import toughasnails.network.UpdateThirstPacket;
 
@@ -18,5 +19,6 @@ public class ModPackets
     {
         HANDLER.register(new UpdateTemperaturePacket());
         HANDLER.register(new UpdateThirstPacket());
+        HANDLER.register(new DrinkInWorldPacket());
     }
 }

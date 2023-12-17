@@ -37,9 +37,9 @@ import toughasnails.api.item.TANItems;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
-import toughasnails.config.ServerConfig;
 import toughasnails.config.ThirstConfig;
 import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
 import toughasnails.network.*;
@@ -85,13 +85,13 @@ public class ThirstHandler
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-        if (!ServerConfig.enableThirst.get() || event.player.level().isClientSide())
+        if (!ModConfig.thirst.enableThirst || event.player.level().isClientSide())
             return;
 
         ServerPlayer player = (ServerPlayer)event.player;
         IThirst thirst = ThirstHelper.getThirst(player);
         Difficulty difficulty = player.level().getDifficulty();
-        double exhaustionThreshold = ThirstConfig.thirstExhaustionThreshold.get();
+        double exhaustionThreshold = ModConfig.thirst.thirstExhaustionThreshold;
 
         if (thirst.getExhaustion() > exhaustionThreshold)
         {
@@ -149,14 +149,14 @@ public class ThirstHandler
     private static void syncThirst(ServerPlayer player)
     {
         IThirst thirst = ThirstHelper.getThirst(player);
-        ModPackets.HANDLER.sendToPlayer(new UpdateThirstPacket.Data(thirst.getThirst(), thirst.getHydration()), player);
+        ModPackets.HANDLER.sendToPlayer(new UpdateThirstPacket(thirst.getThirst(), thirst.getHydration()), player);
     }
 
     // Replenish thirst after drinking from items in the config file
     @SubscribeEvent
     public void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ServerConfig.enableThirst.get() || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
+        if (!ModConfig.thirst.enableThirst || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
             return;
 
         Player player = (Player)event.getEntity();
@@ -289,7 +289,7 @@ public class ThirstHandler
 
     private static boolean canHandDrink()
     {
-        return ServerConfig.enableThirst.get() && ServerConfig.enableHandDrinking.get();
+        return ModConfig.thirst.enableThirst && ModConfig.thirst.enableHandDrinking;
     }
 
     private static boolean canHandDrinkInWorld(Player player, InteractionHand hand)
@@ -309,7 +309,7 @@ public class ThirstHandler
             if (ThirstHelper.canDrink(player, false) && world.mayInteract(player, pos) && world.getFluidState(pos).is(FluidTags.WATER))
             {
                 inWorldDrinkTimer = IN_WORLD_DRINK_COOLDOWN;
-                PacketHandler.HANDLER.send(new MessageDrinkInWorld(pos), PacketDistributor.SERVER.noArg());
+                ModPackets.HANDLER.sendToServer(new DrinkInWorldPacket(pos));
                 player.playSound(SoundEvents.GENERIC_DRINK, 0.5f, 1.0f);
                 player.swing(InteractionHand.MAIN_HAND);
             }

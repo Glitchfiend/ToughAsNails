@@ -17,9 +17,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.config.ClientConfig;
-import toughasnails.config.ServerConfig;
 import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModConfig;
 
 import java.util.Random;
 
@@ -50,7 +49,7 @@ public class TemperatureOverlayHandler
         Minecraft minecraft = Minecraft.getInstance();
 
         // Do nothing if temperature is disabled
-        if (!ServerConfig.enableTemperature.get())
+        if (!ModConfig.temperature.enableTemperature)
             return;
 
         Player player = minecraft.player;
@@ -75,8 +74,8 @@ public class TemperatureOverlayHandler
 
     private static void drawTemperature(GuiGraphics gui, int width, int height, TemperatureLevel temperature)
     {
-        int left = width / 2 - 8 + ClientConfig.temperatureLeftOffset.get();
-        int top = height - 52 + ClientConfig.temperatureTopOffset.get();
+        int left = width / 2 - 8 + ModConfig.client.temperatureLeftOffset;
+        int top = height - 52 + ModConfig.client.temperatureTopOffset;
 
         if (prevTemperatureLevel == null)
             prevTemperatureLevel = temperature;

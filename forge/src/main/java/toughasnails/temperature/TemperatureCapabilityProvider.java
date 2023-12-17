@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.config.ServerConfig;
+import toughasnails.init.ModConfig;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,7 +40,7 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
     {
         CompoundTag compound = new CompoundTag();
 
-        if (ServerConfig.enableTemperature.get())
+        if (ModConfig.temperature.enableTemperature)
         {
             compound.putInt("temperatureLevel", instance.getLevel().ordinal());
             compound.putInt("targetTemperatureLevel", instance.getTargetLevel().ordinal());
@@ -68,7 +68,7 @@ public class TemperatureCapabilityProvider implements INBTSerializable<CompoundT
     {
         if (nbt.contains("temperatureLevel", 99))
         {
-            if (ServerConfig.enableTemperature.get())
+            if (ModConfig.temperature.enableTemperature)
             {
                 instance.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
                 instance.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel")]);

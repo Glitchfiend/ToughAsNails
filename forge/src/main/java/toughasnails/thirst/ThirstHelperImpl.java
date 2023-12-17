@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.config.ServerConfig;
+import toughasnails.init.ModConfig;
 
 public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
 {
@@ -32,7 +32,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     @Override
     public boolean isThirstEnabled()
     {
-        return ServerConfig.enableThirst.get();
+        return ModConfig.thirst.enableThirst;
     }
 }
 

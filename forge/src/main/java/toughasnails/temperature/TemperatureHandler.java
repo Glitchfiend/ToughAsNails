@@ -21,18 +21,15 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.PacketDistributor;
 import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.config.ServerConfig;
-import toughasnails.config.TemperatureConfig;
 import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
-import toughasnails.network.PacketHandler;
 import toughasnails.network.UpdateTemperaturePacket;
 
 import java.util.UUID;
@@ -78,7 +75,7 @@ public class TemperatureHandler
 
         syncTemperature((ServerPlayer)event.getEntity());
 
-        if (!TemperatureConfig.climateClemencyRespawning.get())
+        if (!ModConfig.temperature.climateClemencyRespawning)
         {
             event.getEntity().getPersistentData().putBoolean("climateClemencyGranted", event.getOriginal().getPersistentData().getBoolean("climateClemencyGranted"));
         }
@@ -93,17 +90,17 @@ public class TemperatureHandler
         Player player = (Player)event.getEntity();
         CompoundTag data = player.getPersistentData();
 
-        if (ServerConfig.enableTemperature.get() && TemperatureConfig.climateClemencyDuration.get() > 0 && !data.getBoolean("climateClemencyGranted") && !player.isCreative())
+        if (ModConfig.temperature.enableTemperature && ModConfig.temperature.climateClemencyDuration > 0 && !data.getBoolean("climateClemencyGranted") && !player.isCreative())
         {
             data.putBoolean("climateClemencyGranted", true);
-            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, TemperatureConfig.climateClemencyDuration.get(), 0, false, false, true));
+            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, ModConfig.temperature.climateClemencyDuration, 0, false, false, true));
         }
     }
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-        if (!ServerConfig.enableTemperature.get() || event.player.level().isClientSide())
+        if (!ModConfig.temperature.enableTemperature || event.player.level().isClientSide())
             return;
 
         ServerPlayer player = (ServerPlayer)event.player;
@@ -117,12 +114,12 @@ public class TemperatureHandler
         // Use the positional temperature as the new target level if the player doesn't have climate clemency active
         if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
         {
-            int changeDelay = TemperatureConfig.temperatureChangeDelay.get();
+            int changeDelay = ModConfig.temperature.temperatureChangeDelay;
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
             TemperatureLevel newTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
 
             // Apply modifiers in the configured order
-            for (BuiltInTemperatureModifier modifier : TemperatureConfig.getTemperatureModifierOrder())
+            for (BuiltInTemperatureModifier modifier : BuiltInTemperatureModifier.getTemperatureModifierOrder())
             {
                 Tuple<TemperatureLevel, Integer> output = modifier.apply(player, newTargetLevel, changeDelay);
                 newTargetLevel = output.getA();
@@ -137,7 +134,7 @@ public class TemperatureHandler
                 // Rebound quickly from extremes
                 if ((data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT) && newTargetLevel != TemperatureLevel.ICY && newTargetLevel != TemperatureLevel.HOT)
                 {
-                    changeDelay = Math.min(changeDelay, TemperatureConfig.extremityReboundTemperatureChangeDelay.get());
+                    changeDelay = Math.min(changeDelay, ModConfig.temperature.extremityReboundTemperatureChangeDelay);
                 }
 
                 data.setChangeDelayTicks(changeDelay);
@@ -163,7 +160,7 @@ public class TemperatureHandler
         // If we are entering an extreme temperature, add to the extremity delay
         if (data.getLastLevel() != data.getLevel() && (data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT))
         {
-            data.setExtremityDelayTicks(TemperatureConfig.extremityDamageDelay.get());
+            data.setExtremityDelayTicks(ModConfig.temperature.extremityDamageDelay);
         }
 
         int hyperthermicTicks = data.getHyperthermiaTicks();
@@ -224,7 +221,7 @@ public class TemperatureHandler
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
         temperature.setLastLevel(temperature.getLevel());
         temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
-        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket.Data(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
+        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
     }
 
     private static void removeHeatExhaustion(ServerPlayer player)

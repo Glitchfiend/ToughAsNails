@@ -8,7 +8,9 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.config.TemperatureConfig;
+import toughasnails.init.ModConfig;
+
+import java.util.List;
 
 import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
 
@@ -21,19 +23,19 @@ public enum BuiltInTemperatureModifier
         {
             newTarget = modifier.modify(player, currentTarget);
         }
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, TemperatureConfig.playerTemperatureChangeDelay.get());
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.playerTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     })),
     ITEM_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.handheldModifier(player, currentTarget);
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, TemperatureConfig.handheldTemperatureChangeDelay.get());
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.handheldTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     }),
     ARMOR_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.armorModifier(player, currentTarget);
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, TemperatureConfig.armorTemperatureChangeDelay.get());
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     });
 
@@ -52,5 +54,15 @@ public enum BuiltInTemperatureModifier
     private interface Modifier
     {
         public Tuple<TemperatureLevel, Integer> apply(Player player, TemperatureLevel currentTarget, int currentChangeDelay);
+    }
+
+    private static List<BuiltInTemperatureModifier> temperatureModifierOrderCache;
+    public static List<BuiltInTemperatureModifier> getTemperatureModifierOrder()
+    {
+        if (temperatureModifierOrderCache == null)
+        {
+            temperatureModifierOrderCache = ModConfig.temperature.temperatureModifierOrder.stream().map(s -> BuiltInTemperatureModifier.valueOf(s.toUpperCase())).toList();
+        }
+        return temperatureModifierOrderCache;
     }
 }

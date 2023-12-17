@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.init.*;
-import toughasnails.network.PacketHandler;
 
 @Mod(value = ToughAsNailsForge.MOD_ID)
 public class ToughAsNailsForge
@@ -35,11 +34,6 @@ public class ToughAsNailsForge
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
         bus.addListener(this::loadComplete);
-
-        // Initialize the config file first so other things can rely on it
-        ModConfig.init();
-
-        PacketHandler.init();
 
         ToughAsNails.init();
         ModHandlers.init();

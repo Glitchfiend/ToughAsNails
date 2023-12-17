@@ -1,5 +1,6 @@
 package toughasnails.init;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -8,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import toughasnails.api.TANAPI;
+import toughasnails.api.thirst.WaterType;
 
 public class ModTags
 {
@@ -125,6 +127,16 @@ public class ModTags
         private static TagKey<Biome> create(ResourceLocation loc)
         {
             return TagKey.create(Registries.BIOME, loc);
+        }
+
+        public static WaterType getBiomeWaterType(Holder<Biome> biome)
+        {
+            if (biome.is(DIRTY_WATER_BIOMES))
+                return WaterType.DIRTY;
+            else if (biome.is(PURIFIED_WATER_BIOMES))
+                return WaterType.PURIFIED;
+            else
+                return WaterType.NORMAL;
         }
     }
 }

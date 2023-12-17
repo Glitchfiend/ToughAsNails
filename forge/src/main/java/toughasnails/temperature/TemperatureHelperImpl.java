@@ -22,8 +22,8 @@ import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
-import toughasnails.config.ServerConfig;
 import toughasnails.config.TemperatureConfig;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public boolean isTemperatureEnabled()
     {
-        return ServerConfig.enableTemperature.get();
+        return ModConfig.temperature.enableTemperature;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Holder<Biome> biome = level.getBiome(pos);
         float biomeTemperature = biome.value().getBaseTemperature();
 
-        if (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get() || level.canSeeSky(pos))
+        if (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos))
         {
             if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
             else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;
@@ -139,20 +139,20 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel altitudeModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
-        if (pos.getY() > TemperatureConfig.temperatureDropAltitude.get()) current = current.decrement(1);
-        else if (pos.getY() < TemperatureConfig.temperatureRiseAltitude.get()) current = current.increment(1);
+        if (pos.getY() > ModConfig.temperature.temperatureDropAltitude) current = current.decrement(1);
+        else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude) current = current.increment(1);
         return current;
     }
 
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
         // Drop the temperature during the night
-        if (level.isNight() && (pos.getY() > TemperatureConfig.environmentalModifierAltitude.get() || level.canSeeSky(pos)))
+        if (level.isNight() && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
         {
             if (current == TemperatureLevel.HOT)
-                current = current.increment(TemperatureConfig.nightHotTemperatureChange.get());
+                current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
             else if (current != TemperatureLevel.NEUTRAL)
-                current = current.increment(TemperatureConfig.nightTemperatureChange.get());
+                current = current.increment(ModConfig.temperature.nightTemperatureChange);
         }
 
         return current;
@@ -174,7 +174,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return current;
     }
 
-    private static final int PROXIMITY_RADIUS = TemperatureConfig.nearHeatCoolProximity.get();
+    private static final int PROXIMITY_RADIUS = ModConfig.temperature.nearHeatCoolProximity;
 
     private static void fill(Set<BlockPos> heating, Set<BlockPos> cooling, Level level, BlockPos pos)
     {
@@ -300,8 +300,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Level level = player.level();
         BlockPos pos = player.blockPosition();
 
-        if (player.isOnFire()) current = current.increment(TemperatureConfig.onFireTemperatureChange.get());
-        if (player.isInPowderSnow) current = current.increment(TemperatureConfig.powderSnowTemperatureChange.get());
+        if (player.isOnFire()) current = current.increment(ModConfig.temperature.onFireTemperatureChange);
+        if (player.isInPowderSnow) current = current.increment(ModConfig.temperature.powderSnowTemperatureChange);
         if (player.level().isRaining() && player.level().canSeeSky(pos)) {
             player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
             Holder<Biome> biome = player.level().getBiome(pos);
@@ -309,30 +309,30 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             if (ModList.get().isLoaded("sereneseasons"))
             {
                 if (!SeasonHooks.warmEnoughToRainSeasonal(player.level(), biome, pos))
-                    current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+                    current = current.increment(ModConfig.temperature.snowTemperatureChange);
                 else
-                    current.increment(TemperatureConfig.wetTemperatureChange.get());
+                    current.increment(ModConfig.temperature.wetTemperatureChange);
             }
             else
             {
                 if (biome.value().coldEnoughToSnow(pos))
-                    current = current.increment(TemperatureConfig.snowTemperatureChange.get());
+                    current = current.increment(ModConfig.temperature.snowTemperatureChange);
                 else
-                    current.increment(TemperatureConfig.wetTemperatureChange.get());
+                    current.increment(ModConfig.temperature.wetTemperatureChange);
             }
         }
         else if(!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
         {
             player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
-            current = current.increment(TemperatureConfig.wetTemperatureChange.get());
+            current = current.increment(ModConfig.temperature.wetTemperatureChange);
         }
         else
         {
             // Looks scuffed but should actually be safe, cap is always attached to player.
             ITemperature cap = player.getCapability(TANCapabilities.TEMPERATURE).orElse(null);
 
-            if(cap != null && cap.getDryTicks() < TemperatureConfig.wetTicks.get())
-                current.increment(TemperatureConfig.wetTemperatureChange.get());
+            if(cap != null && cap.getDryTicks() < ModConfig.temperature.wetTicks)
+                current.increment(ModConfig.temperature.wetTemperatureChange);
         }
 
         return current;

@@ -1,11 +1,12 @@
 package toughasnails.mixin.glitchcore.impl;
 
-import glitchcore.forge.network.PacketHandlerImpl;
 import glitchcore.network.CustomPacket;
 import glitchcore.network.PacketHandler;
+import net.jodah.typetools.TypeResolver;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.SimpleChannel;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,21 +23,51 @@ public abstract class MixinPacketHandler
     private SimpleChannel channel;
 
     @Overwrite
-    public void register(CustomPacket<?> packet)
+    public <T extends CustomPacket<T>> void register(CustomPacket<T> packet)
     {
-        PacketHandlerImpl.register(this.channel, packet);
+        final Class<T> dataType = (Class<T>) TypeResolver.resolveRawArgument(CustomPacket.class, packet.getClass());
+
+        if ((Class<?>)dataType == TypeResolver.Unknown.class)
+        {
+            throw new IllegalStateException("Failed to resolve consumer event type: " + packet);
+        }
+
+        this.channel.messageBuilder(dataType).encoder(CustomPacket::encode).decoder(packet::decode).consumerMainThread((data, forgeContext) ->
+        {
+            forgeContext.enqueueWork(() ->
+            {
+                packet.handle(data, new CustomPacket.Context() {
+                    @Override
+                    public boolean isClientSide() {
+                        return forgeContext.isClientSide();
+                    }
+
+                    @Override
+                    public boolean isServerSide() {
+                        return forgeContext.isServerSide();
+                    }
+
+                    @Override
+                    public ServerPlayer getSender()
+                    {
+                        return forgeContext.getSender();
+                    }
+                });
+            });
+            forgeContext.setPacketHandled(true);
+        }).add();
     }
 
     @Overwrite
     public <T> void sendToPlayer(T data, ServerPlayer player)
     {
-        PacketHandlerImpl.sendToPlayer(this.channel, data, player);
+        channel.send(data, PacketDistributor.PLAYER.with(player));
     }
 
     @Overwrite
     public <T> void sendToServer(T data)
     {
-        PacketHandlerImpl.sendToServer(this.channel, data);
+        channel.send(data, PacketDistributor.SERVER.noArg());
     }
 
     @Overwrite

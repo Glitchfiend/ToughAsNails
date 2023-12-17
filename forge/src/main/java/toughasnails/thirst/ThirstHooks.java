@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.config.ServerConfig;
+import toughasnails.init.ModConfig;
 
 public class ThirstHooks
 {
@@ -18,7 +18,7 @@ public class ThirstHooks
      */
     public static void onCauseFoodExhaustion(Player player, float exhaustion)
     {
-        if (ServerConfig.enableThirst.get())
+        if (ModConfig.thirst.enableThirst)
         {
             ThirstHelper.getThirst(player).addExhaustion(exhaustion);
         }

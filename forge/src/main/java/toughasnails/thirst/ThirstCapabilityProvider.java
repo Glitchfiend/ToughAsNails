@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import toughasnails.api.thirst.IThirst;
-import toughasnails.config.ServerConfig;
+import toughasnails.init.ModConfig;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +39,7 @@ public class ThirstCapabilityProvider implements INBTSerializable<CompoundTag>, 
     {
         CompoundTag compound = new CompoundTag();
 
-        if (ServerConfig.enableThirst.get())
+        if (ModConfig.thirst.enableThirst)
         {
             compound.putInt("thirstLevel", instance.getThirst());
             compound.putInt("thirstTickTimer", instance.getTickTimer());
@@ -63,7 +63,7 @@ public class ThirstCapabilityProvider implements INBTSerializable<CompoundTag>, 
     {
         if (nbt.contains("thirstLevel", 99))
         {
-            if (ServerConfig.enableThirst.get())
+            if (ModConfig.thirst.enableThirst)
             {
                 instance.setThirst(nbt.getInt("thirstLevel"));
                 instance.setTickTimer(nbt.getInt("thirstTickTimer"));

@@ -12,6 +12,7 @@ public class ToughAsNails
 {
     public static void init()
     {
+        ModConfig.init();
         ModPackets.init();
         addRegistrars();
     }
