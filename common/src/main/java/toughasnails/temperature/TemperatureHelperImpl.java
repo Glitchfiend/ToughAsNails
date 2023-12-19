@@ -16,13 +16,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.ModList;
-import sereneseasons.season.SeasonHooks;
-import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.enchantment.TANEnchantments;
+import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
-import toughasnails.config.TemperatureConfig;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
@@ -55,7 +52,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public ITemperature getPlayerTemperature(Player player)
     {
-        ITemperature temperature = player.getCapability(TANCapabilities.TEMPERATURE).orElse(lastTemperature);
+        ITemperature temperature = ((ITANPlayer)player).getTemperatureData();
         lastTemperature = temperature;
         return temperature;
     }
@@ -299,39 +296,27 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         Level level = player.level();
         BlockPos pos = player.blockPosition();
+        ITemperature temperature = TemperatureHelper.getTemperatureData(player);
 
         if (player.isOnFire()) current = current.increment(ModConfig.temperature.onFireTemperatureChange);
         if (player.isInPowderSnow) current = current.increment(ModConfig.temperature.powderSnowTemperatureChange);
         if (player.level().isRaining() && player.level().canSeeSky(pos)) {
-            player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
+            temperature.setDryTicks(0);
             Holder<Biome> biome = player.level().getBiome(pos);
 
-            if (ModList.get().isLoaded("sereneseasons"))
-            {
-                if (!SeasonHooks.warmEnoughToRainSeasonal(player.level(), biome, pos))
-                    current = current.increment(ModConfig.temperature.snowTemperatureChange);
-                else
-                    current.increment(ModConfig.temperature.wetTemperatureChange);
-            }
+            if (coldEnoughToSnow(player.level(), biome, pos))
+                current = current.increment(ModConfig.temperature.snowTemperatureChange);
             else
-            {
-                if (biome.value().coldEnoughToSnow(pos))
-                    current = current.increment(ModConfig.temperature.snowTemperatureChange);
-                else
-                    current.increment(ModConfig.temperature.wetTemperatureChange);
-            }
+                current.increment(ModConfig.temperature.wetTemperatureChange);
         }
-        else if(!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
+        else if (!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
         {
-            player.getCapability(TANCapabilities.TEMPERATURE).ifPresent(cap -> cap.setDryTicks(0));
+            temperature.setDryTicks(0);
             current = current.increment(ModConfig.temperature.wetTemperatureChange);
         }
         else
         {
-            // Looks scuffed but should actually be safe, cap is always attached to player.
-            ITemperature cap = player.getCapability(TANCapabilities.TEMPERATURE).orElse(null);
-
-            if(cap != null && cap.getDryTicks() < ModConfig.temperature.wetTicks)
+            if (temperature.getDryTicks() < ModConfig.temperature.wetTicks)
                 current.increment(ModConfig.temperature.wetTemperatureChange);
         }
 
@@ -372,5 +357,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             current = TemperatureLevel.NEUTRAL;
 
         return current;
+    }
+
+    private static boolean coldEnoughToSnow(Level level, Holder<Biome> biome, BlockPos pos)
+    {
+        return biome.value().coldEnoughToSnow(pos);
     }
 }

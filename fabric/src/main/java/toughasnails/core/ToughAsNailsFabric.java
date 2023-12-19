@@ -12,7 +12,6 @@ public class ToughAsNailsFabric implements ModInitializer
     /** Fabric TODOs
      * Fix brewing recipes
      * Add config synchronization for thirst/temperature
-     * Implement an equivalent to capabilities
      * Fix temperatureModifierOrder
       */
 

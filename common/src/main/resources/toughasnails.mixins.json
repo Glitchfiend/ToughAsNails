@@ -4,8 +4,11 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
+    "MixinPlayer"
   ],
   "client": [
+    "client.MixinGui",
+    "client.MixinLocalPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

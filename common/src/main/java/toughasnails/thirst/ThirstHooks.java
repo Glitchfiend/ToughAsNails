@@ -5,8 +5,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.init.ModConfig;
@@ -92,7 +90,6 @@ public class ThirstHooks
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void onAiStep(LocalPlayer player)
     {
         if (player.isSprinting())
@@ -113,7 +110,6 @@ public class ThirstHooks
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void onAiStepSetSprinting(LocalPlayer player, boolean sprinting)
     {
         // Don't allow sprinting if the player has insufficient thirst
@@ -123,7 +119,6 @@ public class ThirstHooks
         player.setSprinting(sprinting);
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static boolean canSprintWithThirst(LocalPlayer player)
     {
         return ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;

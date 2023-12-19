@@ -4,7 +4,9 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
+import net.minecraft.nbt.CompoundTag;
 import toughasnails.api.thirst.IThirst;
+import toughasnails.init.ModConfig;
 
 public class ThirstData implements IThirst
 {
@@ -17,6 +19,47 @@ public class ThirstData implements IThirst
     private int tickTimer;
     private int lastThirst = -99999999;
     private boolean lastHydrationZero = true;
+
+    public void addAdditionalSaveData(CompoundTag nbt)
+    {
+        if (ModConfig.thirst.enableThirst)
+        {
+            nbt.putInt("thirstLevel", this.getThirst());
+            nbt.putInt("thirstTickTimer", this.getTickTimer());
+            nbt.putFloat("thirstHydrationLevel", this.getHydration());
+            nbt.putFloat("thirstExhaustionLevel", this.getExhaustion());
+        }
+        else
+        {
+            // Save default values
+            nbt.putInt("thirstLevel", ThirstData.DEFAULT_THIRST);
+            nbt.putInt("thirstTickTimer", 0);
+            nbt.putFloat("thirstHydrationLevel", ThirstData.DEFAULT_HYDRATION);
+            nbt.putFloat("thirstExhaustionLevel", 0.0F);
+        }
+    }
+
+    public void readAdditionalSaveData(CompoundTag nbt)
+    {
+        if (nbt.contains("thirstLevel", 99))
+        {
+            if (ModConfig.thirst.enableThirst)
+            {
+                this.setThirst(nbt.getInt("thirstLevel"));
+                this.setTickTimer(nbt.getInt("thirstTickTimer"));
+                this.setHydration(nbt.getFloat("thirstHydrationLevel"));
+                this.setExhaustion(nbt.getFloat("thirstExhaustionLevel"));
+            }
+            else
+            {
+                // Use default values if thirst is disabled
+                this.setThirst(ThirstData.DEFAULT_THIRST);
+                this.setTickTimer(0);
+                this.setHydration(ThirstData.DEFAULT_HYDRATION);
+                this.setExhaustion(0.0F);
+            }
+        }
+    }
 
     @Override
     public int getThirst()

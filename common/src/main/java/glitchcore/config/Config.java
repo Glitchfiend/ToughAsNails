@@ -9,6 +9,7 @@ import com.electronwill.nightconfig.core.utils.CommentedConfigWrapper;
 import com.google.common.base.Predicates;
 import glitchcore.core.GlitchCore;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
@@ -20,6 +21,9 @@ public abstract class Config extends CommentedConfigWrapper<CommentedFileConfig>
     {
         super(CommentedFileConfig.builder(path).sync().autosave().build());
         this.path = path;
+
+        // Create parent directories as needed
+        this.path.getParent().toFile().mkdirs();
 
         // Attempt to load from disk
         try { this.config.load(); }

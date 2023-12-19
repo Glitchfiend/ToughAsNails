@@ -14,7 +14,10 @@ public interface CustomPacket<T extends CustomPacket<T>>
     interface Context
     {
         boolean isClientSide();
-        boolean isServerSide();
+        default boolean isServerSide()
+        {
+            return !isClientSide();
+        }
         ServerPlayer getSender();
     }
 }

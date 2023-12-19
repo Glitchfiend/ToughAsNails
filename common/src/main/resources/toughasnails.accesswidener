@@ -12,5 +12,17 @@ accessible method net/minecraft/world/effect/MobEffect <init> (Lnet/minecraft/wo
 # Block entity registration
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
 
-# Registry ordering (Glitch Core)
+# Thirst
+accessible field net/minecraft/world/food/FoodData foodLevel I
+accessible field net/minecraft/world/food/FoodData saturationLevel F
+accessible field net/minecraft/world/food/FoodData exhaustionLevel F
+accessible field net/minecraft/world/food/FoodData tickTimer I
+accessible field net/minecraft/world/food/FoodData lastFoodLevel I
+
+# Gui
+accessible class net/minecraft/client/gui/Gui$HeartType
+
+# GlitchCore
+
+# Registry ordering
 accessible field net/minecraft/core/registries/BuiltInRegistries LOADERS Ljava/util/Map;

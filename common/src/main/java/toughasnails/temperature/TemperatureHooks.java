@@ -9,8 +9,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import toughasnails.api.temperature.TemperatureHelper;
 
 public class TemperatureHooks
@@ -24,7 +22,6 @@ public class TemperatureHooks
     private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_half");
     private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_half_blinking");
 
-    @OnlyIn(Dist.CLIENT)
     public static void heartBlit(GuiGraphics gui, Gui.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf)
     {
         Minecraft minecraft = Minecraft.getInstance();

@@ -4,66 +4,48 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.PacketDistributor;
-import toughasnails.api.capability.TANCapabilities;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.potion.TANEffects;
-import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.api.thirst.IThirst;
-import toughasnails.config.ThirstConfig;
-import toughasnails.core.ToughAsNailsForge;
+import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
-import toughasnails.network.*;
-
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.item.ItemUtils;
+import toughasnails.network.DrinkInWorldPacket;
+import toughasnails.network.UpdateThirstPacket;
 
 public class ThirstHandler
 {
-    @SubscribeEvent
-    public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event)
-    {
-        // NOTE: We always attach the thirst capability, regardless of the thirst enabled config option.
-        // This is mainly to ensure a consistent working environment
-        if (event.getObject() instanceof Player)
-        {
-            event.addCapability(new ResourceLocation(ToughAsNailsForge.MOD_ID, "thirst"), new ThirstCapabilityProvider(TANCapabilities.THIRST, new ThirstData()));
-        }
-    }
-
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {

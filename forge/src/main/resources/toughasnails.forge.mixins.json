@@ -7,12 +7,9 @@
     "glitchcore.impl.MixinEnvironment",
     "glitchcore.impl.MixinPacketHandler",
     "glitchcore.impl.MixinRecipeHelper",
-    "MixinFoodData",
-    "MixinPlayer"
+    "MixinTemperatureHelperImpl"
   ],
   "client": [
-    "client.MixinGui",
-    "client.MixinLocalPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

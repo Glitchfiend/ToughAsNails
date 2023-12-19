@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.mixin;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Abilities;
@@ -16,10 +17,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import toughasnails.api.player.ITANPlayer;
+import toughasnails.api.temperature.ITemperature;
+import toughasnails.api.thirst.IThirst;
+import toughasnails.temperature.TemperatureData;
+import toughasnails.thirst.ThirstData;
 import toughasnails.thirst.ThirstHooks;
 
 @Mixin(Player.class)
-public abstract class MixinPlayer extends LivingEntity
+public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
 {
     @Shadow
     protected FoodData foodData = new FoodData();
@@ -28,9 +34,27 @@ public abstract class MixinPlayer extends LivingEntity
     @Final
     private Abilities abilities;
 
+    private TemperatureData temperatureData = new TemperatureData();
+    private ThirstData thirstData = new ThirstData();
+
+
     private MixinPlayer(EntityType<? extends LivingEntity> type, Level level)
     {
         super(type, level);
+    }
+
+    @Inject(method="readAdditionalSaveData", at=@At(value="TAIL"))
+    public void onReadAdditionalSaveData(CompoundTag nbt, CallbackInfo ci)
+    {
+        this.temperatureData.readAdditionalSaveData(nbt);
+        this.thirstData.readAdditionalSaveData(nbt);
+    }
+
+    @Inject(method="addAdditionalSaveData", at=@At(value="TAIL"))
+    public void onAddAdditionalSaveData(CompoundTag nbt, CallbackInfo ci)
+    {
+        this.temperatureData.addAdditionalSaveData(nbt);
+        this.thirstData.addAdditionalSaveData(nbt);
     }
 
     @Inject(method="causeFoodExhaustion", at=@At(value="HEAD"))
@@ -43,5 +67,17 @@ public abstract class MixinPlayer extends LivingEntity
                 ThirstHooks.onCauseFoodExhaustion((Player)(Object)this, exhaustion);
             }
         }
+    }
+
+    @Override
+    public ITemperature getTemperatureData()
+    {
+        return this.temperatureData;
+    }
+
+    @Override
+    public IThirst getThirstData()
+    {
+        return this.thirstData;
     }
 }

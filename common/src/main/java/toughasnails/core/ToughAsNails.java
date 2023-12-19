@@ -13,8 +13,9 @@ public class ToughAsNails
     public static void init()
     {
         ModConfig.init();
-        ModPackets.init();
         addRegistrars();
+        ModPackets.init();
+        ModApi.init();
     }
 
     private static void addRegistrars()

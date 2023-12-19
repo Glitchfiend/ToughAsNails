@@ -29,7 +29,7 @@ public abstract class MixinPacketHandler
 
         if ((Class<?>)dataType == TypeResolver.Unknown.class)
         {
-            throw new IllegalStateException("Failed to resolve consumer event type: " + packet);
+            throw new IllegalStateException("Failed to resolve packet data type: " + packet);
         }
 
         this.channel.messageBuilder(dataType).encoder(CustomPacket::encode).decoder(packet::decode).consumerMainThread((data, forgeContext) ->
@@ -40,11 +40,6 @@ public abstract class MixinPacketHandler
                     @Override
                     public boolean isClientSide() {
                         return forgeContext.isClientSide();
-                    }
-
-                    @Override
-                    public boolean isServerSide() {
-                        return forgeContext.isServerSide();
                     }
 
                     @Override

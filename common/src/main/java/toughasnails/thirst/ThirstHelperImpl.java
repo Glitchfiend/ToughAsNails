@@ -5,7 +5,7 @@
 package toughasnails.thirst;
 
 import net.minecraft.world.entity.player.Player;
-import toughasnails.api.capability.TANCapabilities;
+import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.init.ModConfig;
@@ -17,7 +17,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     @Override
     public IThirst getThirst(Player player)
     {
-        IThirst thirst = player.getCapability(TANCapabilities.THIRST).orElse(lastThirst);
+        IThirst thirst = ((ITANPlayer)player).getThirstData();
         lastThirst = thirst;
         return thirst;
     }

@@ -4,8 +4,10 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import net.minecraft.nbt.CompoundTag;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.init.ModConfig;
 
 public class TemperatureData implements ITemperature
 {
@@ -20,6 +22,54 @@ public class TemperatureData implements ITemperature
 
     private TemperatureLevel lastTemperature = DEFAULT_LEVEL;
     private int lastHyperthermiaTicks;
+
+    public void addAdditionalSaveData(CompoundTag nbt)
+    {
+        if (ModConfig.temperature.enableTemperature)
+        {
+            nbt.putInt("temperatureLevel", this.getLevel().ordinal());
+            nbt.putInt("targetTemperatureLevel", this.getTargetLevel().ordinal());
+            nbt.putInt("changeDelayTicks", this.getChangeDelayTicks());
+            nbt.putInt("hyperthermiaTicks", this.getHyperthermiaTicks());
+            nbt.putInt("extremityDelayTicks", this.getExtremityDelayTicks());
+            nbt.putInt("dryTicks", this.getDryTicks());
+        }
+        else
+        {
+            // Save default values
+            nbt.putInt("temperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            nbt.putInt("targetTemperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            nbt.putInt("changeDelayTicks", 0);
+            nbt.putInt("hyperthermiaTicks", 0);
+            nbt.putInt("extremityDelayTicks", 0);
+            nbt.putInt("dryTicks", 0);
+        }
+    }
+
+    public void readAdditionalSaveData(CompoundTag nbt)
+    {
+        if (nbt.contains("temperatureLevel", 99))
+        {
+            if (ModConfig.temperature.enableTemperature)
+            {
+                this.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
+                this.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel")]);
+                this.setChangeDelayTicks(nbt.getInt("changeDelayTicks"));
+                this.setHyperthermiaTicks(nbt.getInt("hyperthermiaTicks"));
+                this.setExtremityDelayTicks(nbt.getInt("extremityDelayTicks"));
+            }
+            else
+            {
+                // Use default values if temperature is disabled
+                this.setLevel(TemperatureData.DEFAULT_LEVEL);
+                this.setTargetLevel(TemperatureData.DEFAULT_LEVEL);
+                this.setChangeDelayTicks(0);
+                this.setHyperthermiaTicks(0);
+                this.setExtremityDelayTicks(0);
+                this.setDryTicks(0);
+            }
+        }
+    }
 
     @Override
     public TemperatureLevel getLevel()

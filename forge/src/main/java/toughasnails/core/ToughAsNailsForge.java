@@ -49,8 +49,6 @@ public class ToughAsNailsForge
     {
         event.enqueueWork(() ->
         {
-            // Initialize here to ensure the config has already been setup. Forge now enforces this annoyingly.
-            ModApi.init();
         });
     }
 
