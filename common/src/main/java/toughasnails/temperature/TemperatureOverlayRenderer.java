@@ -1,50 +1,73 @@
 /*******************************************************************************
- * Copyright 2021, the Glitchfiend Team.
+ * Copyright 2023, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
 package toughasnails.temperature;
 
+import glitchcore.event.RenderGuiEvent;
+import glitchcore.event.TickEvent;
+import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import toughasnails.api.TANAPI;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNailsForge;
 import toughasnails.init.ModConfig;
 
 import java.util.Random;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class TemperatureOverlayHandler
+public class TemperatureOverlayRenderer
 {
     private static final Random RANDOM = new Random();
     public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
-    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(ToughAsNailsForge.MOD_ID, "textures/misc/hyperthermia_outline.png");
-
+    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
     private static long updateCounter;
     private static long flashCounter;
     private static TemperatureLevel prevTemperatureLevel;
 
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event)
+    public static void onBeginRenderFood(RenderGuiEvent.Pre event)
+    {
+        if (event.getType() != RenderGuiEvent.Type.FOOD)
+            return;
+
+        Gui gui = event.getGui();
+        Minecraft minecraft = Minecraft.getInstance();
+        if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
+        {
+            GuiUtils.setupOverlayRenderState(true, false);
+            renderTemperature(event.getGuiGraphics(), event.getPartialTicks(), event.getScreenWidth(), event.getScreenHeight());
+        }
+    }
+
+    public static void onBeginRenderFrostbite(RenderGuiEvent.Pre event)
+    {
+        if (event.getType() != RenderGuiEvent.Type.FROSTBITE)
+            return;
+
+        GuiUtils.setupOverlayRenderState(true, false);
+
+        Gui gui = event.getGui();
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+
+        if (TemperatureHelper.getTicksHyperthermic(player) > 0)
+            gui.renderTextureOverlay(event.getGuiGraphics(), HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
+    }
+
+    public static void onClientTick(TickEvent.Client event)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (event.phase == TickEvent.Phase.END && !minecraft.isPaused())
+        if (event.getPhase() == TickEvent.Phase.END && !minecraft.isPaused())
         {
             updateCounter++;
         }
     }
 
-    private static void renderTemperature(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int width, int height)
+    private static void renderTemperature(GuiGraphics guiGraphics, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -62,14 +85,6 @@ public class TemperatureOverlayHandler
         {
             drawTemperature(guiGraphics, width, height, temperature);
         }
-    }
-
-    private static void renderHyperthermia(ForgeGui gui, GuiGraphics guiGraphics)
-    {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        if (TemperatureHelper.getTicksHyperthermic(player) > 0)
-            gui.renderTextureOverlay(guiGraphics, HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
     }
 
     private static void drawTemperature(GuiGraphics gui, int width, int height, TemperatureLevel temperature)
@@ -107,29 +122,5 @@ public class TemperatureOverlayHandler
             v += 16;
 
         gui.blit(OVERLAY, left, top, iconIndex, v, 16, 16);
-    }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    private static class OverlayRegister
-    {
-        @SubscribeEvent
-        public static void registerOverlays(RegisterGuiOverlaysEvent event)
-        {
-            event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "temperature_level", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
-            {
-                Minecraft minecraft = Minecraft.getInstance();
-                if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements())
-                {
-                    gui.setupOverlayRenderState(true, false);
-                    renderTemperature(gui, poseStack, partialTick, screenWidth, screenHeight);
-                }
-            });
-
-            event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), "hyperthermia", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
-            {
-                gui.setupOverlayRenderState(true, false);
-                renderHyperthermia(gui, poseStack);
-            });
-        }
     }
 }

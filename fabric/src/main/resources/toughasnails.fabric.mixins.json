@@ -8,6 +8,7 @@
     "glitchcore.impl.MixinPacketHandler"
   ],
   "client": [
+    "glitchcore.impl.client.MixinGui"
   ],
   "injectors": {
     "defaultRequire": 1

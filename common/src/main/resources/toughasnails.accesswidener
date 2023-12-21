@@ -21,6 +21,7 @@ accessible field net/minecraft/world/food/FoodData lastFoodLevel I
 
 # Gui
 accessible class net/minecraft/client/gui/Gui$HeartType
+accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V
 
 # GlitchCore
 

@@ -10,6 +10,7 @@
     "MixinTemperatureHelperImpl"
   ],
   "client": [
+    "glitchcore.impl.client.MixinForgeGui"
   ],
   "injectors": {
     "defaultRequire": 1

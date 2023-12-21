@@ -22,7 +22,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.init.ModTags;
-import toughasnails.thirst.ThirstOverlayHandler;
+import toughasnails.thirst.ThirstOverlayRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler
@@ -116,16 +116,16 @@ public class TooltipHandler
 
                 // Draw the background of each thirst droplet
                 // Args: poseStack, x, y, u, v, width, height, texWidth, texHeight
-                gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 9, 32, 9, 9, 256, 256);
+                gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 9, 32, 9, 9, 256, 256);
 
                 // Draw a full droplet
                 if (this.amount > dropletHalf)
                 {
-                    gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 4 * 9, 32, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 4 * 9, 32, 9, 9, 256, 256);
                 }
                 else if (this.amount == dropletHalf) // Draw a half droplet
                 {
-                    gui.blit(ThirstOverlayHandler.OVERLAY, startX, startY, 9, 32 + 9, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 9, 32 + 9, 9, 9, 256, 256);
                 }
             }
 
