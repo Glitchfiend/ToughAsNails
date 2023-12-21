@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import toughasnails.api.crafting.TANRecipeSerializers;
+import toughasnails.crafting.WaterPurifierRecipe;
 
 public class WaterPurifierRecipeBuilder
 {
@@ -36,32 +36,6 @@ public class WaterPurifierRecipeBuilder
 
     public void save(RecipeOutput output, ResourceLocation location)
     {
-        output.accept(new WaterPurifierRecipeBuilder.Result(location, TANRecipeSerializers.WATER_PURIFYING, this.input, this.result, this.purifyTime));
-    }
-
-    public record Result(ResourceLocation id, RecipeSerializer<?> type, ItemStack input, ItemStack result, int purifyTime) implements FinishedRecipe {
-        public void serializeRecipeData(JsonObject json) {
-            json.add("input", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.input), IllegalStateException::new));
-            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), IllegalStateException::new));
-            json.addProperty("purifytime", this.purifyTime);
-        }
-
-        @Override
-        public ResourceLocation id()
-        {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> type()
-        {
-            return this.type;
-        }
-
-        @Override
-        public AdvancementHolder advancement()
-        {
-            return null;
-        }
+        output.accept(location, new WaterPurifierRecipe(this.input, this.result, this.purifyTime), null);
     }
 }

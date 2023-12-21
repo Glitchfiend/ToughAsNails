@@ -30,6 +30,5 @@
     "recipes": [
       "toughasnails:empty_canteen"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

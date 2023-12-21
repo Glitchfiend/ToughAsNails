@@ -30,6 +30,5 @@
     "recipes": [
       "toughasnails:pumpkin_juice"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

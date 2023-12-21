@@ -28,6 +28,5 @@
     "recipes": [
       "toughasnails:wool_leggings"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

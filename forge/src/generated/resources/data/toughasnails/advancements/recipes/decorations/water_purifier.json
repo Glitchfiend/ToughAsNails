@@ -30,6 +30,5 @@
     "recipes": [
       "toughasnails:water_purifier"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

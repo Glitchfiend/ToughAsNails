@@ -5,6 +5,7 @@
 package toughasnails.core;
 
 import glitchcore.event.EventManager;
+import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
 import net.minecraft.core.registries.Registries;
 import toughasnails.init.*;

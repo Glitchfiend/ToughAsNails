@@ -4,19 +4,26 @@
  ******************************************************************************/
 package toughasnails.datagen;
 
+import net.minecraft.core.Cloner;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.minecraft.data.registries.RegistriesDatapackGenerator;
+import net.minecraft.resources.RegistryDataLoader;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import toughasnails.api.TANAPI;
 import toughasnails.core.ToughAsNailsForge;
 import toughasnails.datagen.loot.TANLootTableProvider;
 import toughasnails.datagen.provider.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ToughAsNailsForge.MOD_ID)
@@ -32,7 +39,7 @@ public class DataGenerationHandler
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         PackOutput output = generator.getPackOutput();
 
-        var datapackProvider = generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(output, event.getLookupProvider(), REG_BUILDER, Set.of(ToughAsNailsForge.MOD_ID)));
+        var datapackProvider = generator.addProvider(event.includeServer(), new RegistriesDatapackGenerator(output, event.getLookupProvider().thenApply(r -> constructRegistries(r, REG_BUILDER)), Set.of(TANAPI.MOD_ID)));
 
         // Recipes
         generator.addProvider(event.includeServer(), new TANRecipeProvider(output));
@@ -45,5 +52,21 @@ public class DataGenerationHandler
         generator.addProvider(event.includeServer(), new TANItemTagsProvider(output, datapackProvider.getRegistryProvider(), blocksTagProvider.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new TANBiomeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
         generator.addProvider(event.includeServer(), new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
+    }
+
+
+    private static HolderLookup.Provider constructRegistries(HolderLookup.Provider original, RegistrySetBuilder datapackEntriesBuilder)
+    {
+        Cloner.Factory clonerFactory = new Cloner.Factory();
+        var builderKeys = new HashSet<>(datapackEntriesBuilder.getEntryKeys());
+        RegistryDataLoader.WORLDGEN_REGISTRIES.stream().forEach(data -> {
+            // Add keys for missing registries
+            if (!builderKeys.contains(data.key()))
+                datapackEntriesBuilder.add(data.key(), context -> {});
+
+            data.runWithArguments(clonerFactory::addCodec);
+        });
+
+        return datapackEntriesBuilder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original, clonerFactory).patches();
     }
 }

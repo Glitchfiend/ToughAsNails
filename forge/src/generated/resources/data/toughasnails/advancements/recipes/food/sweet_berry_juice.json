@@ -30,6 +30,5 @@
     "recipes": [
       "toughasnails:sweet_berry_juice"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

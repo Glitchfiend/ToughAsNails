@@ -56,7 +56,7 @@ public class ToughAsNailsForge
     {
         event.enqueueWork(() ->
         {
-            ModContainerTypes.registerScreens();
+
         });
     }
 

@@ -28,6 +28,5 @@
     "recipes": [
       "toughasnails:wool_boots"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

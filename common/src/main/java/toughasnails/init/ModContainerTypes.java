@@ -21,10 +21,6 @@ public class ModContainerTypes
     public static void registerContainers(BiConsumer<ResourceLocation, MenuType<?>> func)
     {
         TANContainerTypes.WATER_PURIFIER = register(func, "water_purifier", WaterPurifierContainer::new);
-    }
-
-    public static void registerScreens()
-    {
         MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
     }
 

@@ -30,6 +30,5 @@
     "recipes": [
       "toughasnails:chorus_fruit_juice"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
