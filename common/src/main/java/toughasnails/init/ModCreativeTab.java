@@ -35,7 +35,6 @@ public class ModCreativeTab
                     try
                     {
                         Item item = (Item) field.get(null);
-                        System.out.println("Adding item to tab " + item.toString());
                         if (!ITEM_BLACKLIST.contains(item))
                             output.accept(new ItemStack(item));
                     }

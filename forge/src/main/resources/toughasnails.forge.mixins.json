@@ -7,6 +7,7 @@
     "glitchcore.impl.MixinEnvironment",
     "glitchcore.impl.MixinPacketHandler",
     "glitchcore.impl.MixinRecipeHelper",
+    "glitchcore.impl.MixinServerPlayer",
     "MixinTemperatureHelperImpl"
   ],
   "client": [

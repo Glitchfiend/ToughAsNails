@@ -9,6 +9,7 @@ import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
 import net.minecraft.core.registries.Registries;
 import toughasnails.init.*;
+import toughasnails.temperature.TemperatureHandler;
 import toughasnails.temperature.TemperatureOverlayRenderer;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
@@ -40,9 +41,13 @@ public class ToughAsNails
 
     private static void addHandlers()
     {
+        // Temperature handlers
         EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
+        EventManager.addListener(TemperatureHandler::onChangeDimension);
+
+        // Thirst handlers
         EventManager.addListener(ThirstOverlayRenderer::onClientTick);
         EventManager.addListener(ThirstOverlayRenderer::onBeginRenderAir);
     }

@@ -5,7 +5,8 @@
   "refmap": "toughasnails.refmap.json",
   "mixins": [
     "glitchcore.impl.MixinEnvironment",
-    "glitchcore.impl.MixinPacketHandler"
+    "glitchcore.impl.MixinPacketHandler",
+    "glitchcore.impl.MixinServerPlayer"
   ],
   "client": [
     "glitchcore.impl.client.MixinGui"

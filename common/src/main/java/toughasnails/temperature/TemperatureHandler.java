@@ -4,20 +4,15 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import net.minecraft.nbt.CompoundTag;
+import glitchcore.event.PlayerEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
@@ -33,61 +28,11 @@ public class TemperatureHandler
 {
     private static final UUID SPEED_MODIFIER_HYPERTHERMIA_UUID = UUID.fromString("30b6ca4e-c6df-4532-80db-1d024765b56b");
 
-    @SubscribeEvent
-    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
+    public static void onPlayerTick(Player player)
     {
-        if (event.getEntity().level().isClientSide())
+        if (!ModConfig.temperature.enableTemperature || player.level().isClientSide())
             return;
 
-        syncTemperature((ServerPlayer)event.getEntity());
-    }
-
-    @SubscribeEvent
-    public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
-    {
-        if (event.getEntity().level().isClientSide())
-            return;
-
-        syncTemperature((ServerPlayer)event.getEntity());
-    }
-
-    @SubscribeEvent
-    public void onPlayerCloned(PlayerEvent.Clone event)
-    {
-        if (event.getEntity().level().isClientSide())
-            return;
-
-        syncTemperature((ServerPlayer)event.getEntity());
-
-        if (!ModConfig.temperature.climateClemencyRespawning)
-        {
-            event.getEntity().getPersistentData().putBoolean("climateClemencyGranted", event.getOriginal().getPersistentData().getBoolean("climateClemencyGranted"));
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerSpawn(EntityJoinLevelEvent event)
-    {
-        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Player))
-            return;
-
-        Player player = (Player)event.getEntity();
-        CompoundTag data = player.getPersistentData();
-
-        if (ModConfig.temperature.enableTemperature && ModConfig.temperature.climateClemencyDuration > 0 && !data.getBoolean("climateClemencyGranted") && !player.isCreative())
-        {
-            data.putBoolean("climateClemencyGranted", true);
-            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, ModConfig.temperature.climateClemencyDuration, 0, false, false, true));
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event)
-    {
-        if (!ModConfig.temperature.enableTemperature || event.player.level().isClientSide())
-            return;
-
-        ServerPlayer player = (ServerPlayer)event.player;
         ITemperature data = TemperatureHelper.getTemperatureData(player);
 
         // Decrement the positional change delay ticks
@@ -186,12 +131,6 @@ public class TemperatureHandler
             player.setTicksFrozen(0);
         }
 
-        // Update the temperature if it has changed
-        if (data.getLastLevel() != data.getLevel() || data.getLastHyperthermiaTicks() != data.getHyperthermiaTicks())
-        {
-            syncTemperature(player);
-        }
-
         removeHeatExhaustion(player);
         tryAddHeatExhaustion(player);
 
@@ -200,15 +139,22 @@ public class TemperatureHandler
             player.hurt(player.damageSources().source(TANDamageTypes.HYPERTHERMIA), 1);
     }
 
-    private static void syncTemperature(ServerPlayer player)
+    public static void onChangeDimension(PlayerEvent.ChangeDimension event)
     {
-        ITemperature temperature = TemperatureHelper.getTemperatureData(player);
-        temperature.setLastLevel(temperature.getLevel());
-        temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
-        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
+        ITemperature temperature = TemperatureHelper.getTemperatureData(event.getPlayer());
+        temperature.setLastLevel(TemperatureData.DEFAULT_LEVEL);
+        temperature.setLastHyperthermiaTicks(0);
     }
 
-    private static void removeHeatExhaustion(ServerPlayer player)
+    public static void syncTemperature(ServerPlayer player)
+    {
+        ITemperature temperature = TemperatureHelper.getTemperatureData(player);
+        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
+        temperature.setLastLevel(temperature.getLevel());
+        temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
+    }
+
+    private static void removeHeatExhaustion(Player player)
     {
         AttributeInstance attribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
@@ -221,7 +167,7 @@ public class TemperatureHandler
         }
     }
 
-    protected void tryAddHeatExhaustion(ServerPlayer player)
+    protected static void tryAddHeatExhaustion(Player player)
     {
         if (!player.level().getBlockState(player.getOnPos()).isAir())
         {

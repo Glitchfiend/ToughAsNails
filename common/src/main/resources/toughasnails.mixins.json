@@ -4,12 +4,14 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "MixinPlayer"
+    "MixinPlayer",
+    "MixinServerLevel",
+    "MixinServerPlayer"
   ],
   "client": [
-    "glitchcore.client.MixinMinecraft",
     "client.MixinGui",
-    "client.MixinLocalPlayer"
+    "client.MixinLocalPlayer",
+    "glitchcore.client.MixinMinecraft"
   ],
   "injectors": {
     "defaultRequire": 1

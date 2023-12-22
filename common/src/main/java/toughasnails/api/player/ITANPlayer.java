@@ -7,4 +7,6 @@ public interface ITANPlayer
 {
     ITemperature getTemperatureData();
     IThirst getThirstData();
+    boolean getClimateClemencyGranted();
+    void setClimateClemencyGranted(boolean value);
 }

@@ -94,7 +94,7 @@ public class FabricPacketWrapper<T extends CustomPacket<T>>
         @Override
         public void write(FriendlyByteBuf buf)
         {
-            FabricPacketWrapper.this.packet.encode(buf);
+            this.data.encode(buf);
         }
 
         @Override

@@ -13,6 +13,7 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.core.ToughAsNails;
 
 public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket>
 {
