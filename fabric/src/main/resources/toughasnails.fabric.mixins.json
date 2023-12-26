@@ -6,6 +6,7 @@
   "mixins": [
     "glitchcore.impl.MixinEnvironment",
     "glitchcore.impl.MixinPacketHandler",
+    "glitchcore.impl.MixinRenderTypeHelper",
     "glitchcore.impl.MixinServerPlayer"
   ],
   "client": [

@@ -17,7 +17,7 @@ public class GlitchCoreForge
 
     }
 
-    public static void prepareEventHandlers(IEventBus modEventBus)
+    public static void prepareModEventHandlers(IEventBus modEventBus)
     {
         for (Class<? extends Event> eventClass : EventManager.getRequiredEvents())
         {

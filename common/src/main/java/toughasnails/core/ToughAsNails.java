@@ -5,7 +5,11 @@
 package toughasnails.core;
 
 import glitchcore.event.EventManager;
+import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
+import glitchcore.util.RenderTypeHelper;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
@@ -13,11 +17,15 @@ import toughasnails.temperature.TemperatureOverlayRenderer;
 import toughasnails.thirst.ThirstHandler;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
+import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
+import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
+
 public class ToughAsNails
 {
     public static void init()
     {
         ModConfig.init();
+        ModTags.init();
         addRegistrars();
         addHandlers();
         ModPackets.init();

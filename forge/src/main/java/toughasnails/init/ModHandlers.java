@@ -17,9 +17,7 @@ public class ModHandlers
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        MinecraftForge.EVENT_BUS.register(new ThirstHandler());
-        MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
 
-        GlitchCoreForge.prepareEventHandlers(bus);
+
     }
 }
