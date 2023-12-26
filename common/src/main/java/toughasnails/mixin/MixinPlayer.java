@@ -24,6 +24,7 @@ import toughasnails.api.thirst.IThirst;
 import toughasnails.temperature.TemperatureData;
 import toughasnails.temperature.TemperatureHandler;
 import toughasnails.thirst.ThirstData;
+import toughasnails.thirst.ThirstHandler;
 import toughasnails.thirst.ThirstHooks;
 
 @Mixin(Player.class)
@@ -77,7 +78,9 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
     @Inject(method="tick", at=@At(value="TAIL"))
     public void onTick(CallbackInfo ci)
     {
-        TemperatureHandler.onPlayerTick((Player)(Object)this);
+        Player player = (Player)(Object)this;
+        TemperatureHandler.onPlayerTick(player);
+        ThirstHandler.onPlayerTick(player);
     }
 
     @Override

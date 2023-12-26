@@ -37,6 +37,7 @@ public class ToughAsNailsForge
 
         ToughAsNails.init();
         ModHandlers.init();
+        ModTags.init();
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event)
@@ -66,7 +67,6 @@ public class ToughAsNailsForge
         {
             proxy.init();
             ModCrafting.registerPotionRecipes();
-            ModTags.init();
             ModCompatibility.init();
         });
     }

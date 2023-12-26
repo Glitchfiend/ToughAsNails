@@ -41,15 +41,13 @@ minecraft {
         data {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', mod_id, '--all', '--output', project(':Common').file('src/generated/resources/'), '--existing', project(':Common').file('src/main/resources/')
             taskName 'Data'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
     }
 }
-
-sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"

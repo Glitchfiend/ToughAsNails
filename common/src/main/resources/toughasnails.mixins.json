@@ -6,7 +6,8 @@
   "mixins": [
     "MixinPlayer",
     "MixinServerLevel",
-    "MixinServerPlayer"
+    "MixinServerPlayer",
+    "glitchcore.MixinItemStack"
   ],
   "client": [
     "client.MixinGui",

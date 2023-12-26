@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.mixin.glitchcore.impl;
 
+import com.google.common.base.Preconditions;
 import glitchcore.fabric.network.FabricPacketWrapper;
 import glitchcore.network.CustomPacket;
 import glitchcore.network.PacketHandler;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Mixin(value = PacketHandler.class, remap = false)
 public abstract class MixinPacketHandler
@@ -34,7 +36,8 @@ public abstract class MixinPacketHandler
     @Overwrite
     public <T extends CustomPacket<T>> void register(CustomPacket<T> packet)
     {
-        wrappers.put(getPacketDataType(packet), new FabricPacketWrapper(this.channelName, packet));
+        var dataType = getPacketDataType(packet);
+        wrappers.put(dataType, new FabricPacketWrapper(new ResourceLocation(this.channelName.getNamespace(), String.valueOf(dataType.hashCode())), packet));
     }
 
     @Overwrite

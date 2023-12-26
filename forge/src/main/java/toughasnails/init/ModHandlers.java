@@ -5,8 +5,6 @@
 package toughasnails.init;
 
 import glitchcore.forge.GlitchCoreForge;
-import glitchcore.util.RegistryHelper;
-import net.minecraft.core.registries.Registries;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;

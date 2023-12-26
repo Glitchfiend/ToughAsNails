@@ -18,6 +18,7 @@ accessible field net/minecraft/world/food/FoodData saturationLevel F
 accessible field net/minecraft/world/food/FoodData exhaustionLevel F
 accessible field net/minecraft/world/food/FoodData tickTimer I
 accessible field net/minecraft/world/food/FoodData lastFoodLevel I
+accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;
 
 # Gui
 accessible class net/minecraft/client/gui/Gui$HeartType

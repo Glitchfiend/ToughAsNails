@@ -5,12 +5,12 @@
 package toughasnails.core;
 
 import glitchcore.event.EventManager;
-import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
 import net.minecraft.core.registries.Registries;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
 import toughasnails.temperature.TemperatureOverlayRenderer;
+import toughasnails.thirst.ThirstHandler;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
 public class ToughAsNails
@@ -50,5 +50,10 @@ public class ToughAsNails
         // Thirst handlers
         EventManager.addListener(ThirstOverlayRenderer::onClientTick);
         EventManager.addListener(ThirstOverlayRenderer::onBeginRenderAir);
+        EventManager.addListener(ThirstHandler::onChangeDimension);
+        EventManager.addListener(ThirstHandler::onItemUseFinish);
+        EventManager.addListener(ThirstHandler::onPlayerUseItem);
+        EventManager.addListener(ThirstHandler::onUseEmpty);
+        EventManager.addListener(ThirstHandler::onClientTick);
     }
 }

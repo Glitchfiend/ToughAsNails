@@ -23,6 +23,6 @@ public abstract class Event
         if (!this.isCancellable())
             throw new UnsupportedOperationException("Attempted to cancel event which cannot be cancelled!");
 
-        this.cancelled = cancelled;
+        this.cancelled = value;
     }
 }
