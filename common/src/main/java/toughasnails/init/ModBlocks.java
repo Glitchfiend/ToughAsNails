@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.util.Environment;
 import glitchcore.util.RenderTypeHelper;
 import net.minecraft.client.renderer.RenderType;
@@ -37,6 +38,11 @@ public class ModBlocks
 
         RenderTypeHelper.setRenderType(RAIN_COLLECTOR, cutoutRenderType);
         RenderTypeHelper.setRenderType(WATER_PURIFIER, cutoutRenderType);
+    }
+
+    public static void registerBlockColors(RegisterColorsEvent.Block event)
+    {
+        event.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
     }
 
     private static Block register(BiConsumer<ResourceLocation, Block> func, String name, Block block)

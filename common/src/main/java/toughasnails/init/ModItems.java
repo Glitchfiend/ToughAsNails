@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.event.client.RegisterColorsEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
@@ -49,6 +50,17 @@ public class ModItems
 
         TANItems.RAIN_COLLECTOR = register(func, "rain_collector", new BlockItem(TANBlocks.RAIN_COLLECTOR, new Item.Properties()));
         TANItems.WATER_PURIFIER = register(func, "water_purifier", new BlockItem(TANBlocks.WATER_PURIFIER, new Item.Properties()));
+    }
+
+    public static void registerItemColors(RegisterColorsEvent.Item event)
+    {
+        event.register((stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ((DyeableWoolItem)stack.getItem()).getColor(stack);
+        }, TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
+
+        event.register((stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ((LeafArmorItem)stack.getItem()).getColor(stack);
+        }, TANItems.LEAF_HELMET, TANItems.LEAF_CHESTPLATE, TANItems.LEAF_LEGGINGS, TANItems.LEAF_BOOTS);
     }
 
     private static Item register(BiConsumer<ResourceLocation, Item> func, String name, Item item)

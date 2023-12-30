@@ -6,10 +6,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.Level;
+import toughasnails.core.ToughAsNails;
 
 import java.util.List;
 
-public class LeafArmorItem extends ArmorItem implements DyeableLeatherItem
+public class LeafArmorItem extends DyeableArmorItem
 {
     public LeafArmorItem(ArmorMaterial p_41091_, ArmorItem.Type type, Item.Properties p_41093_)
     {
@@ -22,13 +23,7 @@ public class LeafArmorItem extends ArmorItem implements DyeableLeatherItem
         if (!world.isClientSide())
             return;
 
-        int color = FoliageColor.getDefaultColor();
-
-        if (world != null && entity != null)
-        {
-            color = BiomeColors.getAverageFoliageColor(world, entity.blockPosition());
-        }
-
+        int color = BiomeColors.getAverageFoliageColor(world, entity.blockPosition());
         this.setColor(stack, color);
     }
 
@@ -40,18 +35,7 @@ public class LeafArmorItem extends ArmorItem implements DyeableLeatherItem
     }
 
     @Override
-    public void setColor(ItemStack p_41116_, int p_41117_)
-    {
-        p_41116_.getOrCreateTagElement("display").putInt("color", p_41117_);
-    }
-
-    @Override
     public void clearColor(ItemStack p_41124_)
     {
-    }
-
-    public static ItemStack dyeArmor(ItemStack p_41119_, List<DyeItem> p_41120_)
-    {
-        return p_41119_;
     }
 }

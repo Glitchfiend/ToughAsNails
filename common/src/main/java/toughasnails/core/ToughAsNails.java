@@ -11,6 +11,9 @@ import glitchcore.util.RenderTypeHelper;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import toughasnails.api.TANAPI;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
 import toughasnails.temperature.TemperatureOverlayRenderer;
@@ -22,6 +25,9 @@ import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
 
 public class ToughAsNails
 {
+    public static final String MOD_ID = TANAPI.MOD_ID;
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
     public static void init()
     {
         ModConfig.init();
@@ -68,5 +74,9 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onPlayerUseItem);
         EventManager.addListener(ThirstHandler::onUseEmpty);
         EventManager.addListener(ThirstHandler::onClientTick);
+
+        // Client handlers
+        EventManager.addListener(ModBlocks::registerBlockColors);
+        EventManager.addListener(ModItems::registerItemColors);
     }
 }
