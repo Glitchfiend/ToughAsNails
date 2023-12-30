@@ -36,7 +36,7 @@ public class TooltipHandler
 
         if (stack.is(ModTags.Items.HEATING_ITEMS) || stack.is(ModTags.Items.HEATING_ARMOR) || state.is(ModTags.Blocks.HEATING_BLOCKS))
         {
-            event.getToolTip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.RED));
+            event.getToolTip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
 
         if (stack.is(ModTags.Items.COOLING_ITEMS) || stack.is(ModTags.Items.COOLING_ARMOR) || state.is(ModTags.Blocks.COOLING_BLOCKS))
