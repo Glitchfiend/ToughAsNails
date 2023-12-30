@@ -127,9 +127,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             else if (biome.is(ModTags.Biomes.HOT_BIOMES)) return TemperatureLevel.HOT;
             else if (biomeTemperature < 0.15F) return TemperatureLevel.ICY;
             else if (biomeTemperature >= 0.15F && biomeTemperature < 0.45F) return TemperatureLevel.COLD;
-            else if (biomeTemperature >= 0.45F && biomeTemperature < 0.75F) return TemperatureLevel.NEUTRAL;
-            else if (biomeTemperature >= 0.75F && biomeTemperature < 0.9F) return TemperatureLevel.WARM;
-            else if (biomeTemperature >= 0.9F) return TemperatureLevel.HOT;
+            else if (biomeTemperature >= 0.45F && biomeTemperature < 0.85F) return TemperatureLevel.NEUTRAL;
+            else if (biomeTemperature >= 0.85F && biomeTemperature < 1.0F) return TemperatureLevel.WARM;
+            else if (biomeTemperature >= 1.0F) return TemperatureLevel.HOT;
         }
 
         return TemperatureLevel.NEUTRAL;

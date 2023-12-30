@@ -114,14 +114,11 @@ public class TooltipHandler
                 int startX = x + i * 8 - 1;
                 int startY = y;
 
-                // Draw the background of each thirst droplet
                 // Args: poseStack, x, y, u, v, width, height, texWidth, texHeight
-                gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 9, 32, 9, 9, 256, 256);
-
                 // Draw a full droplet
                 if (this.amount > dropletHalf)
                 {
-                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 4 * 9, 32, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 0, 32 + 9, 9, 9, 256, 256);
                 }
                 else if (this.amount == dropletHalf) // Draw a half droplet
                 {
