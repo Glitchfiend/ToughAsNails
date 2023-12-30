@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.player.ITANPlayer;
@@ -266,11 +267,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         checked.add(pos);
         BlockState state = level.getBlockState(pos);
 
-        if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT)))
+        if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED)))
         {
             heating.add(pos);
         }
-        else if (state.is(ModTags.Blocks.COOLING_BLOCKS))
+        else if (state.is(ModTags.Blocks.COOLING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED)))
         {
             cooling.add(pos);
         }

@@ -1,3 +1,22 @@
 {
-  "values": []
+  "values": [
+    "minecraft:the_void",
+    "minecraft:dripstone_caves",
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:dark_forest",
+    "minecraft:birch_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:cherry_grove",
+    "minecraft:stony_peaks",
+    "minecraft:stony_shore",
+    "minecraft:beach",
+    "minecraft:river",
+    "minecraft:ocean",
+    "minecraft:deep_ocean",
+    "minecraft:lukewarm_ocean",
+    "minecraft:deep_lukewarm_ocean"
+  ]
 }
