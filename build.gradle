@@ -51,6 +51,10 @@ subprojects {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
+        maven {
+            name = 'Forge'
+            url = "https://maven.minecraftforge.net"
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {
@@ -60,7 +64,10 @@ subprojects {
 
     processResources {
         var expandProps = [
-            minecraft_version   : minecraft_version, forge_version: forge_version, forge_version_range: forge_version_range, forge_loader_version_range: forge_loader_version_range,
+            minecraft_version   : minecraft_version,
+            forge_version       : forge_version, forge_version_range: forge_version_range, forge_loader_version_range: forge_loader_version_range,
+            neoforge_version    : neoforge_version, neoforge_version_range: neoforge_version_range, neoforge_loader_version_range: neoforge_loader_version_range,
+            glitchcore_version  : glitchcore_version,
             mod_id              : mod_id, mod_name: mod_name, mod_display_name: mod_display_name, mod_version: mod_version,
             mod_authors         : mod_authors, mod_description: mod_description,
             mod_issues_url      : mod_issues_url, mod_page_url: mod_page_url, mod_git_url: mod_git_url,
@@ -80,51 +87,53 @@ subprojects {
         enabled = false
     }
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifact jar
-                groupId project.group
-                artifactId project.archivesBaseName
-                version project.version
+    afterEvaluate {
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    artifact jar
+                    groupId project.group
+                    artifactId project.archivesBaseName
+                    version project.version
 
-                pom {
-                    name = project.archivesBaseName
-                    description = project.mod_description
-                    url = project.mod_git_url
-                    scm {
+                    pom {
+                        name = project.archivesBaseName
+                        description = project.mod_description
                         url = project.mod_git_url
-                        connection = project.mod_scm_url
-                        developerConnection = project.mod_scm_url
-                    }
-                    issueManagement {
-                        system = 'github'
-                        url = project.mod_issues_url
-                    }
-                    licenses {
-                        license {
-                            name = project.mod_license
+                        scm {
+                            url = project.mod_git_url
+                            connection = project.mod_scm_url
+                            developerConnection = project.mod_scm_url
                         }
-                    }
-                    developers {
-                        developer {
-                            id = 'adubbz'
-                            name = 'Adubbz'
+                        issueManagement {
+                            system = 'github'
+                            url = project.mod_issues_url
                         }
-                        developer {
-                            id = 'forstride'
-                            name = 'Forstride'
+                        licenses {
+                            license {
+                                name = project.mod_license
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = 'adubbz'
+                                name = 'Adubbz'
+                            }
+                            developer {
+                                id = 'forstride'
+                                name = 'Forstride'
+                            }
                         }
                     }
                 }
             }
-        }
-        repositories {
-            maven {
-                url = "https://maven.minecraftforge.net/releases/"
-                credentials {
-                    username = System.getenv("MAVEN_USER")
-                    password = System.getenv("MAVEN_PASSWORD")
+            repositories {
+                maven {
+                    url = "https://maven.minecraftforge.net/releases/"
+                    credentials {
+                        username = System.getenv("MAVEN_USER")
+                        password = System.getenv("MAVEN_PASSWORD")
+                    }
                 }
             }
         }

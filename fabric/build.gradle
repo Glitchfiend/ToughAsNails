@@ -9,10 +9,13 @@ base.archivesName.set("${mod_name}-fabric")
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
+    compileOnly project(":Common")
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "com.github.glitchfiend:GlitchCore-fabric:${minecraft_version}-${glitchcore_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-    compileOnly project(":Common")
+
+    // Dependencies embedded in final jar
     include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
     include implementation("com.electronwill.night-config:core:${nightconfig_version}")
     include implementation("net.jodah:typetools:0.6.3")

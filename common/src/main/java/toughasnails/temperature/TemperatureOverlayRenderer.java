@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import glitchcore.event.RenderGuiEvent;
 import glitchcore.event.TickEvent;
+import glitchcore.event.client.RenderGuiEvent;
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

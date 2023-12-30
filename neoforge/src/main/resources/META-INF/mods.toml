@@ -1,6 +1,6 @@
 modLoader="javafml"
 license="${mod_license}"
-loaderVersion="${forge_loader_version_range}"
+loaderVersion="${neoforge_loader_version_range}"
 issueTrackerURL="${mod_issues_url}"
 displayURL="${mod_page_url}"
 logoFile="${mod_id}_logo.png"
@@ -13,9 +13,9 @@ logoFile="${mod_id}_logo.png"
     description="${mod_description}"
 
 [[dependencies.${mod_id}]]
-    modId="forge"
+    modId="neoforge"
     mandatory=true
-    versionRange="${forge_version_range}"
+    versionRange="${neoforge_version_range}"
     ordering="NONE"
     side="BOTH"
 

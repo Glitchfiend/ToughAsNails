@@ -19,6 +19,6 @@ public class ToughAsNailsFabric implements ModInitializer
     public void onInitialize()
     {
         ToughAsNails.init();
-        GlitchCoreFabric.init();
+        GlitchCoreFabric.prepareEvents();
     }
 }

@@ -52,7 +52,8 @@ minecraft {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
-    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${serene_seasons_version}")
+    implementation fg.deobf('com.github.glitchfiend:GlitchCore-forge:' + minecraft_version + '-' + glitchcore_version)
+    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:" + minecraft_version + '-' + serene_seasons_version)
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

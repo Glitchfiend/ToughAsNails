@@ -4,10 +4,10 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import glitchcore.event.LivingEntityUseItemEvent;
-import glitchcore.event.PlayerEvent;
-import glitchcore.event.PlayerInteractEvent;
 import glitchcore.event.TickEvent;
+import glitchcore.event.entity.LivingEntityUseItemEvent;
+import glitchcore.event.player.PlayerEvent;
+import glitchcore.event.player.PlayerInteractEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;

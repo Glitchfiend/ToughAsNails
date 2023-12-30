@@ -6,13 +6,11 @@
   "mixins": [
     "MixinPlayer",
     "MixinServerLevel",
-    "MixinServerPlayer",
-    "glitchcore.MixinItemStack"
+    "MixinServerPlayer"
   ],
   "client": [
     "client.MixinGui",
-    "client.MixinLocalPlayer",
-    "glitchcore.client.MixinMinecraft"
+    "client.MixinLocalPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

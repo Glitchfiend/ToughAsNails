@@ -4,15 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "MixinTemperatureHelperImpl",
-    "glitchcore.impl.MixinEnvironment",
-    "glitchcore.impl.MixinPacketHandler",
-    "glitchcore.impl.MixinRecipeHelper",
-    "glitchcore.impl.MixinRenderTypeHelper",
-    "glitchcore.impl.MixinServerPlayer"
+    "MixinTemperatureHelperImpl"
   ],
   "client": [
-    "glitchcore.impl.client.MixinForgeGui"
   ],
   "injectors": {
     "defaultRequire": 1

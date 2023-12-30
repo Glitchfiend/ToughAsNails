@@ -26,8 +26,3 @@ accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecr
 
 # Damage source
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;
-
-# GlitchCore
-
-# Registry ordering
-accessible field net/minecraft/core/registries/BuiltInRegistries LOADERS Ljava/util/Map;

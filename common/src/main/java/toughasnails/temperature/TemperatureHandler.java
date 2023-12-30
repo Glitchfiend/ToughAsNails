@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import glitchcore.event.PlayerEvent;
+import glitchcore.event.player.PlayerEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
