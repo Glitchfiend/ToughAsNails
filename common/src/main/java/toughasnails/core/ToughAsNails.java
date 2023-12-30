@@ -32,6 +32,11 @@ public class ToughAsNails
         ModApi.init();
     }
 
+    public static void initClient()
+    {
+        ModBlocks.registerRenderers();
+    }
+
     private static void addRegistrars()
     {
         var regHelper = RegistryHelper.create();

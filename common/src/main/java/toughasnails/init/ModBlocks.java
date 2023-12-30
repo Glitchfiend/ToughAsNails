@@ -27,14 +27,9 @@ public class ModBlocks
     {
         TANBlocks.RAIN_COLLECTOR = register(func, "rain_collector", new RainCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
         TANBlocks.WATER_PURIFIER = register(func, "water_purifier", new WaterPurifierBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
-
-        if (Environment.isClient())
-        {
-            registerRenderers();
-        }
     }
 
-    private static void registerRenderers()
+    public static void registerRenderers()
     {
         RenderType transparentRenderType = RenderType.cutoutMipped();
         RenderType cutoutRenderType = RenderType.cutout();
