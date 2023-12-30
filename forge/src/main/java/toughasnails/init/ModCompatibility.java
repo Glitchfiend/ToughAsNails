@@ -35,13 +35,28 @@ public class ModCompatibility
         if (pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && !level.canSeeSky(pos))
             return current;
 
-        //Check if biome uses seasonal effects
+        // Check if biome uses seasonal effects
         if (biome.is(ModTags.Biomes.BLACKLISTED_BIOMES))
             return current;
 
-        // Don't adjust the season if tropical seasons are in use
+        Season.TropicalSeason tropicalSeason = SeasonHelper.getSeasonState(level).getTropicalSeason();
+
+        // Adjust for mid dry/wet season
         if (biome.is(ModTags.Biomes.TROPICAL_BIOMES))
+        {
+            switch (tropicalSeason)
+            {
+                case MID_DRY:
+                    current = current.increment(1);
+                    break;
+
+                case MID_WET:
+                    current = current.decrement(1);
+                    break;
+            }
+
             return current;
+        }
 
         Season season = SeasonHelper.getSeasonState(level).getSeason();
 
