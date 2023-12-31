@@ -16,6 +16,7 @@ import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.block.RainCollectorBlock;
 import toughasnails.block.WaterPurifierBlock;
+import toughasnails.core.ToughAsNails;
 
 import java.util.function.BiConsumer;
 

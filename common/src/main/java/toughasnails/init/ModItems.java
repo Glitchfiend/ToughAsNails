@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
+import toughasnails.core.ToughAsNails;
 import toughasnails.item.*;
 
 import java.util.function.BiConsumer;

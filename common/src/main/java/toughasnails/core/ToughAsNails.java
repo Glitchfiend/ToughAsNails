@@ -5,6 +5,7 @@
 package toughasnails.core;
 
 import glitchcore.event.EventManager;
+import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
 import net.minecraft.core.registries.Registries;
 import org.apache.logging.log4j.LogManager;
@@ -35,7 +36,6 @@ public class ToughAsNails
     public static void setupClient()
     {
         ModBlocks.registerRenderers();
-        addClientHandlers();
     }
 
     private static void addRegistrars()
@@ -62,6 +62,11 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onChangeDimension);
         EventManager.addListener(ThirstHandler::onItemUseFinish);
         EventManager.addListener(ThirstHandler::onPlayerUseItem);
+
+        if (Environment.isClient())
+        {
+            addClientHandlers();
+        }
     }
 
     private static void addClientHandlers()
