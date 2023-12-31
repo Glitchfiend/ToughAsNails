@@ -7,28 +7,10 @@ package toughasnails.thirst;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.init.ModConfig;
 
-public class ThirstHooksClient {
-    public static void onAiStep(LocalPlayer player)
-    {
-        if (player.isSprinting())
-        {
-            boolean sprintingAllowable = canSprintWithThirst(player);
-
-            if (player.isSwimming())
-            {
-                if (!player.onGround() && !player.input.shiftKeyDown && !sprintingAllowable || !player.isInWater())
-                {
-                    player.setSprinting(false);
-                }
-            }
-            else if (!sprintingAllowable)
-            {
-                player.setSprinting(false);
-            }
-        }
-    }
-
+public class ThirstHooksClient
+{
     public static void onAiStepSetSprinting(LocalPlayer player, boolean sprinting)
     {
         // Don't allow sprinting if the player has insufficient thirst
@@ -40,6 +22,6 @@ public class ThirstHooksClient {
 
     private static boolean canSprintWithThirst(LocalPlayer player)
     {
-        return ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;
+        return !ModConfig.thirst.thirstPreventSprint || ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;
     }
 }

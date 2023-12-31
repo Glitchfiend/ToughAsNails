@@ -14,6 +14,7 @@ public class ThirstConfig extends Config
 {
     public boolean enableThirst;
     public boolean enableHandDrinking;
+    public boolean thirstPreventSprint;
     public double thirstExhaustionThreshold;
     public int handDrinkingThirst;
     public double handDrinkingHydration;
@@ -29,6 +30,7 @@ public class ThirstConfig extends Config
         // Toggles
         enableThirst = add("toggles.enable_thirst", true, "Enable or disable thirst.");
         enableHandDrinking = add("toggles.enable_hand_drinking", false, "Enable or disable hand drinking.");
+        thirstPreventSprint = add("toggles.thirst_prevent_sprint", true, "Prevent sprinting when thirsty.");
 
         // General options
         thirstExhaustionThreshold = addNumber("general.exhaustion_threshold", 8.0D, 0.0D, Double.MAX_VALUE, "The threshold at which exhaustion causes a reduction in hydration and the thirst bar.");
