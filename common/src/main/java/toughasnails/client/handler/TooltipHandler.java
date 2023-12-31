@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.core.ToughAsNails;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
@@ -26,6 +27,10 @@ public class TooltipHandler
         ItemStack stack = event.getStack();
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
+
+        // Don't display heating or cooling tooltips if temperature is disabled
+        if (!ModConfig.temperature.enableTemperature)
+            return;
 
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR))
         {
@@ -51,6 +56,10 @@ public class TooltipHandler
     public static void onRenderTooltip(RenderTooltipEvent event)
     {
         ItemStack stack = event.getStack();
+
+        // Don't display thirst tooltips if thirst is disabled
+        if (!ModConfig.thirst.enableThirst)
+            return;
 
         if (stack.is(ModTags.Items.DRINKS))
         {
