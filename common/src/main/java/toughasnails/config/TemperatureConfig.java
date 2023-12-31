@@ -4,11 +4,16 @@
  ******************************************************************************/
 package toughasnails.config;
 
+import com.google.common.collect.ImmutableList;
 import glitchcore.config.Config;
 import glitchcore.util.Environment;
 import toughasnails.api.TANAPI;
+import toughasnails.core.ToughAsNails;
+import toughasnails.temperature.BuiltInTemperatureModifier;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class TemperatureConfig extends Config
 {
@@ -38,31 +43,20 @@ public class TemperatureConfig extends Config
     public int snowTemperatureChange;
     public int wetTicks;
 
-    // TODO: Fix this
-    public List<String> temperatureModifierOrder = List.of("player_modifiers", "item_modifier", "armor_modifier");
+    public List<String> temperatureModifierOrder;
 
     public TemperatureConfig()
     {
         super(Environment.getConfigPath().resolve(TANAPI.MOD_ID + "/temperature.toml"));
     }
 
-//    private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER)
-//        .stream().map(e -> e.toString().toLowerCase()).toList();
-//
-//    private static final Predicate<Object> TEMPERATURE_MODIFIER_VALIDATOR = o -> {
-//        return o instanceof String && Arrays.stream(BuiltInTemperatureModifier.values()).map(BuiltInTemperatureModifier::toString).anyMatch(s -> s.equalsIgnoreCase((String)o));
-//    };
+    private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER)
+        .stream().map(e -> e.toString().toLowerCase()).toList();
 
-
-//    private static List<BuiltInTemperatureModifier> temperatureModifierOrderCache;
-//    public static List<BuiltInTemperatureModifier> getTemperatureModifierOrder()
-//    {
-//        if (temperatureModifierOrderCache == null)
-//        {
-//            temperatureModifierOrderCache = temperatureModifierOrder.get().stream().map(s -> BuiltInTemperatureModifier.valueOf(s.toUpperCase())).toList();
-//        }
-//        return temperatureModifierOrderCache;
-//    }
+    private static final Predicate<List<String>> TEMPERATURE_MODIFIER_VALIDATOR = list -> {
+        final var allModifiers = Arrays.stream(BuiltInTemperatureModifier.values()).map(BuiltInTemperatureModifier::toString).toList();
+        return list.stream().allMatch(s -> allModifiers.stream().anyMatch(s::equalsIgnoreCase));
+    };
 
     @Override
     public void read()
@@ -79,7 +73,8 @@ public class TemperatureConfig extends Config
         extremityDamageDelay = addNumber("general.extremity_damage_delay", 500, 0, Integer.MAX_VALUE, "Number of ticks to delay taking damage when icy or hot.");
         climateClemencyDuration = addNumber("general.climate_clemency_duration", 600, 0, Integer.MAX_VALUE, "Number of ticks for the duration of Climate Clemency.");
         climateClemencyRespawning = add("general.climate_clemency_respawning", false, "Whether or not Climate Clemency should be granted when respawning.");
-//        temperatureModifierOrder = add("The order in which to apply built-in temperature modifiers").defineList("temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, TEMPERATURE_MODIFIER_VALIDATOR);
+        temperatureModifierOrder = add("general.temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, "The order in which to apply built-in temperature modifiers", TEMPERATURE_MODIFIER_VALIDATOR);
+        ToughAsNails.LOGGER.info(temperatureModifierOrder);
 
         // Altitude options
         temperatureDropAltitude = addNumber("altitude.temperature_drop_altitude", 1024, -64, 1024, "Y level to drop the temperature at when above");
