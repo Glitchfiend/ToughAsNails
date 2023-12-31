@@ -12,6 +12,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import toughasnails.api.damagesource.TANDamageTypes;
+import toughasnails.core.ToughAsNails;
 import toughasnails.core.ToughAsNailsForge;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +21,7 @@ public class TANDamageTypeTagsProvider extends TagsProvider<DamageType>
 {
     public TANDamageTypeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper)
     {
-        super(output, Registries.DAMAGE_TYPE, lookupProvider, ToughAsNailsForge.MOD_ID, existingFileHelper);
+        super(output, Registries.DAMAGE_TYPE, lookupProvider, ToughAsNails.MOD_ID, existingFileHelper);
     }
 
     @Override

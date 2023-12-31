@@ -12,6 +12,7 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.block.TANBlocks;
+import toughasnails.core.ToughAsNails;
 import toughasnails.core.ToughAsNailsForge;
 import toughasnails.init.ModTags;
 
@@ -21,7 +22,7 @@ public class TANBlockTagsProvider extends BlockTagsProvider
 {
     public TANBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper)
     {
-        super(output, lookupProvider, ToughAsNailsForge.MOD_ID, existingFileHelper);
+        super(output, lookupProvider, ToughAsNails.MOD_ID, existingFileHelper);
     }
 
     @Override

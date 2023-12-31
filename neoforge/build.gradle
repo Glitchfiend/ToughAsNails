@@ -83,6 +83,10 @@ curseforge {
         mainArtifact(jar) {
             displayName = "${mod_display_name} NeoForge ${version}"
         }
+
+        relations {
+            requiredDependency 'glitchcore'
+        }
     }
 }
 
@@ -98,5 +102,9 @@ modrinth {
 
     if (changelog_file.exists()) {
         changelog = trimChangelog(changelog_file.text)
+    }
+
+    dependencies {
+        required.project "glitchcore"
     }
 }

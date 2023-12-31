@@ -67,6 +67,10 @@ curseforge {
                 requiredDependency "fabric-api"
             }
         }
+
+        relations {
+            requiredDependency 'glitchcore'
+        }
     }
 }
 
@@ -82,5 +86,9 @@ modrinth {
 
     if (changelog_file.exists()) {
         changelog = trimChangelog(changelog_file.text)
+    }
+
+    dependencies {
+        required.project "glitchcore"
     }
 }

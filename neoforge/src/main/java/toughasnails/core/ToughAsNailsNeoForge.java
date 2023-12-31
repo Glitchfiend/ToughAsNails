@@ -12,7 +12,7 @@ import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import toughasnails.api.TANAPI;
 import toughasnails.init.*;
 
-@Mod(value = TANAPI.MOD_ID)
+@Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNailsNeoForge
 {
     public ToughAsNailsNeoForge()
@@ -26,9 +26,6 @@ public class ToughAsNailsNeoForge
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        event.enqueueWork(() ->
-        {
-            ToughAsNails.initClient();
-        });
+        event.enqueueWork(ToughAsNails::initClient);
     }
 }

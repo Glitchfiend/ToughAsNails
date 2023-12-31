@@ -10,6 +10,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
+import toughasnails.core.ToughAsNails;
 import toughasnails.core.ToughAsNailsForge;
 import toughasnails.datagen.recipes.WaterPurifierRecipeBuilder;
 
@@ -65,6 +66,6 @@ public class TANRecipeProvider extends RecipeProvider
 
     public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
     {
-        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNailsForge.MOD_ID, getItemName(result.getItem())));
+        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())));
     }
 }

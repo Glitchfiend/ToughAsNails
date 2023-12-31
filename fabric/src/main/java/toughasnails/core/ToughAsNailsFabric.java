@@ -11,7 +11,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 public class ToughAsNailsFabric implements ModInitializer
 {
     /** Fabric TODOs
-     * Fix brewing recipes
      * Add config synchronization for thirst/temperature
      * Fix temperatureModifierOrder
       */

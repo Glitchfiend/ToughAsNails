@@ -19,6 +19,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.TANAPI;
+import toughasnails.core.ToughAsNails;
 import toughasnails.core.ToughAsNailsForge;
 import toughasnails.datagen.loot.TANLootTableProvider;
 import toughasnails.datagen.provider.*;
@@ -26,7 +27,7 @@ import toughasnails.datagen.provider.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ToughAsNailsForge.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ToughAsNails.MOD_ID)
 public class DataGenerationHandler
 {
     private static final RegistrySetBuilder REG_BUILDER = new RegistrySetBuilder()

@@ -14,14 +14,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.init.*;
 
-@Mod(value = ToughAsNailsForge.MOD_ID)
+@Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNailsForge
 {
-    public static final String MOD_ID = "toughasnails";
-
-
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-
     public ToughAsNailsForge()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -34,18 +29,11 @@ public class ToughAsNailsForge
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        event.enqueueWork(() ->
-        {
-            ToughAsNails.initClient();
-        });
+        event.enqueueWork(ToughAsNails::initClient);
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event)
     {
-        event.enqueueWork(() ->
-        {
-            ModCrafting.registerPotionRecipes();
-            ModCompatibility.init();
-        });
+        event.enqueueWork(ModCompatibility::init);
     }
 }

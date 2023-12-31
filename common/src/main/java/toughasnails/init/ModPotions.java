@@ -8,7 +8,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.Potions;
 import toughasnails.api.TANAPI;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.potion.TANPotions;
@@ -29,6 +32,15 @@ public class ModPotions
     {
         TANPotions.ICE_RESISTANCE = registerPotion(func, "ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 1200)));
         TANPotions.LONG_ICE_RESISTANCE = registerPotion(func, "long_ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 2400)));
+
+        // Register potion recipes after potions are registered
+        registerPotionRecipes();
+    }
+
+    public static void registerPotionRecipes()
+    {
+        PotionBrewing.addMix(Potions.AWKWARD, Items.SNOWBALL, TANPotions.ICE_RESISTANCE);
+        PotionBrewing.addMix(TANPotions.ICE_RESISTANCE, Items.REDSTONE, TANPotions.LONG_ICE_RESISTANCE);
     }
 
     private static MobEffect registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)

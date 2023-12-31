@@ -12,6 +12,9 @@ accessible method net/minecraft/world/effect/MobEffect <init> (Lnet/minecraft/wo
 # Block entity registration
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
 
+# Potion registration
+accessible method net/minecraft/world/item/alchemy/PotionBrewing addMix (Lnet/minecraft/world/item/alchemy/Potion;Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/alchemy/Potion;)V
+
 # Thirst
 accessible field net/minecraft/world/food/FoodData foodLevel I
 accessible field net/minecraft/world/food/FoodData saturationLevel F
