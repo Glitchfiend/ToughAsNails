@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import toughasnails.temperature.TemperatureHooks;
+import toughasnails.temperature.TemperatureHooksClient;
 
 @Mixin(Gui.class)
 public abstract class MixinGui
@@ -18,7 +18,7 @@ public abstract class MixinGui
     @Inject(method="renderHeart", at=@At(value="HEAD"), cancellable = true)
     public void onRenderHeart(GuiGraphics gui, Gui.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf, CallbackInfo ci)
     {
-        TemperatureHooks.heartBlit(gui, heartType, x, y, isHardcore, isBlinking, isHalf);
+        TemperatureHooksClient.heartBlit(gui, heartType, x, y, isHardcore, isBlinking, isHalf);
         ci.cancel();
     }
 }

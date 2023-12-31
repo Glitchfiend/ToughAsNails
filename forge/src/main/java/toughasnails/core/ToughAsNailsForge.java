@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import toughasnails.init.*;
 
 @Mod(value = ToughAsNails.MOD_ID)
@@ -29,7 +27,7 @@ public class ToughAsNailsForge
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        event.enqueueWork(ToughAsNails::initClient);
+        event.enqueueWork(ToughAsNails::setupClient);
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event)

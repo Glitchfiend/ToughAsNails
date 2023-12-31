@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.util.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
@@ -21,7 +22,11 @@ public class ModContainerTypes
     public static void registerContainers(BiConsumer<ResourceLocation, MenuType<?>> func)
     {
         TANContainerTypes.WATER_PURIFIER = register(func, "water_purifier", WaterPurifierContainer::new);
-        MenuScreens.register((MenuType<WaterPurifierContainer>)TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
+
+        if (Environment.isClient())
+        {
+            MenuScreens.register((MenuType<WaterPurifierContainer>) TANContainerTypes.WATER_PURIFIER, WaterPurifierScreen::new);
+        }
     }
 
     public static <T extends AbstractContainerMenu> MenuType<?> register(BiConsumer<ResourceLocation, MenuType<?>> func, String name, MenuType.MenuSupplier<T> factory)

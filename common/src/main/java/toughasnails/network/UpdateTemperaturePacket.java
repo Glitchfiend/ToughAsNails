@@ -11,9 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.api.thirst.IThirst;
-import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.core.ToughAsNails;
 
 public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket>
 {
@@ -47,10 +44,19 @@ public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePa
         if (context.isServerSide())
             return;
 
-        Player player = Minecraft.getInstance().player;
-        ITemperature temperature = TemperatureHelper.getTemperatureData(player);
+        Detail.setTemperatureClient(packet.temperatureLevel, packet.hyperthermiaTicks);
+    }
 
-        temperature.setLevel(packet.temperatureLevel);
-        temperature.setHyperthermiaTicks(packet.hyperthermiaTicks);
+    // Used to isolate client code from the server
+    private static class Detail
+    {
+        private static void setTemperatureClient(TemperatureLevel level, int hyperthermiaTicks)
+        {
+            Player player = Minecraft.getInstance().player;
+            ITemperature temperature = TemperatureHelper.getTemperatureData(player);
+
+            temperature.setLevel(level);
+            temperature.setHyperthermiaTicks(hyperthermiaTicks);
+        }
     }
 }

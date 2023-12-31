@@ -11,7 +11,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.temperature.TemperatureHelper;
 
-public class TemperatureHooks
+public class TemperatureHooksClient
 {
     private static final ResourceLocation OVERHEATED_HEART_FULL = new ResourceLocation("toughasnails:hud/heart/overheated_full");
     private static final ResourceLocation OVERHEATED_HEART_FULL_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_full_blinking");

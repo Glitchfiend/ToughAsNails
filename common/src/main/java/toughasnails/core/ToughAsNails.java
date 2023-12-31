@@ -5,11 +5,7 @@
 package toughasnails.core;
 
 import glitchcore.event.EventManager;
-import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
-import glitchcore.util.RenderTypeHelper;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +16,6 @@ import toughasnails.temperature.TemperatureHandler;
 import toughasnails.temperature.TemperatureOverlayRenderer;
 import toughasnails.thirst.ThirstHandler;
 import toughasnails.thirst.ThirstOverlayRenderer;
-
-import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
-import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
 
 public class ToughAsNails
 {
@@ -39,9 +32,10 @@ public class ToughAsNails
         ModApi.init();
     }
 
-    public static void initClient()
+    public static void setupClient()
     {
         ModBlocks.registerRenderers();
+        addClientHandlers();
     }
 
     private static void addRegistrars()
@@ -62,23 +56,32 @@ public class ToughAsNails
     private static void addHandlers()
     {
         // Temperature handlers
-        EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
-        EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
-        EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
         EventManager.addListener(TemperatureHandler::onChangeDimension);
 
         // Thirst handlers
-        EventManager.addListener(ThirstOverlayRenderer::onClientTick);
-        EventManager.addListener(ThirstOverlayRenderer::onBeginRenderAir);
         EventManager.addListener(ThirstHandler::onChangeDimension);
         EventManager.addListener(ThirstHandler::onItemUseFinish);
         EventManager.addListener(ThirstHandler::onPlayerUseItem);
+    }
+
+    private static void addClientHandlers()
+    {
+        // Temperature
+        EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
+        EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
+        EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
+
+        // Thirst
+        EventManager.addListener(ThirstOverlayRenderer::onClientTick);
+        EventManager.addListener(ThirstOverlayRenderer::onBeginRenderAir);
         EventManager.addListener(ThirstHandler::onUseEmpty);
         EventManager.addListener(ThirstHandler::onClientTick);
 
-        // Client handlers
+        // Coloring
         EventManager.addListener(ModBlocks::registerBlockColors);
         EventManager.addListener(ModItems::registerItemColors);
+
+        // Tooltips
         EventManager.addListener(TooltipHandler::onTooltip);
         EventManager.addListener(TooltipHandler::onRenderTooltip);
     }

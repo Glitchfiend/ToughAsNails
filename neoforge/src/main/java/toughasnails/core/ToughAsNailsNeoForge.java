@@ -9,8 +9,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
-import toughasnails.api.TANAPI;
-import toughasnails.init.*;
 
 @Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNailsNeoForge
@@ -26,6 +24,6 @@ public class ToughAsNailsNeoForge
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        event.enqueueWork(ToughAsNails::initClient);
+        event.enqueueWork(ToughAsNails::setupClient);
     }
 }

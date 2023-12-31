@@ -8,6 +8,9 @@ import glitchcore.network.CustomPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import toughasnails.api.temperature.ITemperature;
+import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 
@@ -43,10 +46,19 @@ public class UpdateThirstPacket implements CustomPacket<UpdateThirstPacket>
         if (context.isServerSide())
             return;
 
-        Player player = Minecraft.getInstance().player;
-        IThirst thirst = ThirstHelper.getThirst(player);
+        Detail.setThirstClient(packet.thirstLevel, packet.hydrationLevel);
+    }
 
-        thirst.setThirst(packet.thirstLevel);
-        thirst.setHydration(packet.hydrationLevel);
+    // Used to isolate client code from the server
+    private static class Detail
+    {
+        private static void setThirstClient(int thirstLevel, float hydrationLevel)
+        {
+            Player player = Minecraft.getInstance().player;
+            IThirst thirst = ThirstHelper.getThirst(player);
+
+            thirst.setThirst(thirstLevel);
+            thirst.setHydration(hydrationLevel);
+        }
     }
 }

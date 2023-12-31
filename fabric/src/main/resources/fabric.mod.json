@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "toughasnails.core.ToughAsNailsFabric"
+    ],
+    "client": [
+      "toughasnails.core.ToughAsNailsFabric"
     ]
   },
   "mixins": [
