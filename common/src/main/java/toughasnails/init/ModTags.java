@@ -39,8 +39,8 @@ public class ModTags
 
         public static final TagKey<Item> COOLING_ARMOR = create(new ResourceLocation(TANAPI.MOD_ID, "cooling_armor"));
         public static final TagKey<Item> HEATING_ARMOR = create(new ResourceLocation(TANAPI.MOD_ID, "heating_armor"));
-        public static final TagKey<Item> COOLING_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "cooling_items"));
-        public static final TagKey<Item> HEATING_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "heating_items"));
+        public static final TagKey<Item> COOLING_HELD_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "cooling_held_items"));
+        public static final TagKey<Item> HEATING_HELD_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "heating_held_items"));
 
         public static final TagKey<Item> ONE_THIRST_DRINKS = create(new ResourceLocation(TANAPI.MOD_ID, "thirst/1_thirst_drinks"));
         public static final TagKey<Item> TWO_THIRST_DRINKS = create(new ResourceLocation(TANAPI.MOD_ID, "thirst/2_thirst_drinks"));

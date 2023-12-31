@@ -7,6 +7,10 @@
   "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death while trying to escape %2$s",
   "desc.toughasnails.heating": "Heating",
   "desc.toughasnails.cooling": "Cooling",
+  "desc.toughasnails.heating_held": "Heating (Held)",
+  "desc.toughasnails.cooling_held": "Cooling (Held)",
+  "desc.toughasnails.heating_consumed": "Heating (Consumed)",
+  "desc.toughasnails.cooling_consumed": "Cooling (Consumed)",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.climate_clemency.description": "Neutralizes body temperature for the duration. Only granted temporarily when creating a new world (Or when respawning if enabled in the config).",

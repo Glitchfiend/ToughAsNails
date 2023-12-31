@@ -27,14 +27,24 @@ public class TooltipHandler
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
 
-        if (stack.is(ModTags.Items.HEATING_ITEMS) || stack.is(ModTags.Items.HEATING_ARMOR) || state.is(ModTags.Blocks.HEATING_BLOCKS))
+        if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
 
-        if (stack.is(ModTags.Items.COOLING_ITEMS) || stack.is(ModTags.Items.COOLING_ARMOR) || state.is(ModTags.Blocks.COOLING_BLOCKS))
+        if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
+        }
+
+        if (stack.is(ModTags.Items.HEATING_HELD_ITEMS))
+        {
+            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_held")).withStyle(ChatFormatting.GOLD));
+        }
+
+        if (stack.is(ModTags.Items.COOLING_HELD_ITEMS))
+        {
+            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_held")).withStyle(ChatFormatting.AQUA));
         }
     }
 

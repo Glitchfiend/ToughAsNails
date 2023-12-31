@@ -330,8 +330,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger heatingItems = new AtomicInteger();
 
         player.getHandSlots().forEach((stack -> {
-            if (stack.is(ModTags.Items.COOLING_ITEMS)) coolingItems.getAndIncrement();
-            if (stack.is(ModTags.Items.HEATING_ITEMS)) heatingItems.getAndIncrement();
+            if (stack.is(ModTags.Items.COOLING_HELD_ITEMS)) coolingItems.getAndIncrement();
+            if (stack.is(ModTags.Items.HEATING_HELD_ITEMS)) heatingItems.getAndIncrement();
         }));
 
         return current.increment(heatingItems.get() - coolingItems.get());

@@ -34,8 +34,8 @@ public class TANItemTagsProvider extends ItemTagsProvider
         this.tag(ModTags.Items.HEATING_ARMOR).add(TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
 
         // Temperature items
-        this.tag(ModTags.Items.COOLING_ITEMS).add(Items.POWDER_SNOW_BUCKET);
-        this.tag(ModTags.Items.HEATING_ITEMS).add(Items.LAVA_BUCKET);
+        this.tag(ModTags.Items.COOLING_HELD_ITEMS).add(Items.POWDER_SNOW_BUCKET);
+        this.tag(ModTags.Items.HEATING_HELD_ITEMS).add(Items.LAVA_BUCKET);
 
         // Drinks
         this.tag(ModTags.Items.DRINKS).addTags(
