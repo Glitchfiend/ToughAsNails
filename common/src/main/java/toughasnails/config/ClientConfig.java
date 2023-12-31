@@ -21,7 +21,7 @@ public class ClientConfig extends Config
     }
 
     @Override
-    public void read()
+    public void load()
     {
         thirstLeftOffset = addNumber("gui.thirst_left_offset", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The offset of the left of the thirst overlay from its default position.");
         thirstTopOffset = addNumber("gui.thirst_top_offset", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The offset of the top of the thirst overlay from its default position.");

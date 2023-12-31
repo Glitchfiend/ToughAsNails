@@ -12,6 +12,6 @@ public class ModDamageTypes
 {
     protected static void bootstrap(BootstapContext<DamageType> context)
     {
-        context.register(TANDamageTypes.HYPERTHERMIA, new DamageType("hyperthermia", 0.1F));
+        context.register(TANDamageTypes.HYPERTHERMIA, new DamageType("toughasnails.hyperthermia", 0.1F));
     }
 }

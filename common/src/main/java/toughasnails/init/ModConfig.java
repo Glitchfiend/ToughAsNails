@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import glitchcore.config.ConfigSync;
 import glitchcore.util.Environment;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.TemperatureConfig;
@@ -19,6 +20,9 @@ public class ModConfig
     {
         thirst = new ThirstConfig();
         temperature = new TemperatureConfig();
+
+        ConfigSync.register(thirst);
+        ConfigSync.register(temperature);
 
         if (Environment.isClient())
         {

@@ -24,7 +24,7 @@ public class ThirstConfig extends Config
     }
 
     @Override
-    public void read()
+    public void load()
     {
         // Toggles
         enableThirst = add("toggles.enable_thirst", true, "Enable or disable thirst.");

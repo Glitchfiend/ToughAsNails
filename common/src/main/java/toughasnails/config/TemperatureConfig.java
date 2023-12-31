@@ -59,7 +59,7 @@ public class TemperatureConfig extends Config
     };
 
     @Override
-    public void read()
+    public void load()
     {
         // Toggles
         enableTemperature = add("toggles.enable_temperature", true, "Enable or disable temperature.");
