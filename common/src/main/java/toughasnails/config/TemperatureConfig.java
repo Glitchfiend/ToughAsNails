@@ -74,7 +74,6 @@ public class TemperatureConfig extends Config
         climateClemencyDuration = addNumber("general.climate_clemency_duration", 600, 0, Integer.MAX_VALUE, "Number of ticks for the duration of Climate Clemency.");
         climateClemencyRespawning = add("general.climate_clemency_respawning", false, "Whether or not Climate Clemency should be granted when respawning.");
         temperatureModifierOrder = add("general.temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, "The order in which to apply built-in temperature modifiers", TEMPERATURE_MODIFIER_VALIDATOR);
-        ToughAsNails.LOGGER.info(temperatureModifierOrder);
 
         // Altitude options
         temperatureDropAltitude = addNumber("altitude.temperature_drop_altitude", 1024, -64, 1024, "Y level to drop the temperature at when above");
