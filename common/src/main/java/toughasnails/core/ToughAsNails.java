@@ -14,6 +14,7 @@ import net.minecraft.core.registries.Registries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
+import toughasnails.client.handler.TooltipHandler;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
 import toughasnails.temperature.TemperatureOverlayRenderer;
@@ -78,5 +79,7 @@ public class ToughAsNails
         // Client handlers
         EventManager.addListener(ModBlocks::registerBlockColors);
         EventManager.addListener(ModItems::registerItemColors);
+        EventManager.addListener(TooltipHandler::onTooltip);
+        EventManager.addListener(TooltipHandler::onRenderTooltip);
     }
 }

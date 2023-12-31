@@ -4,80 +4,47 @@
  ******************************************************************************/
 package toughasnails.client.handler;
 
-import com.mojang.datafixers.util.Either;
+import glitchcore.event.client.ItemTooltipEvent;
+import glitchcore.event.client.RenderTooltipEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler
 {
-    @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event)
     {
-        ItemStack stack = event.getItemStack();
+        ItemStack stack = event.getStack();
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
 
         if (stack.is(ModTags.Items.HEATING_ITEMS) || stack.is(ModTags.Items.HEATING_ARMOR) || state.is(ModTags.Blocks.HEATING_BLOCKS))
         {
-            event.getToolTip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
+            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
 
         if (stack.is(ModTags.Items.COOLING_ITEMS) || stack.is(ModTags.Items.COOLING_ARMOR) || state.is(ModTags.Blocks.COOLING_BLOCKS))
         {
-            event.getToolTip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
+            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
         }
     }
 
-    @SubscribeEvent
-    public static void onRenderTooltip(RenderTooltipEvent.GatherComponents event)
+    public static void onRenderTooltip(RenderTooltipEvent event)
     {
-        ItemStack stack = event.getItemStack();
+        ItemStack stack = event.getStack();
 
         if (stack.is(ModTags.Items.DRINKS))
         {
-            event.getTooltipElements().add(Either.right(new ThirstTooltipComponent(ModTags.Items.getThirstRestored(stack))));
-        }
-    }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    private static class ClientTooltipRegisterHandler
-    {
-        @SubscribeEvent
-        public static void onRegisterFactories(RegisterClientTooltipComponentFactoriesEvent event)
-        {
-            event.register(ThirstTooltipComponent.class, component -> new ThirstClientTooltipComponent(component.getAmount()));
-        }
-    }
-
-    private static class ThirstTooltipComponent implements TooltipComponent
-    {
-        private final int amount;
-
-        private ThirstTooltipComponent(int amount)
-        {
-            this.amount = amount;
-        }
-
-        public int getAmount()
-        {
-            return this.amount;
+            event.getComponents().add(new ThirstClientTooltipComponent(ModTags.Items.getThirstRestored(stack)));
         }
     }
 
