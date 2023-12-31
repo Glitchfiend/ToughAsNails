@@ -80,7 +80,7 @@ modrinth {
     versionNumber = mod_version
     versionName = mod_version + " for Fabric " + minecraft_version
     versionType = release_channel // can be release, beta, or alpha
-    uploadFile = jar
+    uploadFile = remapJar
     gameVersions = [minecraft_version]
     loaders = ['fabric']
 
