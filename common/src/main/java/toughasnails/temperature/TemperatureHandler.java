@@ -160,10 +160,10 @@ public class TemperatureHandler
         ItemStack item = event.getItem();
 
         if (item.is(ModTags.Items.COOLING_CONSUMED_ITEMS))
-            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_CHILL, ModConfig.temperature.consumableEffectDuration));
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_CHILL, ModConfig.temperature.consumableEffectDuration, 0, false, false, true));
 
         if (item.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
-            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_WARMTH, ModConfig.temperature.consumableEffectDuration));
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_WARMTH, ModConfig.temperature.consumableEffectDuration, 0, false, false, true));
     }
 
     public static void syncTemperature(ServerPlayer player)
