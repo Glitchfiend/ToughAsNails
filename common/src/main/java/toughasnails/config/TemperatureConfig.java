@@ -71,7 +71,7 @@ public class TemperatureConfig extends Config
         playerTemperatureChangeDelay = addNumber("general.player_temperature_change_delay", 125, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when affected by a player-based temperature modifier.");
         extremityReboundTemperatureChangeDelay = addNumber("general.extremity_rebound_temperature_change_delay", 250, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when rebounding from an extreme temperature.");
         extremityDamageDelay = addNumber("general.extremity_damage_delay", 500, 0, Integer.MAX_VALUE, "Number of ticks to delay taking damage when icy or hot.");
-        climateClemencyDuration = addNumber("general.climate_clemency_duration", 600, 0, Integer.MAX_VALUE, "Number of ticks for the duration of Climate Clemency.");
+        climateClemencyDuration = addNumber("general.climate_clemency_duration", 6000, 0, Integer.MAX_VALUE, "Number of ticks for the duration of Climate Clemency.");
         climateClemencyRespawning = add("general.climate_clemency_respawning", false, "Whether or not Climate Clemency should be granted when respawning.");
         temperatureModifierOrder = add("general.temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, "The order in which to apply built-in temperature modifiers", TEMPERATURE_MODIFIER_VALIDATOR);
 

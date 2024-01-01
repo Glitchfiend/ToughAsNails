@@ -11,6 +11,8 @@
   "desc.toughasnails.cooling_held": "Cooling (Held)",
   "desc.toughasnails.heating_consumed": "Heating (Consumed)",
   "desc.toughasnails.cooling_consumed": "Cooling (Consumed)",
+  "desc.toughasnails.heating_trim": "Heating (Trim)",
+  "desc.toughasnails.cooling_trim": "Cooling (Trim)",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.climate_clemency.description": "Neutralizes body temperature for the duration. Only granted temporarily when creating a new world (Or when respawning if enabled in the config).",
@@ -18,6 +20,10 @@
   "effect.toughasnails.ice_resistance.description": "Grants immunity to freezing damage.",
   "effect.toughasnails.thirst": "Thirst",
   "effect.toughasnails.thirst.description": "Lowers thirst at a faster rate than normal.",
+  "effect.toughasnails.internal_warmth": "Internal Warmth",
+  "effect.toughasnails.internal_warmth.description": "Provides a slight increase in body temperature for the duration. Will not cause hyperthermia.",
+  "effect.toughasnails.internal_chill": "Internal Chill",
+  "effect.toughasnails.internal_chill.description": "Provides a slight decrease in body temperature for the duration. Will not cause hypothermia.",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
   
   "block.toughasnails.rain_collector": "Rain Collector",
