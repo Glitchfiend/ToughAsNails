@@ -6,6 +6,7 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.GameRules;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.config.ThirstConfig;
 import toughasnails.init.ModConfig;
 
 public class ThirstHooks
@@ -44,27 +45,31 @@ public class ThirstHooks
 
         boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 
-        if (naturalRegen && data.saturationLevel > 0.0F && thirst.getHydration() > 0.0F && player.isHurt() && data.foodLevel >= 20 && thirst.getThirst() >= 20)
+        if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
         {
             ++data.tickTimer;
 
             if (data.tickTimer >= 10)
             {
-                // Average the saturation and hydration
-                float replenishAmount = (Math.min(data.saturationLevel, 6.0F) + Math.min(thirst.getHydration(), 6.0F)) / 2.0F;
+                // Derive the replenish amount only from hunger to cause less confusion
+                float replenishAmount = Math.min(data.saturationLevel, 6.0F);
 
                 player.heal(replenishAmount / 6.0F);
+
+                // Add exhaustion to thirst regardless of whether the thirst health regen option is enabled/disabled
                 data.addExhaustion(replenishAmount);
                 thirst.addExhaustion(replenishAmount);
                 data.tickTimer = 0;
             }
         }
-        else if (naturalRegen && data.foodLevel >= 18 && thirst.getThirst() >= 18 && player.isHurt())
+        else if (naturalRegen && data.foodLevel >= 18 && (!ModConfig.thirst.thirstPreventHealthRegen || thirst.getThirst() >= 18) && player.isHurt())
         {
             ++data.tickTimer;
             if (data.tickTimer >= 80)
             {
                 player.heal(1.0F);
+
+                // Add exhaustion to thirst regardless of whether the thirst health regen option is enabled/disabled
                 data.addExhaustion(6.0F);
                 thirst.addExhaustion(6.0F);
                 data.tickTimer = 0;
