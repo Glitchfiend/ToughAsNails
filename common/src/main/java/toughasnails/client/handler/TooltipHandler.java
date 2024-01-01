@@ -85,7 +85,7 @@ public class TooltipHandler
         @Override
         public int getWidth(Font font)
         {
-            return (this.amount / 2) * 9;
+            return (this.amount / 2) * 8;
         }
 
         @Override
@@ -97,18 +97,18 @@ public class TooltipHandler
             {
                 int dropletHalf = i * 2 + 1;
 
-                int startX = x + i * 8 - 1;
+                int startX = x + i * 8;
                 int startY = y;
 
                 // Args: poseStack, x, y, u, v, width, height, texWidth, texHeight
                 // Draw a full droplet
                 if (this.amount > dropletHalf)
                 {
-                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 0, 32 + 9, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 0, 41, 8, 8, 256, 256);
                 }
                 else if (this.amount == dropletHalf) // Draw a half droplet
                 {
-                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 9, 32 + 9, 9, 9, 256, 256);
+                    gui.blit(ThirstOverlayRenderer.OVERLAY, startX, startY, 8, 41, 8, 8, 256, 256);
                 }
             }
 
