@@ -49,6 +49,7 @@ public class ModItems
 
         TANItems.TAN_ICON = register(func, "tan_icon", new Item(new Item.Properties()));
 
+        TANItems.TEMPERATURE_GAUGE = register(func, "temperature_gauge", new BlockItem(TANBlocks.TEMPERATURE_GAUGE, new Item.Properties()));
         TANItems.RAIN_COLLECTOR = register(func, "rain_collector", new BlockItem(TANBlocks.RAIN_COLLECTOR, new Item.Properties()));
         TANItems.WATER_PURIFIER = register(func, "water_purifier", new BlockItem(TANBlocks.WATER_PURIFIER, new Item.Properties()));
     }

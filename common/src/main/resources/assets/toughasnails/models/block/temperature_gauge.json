@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_daylight_detector",
+  "textures": {
+    "side": "toughasnails:block/temperature_gauge_side",
+    "top": "toughasnails:block/temperature_gauge_top"
+  }
+}

@@ -27,6 +27,7 @@
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
   
   "block.toughasnails.rain_collector": "Rain Collector",
+  "block.toughasnails.temperature_gauge": "Temperature Gauge",
   "block.toughasnails.water_purifier": "Water Purifier",
   
   "item.toughasnails.apple_juice": "Apple Juice",
@@ -46,6 +47,7 @@
   "item.toughasnails.purified_water_canteen": "Purified Water Canteen",
   "item.toughasnails.sweet_berry_juice": "Sweet Berry Juice",
   "item.toughasnails.tan_icon": "TAN Icon",
+  "item.toughasnails.thermometer": "Thermometer",
   "item.toughasnails.water_canteen": "Water Canteen",
   "item.toughasnails.wool_boots": "Wool Boots",
   "item.toughasnails.wool_chestplate": "Wool Parka",

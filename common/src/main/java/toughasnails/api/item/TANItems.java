@@ -38,6 +38,7 @@ public class TANItems
     public static Item TAN_ICON;
 
     // Block items
+    public static Item TEMPERATURE_GAUGE;
     public static Item RAIN_COLLECTOR;
     public static Item WATER_PURIFIER;
 }
