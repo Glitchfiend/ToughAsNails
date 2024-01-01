@@ -4,22 +4,27 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
+import toughasnails.init.ModTags;
 import toughasnails.network.UpdateTemperaturePacket;
 
 import java.util.UUID;
@@ -144,6 +149,21 @@ public class TemperatureHandler
         ITemperature temperature = TemperatureHelper.getTemperatureData(event.getPlayer());
         temperature.setLastLevel(TemperatureData.DEFAULT_LEVEL);
         temperature.setLastHyperthermiaTicks(0);
+    }
+
+    public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
+    {
+        if (!ModConfig.temperature.enableTemperature || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
+            return;
+
+        Player player = (Player) event.getEntity();
+        ItemStack item = event.getItem();
+
+        if (item.is(ModTags.Items.COOLING_CONSUMED_ITEMS))
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_CHILL, ModConfig.temperature.consumableEffectDuration));
+
+        if (item.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_WARMTH, ModConfig.temperature.consumableEffectDuration));
     }
 
     public static void syncTemperature(ServerPlayer player)

@@ -8,6 +8,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.List;
@@ -36,6 +37,12 @@ public enum BuiltInTemperatureModifier
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.armorModifier(player, currentTarget);
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay);
+        return new Tuple<>(newTarget, newChangeDelay);
+    }),
+    INTERNAL_MODIFIER((player, currentTarget, currentChangeDelay) -> {
+        int newChangeDelay = currentChangeDelay;
+        TemperatureLevel newTarget = TemperatureHelperImpl.internalModifier(player, currentTarget);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.internalTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     });
 

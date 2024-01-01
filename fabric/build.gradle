@@ -64,13 +64,10 @@ curseforge {
 
         mainArtifact(remapJar) {
             displayName = "${mod_display_name} ${name} ${version}"
-
-            relations {
-                requiredDependency "fabric-api"
-            }
         }
 
         relations {
+            requiredDependency 'fabric-api'
             requiredDependency 'glitchcore'
         }
     }

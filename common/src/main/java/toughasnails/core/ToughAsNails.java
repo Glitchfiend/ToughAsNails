@@ -57,6 +57,7 @@ public class ToughAsNails
     {
         // Temperature handlers
         EventManager.addListener(TemperatureHandler::onChangeDimension);
+        EventManager.addListener(TemperatureHandler::onItemUseFinish);
 
         // Thirst handlers
         EventManager.addListener(ThirstHandler::onChangeDimension);

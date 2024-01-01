@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.CopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.player.ITANPlayer;
+import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
 import toughasnails.init.ModConfig;
@@ -356,6 +357,21 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         // Armor enchantments
         if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.THERMAL_TUNING, player) > 0)
             current = TemperatureLevel.NEUTRAL;
+
+        return current;
+    }
+
+    protected static TemperatureLevel internalModifier(Player player, TemperatureLevel current)
+    {
+        TemperatureLevel newTemperature = current;
+
+        if (player.hasEffect(TANEffects.INTERNAL_WARMTH)) newTemperature = newTemperature.increment(1);
+        if (player.hasEffect(TANEffects.INTERNAL_CHILL)) newTemperature = newTemperature.decrement(1);
+
+        // Prevent internal effects from sending players into extremities
+        if (newTemperature == TemperatureLevel.HOT && current != TemperatureLevel.HOT) current = newTemperature.decrement(1);
+        else if (newTemperature == TemperatureLevel.ICY && current != TemperatureLevel.ICY) current = newTemperature.increment(1);
+        else current = newTemperature;
 
         return current;
     }
