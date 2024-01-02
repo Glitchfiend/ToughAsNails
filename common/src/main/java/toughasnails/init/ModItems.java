@@ -89,7 +89,7 @@ public class ModItems
     {
         ItemProperties.register(TANItems.THERMOMETER, new ResourceLocation(ToughAsNails.MOD_ID, "temperature"), new ClampedItemPropertyFunction() {
             final Map<Integer, Delta> deltas = new HashMap<>();
-            private long lastUpdateTick;
+
 
             @Override
             public float unclampedCall(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed)
@@ -106,22 +106,22 @@ public class ModItems
                     return 0.5F;
 
                 Delta delta = deltas.computeIfAbsent(holder.getId(), k -> new Delta());
-
-                if (level.getGameTime() != this.lastUpdateTick) {
-                    this.lastUpdateTick = level.getGameTime();
-                    delta.update(TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition()));
-                }
-
+                delta.update(level, TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition()));
                 return delta.getValue();
             }
 
             private static class Delta
             {
+                private long lastUpdateTick;
                 private double currentValue;
                 private double rota;
 
-                private void update(TemperatureLevel temperatureLevel)
+                private void update(ClientLevel level, TemperatureLevel temperatureLevel)
                 {
+                    if (level.getGameTime() == this.lastUpdateTick)
+                        return;
+
+                    this.lastUpdateTick = level.getGameTime();
                     double targetValue = temperatureLevel.ordinal() * 0.25;
                     double delta = targetValue - this.currentValue;
 
