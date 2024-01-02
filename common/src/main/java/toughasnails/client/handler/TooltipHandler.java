@@ -51,6 +51,16 @@ public class TooltipHandler
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_held")).withStyle(ChatFormatting.AQUA));
         }
+
+        if (stack.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
+        {
+            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_consumed")).withStyle(ChatFormatting.GOLD));
+        }
+
+        if (stack.is(ModTags.Items.COOLING_CONSUMED_ITEMS))
+        {
+            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_consumed")).withStyle(ChatFormatting.AQUA));
+        }
     }
 
     public static void onRenderTooltip(RenderTooltipEvent event)
