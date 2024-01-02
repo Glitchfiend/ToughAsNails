@@ -35,6 +35,8 @@ public class TANItems
     public static Item LEAF_LEGGINGS;
     public static Item LEAF_BOOTS;
 
+    public static Item THERMOMETER;
+
     public static Item TAN_ICON;
 
     // Block items

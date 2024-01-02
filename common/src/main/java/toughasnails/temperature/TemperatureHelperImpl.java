@@ -22,6 +22,7 @@ import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
@@ -30,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {
-    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier);
+    protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier, TemperatureHelperImpl::rainModifier);
     protected static List<IProximityBlockModifier> proximityModifiers = new ArrayList<>();
     protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
 
@@ -49,14 +50,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return proximityModifier(level, pos, temperature);
     }
 
-    private static ITemperature lastTemperature;
-
     @Override
     public ITemperature getPlayerTemperature(Player player)
     {
-        ITemperature temperature = ((ITANPlayer)player).getTemperatureData();
-        lastTemperature = temperature;
-        return temperature;
+        return ((ITANPlayer)player).getTemperatureData();
     }
 
     @Override
@@ -140,6 +137,21 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         if (pos.getY() > ModConfig.temperature.temperatureDropAltitude) current = current.decrement(1);
         else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude) current = current.increment(1);
+        return current;
+    }
+
+    private static TemperatureLevel rainModifier(Level level, BlockPos pos, TemperatureLevel current)
+    {
+        Holder<Biome> biome = level.getBiome(pos);
+
+        if (isExposedToRain(level, pos))
+        {
+            if (coldEnoughToSnow(level, biome, pos))
+                current = current.increment(ModConfig.temperature.snowTemperatureChange);
+            else
+                current = current.increment(ModConfig.temperature.wetTemperatureChange);
+        }
+
         return current;
     }
 
@@ -302,14 +314,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
         if (player.isOnFire()) current = current.increment(ModConfig.temperature.onFireTemperatureChange);
         if (player.isInPowderSnow) current = current.increment(ModConfig.temperature.powderSnowTemperatureChange);
-        if (player.level().isRaining() && player.level().canSeeSky(pos)) {
+        if (isExposedToRain(level, pos))
+        {
+            // Only set the dry ticks here, as the temperature change associated with rain has already been handled by the positional modifier
             temperature.setDryTicks(0);
-            Holder<Biome> biome = player.level().getBiome(pos);
-
-            if (coldEnoughToSnow(player.level(), biome, pos))
-                current = current.increment(ModConfig.temperature.snowTemperatureChange);
-            else
-                current.increment(ModConfig.temperature.wetTemperatureChange);
         }
         else if (!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
         {
@@ -374,6 +382,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         else current = newTemperature;
 
         return current;
+    }
+
+    private static boolean isExposedToRain(Level level, BlockPos pos)
+    {
+        return level.isRaining() && level.canSeeSky(pos);
     }
 
     private static boolean coldEnoughToSnow(Level level, Holder<Biome> biome, BlockPos pos)

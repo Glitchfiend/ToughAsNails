@@ -52,6 +52,8 @@ public class TANRecipeProvider extends RecipeProvider
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TANItems.WOOL_HELMET).define('X', ItemTags.WOOL).pattern("XXX").pattern("X X").unlockedBy("has_wool", has(ItemTags.WOOL)).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TANItems.WOOL_LEGGINGS).define('X', ItemTags.WOOL).pattern("XXX").pattern("X X").pattern("X X").unlockedBy("has_wool", has(ItemTags.WOOL)).save(output);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.THERMOMETER).define('#', Items.COPPER_INGOT).define('X', Items.REDSTONE).pattern(" # ").pattern("#X#").pattern(" # ").unlockedBy("has_redstone", has(Items.REDSTONE)).save(output);
+
         //
         // Water purification recipes
         //

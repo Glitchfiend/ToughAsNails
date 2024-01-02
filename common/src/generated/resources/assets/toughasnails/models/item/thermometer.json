@@ -1,0 +1,131 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "toughasnails:item/thermometer_00",
+      "predicate": {
+        "toughasnails:temperature": 0.0
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_01",
+      "predicate": {
+        "toughasnails:temperature": 0.05
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_02",
+      "predicate": {
+        "toughasnails:temperature": 0.1
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_03",
+      "predicate": {
+        "toughasnails:temperature": 0.15
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_04",
+      "predicate": {
+        "toughasnails:temperature": 0.2
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_05",
+      "predicate": {
+        "toughasnails:temperature": 0.25
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_06",
+      "predicate": {
+        "toughasnails:temperature": 0.3
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_07",
+      "predicate": {
+        "toughasnails:temperature": 0.35
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_08",
+      "predicate": {
+        "toughasnails:temperature": 0.4
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_09",
+      "predicate": {
+        "toughasnails:temperature": 0.45
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_10",
+      "predicate": {
+        "toughasnails:temperature": 0.5
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_11",
+      "predicate": {
+        "toughasnails:temperature": 0.55
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_12",
+      "predicate": {
+        "toughasnails:temperature": 0.6
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_13",
+      "predicate": {
+        "toughasnails:temperature": 0.65
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_14",
+      "predicate": {
+        "toughasnails:temperature": 0.7
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_15",
+      "predicate": {
+        "toughasnails:temperature": 0.75
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_16",
+      "predicate": {
+        "toughasnails:temperature": 0.8
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_17",
+      "predicate": {
+        "toughasnails:temperature": 0.85
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_18",
+      "predicate": {
+        "toughasnails:temperature": 0.9
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_19",
+      "predicate": {
+        "toughasnails:temperature": 0.95
+      }
+    },
+    {
+      "model": "toughasnails:item/thermometer_20",
+      "predicate": {
+        "toughasnails:temperature": 1.0
+      }
+    }
+  ]
+}
