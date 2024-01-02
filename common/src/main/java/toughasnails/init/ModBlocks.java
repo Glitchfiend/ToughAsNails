@@ -44,6 +44,7 @@ public class ModBlocks
     public static void registerBlockColors(RegisterColorsEvent.Block event)
     {
         event.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
+        event.register((state, world, pos, tintIndex) -> 0x3F76E4, TANBlocks.WATER_PURIFIER);
     }
 
     private static Block register(BiConsumer<ResourceLocation, Block> func, String name, Block block)

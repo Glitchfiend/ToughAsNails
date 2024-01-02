@@ -53,7 +53,7 @@ public class TANRecipeProvider extends RecipeProvider
         // Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, TANBlocks.TEMPERATURE_GAUGE).define('G', Items.GLASS).define('Q', Items.QUARTZ).define('T', TANItems.THERMOMETER).define('B', Items.BRICK_SLAB).pattern("GGG").pattern("QTQ").pattern("BBB").unlockedBy("has_thermometer", has(TANItems.THERMOMETER)).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.RAIN_COLLECTOR).define('S', Items.STRING).define('I', Items.IRON_INGOT).define('B', Items.BARREL).pattern("ISI").pattern("IBI").unlockedBy("has_barrel", has(Items.BARREL)).save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.WATER_PURIFIER).define('W', ItemTags.PLANKS).define('S', ItemTags.SAND).define('C', Items.CHARCOAL).define('G', Items.GLASS).pattern("WSW").pattern("GCG").pattern("GGG").unlockedBy("has_charcoal", has(Items.CHARCOAL)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.WATER_PURIFIER).define('W', ItemTags.PLANKS).define('C', Items.CHARCOAL).define('G', Items.GLASS).pattern("WGW").pattern("GCG").pattern("WWW").unlockedBy("has_charcoal", has(Items.CHARCOAL)).save(output);
 
         // Armor
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TANItems.LEAF_BOOTS).define('X', ItemTags.LEAVES).pattern("X X").pattern("X X").unlockedBy("has_leaves", has(ItemTags.LEAVES)).save(output);

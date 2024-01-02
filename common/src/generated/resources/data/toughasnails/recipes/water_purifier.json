@@ -8,17 +8,14 @@
     "G": {
       "item": "minecraft:glass"
     },
-    "S": {
-      "tag": "minecraft:sand"
-    },
     "W": {
       "tag": "minecraft:planks"
     }
   },
   "pattern": [
-    "WSW",
+    "WGW",
     "GCG",
-    "GGG"
+    "WWW"
   ],
   "result": {
     "item": "toughasnails:water_purifier"

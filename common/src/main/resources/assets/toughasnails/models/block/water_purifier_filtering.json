@@ -1,9 +1,95 @@
 {
-  "parent": "minecraft:block/orientable_with_bottom",
-  "textures": {
-    "top": "toughasnails:block/water_purifier_top_filtering",
-    "front": "toughasnails:block/water_purifier_front_filtering",
-    "side": "toughasnails:block/water_purifier_side_filtering",
-	"bottom": "toughasnails:block/water_purifier_bottom_filtering"
-  }
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "toughasnails:block/water_purifier_side",
+        "top": "toughasnails:block/water_purifier_top",
+        "bottom": "toughasnails:block/water_purifier_bottom",
+        "side": "toughasnails:block/water_purifier_side",
+		"front": "toughasnails:block/water_purifier_front",
+        "inside": "toughasnails:block/water_purifier_bottom",
+        "water": "minecraft:block/water_still"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [2, 16, 16],
+			"faces": {
+				"north": {"uv": [14, 0, 16, 16], "texture": "#front", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#top", "cullface": "up"},
+				"down": {"uv": [0, 0, 2, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 2],
+			"to": [14, 2, 14],
+			"faces": {
+				"north": {"uv": [2, 14, 14, 16], "texture": "#front", "cullface": "north"},
+				"east": {"uv": [2, 14, 14, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [2, 14, 14, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [2, 14, 14, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#bottom", "cullface": "up"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [14, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#front", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [14, 0, 16, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [14, 0, 16, 16], "texture": "#top", "cullface": "up"},
+				"down": {"uv": [14, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 0],
+			"to": [14, 16, 2],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#front", "cullface": "north"},
+				"east": {"uv": [14, 0, 16, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 2, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [2, 0, 14, 2], "texture": "#top", "cullface": "up"},
+				"down": {"uv": [2, 14, 14, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 14],
+			"to": [14, 16, 16],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#front"},
+				"east": {"uv": [0, 0, 2, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [14, 0, 16, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [2, 14, 14, 16], "texture": "#top", "cullface": "up"},
+				"down": {"uv": [2, 0, 14, 2], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 13, 2],
+			"to": [14, 16, 14],
+			"faces": {
+				"up": {"uv": [2, 2, 14, 14], "texture": "#top"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#top"}
+			}
+		},
+		{
+			"from": [2, 2, 2],
+			"to": [14, 13, 14],
+			"faces": {
+				"north": {"uv": [2, 3, 14, 14], "texture": "#water", "tintindex": 0},
+				"east": {"uv": [2, 3, 14, 14], "texture": "#water", "tintindex": 0},
+				"south": {"uv": [2, 3, 14, 14], "texture": "#water", "tintindex": 0},
+				"west": {"uv": [2, 3, 14, 14], "texture": "#water", "tintindex": 0},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#water", "tintindex": 0},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#water", "tintindex": 0}
+			}
+		}
+	]
 }
