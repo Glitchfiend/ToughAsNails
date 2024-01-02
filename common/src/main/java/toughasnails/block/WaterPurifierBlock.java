@@ -4,6 +4,8 @@
  ******************************************************************************/
 package toughasnails.block;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,14 +28,18 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class WaterPurifierBlock extends BaseEntityBlock
 {
     public static final MapCodec<WaterPurifierBlock> CODEC = simpleCodec(WaterPurifierBlock::new);
+    private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(0.0D, 0.0D, 2.0D, 16.0D, 16.0D, 16.0D), Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 14.0D), Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, 14.0D, 16.0D, 16.0D), Direction.WEST, Block.box(2.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)));
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PURIFYING = BooleanProperty.create("filtering");
 
@@ -46,6 +53,12 @@ public class WaterPurifierBlock extends BaseEntityBlock
     protected MapCodec<? extends BaseEntityBlock> codec()
     {
         return CODEC;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext)
+    {
+        return SHAPES.get(state.getValue(FACING));
     }
 
     @Override

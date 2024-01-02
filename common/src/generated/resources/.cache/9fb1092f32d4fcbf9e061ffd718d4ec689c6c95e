@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-02T11:28:21.5564694	Recipes
+// 1.20.4	2024-01-02T14:30:50.6090734	Recipes
 09252bd5a872203de304820e8d5c5493afe96cf4 data/toughasnails/advancements/recipes/combat/leaf_boots.json
 2da825265e95f5dfc0dd4026e0dafee70c17512c data/toughasnails/advancements/recipes/combat/leaf_chestplate.json
 6d96cd4baff66d426c9405852ceed3aa8a3cde8f data/toughasnails/advancements/recipes/combat/leaf_helmet.json
@@ -68,7 +68,7 @@ e4a98b0325be4fb27194eb56a079871cdc8d4114 data/toughasnails/recipes/pumpkin_juice
 2512026dc3a027f39db7e77e023a7017de386b9c data/toughasnails/recipes/sweet_berry_juice.json
 e636bfd4fab8d516083454e872c8115f5c15cf27 data/toughasnails/recipes/temperature_gauge.json
 b75d1caa0b1dcb9ae14dc02e47bba2a3c4b4a4dc data/toughasnails/recipes/thermometer.json
-b0bd031a8ff3aa063ccd97f5f915733a3c94935e data/toughasnails/recipes/water_purifier.json
+db1c57e8de0ba741ce1687b038a33505cd4c3a73 data/toughasnails/recipes/water_purifier.json
 30229579a58927cae7011781b0936f7ca87888a4 data/toughasnails/recipes/wool_boots.json
 25ff54ef0230fd94b0f881f7866b571f4729d254 data/toughasnails/recipes/wool_chestplate.json
 0c83d0143c53a5071bda3e30a314be62876186f9 data/toughasnails/recipes/wool_helmet.json
