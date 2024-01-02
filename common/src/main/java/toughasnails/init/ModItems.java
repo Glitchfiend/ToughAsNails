@@ -94,7 +94,7 @@ public class ModItems
             @Override
             public float unclampedCall(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed)
             {
-                Entity holder = entity != null ? entity : stack.getFrame();
+                Entity holder = entity != null ? entity : stack.getEntityRepresentation();
 
                 if (holder == null)
                     return 0.5F;
