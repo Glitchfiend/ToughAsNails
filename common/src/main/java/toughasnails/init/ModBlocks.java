@@ -9,7 +9,9 @@ import glitchcore.util.RenderTypeHelper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
@@ -27,8 +29,8 @@ public class ModBlocks
     public static void registerBlocks(BiConsumer<ResourceLocation, Block> func)
     {
         TANBlocks.TEMPERATURE_GAUGE = register(func, "temperature_gauge", new TemperatureGaugeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops().strength(1.0F)));
-        TANBlocks.RAIN_COLLECTOR = register(func, "rain_collector", new RainCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
-        TANBlocks.WATER_PURIFIER = register(func, "water_purifier", new WaterPurifierBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(3.5F).noOcclusion()));
+        TANBlocks.RAIN_COLLECTOR = register(func, "rain_collector", new RainCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).noOcclusion()));
+        TANBlocks.WATER_PURIFIER = register(func, "water_purifier", new WaterPurifierBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.COPPER).noOcclusion()));
     }
 
     public static void registerRenderers()

@@ -1,4 +1,5 @@
-// 1.20.4	2024-01-01T08:38:05.3367638	Tags for minecraft:block mod id toughasnails
-bdcc25ec3d77d0540777147a5b124a1e15619160 data/minecraft/tags/blocks/mineable/pickaxe.json
+// 1.20.4	2024-01-02T16:58:35.4458416	Tags for minecraft:block mod id toughasnails
+dfed6a08d97cca915d349d312f18532c01063afa data/minecraft/tags/blocks/mineable/axe.json
+204b99a448ab27dca7519b0ea2c4e0a422b1f12a data/minecraft/tags/blocks/mineable/pickaxe.json
 eed9ca8217c04724f67008aba1a0a5edde5697c2 data/toughasnails/tags/blocks/cooling_blocks.json
 d4134d307e68e7865444c0d1d1ab81babc6a27ff data/toughasnails/tags/blocks/heating_blocks.json
