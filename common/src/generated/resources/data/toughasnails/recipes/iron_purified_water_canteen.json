@@ -1,0 +1,18 @@
+{
+  "type": "toughasnails:water_purifying",
+  "input": {
+    "Count": 1,
+    "id": "toughasnails:iron_water_canteen",
+    "tag": {
+      "Damage": 0
+    }
+  },
+  "purifytime": 200,
+  "result": {
+    "Count": 1,
+    "id": "toughasnails:iron_purified_water_canteen",
+    "tag": {
+      "Damage": 0
+    }
+  }
+}

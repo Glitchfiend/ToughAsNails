@@ -34,10 +34,36 @@ public class ModItems
 {
     public static void registerItems(BiConsumer<ResourceLocation, Item> func)
     {
-        TANItems.EMPTY_CANTEEN = register(func, "empty_canteen", new EmptyCanteenItem((new Item.Properties()).stacksTo(1)));
-        TANItems.DIRTY_WATER_CANTEEN = register(func, "dirty_water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5)));
-        TANItems.WATER_CANTEEN = register(func, "water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5)));
-        TANItems.PURIFIED_WATER_CANTEEN = register(func, "purified_water_canteen", new FilledCanteenItem((new Item.Properties()).durability(5)));
+        TANItems.EMPTY_LEATHER_CANTEEN = register(func, "empty_leather_canteen", new EmptyLeatherCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.LEATHER_DIRTY_WATER_CANTEEN = register(func, "leather_dirty_water_canteen", new FilledLeatherCanteenItem((new Item.Properties()).durability(5)));
+        TANItems.LEATHER_WATER_CANTEEN = register(func, "leather_water_canteen", new FilledLeatherCanteenItem((new Item.Properties()).durability(5)));
+        TANItems.LEATHER_PURIFIED_WATER_CANTEEN = register(func, "leather_purified_water_canteen", new FilledLeatherCanteenItem((new Item.Properties()).durability(5)));
+
+        TANItems.EMPTY_COPPER_CANTEEN = register(func, "empty_copper_canteen", new EmptyCopperCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.COPPER_DIRTY_WATER_CANTEEN = register(func, "copper_dirty_water_canteen", new FilledCopperCanteenItem((new Item.Properties()).durability(6)));
+        TANItems.COPPER_WATER_CANTEEN = register(func, "copper_water_canteen", new FilledCopperCanteenItem((new Item.Properties()).durability(6)));
+        TANItems.COPPER_PURIFIED_WATER_CANTEEN = register(func, "copper_purified_water_canteen", new FilledCopperCanteenItem((new Item.Properties()).durability(6)));
+
+        TANItems.EMPTY_IRON_CANTEEN = register(func, "empty_iron_canteen", new EmptyIronCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.IRON_DIRTY_WATER_CANTEEN = register(func, "iron_dirty_water_canteen", new FilledIronCanteenItem((new Item.Properties()).durability(7)));
+        TANItems.IRON_WATER_CANTEEN = register(func, "iron_water_canteen", new FilledIronCanteenItem((new Item.Properties()).durability(7)));
+        TANItems.IRON_PURIFIED_WATER_CANTEEN = register(func, "iron_purified_water_canteen", new FilledIronCanteenItem((new Item.Properties()).durability(7)));
+
+        TANItems.EMPTY_GOLD_CANTEEN = register(func, "empty_gold_canteen", new EmptyGoldCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.GOLD_DIRTY_WATER_CANTEEN = register(func, "gold_dirty_water_canteen", new FilledGoldCanteenItem((new Item.Properties()).durability(10)));
+        TANItems.GOLD_WATER_CANTEEN = register(func, "gold_water_canteen", new FilledGoldCanteenItem((new Item.Properties()).durability(10)));
+        TANItems.GOLD_PURIFIED_WATER_CANTEEN = register(func, "gold_purified_water_canteen", new FilledGoldCanteenItem((new Item.Properties()).durability(10)));
+
+        TANItems.EMPTY_DIAMOND_CANTEEN = register(func, "empty_diamond_canteen", new EmptyDiamondCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.DIAMOND_DIRTY_WATER_CANTEEN = register(func, "diamond_dirty_water_canteen", new FilledDiamondCanteenItem((new Item.Properties()).durability(15)));
+        TANItems.DIAMOND_WATER_CANTEEN = register(func, "diamond_water_canteen", new FilledDiamondCanteenItem((new Item.Properties()).durability(15)));
+        TANItems.DIAMOND_PURIFIED_WATER_CANTEEN = register(func, "diamond_purified_water_canteen", new FilledDiamondCanteenItem((new Item.Properties()).durability(15)));
+
+        TANItems.EMPTY_NETHERITE_CANTEEN = register(func, "empty_netherite_canteen", new EmptyNetheriteCanteenItem((new Item.Properties()).stacksTo(1)));
+        TANItems.NETHERITE_DIRTY_WATER_CANTEEN = register(func, "netherite_dirty_water_canteen", new FilledNetheriteCanteenItem((new Item.Properties()).durability(25)));
+        TANItems.NETHERITE_WATER_CANTEEN = register(func, "netherite_water_canteen", new FilledNetheriteCanteenItem((new Item.Properties()).durability(25)));
+        TANItems.NETHERITE_PURIFIED_WATER_CANTEEN = register(func, "netherite_purified_water_canteen", new FilledNetheriteCanteenItem((new Item.Properties()).durability(25)));
+
 
         TANItems.DIRTY_WATER_BOTTLE = register(func, "dirty_water_bottle", new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1)));
         TANItems.PURIFIED_WATER_BOTTLE = register(func, "purified_water_bottle", new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1)));

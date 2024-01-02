@@ -1,7 +1,12 @@
 {
   "values": [
     "minecraft:potion",
-    "toughasnails:water_canteen",
+    "toughasnails:leather_water_canteen",
+    "toughasnails:copper_water_canteen",
+    "toughasnails:iron_water_canteen",
+    "toughasnails:gold_water_canteen",
+    "toughasnails:diamond_water_canteen",
+    "toughasnails:netherite_water_canteen",
     "toughasnails:chorus_fruit_juice"
   ]
 }

@@ -1,0 +1,18 @@
+{
+  "type": "toughasnails:water_purifying",
+  "input": {
+    "Count": 1,
+    "id": "toughasnails:gold_dirty_water_canteen",
+    "tag": {
+      "Damage": 0
+    }
+  },
+  "purifytime": 400,
+  "result": {
+    "Count": 1,
+    "id": "toughasnails:gold_water_canteen",
+    "tag": {
+      "Damage": 0
+    }
+  }
+}

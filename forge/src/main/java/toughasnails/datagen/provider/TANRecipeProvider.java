@@ -4,10 +4,12 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
@@ -25,7 +27,15 @@ public class TANRecipeProvider extends RecipeProvider
     protected void buildRecipes(RecipeOutput output)
     {
         // Canteen
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_CANTEEN).define('#', Items.LEATHER).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_leather", has(Items.LEATHER)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_LEATHER_CANTEEN).define('#', Items.LEATHER).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_leather", has(Items.LEATHER)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_COPPER_CANTEEN).define('#', Items.COPPER_INGOT).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_IRON_CANTEEN).define('#', Items.IRON_INGOT).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_GOLD_CANTEEN).define('#', Items.GOLD_INGOT).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_DIAMOND_CANTEEN).define('#', Items.DIAMOND).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_diamond", has(Items.DIAMOND)).save(output);
+        netheriteSmithing(output, TANItems.EMPTY_DIAMOND_CANTEEN, RecipeCategory.TOOLS, TANItems.EMPTY_NETHERITE_CANTEEN);
+        netheriteSmithing(output, TANItems.DIAMOND_DIRTY_WATER_CANTEEN, RecipeCategory.TOOLS, TANItems.NETHERITE_DIRTY_WATER_CANTEEN);
+        netheriteSmithing(output, TANItems.DIAMOND_WATER_CANTEEN, RecipeCategory.TOOLS, TANItems.NETHERITE_WATER_CANTEEN);
+        netheriteSmithing(output, TANItems.DIAMOND_PURIFIED_WATER_CANTEEN, RecipeCategory.TOOLS, TANItems.NETHERITE_PURIFIED_WATER_CANTEEN);
 
         // Juice
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, TANItems.APPLE_JUICE).requires(TANItems.PURIFIED_WATER_BOTTLE).requires(Items.SUGAR).requires(Items.APPLE).group("juice").unlockedBy("has_apple", has(Items.APPLE)).save(output);
@@ -63,12 +73,32 @@ public class TANRecipeProvider extends RecipeProvider
         waterPurifier(output, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE), 200);
 
         // Canteens
-        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_CANTEEN), new ItemStack(TANItems.WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.WATER_CANTEEN), new ItemStack(TANItems.PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.LEATHER_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.LEATHER_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStack(TANItems.COPPER_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.COPPER_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStack(TANItems.IRON_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.IRON_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStack(TANItems.GOLD_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.GOLD_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStack(TANItems.DIAMOND_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.DIAMOND_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStack(TANItems.NETHERITE_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.NETHERITE_WATER_CANTEEN), 400);
+
+        waterPurifier(output, new ItemStack(TANItems.LEATHER_WATER_CANTEEN), new ItemStack(TANItems.LEATHER_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.COPPER_WATER_CANTEEN), new ItemStack(TANItems.COPPER_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.IRON_WATER_CANTEEN), new ItemStack(TANItems.IRON_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.GOLD_WATER_CANTEEN), new ItemStack(TANItems.GOLD_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.DIAMOND_WATER_CANTEEN), new ItemStack(TANItems.DIAMOND_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStack(TANItems.NETHERITE_WATER_CANTEEN), new ItemStack(TANItems.NETHERITE_PURIFIED_WATER_CANTEEN), 200);
     }
 
     public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
     {
         WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())));
+    }
+
+    public static void netheriteSmithing(RecipeOutput output, Item input, RecipeCategory category, Item result)
+    {
+        SmithingTransformRecipeBuilder.smithing(
+                Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(input), Ingredient.of(Items.NETHERITE_INGOT), category, result
+            )
+            .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+            .save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result)) + "_smithing");
     }
 }

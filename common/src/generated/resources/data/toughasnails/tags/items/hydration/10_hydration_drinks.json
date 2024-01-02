@@ -1,7 +1,12 @@
 {
   "values": [
     "toughasnails:dirty_water_bottle",
-    "toughasnails:dirty_water_canteen",
+    "toughasnails:leather_dirty_water_canteen",
+    "toughasnails:copper_dirty_water_canteen",
+    "toughasnails:iron_dirty_water_canteen",
+    "toughasnails:gold_dirty_water_canteen",
+    "toughasnails:diamond_dirty_water_canteen",
+    "toughasnails:netherite_dirty_water_canteen",
     "toughasnails:glow_berry_juice",
     "toughasnails:sweet_berry_juice"
   ]

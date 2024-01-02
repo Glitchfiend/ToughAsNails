@@ -9,10 +9,35 @@ import net.minecraft.world.level.block.Block;
 
 public class TANItems
 {
-    public static Item EMPTY_CANTEEN;
-    public static Item WATER_CANTEEN;
-    public static Item DIRTY_WATER_CANTEEN;
-    public static Item PURIFIED_WATER_CANTEEN;
+    public static Item EMPTY_LEATHER_CANTEEN;
+    public static Item LEATHER_DIRTY_WATER_CANTEEN;
+    public static Item LEATHER_WATER_CANTEEN;
+    public static Item LEATHER_PURIFIED_WATER_CANTEEN;
+
+    public static Item EMPTY_COPPER_CANTEEN;
+    public static Item COPPER_DIRTY_WATER_CANTEEN;
+    public static Item COPPER_WATER_CANTEEN;
+    public static Item COPPER_PURIFIED_WATER_CANTEEN;
+
+    public static Item EMPTY_IRON_CANTEEN;
+    public static Item IRON_DIRTY_WATER_CANTEEN;
+    public static Item IRON_WATER_CANTEEN;
+    public static Item IRON_PURIFIED_WATER_CANTEEN;
+
+    public static Item EMPTY_GOLD_CANTEEN;
+    public static Item GOLD_DIRTY_WATER_CANTEEN;
+    public static Item GOLD_WATER_CANTEEN;
+    public static Item GOLD_PURIFIED_WATER_CANTEEN;
+
+    public static Item EMPTY_DIAMOND_CANTEEN;
+    public static Item DIAMOND_DIRTY_WATER_CANTEEN;
+    public static Item DIAMOND_WATER_CANTEEN;
+    public static Item DIAMOND_PURIFIED_WATER_CANTEEN;
+
+    public static Item EMPTY_NETHERITE_CANTEEN;
+    public static Item NETHERITE_DIRTY_WATER_CANTEEN;
+    public static Item NETHERITE_WATER_CANTEEN;
+    public static Item NETHERITE_PURIFIED_WATER_CANTEEN;
 
     public static Item DIRTY_WATER_BOTTLE;
     public static Item PURIFIED_WATER_BOTTLE;
