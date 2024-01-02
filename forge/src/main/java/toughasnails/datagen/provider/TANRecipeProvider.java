@@ -37,7 +37,7 @@ public class TANRecipeProvider extends RecipeProvider
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, TANItems.SWEET_BERRY_JUICE).requires(TANItems.PURIFIED_WATER_BOTTLE).requires(Items.SUGAR).requires(Items.SWEET_BERRIES).group("juice").unlockedBy("has_sweet_berries", has(Items.SWEET_BERRIES)).save(output);
 
         // Blocks
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, TANBlocks.TEMPERATURE_GAUGE).define('G', Items.GLASS).define('R', Items.REDSTONE).define('B', Items.BRICK_SLAB).pattern("GGG").pattern("RRR").pattern("BBB").unlockedBy("has_redstone", has(Items.REDSTONE)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, TANBlocks.TEMPERATURE_GAUGE).define('G', Items.GLASS).define('Q', Items.QUARTZ).define('T', TANItems.THERMOMETER).define('B', Items.BRICK_SLAB).pattern("GGG").pattern("QTQ").pattern("BBB").unlockedBy("has_thermometer", has(TANItems.THERMOMETER)).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.RAIN_COLLECTOR).define('S', Items.STRING).define('I', Items.IRON_INGOT).define('B', Items.BARREL).pattern("ISI").pattern("IBI").unlockedBy("has_barrel", has(Items.BARREL)).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.WATER_PURIFIER).define('W', ItemTags.PLANKS).define('S', ItemTags.SAND).define('C', Items.CHARCOAL).define('G', Items.GLASS).pattern("WSW").pattern("GCG").pattern("GGG").unlockedBy("has_charcoal", has(Items.CHARCOAL)).save(output);
 

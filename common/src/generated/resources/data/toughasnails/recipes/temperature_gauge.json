@@ -8,13 +8,16 @@
     "G": {
       "item": "minecraft:glass"
     },
-    "R": {
-      "item": "minecraft:redstone"
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "T": {
+      "item": "toughasnails:thermometer"
     }
   },
   "pattern": [
     "GGG",
-    "RRR",
+    "QTQ",
     "BBB"
   ],
   "result": {

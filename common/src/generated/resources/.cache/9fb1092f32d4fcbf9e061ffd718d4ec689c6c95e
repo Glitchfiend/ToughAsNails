@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-02T15:35:08.8489587	Recipes
+// 1.20.4	2024-01-02T04:23:10.697763	Recipes
 09252bd5a872203de304820e8d5c5493afe96cf4 data/toughasnails/advancements/recipes/combat/leaf_boots.json
 2da825265e95f5dfc0dd4026e0dafee70c17512c data/toughasnails/advancements/recipes/combat/leaf_chestplate.json
 6d96cd4baff66d426c9405852ceed3aa8a3cde8f data/toughasnails/advancements/recipes/combat/leaf_helmet.json
@@ -16,7 +16,7 @@ db0a08a7c6ccc69ca4625db57d678ce644fdfe49 data/toughasnails/advancements/recipes/
 938ed87afb45ab9596ddcb2435f32472a880e6bd data/toughasnails/advancements/recipes/food/melon_juice.json
 1441a8289dbc285c34bf874d6976315fb41001f0 data/toughasnails/advancements/recipes/food/pumpkin_juice.json
 1b3828862b65dcfb0a1e6d99070287e896379558 data/toughasnails/advancements/recipes/food/sweet_berry_juice.json
-12ff7cdfde84ded584c6dd340468d1ea34b2afa1 data/toughasnails/advancements/recipes/redstone/temperature_gauge.json
+0c2aa5f66f00c9bb358dcfd2b7b1dd149bdec7ad data/toughasnails/advancements/recipes/redstone/temperature_gauge.json
 8b0e1899a965cbcf725172709f9f7f7062c43a5c data/toughasnails/advancements/recipes/tools/empty_canteen.json
 9ce52988e0ffa4ebd960125423c6dc331a72aadd data/toughasnails/advancements/recipes/tools/thermometer.json
 715184d6dfbadc65234a787d2e8271dce076e7b1 data/toughasnails/recipes/apple_juice.json
@@ -35,7 +35,7 @@ e4a98b0325be4fb27194eb56a079871cdc8d4114 data/toughasnails/recipes/pumpkin_juice
 351a2d892d1bc8eaf091aa41c732953c85b661b0 data/toughasnails/recipes/purified_water_canteen.json
 454a67d0df9042690154a1b3b372a5fff586b47d data/toughasnails/recipes/rain_collector.json
 2512026dc3a027f39db7e77e023a7017de386b9c data/toughasnails/recipes/sweet_berry_juice.json
-114b28980e7fe554a5d673093f323d73b4497447 data/toughasnails/recipes/temperature_gauge.json
+e636bfd4fab8d516083454e872c8115f5c15cf27 data/toughasnails/recipes/temperature_gauge.json
 b75d1caa0b1dcb9ae14dc02e47bba2a3c4b4a4dc data/toughasnails/recipes/thermometer.json
 9e06d792260bac7da2725c0b4ab95e165f6ffbec data/toughasnails/recipes/water_canteen.json
 26985bc2361f55479fce0f342c9c2b7573237c7f data/toughasnails/recipes/water_purifier.json
