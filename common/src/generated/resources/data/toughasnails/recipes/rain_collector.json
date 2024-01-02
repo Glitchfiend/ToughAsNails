@@ -2,19 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:barrel"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
     "S": {
       "item": "minecraft:string"
+    },
+    "W": {
+      "tag": "minecraft:planks"
     }
   },
   "pattern": [
-    "ISI",
-    "IBI"
+    "WSW",
+    "W W",
+    "WWW"
   ],
   "result": {
     "item": "toughasnails:rain_collector"

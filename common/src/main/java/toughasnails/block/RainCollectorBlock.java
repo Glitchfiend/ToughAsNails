@@ -23,16 +23,27 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import toughasnails.api.item.TANItems;
 
 public class RainCollectorBlock extends Block
 {
+    private static final VoxelShape INSIDE = box(2.0D, 15.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    protected static final VoxelShape SHAPE = Shapes.join(Shapes.block(), Shapes.or(INSIDE), BooleanOp.ONLY_FIRST);
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 3);
 
     public RainCollectorBlock(Properties properties)
     {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, Integer.valueOf(0)));
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState p_151964_, BlockGetter p_151965_, BlockPos p_151966_, CollisionContext p_151967_) {
+        return SHAPE;
     }
 
     @Override

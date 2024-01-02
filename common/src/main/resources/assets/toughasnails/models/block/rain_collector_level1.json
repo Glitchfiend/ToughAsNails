@@ -1,78 +1,86 @@
 {
 	"parent": "block/block",
     "ambientocclusion": false,
-    "textures": {
+	"textures": {
         "particle": "toughasnails:block/rain_collector_side",
         "top": "toughasnails:block/rain_collector_top",
-        "bottom": "minecraft:block/barrel_bottom",
+        "bottom": "toughasnails:block/rain_collector_bottom",
         "side": "toughasnails:block/rain_collector_side",
-        "inside": "minecraft:block/barrel_top_open",
-        "water": "minecraft:block/water_still"
-    },
-    "elements": [
-        {   "from": [ 0, 0, 0 ],
-            "to": [ 2, 16, 16 ],
-            "faces": {
-                "down":  { "texture": "#bottom" },
-                "up":    { "texture": "#top" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        },
-        {   "from": [ 2, 0, 2 ],
-            "to": [ 14, 4, 14 ],
-            "faces": {
-                "down":  { "texture": "#bottom" },
-                "up":    { "texture": "#inside" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        },
-        {   "from": [ 14, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-                "down":  { "texture": "#bottom" },
-                "up":    { "texture": "#top" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        },
-        {   "from": [ 2, 0, 0 ],
-            "to": [ 14, 16, 2 ],
-            "faces": {
-                "down":  { "texture": "#bottom" },
-                "up":    { "texture": "#top" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        },
-        {   "from": [ 2, 0, 14 ],
-            "to": [ 14, 16, 16 ],
-            "faces": {
-                "down":  { "texture": "#bottom" },
-                "up":    { "texture": "#top" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        },
-        {   "from": [ 2, 16, 2 ],
-            "to": [ 14, 16, 14 ],
-            "faces": {
-                "up": { "texture": "#top" }
-            }
-        },
-        {   "from": [ 2, 9, 2 ],
-            "to": [ 14, 9, 14 ],
+		"side_inner": "toughasnails:block/rain_collector_side_inner",
+        "inside": "toughasnails:block/rain_collector_inner",
+		"water": "minecraft:block/water_still"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [2, 16, 16],
+			"faces": {
+				"north": {"uv": [14, 0, 16, 16], "texture": "#side"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side_inner"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 2, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 2],
+			"to": [14, 4, 14],
+			"faces": {
+				"north": {"uv": [2, 12, 14, 16], "texture": "#side"},
+				"east": {"uv": [2, 12, 14, 16], "texture": "#side"},
+				"south": {"uv": [2, 12, 14, 16], "texture": "#side"},
+				"west": {"uv": [2, 12, 14, 16], "texture": "#side"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#inside"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [14, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#side"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [14, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side_inner"},
+				"up": {"uv": [14, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [14, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 0],
+			"to": [14, 16, 2],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"east": {"uv": [14, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#side_inner"},
+				"west": {"uv": [0, 0, 2, 16], "texture": "#side"},
+				"up": {"uv": [2, 0, 14, 2], "texture": "#top"},
+				"down": {"uv": [2, 14, 14, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 0, 14],
+			"to": [14, 16, 16],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#side_inner"},
+				"east": {"uv": [0, 0, 2, 16], "texture": "#side"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"west": {"uv": [14, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [2, 14, 14, 16], "texture": "#top"},
+				"down": {"uv": [2, 0, 14, 2], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [2, 15, 2],
+			"to": [14, 15, 14],
+			"faces": {
+				"up": {"uv": [2, 2, 14, 14], "texture": "#top"}
+			}
+		},
+        {   
+			"from": [ 2, 8, 2 ],
+            "to": [ 14, 8, 14 ],
             "faces": {
                 "up": { "texture": "#water", "tintindex": 0 }
             }

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_barrel": {
+    "has_string": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:barrel"
+              "minecraft:string"
             ]
           }
         ]
@@ -23,7 +23,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_barrel"
+      "has_string"
     ]
   ],
   "rewards": {
