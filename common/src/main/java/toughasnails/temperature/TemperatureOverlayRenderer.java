@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.TANAPI;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.Random;
@@ -26,6 +27,8 @@ public class TemperatureOverlayRenderer
     private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
     private static long updateCounter;
     private static long flashCounter;
+    private static long arrowCounter;
+    private static ArrowDirection arrowDirection;
     private static TemperatureLevel prevTemperatureLevel;
 
     public static void onBeginRenderFood(RenderGuiEvent.Pre event)
@@ -95,10 +98,17 @@ public class TemperatureOverlayRenderer
         if (prevTemperatureLevel == null)
             prevTemperatureLevel = temperature;
 
+        // Reset arrow direction when duration has elapsed
+        if (updateCounter > arrowCounter)
+            arrowDirection = null;
+
         // Flash for 16 ticks when the temperature changes
         if (prevTemperatureLevel != temperature)
         {
             flashCounter = updateCounter + 3;
+            arrowCounter = updateCounter + 15;
+            if (temperature.compareTo(prevTemperatureLevel) > 0) arrowDirection = ArrowDirection.UP;
+            else if (temperature.compareTo(prevTemperatureLevel) < 0) arrowDirection = ArrowDirection.DOWN;
         }
 
         // Update the prevTemperatureLevel to the current temperature level
@@ -122,5 +132,34 @@ public class TemperatureOverlayRenderer
             v += 16;
 
         gui.blit(OVERLAY, left, top, iconIndex, v, 16, 16);
+
+        // Draw the arrow
+        if (arrowDirection != null)
+        {
+            gui.blit(OVERLAY, left, top, arrowDirection.getU(15 - (int)(arrowCounter - updateCounter)), arrowDirection.getV(), 16, 16);
+        }
+    }
+
+    private enum ArrowDirection
+    {
+        UP(224),
+        DOWN(240);
+
+        private final int v;
+
+        ArrowDirection(int v)
+        {
+            this.v = v;
+        }
+
+        public int getU(int frame)
+        {
+            return frame * 16;
+        }
+
+        public int getV()
+        {
+            return this.v;
+        }
     }
 }
