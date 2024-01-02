@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
+    "MixinItem",
     "MixinPlayer",
     "MixinServerLevel",
     "MixinServerPlayer"
