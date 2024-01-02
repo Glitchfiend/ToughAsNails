@@ -26,6 +26,8 @@ import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class ModItems
@@ -86,8 +88,7 @@ public class ModItems
     private static void registerItemProperties()
     {
         ItemProperties.register(TANItems.THERMOMETER, new ResourceLocation(ToughAsNails.MOD_ID, "temperature"), new ClampedItemPropertyFunction() {
-            private double currentValue;
-            private double rota;
+            final Map<Integer, Delta> deltas = new HashMap<>();
             private long lastUpdateTick;
 
             @Override
@@ -96,19 +97,32 @@ public class ModItems
                 Entity holder = entity != null ? entity : stack.getFrame();
 
                 if (holder == null)
-                    return 0.0F;
+                    return 0.5F;
 
                 if (level == null && holder.level() instanceof ClientLevel)
                     level = (ClientLevel)holder.level();
 
                 if (level == null)
-                    return 0.0F;
+                    return 0.5F;
 
-                TemperatureLevel temperatureLevel = TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition());
-                double targetValue = temperatureLevel.ordinal() * 0.25;
+                Delta delta = deltas.computeIfAbsent(holder.getId(), k -> new Delta());
 
                 if (level.getGameTime() != this.lastUpdateTick) {
                     this.lastUpdateTick = level.getGameTime();
+                    delta.update(TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition()));
+                }
+
+                return delta.getValue();
+            }
+
+            private static class Delta
+            {
+                private double currentValue;
+                private double rota;
+
+                private void update(TemperatureLevel temperatureLevel)
+                {
+                    double targetValue = temperatureLevel.ordinal() * 0.25;
                     double delta = targetValue - this.currentValue;
 
                     // Add a small increment to the rota to move towards the target value
@@ -119,8 +133,11 @@ public class ModItems
                     this.currentValue = Mth.clamp(this.currentValue + this.rota, 0.0, 1.0);
                 }
 
-                // Round to the nearest 0.05
-                return (float)((double)Math.round(this.currentValue * 20.0) / 20.0);
+                public float getValue()
+                {
+                    // Round to the nearest 0.05
+                    return (float)((double)Math.round(this.currentValue * 20.0) / 20.0);
+                }
             }
         });
     }
