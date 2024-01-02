@@ -1,10 +1,10 @@
-// 1.20.4	2024-01-02T07:25:05.8559215	Tags for minecraft:item mod id toughasnails
+// 1.20.4	2024-01-02T09:16:41.432941	Tags for minecraft:item mod id toughasnails
 f05342856fe99891fa5e94bbe8db82a4f75ac41e data/toughasnails/tags/items/cooling_armor.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/cooling_consumed_items.json
+572f6d0748095755aeef0ca7d602f4ebba9bfd76 data/toughasnails/tags/items/cooling_consumed_items.json
 7c304628a9c17ca3ba6cd13e199fcf73ad9c974f data/toughasnails/tags/items/cooling_held_items.json
 d7e37bc0c1468593bf2403c8bab7e97c17edde8e data/toughasnails/tags/items/drinks.json
 eb101cb126ebd917a2c240ff53e1e6e16ba3bf83 data/toughasnails/tags/items/heating_armor.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/heating_consumed_items.json
+cf863878a8af4a7e610b91efb2c1d7846d13868b data/toughasnails/tags/items/heating_consumed_items.json
 efe9e0caf089100a228c46379f3aa70d7f602ddc data/toughasnails/tags/items/heating_held_items.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/hydration/100_hydration_drinks.json
 67139859406093c4ec7fb2563184a349cd422c65 data/toughasnails/tags/items/hydration/10_hydration_drinks.json

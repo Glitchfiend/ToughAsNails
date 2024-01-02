@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-02T07:25:05.8549215	Recipes
+// 1.20.4	2024-01-02T09:16:41.4319405	Recipes
 09252bd5a872203de304820e8d5c5493afe96cf4 data/toughasnails/advancements/recipes/combat/leaf_boots.json
 2da825265e95f5dfc0dd4026e0dafee70c17512c data/toughasnails/advancements/recipes/combat/leaf_chestplate.json
 6d96cd4baff66d426c9405852ceed3aa8a3cde8f data/toughasnails/advancements/recipes/combat/leaf_helmet.json
@@ -11,8 +11,10 @@ e8c549cdadb494e5854491524dbb6404aeb7f9a9 data/toughasnails/advancements/recipes/
 bb4f151b3d411b20ad496cfa2a95fd9aba7c1f78 data/toughasnails/advancements/recipes/decorations/water_purifier.json
 5f76369328acf2e24354a8918957059d62c035bc data/toughasnails/advancements/recipes/food/apple_juice.json
 a566bf835d6a75c46dd173af19b9dd0f4fe7469c data/toughasnails/advancements/recipes/food/cactus_juice.json
+11df03224589ebc8052207a735ac13ff8c0c9192 data/toughasnails/advancements/recipes/food/charc_os.json
 51d195d1d579a660e2ed86e98f58f92c12052428 data/toughasnails/advancements/recipes/food/chorus_fruit_juice.json
 db0a08a7c6ccc69ca4625db57d678ce644fdfe49 data/toughasnails/advancements/recipes/food/glow_berry_juice.json
+ac01c289d4ed4ec056624a23703d850483309a46 data/toughasnails/advancements/recipes/food/ice_cream.json
 938ed87afb45ab9596ddcb2435f32472a880e6bd data/toughasnails/advancements/recipes/food/melon_juice.json
 1441a8289dbc285c34bf874d6976315fb41001f0 data/toughasnails/advancements/recipes/food/pumpkin_juice.json
 1b3828862b65dcfb0a1e6d99070287e896379558 data/toughasnails/advancements/recipes/food/sweet_berry_juice.json
@@ -29,6 +31,7 @@ eb6859b0a41b94e3003405965dadf8f49b465ce0 data/toughasnails/advancements/recipes/
 9ce52988e0ffa4ebd960125423c6dc331a72aadd data/toughasnails/advancements/recipes/tools/thermometer.json
 715184d6dfbadc65234a787d2e8271dce076e7b1 data/toughasnails/recipes/apple_juice.json
 7aefc36c9cb1e7393660e57c9bfe2f47e9c472b9 data/toughasnails/recipes/cactus_juice.json
+f3ec21a6175eeb875a8f8f307dff2ece8532831e data/toughasnails/recipes/charc_os.json
 c03137fedf80a5cea96fa69ecc23ddcc733b02bf data/toughasnails/recipes/chorus_fruit_juice.json
 621a931c624e91f393ca22939253186876e40873 data/toughasnails/recipes/copper_purified_water_canteen.json
 96da20c9eb64283df7947e6272c2286d8b8f2af7 data/toughasnails/recipes/copper_water_canteen.json
@@ -43,6 +46,7 @@ c2f1aadc3c947308ddb2ffa99ff481d3c2702ee3 data/toughasnails/recipes/empty_iron_ca
 af1b982b9d1cc7246035fc73abfd1b34fbb1394d data/toughasnails/recipes/glow_berry_juice.json
 20abd8e2a4e8172968eab10fe809720fc0160118 data/toughasnails/recipes/gold_purified_water_canteen.json
 a2a23e956fe154b4db870456e6e06b3fb6c0e121 data/toughasnails/recipes/gold_water_canteen.json
+f389ed39df339784766c0ce0edd0436a03bb7296 data/toughasnails/recipes/ice_cream.json
 11beca7698ade01aa272b18b3314a42e552746b0 data/toughasnails/recipes/iron_purified_water_canteen.json
 aa5d7b846a2b506c4d93d2f094834d16d8aeded9 data/toughasnails/recipes/iron_water_canteen.json
 6cd4c90a0ccbc67304b76d8fd1890c7559bd3289 data/toughasnails/recipes/leaf_boots.json

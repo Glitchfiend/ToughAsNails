@@ -13,10 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
+import net.minecraft.world.item.*;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
@@ -76,15 +75,18 @@ public class ModItems
         TANItems.PUMPKIN_JUICE = register(func, "pumpkin_juice", new JuiceItem((new Item.Properties()).stacksTo(16)));
         TANItems.SWEET_BERRY_JUICE = register(func, "sweet_berry_juice", new JuiceItem((new Item.Properties()).stacksTo(16)));
 
-        TANItems.WOOL_HELMET = register(func, "wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
-        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
-        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
-        TANItems.WOOL_BOOTS = register(func, "wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
+        TANItems.ICE_CREAM = register(func, "ice_cream", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
+        TANItems.CHARC_0S = register(func, "charc_os", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
 
         TANItems.LEAF_HELMET = register(func, "leaf_helmet", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.HELMET, (new Item.Properties())));
         TANItems.LEAF_CHESTPLATE = register(func, "leaf_chestplate", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
         TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
         TANItems.LEAF_BOOTS = register(func, "leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
+
+        TANItems.WOOL_HELMET = register(func, "wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
+        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+        TANItems.WOOL_BOOTS = register(func, "wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
         TANItems.THERMOMETER = register(func, "thermometer", new Item(new Item.Properties().stacksTo(1)));
 

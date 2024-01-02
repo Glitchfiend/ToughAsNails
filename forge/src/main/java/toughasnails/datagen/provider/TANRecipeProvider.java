@@ -46,6 +46,10 @@ public class TANRecipeProvider extends RecipeProvider
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, TANItems.PUMPKIN_JUICE).requires(TANItems.PURIFIED_WATER_BOTTLE).requires(Items.SUGAR).requires(Items.PUMPKIN).group("juice").unlockedBy("has_pumpkin", has(Items.PUMPKIN)).save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, TANItems.SWEET_BERRY_JUICE).requires(TANItems.PURIFIED_WATER_BOTTLE).requires(Items.SUGAR).requires(Items.SWEET_BERRIES).group("juice").unlockedBy("has_sweet_berries", has(Items.SWEET_BERRIES)).save(output);
 
+        // Foods
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, TANItems.ICE_CREAM).define('#', Items.SNOWBALL).define('S', Items.SUGAR).define('B', Items.BOWL).pattern(" # ").pattern("#S#").pattern(" B ").unlockedBy("has_snowball", has(Items.SNOWBALL)).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, TANItems.CHARC_0S).define('#', Items.CHARCOAL).define('S', Items.SUGAR).define('B', Items.BOWL).pattern(" # ").pattern("#S#").pattern(" B ").unlockedBy("has_charcoal", has(Items.CHARCOAL)).save(output);
+
         // Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, TANBlocks.TEMPERATURE_GAUGE).define('G', Items.GLASS).define('Q', Items.QUARTZ).define('T', TANItems.THERMOMETER).define('B', Items.BRICK_SLAB).pattern("GGG").pattern("QTQ").pattern("BBB").unlockedBy("has_thermometer", has(TANItems.THERMOMETER)).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, TANBlocks.RAIN_COLLECTOR).define('S', Items.STRING).define('I', Items.IRON_INGOT).define('B', Items.BARREL).pattern("ISI").pattern("IBI").unlockedBy("has_barrel", has(Items.BARREL)).save(output);

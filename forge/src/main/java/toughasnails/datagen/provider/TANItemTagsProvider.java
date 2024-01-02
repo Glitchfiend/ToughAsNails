@@ -36,8 +36,8 @@ public class TANItemTagsProvider extends ItemTagsProvider
         // Temperature items
         this.tag(ModTags.Items.COOLING_HELD_ITEMS).add(Items.POWDER_SNOW_BUCKET);
         this.tag(ModTags.Items.HEATING_HELD_ITEMS).add(Items.LAVA_BUCKET);
-        this.tag(ModTags.Items.COOLING_CONSUMED_ITEMS);
-        this.tag(ModTags.Items.HEATING_CONSUMED_ITEMS);
+        this.tag(ModTags.Items.COOLING_CONSUMED_ITEMS).add(TANItems.ICE_CREAM);
+        this.tag(ModTags.Items.HEATING_CONSUMED_ITEMS).add(TANItems.CHARC_0S);
 
         // Drinks
         this.tag(ModTags.Items.DRINKS).addTags(

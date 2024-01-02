@@ -25,9 +25,9 @@ public class ModPotions
     {
         TANEffects.THIRST = registerEffect(func, "thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
         TANEffects.ICE_RESISTANCE = registerEffect(func, "ice_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
-        TANEffects.CLIMATE_CLEMENCY = registerEffect(func, "climate_clemency", new MobEffect(MobEffectCategory.NEUTRAL, 0xB6B6B6));
-        TANEffects.INTERNAL_WARMTH = registerEffect(func, "internal_warmth", new MobEffect(MobEffectCategory.NEUTRAL, 0xFFFAD9));
-        TANEffects.INTERNAL_CHILL = registerEffect(func, "internal_chill", new MobEffect(MobEffectCategory.NEUTRAL, 0xE1FCFF));
+        TANEffects.CLIMATE_CLEMENCY = registerEffect(func, "climate_clemency", new MobEffect(MobEffectCategory.BENEFICIAL, 0xB6B6B6));
+        TANEffects.INTERNAL_WARMTH = registerEffect(func, "internal_warmth", new MobEffect(MobEffectCategory.BENEFICIAL, 0xFFFAD9));
+        TANEffects.INTERNAL_CHILL = registerEffect(func, "internal_chill", new MobEffect(MobEffectCategory.BENEFICIAL, 0xE1FCFF));
     }
 
     public static void registerPotions(BiConsumer<ResourceLocation, Potion> func)

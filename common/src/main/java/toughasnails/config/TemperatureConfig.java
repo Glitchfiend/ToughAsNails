@@ -80,7 +80,7 @@ public class TemperatureConfig extends Config
         extremityDamageDelay = addNumber("general.extremity_damage_delay", 500, 0, Integer.MAX_VALUE, "Number of ticks to delay taking damage when icy or hot.");
         climateClemencyDuration = addNumber("general.climate_clemency_duration", 6000, 0, Integer.MAX_VALUE, "Number of ticks for the duration of Climate Clemency.");
         climateClemencyRespawning = add("general.climate_clemency_respawning", false, "Whether or not Climate Clemency should be granted when respawning.");
-        consumableEffectDuration = add("general.consumable_effect_duration", 600, "Duration of heating or cooling effects given by consuming items.");
+        consumableEffectDuration = add("general.consumable_effect_duration", 1200, "Duration of heating or cooling effects given by consuming items.");
         temperatureModifierOrder = add("general.temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, "The order in which to apply built-in temperature modifiers", TEMPERATURE_MODIFIER_VALIDATOR);
 
         // Altitude options

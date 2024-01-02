@@ -50,15 +50,18 @@ public class TANItems
     public static Item PUMPKIN_JUICE;
     public static Item SWEET_BERRY_JUICE;
 
-    public static Item WOOL_HELMET;
-    public static Item WOOL_CHESTPLATE;
-    public static Item WOOL_LEGGINGS;
-    public static Item WOOL_BOOTS;
+    public static Item ICE_CREAM;
+    public static Item CHARC_0S;
 
     public static Item LEAF_HELMET;
     public static Item LEAF_CHESTPLATE;
     public static Item LEAF_LEGGINGS;
     public static Item LEAF_BOOTS;
+
+    public static Item WOOL_HELMET;
+    public static Item WOOL_CHESTPLATE;
+    public static Item WOOL_LEGGINGS;
+    public static Item WOOL_BOOTS;
 
     public static Item THERMOMETER;
 

@@ -1,0 +1,54 @@
+/*******************************************************************************
+ * Copyright 2021, the Glitchfiend Team.
+ * All rights reserved.
+ ******************************************************************************/
+package toughasnails.item;
+
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+
+public class StackableBowlFoodItem extends Item
+{
+    public StackableBowlFoodItem(Properties properties)
+    {
+        super(properties);
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving)
+    {
+        Player player = entityLiving instanceof Player ? (Player)entityLiving : null;
+
+        // Do nothing if this isn't a player
+        if (player == null)
+            return stack;
+
+        if (player instanceof ServerPlayer)
+        {
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack);
+        }
+
+        player.awardStat(Stats.ITEM_USED.get(this));
+
+        if (!player.getAbilities().instabuild)
+        {
+            stack.shrink(1);
+
+            if (stack.isEmpty())
+            {
+                return new ItemStack(Items.BOWL);
+            }
+
+            player.getInventory().add(new ItemStack(Items.BOWL));
+        }
+
+        return stack;
+    }
+}
