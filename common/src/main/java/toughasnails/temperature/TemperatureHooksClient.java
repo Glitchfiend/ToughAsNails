@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.init.ModConfig;
 
 public class TemperatureHooksClient
 {
@@ -35,6 +36,17 @@ public class TemperatureHooksClient
         else
         {
             gui.blitSprite(heartType.getSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
+        }
+    }
+
+    public static void adjustSelectedItemText(GuiGraphics guiGraphics)
+    {
+        var pose = guiGraphics.pose();
+
+        // If temperature is enabled, move the selected item text up by 2 pixels
+        if (ModConfig.temperature.enableTemperature)
+        {
+            pose.translate(0F, -2F, 0F);
         }
     }
 

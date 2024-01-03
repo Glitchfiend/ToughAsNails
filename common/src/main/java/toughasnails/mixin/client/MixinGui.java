@@ -21,4 +21,18 @@ public abstract class MixinGui
         TemperatureHooksClient.heartBlit(gui, heartType, x, y, isHardcore, isBlinking, isHalf);
         ci.cancel();
     }
+
+    @Inject(method="renderSelectedItemName", at=@At(value="HEAD"))
+    public void onRenderSelectedItemNameBegin(GuiGraphics guiGraphics, CallbackInfo ci)
+    {
+        var pose = guiGraphics.pose();
+        pose.pushPose();
+        TemperatureHooksClient.adjustSelectedItemText(guiGraphics);
+    }
+
+    @Inject(method="renderSelectedItemName", at=@At(value="TAIL"))
+    public void onRenderSelectedItemNameEnd(GuiGraphics guiGraphics, CallbackInfo ci)
+    {
+        guiGraphics.pose().popPose();
+    }
 }
