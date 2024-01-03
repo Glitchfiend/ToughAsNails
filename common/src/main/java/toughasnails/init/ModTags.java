@@ -6,10 +6,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import toughasnails.api.TANAPI;
 import toughasnails.api.thirst.WaterType;
+import toughasnails.core.ToughAsNails;
 
 public class ModTags
 {
@@ -18,6 +21,7 @@ public class ModTags
         Blocks.init();
         Items.init();
         Biomes.init();
+        Trims.init();
     }
 
     public static class Blocks
@@ -139,6 +143,19 @@ public class ModTags
                 return WaterType.PURIFIED;
             else
                 return WaterType.NORMAL;
+        }
+    }
+
+    public static class Trims
+    {
+        public static void init() {}
+
+        public static final TagKey<TrimMaterial> COOLING_TRIMS =  create("cooling_trims");
+        public static final TagKey<TrimMaterial> HEATING_TRIMS =  create("heating_trims");
+
+        private static TagKey<TrimMaterial> create(String name)
+        {
+            return TagKey.create(Registries.TRIM_MATERIAL, new ResourceLocation(ToughAsNails.MOD_ID, name));
         }
     }
 }

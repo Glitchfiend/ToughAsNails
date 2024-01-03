@@ -6,13 +6,17 @@ package toughasnails.client.handler;
 
 import glitchcore.event.client.ItemTooltipEvent;
 import glitchcore.event.client.RenderTooltipEvent;
+import glitchcore.util.Environment;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.core.ToughAsNails;
@@ -20,24 +24,30 @@ import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 import toughasnails.thirst.ThirstOverlayRenderer;
 
+import java.util.Optional;
+
 public class TooltipHandler
 {
     public static void onTooltip(ItemTooltipEvent event)
     {
-        ItemStack stack = event.getStack();
-        Block block = Block.byItem(stack.getItem());
-        BlockState state = block.defaultBlockState();
-
         // Don't display heating or cooling tooltips if temperature is disabled
         if (!ModConfig.temperature.enableTemperature)
             return;
 
-        if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR))
+        if (!Environment.isClient())
+            throw new IllegalStateException("ItemTooltipEvent unexpectedly called on the server");
+
+        ItemStack stack = event.getStack();
+        Block block = Block.byItem(stack.getItem());
+        BlockState state = block.defaultBlockState();
+        Optional<ArmorTrim> trim = ArmorTrim.getTrim(Minecraft.getInstance().getConnection().registryAccess(), stack, true);
+
+        if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.HEATING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
 
-        if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR))
+        if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.COOLING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
         }

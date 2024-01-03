@@ -11,6 +11,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -352,8 +355,20 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger heatingPieces = new AtomicInteger();
 
         player.getArmorSlots().forEach((stack -> {
-            if (stack.is(ModTags.Items.COOLING_ARMOR)) coolingPieces.getAndIncrement();
-            if (stack.is(ModTags.Items.HEATING_ARMOR)) heatingPieces.getAndIncrement();
+            // Prevent doubling of effects if armor were to be tagged as heating/cooling and also had a heating/cooling trim applied
+            if (stack.is(ModTags.Items.COOLING_ARMOR) || stack.is(ModTags.Items.HEATING_ARMOR))
+            {
+                if (stack.is(ModTags.Items.COOLING_ARMOR)) coolingPieces.getAndIncrement();
+                if (stack.is(ModTags.Items.HEATING_ARMOR)) heatingPieces.getAndIncrement();
+            }
+            else
+            {
+                ArmorTrim.getTrim(player.level().registryAccess(), stack, true).ifPresent(armorTrim -> {
+                    Holder<TrimMaterial> trimMaterial = armorTrim.material();
+                    if (trimMaterial.is(ModTags.Trims.COOLING_TRIMS)) coolingPieces.getAndIncrement();
+                    if (trimMaterial.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();
+                });
+            }
         }));
 
         // Prevent armor from sending players over the edge into hot or icy temperature levels
