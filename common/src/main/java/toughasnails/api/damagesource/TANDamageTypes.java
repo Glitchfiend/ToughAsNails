@@ -13,6 +13,7 @@ import toughasnails.api.TANAPI;
 public class TANDamageTypes
 {
     public static final ResourceKey<DamageType> HYPERTHERMIA = register("hyperthermia");
+    public static final ResourceKey<DamageType> THIRST = register("thirst");
 
     private static ResourceKey<DamageType> register(String name)
     {

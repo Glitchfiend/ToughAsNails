@@ -5,6 +5,8 @@
   
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
   "death.attack.toughasnails.hyperthermia.player": "%1$s overheated to death while trying to escape %2$s",
+  "death.attack.toughasnails.thirst": "%1$s died of thirst",
+  "death.attack.toughasnails.thirst.player": "%1$s died of thirst while fighting %2$s",
   "desc.toughasnails.heating": "Heating",
   "desc.toughasnails.cooling": "Cooling",
   "desc.toughasnails.heating_held": "Heating (Held)",

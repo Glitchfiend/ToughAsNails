@@ -49,46 +49,44 @@ public class TooltipHandler
         Optional<ArmorTrim> trim = ArmorTrim.getTrim(registryAccess, stack, true);
         Optional<Holder.Reference<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
 
+        // Heating/Cooling Blocks and Armor/Trimmed Armor
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.HEATING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
-
         if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.COOLING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
         }
 
+        // Heating/Cooling Held Items
         if (stack.is(ModTags.Items.HEATING_HELD_ITEMS))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_held")).withStyle(ChatFormatting.GOLD));
         }
-
         if (stack.is(ModTags.Items.COOLING_HELD_ITEMS))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_held")).withStyle(ChatFormatting.AQUA));
         }
 
-        // Display tooltips for items used as materials for trims (the code above is for displaying tooltips on trimmed armor)
-        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS))
-        {
-            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_trim")).withStyle(ChatFormatting.GOLD));
-        }
-
-        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.COOLING_TRIMS))
-        {
-            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_trim")).withStyle(ChatFormatting.AQUA));
-        }
-
-        // Consumable cooling/heating items
+        // Heating/Cooling Consumables
         if (stack.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_consumed")).withStyle(ChatFormatting.GOLD));
         }
-
         if (stack.is(ModTags.Items.COOLING_CONSUMED_ITEMS))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_consumed")).withStyle(ChatFormatting.AQUA));
+        }
+
+        // Heating/Cooling Trim Material Items
+        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS))
+        {
+            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_trim")).withStyle(ChatFormatting.GOLD));
+        }
+        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.COOLING_TRIMS))
+        {
+            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_trim")).withStyle(ChatFormatting.AQUA));
         }
     }
 

@@ -21,6 +21,27 @@ public class ModItems
 {
     public static void registerItems(BiConsumer<ResourceLocation, Item> func)
     {
+        // Block Items
+        TANItems.TEMPERATURE_GAUGE = register(func, "temperature_gauge", new BlockItem(TANBlocks.TEMPERATURE_GAUGE, new Item.Properties()));
+        TANItems.RAIN_COLLECTOR = register(func, "rain_collector", new BlockItem(TANBlocks.RAIN_COLLECTOR, new Item.Properties()));
+        TANItems.WATER_PURIFIER = register(func, "water_purifier", new BlockItem(TANBlocks.WATER_PURIFIER, new Item.Properties()));
+
+        // Items
+        TANItems.THERMOMETER = register(func, "thermometer", new Item(new Item.Properties().stacksTo(1)));
+
+        TANItems.LEAF_HELMET = register(func, "leaf_helmet", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.HELMET, (new Item.Properties())));
+        TANItems.LEAF_CHESTPLATE = register(func, "leaf_chestplate", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+        TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+        TANItems.LEAF_BOOTS = register(func, "leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
+
+        TANItems.WOOL_HELMET = register(func, "wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
+        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+        TANItems.WOOL_BOOTS = register(func, "wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
+
+        TANItems.ICE_CREAM = register(func, "ice_cream", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
+        TANItems.CHARC_0S = register(func, "charc_os", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
+
         TANItems.EMPTY_LEATHER_CANTEEN = register(func, "empty_leather_canteen", new EmptyLeatherCanteenItem((new Item.Properties()).stacksTo(1)));
         TANItems.LEATHER_DIRTY_WATER_CANTEEN = register(func, "leather_dirty_water_canteen", new FilledLeatherCanteenItem((new Item.Properties()).durability(5)));
         TANItems.LEATHER_WATER_CANTEEN = register(func, "leather_water_canteen", new FilledLeatherCanteenItem((new Item.Properties()).durability(5)));
@@ -51,7 +72,6 @@ public class ModItems
         TANItems.NETHERITE_WATER_CANTEEN = register(func, "netherite_water_canteen", new FilledNetheriteCanteenItem((new Item.Properties()).durability(25)));
         TANItems.NETHERITE_PURIFIED_WATER_CANTEEN = register(func, "netherite_purified_water_canteen", new FilledNetheriteCanteenItem((new Item.Properties()).durability(25)));
 
-
         TANItems.DIRTY_WATER_BOTTLE = register(func, "dirty_water_bottle", new DirtyWaterBottleItem((new Item.Properties()).stacksTo(1)));
         TANItems.PURIFIED_WATER_BOTTLE = register(func, "purified_water_bottle", new PurifiedWaterBottleItem((new Item.Properties()).stacksTo(1)));
 
@@ -63,26 +83,7 @@ public class ModItems
         TANItems.PUMPKIN_JUICE = register(func, "pumpkin_juice", new JuiceItem((new Item.Properties()).stacksTo(16)));
         TANItems.SWEET_BERRY_JUICE = register(func, "sweet_berry_juice", new JuiceItem((new Item.Properties()).stacksTo(16)));
 
-        TANItems.ICE_CREAM = register(func, "ice_cream", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
-        TANItems.CHARC_0S = register(func, "charc_os", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build())));
-
-        TANItems.LEAF_HELMET = register(func, "leaf_helmet", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.HELMET, (new Item.Properties())));
-        TANItems.LEAF_CHESTPLATE = register(func, "leaf_chestplate", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
-        TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
-        TANItems.LEAF_BOOTS = register(func, "leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
-
-        TANItems.WOOL_HELMET = register(func, "wool_helmet", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
-        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
-        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
-        TANItems.WOOL_BOOTS = register(func, "wool_boots", new DyeableWoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
-
-        TANItems.THERMOMETER = register(func, "thermometer", new Item(new Item.Properties().stacksTo(1)));
-
         TANItems.TAN_ICON = register(func, "tan_icon", new Item(new Item.Properties()));
-
-        TANItems.TEMPERATURE_GAUGE = register(func, "temperature_gauge", new BlockItem(TANBlocks.TEMPERATURE_GAUGE, new Item.Properties()));
-        TANItems.RAIN_COLLECTOR = register(func, "rain_collector", new BlockItem(TANBlocks.RAIN_COLLECTOR, new Item.Properties()));
-        TANItems.WATER_PURIFIER = register(func, "water_purifier", new BlockItem(TANBlocks.WATER_PURIFIER, new Item.Properties()));
 
         if (Environment.isClient())
         {

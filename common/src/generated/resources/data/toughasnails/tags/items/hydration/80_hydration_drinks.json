@@ -1,5 +1,11 @@
 {
   "values": [
-    "toughasnails:cactus_juice"
+    "toughasnails:purified_water_bottle",
+    "toughasnails:leather_purified_water_canteen",
+    "toughasnails:copper_purified_water_canteen",
+    "toughasnails:iron_purified_water_canteen",
+    "toughasnails:gold_purified_water_canteen",
+    "toughasnails:diamond_purified_water_canteen",
+    "toughasnails:netherite_purified_water_canteen"
   ]
 }

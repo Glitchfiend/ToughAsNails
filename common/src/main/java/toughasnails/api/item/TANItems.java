@@ -9,6 +9,27 @@ import net.minecraft.world.level.block.Block;
 
 public class TANItems
 {
+    // Block Items
+    public static Item TEMPERATURE_GAUGE;
+    public static Item RAIN_COLLECTOR;
+    public static Item WATER_PURIFIER;
+
+    // Items
+    public static Item THERMOMETER;
+
+    public static Item LEAF_HELMET;
+    public static Item LEAF_CHESTPLATE;
+    public static Item LEAF_LEGGINGS;
+    public static Item LEAF_BOOTS;
+
+    public static Item WOOL_HELMET;
+    public static Item WOOL_CHESTPLATE;
+    public static Item WOOL_LEGGINGS;
+    public static Item WOOL_BOOTS;
+
+    public static Item ICE_CREAM;
+    public static Item CHARC_0S;
+
     public static Item EMPTY_LEATHER_CANTEEN;
     public static Item LEATHER_DIRTY_WATER_CANTEEN;
     public static Item LEATHER_WATER_CANTEEN;
@@ -50,25 +71,5 @@ public class TANItems
     public static Item PUMPKIN_JUICE;
     public static Item SWEET_BERRY_JUICE;
 
-    public static Item ICE_CREAM;
-    public static Item CHARC_0S;
-
-    public static Item LEAF_HELMET;
-    public static Item LEAF_CHESTPLATE;
-    public static Item LEAF_LEGGINGS;
-    public static Item LEAF_BOOTS;
-
-    public static Item WOOL_HELMET;
-    public static Item WOOL_CHESTPLATE;
-    public static Item WOOL_LEGGINGS;
-    public static Item WOOL_BOOTS;
-
-    public static Item THERMOMETER;
-
     public static Item TAN_ICON;
-
-    // Block items
-    public static Item TEMPERATURE_GAUGE;
-    public static Item RAIN_COLLECTOR;
-    public static Item WATER_PURIFIER;
 }

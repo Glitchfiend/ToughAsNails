@@ -26,6 +26,7 @@ public class TANDamageTypeTagsProvider extends TagsProvider<DamageType>
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
-        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(TANDamageTypes.HYPERTHERMIA);
+        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(TANDamageTypes.HYPERTHERMIA, TANDamageTypes.THIRST);
+        this.tag(DamageTypeTags.BYPASSES_EFFECTS).add(TANDamageTypes.THIRST);
     }
 }

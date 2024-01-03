@@ -4,9 +4,9 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.GameRules;
+import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.config.ThirstConfig;
 import toughasnails.init.ModConfig;
 
 public class ThirstHooks
@@ -82,7 +82,7 @@ public class ThirstHooks
             {
                 if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL)
                 {
-                    player.hurt(player.damageSources().starve(), 1.0F);
+                    player.hurt(player.damageSources().source(TANDamageTypes.THIRST), 1.0F);
                 }
 
                 data.tickTimer = 0;

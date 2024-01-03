@@ -32,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
@@ -81,7 +82,7 @@ public class ThirstHandler
             {
                 if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL)
                 {
-                    player.hurt(player.damageSources().starve(), 1.0F);
+                    player.hurt(player.damageSources().source(TANDamageTypes.THIRST), 1.0F);
                 }
 
                 thirst.setTickTimer(0);
