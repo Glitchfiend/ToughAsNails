@@ -12,11 +12,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.core.ToughAsNails;
@@ -40,7 +44,10 @@ public class TooltipHandler
         ItemStack stack = event.getStack();
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
-        Optional<ArmorTrim> trim = ArmorTrim.getTrim(Minecraft.getInstance().getConnection().registryAccess(), stack, true);
+        RegistryAccess registryAccess = Minecraft.getInstance().getConnection().registryAccess();
+
+        Optional<ArmorTrim> trim = ArmorTrim.getTrim(registryAccess, stack, true);
+        Optional<Holder.Reference<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
 
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.HEATING_TRIMS)))
         {
@@ -62,6 +69,18 @@ public class TooltipHandler
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_held")).withStyle(ChatFormatting.AQUA));
         }
 
+        // Display tooltips for items used as materials for trims (the code above is for displaying tooltips on trimmed armor)
+        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS))
+        {
+            event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_trim")).withStyle(ChatFormatting.GOLD));
+        }
+
+        if (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.COOLING_TRIMS))
+        {
+            event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling_trim")).withStyle(ChatFormatting.AQUA));
+        }
+
+        // Consumable cooling/heating items
         if (stack.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating_consumed")).withStyle(ChatFormatting.GOLD));
