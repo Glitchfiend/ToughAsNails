@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-03T09:51:56.6789232	Tags for minecraft:item mod id toughasnails
+// 1.20.4	2024-01-03T14:17:14.7413115	Tags for minecraft:item mod id toughasnails
 f05342856fe99891fa5e94bbe8db82a4f75ac41e data/toughasnails/tags/items/cooling_armor.json
 572f6d0748095755aeef0ca7d602f4ebba9bfd76 data/toughasnails/tags/items/cooling_consumed_items.json
 7c304628a9c17ca3ba6cd13e199fcf73ad9c974f data/toughasnails/tags/items/cooling_held_items.json
@@ -7,13 +7,13 @@ eb101cb126ebd917a2c240ff53e1e6e16ba3bf83 data/toughasnails/tags/items/heating_ar
 cf863878a8af4a7e610b91efb2c1d7846d13868b data/toughasnails/tags/items/heating_consumed_items.json
 efe9e0caf089100a228c46379f3aa70d7f602ddc data/toughasnails/tags/items/heating_held_items.json
 d7b753d45aecdc84f69d294a00dc5271088c2abc data/toughasnails/tags/items/hydration/100_hydration_drinks.json
-67139859406093c4ec7fb2563184a349cd422c65 data/toughasnails/tags/items/hydration/10_hydration_drinks.json
-afb65ee4d43ae8f9cb63112f16629e0e59db5e3d data/toughasnails/tags/items/hydration/20_hydration_drinks.json
+cc0aa3bf437ed849deda4e4b64aff3665160dae6 data/toughasnails/tags/items/hydration/10_hydration_drinks.json
+6ca6b5a2b8cffea21f6112afc30cc32fa4a4e2d7 data/toughasnails/tags/items/hydration/20_hydration_drinks.json
 edb5947f84984a39ab47c98c6fb0b3c3a9a8cc39 data/toughasnails/tags/items/hydration/30_hydration_drinks.json
-ce37a9edf9fd513131ff36c4478e629a45057d38 data/toughasnails/tags/items/hydration/40_hydration_drinks.json
-a8d4693f32c2dabe2f0ff10cb6ccae93882c8530 data/toughasnails/tags/items/hydration/50_hydration_drinks.json
-4f7422a225cdc6c2f193883f99997942060a44fb data/toughasnails/tags/items/hydration/60_hydration_drinks.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/hydration/70_hydration_drinks.json
+f87a1c4dc42b16f1628cfca591895d987e5dc6ca data/toughasnails/tags/items/hydration/40_hydration_drinks.json
+4f7422a225cdc6c2f193883f99997942060a44fb data/toughasnails/tags/items/hydration/50_hydration_drinks.json
+ce37a9edf9fd513131ff36c4478e629a45057d38 data/toughasnails/tags/items/hydration/60_hydration_drinks.json
+a8d4693f32c2dabe2f0ff10cb6ccae93882c8530 data/toughasnails/tags/items/hydration/70_hydration_drinks.json
 7fd9471261d08e940601fdecd379217eb90622d1 data/toughasnails/tags/items/hydration/80_hydration_drinks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/hydration/90_hydration_drinks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/poison_chance/100_poison_chance_drinks.json
