@@ -12,6 +12,7 @@ import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.init.ModTags;
+import sereneseasons.season.SeasonHooks;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
@@ -26,6 +27,11 @@ public class ModCompatibility
             ToughAsNails.LOGGER.info("Serene Seasons detected. Enabling season modifier.");
             TemperatureHelper.registerPositionalTemperatureModifier(ModCompatibility::seasonModifier);
         }
+    }
+
+    public static boolean coldEnoughToSnowSeasonal(Level level, Holder<Biome> biome, BlockPos pos)
+    {
+        return SeasonHooks.coldEnoughToSnowSeasonal(level, biome, pos);
     }
 
     private static TemperatureLevel seasonModifier(Level level, BlockPos pos, TemperatureLevel current)

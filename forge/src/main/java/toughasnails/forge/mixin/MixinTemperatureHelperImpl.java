@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import sereneseasons.season.SeasonHooks;
+import toughasnails.forge.init.ModCompatibility;
 import toughasnails.temperature.TemperatureHelperImpl;
 
 @Mixin(value = TemperatureHelperImpl.class, remap = false)
@@ -22,7 +22,7 @@ public abstract class MixinTemperatureHelperImpl
     {
         if (ModList.get().isLoaded("sereneseasons"))
         {
-            return SeasonHooks.coldEnoughToSnowSeasonal(level, biome, pos);
+            return ModCompatibility.coldEnoughToSnowSeasonal(level, biome, pos);
         }
         else
         {
