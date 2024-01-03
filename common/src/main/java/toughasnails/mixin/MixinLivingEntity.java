@@ -53,7 +53,7 @@ public abstract class MixinLivingEntity extends Entity implements Attackable
 
         if (!player.hasEffect(TANEffects.ICE_RESISTANCE))
         {
-            if (data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
+            if (!player.isCreative() && !player.isSpectator() && data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
             {
                 // Add 2 to the ticksRequiredToFreeze to cause damage
                 player.setTicksFrozen(Math.min(player.getTicksRequiredToFreeze() + 2, player.getTicksFrozen() + 2));
