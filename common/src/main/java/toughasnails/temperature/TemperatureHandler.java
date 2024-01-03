@@ -103,23 +103,10 @@ public class TemperatureHandler
         // Don't perform extremity effects in creative or spectator modes
         if (!player.isCreative() && !player.isSpectator())
         {
-            // Freeze the player if they're icy
-            if (!player.hasEffect(TANEffects.ICE_RESISTANCE) && data.getLevel() == TemperatureLevel.ICY && data.getExtremityDelayTicks() == 0)
-            {
-                int frozenTicks = player.getTicksFrozen();
-                int ticksToFreeze = player.getTicksRequiredToFreeze() + 2; // Add 2 to cause damage
-
-                if (frozenTicks < ticksToFreeze)
-                    player.setTicksFrozen(Math.min(ticksToFreeze, player.getTicksFrozen() + 2));
-            }
-
             // Increase hyperthermia ticks if hot
             if (!player.hasEffect(MobEffects.FIRE_RESISTANCE) && data.getLevel() == TemperatureLevel.HOT && data.getExtremityDelayTicks() == 0)
             {
                 data.setHyperthermiaTicks(Math.min(ticksToHyperthermia, hyperthermicTicks + 1));
-
-                if (player.getTicksFrozen() > 0)
-                    player.setTicksFrozen(Math.max(0, player.getTicksFrozen() - 2));
             }
             else data.setHyperthermiaTicks(Math.max(0, hyperthermicTicks - 2));
         }
@@ -128,12 +115,6 @@ public class TemperatureHandler
             // Decrease hyperthermia, if present
             if (data.getHyperthermiaTicks() > 0)
                 data.setHyperthermiaTicks(Math.max(0, hyperthermicTicks - 2));
-        }
-
-        // Reset frozen ticks with ice resistance. This is mainly to avoid the effects of powdered snow.
-        if (player.hasEffect(TANEffects.ICE_RESISTANCE) && player.getTicksFrozen() > 0)
-        {
-            player.setTicksFrozen(0);
         }
 
         removeHeatExhaustion(player);
