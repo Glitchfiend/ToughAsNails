@@ -4,9 +4,6 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.event.client.RegisterColorsEvent;
-import glitchcore.util.RenderTypeHelper;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -21,9 +18,6 @@ import toughasnails.block.WaterPurifierBlock;
 
 import java.util.function.BiConsumer;
 
-import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
-import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
-
 public class ModBlocks
 {
     public static void registerBlocks(BiConsumer<ResourceLocation, Block> func)
@@ -31,22 +25,6 @@ public class ModBlocks
         TANBlocks.TEMPERATURE_GAUGE = register(func, "temperature_gauge", new TemperatureGaugeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops().strength(1.0F)));
         TANBlocks.RAIN_COLLECTOR = register(func, "rain_collector", new RainCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).noOcclusion()));
         TANBlocks.WATER_PURIFIER = register(func, "water_purifier", new WaterPurifierBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.COPPER).noOcclusion()));
-    }
-
-    public static void registerRenderers()
-    {
-        RenderType transparentRenderType = RenderType.cutoutMipped();
-        RenderType cutoutRenderType = RenderType.cutout();
-        RenderType translucentRenderType = RenderType.translucent();
-
-        RenderTypeHelper.setRenderType(RAIN_COLLECTOR, cutoutRenderType);
-        RenderTypeHelper.setRenderType(WATER_PURIFIER, cutoutRenderType);
-    }
-
-    public static void registerBlockColors(RegisterColorsEvent.Block event)
-    {
-        event.register((state, world, pos, tintIndex) -> 0x47DAFF, TANBlocks.RAIN_COLLECTOR);
-        event.register((state, world, pos, tintIndex) -> 0x3F76E4, TANBlocks.WATER_PURIFIER);
     }
 
     private static Block register(BiConsumer<ResourceLocation, Block> func, String name, Block block)

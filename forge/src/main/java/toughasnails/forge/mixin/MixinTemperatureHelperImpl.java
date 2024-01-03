@@ -2,7 +2,7 @@
  * Copyright 2023, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.mixin;
+package toughasnails.forge.mixin;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

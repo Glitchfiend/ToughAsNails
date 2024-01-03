@@ -2,7 +2,7 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.init;
+package toughasnails.forge.init;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -15,7 +15,7 @@ import sereneseasons.init.ModTags;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
+import toughasnails.init.ModConfig;
 
 public class ModCompatibility
 {

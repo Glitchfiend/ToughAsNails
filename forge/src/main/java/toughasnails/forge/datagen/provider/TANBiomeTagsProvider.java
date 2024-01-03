@@ -2,7 +2,7 @@
  * Copyright 2023, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen.provider;
+package toughasnails.forge.datagen.provider;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -11,7 +11,6 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
 import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;

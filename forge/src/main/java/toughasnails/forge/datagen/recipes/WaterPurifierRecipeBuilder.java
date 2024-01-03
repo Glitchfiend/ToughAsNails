@@ -1,14 +1,8 @@
-package toughasnails.datagen.recipes;
+package toughasnails.forge.datagen.recipes;
 
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 public class WaterPurifierRecipeBuilder

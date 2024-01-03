@@ -2,7 +2,7 @@
  * Copyright 2022, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen;
+package toughasnails.forge.datagen;
 
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
@@ -20,9 +20,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import toughasnails.api.TANAPI;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
-import toughasnails.datagen.loot.TANLootTableProvider;
-import toughasnails.datagen.provider.*;
+import toughasnails.forge.datagen.loot.TANLootTableProvider;
+import toughasnails.forge.datagen.provider.*;
 
 import java.util.HashSet;
 import java.util.Set;

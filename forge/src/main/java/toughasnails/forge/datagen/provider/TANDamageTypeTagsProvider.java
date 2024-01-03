@@ -2,7 +2,7 @@
  * Copyright 2022, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen.provider;
+package toughasnails.forge.datagen.provider;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -13,7 +13,6 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "toughasnails.mixin",
+  "package": "toughasnails.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
   ],
   "client": [
+    "client.MixinGui"
   ],
   "injectors": {
     "defaultRequire": 1

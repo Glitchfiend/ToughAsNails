@@ -35,7 +35,7 @@ public class ToughAsNails
 
     public static void setupClient()
     {
-        ModBlocks.registerRenderers();
+        ModClient.setupRenderTypes();
     }
 
     private static void addRegistrars()
@@ -84,8 +84,8 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onClientTick);
 
         // Coloring
-        EventManager.addListener(ModBlocks::registerBlockColors);
-        EventManager.addListener(ModItems::registerItemColors);
+        EventManager.addListener(ModClient::registerBlockColors);
+        EventManager.addListener(ModClient::registerItemColors);
 
         // Tooltips
         EventManager.addListener(TooltipHandler::onTooltip);

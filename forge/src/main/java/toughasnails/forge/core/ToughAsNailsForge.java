@@ -2,7 +2,7 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.core;
+package toughasnails.forge.core;
 
 import glitchcore.forge.GlitchCoreForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,7 +10,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import toughasnails.init.*;
+import toughasnails.core.ToughAsNails;
+import toughasnails.forge.init.ModCompatibility;
 
 @Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNailsForge

@@ -1,4 +1,4 @@
-package toughasnails.datagen.provider;
+package toughasnails.forge.datagen.provider;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -13,8 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
-import toughasnails.datagen.recipes.WaterPurifierRecipeBuilder;
+import toughasnails.forge.datagen.recipes.WaterPurifierRecipeBuilder;
 
 public class TANRecipeProvider extends RecipeProvider
 {

@@ -17,10 +17,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "toughasnails.core.ToughAsNailsFabric"
+      "toughasnails.fabric.core.ToughAsNailsFabric"
     ],
     "client": [
-      "toughasnails.core.ToughAsNailsFabric"
+      "toughasnails.fabric.core.ToughAsNailsFabric"
     ]
   },
   "mixins": [

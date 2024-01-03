@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,8 +44,8 @@ public class TemperatureHooksClient
     {
         var pose = guiGraphics.pose();
 
-        // If temperature is enabled, move the selected item text up by 2 pixels
-        if (ModConfig.temperature.enableTemperature)
+        // If temperature is enabled, move the selected item text up by 2 pixels. This is only done in survival mode.
+        if (ModConfig.temperature.enableTemperature && GuiUtils.shouldDrawSurvivalElements())
         {
             pose.translate(0F, -2F, 0F);
         }

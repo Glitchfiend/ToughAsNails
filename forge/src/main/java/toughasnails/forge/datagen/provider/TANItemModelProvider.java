@@ -2,7 +2,7 @@
  * Copyright 2023, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen.provider;
+package toughasnails.forge.datagen.provider;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

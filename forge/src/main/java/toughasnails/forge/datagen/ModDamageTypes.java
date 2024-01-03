@@ -2,7 +2,7 @@
  * Copyright 2022, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen;
+package toughasnails.forge.datagen;
 
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.world.damagesource.DamageType;

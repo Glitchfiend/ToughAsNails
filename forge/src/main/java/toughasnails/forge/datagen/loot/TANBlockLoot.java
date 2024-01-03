@@ -2,7 +2,7 @@
  * Copyright 2023, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.datagen.loot;
+package toughasnails.forge.datagen.loot;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -11,7 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.core.ToughAsNails;
-import toughasnails.core.ToughAsNailsForge;
 
 import java.util.Map;
 import java.util.Set;
