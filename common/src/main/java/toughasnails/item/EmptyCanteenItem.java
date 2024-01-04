@@ -16,11 +16,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -69,6 +70,18 @@ public class EmptyCanteenItem extends Item
                         level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
                         ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR).setWaterLevel(level, pos, state, waterLevel - 1);
                         return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(getPurifiedWaterCanteen())));
+                    }
+                }
+                else if (state.getBlock() == Blocks.WATER_CAULDRON)
+                {
+                    // Fill the canteen from water from a cauldron
+                    int waterLevel = state.getValue(LayeredCauldronBlock.LEVEL);
+
+                    if (waterLevel > 0 && !level.isClientSide())
+                    {
+                        level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                        LayeredCauldronBlock.lowerFillLevel(state, level, pos);
+                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(getWaterCanteen())));
                     }
                 }
                 else if (level.getFluidState(pos).is(FluidTags.WATER))
