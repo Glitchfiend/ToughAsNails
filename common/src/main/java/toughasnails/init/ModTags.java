@@ -48,6 +48,9 @@ public class ModTags
         public static final TagKey<Item> COOLING_CONSUMED_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "cooling_consumed_items"));
         public static final TagKey<Item> HEATING_CONSUMED_ITEMS = create(new ResourceLocation(TANAPI.MOD_ID, "heating_consumed_items"));
 
+        public static final TagKey<Item> THERMOREGULATOR_COOLING_FUEL = create(new ResourceLocation(TANAPI.MOD_ID, "thermoregulator_cooling_fuel"));
+        public static final TagKey<Item> THERMOREGULATOR_HEATING_FUEL = create(new ResourceLocation(TANAPI.MOD_ID, "thermoregulator_heating_fuel"));
+
         public static final TagKey<Item> ONE_THIRST_DRINKS = create(new ResourceLocation(TANAPI.MOD_ID, "thirst/1_thirst_drinks"));
         public static final TagKey<Item> TWO_THIRST_DRINKS = create(new ResourceLocation(TANAPI.MOD_ID, "thirst/2_thirst_drinks"));
         public static final TagKey<Item> THREE_THIRST_DRINKS = create(new ResourceLocation(TANAPI.MOD_ID, "thirst/3_thirst_drinks"));

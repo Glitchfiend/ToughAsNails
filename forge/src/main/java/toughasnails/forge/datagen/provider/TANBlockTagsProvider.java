@@ -33,6 +33,6 @@ public class TANBlockTagsProvider extends BlockTagsProvider
 
         // TAN tags
         this.tag(ModTags.Blocks.COOLING_BLOCKS).add(Blocks.SOUL_FIRE, Blocks.SOUL_CAMPFIRE, Blocks.SOUL_LANTERN, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.POWDER_SNOW_CAULDRON);
-        this.tag(ModTags.Blocks.HEATING_BLOCKS).add(Blocks.CAMPFIRE, Blocks.LANTERN, Blocks.LAVA, Blocks.MAGMA_BLOCK, Blocks.LAVA_CAULDRON);
+        this.tag(ModTags.Blocks.HEATING_BLOCKS).add(Blocks.FIRE, Blocks.CAMPFIRE, Blocks.LANTERN, Blocks.LAVA, Blocks.MAGMA_BLOCK, Blocks.LAVA_CAULDRON);
     }
 }

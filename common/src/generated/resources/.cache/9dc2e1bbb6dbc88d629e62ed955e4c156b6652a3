@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-03T14:17:14.7413115	Tags for minecraft:item mod id toughasnails
+// 1.20.4	2024-01-04T08:50:20.0019248	Tags for minecraft:item mod id toughasnails
 f05342856fe99891fa5e94bbe8db82a4f75ac41e data/toughasnails/tags/items/cooling_armor.json
 572f6d0748095755aeef0ca7d602f4ebba9bfd76 data/toughasnails/tags/items/cooling_consumed_items.json
 7c304628a9c17ca3ba6cd13e199fcf73ad9c974f data/toughasnails/tags/items/cooling_held_items.json
@@ -20,6 +20,8 @@ a8d4693f32c2dabe2f0ff10cb6ccae93882c8530 data/toughasnails/tags/items/hydration/
 f87a1c4dc42b16f1628cfca591895d987e5dc6ca data/toughasnails/tags/items/poison_chance/25_poison_chance_drinks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/poison_chance/50_poison_chance_drinks.json
 cc0aa3bf437ed849deda4e4b64aff3665160dae6 data/toughasnails/tags/items/poison_chance/75_poison_chance_drinks.json
+6f524ffe3a9819336fb57316d3245695a9601368 data/toughasnails/tags/items/thermoregulator_cooling_fuel.json
+3d80c1a95b23a8f6e2e0350454fc36e0743ee45a data/toughasnails/tags/items/thermoregulator_heating_fuel.json
 0395ed7d6e3d7510a25d2f4ef8b498b0d8c6c9eb data/toughasnails/tags/items/thirst/10_thirst_drinks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/thirst/11_thirst_drinks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/toughasnails/tags/items/thirst/12_thirst_drinks.json
