@@ -63,6 +63,7 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onChangeDimension);
         EventManager.addListener(ThirstHandler::onItemUseFinish);
         EventManager.addListener(ThirstHandler::onPlayerUseItem);
+        EventManager.addListener(ThirstHandler::onUseBlock);
 
         if (Environment.isClient())
         {

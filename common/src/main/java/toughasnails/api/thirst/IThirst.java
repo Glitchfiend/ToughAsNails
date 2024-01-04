@@ -103,6 +103,13 @@ public interface IThirst
     void addExhaustion(float exhaustion);
 
     /**
+     * Consume a drink with the given thirst and hydration modifier.
+     * @param thirst amount to add to the thirst level.
+     * @param hydrationModifier modifier used to determine the amount of hydration to add.
+     */
+    void drink(int thirst, float hydrationModifier);
+
+    /**
      * Checks whether the player is thirsty or not.
      * @return whether the player is thirsty.
      */

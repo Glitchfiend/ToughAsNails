@@ -52,8 +52,7 @@ public class DrinkInWorldPacket implements CustomPacket<DrinkInWorldPacket>
         // Whilst we already checked on the client, check again to be sure
         if (level.mayInteract(player, packet.pos) && level.getFluidState(packet.pos).is(FluidTags.WATER))
         {
-            thirst.addThirst(ModConfig.thirst.handDrinkingThirst);
-            thirst.addHydration((float)ModConfig.thirst.handDrinkingHydration);
+            thirst.drink(ModConfig.thirst.handDrinkingThirst, (float)ModConfig.thirst.handDrinkingHydration);
 
             Holder<Biome> biome = level.getBiome(packet.pos);
 

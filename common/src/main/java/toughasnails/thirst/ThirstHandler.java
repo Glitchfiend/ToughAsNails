@@ -39,6 +39,7 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
@@ -101,8 +102,6 @@ public class ThirstHandler
                 thirst.setThirst(thirst.getThirst() + 1);
             }
         }
-
-
     }
 
     public static void onChangeDimension(PlayerEvent.ChangeDimension event)
@@ -158,8 +157,8 @@ public class ThirstHandler
 
             ///////////////////
 
-            thirst.addThirst(drink_thirst);
-            thirst.addHydration(drink_hydration);
+            // Based on FoodData's eat
+            thirst.drink(drink_thirst, drink_hydration);
 
             if (player.level().random.nextFloat() < drink_poison_chance)
             {
@@ -223,6 +222,12 @@ public class ThirstHandler
     // Hand drinking
     private static final int IN_WORLD_DRINK_COOLDOWN = 3 * 20;
     private static int inWorldDrinkTimer = 0;
+
+    public static void onUseBlock(PlayerInteractEvent.UseBlock event)
+    {
+        if (canHandDrink() && canHandDrinkInWorld(event.getPlayer(), event.getHand()))
+            tryDrinkWaterInWorld(event.getPlayer());
+    }
 
     public static void onUseEmpty(PlayerInteractEvent.UseEmpty event)
     {
