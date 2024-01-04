@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "T": {
+      "item": "toughasnails:thermometer"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "ITI",
+    "SGS"
+  ],
+  "result": {
+    "item": "toughasnails:thermoregulator"
+  }
+}

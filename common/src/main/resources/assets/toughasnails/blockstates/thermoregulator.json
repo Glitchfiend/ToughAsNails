@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "cooling=false,heating=false": {
+      "model": "toughasnails:block/thermoregulator_inactive"
+    },
+    "cooling=true,heating=false": {
+      "model": "toughasnails:block/thermoregulator_cooling_active"
+    },
+    "cooling=false,heating=true": {
+      "model": "toughasnails:block/thermoregulator_heating_active"
+    },
+    "cooling=true,heating=true": {
+      "model": "toughasnails:block/thermoregulator_active"
+    }
+  }
+}

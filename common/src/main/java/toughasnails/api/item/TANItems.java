@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 public class TANItems
 {
     // Block Items
+    public static Item THERMOREGULATOR;
     public static Item TEMPERATURE_GAUGE;
     public static Item RAIN_COLLECTOR;
     public static Item WATER_PURIFIER;

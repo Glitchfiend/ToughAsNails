@@ -29,7 +29,7 @@ public class TANBlockTagsProvider extends BlockTagsProvider
     {
         // Vanilla tags
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(TANBlocks.RAIN_COLLECTOR);
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(TANBlocks.TEMPERATURE_GAUGE, TANBlocks.WATER_PURIFIER);
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(TANBlocks.THERMOREGULATOR, TANBlocks.TEMPERATURE_GAUGE, TANBlocks.WATER_PURIFIER);
 
         // TAN tags
         this.tag(ModTags.Blocks.COOLING_BLOCKS).add(Blocks.SOUL_FIRE, Blocks.SOUL_CAMPFIRE, Blocks.SOUL_LANTERN, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.POWDER_SNOW_CAULDRON);

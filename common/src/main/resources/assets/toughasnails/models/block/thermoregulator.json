@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "minecraft:block/blast_furnace_top",
-    "side": "toughasnails:block/thermoregulator_side_inactive",
-    "top": "toughasnails:block/thermoregulator_top_inactive"
-  }
-}
