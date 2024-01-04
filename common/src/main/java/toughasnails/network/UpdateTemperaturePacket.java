@@ -44,19 +44,11 @@ public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePa
         if (context.isServerSide())
             return;
 
-        Detail.setTemperatureClient(packet.temperatureLevel, packet.hyperthermiaTicks);
-    }
-
-    // Used to isolate client code from the server
-    private static class Detail
-    {
-        private static void setTemperatureClient(TemperatureLevel level, int hyperthermiaTicks)
-        {
-            Player player = Minecraft.getInstance().player;
+        context.getPlayer().ifPresent(player -> {
             ITemperature temperature = TemperatureHelper.getTemperatureData(player);
 
-            temperature.setLevel(level);
-            temperature.setHyperthermiaTicks(hyperthermiaTicks);
-        }
+            temperature.setLevel(packet.temperatureLevel);
+            temperature.setHyperthermiaTicks(packet.hyperthermiaTicks);
+        });
     }
 }
