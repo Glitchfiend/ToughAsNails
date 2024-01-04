@@ -160,6 +160,9 @@ public class ThirstData implements IThirst
     @Override
     public void drink(int thirst, float hydrationModifier)
     {
+        if (!this.isThirsty())
+            return;
+
         this.thirstLevel = Math.min(thirst + this.thirstLevel, 20);
         this.hydrationLevel = Math.min(this.hydrationLevel + (float)thirst * hydrationModifier * 2.0F, (float)this.thirstLevel);
     }
