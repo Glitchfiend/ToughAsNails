@@ -142,10 +142,14 @@ public class TemperatureGaugeBlock extends BaseEntityBlock
     private static void updateSignalStrength(BlockState state, Level level, BlockPos pos)
     {
         TemperatureLevel temperatureLevel = TemperatureHelperImpl.getTemperatureAtPosWithoutProximity(level, pos);
-        int strength = Mth.floor(15F * (float)temperatureLevel.ordinal() / (float)(TemperatureLevel.values().length - 1));
+        int strength;
 
-        if (!state.getValue(INVERTED)) {
-            strength = 15 - strength;
+        if (state.getValue(INVERTED)) {
+            strength = (Mth.clamp(temperatureLevel.ordinal(), 2, 4) - 2) * 8 - 1;
+        }
+        else
+        {
+            strength = 15 - Mth.clamp(temperatureLevel.ordinal(), 0, 2) * 8;
         }
 
         strength = Mth.clamp(strength, 0, 15);
