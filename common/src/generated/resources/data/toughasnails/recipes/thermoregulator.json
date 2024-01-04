@@ -2,9 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:glass"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
@@ -16,9 +13,9 @@
     }
   },
   "pattern": [
-    "SGS",
+    "SIS",
     "ITI",
-    "SGS"
+    "SIS"
   ],
   "result": {
     "item": "toughasnails:thermoregulator"

@@ -40,7 +40,7 @@ public class TANItemTagsProvider extends ItemTagsProvider
 
         // Thermoregulator fuel
         this.tag(ModTags.Items.THERMOREGULATOR_COOLING_FUEL).add(Items.ICE, Items.PACKED_ICE, Items.BLUE_ICE, Items.SNOWBALL, Items.SNOW, Items.SNOW_BLOCK, Items.POWDER_SNOW_BUCKET);
-        this.tag(ModTags.Items.THERMOREGULATOR_HEATING_FUEL).add(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.COAL, Items.CHARCOAL, Items.COAL_BLOCK, Items.LAVA_BUCKET);
+        this.tag(ModTags.Items.THERMOREGULATOR_HEATING_FUEL).add(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.FIRE_CHARGE, Items.COAL, Items.CHARCOAL, Items.COAL_BLOCK, Items.LAVA_BUCKET);
 
         // Drinks
         this.tag(ModTags.Items.DRINKS).addTags(

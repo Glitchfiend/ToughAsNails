@@ -1,16 +1,64 @@
 {
   "variants": {
-    "cooling=false,heating=false": {
+    "facing=east,cooling=false,heating=false": {
+      "model": "toughasnails:block/thermoregulator_inactive",
+      "y": 90
+    },
+    "facing=east,cooling=true,heating=false": {
+      "model": "toughasnails:block/thermoregulator_cooling_active",
+      "y": 90
+    },
+    "facing=east,cooling=false,heating=true": {
+      "model": "toughasnails:block/thermoregulator_heating_active",
+      "y": 90
+    },
+    "facing=east,cooling=true,heating=true": {
+      "model": "toughasnails:block/thermoregulator_active",
+      "y": 90
+    },
+	"facing=north,cooling=false,heating=false": {
       "model": "toughasnails:block/thermoregulator_inactive"
     },
-    "cooling=true,heating=false": {
+    "facing=north,cooling=true,heating=false": {
       "model": "toughasnails:block/thermoregulator_cooling_active"
     },
-    "cooling=false,heating=true": {
+    "facing=north,cooling=false,heating=true": {
       "model": "toughasnails:block/thermoregulator_heating_active"
     },
-    "cooling=true,heating=true": {
+    "facing=north,cooling=true,heating=true": {
       "model": "toughasnails:block/thermoregulator_active"
+    },
+	"facing=south,cooling=false,heating=false": {
+      "model": "toughasnails:block/thermoregulator_inactive",
+      "y": 180
+    },
+    "facing=south,cooling=true,heating=false": {
+      "model": "toughasnails:block/thermoregulator_cooling_active",
+      "y": 180
+    },
+    "facing=south,cooling=false,heating=true": {
+      "model": "toughasnails:block/thermoregulator_heating_active",
+      "y": 180
+    },
+    "facing=south,cooling=true,heating=true": {
+      "model": "toughasnails:block/thermoregulator_active",
+      "y": 180
+    },
+	"facing=west,cooling=false,heating=false": {
+      "model": "toughasnails:block/thermoregulator_inactive",
+      "y": 270
+    },
+    "facing=west,cooling=true,heating=false": {
+      "model": "toughasnails:block/thermoregulator_cooling_active",
+      "y": 270
+    },
+    "facing=west,cooling=false,heating=true": {
+      "model": "toughasnails:block/thermoregulator_heating_active",
+      "y": 270
+    },
+    "facing=west,cooling=true,heating=true": {
+      "model": "toughasnails:block/thermoregulator_active",
+      "y": 270
     }
   }
 }
