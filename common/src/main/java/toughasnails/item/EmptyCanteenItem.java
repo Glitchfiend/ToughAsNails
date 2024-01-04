@@ -27,11 +27,14 @@ import toughasnails.api.item.TANItems;
 import toughasnails.block.RainCollectorBlock;
 import toughasnails.init.ModTags;
 
-public class EmptyDiamondCanteenItem extends Item
+public class EmptyCanteenItem extends Item
 {
-    public EmptyDiamondCanteenItem(Properties properties)
+    int tier;
+
+    public EmptyCanteenItem(int tier, Properties properties)
     {
         super(properties);
+        this.tier = tier;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class EmptyDiamondCanteenItem extends Item
                     {
                         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
                         ((RainCollectorBlock) TANBlocks.RAIN_COLLECTOR).setWaterLevel(world, pos, state, waterLevel - 1);
-                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(TANItems.DIAMOND_PURIFIED_WATER_CANTEEN)));
+                        return InteractionResultHolder.success(this.replaceCanteen(stack, player, new ItemStack(getPurifiedWaterCanteen())));
                     }
                 }
                 else if (world.getFluidState(pos).is(FluidTags.WATER))
@@ -70,15 +73,15 @@ public class EmptyDiamondCanteenItem extends Item
 
                     if (biome.is(ModTags.Biomes.DIRTY_WATER_BIOMES))
                     {
-                        canteenItem = TANItems.DIAMOND_DIRTY_WATER_CANTEEN;
+                        canteenItem = getDirtyWaterCanteen();
                     }
                     else if (biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
                     {
-                        canteenItem = TANItems.DIAMOND_PURIFIED_WATER_CANTEEN;
+                        canteenItem = getPurifiedWaterCanteen();
                     }
                     else
                     {
-                        canteenItem = TANItems.DIAMOND_WATER_CANTEEN;
+                        canteenItem = getWaterCanteen();
                     }
 
                     return InteractionResultHolder.sidedSuccess(this.replaceCanteen(stack, player, new ItemStack(canteenItem)), world.isClientSide());
@@ -93,5 +96,44 @@ public class EmptyDiamondCanteenItem extends Item
     {
         player.awardStat(Stats.ITEM_USED.get(this));
         return ItemUtils.createFilledResult(oldStack, player, newStack);
+    }
+
+    public Item getDirtyWaterCanteen()
+    {
+        switch (this.tier)
+        {
+            default: case 0: return TANItems.LEATHER_DIRTY_WATER_CANTEEN;
+            case 1: return TANItems.COPPER_DIRTY_WATER_CANTEEN;
+            case 2: return TANItems.IRON_DIRTY_WATER_CANTEEN;
+            case 3: return TANItems.GOLD_DIRTY_WATER_CANTEEN;
+            case 4: return TANItems.DIAMOND_DIRTY_WATER_CANTEEN;
+            case 5: return TANItems.NETHERITE_DIRTY_WATER_CANTEEN;
+        }
+    }
+
+    public Item getWaterCanteen()
+    {
+        switch (this.tier)
+        {
+            default: case 0: return TANItems.LEATHER_WATER_CANTEEN;
+            case 1: return TANItems.COPPER_WATER_CANTEEN;
+            case 2: return TANItems.IRON_WATER_CANTEEN;
+            case 3: return TANItems.GOLD_WATER_CANTEEN;
+            case 4: return TANItems.DIAMOND_WATER_CANTEEN;
+            case 5: return TANItems.NETHERITE_WATER_CANTEEN;
+        }
+    }
+
+    public Item getPurifiedWaterCanteen()
+    {
+        switch (this.tier)
+        {
+            default: case 0: return TANItems.LEATHER_PURIFIED_WATER_CANTEEN;
+            case 1: return TANItems.COPPER_PURIFIED_WATER_CANTEEN;
+            case 2: return TANItems.IRON_PURIFIED_WATER_CANTEEN;
+            case 3: return TANItems.GOLD_PURIFIED_WATER_CANTEEN;
+            case 4: return TANItems.DIAMOND_PURIFIED_WATER_CANTEEN;
+            case 5: return TANItems.NETHERITE_PURIFIED_WATER_CANTEEN;
+        }
     }
 }
