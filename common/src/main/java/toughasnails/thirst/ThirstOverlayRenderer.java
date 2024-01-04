@@ -10,6 +10,7 @@ import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.IThirst;
@@ -41,7 +42,9 @@ public class ThirstOverlayRenderer
             return;
 
         Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
+        Entity vehicle = minecraft.player.getVehicle();
+        boolean isMounted = vehicle != null && vehicle.showVehicleHealth();
+        if (!isMounted && !minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
         {
             GuiUtils.setupOverlayRenderState(true, false);
             Player player = minecraft.player;
