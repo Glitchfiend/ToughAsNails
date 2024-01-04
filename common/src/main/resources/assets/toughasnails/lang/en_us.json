@@ -1,6 +1,7 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
   
+  "container.toughasnails.thermoregulator": "Thermoregulator",
   "container.toughasnails.water_purifier": "Water Purifier",
   
   "death.attack.toughasnails.hyperthermia": "%1$s overheated to death",
