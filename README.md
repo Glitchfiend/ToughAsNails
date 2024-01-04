@@ -1,5 +1,5 @@
-<p align="center"><img src="https://i.imgur.com/uNgjobq.png"></p>
+<p align="center"><img src="https://i.imgur.com/r0ZlRwr.png"></p>
 
-**Tough As Nails** is a **Minecraft mod** that adds features to enhance survival mode and increase the game's difficulty. It is currently under development.
+**Tough As Nails** is a **Minecraft mod** that adds various features to increase the game's difficulty, including a thirst and temperature system.
 
-© 2021 Glitchfiend. All rights reserved.
+© 2024 Glitchfiend. All rights reserved.
