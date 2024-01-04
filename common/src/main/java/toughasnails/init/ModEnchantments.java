@@ -9,6 +9,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import toughasnails.api.TANAPI;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.enchantment.ThermalTuningEnchantment;
+import toughasnails.enchantment.WaterCleansingEnchantment;
 
 import java.util.function.BiConsumer;
 
@@ -17,6 +18,7 @@ public class ModEnchantments
     public static void registerEnchantments(BiConsumer<ResourceLocation, Enchantment> func)
     {
         TANEnchantments.THERMAL_TUNING = register(func, "thermal_tuning", new ThermalTuningEnchantment());
+        TANEnchantments.WATER_CLEANSING = register(func, "water_cleansing", new WaterCleansingEnchantment());
     }
 
     private static Enchantment register(BiConsumer<ResourceLocation, Enchantment> func, String name, Enchantment enchantment)

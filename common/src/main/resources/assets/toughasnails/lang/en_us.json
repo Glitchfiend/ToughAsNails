@@ -27,6 +27,7 @@
   "effect.toughasnails.internal_chill": "Internal Chill",
   "effect.toughasnails.internal_chill.description": "Provides a slight decrease in body temperature for the duration. Will not cause hypothermia.",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
+  "enchantment.toughasnails.water_cleansing": "Water Cleansing",
   
   "block.toughasnails.rain_collector": "Rain Collector",
   "block.toughasnails.temperature_gauge": "Temperature Gauge",
