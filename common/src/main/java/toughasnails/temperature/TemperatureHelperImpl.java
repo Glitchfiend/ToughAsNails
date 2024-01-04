@@ -53,6 +53,18 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return proximityModifier(level, pos, temperature);
     }
 
+    public static TemperatureLevel getTemperatureAtPosWithoutProximity(Level level, BlockPos pos)
+    {
+        TemperatureLevel temperature = getBiomeTemperatureLevel(level, pos);
+
+        for (IPositionalTemperatureModifier modifier : positionalModifiers)
+        {
+            temperature = modifier.modify(level, pos, temperature);
+        }
+
+        return nightModifier(level, pos, temperature);
+    }
+
     @Override
     public ITemperature getPlayerTemperature(Player player)
     {

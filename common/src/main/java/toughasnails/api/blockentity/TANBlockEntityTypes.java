@@ -9,4 +9,5 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 public class TANBlockEntityTypes
 {
     public static BlockEntityType<?> WATER_PURIFIER;
+    public static BlockEntityType<?> TEMPERATURE_GAUGE;
 }

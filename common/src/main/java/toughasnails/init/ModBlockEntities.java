@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
+import toughasnails.block.entity.TemperatureGaugeBlockEntity;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 
 import java.util.function.BiConsumer;
@@ -24,6 +25,7 @@ public class ModBlockEntities
     public static void registerBlockEntities(BiConsumer<ResourceLocation, BlockEntityType<?>> func)
     {
         TANBlockEntityTypes.WATER_PURIFIER = register(func, "water_purifier", BlockEntityType.Builder.of(WaterPurifierBlockEntity::new, TANBlocks.WATER_PURIFIER));
+        TANBlockEntityTypes.TEMPERATURE_GAUGE = register(func, "temperature_gauge", BlockEntityType.Builder.of(TemperatureGaugeBlockEntity::new, TANBlocks.TEMPERATURE_GAUGE));
     }
 
     private static <T extends BlockEntity> BlockEntityType<?> register(BiConsumer<ResourceLocation, BlockEntityType<?>> func, String name, BlockEntityType.Builder<T> builder)
