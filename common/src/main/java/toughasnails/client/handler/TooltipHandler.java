@@ -41,6 +41,10 @@ public class TooltipHandler
         if (!Environment.isClient())
             throw new IllegalStateException("ItemTooltipEvent unexpectedly called on the server");
 
+        // In some rare cases (on Forge at least) this may be called with a null connection
+        if (Minecraft.getInstance().getConnection() == null)
+            return;
+
         ItemStack stack = event.getStack();
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
