@@ -65,6 +65,9 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onPlayerUseItem);
         EventManager.addListener(ThirstHandler::onUseBlock);
 
+        // Misc handlers
+        EventManager.addListener(ModVillagerTrades::addWanderingVillagerTrades);
+
         if (Environment.isClient())
         {
             addClientHandlers();
