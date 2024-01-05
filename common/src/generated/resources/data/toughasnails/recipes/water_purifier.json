@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "C": {
-      "item": "minecraft:charcoal"
+      "item": "minecraft:copper_ingot"
     },
     "G": {
       "item": "minecraft:glass"
     },
-    "I": {
-      "item": "minecraft:copper_ingot"
+    "W": {
+      "tag": "minecraft:planks"
     }
   },
   "pattern": [
-    "III",
     "GCG",
-    "III"
+    "C C",
+    "WWW"
   ],
   "result": {
     "item": "toughasnails:water_purifier"

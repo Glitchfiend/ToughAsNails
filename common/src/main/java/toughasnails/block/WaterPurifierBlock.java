@@ -39,7 +39,6 @@ import java.util.Map;
 public class WaterPurifierBlock extends BaseEntityBlock
 {
     public static final MapCodec<WaterPurifierBlock> CODEC = simpleCodec(WaterPurifierBlock::new);
-    protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PURIFYING = BooleanProperty.create("filtering");
 
@@ -53,12 +52,6 @@ public class WaterPurifierBlock extends BaseEntityBlock
     protected MapCodec<? extends BaseEntityBlock> codec()
     {
         return CODEC;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext)
-    {
-        return SHAPE;
     }
 
     @Override
