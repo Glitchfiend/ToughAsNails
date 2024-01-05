@@ -7,9 +7,13 @@ package toughasnails.block.entity;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -23,16 +27,18 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
+import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 import javax.annotation.Nullable;
+import java.util.Iterator;
 
 public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {
@@ -405,7 +411,29 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     private static ImmutableMap<Item, Integer> getFilterDurations()
     {
         ImmutableMap.Builder<Item, Integer> builder = ImmutableMap.builder();
-        builder.put(Items.CHARCOAL, 1200);
+        add(builder, Items.SHORT_GRASS, 100);
+        add(builder, Items.PAPER, 200);
+        add(builder, Items.GRAVEL, 400);
+        add(builder, ItemTags.SAND, 800);
+        add(builder, Items.CHARCOAL, 1600);
+        add(builder, Items.PRISMARINE_CRYSTALS, 3200);
+        add(builder, Items.HEART_OF_THE_SEA, 6400);
         return builder.build();
+    }
+
+    private static void add(ImmutableMap.Builder<Item, Integer> builder, TagKey<Item> tagKey, int i)
+    {
+        Iterator var3 = BuiltInRegistries.ITEM.getTagOrEmpty(tagKey).iterator();
+
+        while(var3.hasNext())
+        {
+            Holder<Item> holder = (Holder)var3.next();
+            builder.put(holder.value(), i);
+        }
+    }
+
+    private static void add(ImmutableMap.Builder<Item, Integer> builder, ItemLike itemLike, int i) {
+        Item item = itemLike.asItem();
+        builder.put(item, i);
     }
 }
