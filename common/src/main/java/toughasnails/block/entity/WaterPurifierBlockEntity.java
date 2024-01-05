@@ -27,7 +27,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -432,8 +431,8 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         }
     }
 
-    private static void add(ImmutableMap.Builder<Item, Integer> builder, ItemLike itemLike, int i) {
-        Item item = itemLike.asItem();
+    private static void add(ImmutableMap.Builder<Item, Integer> builder, Item item, int i)
+    {
         builder.put(item, i);
     }
 }

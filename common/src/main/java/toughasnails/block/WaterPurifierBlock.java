@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,13 +27,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 public class WaterPurifierBlock extends BaseEntityBlock
 {
@@ -151,5 +147,24 @@ public class WaterPurifierBlock extends BaseEntityBlock
     public RenderShape getRenderShape(BlockState state)
     {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public void animateTick(BlockState p_221253_, Level p_221254_, BlockPos p_221255_, RandomSource p_221256_)
+    {
+        if (p_221253_.getValue(PURIFYING) && p_221256_.nextInt(12) == 0)
+        {
+            double d0 = (double)p_221255_.getX() + 0.5D;
+            double d1 = (double)p_221255_.getY() + 0.4D;
+            double d2 = (double)p_221255_.getZ() + 0.5D;
+
+            Direction direction = p_221253_.getValue(FACING);
+            Direction.Axis direction$axis = direction.getAxis();
+            double d4 = p_221256_.nextDouble() * 0.4D - 0.2D;
+            double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.55D : d4;
+            double d6 = p_221256_.nextDouble() * 1.0D / 16.0D;
+            double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.55D : d4;
+            p_221254_.addParticle(ParticleTypes.DRIPPING_WATER, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+        }
     }
 }
