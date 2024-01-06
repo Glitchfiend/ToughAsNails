@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "MixinTemperatureHelperImpl"
+    "MixinTemperatureHelperImpl",
+    "MixinWaterPurifierBlockEntity"
   ],
   "client": [
     "client.MixinGui"
