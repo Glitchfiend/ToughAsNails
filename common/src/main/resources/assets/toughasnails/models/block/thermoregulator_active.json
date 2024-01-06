@@ -2,6 +2,7 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "toughasnails:block/thermoregulator_side_active",
+		"front": "toughasnails:block/thermoregulator_front_active",
 		"side": "toughasnails:block/thermoregulator_side_active",
 		"top": "toughasnails:block/thermoregulator_top_active",
 		"bottom": "minecraft:block/blast_furnace_top"
@@ -25,7 +26,7 @@
 			"from": [0, 8, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "north"},
+				"north": {"uv": [0, 0, 16, 8], "texture": "#front", "cullface": "north"},
 				"east": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "east"},
 				"south": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "south"},
 				"west": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "west"}
@@ -35,7 +36,7 @@
 			"from": [0, 0, 0],
 			"to": [16, 8, 16],
 			"faces": {
-				"north": {"uv": [0, 8, 16, 16], "texture": "#side", "cullface": "north"},
+				"north": {"uv": [0, 8, 16, 16], "texture": "#front", "cullface": "north"},
 				"east": {"uv": [0, 8, 16, 16], "texture": "#side", "cullface": "east"},
 				"south": {"uv": [0, 8, 16, 16], "texture": "#side", "cullface": "south"},
 				"west": {"uv": [0, 8, 16, 16], "texture": "#side", "cullface": "west"},
