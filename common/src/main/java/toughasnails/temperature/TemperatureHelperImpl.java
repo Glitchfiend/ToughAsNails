@@ -8,12 +8,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -27,11 +24,12 @@ import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
@@ -193,7 +191,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         boolean isNight = time >= 0.25F && time <= 0.75F;
 
         // Drop the temperature during the night
-        if (isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
+        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
