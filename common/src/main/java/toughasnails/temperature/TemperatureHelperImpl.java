@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ArmorMaterial;
@@ -187,8 +188,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
+        // level.isNight is unavailable on the client, so we roughly approximate with level.getTimeOfDay()
+        float time = level.getTimeOfDay(1.0F);
+        boolean isNight = time >= 0.25F && time <= 0.75F;
+
         // Drop the temperature during the night
-        if (level.isNight() && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
+        if (isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
