@@ -147,7 +147,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Holder<Biome> biome = level.getBiome(pos);
         float biomeTemperature = biome.value().getBaseTemperature();
 
-        if (!biome.is(BiomeTags.IS_OVERWORLD) || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
+        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
         {
             if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
             else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;

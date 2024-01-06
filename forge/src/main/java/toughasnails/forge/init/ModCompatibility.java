@@ -40,7 +40,7 @@ public class ModCompatibility
         Holder<Biome> biome = level.getBiome(pos);
 
         // Only adjust if above the environmental modifier altitude
-        if (biome.is(BiomeTags.IS_OVERWORLD) && pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && !level.canSeeSky(pos))
+        if (level.dimensionType().natural() && pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && !level.canSeeSky(pos))
             return current;
 
         // Check if biome uses seasonal effects
