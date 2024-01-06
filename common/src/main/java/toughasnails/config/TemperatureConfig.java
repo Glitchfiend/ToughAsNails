@@ -89,7 +89,7 @@ public class TemperatureConfig extends Config
         environmentalModifierAltitude = addNumber("altitude.environmental_modifier_altitude", 50, -64, 256, "Y level above which environmental modifiers are applied");
 
         // Blocks options
-        nearHeatCoolProximity = addNumber("blocks.near_heat_cool_proximity", 7, 1, 16, "The proximity which constitutes near a heat or cool source");
+        nearHeatCoolProximity = addNumber("blocks.near_heat_cool_proximity", 8, 1, 16, "The proximity which constitutes near a heat or cool source");
 
         // Immersion options
         onFireTemperatureChange = addNumber("immersion.on_fire_temperature_change", 2, -4, 4, "Amount to change the temperature by when on fire.");

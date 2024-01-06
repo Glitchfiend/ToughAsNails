@@ -195,7 +195,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             pos = pos.above();
 
         AreaFill.fill(level, pos, (checkerLevel, checkedPos) -> {
-           addHeatingOrCooling(heating, cooling, checkerLevel, checkedPos);
+           addHeatingOrCooling(heating, cooling, checkerLevel, checkedPos.pos());
         });
 
         if (heating.size() > cooling.size()) current = current.increment(1);

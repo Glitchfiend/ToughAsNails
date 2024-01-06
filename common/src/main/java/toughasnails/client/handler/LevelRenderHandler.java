@@ -57,12 +57,14 @@ public class LevelRenderHandler
     {
         Level level = player.level();
 
-        if (connectedBlocks.isEmpty() || level.getGameTime() % 20L == 0L)
-        {
+        // The optimisation is good enough for me, and this isn't really a feature for a broad audience
+        // If that changes though, the below code is an option.
+        //if (connectedBlocks.isEmpty() || level.getGameTime() % 20L == 0L)
+        //{
             // Clear old connectedBlocks
             connectedBlocks.clear();
             populateConnectedBlocksForPlayer(player);
-        }
+        //}
 
         return connectedBlocks;
     }
@@ -78,7 +80,7 @@ public class LevelRenderHandler
 
         Set<BlockPos> renderPositions = new HashSet<>();
         AreaFill.fill(level, playerPos, (checkerLevel, checkedPos) -> {
-            renderPositions.add(checkedPos);
+            renderPositions.add(checkedPos.pos());
         });
 
         // TODO: This could probably be optimised so that blocks opposite each other can set each other's faces, but this is good enough for now
