@@ -137,69 +137,68 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, WaterPurifierBlockEntity blockEntity)
     {
-        boolean previouslyFiltering = blockEntity.currentlyFiltering();
+        boolean previouslyFiltering = blockEntity.isFiltering();
         boolean changed = false;
 
-        if (blockEntity.currentlyFiltering())
+        if (blockEntity.isFiltering())
         {
             --blockEntity.filterTimeRemaining;
         }
 
-        if (!blockEntity.level.isClientSide)
-        {
-            ItemStack filterStack = blockEntity.items.get(1);
-            boolean hasFilter = !filterStack.isEmpty();
-            if (blockEntity.currentlyFiltering() || hasFilter && !blockEntity.items.get(0).isEmpty()) {
-                RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
+        ItemStack filterStack = blockEntity.items.get(1);
+        boolean hasFilter = !filterStack.isEmpty();
+        if (blockEntity.isFiltering() || hasFilter && !blockEntity.items.get(0).isEmpty()) {
+            RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
 
-                if (recipe != null)
-                {
-                    if (!blockEntity.currentlyFiltering() && blockEntity.canFilter(recipe.value())) {
-                        blockEntity.filterTimeRemaining = blockEntity.getFilterDuration(filterStack);
-                        blockEntity.filterDuration = blockEntity.filterTimeRemaining;
+            if (recipe != null)
+            {
+                if (!blockEntity.isFiltering() && blockEntity.canFilter(recipe.value())) {
+                    blockEntity.filterTimeRemaining = blockEntity.getFilterDuration(filterStack);
+                    blockEntity.filterDuration = blockEntity.filterTimeRemaining;
 
-                        // If we are now filtering, consume the filter item
-                        if (blockEntity.currentlyFiltering()) {
-                            changed = true;
+                    // If we are now filtering, consume the filter item
+                    if (blockEntity.isFiltering()) {
+                        changed = true;
 
-                            if (hasFilter)
+                        if (hasFilter)
+                        {
+                            Item filter = filterStack.getItem();
+                            filterStack.shrink(1);
+                            if (filterStack.isEmpty())
                             {
-                                Item filter = filterStack.getItem();
-                                filterStack.shrink(1);
-                                if (filterStack.isEmpty())
-                                {
-                                    Item remainingItem = filter.getCraftingRemainingItem();
-                                    blockEntity.items.set(1, remainingItem == null ? ItemStack.EMPTY : new ItemStack(remainingItem));
-                                }
+                                Item remainingItem = filter.getCraftingRemainingItem();
+                                blockEntity.items.set(1, remainingItem == null ? ItemStack.EMPTY : new ItemStack(remainingItem));
                             }
                         }
                     }
+                }
 
-                    if (blockEntity.currentlyFiltering() && blockEntity.canFilter(recipe.value())) {
-                        ++blockEntity.purifyProgress;
+                if (blockEntity.isFiltering() && blockEntity.canFilter(recipe.value())) {
+                    ++blockEntity.purifyProgress;
 
-                        if (blockEntity.purifyProgress == blockEntity.purifyTotalTime) {
-                            blockEntity.purifyProgress = 0;
-                            blockEntity.purifyTotalTime = blockEntity.getTotalPurifyTime();
-                            blockEntity.filter(recipe.value());
-                            changed = true;
-                        }
-                    } else {
+                    if (blockEntity.purifyProgress == blockEntity.purifyTotalTime) {
                         blockEntity.purifyProgress = 0;
+                        blockEntity.purifyTotalTime = blockEntity.getTotalPurifyTime();
+                        blockEntity.filter(recipe.value());
+                        changed = true;
                     }
-                } else if (!blockEntity.currentlyFiltering() && blockEntity.purifyProgress > 0) {
-                    blockEntity.purifyProgress = Mth.clamp(blockEntity.purifyProgress - 2, 0, blockEntity.purifyTotalTime);
+                } else {
+                    blockEntity.purifyProgress = 0;
                 }
-
-                if (previouslyFiltering != blockEntity.currentlyFiltering()) {
-                    changed = true;
-                    blockEntity.level.setBlock(blockEntity.worldPosition, blockEntity.level.getBlockState(blockEntity.worldPosition).setValue(WaterPurifierBlock.PURIFYING, Boolean.valueOf(blockEntity.currentlyFiltering())), 3);
-                }
+            } else if (!blockEntity.isFiltering() && blockEntity.purifyProgress > 0) {
+                blockEntity.purifyProgress = Mth.clamp(blockEntity.purifyProgress - 2, 0, blockEntity.purifyTotalTime);
             }
         }
 
+        if (previouslyFiltering != blockEntity.isFiltering())
+        {
+            changed = true;
+            state = state.setValue(WaterPurifierBlock.PURIFYING, blockEntity.isFiltering());
+            level.setBlock(pos, state, 3);
+        }
+
         // Mark as changed
-        if (changed) blockEntity.setChanged();
+        if (changed) setChanged(level, pos, state);
     }
 
     @Override
@@ -328,7 +327,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         this.items.clear();
     }
 
-    public boolean currentlyFiltering()
+    public boolean isFiltering()
     {
         return this.filterTimeRemaining > 0;
     }

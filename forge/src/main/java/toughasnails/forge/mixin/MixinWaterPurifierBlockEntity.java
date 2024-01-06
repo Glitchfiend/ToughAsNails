@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 
-@Mixin(value = WaterPurifierBlockEntity.class, remap = false)
+@Mixin(value = WaterPurifierBlockEntity.class)
 public abstract class MixinWaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
     protected MixinWaterPurifierBlockEntity(BlockEntityType<?> p_155076_, BlockPos p_155077_, BlockState p_155078_) {
         super(p_155076_, p_155077_, p_155078_);
