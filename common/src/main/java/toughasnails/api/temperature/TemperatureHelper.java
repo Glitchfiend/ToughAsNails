@@ -91,6 +91,28 @@ public class TemperatureHelper
     }
 
     /**
+     * Gets whether a position is heating.
+     * @param level the level.
+     * @param pos the position to check.
+     * @return is heating.
+     */
+    public static boolean isHeating(Level level, BlockPos pos)
+    {
+        return Impl.INSTANCE.isHeating(level, pos);
+    }
+
+    /**
+     * Gets whether a position is cooling.
+     * @param level the level.
+     * @param pos the position to check.
+     * @return is cooling.
+     */
+    public static boolean isCooling(Level level, BlockPos pos)
+    {
+        return Impl.INSTANCE.isCooling(level, pos);
+    }
+
+    /**
      * Register a player temperature modifier.
      * @param modifier the modifier.
      */
@@ -140,6 +162,9 @@ public class TemperatureHelper
             boolean isFullyHyperthermic(Player player);
             int getTicksRequiredForHyperthermia();
             int getTicksHyperthermic(Player player);
+            boolean isHeating(Level level, BlockPos pos);
+            boolean isCooling(Level level, BlockPos pos);
+
             void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier);
             void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier);
             void registerProximityBlockModifier(IProximityBlockModifier modifier);

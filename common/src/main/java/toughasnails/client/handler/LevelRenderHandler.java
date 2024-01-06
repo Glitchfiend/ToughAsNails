@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.temperature.AreaFill;
 
 import java.util.Arrays;
@@ -26,12 +27,6 @@ import java.util.Set;
 public class LevelRenderHandler
 {
     private static final boolean ENABLE_DEBUG = false;
-    
-    private static final float PLAYER_FILL_OUTLINE_R = 168.0F / 255.0F;
-    private static final float PLAYER_FILL_OUTLINE_G = 247.0F / 255.0F;
-    private static final float PLAYER_FILL_OUTLINE_B = 255.0F / 255.0F;
-    private static final float PLAYER_FILL_OUTLINE_A = 1.0F;
-
 
     public static void onLevelRender(LevelRenderEvent event) {
         Player player = Minecraft.getInstance().player;
@@ -63,13 +58,13 @@ public class LevelRenderHandler
         //{
             // Clear old connectedBlocks
             connectedBlocks.clear();
-            populateConnectedBlocksForPlayer(player);
+            populateConnectedBlocks(player);
         //}
 
         return connectedBlocks;
     }
 
-    private static void populateConnectedBlocksForPlayer(Player player)
+    private static void populateConnectedBlocks(Player player)
     {
         Level level = player.level();
         BlockPos playerPos = player.blockPosition();
@@ -78,23 +73,53 @@ public class LevelRenderHandler
         if (!level.isEmptyBlock(playerPos))
             playerPos = playerPos.above();
 
-        Set<BlockPos> renderPositions = new HashSet<>();
-        AreaFill.fill(level, playerPos, (checkerLevel, checkedPos) -> {
-            renderPositions.add(checkedPos.pos());
+        Set<BlockPos> passablePositions = new HashSet<>();
+        Set<BlockPos> heatingPositions = new HashSet<>();
+        Set<BlockPos> coolingPositions = new HashSet<>();
+        Set<BlockPos> blockingPositions = new HashSet<>();
+        AreaFill.fill(level, playerPos, new AreaFill.PositionChecker() {
+            @Override
+            public void onSolid(Level level, AreaFill.PosAndDepth pos)
+            {
+                if (TemperatureHelper.isHeating(level, pos.pos()))
+                {
+                    heatingPositions.add(pos.pos());
+                }
+                else if (TemperatureHelper.isCooling(level, pos.pos()))
+                {
+                    coolingPositions.add(pos.pos());
+                }
+                else blockingPositions.add(pos.pos());
+            }
+
+            @Override
+            public void onPassable(Level level, AreaFill.PosAndDepth pos)
+            {
+                passablePositions.add(pos.pos());
+            }
         });
 
+        connectBlocks(passablePositions, 170, 170, 170, 255);
+        connectBlocks(heatingPositions, 255, 170, 0, 255);
+        connectBlocks(coolingPositions, 85, 255, 255, 255);
+        connectBlocks(blockingPositions, 255, 85, 85, 255);
+    }
+
+    private static void connectBlocks(Set<BlockPos> positions, int r, int g, int b, int a)
+    {
         // TODO: This could probably be optimised so that blocks opposite each other can set each other's faces, but this is good enough for now
-        for (BlockPos pos : renderPositions)
+        for (BlockPos pos : positions)
         {
             Set<Direction> connectedFaces = new HashSet<>();
 
             for (Direction dir : Direction.values())
             {
-                if (renderPositions.contains(pos.relative(dir)))
+                if (positions.contains(pos.relative(dir)))
                     connectedFaces.add(dir);
             }
 
-            connectedBlocks.add(new ConnectedBlock(pos, connectedFaces, PLAYER_FILL_OUTLINE_R, PLAYER_FILL_OUTLINE_G, PLAYER_FILL_OUTLINE_B, PLAYER_FILL_OUTLINE_A));
+            if (!connectedFaces.containsAll(Arrays.stream(Direction.values()).toList()))
+                connectedBlocks.add(new ConnectedBlock(pos, connectedFaces, (float)r / 255.0F, (float)g / 255.0F, (float)b / 255.0F, (float)a / 255.0F));
         }
     }
 
@@ -123,13 +148,13 @@ public class LevelRenderHandler
             this.b = b;
             this.a = a;
 
-            // Offset by 0.01 to prevent Z-fighting with the selection box
-            this.minX = (float)pos.getX() + 0.01F;
-            this.minY = (float)pos.getY() + 0.01F;
-            this.minZ = (float)pos.getZ() + 0.01F;
-            this.maxX = (float)pos.getX() + 1 + 0.01F;
-            this.maxY = (float)pos.getY() + 1 + 0.01F;
-            this.maxZ = (float)pos.getZ() + 1 + 0.01F;
+            // Offset by 0.0001 to prevent Z-fighting with the selection box
+            this.minX = (float)pos.getX() + 0.0001F;
+            this.minY = (float)pos.getY() + 0.0001F;
+            this.minZ = (float)pos.getZ() + 0.0001F;
+            this.maxX = (float)pos.getX() + 1 - 0.0001F;
+            this.maxY = (float)pos.getY() + 1 - 0.0001F;
+            this.maxZ = (float)pos.getZ() + 1 - 0.0001F;
         }
 
         public void render(PoseStack poseStack, VertexConsumer vertexConsumer)

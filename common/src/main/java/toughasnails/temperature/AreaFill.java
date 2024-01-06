@@ -8,7 +8,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.LinkedList;
@@ -34,42 +34,37 @@ public class AreaFill
                 continue;
 
             // Positive x is east, negative x is west
-            if (isPassable(level, posToCheck))
+            if (checkPassable(checker, level, posToCheck))
             {
                 PosAndDepth westPos = posToCheck;
-                PosAndDepth eastPos = posToCheck.east();
-
-                while (isPassable(level, westPos))
+                while (westPos.depth() < maxDepth && checkPassable(checker, level, westPos))
                 {
                     checked.add(westPos);
-
-                    if (westPos.depth() < maxDepth)
-                    {
-                        expand(queue, checked, checker, level, westPos);
-                        westPos = westPos.west();
-                    }
-                    else break;
+                    expand(queue, checked, checker, level, westPos);
+                    westPos = westPos.west();
                 }
 
-                while (isPassable(level, eastPos))
+                checked.add(westPos);
+                if (!checkPassable(checker, level, westPos)) checkSolid(checked, checker, level, westPos);
+
+                // Don't spread further or else we'll exceed the max depth
+                if (posToCheck.depth() >= maxDepth)
+                    continue;
+
+                PosAndDepth eastPos = posToCheck.east();
+                while (eastPos.depth() < maxDepth && checkPassable(checker, level, eastPos))
                 {
                     checked.add(eastPos);
-
-                    if (eastPos.depth() < maxDepth)
-                    {
-                        expand(queue, checked, checker, level, eastPos);
-                        eastPos = eastPos.east();
-                    }
-                    else break;
+                    expand(queue, checked, checker, level, eastPos);
+                    eastPos = eastPos.east();
                 }
 
-                // Add the first non-air blocks (or nothing if still air)
-                if (!isPassable(level, westPos)) checkPos(checked, checker, level, westPos);
-                if (!isPassable(level, eastPos)) checkPos(checked, checker, level, eastPos);
+                checked.add(eastPos);
+                if (!checkPassable(checker, level, eastPos)) checkSolid(checked, checker, level, eastPos);
             }
             else
             {
-                checkPos(checked, checker, level, posToCheck);
+                checkSolid(checked, checker, level, posToCheck);
             }
         }
     }
@@ -81,34 +76,37 @@ public class AreaFill
         PosAndDepth down = pos.below(); // Negative Y
         PosAndDepth up = pos.above(); // Positive Y
 
-        if (isPassable(level, north)) queue.add(north);
-        else checkPos(checked, checker, level, north);
+        if (checkPassable(checker, level, north)) queue.add(north);
+        else checkSolid(checked, checker, level, north);
 
-        if (isPassable(level, south)) queue.add(south);
-        else checkPos(checked, checker, level, south);
+        if (checkPassable(checker, level, south)) queue.add(south);
+        else checkSolid(checked, checker, level, south);
 
-        if (isPassable(level, down)) queue.add(down);
-        else checkPos(checked, checker, level, down);
+        if (checkPassable(checker, level, down)) queue.add(down);
+        else checkSolid(checked, checker, level, down);
 
-        if (isPassable(level, up)) queue.add(up);
-        else checkPos(checked, checker, level, up);
+        if (checkPassable(checker, level, up)) queue.add(up);
+        else checkSolid(checked, checker, level, up);
     }
 
-    private static void checkPos(Set<PosAndDepth> checked, PositionChecker checker, Level level, PosAndDepth pos)
+    private static void checkSolid(Set<PosAndDepth> checked, PositionChecker checker, Level level, PosAndDepth pos)
     {
         checked.add(pos);
-        checker.check(level, pos);
+        checker.onSolid(level, pos);
     }
     
-    private static boolean isPassable(Level level, PosAndDepth pos)
+    private static boolean checkPassable(PositionChecker checker, Level level, PosAndDepth pos)
     {
         BlockState state = level.getBlockState(pos.pos());
-        return state.isAir() || !state.isSolid();
+        boolean passable = state.isAir() || (!state.isSolid() && !state.liquid());
+        if (passable) checker.onPassable(level, pos);
+        return passable;
     }
 
     public interface PositionChecker
     {
-        void check(Level level, PosAndDepth pos);
+        void onSolid(Level level, PosAndDepth pos);
+        default void onPassable(Level level, PosAndDepth pos) {}
     }
 
     public record PosAndDepth(BlockPos pos, int depth)

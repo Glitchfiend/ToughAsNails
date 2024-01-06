@@ -110,6 +110,20 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     }
 
     @Override
+    public boolean isHeating(Level level, BlockPos pos)
+    {
+        BlockState state = level.getBlockState(pos);
+        return state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED));
+    }
+
+    @Override
+    public boolean isCooling(Level level, BlockPos pos)
+    {
+        BlockState state = level.getBlockState(pos);
+        return state.is(ModTags.Blocks.COOLING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED));
+    }
+
+    @Override
     public void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier)
     {
         playerModifiers.add(modifier);
@@ -207,11 +221,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         BlockState state = level.getBlockState(pos);
 
-        if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED)))
+        if (TemperatureHelper.isHeating(level, pos))
         {
             heating.add(pos);
         }
-        else if (state.is(ModTags.Blocks.COOLING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED)))
+        else if (TemperatureHelper.isCooling(level, pos))
         {
             cooling.add(pos);
         }
