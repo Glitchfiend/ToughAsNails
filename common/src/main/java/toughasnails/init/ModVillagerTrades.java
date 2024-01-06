@@ -14,12 +14,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import toughasnails.api.item.TANItems;
 
+import java.util.Arrays;
+
 public class ModVillagerTrades
 {
-    public static void addWanderingVillagerTrades(WandererTradesEvent event)
-    {
-        //Cost, Amount, Trades Until Disabled, Villager XP
-        VillagerTrades.ItemListing[] WANDERING_TRADER_GENERIC = new VillagerTrades.ItemListing[]{
+    //Cost, Amount, Trades Until Disabled, Villager XP
+    private static final VillagerTrades.ItemListing[] WANDERING_TRADER_GENERIC = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(TANItems.ICE_CREAM, 2, 1, 4, 1),
             new ItemsForEmeralds(TANItems.CHARC_0S, 2, 1, 4, 1),
             new ItemsForEmeralds(TANItems.GLOW_BERRY_JUICE, 2, 1, 4, 1),
@@ -29,18 +29,15 @@ public class ModVillagerTrades
             new ItemsForEmeralds(TANItems.APPLE_JUICE, 4, 1, 2, 1),
             new ItemsForEmeralds(TANItems.CACTUS_JUICE, 4, 1, 2, 1)};
 
-        VillagerTrades.ItemListing[] WANDERING_TRADER_RARE = new VillagerTrades.ItemListing[]{
+    private static final VillagerTrades.ItemListing[] WANDERING_TRADER_RARE = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(TANItems.CHORUS_FRUIT_JUICE, 5, 1, 1, 1),
             new ItemsForEmeralds(TANItems.PURIFIED_WATER_BOTTLE, 4, 1, 2, 1)};
 
-        for (VillagerTrades.ItemListing trade : WANDERING_TRADER_GENERIC)
-        {
-            event.addGenericTrade(trade);
-        }
-        for (VillagerTrades.ItemListing trade : WANDERING_TRADER_RARE)
-        {
-            event.addRareTrade(trade);
-        }
+
+    public static void addWanderingVillagerTrades(WandererTradesEvent event)
+    {
+        event.addGenericTrades(Arrays.stream(WANDERING_TRADER_GENERIC).toList());
+        event.addRareTrades(Arrays.stream(WANDERING_TRADER_RARE).toList());
     }
 
     static class ItemsForEmeralds implements VillagerTrades.ItemListing {

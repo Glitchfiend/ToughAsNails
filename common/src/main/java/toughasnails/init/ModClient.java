@@ -36,7 +36,6 @@ public class ModClient
         ItemProperties.register(TANItems.THERMOMETER, new ResourceLocation(ToughAsNails.MOD_ID, "temperature"), new ClampedItemPropertyFunction() {
             final Map<Integer, Delta> deltas = new HashMap<>();
 
-
             @Override
             public float unclampedCall(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed)
             {

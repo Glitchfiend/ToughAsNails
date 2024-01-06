@@ -194,106 +194,17 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (!level.isEmptyBlock(pos))
             pos = pos.above();
 
-        fill(heating, cooling, level, pos);
+        AreaFill.fill(level, pos, (checkerLevel, checkedPos) -> {
+           addHeatingOrCooling(heating, cooling, checkerLevel, checkedPos);
+        });
 
         if (heating.size() > cooling.size()) current = current.increment(1);
         else if (cooling.size() > heating.size()) current = current.decrement(1);
         return current;
     }
 
-    private static final int PROXIMITY_RADIUS = ModConfig.temperature.nearHeatCoolProximity;
-
-    private static void fill(Set<BlockPos> heating, Set<BlockPos> cooling, Level level, BlockPos pos)
+    private static void addHeatingOrCooling(Set<BlockPos> heating, Set<BlockPos> cooling, Level level, BlockPos pos)
     {
-        Set<BlockPos> checked = Sets.newHashSet();
-        Queue<BlockPos> queue = new LinkedList();
-
-        int minX = pos.getX() - PROXIMITY_RADIUS;
-        int maxX = pos.getX() + PROXIMITY_RADIUS;
-
-        queue.add(pos);
-        while (!queue.isEmpty())
-        {
-            BlockPos posToCheck = queue.poll();
-
-            // Skip already checked positions
-            if (checked.contains(posToCheck))
-                continue;
-
-            // Positive x is east, negative x is west
-            if (level.isEmptyBlock(posToCheck))
-            {
-                BlockPos westPos = posToCheck;
-                BlockPos eastPos = posToCheck.east();
-
-                while (level.isEmptyBlock(westPos) && westPos.getX() >= minX)
-                {
-                    checked.add(westPos);
-                    expand(queue, checked, heating, cooling, level, pos, westPos);
-                    westPos = westPos.west();
-                }
-
-                while (level.isEmptyBlock(eastPos) && eastPos.getX() <= maxX)
-                {
-                    checked.add(eastPos);
-                    expand(queue, checked, heating, cooling, level, pos, eastPos);
-                    eastPos = eastPos.east();
-                }
-
-                // Add the first non-air blocks (or nothing if still air)
-                if (level.isEmptyBlock(westPos)) checked.add(westPos);
-                else addHeatingOrCooling(checked, heating, cooling, level, westPos);
-
-                if (level.isEmptyBlock(eastPos)) checked.add(eastPos);
-                else addHeatingOrCooling(checked, heating, cooling, level, eastPos);
-            }
-            else
-            {
-                addHeatingOrCooling(checked, heating, cooling, level, posToCheck);
-            }
-        }
-    }
-
-    private static void expand(Queue<BlockPos> queue, Set<BlockPos> checked, Set<BlockPos> heating, Set<BlockPos> cooling, Level level, BlockPos origin, BlockPos pos)
-    {
-        BlockPos north = pos.north(); // Negative Z
-        BlockPos south = pos.south(); // Positive Z
-        BlockPos down = pos.below(); // Negative Y
-        BlockPos up = pos.above(); // Positive Y
-
-        int minZ = origin.getZ() - PROXIMITY_RADIUS;
-        int maxZ = origin.getZ() + PROXIMITY_RADIUS;
-        int minY = origin.getY() - PROXIMITY_RADIUS;
-        int maxY = origin.getY() + PROXIMITY_RADIUS;
-
-        if (north.getZ() >= minZ)
-        {
-            if (level.isEmptyBlock(north)) queue.add(north);
-            else addHeatingOrCooling(checked, heating, cooling, level, north);
-        }
-
-        if (south.getZ() <= maxZ)
-        {
-            if (level.isEmptyBlock(south)) queue.add(south);
-            else addHeatingOrCooling(checked, heating, cooling, level, south);
-        }
-
-        if (down.getY() >= minY)
-        {
-            if (level.isEmptyBlock(down)) queue.add(down);
-            else addHeatingOrCooling(checked, heating, cooling, level, down);
-        }
-
-        if (up.getY() <= maxY)
-        {
-            if (level.isEmptyBlock(up)) queue.add(up);
-            else addHeatingOrCooling(checked, heating, cooling, level, up);
-        }
-    }
-
-    private static void addHeatingOrCooling(Set<BlockPos> checked, Set<BlockPos> heating, Set<BlockPos> cooling, Level level, BlockPos pos)
-    {
-        checked.add(pos);
         BlockState state = level.getBlockState(pos);
 
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED)))

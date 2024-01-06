@@ -11,6 +11,7 @@ import net.minecraft.core.registries.Registries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
+import toughasnails.client.handler.LevelRenderHandler;
 import toughasnails.client.handler.TooltipHandler;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
@@ -80,6 +81,7 @@ public class ToughAsNails
         EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
+        EventManager.addListener(LevelRenderHandler::onLevelRender);
 
         // Thirst
         EventManager.addListener(ThirstOverlayRenderer::onClientTick);
