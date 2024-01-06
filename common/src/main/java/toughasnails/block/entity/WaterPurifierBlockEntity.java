@@ -140,8 +140,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         boolean previouslyFiltering = blockEntity.currentlyFiltering();
         boolean changed = false;
 
-        // Reduce the time remaining on the filter whilst purification is occurring
-        if (blockEntity.currentlyFiltering() && blockEntity.purifyProgress > 0)
+        if (blockEntity.currentlyFiltering())
         {
             --blockEntity.filterTimeRemaining;
         }
@@ -149,7 +148,8 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         if (!blockEntity.level.isClientSide)
         {
             ItemStack filterStack = blockEntity.items.get(1);
-            if (blockEntity.currentlyFiltering() || !filterStack.isEmpty() && !blockEntity.items.get(0).isEmpty()) {
+            boolean hasFilter = !filterStack.isEmpty();
+            if (blockEntity.currentlyFiltering() || hasFilter && !blockEntity.items.get(0).isEmpty()) {
                 RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
 
                 if (recipe != null)
@@ -161,15 +161,15 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                         // If we are now filtering, consume the filter item
                         if (blockEntity.currentlyFiltering()) {
                             changed = true;
-                            if (filterStack.getItem().hasCraftingRemainingItem())
-                                blockEntity.items.set(1, new ItemStack(filterStack.getItem().getCraftingRemainingItem()));
-                            else if (!filterStack.isEmpty()) {
-                                filterStack.shrink(1);
 
-                                // Replace the filter with the containing item (if there is one)
-                                // Normally this would be something like an empty bucket
-                                if (filterStack.isEmpty()) {
-                                    blockEntity.items.set(1, new ItemStack(filterStack.getItem().getCraftingRemainingItem()));
+                            if (hasFilter)
+                            {
+                                Item filter = filterStack.getItem();
+                                filterStack.shrink(1);
+                                if (filterStack.isEmpty())
+                                {
+                                    Item remainingItem = filter.getCraftingRemainingItem();
+                                    blockEntity.items.set(1, remainingItem == null ? ItemStack.EMPTY : new ItemStack(remainingItem));
                                 }
                             }
                         }
