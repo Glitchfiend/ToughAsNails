@@ -1,7 +1,6 @@
 {
   "values": [
     "toughasnails:thermoregulator",
-    "toughasnails:temperature_gauge",
-    "toughasnails:water_purifier"
+    "toughasnails:temperature_gauge"
   ]
 }
