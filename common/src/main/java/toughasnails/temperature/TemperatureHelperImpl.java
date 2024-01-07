@@ -19,13 +19,13 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.CopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
@@ -145,7 +145,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Holder<Biome> biome = level.getBiome(pos);
         float biomeTemperature = biome.value().getBaseTemperature();
 
-        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
+        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
             else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;
@@ -191,7 +191,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         boolean isNight = time >= 0.25F && time <= 0.75F;
 
         // Drop the temperature during the night
-        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || level.canSeeSky(pos)))
+        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
@@ -347,7 +347,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static boolean isExposedToRain(Level level, BlockPos pos)
     {
-        return level.isRaining() && level.canSeeSky(pos);
+        return level.isRaining() && pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY();
     }
 
     private static boolean coldEnoughToSnow(Level level, Holder<Biome> biome, BlockPos pos)

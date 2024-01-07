@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonHelper;
@@ -39,7 +40,7 @@ public class ModCompatibility
         Holder<Biome> biome = level.getBiome(pos);
 
         // Only adjust if above the environmental modifier altitude
-        if (level.dimensionType().natural() && pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && !level.canSeeSky(pos))
+        if (level.dimensionType().natural() && pos.getY() <= ModConfig.temperature.environmentalModifierAltitude && pos.getY() < level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY())
             return current;
 
         // Check if biome uses seasonal effects
