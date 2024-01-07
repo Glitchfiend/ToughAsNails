@@ -8,11 +8,9 @@ import com.google.common.collect.ImmutableList;
 import glitchcore.config.Config;
 import glitchcore.util.Environment;
 import toughasnails.api.TANAPI;
-import toughasnails.core.ToughAsNails;
 import toughasnails.temperature.BuiltInTemperatureModifier;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -84,8 +82,8 @@ public class TemperatureConfig extends Config
         temperatureModifierOrder = add("general.temperature_modifier_order", DEFAULT_TEMPERATURE_MODIFIER_ORDER, "The order in which to apply built-in temperature modifiers", TEMPERATURE_MODIFIER_VALIDATOR);
 
         // Altitude options
-        temperatureDropAltitude = addNumber("altitude.temperature_drop_altitude", 1024, -64, 1024, "Y level to drop the temperature at when above");
-        temperatureRiseAltitude = addNumber("altitude.temperature_rise_altitude", -64, -64, 1024, "Y level to rise the temperature at when below");
+        temperatureDropAltitude = addNumber("altitude.temperature_drop_altitude", 160, -64, 1024, "Y level to drop the temperature at when above");
+        temperatureRiseAltitude = addNumber("altitude.temperature_rise_altitude", -32, -64, 1024, "Y level to rise the temperature at when below");
         environmentalModifierAltitude = addNumber("altitude.environmental_modifier_altitude", 50, -64, 256, "Y level above which environmental modifiers are applied");
 
         // Blocks options

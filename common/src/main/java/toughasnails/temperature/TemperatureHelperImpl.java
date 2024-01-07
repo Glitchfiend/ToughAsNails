@@ -164,6 +164,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel altitudeModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
+        if (!level.dimensionType().natural())
+            return current;
+
         if (pos.getY() > ModConfig.temperature.temperatureDropAltitude) current = current.decrement(1);
         else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude) current = current.increment(1);
         return current;
