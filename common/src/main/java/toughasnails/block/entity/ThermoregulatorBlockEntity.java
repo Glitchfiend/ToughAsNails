@@ -48,7 +48,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     public static final int INFORM_PLAYER_RADIUS = 20;
     private static final int SPREAD_RADIUS = 16;
 
-    public static final int CONSUMABLE_DURATION = 600;
+    public static final int CONSUMABLE_DURATION = 1600;
 
     public static final int SLOT_COOLING = 0;
     public static final int SLOT_HEATING = 1;
