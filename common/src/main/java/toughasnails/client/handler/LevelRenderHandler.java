@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -81,11 +82,13 @@ public class LevelRenderHandler
             @Override
             public void onSolid(Level level, AreaFill.PosAndDepth pos)
             {
-                if (TemperatureHelper.isHeating(level, pos.pos()))
+                BlockState state = level.getBlockState(pos.pos());
+
+                if (TemperatureHelper.isHeating(state))
                 {
                     heatingPositions.add(pos.pos());
                 }
-                else if (TemperatureHelper.isCooling(level, pos.pos()))
+                else if (TemperatureHelper.isCooling(state))
                 {
                     coolingPositions.add(pos.pos());
                 }

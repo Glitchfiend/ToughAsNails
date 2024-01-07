@@ -6,11 +6,14 @@ package toughasnails.temperature;
 
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -98,15 +101,28 @@ public class AreaFill
     private static boolean checkPassable(PositionChecker checker, Level level, PosAndDepth pos)
     {
         BlockState state = level.getBlockState(pos.pos());
-        boolean passable = state.isAir() || (!state.isSolid() && !state.liquid());
+        boolean passable = checker.isPassable(level, pos.pos());
         if (passable) checker.onPassable(level, pos);
         return passable;
     }
 
-    public interface PositionChecker
-    {
+    public interface PositionChecker {
         void onSolid(Level level, PosAndDepth pos);
-        default void onPassable(Level level, PosAndDepth pos) {}
+
+        default void onPassable(Level level, PosAndDepth pos) {
+        }
+
+        default boolean isPassable(Level level, BlockPos pos)
+        {
+            BlockState state = level.getBlockState(pos);
+            return state.isAir() || (!isFullySolid(level, pos) && !TemperatureHelper.isHeating(state) && !TemperatureHelper.isCooling(state));
+        }
+
+        default boolean isFullySolid(Level level, BlockPos pos)
+        {
+            BlockState state = level.getBlockState(pos);
+            return Arrays.stream(Direction.values()).allMatch(dir -> state.isFaceSturdy(level, pos, dir));
+        }
     }
 
     public record PosAndDepth(BlockPos pos, int depth)

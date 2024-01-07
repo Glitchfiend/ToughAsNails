@@ -10,4 +10,5 @@ public class TANBlockEntityTypes
 {
     public static BlockEntityType<?> WATER_PURIFIER;
     public static BlockEntityType<?> TEMPERATURE_GAUGE;
+    public static BlockEntityType<?> THERMOREGULATOR;
 }

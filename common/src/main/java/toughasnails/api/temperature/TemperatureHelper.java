@@ -7,6 +7,7 @@ package toughasnails.api.temperature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TemperatureHelper
 {
@@ -91,25 +92,23 @@ public class TemperatureHelper
     }
 
     /**
-     * Gets whether a position is heating.
-     * @param level the level.
-     * @param pos the position to check.
+     * Gets whether a state is heating.
+     * @param state the state to check.
      * @return is heating.
      */
-    public static boolean isHeating(Level level, BlockPos pos)
+    public static boolean isHeating(BlockState state)
     {
-        return Impl.INSTANCE.isHeating(level, pos);
+        return Impl.INSTANCE.isHeating(state);
     }
 
     /**
-     * Gets whether a position is cooling.
-     * @param level the level.
-     * @param pos the position to check.
+     * Gets whether a state is cooling.
+     * @param state the state to check.
      * @return is cooling.
      */
-    public static boolean isCooling(Level level, BlockPos pos)
+    public static boolean isCooling(BlockState state)
     {
-        return Impl.INSTANCE.isCooling(level, pos);
+        return Impl.INSTANCE.isCooling(state);
     }
 
     /**
@@ -162,8 +161,8 @@ public class TemperatureHelper
             boolean isFullyHyperthermic(Player player);
             int getTicksRequiredForHyperthermia();
             int getTicksHyperthermic(Player player);
-            boolean isHeating(Level level, BlockPos pos);
-            boolean isCooling(Level level, BlockPos pos);
+            boolean isHeating(BlockState state);
+            boolean isCooling(BlockState state);
 
             void registerPlayerTemperatureModifier(IPlayerTemperatureModifier modifier);
             void registerPositionalTemperatureModifier(IPositionalTemperatureModifier modifier);
