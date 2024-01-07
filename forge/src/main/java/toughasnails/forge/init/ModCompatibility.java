@@ -59,7 +59,8 @@ public class ModCompatibility
                     break;
 
                 case MID_WET:
-                    current = current.decrement(1);
+                    if (current == TemperatureLevel.HOT)
+                        current = current.decrement(1);
                     break;
             }
 
