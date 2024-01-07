@@ -4,6 +4,10 @@
  ******************************************************************************/
 package toughasnails.api.temperature;
 
+import net.minecraft.core.BlockPos;
+
+import java.util.Set;
+
 public interface ITemperature
 {
     /**
@@ -55,6 +59,18 @@ public interface ITemperature
     int getLastHyperthermiaTicks();
 
     /**
+     * Get the last positions of nearby thermoregulators.
+     * @return nearby thermoregulators.
+     */
+    Set<BlockPos> getLastNearbyThermoregulators();
+
+    /**
+     * Get the positions of nearby thermoregulators.
+     * @return nearby thermoregulators.
+     */
+    Set<BlockPos> getNearbyThermoregulators();
+
+    /**
      * Set the temperature level.
      * @param level temperature level
      */
@@ -101,4 +117,16 @@ public interface ITemperature
      * @param ticks number of ticks.
      */
     void setLastHyperthermiaTicks(int ticks);
+
+    /**
+     * Set the last nearby thermoregulators.
+     * @param values nearby thermoregulators.
+     */
+    void setLastNearbyThermoregulators(Set<BlockPos> values);
+
+    /**
+     * Set the nearby thermoregulators.
+     * @param values nearby thermoregulators.
+     */
+    void setNearbyThermoregulators(Set<BlockPos> values);
 }

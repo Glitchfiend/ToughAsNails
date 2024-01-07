@@ -22,8 +22,9 @@ public enum BuiltInTemperatureModifier
         int newChangeDelay = currentChangeDelay;
         for (IPlayerTemperatureModifier modifier : playerModifiers)
         {
-            newTarget = modifier.modify(player, currentTarget);
+            newTarget = modifier.modify(player, newTarget);
         }
+
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.playerTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     })),

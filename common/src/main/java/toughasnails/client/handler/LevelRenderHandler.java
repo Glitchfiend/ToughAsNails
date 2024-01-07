@@ -18,7 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.block.entity.ThermoregulatorBlockEntity;
+import toughasnails.core.ToughAsNails;
 import toughasnails.temperature.AreaFill;
 
 import java.util.Arrays;
@@ -77,6 +80,7 @@ public class LevelRenderHandler
         Set<BlockPos> passablePositions = new HashSet<>();
         Set<BlockPos> heatingPositions = new HashSet<>();
         Set<BlockPos> coolingPositions = new HashSet<>();
+        Set<BlockPos> thermoregulatorPositions = new HashSet<>();
         Set<BlockPos> blockingPositions = new HashSet<>();
         AreaFill.fill(level, playerPos, new AreaFill.PositionChecker() {
             @Override
@@ -84,11 +88,11 @@ public class LevelRenderHandler
             {
                 BlockState state = level.getBlockState(pos.pos());
 
-                if (TemperatureHelper.isHeating(state))
+                if (TemperatureHelper.isHeatingBlock(state))
                 {
                     heatingPositions.add(pos.pos());
                 }
-                else if (TemperatureHelper.isCooling(state))
+                else if (TemperatureHelper.isCoolingBlock(state))
                 {
                     coolingPositions.add(pos.pos());
                 }
@@ -102,10 +106,22 @@ public class LevelRenderHandler
             }
         });
 
-        connectBlocks(passablePositions, 170, 170, 170, 255);
-        connectBlocks(heatingPositions, 255, 170, 0, 255);
-        connectBlocks(coolingPositions, 85, 255, 255, 255);
-        connectBlocks(blockingPositions, 255, 85, 85, 255);
+        // Add blocks from thermoregulators
+        for (BlockPos pos : TemperatureHelper.getTemperatureData(player).getNearbyThermoregulators())
+        {
+            ThermoregulatorBlockEntity blockEntity = (ThermoregulatorBlockEntity)level.getBlockEntity(pos);
+
+            if (blockEntity == null)
+                continue;
+
+            thermoregulatorPositions.addAll(blockEntity.getFilledBlocks());
+        }
+
+        connectBlocks(passablePositions, 170, 170, 170, 255); // Grey
+        connectBlocks(heatingPositions, 255, 170, 0, 255); // Orange
+        connectBlocks(coolingPositions, 85, 255, 255, 255); // Blue
+        connectBlocks(thermoregulatorPositions, 255, 85, 255, 255); // Purple
+        connectBlocks(blockingPositions, 255, 85, 85, 255); // Red
     }
 
     private static void connectBlocks(Set<BlockPos> positions, int r, int g, int b, int a)

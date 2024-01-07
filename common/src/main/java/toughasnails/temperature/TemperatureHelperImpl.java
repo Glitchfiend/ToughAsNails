@@ -24,6 +24,8 @@ import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
+import toughasnails.block.entity.ThermoregulatorBlockEntity;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
@@ -36,7 +38,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 {
     protected static List<IPositionalTemperatureModifier> positionalModifiers = Lists.newArrayList(TemperatureHelperImpl::altitudeModifier, TemperatureHelperImpl::rainModifier);
     protected static List<IProximityBlockModifier> proximityModifiers = new ArrayList<>();
-    protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::immersionModifier);
+    protected static List<IPlayerTemperatureModifier> playerModifiers = Lists.newArrayList(TemperatureHelperImpl::thermoregulatorModifier, TemperatureHelperImpl::immersionModifier);
 
     @Override
     public TemperatureLevel getTemperatureAtPos(Level level, BlockPos pos)
@@ -222,11 +224,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     {
         BlockState state = level.getBlockState(pos);
 
-        if (TemperatureHelper.isHeating(state))
+        if (TemperatureHelper.isHeatingBlock(state))
         {
             heating.add(pos);
         }
-        else if (TemperatureHelper.isCooling(state))
+        else if (TemperatureHelper.isCoolingBlock(state))
         {
             cooling.add(pos);
         }
@@ -246,6 +248,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                 }
             }
         }
+    }
+
+    private static TemperatureLevel thermoregulatorModifier(Player player, TemperatureLevel current)
+    {
+        return modifyTemperatureByThermoregulators(player.level(), TemperatureHelper.getTemperatureData(player).getNearbyThermoregulators(), player.blockPosition(), current);
     }
 
     private static TemperatureLevel immersionModifier(Player player, TemperatureLevel current)
@@ -346,5 +353,32 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     private static boolean coldEnoughToSnow(Level level, Holder<Biome> biome, BlockPos pos)
     {
         return biome.value().coldEnoughToSnow(pos);
+    }
+
+    public static TemperatureLevel modifyTemperatureByThermoregulators(Level level, Set<BlockPos> thermoregulators, BlockPos checkPos, TemperatureLevel current)
+    {
+        int coolingCount = 0;
+        int heatingCount = 0;
+        int neutralCount = 0;
+
+        for (BlockPos pos : thermoregulators)
+        {
+            ThermoregulatorBlockEntity blockEntity = (ThermoregulatorBlockEntity)level.getBlockEntity(pos);
+
+            if (blockEntity == null)
+                continue;
+
+            switch (blockEntity.getEffectAtPos(checkPos))
+            {
+                case COOLING -> ++coolingCount;
+                case HEATING -> ++heatingCount;
+                case NEUTRALIZING -> ++neutralCount;
+            }
+        }
+
+        if (coolingCount == 0 && heatingCount == 0 && neutralCount > 0) return TemperatureLevel.NEUTRAL;
+        else if (coolingCount > heatingCount) return current.decrement(2);
+        else if (heatingCount > coolingCount) return current.increment(2);
+        else return current;
     }
 }

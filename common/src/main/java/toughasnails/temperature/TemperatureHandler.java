@@ -6,6 +6,7 @@ package toughasnails.temperature;
 
 import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
@@ -16,6 +17,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
@@ -27,6 +30,7 @@ import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
 import toughasnails.network.UpdateTemperaturePacket;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class TemperatureHandler
@@ -38,7 +42,11 @@ public class TemperatureHandler
         if (!ModConfig.temperature.enableTemperature || player.level().isClientSide())
             return;
 
+        Level level = player.level();
         ITemperature data = TemperatureHelper.getTemperatureData(player);
+
+        // Remove thermoregulators more than 32 blocks away
+        data.getNearbyThermoregulators().removeIf(pos -> level.getBlockEntity(pos) == null || player.distanceToSqr((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) > 32 * 32);
 
         // Decrement the positional change delay ticks
         data.setChangeDelayTicks(Math.max(0, data.getChangeDelayTicks() - 1));
@@ -130,6 +138,7 @@ public class TemperatureHandler
         ITemperature temperature = TemperatureHelper.getTemperatureData(event.getPlayer());
         temperature.setLastLevel(TemperatureData.DEFAULT_LEVEL);
         temperature.setLastHyperthermiaTicks(0);
+        temperature.setLastNearbyThermoregulators(new HashSet<>());
     }
 
     public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
@@ -150,9 +159,10 @@ public class TemperatureHandler
     public static void syncTemperature(ServerPlayer player)
     {
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
-        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket(temperature.getLevel(), temperature.getHyperthermiaTicks()), player);
+        ModPackets.HANDLER.sendToPlayer(new UpdateTemperaturePacket(temperature.getLevel(), temperature.getHyperthermiaTicks(), temperature.getNearbyThermoregulators()), player);
         temperature.setLastLevel(temperature.getLevel());
         temperature.setLastHyperthermiaTicks(temperature.getHyperthermiaTicks());
+        temperature.setNearbyThermoregulators(temperature.getNearbyThermoregulators());
     }
 
     private static void removeHeatExhaustion(Player player)

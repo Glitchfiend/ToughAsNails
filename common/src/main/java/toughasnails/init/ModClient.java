@@ -6,15 +6,19 @@ package toughasnails.init;
 
 import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.util.RenderTypeHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.temperature.TemperatureHelper;
@@ -22,9 +26,11 @@ import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.DyeableWoolItem;
 import toughasnails.item.LeafArmorItem;
+import toughasnails.temperature.TemperatureHelperImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
 import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
@@ -51,8 +57,18 @@ public class ModClient
                     return 0.5F;
 
                 Delta delta = deltas.computeIfAbsent(holder.getId(), k -> new Delta());
-                delta.update(level, TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition()));
+                delta.update(level, getTemperatureForThermometer(level, holder));
                 return delta.getValue();
+            }
+
+            private static TemperatureLevel getTemperatureForThermometer(Level level, Entity holder)
+            {
+                TemperatureLevel temperatureLevel = TemperatureHelper.getTemperatureAtPos(level, holder.blockPosition());
+
+                // Use the player to acquire nearby thermoregulators, even if they aren't holding the thermometer
+                Player player = Minecraft.getInstance().player;
+                Set<BlockPos> nearbyThermoregulators = TemperatureHelper.getTemperatureData(player).getNearbyThermoregulators();
+                return TemperatureHelperImpl.modifyTemperatureByThermoregulators(level, nearbyThermoregulators, holder.blockPosition(), temperatureLevel);
             }
 
             private static class Delta

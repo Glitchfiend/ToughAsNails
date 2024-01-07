@@ -46,7 +46,7 @@ public abstract class MixinServerPlayer extends Player implements ITANPlayer
         IThirst thirst = ThirstHelper.getThirst(player);
 
         // Update the temperature if it has changed
-        if (data.getLastLevel() != data.getLevel() || data.getLastHyperthermiaTicks() != data.getHyperthermiaTicks())
+        if (data.getLastLevel() != data.getLevel() || data.getLastHyperthermiaTicks() != data.getHyperthermiaTicks() || !data.getLastNearbyThermoregulators().equals(data.getNearbyThermoregulators()))
         {
             syncTemperature(player);
         }

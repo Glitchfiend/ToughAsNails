@@ -4,10 +4,14 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.init.ModConfig;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class TemperatureData implements ITemperature
 {
@@ -20,8 +24,10 @@ public class TemperatureData implements ITemperature
     private int ticksDry;
     private int extremityDelayTicks;
 
+    private Set<BlockPos> nearbyThermoregulators = new HashSet<>();
     private TemperatureLevel lastTemperature = DEFAULT_LEVEL;
     private int lastHyperthermiaTicks;
+    private Set<BlockPos> lastNearbyThermoregulators = new HashSet<>();
 
     public void addAdditionalSaveData(CompoundTag nbt)
     {
@@ -119,6 +125,18 @@ public class TemperatureData implements ITemperature
     }
 
     @Override
+    public Set<BlockPos> getLastNearbyThermoregulators()
+    {
+        return this.lastNearbyThermoregulators;
+    }
+
+    @Override
+    public Set<BlockPos> getNearbyThermoregulators()
+    {
+        return this.nearbyThermoregulators;
+    }
+
+    @Override
     public void setLevel(TemperatureLevel level)
     {
         this.level = level;
@@ -163,5 +181,17 @@ public class TemperatureData implements ITemperature
     public void setLastHyperthermiaTicks(int ticks)
     {
         this.lastHyperthermiaTicks = ticks;
+    }
+
+    @Override
+    public void setLastNearbyThermoregulators(Set<BlockPos> values)
+    {
+        this.lastNearbyThermoregulators = values;
+    }
+
+    @Override
+    public void setNearbyThermoregulators(Set<BlockPos> values)
+    {
+        this.nearbyThermoregulators = values;
     }
 }

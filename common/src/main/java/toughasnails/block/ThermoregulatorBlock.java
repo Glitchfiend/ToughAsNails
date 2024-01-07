@@ -7,6 +7,9 @@ package toughasnails.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -17,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
@@ -41,6 +45,20 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     protected MapCodec<? extends BaseEntityBlock> codec()
     {
         return CODEC;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
+    {
+        if (worldIn.isClientSide)
+        {
+            return InteractionResult.SUCCESS;
+        }
+        else
+        {
+            player.openMenu(state.getMenuProvider(worldIn, pos));
+            return InteractionResult.CONSUME;
+        }
     }
 
     @Override
@@ -87,20 +105,9 @@ public class ThermoregulatorBlock extends BaseEntityBlock
         builder.add(FACING, COOLING, HEATING);
     }
 
-    public static Effect getEffect(BlockState state)
+    @Override
+    public RenderShape getRenderShape(BlockState state)
     {
-        boolean heating = state.getValue(HEATING);
-        boolean cooling = state.getValue(COOLING);
-
-        if (heating && cooling) return Effect.NEUTRALIZING;
-        else if (heating) return Effect.HEATING;
-        else return Effect.COOLING;
-    }
-
-    public enum Effect
-    {
-        HEATING,
-        COOLING,
-        NEUTRALIZING
+        return RenderShape.MODEL;
     }
 }

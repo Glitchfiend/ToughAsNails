@@ -5,6 +5,7 @@
   "refmap": "toughasnails.refmap.json",
   "mixins": [
     "MixinTemperatureHelperImpl",
+    "MixinThermoregulatorBlockEntity",
     "MixinWaterPurifierBlockEntity"
   ],
   "client": [

@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.Arrays;
@@ -22,10 +21,13 @@ public class AreaFill
 {
     public static void fill(Level level, BlockPos pos, PositionChecker checker)
     {
+        fill(level, pos, checker, ModConfig.temperature.nearHeatCoolProximity);
+    }
+
+    public static void fill(Level level, BlockPos pos, PositionChecker checker, final int maxDepth)
+    {
         Set<PosAndDepth> checked = Sets.newHashSet();
         Queue<PosAndDepth> queue = new LinkedList();
-
-        final int maxDepth = ModConfig.temperature.nearHeatCoolProximity;
 
         queue.add(new PosAndDepth(pos, 1));
         while (!queue.isEmpty())
@@ -115,7 +117,7 @@ public class AreaFill
         default boolean isPassable(Level level, BlockPos pos)
         {
             BlockState state = level.getBlockState(pos);
-            return state.isAir() || (!isFullySolid(level, pos) && !TemperatureHelper.isHeating(state) && !TemperatureHelper.isCooling(state));
+            return state.isAir() || (!isFullySolid(level, pos) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state));
         }
 
         default boolean isFullySolid(Level level, BlockPos pos)

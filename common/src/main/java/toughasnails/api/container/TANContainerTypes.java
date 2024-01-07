@@ -9,4 +9,5 @@ import net.minecraft.world.inventory.MenuType;
 public class TANContainerTypes
 {
     public static MenuType<?> WATER_PURIFIER;
+    public static MenuType<?> THERMOREGULATOR;
 }

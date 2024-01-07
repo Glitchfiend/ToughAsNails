@@ -96,7 +96,7 @@ public class TemperatureHelper
      * @param state the state to check.
      * @return is heating.
      */
-    public static boolean isHeating(BlockState state)
+    public static boolean isHeatingBlock(BlockState state)
     {
         return Impl.INSTANCE.isHeating(state);
     }
@@ -106,7 +106,7 @@ public class TemperatureHelper
      * @param state the state to check.
      * @return is cooling.
      */
-    public static boolean isCooling(BlockState state)
+    public static boolean isCoolingBlock(BlockState state)
     {
         return Impl.INSTANCE.isCooling(state);
     }
