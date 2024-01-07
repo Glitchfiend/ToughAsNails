@@ -53,6 +53,7 @@ public class ToughAsNails
         regHelper.addRegistrar(Registries.MOB_EFFECT, ModPotions::registerEffects);
         regHelper.addRegistrar(Registries.POTION, ModPotions::registerPotions);
         regHelper.addRegistrar(Registries.CREATIVE_MODE_TAB, ModCreativeTab::registerCreativeTabs);
+        regHelper.addRegistrar(Registries.PARTICLE_TYPE, ModParticles::registerParticles);
     }
 
     private static void addHandlers()
