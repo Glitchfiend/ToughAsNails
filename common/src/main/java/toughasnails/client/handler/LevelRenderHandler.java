@@ -26,12 +26,12 @@ import java.util.Set;
 
 public class LevelRenderHandler
 {
-    private static final boolean ENABLE_DEBUG = false;
+    public static boolean enableDebug = false;
 
     public static void onLevelRender(LevelRenderEvent event) {
         Player player = Minecraft.getInstance().player;
 
-        if (!ENABLE_DEBUG || player == null)
+        if (!enableDebug || player == null)
             return;
 
         Vec3 cameraPos = event.getCamera().getPosition();

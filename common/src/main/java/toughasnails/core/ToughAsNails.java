@@ -11,6 +11,7 @@ import net.minecraft.core.registries.Registries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
+import toughasnails.client.handler.KeyHandler;
 import toughasnails.client.handler.LevelRenderHandler;
 import toughasnails.client.handler.TooltipHandler;
 import toughasnails.init.*;
@@ -96,5 +97,8 @@ public class ToughAsNails
         // Tooltips
         EventManager.addListener(TooltipHandler::onTooltip);
         EventManager.addListener(TooltipHandler::onRenderTooltip);
+
+        // Debug
+        EventManager.addListener(KeyHandler::onKeyPress);
     }
 }

@@ -16,6 +16,9 @@
   "desc.toughasnails.cooling_consumed": "Cooling (Consumed)",
   "desc.toughasnails.heating_trim": "Heating (Trim)",
   "desc.toughasnails.cooling_trim": "Cooling (Trim)",
+  "debug.temperature_fill.help": "F3 + 7 = Show temperature fill",
+  "debug.temperature_fill.off": "Temperature fill: hidden",
+  "debug.temperature_fill.on": "Temperature fill: shown",
   
   "effect.toughasnails.climate_clemency": "Climate Clemency",
   "effect.toughasnails.climate_clemency.description": "Neutralizes body temperature for the duration. Only granted temporarily when creating a new world (Or when respawning if enabled in the config).",
