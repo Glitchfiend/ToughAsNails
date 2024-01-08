@@ -5,6 +5,7 @@
 package toughasnails.init;
 
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.TANAPI;
 

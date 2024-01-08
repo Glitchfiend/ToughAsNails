@@ -34,7 +34,6 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.block.ThermoregulatorBlock;
 import toughasnails.container.ThermoregulatorContainer;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 import toughasnails.temperature.AreaFill;
 
@@ -224,19 +223,19 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
             blockEntity.filledBlocks.clear();
             AreaFill.fill(level, fillStart, new AreaFill.PositionChecker() {
                 @Override
-                public void onSolid(Level level, AreaFill.PosAndDepth pos) {}
+                public void onSolid(Level level, AreaFill.FillPos pos) {}
 
                 @Override
-                public void onPassable(Level level, AreaFill.PosAndDepth pos)
+                public void onPassable(Level level, AreaFill.FillPos pos)
                 {
                     blockEntity.filledBlocks.add(pos.pos());
                 }
 
                 @Override
-                public boolean isPassable(Level level, BlockPos pos)
+                public boolean isPassable(Level level, AreaFill.FillPos pos)
                 {
-                    BlockState state = level.getBlockState(pos);
-                    return state.isAir() || !isFullySolid(level, pos);
+                    BlockState state = level.getBlockState(pos.pos());
+                    return isConfined(level, pos.pos()) && (state.isAir() || !isFlowBlocking(level, pos, state));
                 }
             }, SPREAD_RADIUS);
 

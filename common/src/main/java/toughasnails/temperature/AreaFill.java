@@ -9,10 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.temperature.TemperatureHelper;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -26,13 +27,13 @@ public class AreaFill
 
     public static void fill(Level level, BlockPos pos, PositionChecker checker, final int maxDepth)
     {
-        Set<PosAndDepth> checked = Sets.newHashSet();
-        Queue<PosAndDepth> queue = new LinkedList();
+        Set<FillPos> checked = Sets.newHashSet();
+        Queue<FillPos> queue = new LinkedList();
 
-        queue.add(new PosAndDepth(pos, 1));
+        queue.add(new FillPos(pos, 1, Direction.DOWN));
         while (!queue.isEmpty())
         {
-            PosAndDepth posToCheck = queue.poll();
+            FillPos posToCheck = queue.poll();
 
             // Skip already checked positions
             if (checked.contains(posToCheck))
@@ -41,7 +42,7 @@ public class AreaFill
             // Positive x is east, negative x is west
             if (checkPassable(checker, level, posToCheck))
             {
-                PosAndDepth westPos = posToCheck;
+                FillPos westPos = posToCheck;
                 while (westPos.depth() < maxDepth && checkPassable(checker, level, westPos))
                 {
                     checked.add(westPos);
@@ -56,7 +57,7 @@ public class AreaFill
                 if (posToCheck.depth() >= maxDepth)
                     continue;
 
-                PosAndDepth eastPos = posToCheck.east();
+                FillPos eastPos = posToCheck.east();
                 while (eastPos.depth() < maxDepth && checkPassable(checker, level, eastPos))
                 {
                     checked.add(eastPos);
@@ -74,12 +75,12 @@ public class AreaFill
         }
     }
 
-    private static void expand(Queue<PosAndDepth> queue, Set<PosAndDepth> checked, PositionChecker checker, Level level, PosAndDepth pos)
+    private static void expand(Queue<FillPos> queue, Set<FillPos> checked, PositionChecker checker, Level level, FillPos pos)
     {
-        PosAndDepth north = pos.north(); // Negative Z
-        PosAndDepth south = pos.south(); // Positive Z
-        PosAndDepth down = pos.below(); // Negative Y
-        PosAndDepth up = pos.above(); // Positive Y
+        FillPos north = pos.north(); // Negative Z
+        FillPos south = pos.south(); // Positive Z
+        FillPos down = pos.below(); // Negative Y
+        FillPos up = pos.above(); // Positive Y
 
         if (checkPassable(checker, level, north)) queue.add(north);
         else checkSolid(checked, checker, level, north);
@@ -94,69 +95,72 @@ public class AreaFill
         else checkSolid(checked, checker, level, up);
     }
 
-    private static void checkSolid(Set<PosAndDepth> checked, PositionChecker checker, Level level, PosAndDepth pos)
+    private static void checkSolid(Set<FillPos> checked, PositionChecker checker, Level level, FillPos pos)
     {
         checked.add(pos);
         checker.onSolid(level, pos);
     }
     
-    private static boolean checkPassable(PositionChecker checker, Level level, PosAndDepth pos)
+    private static boolean checkPassable(PositionChecker checker, Level level, FillPos pos)
     {
-        BlockState state = level.getBlockState(pos.pos());
-        boolean passable = checker.isPassable(level, pos.pos());
+        boolean passable = checker.isPassable(level, pos);
         if (passable) checker.onPassable(level, pos);
         return passable;
     }
 
     public interface PositionChecker {
-        void onSolid(Level level, PosAndDepth pos);
+        void onSolid(Level level, FillPos pos);
 
-        default void onPassable(Level level, PosAndDepth pos) {
+        default void onPassable(Level level, FillPos pos) {
         }
 
-        default boolean isPassable(Level level, BlockPos pos)
+        default boolean isPassable(Level level, FillPos pos)
         {
-            BlockState state = level.getBlockState(pos);
-            return state.isAir() || (!isFullySolid(level, pos) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state));
+            BlockState state = level.getBlockState(pos.pos());
+            return isConfined(level, pos.pos()) && (state.isAir() || (!isFlowBlocking(level, pos, state) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state)));
         }
 
-        default boolean isFullySolid(Level level, BlockPos pos)
+        default boolean isConfined(Level level, BlockPos pos)
         {
-            BlockState state = level.getBlockState(pos);
-            return Arrays.stream(Direction.values()).allMatch(dir -> state.isFaceSturdy(level, pos, dir));
+            return pos.getY() < level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos).below().getY();
+        }
+
+        default boolean isFlowBlocking(Level level, FillPos pos, BlockState state)
+        {
+            return state.isFaceSturdy(level, pos.pos(), pos.source()) || state.isFaceSturdy(level, pos.pos(), pos.source().getOpposite());
         }
     }
 
-    public record PosAndDepth(BlockPos pos, int depth)
+    public record FillPos(BlockPos pos, int depth, Direction source)
     {
-        public PosAndDepth north()
+        public FillPos north()
         {
-            return new PosAndDepth(pos().north(), depth() + 1);
+            return new FillPos(pos().north(), depth() + 1, Direction.SOUTH);
         }
 
-        public PosAndDepth south()
+        public FillPos south()
         {
-            return new PosAndDepth(pos().south(), depth() + 1);
+            return new FillPos(pos().south(), depth() + 1, Direction.NORTH);
         }
 
-        public PosAndDepth east()
+        public FillPos east()
         {
-            return new PosAndDepth(pos().east(), depth() + 1);
+            return new FillPos(pos().east(), depth() + 1, Direction.WEST);
         }
 
-        public PosAndDepth west()
+        public FillPos west()
         {
-            return new PosAndDepth(pos().west(), depth() + 1);
+            return new FillPos(pos().west(), depth() + 1, Direction.EAST);
         }
 
-        public PosAndDepth above()
+        public FillPos above()
         {
-            return new PosAndDepth(pos().above(), depth() + 1);
+            return new FillPos(pos().above(), depth() + 1, Direction.DOWN);
         }
 
-        public PosAndDepth below()
+        public FillPos below()
         {
-            return new PosAndDepth(pos().below(), depth() + 1);
+            return new FillPos(pos().below(), depth() + 1, Direction.UP);
         }
     }
 }

@@ -18,10 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
-import toughasnails.core.ToughAsNails;
 import toughasnails.temperature.AreaFill;
 
 import java.util.Arrays;
@@ -84,7 +82,7 @@ public class LevelRenderHandler
         Set<BlockPos> blockingPositions = new HashSet<>();
         AreaFill.fill(level, playerPos, new AreaFill.PositionChecker() {
             @Override
-            public void onSolid(Level level, AreaFill.PosAndDepth pos)
+            public void onSolid(Level level, AreaFill.FillPos pos)
             {
                 BlockState state = level.getBlockState(pos.pos());
 
@@ -100,7 +98,7 @@ public class LevelRenderHandler
             }
 
             @Override
-            public void onPassable(Level level, AreaFill.PosAndDepth pos)
+            public void onPassable(Level level, AreaFill.FillPos pos)
             {
                 passablePositions.add(pos.pos());
             }
