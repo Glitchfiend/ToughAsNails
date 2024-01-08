@@ -117,7 +117,7 @@ public class AreaFill
         default boolean isPassable(Level level, FillPos pos)
         {
             BlockState state = level.getBlockState(pos.pos());
-            return isConfined(level, pos.pos()) && (state.isAir() || (!isFlowBlocking(level, pos, state) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state)));
+            return state.isAir() || (!isFlowBlocking(level, pos, state) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state));
         }
 
         default boolean isConfined(Level level, BlockPos pos)
