@@ -127,14 +127,17 @@ public class ThermoregulatorBlock extends BaseEntityBlock
         boolean cooling = p_221253_.getValue(COOLING);
         boolean heating = p_221253_.getValue(HEATING);
 
-        if (cooling || heating)
+        Direction direction = p_221253_.getValue(FACING);
+        Direction.Axis direction$axis = direction.getAxis();
+        BlockPos blockpos = p_221255_.relative(direction);
+        BlockState blockstate = p_221254_.getBlockState(blockpos);
+
+        if ((cooling || heating) && !isFaceFull(blockstate.getCollisionShape(p_221254_, blockpos), direction.getOpposite()))
         {
             double d0 = (double)p_221255_.getX() + 0.5D;
             double d1 = (double)p_221255_.getY() + 0.5D;
             double d2 = (double)p_221255_.getZ() + 0.5D;
 
-            Direction direction = p_221253_.getValue(FACING);
-            Direction.Axis direction$axis = direction.getAxis();
             double d4 = (p_221256_.nextDouble() * 0.3D) - (p_221256_.nextDouble() * 0.3D);
             double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.55D : d4;
             double d6 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.55D : d4;
