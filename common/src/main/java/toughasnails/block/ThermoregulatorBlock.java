@@ -13,6 +13,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -37,11 +39,12 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty COOLING = BooleanProperty.create("cooling");
     public static final BooleanProperty HEATING = BooleanProperty.create("heating");
+    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
     public ThermoregulatorBlock(Properties properties)
     {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(COOLING, false).setValue(HEATING, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(COOLING, false).setValue(HEATING, false).setValue(ENABLED, true));
     }
 
     @Override
@@ -89,7 +92,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext $$0) {
-        return (BlockState)this.defaultBlockState().setValue(FACING, $$0.getHorizontalDirection().getOpposite());
+        return (BlockState)this.defaultBlockState().setValue(FACING, $$0.getHorizontalDirection().getOpposite()).setValue(ENABLED, true);
     }
 
     @Override
@@ -105,7 +108,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
-        builder.add(FACING, COOLING, HEATING);
+        builder.add(FACING, COOLING, HEATING, ENABLED);
     }
 
     @Override
@@ -119,6 +122,41 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     {
         Containers.dropContentsOnDestroy(state, newState, level, pos);
         super.onRemove(state, level, pos, newState, $$4);
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos $$2, BlockState $$3, boolean $$4)
+    {
+        if (!$$3.is(state.getBlock())) {
+            this.checkPoweredState(level, $$2, state);
+        }
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston)
+    {
+        this.checkPoweredState(level, pos, state);
+    }
+
+    private void checkPoweredState(Level level, BlockPos pos, BlockState state)
+    {
+        boolean flag = !level.hasNeighborSignal(pos);
+        if (flag != state.getValue(ENABLED)) {
+            level.setBlock(pos, state.setValue(ENABLED, Boolean.valueOf(flag)), 2);
+        }
+
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state)
+    {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos)
+    {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 
     @Override

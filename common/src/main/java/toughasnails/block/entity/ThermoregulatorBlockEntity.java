@@ -34,6 +34,7 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.block.ThermoregulatorBlock;
 import toughasnails.container.ThermoregulatorContainer;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 import toughasnails.temperature.AreaFill;
 
@@ -148,6 +149,20 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         boolean previouslyHeating = blockEntity.isHeating();
         boolean changed = false;
 
+        if (!state.getValue(ThermoregulatorBlock.ENABLED))
+        {
+            blockEntity.filledBlocks.clear();
+
+            if (state.getValue(ThermoregulatorBlock.COOLING) || state.getValue(ThermoregulatorBlock.HEATING))
+            {
+                state = state.setValue(ThermoregulatorBlock.COOLING, false).setValue(ThermoregulatorBlock.HEATING, false);
+                level.setBlock(pos, state, 3);
+                setChanged(level, pos, state);
+            }
+
+            return;
+        }
+
         if (blockEntity.isCooling()) --blockEntity.coolingTimeRemaining;
         if (blockEntity.isHeating()) --blockEntity.heatingTimeRemaining;
 
@@ -189,14 +204,14 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
             }
         }
 
-        if (previouslyCooling != blockEntity.isCooling())
+        if (state.getValue(ThermoregulatorBlock.COOLING) != blockEntity.isCooling())
         {
             changed = true;
             state = state.setValue(ThermoregulatorBlock.COOLING, blockEntity.isCooling());
             level.setBlock(pos, state, 3);
         }
 
-        if (previouslyHeating != blockEntity.isHeating())
+        if (state.getValue(ThermoregulatorBlock.HEATING) != blockEntity.isHeating())
         {
             changed = true;
             state = state.setValue(ThermoregulatorBlock.HEATING, blockEntity.isHeating());
@@ -248,7 +263,6 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         if (changed)
         {
             setChanged(level, pos, state);
-            level.sendBlockUpdated(pos, state, state, 3);
         }
     }
 
