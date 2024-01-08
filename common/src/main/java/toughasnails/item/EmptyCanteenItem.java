@@ -20,6 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +31,7 @@ import toughasnails.api.block.TANBlocks;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.item.TANItems;
 import toughasnails.block.RainCollectorBlock;
+import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 
 public class EmptyCanteenItem extends Item
@@ -88,6 +90,9 @@ public class EmptyCanteenItem extends Item
                 {
                     // Fill the canteen with water in the world
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+
+                    if (ModConfig.thirst.removeSourceBlocks)
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
 
                     Holder<Biome> biome = player.level().getBiome(player.blockPosition());
                     Item canteenItem;

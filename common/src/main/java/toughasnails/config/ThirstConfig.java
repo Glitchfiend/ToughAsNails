@@ -14,6 +14,7 @@ public class ThirstConfig extends Config
 {
     public boolean enableThirst;
     public boolean enableHandDrinking;
+    public boolean removeSourceBlocks;
     public boolean thirstPreventSprint;
     public boolean thirstPreventHealthRegen;
     public double thirstExhaustionThreshold;
@@ -31,6 +32,7 @@ public class ThirstConfig extends Config
         // Toggles
         enableThirst = add("toggles.enable_thirst", true, "Enable or disable thirst.");
         enableHandDrinking = add("toggles.enable_hand_drinking", false, "Enable or disable hand drinking.");
+        removeSourceBlocks = add("toggles.remove_source_blocks", false, "Remove source blocks when filling the canteen.");
         thirstPreventSprint = add("toggles.thirst_prevent_sprint", true, "Prevent sprinting when thirsty.");
         thirstPreventHealthRegen = add("toggles.thirst_prevent_health_regen", true, "Prevent health regeneration when thirsty.");
 
