@@ -64,7 +64,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             temperature = modifier.modify(level, pos, temperature);
         }
 
-        return temperature
+        return temperature;
     }
 
     @Override
