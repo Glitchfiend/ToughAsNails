@@ -23,5 +23,5 @@ logoFile="${mod_id}_logo.png"
     modId="glitchcore"
     mandatory=true
     versionRange="[${glitchcore_version},)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"

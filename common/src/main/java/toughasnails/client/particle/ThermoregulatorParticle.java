@@ -57,6 +57,7 @@ public class ThermoregulatorParticle extends TextureSheetParticle
             this.sprites = p_105899_;
         }
 
+        @Override
         public Particle createParticle(SimpleParticleType p_105910_, ClientLevel p_105911_, double p_105912_, double p_105913_, double p_105914_, double p_105915_, double p_105916_, double p_105917_)
         {
             ThermoregulatorParticle particle = new ThermoregulatorParticle(p_105911_, p_105912_, p_105913_, p_105914_, p_105915_, p_105916_, p_105917_);

@@ -16,10 +16,7 @@
   "icon": "${mod_id}_logo.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "toughasnails.fabric.core.ToughAsNailsFabric"
-    ],
-    "client": [
+    "glitchcore": [
       "toughasnails.fabric.core.ToughAsNailsFabric"
     ]
   },
