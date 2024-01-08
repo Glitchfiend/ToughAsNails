@@ -5,6 +5,7 @@
 package toughasnails.init;
 
 import glitchcore.event.client.RegisterColorsEvent;
+import glitchcore.event.client.RegisterParticleSpritesEvent;
 import glitchcore.util.RenderTypeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -21,8 +22,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.item.TANItems;
+import toughasnails.api.particle.TANParticles;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
+import toughasnails.client.particle.ThermoregulatorParticle;
 import toughasnails.core.ToughAsNails;
 import toughasnails.item.DyeableWoolItem;
 import toughasnails.item.LeafArmorItem;
@@ -118,6 +121,13 @@ public class ModClient
     {
         event.register((state, world, pos, tintIndex) -> 0x47DAFF, RAIN_COLLECTOR);
         event.register((state, world, pos, tintIndex) -> 0x3F76E4, WATER_PURIFIER);
+    }
+
+    public static void registerParticleSprites(RegisterParticleSpritesEvent event)
+    {
+        event.registerSpriteSet(TANParticles.THERMOREGULATOR_COOL, ThermoregulatorParticle.Provider::new);
+        event.registerSpriteSet(TANParticles.THERMOREGULATOR_WARM, ThermoregulatorParticle.Provider::new);
+        event.registerSpriteSet(TANParticles.THERMOREGULATOR_NEUTRAL, ThermoregulatorParticle.Provider::new);
     }
 
     public static void setupRenderTypes()

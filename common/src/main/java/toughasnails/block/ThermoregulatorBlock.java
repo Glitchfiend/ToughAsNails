@@ -7,7 +7,7 @@ package toughasnails.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
+import toughasnails.api.particle.TANParticles;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 
 import javax.annotation.Nullable;
@@ -120,7 +121,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
         super.onRemove(state, level, pos, newState, $$4);
     }
 
-    /*@Override
+    @Override
     public void animateTick(BlockState p_221253_, Level p_221254_, BlockPos p_221255_, RandomSource p_221256_)
     {
         boolean cooling = p_221253_.getValue(COOLING);
@@ -142,10 +143,11 @@ public class ThermoregulatorBlock extends BaseEntityBlock
             double xmove = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.15D : ymove;
             double zmove = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.15D : ymove;
 
-            p_221254_.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, d0 + d5, d1 + d4, d2 + d6, xmove, ymove, zmove);
+            ParticleOptions particle = TANParticles.THERMOREGULATOR_NEUTRAL;
+            if (cooling && !heating) { particle = TANParticles.THERMOREGULATOR_COOL; }
+            if (!cooling && heating) { particle = TANParticles.THERMOREGULATOR_WARM; }
 
-            if (cooling && p_221256_.nextInt(6) == 0) { p_221254_.addParticle(ParticleTypes.SNOWFLAKE, d0 + d5, d1 + d6, d2 + d6, xmove, ymove, zmove); }
-            if (heating && p_221256_.nextInt(6) == 0) { p_221254_.addParticle(ParticleTypes.SMALL_FLAME, d0 + d5, d1 + d6, d2 + d6, xmove, ymove, zmove); }
+            p_221254_.addParticle(particle, d0 + d5, d1 + d4, d2 + d6, xmove, ymove, zmove);
         }
-    }*/
+    }
 }

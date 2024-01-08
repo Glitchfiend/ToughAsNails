@@ -95,6 +95,9 @@ public class ToughAsNails
         EventManager.addListener(ModClient::registerBlockColors);
         EventManager.addListener(ModClient::registerItemColors);
 
+        // Particles
+        EventManager.addListener(ModClient::registerParticleSprites);
+
         // Tooltips
         EventManager.addListener(TooltipHandler::onTooltip);
         EventManager.addListener(TooltipHandler::onRenderTooltip);

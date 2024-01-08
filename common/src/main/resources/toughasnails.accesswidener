@@ -19,6 +19,7 @@ accessible method net/minecraft/client/renderer/item/ItemProperties register (Ln
 accessible method net/minecraft/world/item/alchemy/PotionBrewing addMix (Lnet/minecraft/world/item/alchemy/Potion;Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/alchemy/Potion;)V
 
 # Particle registration
+accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 
 # Thirst

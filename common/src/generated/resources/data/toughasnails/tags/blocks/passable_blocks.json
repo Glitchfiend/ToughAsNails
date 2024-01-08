@@ -1,6 +1,7 @@
 {
   "values": [
     "#minecraft:doors",
-    "#minecraft:trapdoors"
+    "#minecraft:trapdoors",
+    "minecraft:scaffolding"
   ]
 }
