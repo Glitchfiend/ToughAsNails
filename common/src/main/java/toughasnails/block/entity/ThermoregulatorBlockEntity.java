@@ -235,7 +235,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
                 public boolean isPassable(Level level, AreaFill.FillPos pos)
                 {
                     BlockState state = level.getBlockState(pos.pos());
-                    return isConfined(level, pos.pos()) && (state.isAir() || !isFlowBlocking(level, pos, state));
+                    return isConfined(level, pos.pos()) && (state.isAir() || state.is(ModTags.Blocks.PASSABLE_BLOCKS) || !isFlowBlocking(level, pos, state));
                 }
             }, SPREAD_RADIUS);
 

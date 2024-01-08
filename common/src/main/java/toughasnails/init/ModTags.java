@@ -30,6 +30,7 @@ public class ModTags
 
         public static final TagKey<Block> COOLING_BLOCKS = create(new ResourceLocation(TANAPI.MOD_ID, "cooling_blocks"));
         public static final TagKey<Block> HEATING_BLOCKS = create(new ResourceLocation(TANAPI.MOD_ID, "heating_blocks"));
+        public static final TagKey<Block> PASSABLE_BLOCKS = create(new ResourceLocation(TANAPI.MOD_ID, "passable_blocks"));
 
         public static TagKey<Block> create(ResourceLocation name) 
         {

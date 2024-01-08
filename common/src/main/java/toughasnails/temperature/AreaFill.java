@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
+import toughasnails.init.ModTags;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -117,7 +118,7 @@ public class AreaFill
         default boolean isPassable(Level level, FillPos pos)
         {
             BlockState state = level.getBlockState(pos.pos());
-            return state.isAir() || (!isFlowBlocking(level, pos, state) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state));
+            return state.isAir() || state.is(ModTags.Blocks.PASSABLE_BLOCKS) || (!isFlowBlocking(level, pos, state) && !TemperatureHelper.isHeatingBlock(state) && !TemperatureHelper.isCoolingBlock(state));
         }
 
         default boolean isConfined(Level level, BlockPos pos)
