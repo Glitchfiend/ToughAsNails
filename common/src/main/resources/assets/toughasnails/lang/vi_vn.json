@@ -1,0 +1,50 @@
+{
+  "itemGroup.toughasnails": "Tough As Nails ",
+  
+  "container.toughasnails.water_purifier": "Máy lọc nước ",
+  
+  "death.attack.toughasnails.hyperthermia": "%1$s quá nóng đến chết ",
+  "death.attack.toughasnails.hyperthermia.player": "%1$s quá nóng đến chết trong khi cố gắng thoát khỏi %2$s ",
+  "desc.toughasnails.heating": "Sưởi ấm ",
+  "desc.toughasnails.cooling": "Làm mát ",
+  
+  "effect.toughasnails.climate_clemency": " Khí hậu mát mẻ ",
+  "effect.toughasnails.ice_resistance": "Kháng lạnh ",
+  "effect.toughasnails.thirst": "Khát ",
+  "enchantment.toughasnails.thermal_tuning": "Điều chỉnh nhiệt ",
+  
+  "block.toughasnails.rain_collector": "Bộ thu mưa ",
+  "block.toughasnails.water_purifier": "Máy lọc nước ",
+  
+  "item.toughasnails.apple_juice": "Nước ép táo ",
+  "item.toughasnails.cactus_juice": "Nước ép xương rồng ",
+  "item.toughasnails.chorus_fruit_juice": "Nước ép trái cây hợp xướng ",
+  "item.toughasnails.dirty_water_bottle": "Chai nước bẩn ",
+  "item.toughasnails.dirty_water_canteen": "Túi nước bẩn",
+  "item.toughasnails.empty_canteen": "Túi nước rỗng",
+  "item.toughasnails.glow_berry_juice": "Nước ép quả mọng ",
+  "item.toughasnails.leaf_boots": "Giày lá",
+  "item.toughasnails.leaf_chestplate": "Áo lá ",
+  "item.toughasnails.leaf_helmet": "Mũ lá",
+  "item.toughasnails.leaf_leggings": "Quần lá ",
+  "item.toughasnails.melon_juice": "Nước dưa ",
+  "item.toughasnails.pumpkin_juice": "Nước ép bí ngô ",
+  "item.toughasnails.purified_water_bottle": "Chai nước sạch",
+  "item.toughasnails.purified_water_canteen": "Túi nước sạch",
+  "item.toughasnails.sweet_berry_juice": "Nước ép quả mọng ngọt ",
+  "item.toughasnails.tan_icon": "Biểu tượng TAN ",
+  "item.toughasnails.water_canteen": "Túi nước",
+  "item.toughasnails.wool_boots": "Giày len ",
+  "item.toughasnails.wool_chestplate": "Áo len ",
+  "item.toughasnails.wool_helmet": "Mũ len ",
+  "item.toughasnails.wool_leggings": "Quần len ",
+  
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Thuốc kháng băng kéo dài ",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Thuốc kháng băng kéo dài ",
+  "item.minecraft.potion.effect.ice_resistance": "Thuốc kháng băng ",
+  "item.minecraft.potion.effect.long_ice_resistance": "Thuốc kháng băng ",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Thuốc kháng băng ném được",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Thuốc kháng băng ném được",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Mũi tên kháng băng ",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Mũi tên kháng băng"
+}
