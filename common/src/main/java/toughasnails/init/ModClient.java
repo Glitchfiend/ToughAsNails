@@ -6,7 +6,7 @@ package toughasnails.init;
 
 import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.event.client.RegisterParticleSpritesEvent;
-import glitchcore.util.RenderTypeHelper;
+import glitchcore.util.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
@@ -136,7 +136,7 @@ public class ModClient
         RenderType cutoutRenderType = RenderType.cutout();
         RenderType translucentRenderType = RenderType.translucent();
 
-        RenderTypeHelper.setRenderType(RAIN_COLLECTOR, cutoutRenderType);
-        RenderTypeHelper.setRenderType(WATER_PURIFIER, cutoutRenderType);
+        RenderHelper.setRenderType(RAIN_COLLECTOR, cutoutRenderType);
+        RenderHelper.setRenderType(WATER_PURIFIER, cutoutRenderType);
     }
 }
