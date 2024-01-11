@@ -13,7 +13,7 @@
     "sources": "${mod_git_url}"
   },
   "license": "${mod_license}",
-  "icon": "${mod_id}_logo.png",
+  "icon": "assets/toughasnails/textures/item/tan_icon.png",
   "environment": "*",
   "entrypoints": {
     "glitchcore": [
