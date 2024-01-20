@@ -11,7 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import toughasnails.core.ToughAsNails;
-import toughasnails.forge.init.ModCompatibility;
+import toughasnails.init.ModCompatibility;
 
 @Mod(value = ToughAsNails.MOD_ID)
 public class ToughAsNailsForge
@@ -19,7 +19,6 @@ public class ToughAsNailsForge
     public ToughAsNailsForge()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::loadComplete);
         bus.addListener(this::clientSetup);
 
         ToughAsNails.init();
@@ -29,10 +28,5 @@ public class ToughAsNailsForge
     private void clientSetup(final FMLClientSetupEvent event)
     {
         event.enqueueWork(ToughAsNails::setupClient);
-    }
-
-    private void loadComplete(final FMLLoadCompleteEvent event)
-    {
-        event.enqueueWork(ModCompatibility::init);
     }
 }

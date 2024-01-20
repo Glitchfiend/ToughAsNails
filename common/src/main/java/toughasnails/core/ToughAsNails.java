@@ -33,6 +33,7 @@ public class ToughAsNails
         addHandlers();
         ModPackets.init();
         ModApi.init();
+        ModCompatibility.init();
     }
 
     public static void setupClient()

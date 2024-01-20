@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import toughasnails.forge.init.ModCompatibility;
+import toughasnails.init.ModCompatibility;
 import toughasnails.temperature.TemperatureHelperImpl;
 
 @Mixin(value = TemperatureHelperImpl.class, remap = false)

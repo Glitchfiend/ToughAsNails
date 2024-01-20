@@ -2,14 +2,14 @@
  * Copyright 2021, the Glitchfiend Team.
  * All rights reserved.
  ******************************************************************************/
-package toughasnails.forge.init;
+package toughasnails.init;
 
+import glitchcore.util.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.init.ModTags;
@@ -17,13 +17,12 @@ import sereneseasons.season.SeasonHooks;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
-import toughasnails.init.ModConfig;
 
 public class ModCompatibility
 {
     public static void init()
     {
-        if (ModList.get().isLoaded("sereneseasons"))
+        if (Environment.isModLoaded("sereneseasons"))
         {
             ToughAsNails.LOGGER.info("Serene Seasons detected. Enabling season modifier.");
             TemperatureHelper.registerPositionalTemperatureModifier(ModCompatibility::seasonModifier);
