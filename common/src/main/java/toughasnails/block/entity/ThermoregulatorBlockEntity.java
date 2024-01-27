@@ -263,6 +263,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         if (changed)
         {
             setChanged(level, pos, state);
+            level.sendBlockUpdated(pos, state, state, 3);
         }
     }
 
