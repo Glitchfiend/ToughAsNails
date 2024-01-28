@@ -5,6 +5,8 @@
 package toughasnails.fabric.core;
 
 import glitchcore.fabric.GlitchCoreInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import toughasnails.core.ToughAsNails;
 
 public class ToughAsNailsFabric implements GlitchCoreInitializer
@@ -13,6 +15,8 @@ public class ToughAsNailsFabric implements GlitchCoreInitializer
     public void onInitialize()
     {
         ToughAsNails.init();
+
+        ServerLifecycleEvents.SERVER_STARTING.register(ToughAsNails::onServerAboutToStart);
     }
 
     @Override

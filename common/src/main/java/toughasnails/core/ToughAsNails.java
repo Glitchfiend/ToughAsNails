@@ -7,7 +7,9 @@ package toughasnails.core;
 import glitchcore.event.EventManager;
 import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
@@ -41,6 +43,11 @@ public class ToughAsNails
         ModClient.setupRenderTypes();
     }
 
+    public static void onServerAboutToStart(MinecraftServer server)
+    {
+        ModVillages.addBuildings(server.registryAccess());
+    }
+
     private static void addRegistrars()
     {
         var regHelper = RegistryHelper.create();
@@ -70,7 +77,7 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onUseBlock);
 
         // Misc handlers
-        EventManager.addListener(ModVillagerTrades::addWanderingVillagerTrades);
+        EventManager.addListener(ModVillages::addWanderingVillagerTrades);
 
         if (Environment.isClient())
         {
