@@ -91,5 +91,7 @@
   "item.minecraft.splash_potion.effect.ice_resistance": "Splash Potion of Ice Resistance",
   "item.minecraft.splash_potion.effect.long_ice_resistance": "Splash Potion of Ice Resistance",
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Arrow of Ice Resistance",
-  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Arrow of Ice Resistance"
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Arrow of Ice Resistance",
+  
+  "entity.minecraft.villager.toughasnails.climatologist": "Climatologist"
 }
