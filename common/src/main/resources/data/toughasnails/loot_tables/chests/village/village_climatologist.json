@@ -6,6 +6,10 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "minecraft:emerald"
+        },
+		{
+          "type": "minecraft:item",
           "functions": [
             {
               "add": false,
@@ -18,7 +22,7 @@
             }
           ],
           "name": "minecraft:charcoal",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -34,15 +38,39 @@
             }
           ],
           "name": "minecraft:snowball",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:ice",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:ice"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:magma_block"
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:magma_block",
+          "weight": 2
         }
       ],
       "rolls": {

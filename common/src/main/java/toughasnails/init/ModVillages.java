@@ -59,11 +59,11 @@ public class ModVillages
         Registry<StructureTemplatePool> templatePools = registryAccess.registry(Registries.TEMPLATE_POOL).get();
         Registry<StructureProcessorList> processorLists = registryAccess.registry(Registries.PROCESSOR_LIST).get();
 
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 5);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 5);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 5);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 5);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 5);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 2);
     }
 
     static class ItemsForEmeralds implements VillagerTrades.ItemListing {
