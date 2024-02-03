@@ -53,7 +53,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:ice",
+          "name": "minecraft:packed_ice",
           "weight": 2
         },
         {

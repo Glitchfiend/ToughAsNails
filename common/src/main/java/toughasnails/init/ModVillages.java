@@ -62,32 +62,29 @@ public class ModVillages
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_2_TRADES = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(new ItemStack(TANItems.THERMOMETER), 2, 1, 10, 2, 0.2F),
-            new EmeraldForItems(TANItems.ICE_CREAM, 4, 16, 3),
-            new EmeraldForItems(TANItems.CHARC_0S, 4, 16, 3)};
+            new ItemsForEmeralds(new ItemStack(TANBlocks.TEMPERATURE_GAUGE), 4, 1, 5, 4, 0.2F)};
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_3_TRADES = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(new ItemStack(TANItems.WOOL_HELMET), 5, 1, 12, 3, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_CHESTPLATE), 7, 1, 12, 3, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_LEGGINGS), 3, 1, 12, 3, 0.2F),
             new ItemsForEmeralds(new ItemStack(TANItems.WOOL_BOOTS), 4, 1, 12, 3, 0.2F),
             new ItemsForEmeralds(new ItemStack(TANItems.LEAF_HELMET), 5, 1, 12, 3, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_CHESTPLATE), 7, 1, 12, 3, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_LEGGINGS), 3, 1, 12, 3, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_BOOTS), 4, 1, 12, 3, 0.2F),
-            new EmeraldForItems(Blocks.ICE, 16, 8, 5),
-            new EmeraldForItems(Blocks.MAGMA_BLOCK, 16, 8, 5)};
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_BOOTS), 4, 1, 12, 3, 0.2F)};
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_4_TRADES = new VillagerTrades.ItemListing[]{
-            new ItemsForEmeralds(new ItemStack(Items.SNOWBALL), 2, 4, 16, 1, 0.2F),
-            new ItemsForEmeralds(new ItemStack(Items.CHARCOAL), 2, 4, 16, 1, 0.2F),
-            new ItemsForEmeralds(new ItemStack(Items.POWDER_SNOW_BUCKET), 4, 1, 8, 2, 0.2F),
-            new ItemsForEmeralds(new ItemStack(Items.LAVA_BUCKET), 4, 1, 8, 2, 0.2F)};
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_CHESTPLATE), 7, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_LEGGINGS), 3, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_CHESTPLATE), 7, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_LEGGINGS), 3, 1, 12, 3, 0.2F)};
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_5_TRADES = new VillagerTrades.ItemListing[]{
-            new ItemsForEmeralds(new ItemStack(Blocks.ICE), 4, 8, 20, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Items.POWDER_SNOW_BUCKET), 4, 1, 10, 2, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Items.LAVA_BUCKET), 4, 1, 10, 2, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Blocks.PACKED_ICE), 4, 8, 20, 1, 0.2F),
             new ItemsForEmeralds(new ItemStack(Blocks.MAGMA_BLOCK), 4, 8, 20, 1, 0.2F),
-            new EmeraldForItems(Items.SNOWBALL, 16, 4, 1),
-            new EmeraldForItems(Items.CHARCOAL, 16, 4, 1)};
+            new EmeraldForItems(Blocks.PACKED_ICE, 16, 10, 2),
+            new EmeraldForItems(Blocks.MAGMA_BLOCK, 16, 10, 2),
+            new EmeraldForItems(Items.SNOWBALL, 16, 5, 1),
+            new EmeraldForItems(Items.CHARCOAL, 16, 5, 1)};
 
     private static final Int2ObjectMap<VillagerTrades.ItemListing[]> CLIMATOLOGIST_TRADES = toIntMap(ImmutableMap.of(1, CLIMATOLOGIST_LEVEL_1_TRADES, 2, CLIMATOLOGIST_LEVEL_2_TRADES, 3, CLIMATOLOGIST_LEVEL_3_TRADES, 4, CLIMATOLOGIST_LEVEL_4_TRADES, 5, CLIMATOLOGIST_LEVEL_5_TRADES));
 
@@ -141,8 +138,8 @@ public class ModVillages
 
         addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 1);
         addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 2);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 3);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 4);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 3);
         addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 2);
     }
 
