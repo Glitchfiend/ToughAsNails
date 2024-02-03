@@ -4,9 +4,13 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import glitchcore.event.village.VillagerTradesEvent;
 import glitchcore.event.village.WandererTradesEvent;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -28,6 +32,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
@@ -49,6 +54,65 @@ import java.util.function.Predicate;
 
 public class ModVillages
 {
+    //Cost, Amount, Trades Until Disabled, Villager XP, Price Multiplier
+    //Amount Required, Trades Until Disabled, Villager XP
+    private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_1_TRADES = new VillagerTrades.ItemListing[]{
+            new ItemsForEmeralds(new ItemStack(TANItems.ICE_CREAM), 1, 2, 12, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.CHARC_0S), 1, 2, 12, 1, 0.2F)};
+
+    private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_2_TRADES = new VillagerTrades.ItemListing[]{
+            new ItemsForEmeralds(new ItemStack(TANItems.THERMOMETER), 2, 1, 10, 2, 0.2F),
+            new EmeraldForItems(TANItems.ICE_CREAM, 4, 16, 3),
+            new EmeraldForItems(TANItems.CHARC_0S, 4, 16, 3)};
+
+    private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_3_TRADES = new VillagerTrades.ItemListing[]{
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_HELMET), 5, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_CHESTPLATE), 7, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_LEGGINGS), 3, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.WOOL_BOOTS), 4, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_HELMET), 5, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_CHESTPLATE), 7, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_LEGGINGS), 3, 1, 12, 3, 0.2F),
+            new ItemsForEmeralds(new ItemStack(TANItems.LEAF_BOOTS), 4, 1, 12, 3, 0.2F),
+            new EmeraldForItems(Blocks.ICE, 16, 8, 5),
+            new EmeraldForItems(Blocks.MAGMA_BLOCK, 16, 8, 5)};
+
+    private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_4_TRADES = new VillagerTrades.ItemListing[]{
+            new ItemsForEmeralds(new ItemStack(Items.SNOWBALL), 2, 4, 16, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Items.CHARCOAL), 2, 4, 16, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Items.POWDER_SNOW_BUCKET), 4, 1, 8, 2, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Items.LAVA_BUCKET), 4, 1, 8, 2, 0.2F)};
+
+    private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_5_TRADES = new VillagerTrades.ItemListing[]{
+            new ItemsForEmeralds(new ItemStack(Blocks.ICE), 4, 8, 20, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Blocks.MAGMA_BLOCK), 4, 8, 20, 1, 0.2F),
+            new EmeraldForItems(Items.SNOWBALL, 16, 4, 1),
+            new EmeraldForItems(Items.CHARCOAL, 16, 4, 1)};
+
+    private static final Int2ObjectMap<VillagerTrades.ItemListing[]> CLIMATOLOGIST_TRADES = toIntMap(ImmutableMap.of(1, CLIMATOLOGIST_LEVEL_1_TRADES, 2, CLIMATOLOGIST_LEVEL_2_TRADES, 3, CLIMATOLOGIST_LEVEL_3_TRADES, 4, CLIMATOLOGIST_LEVEL_4_TRADES, 5, CLIMATOLOGIST_LEVEL_5_TRADES));
+
+    public static void addVillagerTrades(VillagerTradesEvent event)
+    {
+        addProfessionTrade(event, TANVillagerProfessions.CLIMATOLOGIST, CLIMATOLOGIST_TRADES);
+    }
+
+    public static void addProfessionTrade(VillagerTradesEvent event, VillagerProfession profession, Int2ObjectMap<VillagerTrades.ItemListing[]> trades)
+    {
+        if (event.getProfession() == profession)
+        {
+            for (int level = 1; level <= 5; level++)
+            {
+                for (VillagerTrades.ItemListing trade : trades.get(level))
+                {
+                    if (event.getLevel() == level)
+                    {
+                        event.getTrades().add(trade);
+                    }
+                }
+            }
+        }
+    }
+
     //Cost, Amount, Trades Until Disabled, Villager XP
     private static final VillagerTrades.ItemListing[] WANDERING_TRADER_GENERIC = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(TANItems.ICE_CREAM, 2, 1, 4, 1),
@@ -64,7 +128,6 @@ public class ModVillages
             new ItemsForEmeralds(TANItems.CHORUS_FRUIT_JUICE, 5, 1, 1, 1),
             new ItemsForEmeralds(TANItems.PURIFIED_WATER_BOTTLE, 4, 1, 2, 1)};
 
-
     public static void addWanderingVillagerTrades(WandererTradesEvent event)
     {
         event.addGenericTrades(Arrays.stream(WANDERING_TRADER_GENERIC).toList());
@@ -76,11 +139,11 @@ public class ModVillages
         Registry<StructureTemplatePool> templatePools = registryAccess.registry(Registries.TEMPLATE_POOL).get();
         Registry<StructureProcessorList> processorLists = registryAccess.registry(Registries.PROCESSOR_LIST).get();
 
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 2);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 1);
         addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 3);
+        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 4);
         addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 2);
-        addBuildingToPool(templatePools, processorLists, new ResourceLocation("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 2);
     }
 
     public static void registerPointsOfInterest(BiConsumer<ResourceLocation, PoiType> func)
@@ -142,6 +205,10 @@ public class ModVillages
         public MerchantOffer getOffer(Entity p_219699_, RandomSource p_219700_) {
             return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
+    }
+
+    private static Int2ObjectMap<VillagerTrades.ItemListing[]> toIntMap(ImmutableMap<Integer, VillagerTrades.ItemListing[]> p_221238_0_) {
+        return new Int2ObjectOpenHashMap<>(p_221238_0_);
     }
 
     public static void addBuildingToPool(Registry<StructureTemplatePool> templatePoolRegistry, Registry<StructureProcessorList> processorListRegistry, ResourceLocation poolRL, String nbtPieceRL, int weight)

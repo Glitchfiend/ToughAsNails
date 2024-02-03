@@ -79,6 +79,7 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onUseBlock);
 
         // Misc handlers
+        EventManager.addListener(ModVillages::addVillagerTrades);
         EventManager.addListener(ModVillages::addWanderingVillagerTrades);
 
         if (Environment.isClient())
