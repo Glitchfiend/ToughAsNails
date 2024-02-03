@@ -28,7 +28,7 @@ logoFile="${mod_id}_logo.png"
 
 [[dependencies.${mod_id}]]
     modId="sereneseasons"
-    required=false
+    type="optional"
     versionRange="[${serene_seasons_version},)"
     ordering="AFTER"
     side="BOTH"
