@@ -62,6 +62,8 @@ public class ToughAsNails
         regHelper.addRegistrar(Registries.POTION, ModPotions::registerPotions);
         regHelper.addRegistrar(Registries.CREATIVE_MODE_TAB, ModCreativeTab::registerCreativeTabs);
         regHelper.addRegistrar(Registries.PARTICLE_TYPE, ModParticles::registerParticles);
+        regHelper.addRegistrar(Registries.POINT_OF_INTEREST_TYPE, ModVillages::registerPointsOfInterest);
+        regHelper.addRegistrar(Registries.VILLAGER_PROFESSION, ModVillages::registerProfessions);
     }
 
     private static void addHandlers()
