@@ -90,16 +90,11 @@ public class ModVillages
 
     public static void addVillagerTrades(VillagerTradesEvent event)
     {
-        addProfessionTrade(event, TANVillagerProfessions.CLIMATOLOGIST, CLIMATOLOGIST_TRADES);
-    }
-
-    public static void addProfessionTrade(VillagerTradesEvent event, VillagerProfession profession, Int2ObjectMap<VillagerTrades.ItemListing[]> trades)
-    {
-        if (event.getProfession() == profession)
+        if (event.getProfession() == TANVillagerProfessions.CLIMATOLOGIST)
         {
             for (int level = 1; level <= 5; level++)
             {
-                for (VillagerTrades.ItemListing trade : trades.get(level))
+                for (VillagerTrades.ItemListing trade : CLIMATOLOGIST_TRADES.get(level))
                 {
                     if (event.getLevel() == level)
                     {
