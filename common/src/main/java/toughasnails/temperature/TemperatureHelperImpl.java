@@ -113,13 +113,13 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public boolean isHeating(BlockState state)
     {
-        return state.is(ModTags.Blocks.HEATING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED));
+        return state.is(ModTags.Blocks.HEATING_BLOCKS) && ((state.hasProperty(CampfireBlock.LIT) && state.getValue(CampfireBlock.LIT)) || (state.hasProperty(CopperBulbBlock.POWERED) && state.getValue(CopperBulbBlock.POWERED)));
     }
 
     @Override
     public boolean isCooling(BlockState state)
     {
-        return state.is(ModTags.Blocks.COOLING_BLOCKS) && (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT) || !state.hasProperty(CopperBulbBlock.POWERED) || state.getValue(CopperBulbBlock.POWERED));
+        return state.is(ModTags.Blocks.COOLING_BLOCKS) && ((state.hasProperty(CampfireBlock.LIT) && state.getValue(CampfireBlock.LIT)) || (state.hasProperty(CopperBulbBlock.POWERED) && state.getValue(CopperBulbBlock.POWERED)));
     }
 
     @Override
