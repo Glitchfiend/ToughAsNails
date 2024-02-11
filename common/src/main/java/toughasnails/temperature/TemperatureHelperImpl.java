@@ -16,9 +16,9 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.level.block.CopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.player.ITANPlayer;
@@ -113,13 +113,13 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public boolean isHeating(BlockState state)
     {
-        return state.is(ModTags.Blocks.HEATING_BLOCKS) && ((state.hasProperty(CampfireBlock.LIT) ? state.getValue(CampfireBlock.LIT) : (state.hasProperty(CopperBulbBlock.POWERED) ? state.getValue(CopperBulbBlock.POWERED) : true)));
+        return state.is(ModTags.Blocks.HEATING_BLOCKS) && ((state.hasProperty(BlockStateProperties.LIT) ? state.getValue(BlockStateProperties.LIT) : (state.hasProperty(BlockStateProperties.POWERED) ? state.getValue(BlockStateProperties.POWERED) : (state.hasProperty(BlockStateProperties.ENABLED) ? state.getValue(BlockStateProperties.ENABLED) : (state.hasProperty(BooleanProperty.create("active")) ? state.getValue(BooleanProperty.create("active")) : (state.hasProperty(BooleanProperty.create("on")) ? state.getValue(BooleanProperty.create("on")) : true))))));
     }
 
     @Override
     public boolean isCooling(BlockState state)
     {
-        return state.is(ModTags.Blocks.COOLING_BLOCKS) && ((state.hasProperty(CampfireBlock.LIT) ? state.getValue(CampfireBlock.LIT) : (state.hasProperty(CopperBulbBlock.POWERED) ? state.getValue(CopperBulbBlock.POWERED) : true)));
+        return state.is(ModTags.Blocks.COOLING_BLOCKS) && ((state.hasProperty(BlockStateProperties.LIT) ? state.getValue(BlockStateProperties.LIT) : (state.hasProperty(BlockStateProperties.POWERED) ? state.getValue(BlockStateProperties.POWERED) : (state.hasProperty(BlockStateProperties.ENABLED) ? state.getValue(BlockStateProperties.ENABLED) : (state.hasProperty(BooleanProperty.create("active")) ? state.getValue(BooleanProperty.create("active")) : (state.hasProperty(BooleanProperty.create("on")) ? state.getValue(BooleanProperty.create("on")) : true))))));
     }
 
     @Override
