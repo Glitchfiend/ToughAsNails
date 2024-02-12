@@ -61,8 +61,10 @@ public class ModVillages
             new ItemsForEmeralds(new ItemStack(TANItems.CHARC_0S), 1, 2, 12, 1, 0.2F)};
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_2_TRADES = new VillagerTrades.ItemListing[]{
-            new ItemsForEmeralds(new ItemStack(TANItems.THERMOMETER), 2, 1, 10, 2, 0.2F),
-            new ItemsForEmeralds(new ItemStack(TANBlocks.TEMPERATURE_GAUGE), 4, 1, 5, 4, 0.2F)};
+            new ItemsForEmeralds(new ItemStack(Blocks.PACKED_ICE), 4, 8, 16, 1, 0.2F),
+            new ItemsForEmeralds(new ItemStack(Blocks.MAGMA_BLOCK), 4, 8, 16, 1, 0.2F),
+            new EmeraldForItems(Blocks.PACKED_ICE, 16, 10, 2),
+            new EmeraldForItems(Blocks.MAGMA_BLOCK, 16, 10, 2)};
 
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_3_TRADES = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(new ItemStack(TANItems.WOOL_HELMET), 5, 1, 12, 3, 0.2F),
@@ -79,10 +81,6 @@ public class ModVillages
     private static final VillagerTrades.ItemListing[] CLIMATOLOGIST_LEVEL_5_TRADES = new VillagerTrades.ItemListing[]{
             new ItemsForEmeralds(new ItemStack(Items.POWDER_SNOW_BUCKET), 4, 1, 10, 2, 0.2F),
             new ItemsForEmeralds(new ItemStack(Items.LAVA_BUCKET), 4, 1, 10, 2, 0.2F),
-            new ItemsForEmeralds(new ItemStack(Blocks.PACKED_ICE), 4, 8, 20, 1, 0.2F),
-            new ItemsForEmeralds(new ItemStack(Blocks.MAGMA_BLOCK), 4, 8, 20, 1, 0.2F),
-            new EmeraldForItems(Blocks.PACKED_ICE, 16, 10, 2),
-            new EmeraldForItems(Blocks.MAGMA_BLOCK, 16, 10, 2),
             new EmeraldForItems(Items.SNOWBALL, 16, 5, 1),
             new EmeraldForItems(Items.CHARCOAL, 16, 5, 1)};
 
