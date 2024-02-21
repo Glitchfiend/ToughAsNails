@@ -70,7 +70,7 @@ public class TemperatureOverlayRenderer
         }
     }
 
-    private static void renderTemperature(GuiGraphics guiGraphics, float partialTicks, int width, int height)
+    public static void renderTemperature(GuiGraphics guiGraphics, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 

@@ -59,7 +59,7 @@ public class ThirstOverlayRenderer
         }
     }
 
-    private static void drawThirst(GuiGraphics guiGraphics, int screenWidth, int rowTop, int thirstLevel, float thirstHydrationLevel)
+    public static void drawThirst(GuiGraphics guiGraphics, int screenWidth, int rowTop, int thirstLevel, float thirstHydrationLevel)
     {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
