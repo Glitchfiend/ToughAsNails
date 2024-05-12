@@ -4,13 +4,14 @@
  ******************************************************************************/
 package toughasnails.api.potion;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 
 public class TANEffects
 {
-    public static MobEffect THIRST;
-    public static MobEffect ICE_RESISTANCE;
-    public static MobEffect CLIMATE_CLEMENCY;
-    public static MobEffect INTERNAL_WARMTH;
-    public static MobEffect INTERNAL_CHILL;
+    public static Holder<MobEffect> THIRST;
+    public static Holder<MobEffect> ICE_RESISTANCE;
+    public static Holder<MobEffect> CLIMATE_CLEMENCY;
+    public static Holder<MobEffect> INTERNAL_WARMTH;
+    public static Holder<MobEffect> INTERNAL_CHILL;
 }

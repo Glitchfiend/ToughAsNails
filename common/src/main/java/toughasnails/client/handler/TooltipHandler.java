@@ -48,15 +48,14 @@ public class TooltipHandler
         BlockState state = block.defaultBlockState();
         RegistryAccess registryAccess = Minecraft.getInstance().getConnection().registryAccess();
 
-        Optional<ArmorTrim> trim = ArmorTrim.getTrim(registryAccess, stack, true);
         Optional<Holder.Reference<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
 
         // Heating/Cooling Blocks and Armor/Trimmed Armor
-        if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.HEATING_TRIMS)))
+        if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\uD83D\uDD25 ").append(Component.translatable("desc.toughasnails.heating")).withStyle(ChatFormatting.GOLD));
         }
-        if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR) || (trim.isPresent() && trim.get().material().is(ModTags.Trims.COOLING_TRIMS)))
+        if (state.is(ModTags.Blocks.COOLING_BLOCKS) || stack.is(ModTags.Items.COOLING_ARMOR) || (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.COOLING_TRIMS)))
         {
             event.getTooltip().add(Component.literal("\u2744 ").append(Component.translatable("desc.toughasnails.cooling")).withStyle(ChatFormatting.AQUA));
         }

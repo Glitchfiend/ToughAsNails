@@ -4,10 +4,11 @@
  ******************************************************************************/
 package toughasnails.api.potion;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.alchemy.Potion;
 
 public class TANPotions
 {
-    public static Potion ICE_RESISTANCE;
-    public static Potion LONG_ICE_RESISTANCE;
+    public static Holder<Potion> ICE_RESISTANCE;
+    public static Holder<Potion> LONG_ICE_RESISTANCE;
 }

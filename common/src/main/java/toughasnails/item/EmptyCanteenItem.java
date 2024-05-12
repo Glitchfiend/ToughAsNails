@@ -124,18 +124,12 @@ public class EmptyCanteenItem extends Item
         return true;
     }
 
-    @Override
-    public boolean canBeDepleted()
-    {
-        return true;
-    }
-
     protected ItemStack replaceCanteen(ItemStack oldStack, Player player, ItemStack newStack)
     {
         player.awardStat(Stats.ITEM_USED.get(this));
 
         // Copy enchantments from the old stack to the new stack
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(oldStack), newStack);
+        EnchantmentHelper.setEnchantments(newStack, EnchantmentHelper.getEnchantmentsForCrafting(oldStack));
         return ItemUtils.createFilledResult(oldStack, player, newStack);
     }
 

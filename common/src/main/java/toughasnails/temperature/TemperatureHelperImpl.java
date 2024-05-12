@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -312,10 +313,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             }
             else
             {
-                ArmorTrim.getTrim(player.level().registryAccess(), stack, true).ifPresent(armorTrim -> {
-                    Holder<TrimMaterial> trimMaterial = armorTrim.material();
-                    if (trimMaterial.is(ModTags.Trims.COOLING_TRIMS)) coolingPieces.getAndIncrement();
-                    if (trimMaterial.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();
+                TrimMaterials.getFromIngredient(player.level().registryAccess(), stack).ifPresent(material -> {
+                    if (material.is(ModTags.Trims.COOLING_TRIMS)) coolingPieces.getAndIncrement();
+                    if (material.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();
                 });
             }
         }));

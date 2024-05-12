@@ -1,18 +1,12 @@
 {
   "type": "toughasnails:water_purifying",
   "input": {
-    "Count": 1,
-    "id": "toughasnails:copper_dirty_water_canteen",
-    "tag": {
-      "Damage": 0
-    }
+    "count": 1,
+    "id": "toughasnails:copper_dirty_water_canteen"
   },
   "purifytime": 400,
   "result": {
-    "Count": 1,
-    "id": "toughasnails:copper_water_canteen",
-    "tag": {
-      "Damage": 0
-    }
+    "count": 1,
+    "id": "toughasnails:copper_water_canteen"
   }
 }

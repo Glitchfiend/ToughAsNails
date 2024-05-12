@@ -7,7 +7,8 @@
     "item": "toughasnails:diamond_water_canteen"
   },
   "result": {
-    "item": "toughasnails:netherite_water_canteen"
+    "count": 1,
+    "id": "toughasnails:netherite_water_canteen"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

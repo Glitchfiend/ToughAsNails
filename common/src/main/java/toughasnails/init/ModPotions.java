@@ -4,10 +4,15 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -15,6 +20,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import toughasnails.api.TANAPI;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.potion.TANPotions;
+import toughasnails.core.ToughAsNails;
 import toughasnails.potion.ThirstEffect;
 
 import java.util.function.BiConsumer;
@@ -41,19 +47,28 @@ public class ModPotions
 
     public static void registerPotionRecipes()
     {
-        PotionBrewing.addMix(Potions.AWKWARD, Items.SNOWBALL, TANPotions.ICE_RESISTANCE);
-        PotionBrewing.addMix(TANPotions.ICE_RESISTANCE, Items.REDSTONE, TANPotions.LONG_ICE_RESISTANCE);
+        addPotionBrewingMix(Potions.AWKWARD, Items.SNOWBALL, TANPotions.ICE_RESISTANCE);
+        addPotionBrewingMix(TANPotions.ICE_RESISTANCE, Items.REDSTONE, TANPotions.LONG_ICE_RESISTANCE);
     }
 
-    private static MobEffect registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)
+    private static Holder<MobEffect> registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), effect);
-        return effect;
+        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        ResourceKey<MobEffect> key = ResourceKey.create(Registries.MOB_EFFECT, location);
+        func.accept(location, effect);
+        return BuiltInRegistries.MOB_EFFECT.getHolder(key).orElseThrow();
     }
 
-    private static Potion registerPotion(BiConsumer<ResourceLocation, Potion> func, String name, Potion potion)
+    private static Holder<Potion> registerPotion(BiConsumer<ResourceLocation, Potion> func, String name, Potion potion)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), potion);
-        return potion;
+        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        ResourceKey<Potion> key = ResourceKey.create(Registries.POTION, location);
+        func.accept(location, potion);
+        return BuiltInRegistries.POTION.getHolder(key).orElseThrow();
+    }
+
+    private static void addPotionBrewingMix(Holder<Potion> input, Item ingredient, Holder<Potion> output)
+    {
+        // TODOO
     }
 }

@@ -177,27 +177,27 @@ public class LevelRenderHandler
         public void render(PoseStack poseStack, VertexConsumer vertexConsumer)
         {
             Matrix4f poseMatrix = poseStack.last().pose();
-            Matrix3f normalMatrix = poseStack.last().normal();
+            PoseStack.Pose lastPose = poseStack.last();
 
             // North face (towards -Z)
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, minY, minZ, maxX, minY, minZ, Direction.NORTH, Direction.DOWN);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, minY, minZ, minX, maxY, minZ, Direction.NORTH, Direction.WEST);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, maxX, minY, minZ, maxX, maxY, minZ, Direction.NORTH, Direction.EAST);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, maxX, maxY, minZ, minX, maxY, minZ, Direction.NORTH, Direction.UP);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, minY, minZ, maxX, minY, minZ, Direction.NORTH, Direction.DOWN);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, minY, minZ, minX, maxY, minZ, Direction.NORTH, Direction.WEST);
+            drawLine(vertexConsumer, poseMatrix, lastPose, maxX, minY, minZ, maxX, maxY, minZ, Direction.NORTH, Direction.EAST);
+            drawLine(vertexConsumer, poseMatrix, lastPose, maxX, maxY, minZ, minX, maxY, minZ, Direction.NORTH, Direction.UP);
 
             // South face (towards +Z)
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, maxY, maxZ, minX, minY, maxZ, Direction.SOUTH, Direction.WEST);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, minY, maxZ, maxX, minY, maxZ, Direction.SOUTH, Direction.DOWN);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, maxY, maxZ, maxX, maxY, maxZ, Direction.SOUTH, Direction.UP);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, maxX, minY, maxZ, maxX, maxY, maxZ, Direction.SOUTH, Direction.EAST);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, maxY, maxZ, minX, minY, maxZ, Direction.SOUTH, Direction.WEST);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, minY, maxZ, maxX, minY, maxZ, Direction.SOUTH, Direction.DOWN);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, maxY, maxZ, maxX, maxY, maxZ, Direction.SOUTH, Direction.UP);
+            drawLine(vertexConsumer, poseMatrix, lastPose, maxX, minY, maxZ, maxX, maxY, maxZ, Direction.SOUTH, Direction.EAST);
 
             // West face (towards -X)
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, minY, minZ, minX, minY, maxZ, Direction.WEST, Direction.DOWN);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, minX, maxY, minZ, minX, maxY, maxZ, Direction.WEST, Direction.UP);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, minY, minZ, minX, minY, maxZ, Direction.WEST, Direction.DOWN);
+            drawLine(vertexConsumer, poseMatrix, lastPose, minX, maxY, minZ, minX, maxY, maxZ, Direction.WEST, Direction.UP);
 
             // East face (towards +X)
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, maxX, minY, maxZ, maxX, minY, minZ, Direction.EAST, Direction.DOWN);
-            drawLine(vertexConsumer, poseMatrix, normalMatrix, maxX, maxY, minZ, maxX, maxY, maxZ, Direction.EAST, Direction.UP);
+            drawLine(vertexConsumer, poseMatrix, lastPose, maxX, minY, maxZ, maxX, minY, minZ, Direction.EAST, Direction.DOWN);
+            drawLine(vertexConsumer, poseMatrix, lastPose, maxX, maxY, minZ, maxX, maxY, maxZ, Direction.EAST, Direction.UP);
         }
 
         public Set<Direction> getConnectedFaces()
@@ -205,7 +205,7 @@ public class LevelRenderHandler
             return this.connectedFaces;
         }
 
-        private void drawLine(VertexConsumer vertexConsumer, Matrix4f poseMatrix, Matrix3f normalMatrix, float fromX, float fromY, float fromZ, float toX, float toY, float toZ, Direction... relevantFaces)
+        private void drawLine(VertexConsumer vertexConsumer, Matrix4f poseMatrix, PoseStack.Pose lastPose, float fromX, float fromY, float fromZ, float toX, float toY, float toZ, Direction... relevantFaces)
         {
             // Don't draw this line if it forms part of a connected face
             if (Arrays.stream(relevantFaces).anyMatch(this.connectedFaces::contains))
@@ -215,8 +215,8 @@ public class LevelRenderHandler
             float normalY = Math.signum(fromY - toY);
             float normalZ = Math.signum(fromZ - toZ);
 
-            vertexConsumer.vertex(poseMatrix, fromX, fromY, fromZ).color(r, g, b, a).normal(normalMatrix, normalX, normalY, normalZ).endVertex();
-            vertexConsumer.vertex(poseMatrix, toX, toY, toZ).color(r, g, b, a).normal(normalMatrix, normalX, normalY, normalZ).endVertex();
+            vertexConsumer.vertex(poseMatrix, fromX, fromY, fromZ).color(r, g, b, a).normal(lastPose, normalX, normalY, normalZ).endVertex();
+            vertexConsumer.vertex(poseMatrix, toX, toY, toZ).color(r, g, b, a).normal(lastPose, normalX, normalY, normalZ).endVertex();
         }
     }
 }

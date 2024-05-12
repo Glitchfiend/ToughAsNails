@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -31,13 +32,13 @@ public class FilledCanteenItem extends EmptyCanteenItem
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected)
     {
-        if (!(entity instanceof Player player) || stack.getItem() == getPurifiedWaterCanteen() || EnchantmentHelper.getEnchantments(stack).isEmpty())
+        if (!(entity instanceof Player player) || stack.getItem() == getPurifiedWaterCanteen() || stack.getEnchantments().isEmpty())
             return;
 
         // Create a new stack with the same damage value, except purified
         ItemStack newStack = new ItemStack(getPurifiedWaterCanteen());
         newStack.setDamageValue(stack.getDamageValue());
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), newStack);
+        stack.getEnchantments().entrySet().forEach(e -> newStack.enchant(e.getKey().value(), e.getIntValue()));
 
         // Replace the current stack in the player's inventory
         player.getInventory().setItem(slot, newStack);
@@ -77,10 +78,10 @@ public class FilledCanteenItem extends EmptyCanteenItem
         if (!worldIn.isClientSide && !player.getAbilities().instabuild)
         {
             ItemStack emptyStack = new ItemStack(getEmptyCanteen());
-            EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), emptyStack);
+            stack.getEnchantments().entrySet().forEach(e -> emptyStack.enchant(e.getKey().value(), e.getIntValue()));
 
             AtomicBoolean broken = new AtomicBoolean(false);
-            stack.hurtAndBreak(1, player, (entity) -> broken.set(true));
+            stack.hurtAndBreak(1, player.getRandom(), (ServerPlayer)player, () -> broken.set(true));
             if (broken.get())
             {
                 return emptyStack;

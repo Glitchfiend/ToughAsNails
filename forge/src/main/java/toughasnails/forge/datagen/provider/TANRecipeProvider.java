@@ -1,5 +1,6 @@
 package toughasnails.forge.datagen.provider;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -7,7 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import toughasnails.api.block.TANBlocks;
@@ -15,11 +16,13 @@ import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.forge.datagen.recipes.WaterPurifierRecipeBuilder;
 
+import java.util.concurrent.CompletableFuture;
+
 public class TANRecipeProvider extends RecipeProvider
 {
-    public TANRecipeProvider(PackOutput output)
+    public TANRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup)
     {
-        super(output);
+        super(output, lookup);
     }
 
     @Override
@@ -73,8 +76,8 @@ public class TANRecipeProvider extends RecipeProvider
         //
 
         // Water bottle
-        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_BOTTLE), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), 400);
-        waterPurifier(output, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE), 200);
+        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_BOTTLE), PotionContents.createItemStack(Items.POTION, Potions.WATER), 400);
+        waterPurifier(output, PotionContents.createItemStack(Items.POTION, Potions.WATER), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE), 200);
 
         // Canteens
         waterPurifier(output, new ItemStack(TANItems.LEATHER_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.LEATHER_WATER_CANTEEN), 400);

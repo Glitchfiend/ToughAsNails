@@ -5,10 +5,7 @@
 package toughasnails.block.entity;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -113,11 +110,11 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void load(CompoundTag nbt)
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
     {
-        super.load(nbt);
+        super.loadAdditional(nbt, lookup);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, this.items);
+        ContainerHelper.loadAllItems(nbt, this.items, lookup);
         this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining");
         this.filterDuration = nbt.getInt("FilterDuration");
         this.purifyProgress = nbt.getInt("PurifyProgress");
@@ -125,14 +122,14 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt)
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider)
     {
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, provider);
         nbt.putInt("FilterTimeRemaining", this.filterTimeRemaining);
         nbt.putInt("FilterDuration", this.filterDuration);
         nbt.putInt("PurifyProgress", this.purifyProgress);
         nbt.putInt("PurifyTotalTime", this.purifyTotalTime);
-        ContainerHelper.saveAllItems(nbt, this.items);
+        ContainerHelper.saveAllItems(nbt, this.items, provider);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, WaterPurifierBlockEntity blockEntity)
@@ -214,6 +211,18 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
+    protected NonNullList<ItemStack> getItems()
+    {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items)
+    {
+        this.items = items;
+    }
+
+    @Override
     public int[] getSlotsForFace(Direction side)
     {
         switch (side)
@@ -291,7 +300,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     public void setItem(int index, ItemStack stack)
     {
         ItemStack currentStack = this.items.get(index);
-        boolean sameItem = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, currentStack);
+        boolean sameItem = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, currentStack);
         this.items.set(index, stack);
 
         if (stack.getCount() > this.getMaxStackSize())

@@ -11,6 +11,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,12 +48,10 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult)
     {
-        ItemStack stack = player.getItemInHand(hand);
-
         if (stack.isEmpty() || stack.getItem() != Items.GLASS_BOTTLE)
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         int waterLevel = state.getValue(LEVEL);
 
@@ -73,7 +72,7 @@ public class RainCollectorBlock extends Block
             this.setWaterLevel(worldIn, pos, state, waterLevel - 1);
         }
 
-        return InteractionResult.sidedSuccess(worldIn.isClientSide);
+        return ItemInteractionResult.sidedSuccess(worldIn.isClientSide);
     }
 
     public void setWaterLevel(Level world, BlockPos pos, BlockState state, int level)
@@ -120,7 +119,7 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type)
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType)
     {
         return false;
     }

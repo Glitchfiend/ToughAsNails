@@ -19,7 +19,7 @@ public class ThirstEffect extends MobEffect
     }
 
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier)
+    public boolean applyEffectTick(LivingEntity entity, int amplifier)
     {
         if (entity instanceof Player)
         {
@@ -27,6 +27,8 @@ public class ThirstEffect extends MobEffect
             IThirst thirst = ThirstHelper.getThirst(player);
             thirst.addExhaustion(0.025F * (float)(amplifier + 1));
         }
+
+        return true;
     }
 
     @Override

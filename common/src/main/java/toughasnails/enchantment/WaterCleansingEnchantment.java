@@ -4,18 +4,17 @@
  ******************************************************************************/
 package toughasnails.enchantment;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import toughasnails.item.EmptyCanteenItem;
 
 public class WaterCleansingEnchantment extends Enchantment
 {
     public WaterCleansingEnchantment()
     {
-        // EnchantmentCategory is irrelevant for treasure only enchantments
-        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND } );
+        super(Enchantment.definition(ItemTags.DURABILITY_ENCHANTABLE, 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlot.MAINHAND));
     }
 
     @Override

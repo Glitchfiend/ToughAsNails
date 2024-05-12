@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "toughasnails:thermometer"
-            ]
+            "items": "toughasnails:thermometer"
           }
         ]
       },

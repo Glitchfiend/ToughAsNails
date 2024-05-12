@@ -23,7 +23,6 @@ public class ToughAsNailsForge
         MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
         ToughAsNails.init();
-        GlitchCoreForge.prepareModEventHandlers(bus);
     }
 
     private void clientSetup(final FMLClientSetupEvent event)

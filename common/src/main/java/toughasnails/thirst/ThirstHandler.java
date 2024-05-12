@@ -24,7 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
@@ -208,7 +208,7 @@ public class ThirstHandler
         }
         else
         {
-            filledStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+            filledStack = PotionContents.createItemStack(Items.POTION, Potions.WATER);
         }
 
         player.awardStat(Stats.ITEM_USED.get(item));

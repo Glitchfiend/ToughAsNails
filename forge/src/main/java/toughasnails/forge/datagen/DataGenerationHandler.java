@@ -42,10 +42,10 @@ public class DataGenerationHandler
         var datapackProvider = generator.addProvider(event.includeServer(), new RegistriesDatapackGenerator(output, event.getLookupProvider().thenApply(r -> constructRegistries(r, REG_BUILDER)), Set.of(TANAPI.MOD_ID)));
 
         // Recipes
-        generator.addProvider(event.includeServer(), new TANRecipeProvider(output));
+        generator.addProvider(event.includeServer(), new TANRecipeProvider(output, event.getLookupProvider()));
 
         // Loot
-        generator.addProvider(event.includeServer(), TANLootTableProvider.create(output));
+        generator.addProvider(event.includeServer(), TANLootTableProvider.create(output, event.getLookupProvider()));
 
         // Tags
         var blocksTagProvider = generator.addProvider(event.includeServer(), new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));

@@ -1,18 +1,12 @@
 {
   "type": "toughasnails:water_purifying",
   "input": {
-    "Count": 1,
-    "id": "toughasnails:netherite_water_canteen",
-    "tag": {
-      "Damage": 0
-    }
+    "count": 1,
+    "id": "toughasnails:netherite_water_canteen"
   },
   "purifytime": 200,
   "result": {
-    "Count": 1,
-    "id": "toughasnails:netherite_purified_water_canteen",
-    "tag": {
-      "Damage": 0
-    }
+    "count": 1,
+    "id": "toughasnails:netherite_purified_water_canteen"
   }
 }

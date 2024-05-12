@@ -190,7 +190,7 @@ public class TemperatureHandler
                     return;
 
                 float f = 0.015F * TemperatureHelper.getPercentHyperthermic(player);
-                attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID, "Hyperthermia slow", (double)f, AttributeModifier.Operation.ADDITION));
+                attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID, "Hyperthermia slow", f, AttributeModifier.Operation.ADD_VALUE));
             }
         }
     }

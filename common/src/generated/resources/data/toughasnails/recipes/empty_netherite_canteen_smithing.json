@@ -7,7 +7,8 @@
     "item": "toughasnails:empty_diamond_canteen"
   },
   "result": {
-    "item": "toughasnails:empty_netherite_canteen"
+    "count": 1,
+    "id": "toughasnails:empty_netherite_canteen"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

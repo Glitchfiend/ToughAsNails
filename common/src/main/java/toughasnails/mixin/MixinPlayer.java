@@ -4,12 +4,16 @@
  ******************************************************************************/
 package toughasnails.mixin;
 
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +22,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import toughasnails.api.item.TANItems;
 import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.thirst.IThirst;
@@ -81,6 +86,13 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
         Player player = (Player)(Object)this;
         TemperatureHandler.onPlayerTick(player);
         ThirstHandler.onPlayerTick(player);
+
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++)
+        {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (stack.getItem() == TANItems.LEAF_BOOTS || stack.getItem() == TANItems.LEAF_LEGGINGS || stack.getItem() == TANItems.LEAF_CHESTPLATE || stack.getItem() == TANItems.LEAF_HELMET)
+                stack.set(DataComponents.DYED_COLOR, new DyedItemColor(0xFF0000, false));
+        }
     }
 
     @Override

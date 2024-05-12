@@ -7,11 +7,9 @@ package toughasnails.block.entity;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -103,23 +101,31 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public void load(CompoundTag nbt)
+    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
     {
-        super.load(nbt);
+        super.loadAdditional(nbt, lookup);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, this.items);
+        ContainerHelper.loadAllItems(nbt, this.items, lookup);
         this.coolingTimeRemaining = nbt.getInt("CoolingTimeRemaining");
         this.heatingTimeRemaining = nbt.getInt("HeatingTimeRemaining");
         this.fillTimer = nbt.getInt("FillTimer");
 
         ListTag list = nbt.getList("FilledBlocks", Tag.TAG_COMPOUND);
-        this.filledBlocks = list.stream().map(tag -> NbtUtils.readBlockPos((CompoundTag)tag)).collect(Collectors.toCollection(HashSet::new));
+        this.filledBlocks = new HashSet<>();
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            int[] arr = list.getIntArray(i);
+            if (arr.length != 3)
+                continue;
+            this.filledBlocks.add(new BlockPos(arr[0], arr[1], arr[2]));
+        }
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt)
+    public void saveAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
     {
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, lookup);
         nbt.putInt("CoolingTimeRemaining", this.coolingTimeRemaining);
         nbt.putInt("HeatingTimeRemaining", this.heatingTimeRemaining);
         nbt.putInt("FillTimer", this.fillTimer);
@@ -128,7 +134,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         this.filledBlocks.stream().map(NbtUtils::writeBlockPos).forEach(list::add);
         nbt.put("FilledBlocks", list);
 
-        ContainerHelper.saveAllItems(nbt, this.items);
+        ContainerHelper.saveAllItems(nbt, this.items, lookup);
     }
 
     @Override
@@ -138,9 +144,9 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public CompoundTag getUpdateTag()
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookup)
     {
-        return this.saveWithoutMetadata();
+        return this.saveCustomOnly(lookup);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, ThermoregulatorBlockEntity blockEntity)
@@ -382,6 +388,18 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
+    protected NonNullList<ItemStack> getItems()
+    {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items)
+    {
+        this.items = items;
+    }
+
+    @Override
     public ItemStack removeItemNoUpdate(int index)
     {
         return ContainerHelper.takeItem(this.items, index);
@@ -391,7 +409,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     public void setItem(int index, ItemStack stack)
     {
         ItemStack currentStack = this.items.get(index);
-        boolean sameItem = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, currentStack);
+        boolean sameItem = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, currentStack);
         this.items.set(index, stack);
 
         if (stack.getCount() > this.getMaxStackSize())

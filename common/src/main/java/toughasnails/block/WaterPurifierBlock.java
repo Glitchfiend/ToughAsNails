@@ -7,6 +7,7 @@ package toughasnails.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -51,15 +52,15 @@ public class WaterPurifierBlock extends BaseEntityBlock
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult blockHitResult)
     {
-        if (worldIn.isClientSide)
+        if (level.isClientSide)
         {
             return InteractionResult.SUCCESS;
         }
         else
         {
-            player.openMenu(state.getMenuProvider(worldIn, pos));
+            player.openMenu(state.getMenuProvider(level, pos));
             return InteractionResult.CONSUME;
         }
     }
@@ -81,20 +82,6 @@ public class WaterPurifierBlock extends BaseEntityBlock
     public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
-    {
-        if (stack.hasCustomHoverName())
-        {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof WaterPurifierBlockEntity)
-            {
-                ((WaterPurifierBlockEntity)tile).setCustomName(stack.getHoverName());
-            }
-        }
-
     }
 
     @Override

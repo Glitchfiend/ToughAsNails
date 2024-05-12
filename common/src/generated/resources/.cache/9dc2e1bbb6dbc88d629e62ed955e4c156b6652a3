@@ -1,4 +1,5 @@
-// 1.20.4	2024-02-03T07:33:59.103727	Tags for minecraft:item mod id toughasnails
+// 1.20.6	2024-05-12T10:33:15.5464032	Tags for minecraft:item mod id toughasnails
+54fbb602df8fe763300ee759cb3a9fbb72ded2eb data/minecraft/tags/items/dyeable.json
 f05342856fe99891fa5e94bbe8db82a4f75ac41e data/toughasnails/tags/items/cooling_armor.json
 572f6d0748095755aeef0ca7d602f4ebba9bfd76 data/toughasnails/tags/items/cooling_consumed_items.json
 7c304628a9c17ca3ba6cd13e199fcf73ad9c974f data/toughasnails/tags/items/cooling_held_items.json

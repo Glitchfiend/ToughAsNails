@@ -5,9 +5,13 @@
 package toughasnails.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -37,11 +41,11 @@ public class WaterPurifierRecipe implements Recipe<Container>
             return false;
 
         ItemStack containerInput = inv.getItem(0);
-        return ItemStack.isSameItemSameTags(this.input, containerInput) && this.input.getDamageValue() == containerInput.getDamageValue();
+        return ItemStack.isSameItemSameComponents(this.input, containerInput) && this.input.getDamageValue() == containerInput.getDamageValue();
     }
 
     @Override
-    public ItemStack assemble(Container inv, RegistryAccess registryAccess)
+    public ItemStack assemble(Container inv, HolderLookup.Provider lookup)
     {
         return this.result.copy();
     }
@@ -53,7 +57,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess)
+    public ItemStack getResultItem(HolderLookup.Provider lookup)
     {
         return this.result;
     }
@@ -77,7 +81,7 @@ public class WaterPurifierRecipe implements Recipe<Container>
 
     public static class Serializer implements RecipeSerializer<WaterPurifierRecipe>
     {
-        private static final Codec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.create((builder) -> {
+        private static final MapCodec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.mapCodec((builder) -> {
             return builder.group(ItemStack.CODEC.fieldOf("input").forGetter((p_296920_) -> {
                 return p_296920_.input;
             }), ItemStack.CODEC.fieldOf("result").forGetter((p_296923_) -> {
@@ -87,28 +91,32 @@ public class WaterPurifierRecipe implements Recipe<Container>
             })).apply(builder, WaterPurifierRecipe::new);
         });
 
-        @Override
-        public WaterPurifierRecipe fromNetwork(FriendlyByteBuf buffer)
+        private final StreamCodec<RegistryFriendlyByteBuf, WaterPurifierRecipe> streamCodec = StreamCodec.of(this::toNetwork, this::fromNetwork);
+
+        public WaterPurifierRecipe fromNetwork(RegistryFriendlyByteBuf buffer)
         {
-            ItemStack input = buffer.readItem();
-            ItemStack result = buffer.readItem();
+            ItemStack input = ItemStack.STREAM_CODEC.decode(buffer);
+            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
             int purifyTime = buffer.readInt();
             return new WaterPurifierRecipe(input, result, purifyTime);
         }
 
+        public void toNetwork(RegistryFriendlyByteBuf buffer, WaterPurifierRecipe recipe)
+        {
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.input);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+            buffer.writeInt(recipe.purifyTime);
+        }
+
         @Override
-        public Codec<WaterPurifierRecipe> codec()
+        public MapCodec<WaterPurifierRecipe> codec()
         {
             return CODEC;
         }
 
-
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, WaterPurifierRecipe recipe)
-        {
-            buffer.writeItem(recipe.input);
-            buffer.writeItem(recipe.result);
-            buffer.writeInt(recipe.purifyTime);
+        public StreamCodec<RegistryFriendlyByteBuf, WaterPurifierRecipe> streamCodec() {
+            return this.streamCodec;
         }
     }
 }

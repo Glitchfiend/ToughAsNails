@@ -55,26 +55,26 @@ public class TemperatureGaugeBlock extends BaseEntityBlock
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult)
     {
         if (player.mayBuild())
         {
-            if (world.isClientSide)
+            if (level.isClientSide)
             {
                 return InteractionResult.SUCCESS;
             }
             else
             {
                 BlockState blockstate = (BlockState)state.cycle(INVERTED);
-                world.setBlock(pos, blockstate, 2);
-                world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
-                 updateSignalStrength(blockstate, world, pos);
+                level.setBlock(pos, blockstate, 2);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
+                 updateSignalStrength(blockstate, level, pos);
                 return InteractionResult.CONSUME;
             }
         }
         else
         {
-            return super.use(state, world, pos, player, hand, rayTraceResult);
+            return super.useWithoutItem(state, level, pos, player, hitResult);
         }
     }
 

@@ -19,6 +19,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.item.TANItems;
@@ -27,8 +29,6 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.client.particle.ThermoregulatorParticle;
 import toughasnails.core.ToughAsNails;
-import toughasnails.item.DyeableWoolItem;
-import toughasnails.item.LeafArmorItem;
 import toughasnails.temperature.TemperatureHelperImpl;
 
 import java.util.HashMap;
@@ -109,11 +109,11 @@ public class ModClient
     public static void registerItemColors(RegisterColorsEvent.Item event)
     {
         event.register((stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ((DyeableWoolItem)stack.getItem()).getColor(stack);
+            return tintIndex > 0 ? -1 : DyedItemColor.getOrDefault(stack, 0xFFFFFF);
         }, TANItems.WOOL_HELMET, TANItems.WOOL_CHESTPLATE, TANItems.WOOL_LEGGINGS, TANItems.WOOL_BOOTS);
 
         event.register((stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ((LeafArmorItem)stack.getItem()).getColor(stack);
+            return tintIndex > 0 ? -1 : DyedItemColor.getOrDefault(stack, FoliageColor.getDefaultColor());
         }, TANItems.LEAF_HELMET, TANItems.LEAF_CHESTPLATE, TANItems.LEAF_LEGGINGS, TANItems.LEAF_BOOTS);
     }
 

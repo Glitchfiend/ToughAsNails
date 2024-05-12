@@ -54,15 +54,15 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult)
     {
-        if (worldIn.isClientSide)
+        if (level.isClientSide)
         {
             return InteractionResult.SUCCESS;
         }
         else
         {
-            player.openMenu(state.getMenuProvider(worldIn, pos));
+            player.openMenu(state.getMenuProvider(level, pos));
             return InteractionResult.CONSUME;
         }
     }

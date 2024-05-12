@@ -36,13 +36,13 @@ public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePa
     {
         buf.writeEnum(this.temperatureLevel);
         buf.writeInt(this.hyperthermiaTicks);
-        buf.writeCollection(this.nearbyThermoregulators, FriendlyByteBuf::writeBlockPos);
+        buf.writeCollection(this.nearbyThermoregulators, (o, pos) -> o.writeBlockPos(pos));
     }
 
     @Override
     public UpdateTemperaturePacket decode(FriendlyByteBuf buf)
     {
-        return new UpdateTemperaturePacket(buf.readEnum(TemperatureLevel.class), buf.readInt(), buf.readCollection(HashSet::new, FriendlyByteBuf::readBlockPos));
+        return new UpdateTemperaturePacket(buf.readEnum(TemperatureLevel.class), buf.readInt(), buf.readCollection(HashSet::new, (o) -> o.readBlockPos()));
     }
 
     @Override
