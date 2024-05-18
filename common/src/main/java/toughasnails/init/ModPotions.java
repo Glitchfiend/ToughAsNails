@@ -40,15 +40,6 @@ public class ModPotions
     {
         TANPotions.ICE_RESISTANCE = registerPotion(func, "ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 3600)));
         TANPotions.LONG_ICE_RESISTANCE = registerPotion(func, "long_ice_resistance", new Potion(new MobEffectInstance(TANEffects.ICE_RESISTANCE, 9600)));
-
-        // Register potion recipes after potions are registered
-        registerPotionRecipes();
-    }
-
-    public static void registerPotionRecipes()
-    {
-        addPotionBrewingMix(Potions.AWKWARD, Items.SNOWBALL, TANPotions.ICE_RESISTANCE);
-        addPotionBrewingMix(TANPotions.ICE_RESISTANCE, Items.REDSTONE, TANPotions.LONG_ICE_RESISTANCE);
     }
 
     private static Holder<MobEffect> registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)
@@ -65,10 +56,5 @@ public class ModPotions
         ResourceKey<Potion> key = ResourceKey.create(Registries.POTION, location);
         func.accept(location, potion);
         return BuiltInRegistries.POTION.getHolder(key).orElseThrow();
-    }
-
-    private static void addPotionBrewingMix(Holder<Potion> input, Item ingredient, Holder<Potion> output)
-    {
-        // TODOO
     }
 }
