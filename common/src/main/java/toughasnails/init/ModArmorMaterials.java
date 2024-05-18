@@ -24,18 +24,18 @@ public class ModArmorMaterials
         map.put(ArmorItem.Type.LEGGINGS, 1);
         map.put(ArmorItem.Type.CHESTPLATE, 1);
         map.put(ArmorItem.Type.HELMET, 1);
-    }), 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> Ingredient.of(ItemTags.WOOL));
+    }), 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> Ingredient.of(ItemTags.WOOL), true);
 
     public static Holder<ArmorMaterial> LEAF = register("leaf", Util.make(new EnumMap<>(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 1);
         map.put(ArmorItem.Type.LEGGINGS, 1);
         map.put(ArmorItem.Type.CHESTPLATE, 1);
         map.put(ArmorItem.Type.HELMET, 1);
-    }), 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> Ingredient.of(ItemTags.LEAVES));
+    }), 1, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> Ingredient.of(ItemTags.LEAVES), true);
 
-    private static Holder<ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> map, int enchantmentValue, Holder<SoundEvent> equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient)
+    private static Holder<ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> map, int enchantmentValue, Holder<SoundEvent> equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient, boolean dyeable)
     {
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(new ResourceLocation(ToughAsNails.MOD_ID, name)));
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(new ResourceLocation(ToughAsNails.MOD_ID, name), "", dyeable));
         return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(ToughAsNails.MOD_ID, name), new ArmorMaterial(map, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockbackResistance));
     }
 }

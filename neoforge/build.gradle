@@ -1,15 +1,10 @@
 plugins {
-    id "net.neoforged.gradle.userdev" version "7.+"
-    id "net.neoforged.gradle.mixin" version "7.+"
+    id "net.neoforged.gradle.userdev" version "7.0.124"
+    id "net.neoforged.gradle.mixin" version "7.0.124"
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 base.archivesName.set("${mod_name}-neoforge")
-
-mixin {
-    config "${mod_id}.mixins.json"
-    config "${mod_id}.neoforge.mixins.json"
-}
 
 minecraft {
     mappings {

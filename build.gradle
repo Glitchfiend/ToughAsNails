@@ -89,7 +89,8 @@ subprojects {
             mod_discord_url     : mod_discord_url,
             mod_license         : mod_license
         ]
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', "*.mixins.json"]) {
+
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', "*.mixins.json"]) {
             expand expandProps
         }
         inputs.properties(expandProps)

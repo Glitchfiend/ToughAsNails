@@ -91,7 +91,7 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
         {
             ItemStack stack = player.getInventory().getItem(i);
             if (stack.getItem() == TANItems.LEAF_BOOTS || stack.getItem() == TANItems.LEAF_LEGGINGS || stack.getItem() == TANItems.LEAF_CHESTPLATE || stack.getItem() == TANItems.LEAF_HELMET)
-                stack.set(DataComponents.DYED_COLOR, new DyedItemColor(0xFF0000, false));
+                stack.set(DataComponents.DYED_COLOR, new DyedItemColor(BiomeColors.getAverageFoliageColor(player.level(), player.blockPosition()), false));
         }
     }
 
