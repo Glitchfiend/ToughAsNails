@@ -30,10 +30,10 @@ public class ModItems
         // Items
         TANItems.THERMOMETER = register(func, "thermometer", new Item(new Item.Properties().stacksTo(1)));
 
-        TANItems.LEAF_HELMET = register(func, "leaf_helmet", new ArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.HELMET, (new Item.Properties())));
-        TANItems.LEAF_CHESTPLATE = register(func, "leaf_chestplate", new ArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
-        TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new ArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
-        TANItems.LEAF_BOOTS = register(func, "leaf_boots", new ArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
+        TANItems.LEAF_HELMET = register(func, "leaf_helmet", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.HELMET, (new Item.Properties())));
+        TANItems.LEAF_CHESTPLATE = register(func, "leaf_chestplate", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+        TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+        TANItems.LEAF_BOOTS = register(func, "leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
         TANItems.WOOL_HELMET = register(func, "wool_helmet", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
         TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
