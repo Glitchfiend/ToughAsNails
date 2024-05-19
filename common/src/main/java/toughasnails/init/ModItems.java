@@ -35,10 +35,10 @@ public class ModItems
         TANItems.LEAF_LEGGINGS = register(func, "leaf_leggings", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
         TANItems.LEAF_BOOTS = register(func, "leaf_boots", new LeafArmorItem(ModArmorMaterials.LEAF, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
-        TANItems.WOOL_HELMET = register(func, "wool_helmet", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
-        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
-        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
-        TANItems.WOOL_BOOTS = register(func, "wool_boots", new ArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
+        TANItems.WOOL_HELMET = register(func, "wool_helmet", new WoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.HELMET, (new Item.Properties())));
+        TANItems.WOOL_CHESTPLATE = register(func, "wool_chestplate", new WoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.CHESTPLATE, (new Item.Properties())));
+        TANItems.WOOL_LEGGINGS = register(func, "wool_leggings", new WoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.LEGGINGS, (new Item.Properties())));
+        TANItems.WOOL_BOOTS = register(func, "wool_boots", new WoolArmorItem(ModArmorMaterials.WOOL, ArmorItem.Type.BOOTS, (new Item.Properties())));
 
         TANItems.ICE_CREAM = register(func, "ice_cream", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationModifier(0.0F).alwaysEdible().build())));
         TANItems.CHARC_0S = register(func, "charc_os", new StackableBowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(0).saturationModifier(0.0F).alwaysEdible().build())));
