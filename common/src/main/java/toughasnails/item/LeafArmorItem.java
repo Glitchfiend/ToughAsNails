@@ -24,6 +24,9 @@ public class LeafArmorItem extends ArmorItem
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int p_41407_, boolean p_41408_)
     {
+        if (!level.isClientSide())
+            return;
+
         if (stack.getItem() == TANItems.LEAF_BOOTS || stack.getItem() == TANItems.LEAF_LEGGINGS || stack.getItem() == TANItems.LEAF_CHESTPLATE || stack.getItem() == TANItems.LEAF_HELMET)
             stack.set(DataComponents.DYED_COLOR, new DyedItemColor(BiomeColors.getAverageFoliageColor(entity.level(), entity.blockPosition()), false));
     }
