@@ -14,7 +14,7 @@ import toughasnails.container.WaterPurifierContainer;
 
 public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierContainer>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(TANAPI.MOD_ID, "textures/gui/container/water_purifier.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/gui/container/water_purifier.png");
 
     public WaterPurifierScreen(WaterPurifierContainer screenContainer, Inventory inv, Component titleIn)
     {

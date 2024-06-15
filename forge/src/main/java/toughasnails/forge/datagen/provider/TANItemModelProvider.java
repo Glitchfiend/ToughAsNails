@@ -49,6 +49,6 @@ public class TANItemModelProvider extends ItemModelProvider
 
     private static ResourceLocation loc(String name)
     {
-        return new ResourceLocation(ToughAsNails.MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
     }
 }

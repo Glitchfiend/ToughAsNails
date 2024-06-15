@@ -4,26 +4,44 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import toughasnails.api.TANAPI;
 import toughasnails.api.enchantment.TANEnchantments;
-import toughasnails.enchantment.ThermalTuningEnchantment;
-import toughasnails.enchantment.WaterCleansingEnchantment;
-
-import java.util.function.BiConsumer;
 
 public class ModEnchantments
 {
-    public static void registerEnchantments(BiConsumer<ResourceLocation, Enchantment> func)
+    public static void bootstrap(BootstrapContext<Enchantment> context)
     {
-        TANEnchantments.THERMAL_TUNING = register(func, "thermal_tuning", new ThermalTuningEnchantment());
-        TANEnchantments.WATER_CLEANSING = register(func, "water_cleansing", new WaterCleansingEnchantment());
+        HolderGetter<Enchantment> enchantmentGetter = context.lookup(Registries.ENCHANTMENT);
+        HolderGetter<Item> itemGetter = context.lookup(Registries.ITEM);
+        register(
+                context,
+                TANEnchantments.THERMAL_TUNING,
+                Enchantment.enchantment(
+                    Enchantment.definition(itemGetter.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE), 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlotGroup.CHEST)
+                )
+                .exclusiveWith(enchantmentGetter.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
+        );
+
+        register(
+            context,
+            TANEnchantments.WATER_CLEANSING,
+            Enchantment.enchantment(
+                Enchantment.definition(itemGetter.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE), 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlotGroup.MAINHAND)
+            )
+            .exclusiveWith(enchantmentGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
+        );
     }
 
-    private static Enchantment register(BiConsumer<ResourceLocation, Enchantment> func, String name, Enchantment enchantment)
+    private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), enchantment);
-        return enchantment;
+        context.register(key, builder.build(key.location()));
     }
 }

@@ -17,11 +17,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
 
-public class WaterPurifierRecipe implements Recipe<Container>
+public class WaterPurifierRecipe implements Recipe<SingleRecipeInput>
 {
     protected final ItemStack input;
     protected final ItemStack result;
@@ -35,17 +36,17 @@ public class WaterPurifierRecipe implements Recipe<Container>
     }
 
     @Override
-    public boolean matches(Container inv, Level worldIn)
+    public boolean matches(SingleRecipeInput input, Level var2)
     {
         if (this.input == null)
             return false;
 
-        ItemStack containerInput = inv.getItem(0);
+        ItemStack containerInput = input.getItem(0);
         return ItemStack.isSameItemSameComponents(this.input, containerInput) && this.input.getDamageValue() == containerInput.getDamageValue();
     }
 
     @Override
-    public ItemStack assemble(Container inv, HolderLookup.Provider lookup)
+    public ItemStack assemble(SingleRecipeInput var1, HolderLookup.Provider var2)
     {
         return this.result.copy();
     }

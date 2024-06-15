@@ -16,6 +16,6 @@ public class TANPoiTypes
 
     private static ResourceKey<PoiType> createKey(String name)
     {
-        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, new ResourceLocation(TANAPI.MOD_ID, name));
+        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name));
     }
 }

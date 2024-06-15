@@ -22,6 +22,7 @@ import toughasnails.api.TANAPI;
 import toughasnails.core.ToughAsNails;
 import toughasnails.forge.datagen.loot.TANLootTableProvider;
 import toughasnails.forge.datagen.provider.*;
+import toughasnails.init.ModEnchantments;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +31,8 @@ import java.util.Set;
 public class DataGenerationHandler
 {
     private static final RegistrySetBuilder REG_BUILDER = new RegistrySetBuilder()
-        .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
+        .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap)
+        .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
 
     @SubscribeEvent
     public static void onGatherData(GatherDataEvent event)
@@ -54,6 +56,7 @@ public class DataGenerationHandler
         generator.addProvider(event.includeServer(), new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
         generator.addProvider(event.includeServer(), new TANTrimMaterialTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
         generator.addProvider(event.includeServer(), new TANPoiTypesTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new TANEnchantmentTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
 
         // Client
         generator.addProvider(event.includeClient(), new TANItemModelProvider(output, existingFileHelper));

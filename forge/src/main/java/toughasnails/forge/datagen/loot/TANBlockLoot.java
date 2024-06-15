@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.forge.datagen.loot;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -19,9 +20,9 @@ public class TANBlockLoot extends BlockLootSubProvider
 {
     private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
 
-    public TANBlockLoot()
+    public TANBlockLoot(HolderLookup.Provider provider)
     {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), provider);
     }
 
     @Override

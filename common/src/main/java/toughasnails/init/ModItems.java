@@ -94,7 +94,7 @@ public class ModItems
 
     private static Item register(BiConsumer<ResourceLocation, Item> func, String name, Item item)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), item);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), item);
         return item;
     }
 }

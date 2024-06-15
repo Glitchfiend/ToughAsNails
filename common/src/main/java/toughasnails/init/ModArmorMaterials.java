@@ -35,7 +35,7 @@ public class ModArmorMaterials
 
     private static Holder<ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> map, int enchantmentValue, Holder<SoundEvent> equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient, boolean dyeable)
     {
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(new ResourceLocation(ToughAsNails.MOD_ID, name), "", dyeable));
-        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(ToughAsNails.MOD_ID, name), new ArmorMaterial(map, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockbackResistance));
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), "", dyeable));
+        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), new ArmorMaterial(map, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockbackResistance));
     }
 }

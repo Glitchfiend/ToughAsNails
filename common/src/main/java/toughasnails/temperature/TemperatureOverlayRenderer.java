@@ -23,8 +23,8 @@ import java.util.Random;
 public class TemperatureOverlayRenderer
 {
     private static final Random RANDOM = new Random();
-    public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
-    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = new ResourceLocation(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
+    public static final ResourceLocation OVERLAY = ResourceLocation.parse("toughasnails:textures/gui/icons.png");
+    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
     private static long updateCounter;
     private static long flashCounter;
     private static long arrowCounter;
@@ -41,7 +41,7 @@ public class TemperatureOverlayRenderer
         if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
         {
             GuiUtils.setupOverlayRenderState(true, false);
-            renderTemperature(event.getGuiGraphics(), event.getPartialTicks(), event.getScreenWidth(), event.getScreenHeight());
+            renderTemperature(event.getGuiGraphics(), event.getDeltaTracker().getRealtimeDeltaTicks(), event.getScreenWidth(), event.getScreenHeight());
         }
     }
 

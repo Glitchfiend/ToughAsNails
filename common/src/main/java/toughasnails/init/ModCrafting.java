@@ -41,13 +41,13 @@ public class ModCrafting
 
     private static RecipeSerializer<?> registerSerializer(BiConsumer<ResourceLocation, RecipeSerializer<?>> func, String name, RecipeSerializer<?> serializer)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), serializer);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), serializer);
         return serializer;
     }
 
     private static RecipeType<?> registerRecipe(BiConsumer<ResourceLocation, RecipeType<?>> func, String name, RecipeType<?> type)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), type);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), type);
         return type;
     }
 }

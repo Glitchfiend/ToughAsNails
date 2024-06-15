@@ -42,7 +42,7 @@ public class ModClient
 {
     static void registerItemProperties()
     {
-        ItemProperties.register(TANItems.THERMOMETER, new ResourceLocation(ToughAsNails.MOD_ID, "temperature"), new ClampedItemPropertyFunction() {
+        ItemProperties.register(TANItems.THERMOMETER, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "temperature"), new ClampedItemPropertyFunction() {
             final Map<Integer, Delta> deltas = new HashMap<>();
 
             @Override

@@ -25,7 +25,7 @@ public class WaterPurifierRecipeBuilder
 
     public void save(RecipeOutput output, String name)
     {
-        this.save(output, new ResourceLocation(name));
+        this.save(output, ResourceLocation.parse(name));
     }
 
     public void save(RecipeOutput output, ResourceLocation location)

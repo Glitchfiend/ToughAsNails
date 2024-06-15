@@ -32,7 +32,7 @@ public class ModBlocks
 
     private static Block register(BiConsumer<ResourceLocation, Block> func, String name, Block block)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), block);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), block);
         return block;
     }
 }

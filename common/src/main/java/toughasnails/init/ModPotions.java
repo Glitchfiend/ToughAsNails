@@ -44,7 +44,7 @@ public class ModPotions
 
     private static Holder<MobEffect> registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)
     {
-        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
         ResourceKey<MobEffect> key = ResourceKey.create(Registries.MOB_EFFECT, location);
         func.accept(location, effect);
         return BuiltInRegistries.MOB_EFFECT.getHolder(key).orElseThrow();
@@ -52,7 +52,7 @@ public class ModPotions
 
     private static Holder<Potion> registerPotion(BiConsumer<ResourceLocation, Potion> func, String name, Potion potion)
     {
-        ResourceLocation location = new ResourceLocation(ToughAsNails.MOD_ID, name);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
         ResourceKey<Potion> key = ResourceKey.create(Registries.POTION, location);
         func.accept(location, potion);
         return BuiltInRegistries.POTION.getHolder(key).orElseThrow();

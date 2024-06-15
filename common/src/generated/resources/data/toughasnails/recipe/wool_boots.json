@@ -8,11 +8,16 @@
   },
   "pattern": [
     "X X",
-    "XXX",
-    "XXX"
+    "X X"
   ],
   "result": {
+    "components": {
+      "minecraft:dyed_color": {
+        "rgb": 16777215,
+        "show_in_tooltip": false
+      }
+    },
     "count": 1,
-    "id": "toughasnails:wool_chestplate"
+    "id": "toughasnails:wool_boots"
   }
 }

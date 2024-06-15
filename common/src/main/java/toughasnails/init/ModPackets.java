@@ -15,7 +15,7 @@ import toughasnails.network.UpdateThirstPacket;
 
 public class ModPackets
 {
-    private static final ResourceLocation CHANNEL = new ResourceLocation(TANAPI.MOD_ID, "main");
+    private static final ResourceLocation CHANNEL = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "main");
     public static final PacketHandler HANDLER = new PacketHandler(CHANNEL);
     public static void init()
     {
@@ -26,6 +26,6 @@ public class ModPackets
 
     public static void register(String name, CustomPacket<?> packet)
     {
-        HANDLER.register(new ResourceLocation(ToughAsNails.MOD_ID, name), packet);
+        HANDLER.register(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), packet);
     }
 }

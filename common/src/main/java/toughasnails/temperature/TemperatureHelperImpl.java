@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -326,8 +327,10 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         else if (armorAdjTemp == TemperatureLevel.ICY && current != TemperatureLevel.ICY) current = armorAdjTemp.increment(1);
         else current = armorAdjTemp;
 
+        var enchantmentRegistry = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+
         // Armor enchantments
-        if (EnchantmentHelper.getEnchantmentLevel(TANEnchantments.THERMAL_TUNING, player) > 0)
+        if (EnchantmentHelper.getEnchantmentLevel(enchantmentRegistry.getHolderOrThrow(TANEnchantments.THERMAL_TUNING), player) > 0)
             current = TemperatureLevel.NEUTRAL;
 
         return current;

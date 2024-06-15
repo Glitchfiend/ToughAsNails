@@ -24,7 +24,7 @@ public class ModParticles
 
     private static <T extends ParticleType<? extends ParticleOptions>> T register(BiConsumer<ResourceLocation, ParticleType<?>> func, String name, T particle)
     {
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), particle);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), particle);
         return particle;
     }
 }

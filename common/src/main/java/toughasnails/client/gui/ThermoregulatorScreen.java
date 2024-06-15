@@ -15,7 +15,7 @@ import toughasnails.container.WaterPurifierContainer;
 
 public class ThermoregulatorScreen extends AbstractContainerScreen<ThermoregulatorContainer>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(TANAPI.MOD_ID, "textures/gui/container/thermoregulator.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/gui/container/thermoregulator.png");
 
     public ThermoregulatorScreen(ThermoregulatorContainer screenContainer, Inventory inv, Component titleIn)
     {

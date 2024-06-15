@@ -15,14 +15,14 @@ import toughasnails.init.ModConfig;
 
 public class TemperatureHooksClient
 {
-    private static final ResourceLocation OVERHEATED_HEART_FULL = new ResourceLocation("toughasnails:hud/heart/overheated_full");
-    private static final ResourceLocation OVERHEATED_HEART_FULL_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_full_blinking");
-    private static final ResourceLocation OVERHEATED_HEART_HALF = new ResourceLocation("toughasnails:hud/heart/overheated_half");
-    private static final ResourceLocation OVERHEATED_HEART_HALF_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_half_blinking");
-    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_FULL = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_full");
-    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_FULL_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_full_blinking");
-    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_half");
-    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_hardcore_half_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_FULL = ResourceLocation.parse("toughasnails:hud/heart/overheated_full");
+    private static final ResourceLocation OVERHEATED_HEART_FULL_BLINKING = ResourceLocation.parse("toughasnails:hud/heart/overheated_full_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_HALF = ResourceLocation.parse("toughasnails:hud/heart/overheated_half");
+    private static final ResourceLocation OVERHEATED_HEART_HALF_BLINKING = ResourceLocation.parse("toughasnails:hud/heart/overheated_half_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_FULL = ResourceLocation.parse("toughasnails:hud/heart/overheated_hardcore_full");
+    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_FULL_BLINKING = ResourceLocation.parse("toughasnails:hud/heart/overheated_hardcore_full_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF = ResourceLocation.parse("toughasnails:hud/heart/overheated_hardcore_half");
+    private static final ResourceLocation OVERHEATED_HEART_HARDCORE_HALF_BLINKING = ResourceLocation.parse("toughasnails:hud/heart/overheated_hardcore_half_blinking");
 
     public static void heartBlit(GuiGraphics gui, Gui.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf)
     {

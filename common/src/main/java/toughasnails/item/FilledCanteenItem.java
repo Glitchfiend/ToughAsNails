@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +39,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
         // Create a new stack with the same damage value, except purified
         ItemStack newStack = new ItemStack(getPurifiedWaterCanteen());
         newStack.setDamageValue(stack.getDamageValue());
-        stack.getEnchantments().entrySet().forEach(e -> newStack.enchant(e.getKey().value(), e.getIntValue()));
+        stack.getEnchantments().entrySet().forEach(e -> newStack.enchant(e.getKey(), e.getIntValue()));
 
         // Replace the current stack in the player's inventory
         player.getInventory().setItem(slot, newStack);
@@ -78,10 +79,10 @@ public class FilledCanteenItem extends EmptyCanteenItem
         if (!worldIn.isClientSide && !player.getAbilities().instabuild)
         {
             ItemStack emptyStack = new ItemStack(getEmptyCanteen());
-            stack.getEnchantments().entrySet().forEach(e -> emptyStack.enchant(e.getKey().value(), e.getIntValue()));
+            stack.getEnchantments().entrySet().forEach(e -> emptyStack.enchant(e.getKey(), e.getIntValue()));
 
             AtomicBoolean broken = new AtomicBoolean(false);
-            stack.hurtAndBreak(1, player.getRandom(), (ServerPlayer)player, () -> broken.set(true));
+            stack.hurtAndBreak(1, (ServerLevel)worldIn, (ServerPlayer)player, item -> broken.set(true));
             if (broken.get())
             {
                 return emptyStack;
@@ -92,7 +93,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
     }
 
     @Override
-    public int getUseDuration(ItemStack stack)
+    public int getUseDuration(ItemStack stack, LivingEntity entity)
     {
         return 32;
     }

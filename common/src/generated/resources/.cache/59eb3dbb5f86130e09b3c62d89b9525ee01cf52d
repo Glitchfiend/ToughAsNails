@@ -1,5 +1,5 @@
-// 1.20.6	2024-05-12T09:45:42.5810522	Loot Tables
-8fca2e50f9df3893ec7ecb84fb15e5f83b33508a data/toughasnails/loot_tables/blocks/rain_collector.json
-5b982875ef4148c8acb507e82e690b7ffd814749 data/toughasnails/loot_tables/blocks/temperature_gauge.json
-3014cc41e7b43922f50ec3eb6c2eb83fbf3201d2 data/toughasnails/loot_tables/blocks/thermoregulator.json
-1410cb58946442b13107a7153298bdcdc8ccaacc data/toughasnails/loot_tables/blocks/water_purifier.json
+// 1.21	2024-06-15T11:33:35.2140093	Loot Tables
+8fca2e50f9df3893ec7ecb84fb15e5f83b33508a data/toughasnails/loot_table/blocks/rain_collector.json
+5b982875ef4148c8acb507e82e690b7ffd814749 data/toughasnails/loot_table/blocks/temperature_gauge.json
+3014cc41e7b43922f50ec3eb6c2eb83fbf3201d2 data/toughasnails/loot_table/blocks/thermoregulator.json
+1410cb58946442b13107a7153298bdcdc8ccaacc data/toughasnails/loot_table/blocks/water_purifier.json

@@ -36,7 +36,7 @@ public class ModContainerTypes
     public static <T extends AbstractContainerMenu> MenuType<?> register(BiConsumer<ResourceLocation, MenuType<?>> func, String name, MenuType.MenuSupplier<T> factory)
     {
         var menuType = new MenuType<>(factory, FeatureFlags.DEFAULT_FLAGS);
-        func.accept(new ResourceLocation(TANAPI.MOD_ID, name), menuType);
+        func.accept(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name), menuType);
         return menuType;
     }
 }

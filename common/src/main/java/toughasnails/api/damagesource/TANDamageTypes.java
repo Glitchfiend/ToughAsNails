@@ -17,6 +17,6 @@ public class TANDamageTypes
 
     private static ResourceKey<DamageType> register(String name)
     {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(TANAPI.MOD_ID, name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name));
     }
 }

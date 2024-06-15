@@ -1,3 +1,5 @@
-// 1.20.6	2024-05-12T09:45:42.581552	Registries
+// 1.21	2024-06-15T11:33:35.2140093	Registries
 55b6780cec82f4d4f609e750902d114649d4a8ad data/toughasnails/damage_type/hyperthermia.json
 eae6d7bc6de6b808206268351a4eb97746f013bf data/toughasnails/damage_type/thirst.json
+a532ac48cf501e9d5025919020cae649732b61b0 data/toughasnails/enchantment/thermal_tuning.json
+82349ce5d9533bbc75097c13464c0e4df56b37ed data/toughasnails/enchantment/water_cleansing.json

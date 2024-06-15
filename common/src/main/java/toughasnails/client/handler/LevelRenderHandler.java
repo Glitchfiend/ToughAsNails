@@ -215,8 +215,8 @@ public class LevelRenderHandler
             float normalY = Math.signum(fromY - toY);
             float normalZ = Math.signum(fromZ - toZ);
 
-            vertexConsumer.vertex(poseMatrix, fromX, fromY, fromZ).color(r, g, b, a).normal(lastPose, normalX, normalY, normalZ).endVertex();
-            vertexConsumer.vertex(poseMatrix, toX, toY, toZ).color(r, g, b, a).normal(lastPose, normalX, normalY, normalZ).endVertex();
+            vertexConsumer.addVertex(poseMatrix, fromX, fromY, fromZ).setColor(r, g, b, a).setNormal(lastPose, normalX, normalY, normalZ);
+            vertexConsumer.addVertex(poseMatrix, toX, toY, toZ).setColor(r, g, b, a).setNormal(lastPose, normalX, normalY, normalZ);
         }
     }
 }

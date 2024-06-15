@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -145,7 +146,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         ItemStack filterStack = blockEntity.items.get(1);
         boolean hasFilter = !filterStack.isEmpty();
         if (blockEntity.isFiltering() || hasFilter && !blockEntity.items.get(0).isEmpty()) {
-            RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
+            RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, new SingleRecipeInput(blockEntity.items.get(0)), blockEntity.level).orElse(null);
 
             if (recipe != null)
             {
@@ -376,7 +377,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     /** Get the time taken for an input item to be purified. */
     protected int getTotalPurifyTime()
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(r -> r.value().getPurifyTime()).orElse(200);
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, new SingleRecipeInput(this.items.get(0)), this.level).map(r -> r.value().getPurifyTime()).orElse(200);
     }
 
     private void filter(@Nullable Recipe<?> recipe)

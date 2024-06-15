@@ -6,6 +6,7 @@ package toughasnails.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -97,7 +98,8 @@ public class EmptyCanteenItem extends Item
                     Holder<Biome> biome = player.level().getBiome(player.blockPosition());
                     Item canteenItem;
 
-                    if (EnchantmentHelper.getItemEnchantmentLevel(TANEnchantments.WATER_CLEANSING, stack) > 0 || biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
+                    var enchantmentRegistry = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+                    if (EnchantmentHelper.getItemEnchantmentLevel(enchantmentRegistry.getHolderOrThrow(TANEnchantments.WATER_CLEANSING), stack) > 0 || biome.is(ModTags.Biomes.PURIFIED_WATER_BIOMES))
                     {
                         canteenItem = getPurifiedWaterCanteen();
                     }

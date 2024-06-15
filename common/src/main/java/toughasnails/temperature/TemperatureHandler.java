@@ -6,7 +6,7 @@ package toughasnails.temperature;
 
 import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
-import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
@@ -18,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
@@ -31,11 +30,10 @@ import toughasnails.init.ModTags;
 import toughasnails.network.UpdateTemperaturePacket;
 
 import java.util.HashSet;
-import java.util.UUID;
 
 public class TemperatureHandler
 {
-    private static final UUID SPEED_MODIFIER_HYPERTHERMIA_UUID = UUID.fromString("30b6ca4e-c6df-4532-80db-1d024765b56b");
+    protected static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "speed_modifier");
 
     public static void onPlayerTick(Player player)
     {
@@ -171,9 +169,9 @@ public class TemperatureHandler
 
         if (attribute != null)
         {
-            if (attribute.getModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID) != null)
+            if (attribute.getModifier(SPEED_MODIFIER_ID) != null)
             {
-                attribute.removeModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID);
+                attribute.removeModifier(SPEED_MODIFIER_ID);
             }
         }
     }
@@ -190,7 +188,7 @@ public class TemperatureHandler
                     return;
 
                 float f = 0.015F * TemperatureHelper.getPercentHyperthermic(player);
-                attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_HYPERTHERMIA_UUID, "Hyperthermia slow", f, AttributeModifier.Operation.ADD_VALUE));
+                attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_ID, f, AttributeModifier.Operation.ADD_VALUE));
             }
         }
     }

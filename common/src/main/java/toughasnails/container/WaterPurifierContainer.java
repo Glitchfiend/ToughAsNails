@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.api.container.TANContainerTypes;
@@ -146,7 +147,7 @@ public class WaterPurifierContainer extends AbstractContainerMenu
 
     protected boolean canPurify(ItemStack stack)
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>)TANRecipeTypes.WATER_PURIFYING, new SingleRecipeInput(stack), this.level).isPresent();
     }
 
     protected boolean isFilter(ItemStack stack)

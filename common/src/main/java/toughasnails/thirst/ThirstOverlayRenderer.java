@@ -22,7 +22,7 @@ import java.util.Random;
 public class ThirstOverlayRenderer
 {
     private static final Random RANDOM = new Random();
-    public static final ResourceLocation OVERLAY = new ResourceLocation("toughasnails:textures/gui/icons.png");
+    public static final ResourceLocation OVERLAY = ResourceLocation.parse("toughasnails:textures/gui/icons.png");
 
     private static int updateCounter;
 
