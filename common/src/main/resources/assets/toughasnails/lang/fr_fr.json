@@ -95,7 +95,7 @@
   "enchantment.toughasnails.water_cleansing.desc": "Filtre automatiquement l'eau d'une gourde.",
   
   "entity.minecraft.villager.toughasnails.climatologist": "Climatologue",
-  "entity.minecraft.villager.climatologist": "Climatologue"
+  "entity.minecraft.villager.climatologist": "Climatologue",
 
   "itemGroup.toughasnails": "Tough As Nails"
 }
