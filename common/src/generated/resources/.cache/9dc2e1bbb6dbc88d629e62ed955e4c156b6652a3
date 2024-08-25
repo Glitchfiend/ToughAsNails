@@ -1,9 +1,10 @@
-// 1.21	2024-06-14T22:04:30.625402	Tags for minecraft:item mod id toughasnails
+// 1.21.1	2024-08-25T05:09:20.7525498	Tags for minecraft:item mod id toughasnails
 54fbb602df8fe763300ee759cb3a9fbb72ded2eb data/minecraft/tags/item/dyeable.json
 f05342856fe99891fa5e94bbe8db82a4f75ac41e data/toughasnails/tags/item/cooling_armor.json
 572f6d0748095755aeef0ca7d602f4ebba9bfd76 data/toughasnails/tags/item/cooling_consumed_items.json
 7c304628a9c17ca3ba6cd13e199fcf73ad9c974f data/toughasnails/tags/item/cooling_held_items.json
 d7e37bc0c1468593bf2403c8bab7e97c17edde8e data/toughasnails/tags/item/drinks.json
+2128c434dd823a25c4cb1370f7d09fdbff2e89d8 data/toughasnails/tags/item/enchantable/canteen.json
 eb101cb126ebd917a2c240ff53e1e6e16ba3bf83 data/toughasnails/tags/item/heating_armor.json
 cf863878a8af4a7e610b91efb2c1d7846d13868b data/toughasnails/tags/item/heating_consumed_items.json
 efe9e0caf089100a228c46379f3aa70d7f602ddc data/toughasnails/tags/item/heating_held_items.json

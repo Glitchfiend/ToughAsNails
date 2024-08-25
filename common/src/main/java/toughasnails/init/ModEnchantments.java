@@ -34,9 +34,8 @@ public class ModEnchantments
             context,
             TANEnchantments.WATER_CLEANSING,
             Enchantment.enchantment(
-                Enchantment.definition(itemGetter.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE), 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlotGroup.MAINHAND)
+                Enchantment.definition(itemGetter.getOrThrow(ModTags.Items.CANTEEN), 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlotGroup.MAINHAND)
             )
-            .exclusiveWith(enchantmentGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
         );
     }
 
