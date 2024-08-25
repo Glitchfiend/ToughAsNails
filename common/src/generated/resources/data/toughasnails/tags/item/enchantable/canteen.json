@@ -1,0 +1,28 @@
+{
+  "values": [
+    "toughasnails:empty_leather_canteen",
+    "toughasnails:leather_dirty_water_canteen",
+    "toughasnails:leather_water_canteen",
+    "toughasnails:leather_purified_water_canteen",
+    "toughasnails:empty_copper_canteen",
+    "toughasnails:copper_dirty_water_canteen",
+    "toughasnails:copper_water_canteen",
+    "toughasnails:copper_purified_water_canteen",
+    "toughasnails:empty_iron_canteen",
+    "toughasnails:iron_dirty_water_canteen",
+    "toughasnails:iron_water_canteen",
+    "toughasnails:iron_purified_water_canteen",
+    "toughasnails:empty_gold_canteen",
+    "toughasnails:gold_dirty_water_canteen",
+    "toughasnails:gold_water_canteen",
+    "toughasnails:gold_purified_water_canteen",
+    "toughasnails:empty_diamond_canteen",
+    "toughasnails:diamond_dirty_water_canteen",
+    "toughasnails:diamond_water_canteen",
+    "toughasnails:diamond_purified_water_canteen",
+    "toughasnails:empty_netherite_canteen",
+    "toughasnails:netherite_dirty_water_canteen",
+    "toughasnails:netherite_water_canteen",
+    "toughasnails:netherite_purified_water_canteen"
+  ]
+}

@@ -16,6 +16,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/durability",
+  "supported_items": "#toughasnails:enchantable/canteen",
   "weight": 2
 }

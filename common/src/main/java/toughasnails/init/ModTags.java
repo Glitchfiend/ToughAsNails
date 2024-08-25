@@ -90,6 +90,7 @@ public class ModTags
         public static final TagKey<Item> ONE_HUNDRED_POISON_CHANCE_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/100_poison_chance_drinks"));
 
         public static final TagKey<Item> DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "drinks"));
+        public static final TagKey<Item> CANTEEN = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "enchantable/canteen"));
         
         public static int getThirstRestored(ItemStack drink)
         {
