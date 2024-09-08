@@ -32,5 +32,7 @@ public class TANEnchantmentTagsProvider extends EnchantmentTagsProvider
     {
         // TAN tags
         this.tag(EnchantmentTags.TREASURE).add(TANEnchantments.THERMAL_TUNING).add(TANEnchantments.WATER_CLEANSING);
+        this.tag(EnchantmentTags.TRADEABLE).add(TANEnchantments.THERMAL_TUNING).add(TANEnchantments.WATER_CLEANSING);
+        this.tag(EnchantmentTags.ON_RANDOM_LOOT).add(TANEnchantments.THERMAL_TUNING).add(TANEnchantments.WATER_CLEANSING);
     }
 }
