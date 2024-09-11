@@ -91,7 +91,7 @@
   "item.minecraft.splash_potion.effect.ice_resistance": "투척용 얼음 저항의 물약",
   "item.minecraft.splash_potion.effect.long_ice_resistance": "투척용 얼음 저항의 물약 II",
   "item.minecraft.tipped_arrow.effect.ice_resistance": "얼음 저항의 화살",
-  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "얼음 저항의 화살 II"
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "얼음 저항의 화살 II",
   
   "entity.minecraft.villager.toughasnails.climatologist": "기후학자",
   "entity.minecraft.villager.climatologist": "기후학자"
