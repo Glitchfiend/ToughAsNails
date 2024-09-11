@@ -7,7 +7,7 @@
   "death.attack.toughasnails.hyperthermia": "%1$s이(가) 열사병으로 사망했습니다",
   "death.attack.toughasnails.hyperthermia.player": "%2$s를 탈출하려고 시도하는 동안 %1$s이(가) 열사병으로 사망했습니다",
   "death.attack.toughasnails.thirst": "%1$s이(가) 목마름으로 사망했습니다",
-  "death.attack.toughasnails.thirst.player": "%1$s이(가) %2$s과(와) 싸우다가 목마름으로 사망했습니다",
+  "death.attack.toughasnails.thirst.player": "%1$s이(가) %2$s과(와) 싸우는 도중 목마름으로 사망했습니다",
   "desc.toughasnails.heating": "따뜻함",
   "desc.toughasnails.cooling": "시원함",
   "desc.toughasnails.heating_held": "따뜻함 (보류)",
