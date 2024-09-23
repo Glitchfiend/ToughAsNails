@@ -4,12 +4,16 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
+    "ForgeEnvironmentMixin",
+    "MixinRenderHelper",
     "MixinTemperatureHelperImpl",
     "MixinThermoregulatorBlockEntity",
     "MixinWaterPurifierBlockEntity"
   ],
   "client": [
-    "client.MixinGui"
+    "client.MixinGui",
+    "client.MixinGuiGraphics",
+    "client.MixinVanillaGuiOverlay"
   ],
   "injectors": {
     "defaultRequire": 1

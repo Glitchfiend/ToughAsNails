@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.config;
 
-import glitchcore.config.Config;
-import glitchcore.util.Environment;
+import toughasnails.glitch.config.Config;
+import toughasnails.glitch.util.Environment;
 import toughasnails.api.TANAPI;
 
 public class ClientConfig extends Config

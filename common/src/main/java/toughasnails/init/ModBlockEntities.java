@@ -4,12 +4,9 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import com.mojang.datafixers.types.Type;
-import glitchcore.event.RegistryEvent;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.References;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import toughasnails.api.TANAPI;

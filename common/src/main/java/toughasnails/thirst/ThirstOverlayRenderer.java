@@ -4,9 +4,9 @@
  ******************************************************************************/
 package toughasnails.thirst;
 
-import glitchcore.event.TickEvent;
-import glitchcore.event.client.RenderGuiEvent;
-import glitchcore.util.GuiUtils;
+import toughasnails.glitch.event.TickEvent;
+import toughasnails.glitch.event.client.RenderGuiEvent;
+import toughasnails.glitch.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;

@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import glitchcore.event.entity.LivingEntityUseItemEvent;
-import glitchcore.event.player.PlayerEvent;
+import toughasnails.glitch.event.entity.LivingEntityUseItemEvent;
+import toughasnails.glitch.event.player.PlayerEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;

@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.config.ConfigSync;
-import glitchcore.util.Environment;
+import toughasnails.glitch.config.ConfigSync;
+import toughasnails.glitch.util.Environment;
 import toughasnails.config.ClientConfig;
 import toughasnails.config.TemperatureConfig;
 import toughasnails.config.ThirstConfig;

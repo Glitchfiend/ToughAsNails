@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import glitchcore.util.Environment;
+import toughasnails.glitch.util.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;

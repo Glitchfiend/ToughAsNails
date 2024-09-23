@@ -6,6 +6,7 @@
   "mixins": [
     "MixinFoodData",
     "MixinItem",
+    "MixinItemStack",
     "MixinLivingEntity",
     "MixinPlayer",
     "MixinServerLevel",
@@ -13,7 +14,9 @@
   ],
   "client": [
     "client.MixinGui",
-    "client.MixinLocalPlayer"
+    "client.MixinKeyboardHandler",
+    "client.MixinLocalPlayer",
+    "client.MixinMinecraft"
   ],
   "injectors": {
     "defaultRequire": 1

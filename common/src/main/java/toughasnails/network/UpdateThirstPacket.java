@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.network;
 
-import glitchcore.network.CustomPacket;
+import toughasnails.glitch.network.CustomPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;

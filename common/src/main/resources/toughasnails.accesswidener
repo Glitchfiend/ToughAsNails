@@ -42,3 +42,9 @@ accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTem
 mutable field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool rawTemplates Ljava/util/List;
 accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool templates Lit/unimi/dsi/fastutil/objects/ObjectArrayList;
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
+
+# Level renderer events
+accessible field net/minecraft/client/renderer/LevelRenderer ticks I
+
+# Loaders
+accessible field net/minecraft/core/registries/BuiltInRegistries LOADERS Ljava/util/Map;

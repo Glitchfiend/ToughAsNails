@@ -5,7 +5,7 @@
 package toughasnails.client.handler;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import glitchcore.event.client.InputEvent;
+import toughasnails.glitch.event.client.InputEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;

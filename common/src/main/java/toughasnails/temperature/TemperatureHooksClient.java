@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import glitchcore.util.GuiUtils;
+import toughasnails.glitch.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;

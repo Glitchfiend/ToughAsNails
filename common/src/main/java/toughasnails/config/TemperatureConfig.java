@@ -5,8 +5,8 @@
 package toughasnails.config;
 
 import com.google.common.collect.ImmutableList;
-import glitchcore.config.Config;
-import glitchcore.util.Environment;
+import toughasnails.glitch.config.Config;
+import toughasnails.glitch.util.Environment;
 import toughasnails.api.TANAPI;
 import toughasnails.temperature.BuiltInTemperatureModifier;
 
