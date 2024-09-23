@@ -5,6 +5,7 @@
   "refmap": "toughasnails.refmap.json",
   "mixins": [
     "ForgeEnvironmentMixin",
+    "MixinPacketHandler",
     "MixinRenderHelper",
     "MixinTemperatureHelperImpl",
     "MixinThermoregulatorBlockEntity",
