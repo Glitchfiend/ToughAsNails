@@ -18,4 +18,8 @@ public final class Environment
     throw new UnsupportedOperationException();
   }
 
+  public static boolean isModLoaded(String id)
+  {
+    throw new UnsupportedOperationException();
+  }
 }

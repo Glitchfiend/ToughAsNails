@@ -21,4 +21,10 @@ public abstract class FabricEnvironmentMixin
   {
     return FabricLoader.getInstance().getConfigDir();
   }
+
+  @Overwrite
+  public static boolean isModLoaded(String id)
+  {
+    return FabricLoader.getInstance().isModLoaded(id);
+  }
 }

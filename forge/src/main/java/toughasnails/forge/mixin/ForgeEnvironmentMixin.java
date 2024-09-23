@@ -1,5 +1,6 @@
 package toughasnails.forge.mixin;
 
+import net.minecraftforge.fml.ModList;
 import toughasnails.glitch.util.Environment;
 import java.nio.file.Path;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -20,5 +21,11 @@ public abstract class ForgeEnvironmentMixin
   public static Path getConfigPath()
   {
     return FMLPaths.CONFIGDIR.get();
+  }
+
+  @Overwrite
+  public static boolean isModLoaded(String id)
+  {
+    return ModList.get().isLoaded(id);
   }
 }
