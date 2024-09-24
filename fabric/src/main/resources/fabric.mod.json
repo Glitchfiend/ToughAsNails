@@ -30,7 +30,7 @@
     "minecraft": "${minecraft_version}",
     "java": ">=17",
     "glitchcore": ">=${glitchcore_version}",
-    "fzzy_config": ">=${fzzyconfig_version}"
+    "owo": ">=${owo_version}"
   },
   "accessWidener": "${mod_id}.accesswidener",
   "custom": {

@@ -65,11 +65,7 @@ subprojects {
             url 'https://jitpack.io'
         }
         maven {
-            name = "Modrinth"
-            url = uri("https://api.modrinth.com/maven")
-            content {
-                includeGroup("maven.modrinth")
-            }
+            url 'https://maven.wispforest.io/releases/'
         }
         mavenCentral()
         maven {
