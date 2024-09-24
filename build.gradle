@@ -61,6 +61,13 @@ subprojects {
     }
 
     repositories {
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven {
+            name = "FzzyMaven"
+            url = "https://maven.fzzyhmstrs.me/"
+        }
         mavenCentral()
         maven {
             name = 'Sponge / Mixin'

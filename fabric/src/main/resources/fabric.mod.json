@@ -29,7 +29,8 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "java": ">=17",
-    "glitchcore": ">=${glitchcore_version}"
+    "glitchcore": ">=${glitchcore_version}",
+    "fzzy_config": ">=${fzzyconfig_version}"
   },
   "accessWidener": "${mod_id}.accesswidener",
   "custom": {
