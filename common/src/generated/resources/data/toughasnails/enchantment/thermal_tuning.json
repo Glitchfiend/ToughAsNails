@@ -3,7 +3,6 @@
   "description": {
     "translate": "enchantment.toughasnails.thermal_tuning"
   },
-  "exclusive_set": "#minecraft:exclusive_set/armor",
   "max_cost": {
     "base": 75,
     "per_level_above_first": 25

@@ -27,7 +27,6 @@ public class ModEnchantments
                 Enchantment.enchantment(
                     Enchantment.definition(itemGetter.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE), 2, 1, Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 4, EquipmentSlotGroup.CHEST)
                 )
-                .exclusiveWith(enchantmentGetter.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
         );
 
         register(
