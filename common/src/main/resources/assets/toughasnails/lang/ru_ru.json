@@ -32,6 +32,9 @@
   "effect.toughasnails.internal_chill.description": "Обеспечивает небольшое снижение температуры тела на время. Не вызывает переохлаждения.",
   "enchantment.toughasnails.thermal_tuning": "Терморегуляция",
   "enchantment.toughasnails.water_cleansing": "Водоочистка",
+  "enchantment.toughasnails.thermal_tuning.desc": "Полностью нейтрализует температуру тела игрока, независимо от текущей температуры окружающей среды. Применяется к нагруднику.",
+  "enchantment.toughasnails.water_cleansing.desc": "Автоматически очищает любую воду, налитую во флягу. Применяется к флягам.",
+  
   
   "block.toughasnails.rain_collector": "Дождесборник",
   "block.toughasnails.temperature_gauge": "Датчик температуры",
