@@ -4,12 +4,10 @@
  ******************************************************************************/
 package toughasnails.core;
 
-import toughasnails.glitch.network.SyncConfigPacket;
-import toughasnails.glitch.network.PacketHandler;
-import net.minecraft.resources.ResourceLocation;
-import toughasnails.glitch.event.EventManager;
-import toughasnails.glitch.util.Environment;
-import toughasnails.glitch.util.RegistryHelper;
+import glitchcore.event.EventManager;
+import glitchcore.util.Environment;
+import glitchcore.util.RegistryHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
@@ -28,13 +26,9 @@ public class ToughAsNails
 {
     public static final String MOD_ID = TANAPI.MOD_ID;
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-    private static final ResourceLocation CHANNEL = new ResourceLocation(MOD_ID, "main");
-    public static final PacketHandler PACKET_HANDLER = new PacketHandler(CHANNEL);
 
     public static void init()
     {
-        PACKET_HANDLER.register(new ResourceLocation(MOD_ID, "sync_config"), new SyncConfigPacket());
-
         ModConfig.init();
         ModTags.init();
         addRegistrars();

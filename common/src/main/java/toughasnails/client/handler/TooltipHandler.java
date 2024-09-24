@@ -4,9 +4,9 @@
  ******************************************************************************/
 package toughasnails.client.handler;
 
-import toughasnails.glitch.event.client.ItemTooltipEvent;
-import toughasnails.glitch.event.client.RenderTooltipEvent;
-import toughasnails.glitch.util.Environment;
+import glitchcore.event.client.ItemTooltipEvent;
+import glitchcore.event.client.RenderTooltipEvent;
+import glitchcore.util.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

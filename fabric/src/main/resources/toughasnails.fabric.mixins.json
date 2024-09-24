@@ -4,13 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "toughasnails.refmap.json",
   "mixins": [
-    "FabricEnvironmentMixin",
-    "MixinPacketHandler",
-    "MixinRenderHelper"
   ],
   "client": [
-    "client.MixinGui",
-    "client.MixinGuiGraphics"
+    "client.MixinGui"
   ],
   "injectors": {
     "defaultRequire": 1

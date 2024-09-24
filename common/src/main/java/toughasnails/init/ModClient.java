@@ -4,9 +4,9 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import toughasnails.glitch.event.client.RegisterColorsEvent;
-import toughasnails.glitch.event.client.RegisterParticleSpritesEvent;
-import toughasnails.glitch.util.RenderHelper;
+import glitchcore.event.client.RegisterColorsEvent;
+import glitchcore.event.client.RegisterParticleSpritesEvent;
+import glitchcore.util.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;

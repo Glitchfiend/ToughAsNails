@@ -19,6 +19,6 @@ dependencies {
     compileOnly("com.electronwill.night-config:toml:${nightconfig_version}")
     compileOnly("com.electronwill.night-config:core:${nightconfig_version}")
     compileOnly("net.jodah:typetools:0.6.3")
-    //compileOnly 'com.github.glitchfiend:GlitchCore-common:' + minecraft_version + '-' + "1.0.0.58"
+    compileOnly 'com.github.glitchfiend:GlitchCore-common:' + minecraft_version + '-' + glitchcore_version
     compileOnly 'com.github.glitchfiend:SereneSeasons-common:' + minecraft_version + '-' + serene_seasons_version
 }

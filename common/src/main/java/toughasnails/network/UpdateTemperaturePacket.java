@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.network;
 
-import toughasnails.glitch.network.CustomPacket;
+import glitchcore.network.CustomPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

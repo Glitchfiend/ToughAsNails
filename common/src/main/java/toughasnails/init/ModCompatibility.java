@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import toughasnails.glitch.util.Environment;
+import glitchcore.util.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;

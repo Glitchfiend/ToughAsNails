@@ -16,10 +16,7 @@
   "icon": "assets/toughasnails/textures/item/tan_icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "toughasnails.fabric.client.ToughAsNailsClient"
-    ],
-    "main": [
+    "glitchcore": [
       "toughasnails.fabric.core.ToughAsNailsFabric"
     ]
   },
@@ -31,7 +28,8 @@
     "fabricloader": "*",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
-    "java": ">=17"
+    "java": ">=17",
+    "glitchcore": ">=${glitchcore_version}"
   },
   "accessWidener": "${mod_id}.accesswidener",
   "custom": {

@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import toughasnails.glitch.network.CustomPacket;
-import toughasnails.glitch.network.PacketHandler;
+import glitchcore.network.CustomPacket;
+import glitchcore.network.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.TANAPI;
 import toughasnails.core.ToughAsNails;

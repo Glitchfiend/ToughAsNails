@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
-import toughasnails.glitch.event.EventManager;
-import toughasnails.glitch.event.player.PlayerEvent;
 import toughasnails.init.ModConfig;
 
 @Mixin(ServerLevel.class)
@@ -23,7 +21,6 @@ public class MixinServerLevel
     @Inject(method="addPlayer", at=@At(value="HEAD"))
     public void onAddPlayer(ServerPlayer player, CallbackInfo ci)
     {
-        EventManager.fire(new PlayerEvent.JoinLevel(player));
         ITANPlayer tanPlayer = (ITANPlayer)player;
 
         if (ModConfig.temperature.enableTemperature && ModConfig.temperature.climateClemencyDuration > 0 && !tanPlayer.getClimateClemencyGranted() && !player.isCreative())
