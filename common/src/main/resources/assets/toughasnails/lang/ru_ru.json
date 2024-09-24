@@ -1,5 +1,5 @@
 {
-  "itemGroup.toughasnails": "Крепкие как гвозди",
+  "itemGroup.toughasnails": "Крепкие Как Гвозди",
   
   "container.toughasnails.thermoregulator": "Терморегулятор",
   "container.toughasnails.water_purifier": "Водоочиститель",
@@ -32,6 +32,9 @@
   "effect.toughasnails.internal_chill.description": "Обеспечивает небольшое снижение температуры тела на время. Не вызывает переохлаждения.",
   "enchantment.toughasnails.thermal_tuning": "Терморегуляция",
   "enchantment.toughasnails.water_cleansing": "Водоочистка",
+  "enchantment.toughasnails.thermal_tuning.desc": "Полностью нейтрализует температуру тела игрока, независимо от текущей температуры окружающей среды. Применяется к нагруднику.",
+  "enchantment.toughasnails.water_cleansing.desc": "Автоматически очищает любую воду, налитую во флягу. Применяется к флягам.",
+  
   
   "block.toughasnails.rain_collector": "Дождесборник",
   "block.toughasnails.temperature_gauge": "Датчик температуры",
@@ -77,7 +80,7 @@
   "item.toughasnails.pumpkin_juice": "Тыквенный сок",
   "item.toughasnails.purified_water_bottle": "Бутылка чистой воды",
   "item.toughasnails.sweet_berry_juice": "Сок из сладких ягод",
-  "item.toughasnails.tan_icon": "Иконка «Крепкие как гвозди»",
+  "item.toughasnails.tan_icon": "Иконка «Крепкие Как Квозди»",
   "item.toughasnails.thermometer": "Термометр",
   "item.toughasnails.wool_boots": "Шерстяные ботинки",
   "item.toughasnails.wool_chestplate": "Шерстяная куртка",
@@ -93,5 +96,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Стрела лёдостойкости",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стрела лёдостойкости",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "Климатолог"
+  "entity.minecraft.villager.toughasnails.climatologist": "Климатолог",
+  "entity.minecraft.villager.climatologist": "Климатолог"
 }

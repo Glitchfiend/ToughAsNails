@@ -32,6 +32,8 @@
   "effect.toughasnails.internal_chill.description": "Provides a slight decrease in body temperature for the duration. Will not cause hypothermia.",
   "enchantment.toughasnails.thermal_tuning": "Thermal Tuning",
   "enchantment.toughasnails.water_cleansing": "Water Cleansing",
+  "enchantment.toughasnails.thermal_tuning.desc": "A Chestplate with Thermal Tuning will completely neutralize the player's body temperature, regardless of the current environmental temperature.",
+  "enchantment.toughasnails.water_cleansing.desc": "A Canteen with Water Cleansing will automatically purify any water put into it.",
   
   "block.toughasnails.rain_collector": "Rain Collector",
   "block.toughasnails.temperature_gauge": "Temperature Gauge",
