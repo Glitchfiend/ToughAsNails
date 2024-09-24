@@ -51,7 +51,7 @@ minecraft {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
-    implementation fg.deobf("me.fzzyhmstrs:fzzy_config:${fzzyconfig_version}+${minecraft_version}")
+    implementation fg.deobf("maven.modrinth:fzzy-config:${fzzyconfig_version}+${minecraft_version}")
     implementation fg.deobf("com.github.marlester-dev.GlitchCore-1201:GlitchCore-forge:${glitchcore_version}")
     implementation fg.deobf("com.github.glitchfiend:SereneSeasons-forge:${minecraft_version}-${serene_seasons_version}")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
