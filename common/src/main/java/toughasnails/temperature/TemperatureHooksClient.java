@@ -15,10 +15,10 @@ import toughasnails.init.ModConfig;
 
 public class TemperatureHooksClient
 {
-    private static final ResourceLocation OVERHEATED_HEART_FULL = new ResourceLocation("toughasnails:hud/heart/overheated_full");
-    private static final ResourceLocation OVERHEATED_HEART_FULL_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_full_blinking");
-    private static final ResourceLocation OVERHEATED_HEART_HALF = new ResourceLocation("toughasnails:hud/heart/overheated_half");
-    private static final ResourceLocation OVERHEATED_HEART_HALF_BLINKING = new ResourceLocation("toughasnails:hud/heart/overheated_half_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_FULL = new ResourceLocation("toughasnails:texture/gui/sprites/hud/heart/overheated_full");
+    private static final ResourceLocation OVERHEATED_HEART_FULL_BLINKING = new ResourceLocation("toughasnails:texture/gui/sprites/hud/heart/overheated_full_blinking");
+    private static final ResourceLocation OVERHEATED_HEART_HALF = new ResourceLocation("toughasnails:texture/gui/sprites/hud/heart/overheated_half");
+    private static final ResourceLocation OVERHEATED_HEART_HALF_BLINKING = new ResourceLocation("toughasnails:texture/gui/sprites/hud/heart/overheated_half_blinking");
 
     public static void heartBlit(GuiGraphics gui,
         int left, int top, int u, int v, int width, int height, boolean isBlinking, boolean isHalf)

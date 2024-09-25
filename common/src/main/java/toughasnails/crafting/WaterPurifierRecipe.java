@@ -8,7 +8,6 @@ package toughasnails.crafting;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.Level;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
+import toughasnails.util.serialization.ItemStackDeserializer;
 
 public class WaterPurifierRecipe implements Recipe<Container> {
   protected final ResourceLocation id;
@@ -89,6 +89,11 @@ public class WaterPurifierRecipe implements Recipe<Container> {
     return TANRecipeSerializers.WATER_PURIFYING;
   }
 
+  @Override
+  public boolean isSpecial() {
+    return true;
+  }
+
   // custom methods
 
   public int getPurifyTime() {
@@ -99,17 +104,10 @@ public class WaterPurifierRecipe implements Recipe<Container> {
   {
     @Override
     public WaterPurifierRecipe fromJson(ResourceLocation resourceLocation, JsonObject jsonObject) {
-      String fd6 = GsonHelper.getAsString(jsonObject, "input");
-      ResourceLocation fd7 = new ResourceLocation(fd6);
-      ItemStack input = new ItemStack(BuiltInRegistries.ITEM.getOptional(fd7).orElseThrow(() -> {
-        return new IllegalStateException("Item: " + fd6 + " does not exist");
-      }));
-      String ff6 = GsonHelper.getAsString(jsonObject, "result");
-      ResourceLocation ff7 = new ResourceLocation(ff6);
-      ItemStack result = new ItemStack(BuiltInRegistries.ITEM.getOptional(ff7).orElseThrow(() -> {
-        return new IllegalStateException("Item: " + ff6 + " does not exist");
-      }));
+      ItemStack input = ItemStackDeserializer.deserialize(jsonObject.getAsJsonObject("input"));
+      ItemStack result = ItemStackDeserializer.deserialize(jsonObject.getAsJsonObject("result"));
       int purifyTime = GsonHelper.getAsInt(jsonObject, "purifytime");
+
       return new WaterPurifierRecipe(resourceLocation, input, result, purifyTime);
     }
 
