@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -37,16 +36,9 @@ import javax.annotation.Nullable;
 
 public class TemperatureGaugeBlock extends BaseEntityBlock
 {
-    public static final MapCodec<TemperatureGaugeBlock> CODEC = simpleCodec(TemperatureGaugeBlock::new);
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
     public static final BooleanProperty INVERTED = BlockStateProperties.INVERTED;
-
-    @Override
-    public MapCodec<TemperatureGaugeBlock> codec()
-    {
-        return CODEC;
-    }
 
     public TemperatureGaugeBlock(Properties properties)
     {

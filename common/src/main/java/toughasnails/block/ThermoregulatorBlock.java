@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -35,7 +34,6 @@ import java.util.function.ToIntFunction;
 
 public class ThermoregulatorBlock extends BaseEntityBlock
 {
-    public static final MapCodec<WaterPurifierBlock> CODEC = simpleCodec(WaterPurifierBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty COOLING = BooleanProperty.create("cooling");
     public static final BooleanProperty HEATING = BooleanProperty.create("heating");
@@ -45,12 +43,6 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(COOLING, false).setValue(HEATING, false).setValue(ENABLED, true));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec()
-    {
-        return CODEC;
     }
 
     @Override
