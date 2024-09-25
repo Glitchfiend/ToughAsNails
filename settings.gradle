@@ -1,14 +1,10 @@
-include("common", "forge", "fabric")
+include("common", "fabric")
 
 pluginManagement.repositories {
     gradlePluginPortal()
     maven {
         name = "Fabric"
         url = "https://maven.fabricmc.net/"
-    }
-    maven {
-        name = "Forge"
-        url = "https://maven.minecraftforge.net"
     }
     maven {
         name = "Sponge Snapshots"
@@ -20,5 +16,4 @@ rootProject.name = "ToughAsNails"
 
 // We want lowercase folder names but uppercase project names
 project(":common").name = "Common"
-project(":forge").name = "Forge"
 project(":fabric").name = "Fabric"

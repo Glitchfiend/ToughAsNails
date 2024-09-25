@@ -11,7 +11,7 @@ dependencies {
     compileOnly project(":Common")
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modImplementation "io.wispforest:owo-lib:${owo_version}"
+    annotationProcessor modImplementation("io.wispforest:owo-lib:${owo_version}")
     modImplementation "com.github.marlester-dev.GlitchCore-1201:GlitchCore-fabric:${glitchcore_version}"
     modImplementation "com.github.glitchfiend:SereneSeasons-fabric:${minecraft_version}-${serene_seasons_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
