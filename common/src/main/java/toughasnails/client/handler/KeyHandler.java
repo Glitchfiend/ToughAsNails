@@ -6,11 +6,14 @@ package toughasnails.client.handler;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import glitchcore.event.client.InputEvent;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 
 public class KeyHandler
 {
@@ -62,6 +65,21 @@ public class KeyHandler
     }
 
     private static void debugFeedbackTranslated(String $$0, Object... $$1) {
-        debugFeedbackComponent(Component.translatableEscape($$0, $$1));
+        debugFeedbackComponent(translatableEscape($$0, $$1));
+    }
+
+    private static MutableComponent translatableEscape(String $$0, Object... $$1) {
+        for(int $$2 = 0; $$2 < $$1.length; ++$$2) {
+            Object $$3 = $$1[$$2];
+            if (!isAllowedPrimitiveArgument($$3) && !($$3 instanceof Component)) {
+                $$1[$$2] = String.valueOf($$3);
+            }
+        }
+
+        return Component.translatable($$0, $$1);
+    }
+
+    private static boolean isAllowedPrimitiveArgument(@Nullable Object $$0) {
+        return $$0 instanceof Number || $$0 instanceof Boolean || $$0 instanceof String;
     }
 }

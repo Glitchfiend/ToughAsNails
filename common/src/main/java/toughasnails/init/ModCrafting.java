@@ -5,20 +5,14 @@
 package toughasnails.init;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionBrewing;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import toughasnails.api.TANAPI;
 import toughasnails.api.crafting.TANRecipeSerializers;
 import toughasnails.api.crafting.TANRecipeTypes;
-import toughasnails.api.potion.TANPotions;
-import toughasnails.crafting.WaterPurifierRecipe;
 
 import java.util.function.BiConsumer;
+import toughasnails.crafting.WaterPurifierRecipe;
 
 public class ModCrafting
 {

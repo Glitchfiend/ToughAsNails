@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -112,8 +113,20 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean $$4)
     {
-        Containers.dropContentsOnDestroy(state, newState, level, pos);
+        dropContentsOnDestroy(state, newState, level, pos);
         super.onRemove(state, level, pos, newState, $$4);
+    }
+
+    public static void dropContentsOnDestroy(BlockState $$0, BlockState $$1, Level $$2, BlockPos $$3) {
+        if (!$$0.is($$1.getBlock())) {
+            BlockEntity $$4 = $$2.getBlockEntity($$3);
+            if ($$4 instanceof Container) {
+                Container $$5 = (Container)$$4;
+                Containers.dropContents($$2, $$3, $$5);
+                $$2.updateNeighbourForOutputSignal($$3, $$0.getBlock());
+            }
+
+        }
     }
 
     @Override

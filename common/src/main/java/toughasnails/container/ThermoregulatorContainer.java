@@ -13,14 +13,10 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import toughasnails.api.container.TANContainerTypes;
-import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
-import toughasnails.block.entity.WaterPurifierBlockEntity;
-import toughasnails.crafting.WaterPurifierRecipe;
 
 public class ThermoregulatorContainer extends AbstractContainerMenu
 {
