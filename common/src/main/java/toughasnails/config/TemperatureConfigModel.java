@@ -3,7 +3,6 @@ package toughasnails.config;
 import com.google.common.collect.ImmutableList;
 import io.wispforest.owo.config.Option.SyncMode;
 import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
 import io.wispforest.owo.config.annotation.PredicateConstraint;
 import io.wispforest.owo.config.annotation.RangeConstraint;
 import io.wispforest.owo.config.annotation.Sync;
@@ -11,11 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import toughasnails.api.TANAPI;
 import toughasnails.temperature.BuiltInTemperatureModifier;
 
 @Sync(SyncMode.OVERRIDE_CLIENT)
-@Modmenu(modId = TANAPI.MOD_ID)
 @Config(name = "TAN_temperature", wrapperName = "TemperatureConfig")
 public class TemperatureConfigModel {
   // Toggles
