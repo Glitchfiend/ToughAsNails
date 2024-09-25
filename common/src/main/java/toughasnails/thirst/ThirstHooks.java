@@ -17,7 +17,7 @@ public class ThirstHooks
      */
     public static void onCauseFoodExhaustion(Player player, float exhaustion)
     {
-        if (ModConfig.thirst.enableThirst)
+        if (ModConfig.thirst.enableThirst())
         {
             ThirstHelper.getThirst(player).addExhaustion(exhaustion);
         }
@@ -46,7 +46,7 @@ public class ThirstHooks
 
         boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 
-        if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
+        if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen() || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
         {
             ++data.tickTimer;
 
@@ -63,7 +63,7 @@ public class ThirstHooks
                 data.tickTimer = 0;
             }
         }
-        else if (naturalRegen && data.foodLevel >= 18 && (!ModConfig.thirst.thirstPreventHealthRegen || thirst.getThirst() >= 18) && player.isHurt())
+        else if (naturalRegen && data.foodLevel >= 18 && (!ModConfig.thirst.thirstPreventHealthRegen() || thirst.getThirst() >= 18) && player.isHurt())
         {
             ++data.tickTimer;
             if (data.tickTimer >= 80)

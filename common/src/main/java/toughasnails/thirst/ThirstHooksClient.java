@@ -22,6 +22,6 @@ public class ThirstHooksClient
 
     private static boolean canSprintWithThirst(LocalPlayer player)
     {
-        return !ModConfig.thirst.thirstPreventSprint || ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;
+        return !ModConfig.thirst.thirstPreventSprint() || ThirstHelper.getThirst(player).getThirst() > 6 || player.getAbilities().mayfly;
     }
 }

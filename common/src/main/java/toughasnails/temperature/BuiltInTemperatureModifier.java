@@ -25,25 +25,25 @@ public enum BuiltInTemperatureModifier
             newTarget = modifier.modify(player, newTarget);
         }
 
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.playerTemperatureChangeDelay);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.playerTemperatureChangeDelay());
         return new Tuple<>(newTarget, newChangeDelay);
     })),
     ITEM_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.handheldModifier(player, currentTarget);
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.handheldTemperatureChangeDelay);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.handheldTemperatureChangeDelay());
         return new Tuple<>(newTarget, newChangeDelay);
     }),
     ARMOR_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.armorModifier(player, currentTarget);
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay());
         return new Tuple<>(newTarget, newChangeDelay);
     }),
     INTERNAL_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.internalModifier(player, currentTarget);
-        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.internalTemperatureChangeDelay);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.internalTemperatureChangeDelay());
         return new Tuple<>(newTarget, newChangeDelay);
     });
 
@@ -69,7 +69,7 @@ public enum BuiltInTemperatureModifier
     {
         if (temperatureModifierOrderCache == null)
         {
-            temperatureModifierOrderCache = ModConfig.temperature.temperatureModifierOrder.stream().map(s -> BuiltInTemperatureModifier.valueOf(s.toUpperCase())).toList();
+            temperatureModifierOrderCache = ModConfig.temperature.temperatureModifierOrder().stream().map(s -> BuiltInTemperatureModifier.valueOf(s.toUpperCase())).toList();
         }
         return temperatureModifierOrderCache;
     }

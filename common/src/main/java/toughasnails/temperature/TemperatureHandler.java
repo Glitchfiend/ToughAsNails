@@ -39,7 +39,7 @@ public class TemperatureHandler
 
     public static void onPlayerTick(Player player)
     {
-        if (!ModConfig.temperature.enableTemperature || player.level().isClientSide())
+        if (!ModConfig.temperature.enableTemperature() || player.level().isClientSide())
             return;
 
         Level level = player.level();
@@ -56,7 +56,7 @@ public class TemperatureHandler
         // Use the positional temperature as the new target level if the player doesn't have climate clemency active
         if (!player.hasEffect(TANEffects.CLIMATE_CLEMENCY))
         {
-            int changeDelay = ModConfig.temperature.temperatureChangeDelay;
+            int changeDelay = ModConfig.temperature.temperatureChangeDelay();
             TemperatureLevel currentTargetLevel = data.getTargetLevel();
             TemperatureLevel newTargetLevel = TemperatureHelper.getTemperatureAtPos(player.level(), player.blockPosition());
 
@@ -76,7 +76,7 @@ public class TemperatureHandler
                 // Rebound quickly from extremes
                 if ((data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT) && newTargetLevel != TemperatureLevel.ICY && newTargetLevel != TemperatureLevel.HOT)
                 {
-                    changeDelay = Math.min(changeDelay, ModConfig.temperature.extremityReboundTemperatureChangeDelay);
+                    changeDelay = Math.min(changeDelay, ModConfig.temperature.extremityReboundTemperatureChangeDelay());
                 }
 
                 data.setChangeDelayTicks(changeDelay);
@@ -102,7 +102,7 @@ public class TemperatureHandler
         // If we are entering an extreme temperature, add to the extremity delay
         if (data.getLastLevel() != data.getLevel() && (data.getLevel() == TemperatureLevel.ICY || data.getLevel() == TemperatureLevel.HOT))
         {
-            data.setExtremityDelayTicks(ModConfig.temperature.extremityDamageDelay);
+            data.setExtremityDelayTicks(ModConfig.temperature.extremityDamageDelay());
         }
 
         int hyperthermicTicks = data.getHyperthermiaTicks();
@@ -143,17 +143,17 @@ public class TemperatureHandler
 
     public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ModConfig.temperature.enableTemperature || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
+        if (!ModConfig.temperature.enableTemperature() || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
             return;
 
         Player player = (Player) event.getEntity();
         ItemStack item = event.getItem();
 
         if (item.is(ModTags.Items.COOLING_CONSUMED_ITEMS))
-            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_CHILL, ModConfig.temperature.consumableEffectDuration, 0, false, false, true));
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_CHILL, ModConfig.temperature.consumableEffectDuration(), 0, false, false, true));
 
         if (item.is(ModTags.Items.HEATING_CONSUMED_ITEMS))
-            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_WARMTH, ModConfig.temperature.consumableEffectDuration, 0, false, false, true));
+            player.addEffect(new MobEffectInstance(TANEffects.INTERNAL_WARMTH, ModConfig.temperature.consumableEffectDuration(), 0, false, false, true));
     }
 
     public static void syncTemperature(ServerPlayer player)

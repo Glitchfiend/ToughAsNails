@@ -45,7 +45,7 @@ public class TemperatureHooksClient
         var pose = guiGraphics.pose();
 
         // If temperature is enabled, move the selected item text up by 2 pixels. This is only done in survival mode.
-        if (ModConfig.temperature.enableTemperature && GuiUtils.shouldDrawSurvivalElements())
+        if (ModConfig.temperature.enableTemperature() && GuiUtils.shouldDrawSurvivalElements())
         {
             pose.translate(0F, -2F, 0F);
         }

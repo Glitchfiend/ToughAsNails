@@ -51,12 +51,12 @@ public class ThirstHandler
 {
     public static void onPlayerTick(Player player)
     {
-        if (!ModConfig.thirst.enableThirst || player.level().isClientSide())
+        if (!ModConfig.thirst.enableThirst() || player.level().isClientSide())
             return;
 
         IThirst thirst = ThirstHelper.getThirst(player);
         Difficulty difficulty = player.level().getDifficulty();
-        double exhaustionThreshold = ModConfig.thirst.thirstExhaustionThreshold;
+        double exhaustionThreshold = ModConfig.thirst.thirstExhaustionThreshold();
 
         if (thirst.getExhaustion() > exhaustionThreshold)
         {
@@ -122,7 +122,7 @@ public class ThirstHandler
     // Replenish thirst after drinking from items in the config file
     public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event)
     {
-        if (!ModConfig.thirst.enableThirst || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
+        if (!ModConfig.thirst.enableThirst() || !(event.getEntity() instanceof Player) || event.getEntity().level().isClientSide())
             return;
 
         Player player = (Player)event.getEntity();
@@ -243,7 +243,7 @@ public class ThirstHandler
 
     private static boolean canHandDrink()
     {
-        return ModConfig.thirst.enableThirst && ModConfig.thirst.enableHandDrinking;
+        return ModConfig.thirst.enableThirst() && ModConfig.thirst.enableHandDrinking();
     }
 
     private static boolean canHandDrinkInWorld(Player player, InteractionHand hand)

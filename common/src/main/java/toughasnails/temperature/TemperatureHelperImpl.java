@@ -76,7 +76,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
     @Override
     public boolean isTemperatureEnabled()
     {
-        return ModConfig.temperature.enableTemperature;
+        return ModConfig.temperature.enableTemperature();
     }
 
     @Override
@@ -145,7 +145,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Holder<Biome> biome = level.getBiome(pos);
         float biomeTemperature = biome.value().getBaseTemperature();
 
-        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
+        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude() || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
             else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;
@@ -167,8 +167,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (!level.dimensionType().natural())
             return current;
 
-        if (pos.getY() > ModConfig.temperature.temperatureDropAltitude) current = current.decrement(1);
-        else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude) current = current.increment(1);
+        if (pos.getY() > ModConfig.temperature.temperatureDropAltitude()) current = current.decrement(1);
+        else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude()) current = current.increment(1);
         return current;
     }
 
@@ -179,9 +179,9 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (isExposedToRain(level, pos))
         {
             if (coldEnoughToSnow(level, biome, pos))
-                current = current.increment(ModConfig.temperature.snowTemperatureChange);
+                current = current.increment(ModConfig.temperature.snowTemperatureChange());
             else
-                current = current.increment(ModConfig.temperature.wetTemperatureChange);
+                current = current.increment(ModConfig.temperature.wetTemperatureChange());
         }
 
         return current;
@@ -194,12 +194,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         boolean isNight = time >= 0.25F && time <= 0.75F;
 
         // Drop the temperature during the night
-        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
+        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude() || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (current == TemperatureLevel.HOT)
-                current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
+                current = current.increment(ModConfig.temperature.nightHotTemperatureChange());
             else if (current != TemperatureLevel.NEUTRAL)
-                current = current.increment(ModConfig.temperature.nightTemperatureChange);
+                current = current.increment(ModConfig.temperature.nightTemperatureChange());
         }
 
         return current;
@@ -264,8 +264,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         BlockPos pos = player.blockPosition();
         ITemperature temperature = TemperatureHelper.getTemperatureData(player);
 
-        if (player.isOnFire()) current = current.increment(ModConfig.temperature.onFireTemperatureChange);
-        if (player.isInPowderSnow) current = current.increment(ModConfig.temperature.powderSnowTemperatureChange);
+        if (player.isOnFire()) current = current.increment(ModConfig.temperature.onFireTemperatureChange());
+        if (player.isInPowderSnow) current = current.increment(ModConfig.temperature.powderSnowTemperatureChange());
         if (isExposedToRain(level, pos))
         {
             // Only set the dry ticks here, as the temperature change associated with rain has already been handled by the positional modifier
@@ -274,12 +274,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         else if (!(player.getRootVehicle() instanceof Boat) && (player.isInWater() || level.getFluidState(pos).is(FluidTags.WATER)))
         {
             temperature.setDryTicks(0);
-            current = current.increment(ModConfig.temperature.wetTemperatureChange);
+            current = current.increment(ModConfig.temperature.wetTemperatureChange());
         }
         else
         {
-            if (temperature.getDryTicks() < ModConfig.temperature.wetTicks)
-                current.increment(ModConfig.temperature.wetTemperatureChange);
+            if (temperature.getDryTicks() < ModConfig.temperature.wetTicks())
+                current.increment(ModConfig.temperature.wetTemperatureChange());
         }
 
         return current;

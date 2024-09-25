@@ -31,7 +31,7 @@ public class TemperatureData implements ITemperature
 
     public void addAdditionalSaveData(CompoundTag nbt)
     {
-        if (ModConfig.temperature.enableTemperature)
+        if (ModConfig.temperature.enableTemperature())
         {
             nbt.putInt("temperatureLevel", this.getLevel().ordinal());
             nbt.putInt("targetTemperatureLevel", this.getTargetLevel().ordinal());
@@ -56,7 +56,7 @@ public class TemperatureData implements ITemperature
     {
         if (nbt.contains("temperatureLevel", 99))
         {
-            if (ModConfig.temperature.enableTemperature)
+            if (ModConfig.temperature.enableTemperature())
             {
                 this.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
                 this.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel")]);

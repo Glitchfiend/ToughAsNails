@@ -19,7 +19,7 @@ dependencies {
     compileOnly("com.electronwill.night-config:toml:${nightconfig_version}")
     compileOnly("com.electronwill.night-config:core:${nightconfig_version}")
     compileOnly("net.jodah:typetools:0.6.3")
-    compileOnly "io.wispforest:owo-lib:${owo_version}"
+    annotationProcessor compileOnly("io.wispforest:owo-lib:${owo_version}")
     compileOnly "com.github.marlester-dev.GlitchCore-1201:GlitchCore-common:${glitchcore_version}"
     compileOnly 'com.github.glitchfiend:SereneSeasons-common:' + minecraft_version + '-' + serene_seasons_version
 }

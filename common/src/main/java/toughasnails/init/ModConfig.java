@@ -17,12 +17,12 @@ public class ModConfig
 
     public static void init()
     {
-        thirst = new ThirstConfig();
-        temperature = new TemperatureConfig();
+        thirst = ThirstConfig.createAndLoad();
+        temperature = TemperatureConfig.createAndLoad();
 
         if (Environment.isClient())
         {
-            client = new ClientConfig();
+            client = ClientConfig.createAndLoad();
         }
     }
 }

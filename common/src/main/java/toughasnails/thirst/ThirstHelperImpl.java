@@ -32,7 +32,7 @@ public class ThirstHelperImpl implements ThirstHelper.Impl.IThirstHelper
     @Override
     public boolean isThirstEnabled()
     {
-        return ModConfig.thirst.enableThirst;
+        return ModConfig.thirst.enableThirst();
     }
 }
 

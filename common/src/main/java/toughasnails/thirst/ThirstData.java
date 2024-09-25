@@ -22,7 +22,7 @@ public class ThirstData implements IThirst
 
     public void addAdditionalSaveData(CompoundTag nbt)
     {
-        if (ModConfig.thirst.enableThirst)
+        if (ModConfig.thirst.enableThirst())
         {
             nbt.putInt("thirstLevel", this.getThirst());
             nbt.putInt("thirstTickTimer", this.getTickTimer());
@@ -43,7 +43,7 @@ public class ThirstData implements IThirst
     {
         if (nbt.contains("thirstLevel", 99))
         {
-            if (ModConfig.thirst.enableThirst)
+            if (ModConfig.thirst.enableThirst())
             {
                 this.setThirst(nbt.getInt("thirstLevel"));
                 this.setTickTimer(nbt.getInt("thirstTickTimer"));
