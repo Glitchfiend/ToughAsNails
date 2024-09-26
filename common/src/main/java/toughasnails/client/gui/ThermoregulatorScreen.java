@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import toughasnails.api.TANAPI;
 import toughasnails.container.ThermoregulatorContainer;
-import toughasnails.container.WaterPurifierContainer;
 
 public class ThermoregulatorScreen extends AbstractContainerScreen<ThermoregulatorContainer>
 {

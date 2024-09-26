@@ -7,6 +7,7 @@ package toughasnails.client.handler;
 import glitchcore.event.client.ItemTooltipEvent;
 import glitchcore.event.client.RenderTooltipEvent;
 import glitchcore.util.Environment;
+import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -25,8 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 import toughasnails.thirst.ThirstOverlayRenderer;
-
-import java.util.Optional;
 
 public class TooltipHandler
 {

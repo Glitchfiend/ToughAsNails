@@ -24,13 +24,12 @@
 
 package toughasnails.util.serialization;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
-
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 

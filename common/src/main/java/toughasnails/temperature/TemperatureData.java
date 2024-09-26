@@ -4,14 +4,13 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.init.ModConfig;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class TemperatureData implements ITemperature
 {

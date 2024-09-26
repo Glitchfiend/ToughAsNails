@@ -5,6 +5,8 @@
 package toughasnails.block.entity;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Iterator;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -33,9 +35,6 @@ import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
-
-import javax.annotation.Nullable;
-import java.util.Iterator;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer

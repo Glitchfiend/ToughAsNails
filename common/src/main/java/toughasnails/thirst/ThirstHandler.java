@@ -39,7 +39,6 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;

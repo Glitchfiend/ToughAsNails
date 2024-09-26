@@ -7,6 +7,7 @@ package toughasnails.temperature;
 import glitchcore.event.TickEvent;
 import glitchcore.event.client.RenderGuiEvent;
 import glitchcore.util.GuiUtils;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,10 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.TANAPI;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
-
-import java.util.Random;
 
 public class TemperatureOverlayRenderer
 {

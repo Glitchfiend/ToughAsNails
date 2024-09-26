@@ -4,16 +4,14 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
+import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
+
+import java.util.List;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
-
-import java.util.List;
-
-import static toughasnails.temperature.TemperatureHelperImpl.playerModifiers;
 
 public enum BuiltInTemperatureModifier
 {

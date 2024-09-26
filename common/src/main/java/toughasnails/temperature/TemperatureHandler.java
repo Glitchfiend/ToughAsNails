@@ -6,7 +6,8 @@ package toughasnails.temperature;
 
 import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
-import net.minecraft.core.BlockPos;
+import java.util.HashSet;
+import java.util.UUID;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
@@ -18,20 +19,15 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
 import toughasnails.network.UpdateTemperaturePacket;
-
-import java.util.HashSet;
-import java.util.UUID;
 
 public class TemperatureHandler
 {

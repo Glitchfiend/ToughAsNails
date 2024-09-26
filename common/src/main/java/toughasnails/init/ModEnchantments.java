@@ -4,14 +4,13 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import toughasnails.api.TANAPI;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.enchantment.ThermalTuningEnchantment;
 import toughasnails.enchantment.WaterCleansingEnchantment;
-
-import java.util.function.BiConsumer;
 
 public class ModEnchantments
 {

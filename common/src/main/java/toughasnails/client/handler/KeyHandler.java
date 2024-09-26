@@ -13,7 +13,6 @@ import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
 
 public class KeyHandler
 {

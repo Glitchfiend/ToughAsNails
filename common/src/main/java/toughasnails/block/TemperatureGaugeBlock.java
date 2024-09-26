@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.block;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -31,8 +32,6 @@ import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.block.entity.TemperatureGaugeBlockEntity;
 import toughasnails.temperature.TemperatureHelperImpl;
-
-import javax.annotation.Nullable;
 
 public class TemperatureGaugeBlock extends BaseEntityBlock
 {

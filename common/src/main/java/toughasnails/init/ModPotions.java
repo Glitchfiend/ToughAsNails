@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -16,8 +17,6 @@ import toughasnails.api.TANAPI;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.potion.TANPotions;
 import toughasnails.potion.ThirstEffect;
-
-import java.util.function.BiConsumer;
 
 public class ModPotions
 {

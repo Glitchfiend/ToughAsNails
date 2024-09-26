@@ -5,16 +5,13 @@
 package toughasnails.network;
 
 import glitchcore.network.CustomPacket;
-import net.minecraft.client.Minecraft;
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket>
 {

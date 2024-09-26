@@ -4,9 +4,15 @@
  ******************************************************************************/
 package toughasnails.init;
 
+import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
+import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
+
 import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.event.client.RegisterParticleSpritesEvent;
 import glitchcore.util.RenderHelper;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
@@ -30,13 +36,6 @@ import toughasnails.core.ToughAsNails;
 import toughasnails.item.DyeableWoolItem;
 import toughasnails.item.LeafArmorItem;
 import toughasnails.temperature.TemperatureHelperImpl;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import static toughasnails.api.block.TANBlocks.RAIN_COLLECTOR;
-import static toughasnails.api.block.TANBlocks.WATER_PURIFIER;
 
 public class ModClient
 {

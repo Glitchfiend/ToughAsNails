@@ -4,6 +4,7 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -18,8 +19,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.thirst.ThirstHelper;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FilledCanteenItem extends EmptyCanteenItem
 {

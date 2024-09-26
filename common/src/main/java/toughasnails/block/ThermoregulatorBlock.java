@@ -4,6 +4,8 @@
  ******************************************************************************/
 package toughasnails.block;
 
+import java.util.function.ToIntFunction;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -16,7 +18,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,9 +36,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.api.particle.TANParticles;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
-
-import javax.annotation.Nullable;
-import java.util.function.ToIntFunction;
 
 public class ThermoregulatorBlock extends BaseEntityBlock
 {

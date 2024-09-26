@@ -5,6 +5,7 @@
 package toughasnails.init;
 
 import glitchcore.util.Environment;
+import java.util.function.BiConsumer;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
@@ -16,8 +17,6 @@ import toughasnails.client.gui.ThermoregulatorScreen;
 import toughasnails.client.gui.WaterPurifierScreen;
 import toughasnails.container.ThermoregulatorContainer;
 import toughasnails.container.WaterPurifierContainer;
-
-import java.util.function.BiConsumer;
 
 public class ModContainerTypes
 {
