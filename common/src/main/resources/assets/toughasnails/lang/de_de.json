@@ -93,5 +93,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Pfeil der Kälteresistenz",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Pfeil der Kälteresistenz",
 
-  "entity.minecraft.villager.toughasnails.climatologist": "Klimaforscher"
+  "entity.minecraft.villager.toughasnails.climatologist": "Klimaforscher",
+  "entity.minecraft.villager.climatologist": "Klimaforscher"
 }

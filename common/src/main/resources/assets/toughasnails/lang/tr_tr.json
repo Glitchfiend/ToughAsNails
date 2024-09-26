@@ -93,5 +93,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Buz Direnci Oku",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Buz Direnci Oku",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "İklim Bilimci"
+  "entity.minecraft.villager.toughasnails.climatologist": "İklim Bilimci",
+  "entity.minecraft.villager.climatologist": "İklim Bilimci"
 }

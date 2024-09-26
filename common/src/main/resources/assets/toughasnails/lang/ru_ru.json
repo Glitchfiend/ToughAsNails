@@ -93,5 +93,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Стрела лёдостойкости",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стрела лёдостойкости",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "Климатолог"
+  "entity.minecraft.villager.toughasnails.climatologist": "Климатолог",
+  "entity.minecraft.villager.climatologist": "Климатолог"
 }
