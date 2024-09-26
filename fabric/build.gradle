@@ -71,6 +71,7 @@ curseforge {
         relations {
             requiredDependency 'fabric-api'
             requiredDependency 'glitchcore'
+            requiredDependency 'owo-lib'
         }
     }
 }

@@ -125,6 +125,7 @@ subprojects {
                         required.project "fabric-api"
                     }
                     required.project "glitchcore"
+                    required.project "owo-lib"
                 }
 
                 if (changelog_file.exists()) {
