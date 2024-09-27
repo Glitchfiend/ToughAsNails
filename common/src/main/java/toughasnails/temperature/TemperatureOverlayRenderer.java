@@ -73,7 +73,7 @@ public class TemperatureOverlayRenderer
         Minecraft minecraft = Minecraft.getInstance();
 
         // Do nothing if temperature is disabled
-        if (!ModConfig.temperature.enableTemperature())
+        if (!ModConfig.temperature.enableTemperature)
             return;
 
         Player player = minecraft.player;
@@ -90,8 +90,8 @@ public class TemperatureOverlayRenderer
 
     private static void drawTemperature(GuiGraphics gui, int width, int height, TemperatureLevel temperature)
     {
-        int left = width / 2 - 8 + ModConfig.client.temperatureLeftOffset();
-        int top = height - 52 + ModConfig.client.temperatureTopOffset();
+        int left = width / 2 - 8 + ModConfig.client.temperatureLeftOffset;
+        int top = height - 52 + ModConfig.client.temperatureTopOffset;
 
         if (prevTemperatureLevel == null)
             prevTemperatureLevel = temperature;

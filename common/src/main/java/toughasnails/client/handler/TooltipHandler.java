@@ -32,7 +32,7 @@ public class TooltipHandler
     public static void onTooltip(ItemTooltipEvent event)
     {
         // Don't display heating or cooling tooltips if temperature is disabled
-        if (!ModConfig.temperature.enableTemperature())
+        if (!ModConfig.temperature.enableTemperature)
             return;
 
         if (!Environment.isClient())
@@ -96,7 +96,7 @@ public class TooltipHandler
         ItemStack stack = event.getStack();
 
         // Don't display thirst tooltips if thirst is disabled
-        if (!ModConfig.thirst.enableThirst())
+        if (!ModConfig.thirst.enableThirst)
             return;
 
         if (stack.is(ModTags.Items.DRINKS))

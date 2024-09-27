@@ -54,7 +54,7 @@ public abstract class MixinServerPlayer extends Player implements ITANPlayer
     @Inject(method="restoreFrom", at=@At(value="TAIL"))
     public void onRestoreFrom(ServerPlayer player, boolean $$1, CallbackInfo ci)
     {
-        if (!ModConfig.temperature.climateClemencyRespawning())
+        if (!ModConfig.temperature.climateClemencyRespawning)
         {
             this.setClimateClemencyGranted(((ITANPlayer)player).getClimateClemencyGranted());
         }

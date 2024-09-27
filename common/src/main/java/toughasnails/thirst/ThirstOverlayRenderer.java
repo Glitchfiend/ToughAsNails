@@ -37,7 +37,7 @@ public class ThirstOverlayRenderer
 
     public static void onBeginRenderAir(RenderGuiEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.AIR || !ModConfig.thirst.enableThirst())
+        if (event.getType() != RenderGuiEvent.Type.AIR || !ModConfig.thirst.enableThirst)
             return;
 
         Minecraft minecraft = Minecraft.getInstance();
@@ -63,8 +63,8 @@ public class ThirstOverlayRenderer
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
 
-        int left = screenWidth / 2 + 91 + ModConfig.client.thirstLeftOffset();
-        int top = rowTop + ModConfig.client.thirstTopOffset();
+        int left = screenWidth / 2 + 91 + ModConfig.client.thirstLeftOffset;
+        int top = rowTop + ModConfig.client.thirstTopOffset;
 
         for (int i = 0; i < 10; i++)
         {

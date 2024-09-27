@@ -21,7 +21,7 @@ public class AreaFill
 {
     public static void fill(Level level, BlockPos pos, PositionChecker checker)
     {
-        fill(level, pos, checker, ModConfig.temperature.nearHeatCoolProximity());
+        fill(level, pos, checker, ModConfig.temperature.nearHeatCoolProximity);
     }
 
     public static void fill(Level level, BlockPos pos, PositionChecker checker, final int maxDepth)

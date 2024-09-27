@@ -23,10 +23,10 @@ public class MixinServerLevel
     {
         ITANPlayer tanPlayer = (ITANPlayer)player;
 
-        if (ModConfig.temperature.enableTemperature() && ModConfig.temperature.climateClemencyDuration() > 0 && !tanPlayer.getClimateClemencyGranted() && !player.isCreative())
+        if (ModConfig.temperature.enableTemperature && ModConfig.temperature.climateClemencyDuration > 0 && !tanPlayer.getClimateClemencyGranted() && !player.isCreative())
         {
             tanPlayer.setClimateClemencyGranted(true);
-            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, ModConfig.temperature.climateClemencyDuration(), 0, false, false, true));
+            player.addEffect(new MobEffectInstance(TANEffects.CLIMATE_CLEMENCY, ModConfig.temperature.climateClemencyDuration, 0, false, false, true));
         }
     }
 }

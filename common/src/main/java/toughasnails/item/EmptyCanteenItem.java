@@ -91,7 +91,7 @@ public class EmptyCanteenItem extends Item
                     // Fill the canteen with water in the world
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-                    if (ModConfig.thirst.removeSourceBlocks())
+                    if (ModConfig.thirst.removeSourceBlocks)
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
 
                     Holder<Biome> biome = player.level().getBiome(player.blockPosition());
