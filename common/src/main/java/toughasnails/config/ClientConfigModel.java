@@ -3,12 +3,9 @@ package toughasnails.config;
 import blue.endless.jankson.Comment;
 import io.wispforest.owo.config.Option.SyncMode;
 import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
 import io.wispforest.owo.config.annotation.Sync;
-import toughasnails.api.TANAPI;
 
 @Sync(SyncMode.NONE)
-@Modmenu(modId = TANAPI.MOD_ID)
 @Config(name = "ToughAsNails_clientconfig", wrapperName = "ClientConfig")
 public class ClientConfigModel {
   // Gui
