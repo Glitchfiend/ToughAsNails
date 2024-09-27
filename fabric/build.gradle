@@ -20,6 +20,7 @@ dependencies {
     include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
     include implementation("com.electronwill.night-config:core:${nightconfig_version}")
     include implementation("net.jodah:typetools:0.6.3")
+    include "io.wispforest:owo-sentinel:${owo_version}"
 }
 
 loom {
