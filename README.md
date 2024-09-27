@@ -12,6 +12,5 @@ Compilation instructions:
 Use instructions:
 1. install fabric 1.20.1 and fabric api
 2. install glitchcore for 1.20.1 fabric
-3. install owo-lib for 1.20.1 fabric
-4. install the mod
-5. start the game
+3. install the mod
+4. start the game

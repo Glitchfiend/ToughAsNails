@@ -11,7 +11,6 @@ dependencies {
     compileOnly project(":Common")
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    annotationProcessor modImplementation("io.wispforest:owo-lib:${owo_version}")
     modImplementation "com.github.marlester-dev.GlitchCore-1201:GlitchCore-fabric:${glitchcore_version}"
     modImplementation "com.github.glitchfiend:SereneSeasons-fabric:1.20.4-${serene_seasons_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
@@ -20,7 +19,6 @@ dependencies {
     include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
     include implementation("com.electronwill.night-config:core:${nightconfig_version}")
     include implementation("net.jodah:typetools:0.6.3")
-    include "io.wispforest:owo-sentinel:${owo_version}"
 }
 
 loom {
@@ -72,7 +70,6 @@ curseforge {
         relations {
             requiredDependency 'fabric-api'
             requiredDependency 'glitchcore'
-            requiredDependency 'owo-lib'
         }
     }
 }

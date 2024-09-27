@@ -86,7 +86,7 @@ subprojects {
     processResources {
         var expandProps = [
             minecraft_version   : minecraft_version,
-            owo_version         : owo_version, glitchcore_version  : glitchcore_version, serene_seasons_version: serene_seasons_version,
+            glitchcore_version  : glitchcore_version, serene_seasons_version: serene_seasons_version,
             mod_id              : mod_id, mod_name: mod_name, mod_display_name: mod_display_name, mod_version: mod_version,
             mod_authors         : mod_authors, mod_description: mod_description,
             mod_issues_url      : mod_issues_url, mod_page_url: mod_page_url, mod_git_url: mod_git_url,
@@ -125,7 +125,6 @@ subprojects {
                         required.project "fabric-api"
                     }
                     required.project "glitchcore"
-                    required.project "owo-lib"
                 }
 
                 if (changelog_file.exists()) {
