@@ -64,9 +64,6 @@ subprojects {
         maven {
             url 'https://jitpack.io'
         }
-        maven {
-            url 'https://maven.wispforest.io/releases/'
-        }
         mavenCentral()
         maven {
             name = 'Sponge / Mixin'
