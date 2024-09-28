@@ -32,11 +32,13 @@
   "effect.toughasnails.internal_chill.description": "Gjev ein liten reduksjon i kroppstemperaturen for lengda. Vil ikkje gje hypotermi.",
   "enchantment.toughasnails.thermal_tuning": "Termisk tuning",
   "enchantment.toughasnails.water_cleansing": "Vassrensing",
+  "enchantment.toughasnails.thermal_tuning.desc": "Ei brystplate med termisk tuning vil nøytralisere spelaren sin kroppstemperatur, uansett noverande miljøtemperatur.",
+  "enchantment.toughasnails.water_cleansing.desc": "Ei vassflaske med vassreinsing vil automatisk reinse vatn som vert fylt opp i den.",
   
   "block.toughasnails.rain_collector": "Regnsamlar",
   "block.toughasnails.temperature_gauge": "Temperaturmålar",
   "block.toughasnails.thermoregulator": "Termisk regulator",
-  "block.toughasnails.water_purifier": "Vassrensar",
+  "block.toughasnails.water_purifier": "Vassreinsar",
   
   "item.toughasnails.apple_juice": "Eplejus",
   "item.toughasnails.cactus_juice": "Kaktusjus",
@@ -93,5 +95,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Ismotstandspil",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Ismotstandspil",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "Klimatolog"
+  "entity.minecraft.villager.toughasnails.climatologist": "Klimatolog",
+  "entity.minecraft.villager.climatologist": "Klimatolog"
 }
