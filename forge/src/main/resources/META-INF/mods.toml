@@ -27,13 +27,6 @@ logoFile="${mod_id}_logo.png"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
-    modId="owo"
-    mandatory=true
-    versionRange="[${owo_version},)"
-    ordering="AFTER"
-    side="BOTH"
-
-[[dependencies.${mod_id}]]
     modId="sereneseasons"
     mandatory=false
     versionRange="[${serene_seasons_version},)"
