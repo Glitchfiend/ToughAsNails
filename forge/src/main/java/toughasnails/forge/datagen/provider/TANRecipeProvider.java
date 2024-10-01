@@ -15,6 +15,8 @@ import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.forge.datagen.recipes.WaterPurifierRecipeBuilder;
 
+import java.util.function.Consumer;
+
 public class TANRecipeProvider extends RecipeProvider
 {
     public TANRecipeProvider(PackOutput output)
@@ -23,7 +25,7 @@ public class TANRecipeProvider extends RecipeProvider
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput output)
+    protected void buildRecipes(Consumer<FinishedRecipe> output)
     {
         // Canteen
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, TANItems.EMPTY_LEATHER_CANTEEN).define('#', Items.LEATHER).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_leather", has(Items.LEATHER)).save(output);
@@ -92,12 +94,12 @@ public class TANRecipeProvider extends RecipeProvider
         waterPurifier(output, new ItemStack(TANItems.NETHERITE_WATER_CANTEEN), new ItemStack(TANItems.NETHERITE_PURIFIED_WATER_CANTEEN), 200);
     }
 
-    public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
+    public static void waterPurifier(Consumer<FinishedRecipe> output, ItemStack input, ItemStack result, int purifyTime)
     {
-        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())));
+        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, new ResourceLocation(ToughAsNails.MOD_ID, getItemName(result.getItem())), input, result, purifyTime);
     }
 
-    public static void netheriteSmithing(RecipeOutput output, Item input, RecipeCategory category, Item result)
+    public static void netheriteSmithing(Consumer<FinishedRecipe> output, Item input, RecipeCategory category, Item result)
     {
         SmithingTransformRecipeBuilder.smithing(
                 Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(input), Ingredient.of(Items.NETHERITE_INGOT), category, result

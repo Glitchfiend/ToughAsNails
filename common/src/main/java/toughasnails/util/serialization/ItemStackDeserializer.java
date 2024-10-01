@@ -24,6 +24,7 @@
 
 package toughasnails.util.serialization;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -70,5 +71,16 @@ public class ItemStackDeserializer {
     }
 
     return null;
+  }
+
+  public static JsonElement serialize(ItemStack itemStack) {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty(NAME, BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath());
+    jsonObject.addProperty(STACK_SIZE, itemStack.getCount());
+    CompoundTag tag = itemStack.getTag();
+    if (tag != null) {
+      jsonObject.addProperty(TAG_COMPOUND, tag.toString());
+    }
+    return jsonObject;
   }
 }
