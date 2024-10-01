@@ -29,7 +29,7 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "java": ">=17",
-    "glitchcore": "*"
+    "glitchcore": ">=${glitchcore_version}"
   },
   "accessWidener": "${mod_id}.accesswidener",
   "custom": {
