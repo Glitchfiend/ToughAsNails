@@ -54,7 +54,7 @@ public class TemperatureConfig extends Config
     }
 
     private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER, BuiltInTemperatureModifier.INTERNAL_MODIFIER)
-            .stream().map(e -> e.toString().toLowerCase()).toList();
+        .stream().map(e -> e.toString().toLowerCase()).toList();
 
     private static final Predicate<List<String>> TEMPERATURE_MODIFIER_VALIDATOR = list -> {
         Set<String> configEntries = list.stream().map(String::toLowerCase).collect(Collectors.toSet());
