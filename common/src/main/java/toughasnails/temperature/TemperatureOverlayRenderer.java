@@ -18,8 +18,6 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.init.ModConfig;
 
-// FIXME: Minecraft Forge doesn't render overlay or hearts bug
-
 public class TemperatureOverlayRenderer
 {
     private static final Random RANDOM = new Random();
