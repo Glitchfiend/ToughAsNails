@@ -14,7 +14,7 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 
-@Mixin(LivingEntity.class)
+@Mixin(value = LivingEntity.class, priority = 99)
 public class MixinLivingEntity {
 
     @Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isDeadOrDying()Z", ordinal = 0) )
