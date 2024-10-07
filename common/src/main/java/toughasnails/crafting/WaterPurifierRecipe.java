@@ -1,7 +1,7 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+/*******************************************************************************
+ * Copyright 2021, the Glitchfiend Team.
+ * All rights reserved.
+ ******************************************************************************/
 
 package toughasnails.crafting;
 
