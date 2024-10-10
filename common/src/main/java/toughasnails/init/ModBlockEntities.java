@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import java.util.function.BiConsumer;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.References;
@@ -16,6 +15,8 @@ import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.block.entity.TemperatureGaugeBlockEntity;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
+
+import java.util.function.BiConsumer;
 
 public class ModBlockEntities
 {

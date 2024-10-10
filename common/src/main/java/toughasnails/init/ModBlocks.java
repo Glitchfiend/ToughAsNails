@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -17,6 +16,8 @@ import toughasnails.block.RainCollectorBlock;
 import toughasnails.block.TemperatureGaugeBlock;
 import toughasnails.block.ThermoregulatorBlock;
 import toughasnails.block.WaterPurifierBlock;
+
+import java.util.function.BiConsumer;
 
 public class ModBlocks
 {

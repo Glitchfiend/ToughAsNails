@@ -4,9 +4,6 @@
  ******************************************************************************/
 package toughasnails.mixin;
 
-import static toughasnails.temperature.TemperatureHandler.syncTemperature;
-import static toughasnails.thirst.ThirstHandler.syncThirst;
-
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +19,9 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.init.ModConfig;
+
+import static toughasnails.temperature.TemperatureHandler.syncTemperature;
+import static toughasnails.thirst.ThirstHandler.syncThirst;
 
 @Mixin(ServerPlayer.class)
 public abstract class MixinServerPlayer extends Player implements ITANPlayer

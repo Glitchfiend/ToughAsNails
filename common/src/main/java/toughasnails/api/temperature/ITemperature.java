@@ -4,8 +4,8 @@
  ******************************************************************************/
 package toughasnails.api.temperature;
 
-import java.util.Set;
 import net.minecraft.core.BlockPos;
+import java.util.Set;
 
 public interface ITemperature
 {

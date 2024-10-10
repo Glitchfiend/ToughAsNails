@@ -15,8 +15,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import toughasnails.api.container.TANContainerTypes;
 import toughasnails.api.crafting.TANRecipeTypes;
+import toughasnails.api.container.TANContainerTypes;
 import toughasnails.block.entity.WaterPurifierBlockEntity;
 import toughasnails.crafting.WaterPurifierRecipe;
 

@@ -5,9 +5,6 @@
 package toughasnails.block.entity;
 
 import com.google.common.collect.ImmutableSet;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -39,6 +36,10 @@ import toughasnails.block.ThermoregulatorBlock;
 import toughasnails.container.ThermoregulatorContainer;
 import toughasnails.init.ModTags;
 import toughasnails.temperature.AreaFill;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {

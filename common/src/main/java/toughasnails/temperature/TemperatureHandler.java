@@ -6,8 +6,6 @@ package toughasnails.temperature;
 
 import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
-import java.util.HashSet;
-import java.util.UUID;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
@@ -28,6 +26,9 @@ import toughasnails.init.ModConfig;
 import toughasnails.init.ModPackets;
 import toughasnails.init.ModTags;
 import toughasnails.network.UpdateTemperaturePacket;
+
+import java.util.HashSet;
+import java.util.UUID;
 
 public class TemperatureHandler
 {

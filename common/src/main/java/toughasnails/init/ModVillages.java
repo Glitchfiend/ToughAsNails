@@ -11,13 +11,6 @@ import glitchcore.event.village.VillagerTradesEvent;
 import glitchcore.event.village.WandererTradesEvent;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
-import javax.annotation.Nullable;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -50,6 +43,14 @@ import toughasnails.api.item.TANItems;
 import toughasnails.api.village.TANPoiTypes;
 import toughasnails.api.village.TANVillagerProfessions;
 import toughasnails.core.ToughAsNails;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public class ModVillages
 {

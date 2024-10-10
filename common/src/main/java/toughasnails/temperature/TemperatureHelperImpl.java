@@ -6,10 +6,6 @@ package toughasnails.temperature;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.FluidTags;
@@ -27,16 +23,16 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.enchantment.TANEnchantments;
 import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
-import toughasnails.api.temperature.IPlayerTemperatureModifier;
-import toughasnails.api.temperature.IPositionalTemperatureModifier;
-import toughasnails.api.temperature.IProximityBlockModifier;
+import toughasnails.api.temperature.*;
 import toughasnails.api.temperature.IProximityBlockModifier.Type;
-import toughasnails.api.temperature.ITemperature;
-import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatureHelper
 {

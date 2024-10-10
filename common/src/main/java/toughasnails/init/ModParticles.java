@@ -4,13 +4,14 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import java.util.function.BiConsumer;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import toughasnails.api.TANAPI;
 import toughasnails.api.particle.TANParticles;
+
+import java.util.function.BiConsumer;
 
 public class ModParticles
 {

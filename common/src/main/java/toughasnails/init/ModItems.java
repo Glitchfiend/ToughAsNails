@@ -5,7 +5,6 @@
 package toughasnails.init;
 
 import glitchcore.util.Environment;
-import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
@@ -14,14 +13,9 @@ import net.minecraft.world.item.Item;
 import toughasnails.api.TANAPI;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
-import toughasnails.item.DirtyWaterBottleItem;
-import toughasnails.item.DyeableWoolArmorItem;
-import toughasnails.item.EmptyCanteenItem;
-import toughasnails.item.FilledCanteenItem;
-import toughasnails.item.JuiceItem;
-import toughasnails.item.LeafArmorItem;
-import toughasnails.item.PurifiedWaterBottleItem;
-import toughasnails.item.StackableBowlFoodItem;
+import toughasnails.item.*;
+
+import java.util.function.BiConsumer;
 
 public class ModItems
 {

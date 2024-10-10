@@ -7,9 +7,6 @@ package toughasnails.client.handler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import glitchcore.event.client.LevelRenderEvent;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -24,6 +21,10 @@ import org.joml.Matrix4f;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 import toughasnails.temperature.AreaFill;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LevelRenderHandler
 {

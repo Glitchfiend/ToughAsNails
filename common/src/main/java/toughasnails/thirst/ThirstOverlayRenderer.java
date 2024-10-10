@@ -7,7 +7,6 @@ package toughasnails.thirst;
 import glitchcore.event.TickEvent;
 import glitchcore.event.client.RenderGuiEvent;
 import glitchcore.util.GuiUtils;
-import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +16,8 @@ import toughasnails.api.potion.TANEffects;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.init.ModConfig;
+
+import java.util.Random;
 
 public class ThirstOverlayRenderer
 {
