@@ -31,7 +31,7 @@ public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierCo
     @Override
     public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks)
     {
-        this.renderBackground(gui, mouseX, mouseY, partialTicks);
+        this.renderBackground(gui);
         super.render(gui, mouseX, mouseY, partialTicks);
         this.renderTooltip(gui, mouseX, mouseY);
     }

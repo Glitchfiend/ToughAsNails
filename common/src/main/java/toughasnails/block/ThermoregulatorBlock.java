@@ -4,11 +4,11 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,12 +30,11 @@ import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.api.particle.TANParticles;
 import toughasnails.block.entity.ThermoregulatorBlockEntity;
 
-import javax.annotation.Nullable;
 import java.util.function.ToIntFunction;
+import javax.annotation.Nullable;
 
 public class ThermoregulatorBlock extends BaseEntityBlock
 {
-    public static final MapCodec<WaterPurifierBlock> CODEC = simpleCodec(WaterPurifierBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty COOLING = BooleanProperty.create("cooling");
     public static final BooleanProperty HEATING = BooleanProperty.create("heating");
@@ -45,12 +44,6 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(COOLING, false).setValue(HEATING, false).setValue(ENABLED, true));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec()
-    {
-        return CODEC;
     }
 
     @Override
@@ -120,8 +113,20 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean $$4)
     {
-        Containers.dropContentsOnDestroy(state, newState, level, pos);
+        dropContentsOnDestroy(state, newState, level, pos);
         super.onRemove(state, level, pos, newState, $$4);
+    }
+
+    public static void dropContentsOnDestroy(BlockState $$0, BlockState $$1, Level $$2, BlockPos $$3) {
+        if (!$$0.is($$1.getBlock())) {
+            BlockEntity $$4 = $$2.getBlockEntity($$3);
+            if ($$4 instanceof Container) {
+                Container $$5 = (Container)$$4;
+                Containers.dropContents($$2, $$3, $$5);
+                $$2.updateNeighbourForOutputSignal($$3, $$0.getBlock());
+            }
+
+        }
     }
 
     @Override

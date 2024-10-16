@@ -8,8 +8,6 @@ import glitchcore.config.Config;
 import glitchcore.util.Environment;
 import toughasnails.api.TANAPI;
 
-import java.nio.file.Path;
-
 public class ThirstConfig extends Config
 {
     public boolean enableThirst;

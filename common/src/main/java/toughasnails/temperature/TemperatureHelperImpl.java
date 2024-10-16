@@ -312,7 +312,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             }
             else
             {
-                ArmorTrim.getTrim(player.level().registryAccess(), stack, true).ifPresent(armorTrim -> {
+                ArmorTrim.getTrim(player.level().registryAccess(), stack).ifPresent(armorTrim -> {
                     Holder<TrimMaterial> trimMaterial = armorTrim.material();
                     if (trimMaterial.is(ModTags.Trims.COOLING_TRIMS)) coolingPieces.getAndIncrement();
                     if (trimMaterial.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();

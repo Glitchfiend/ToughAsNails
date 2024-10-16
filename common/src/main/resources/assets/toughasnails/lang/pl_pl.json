@@ -93,5 +93,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Strzała odporności na lód",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Strzała odporności na lód",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "Klimatolog"
+  "entity.minecraft.villager.toughasnails.climatologist": "Klimatolog",
+  "entity.minecraft.villager.climatologist": "Klimatolog"
 }

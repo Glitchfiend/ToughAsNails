@@ -8,7 +8,6 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.List;

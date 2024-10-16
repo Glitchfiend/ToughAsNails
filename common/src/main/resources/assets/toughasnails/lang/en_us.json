@@ -93,5 +93,6 @@
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Arrow of Ice Resistance",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Arrow of Ice Resistance",
   
-  "entity.minecraft.villager.toughasnails.climatologist": "Climatologist"
+  "entity.minecraft.villager.toughasnails.climatologist": "Climatologist",
+  "entity.minecraft.villager.climatologist": "Climatologist"
 }

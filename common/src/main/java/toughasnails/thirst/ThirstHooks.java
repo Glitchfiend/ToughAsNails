@@ -7,7 +7,6 @@ import net.minecraft.world.level.GameRules;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 public class ThirstHooks

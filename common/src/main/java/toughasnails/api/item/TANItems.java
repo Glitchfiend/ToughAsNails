@@ -5,7 +5,6 @@
 package toughasnails.api.item;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 
 public class TANItems
 {

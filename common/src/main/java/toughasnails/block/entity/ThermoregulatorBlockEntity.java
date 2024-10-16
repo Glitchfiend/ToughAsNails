@@ -34,7 +34,6 @@ import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.block.ThermoregulatorBlock;
 import toughasnails.container.ThermoregulatorContainer;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 import toughasnails.temperature.AreaFill;
 

@@ -16,7 +16,6 @@ import toughasnails.api.TANAPI;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.api.potion.TANPotions;
 import toughasnails.potion.ThirstEffect;
-
 import java.util.function.BiConsumer;
 
 public class ModPotions

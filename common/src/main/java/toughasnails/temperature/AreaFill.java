@@ -11,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import toughasnails.api.temperature.TemperatureHelper;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 import toughasnails.init.ModTags;
 

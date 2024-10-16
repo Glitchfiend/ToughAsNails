@@ -7,7 +7,6 @@ package toughasnails.core;
 import glitchcore.event.EventManager;
 import glitchcore.util.Environment;
 import glitchcore.util.RegistryHelper;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;

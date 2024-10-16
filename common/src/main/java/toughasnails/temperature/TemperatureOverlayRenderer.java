@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import toughasnails.api.TANAPI;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModConfig;
 
 import java.util.Random;
@@ -36,7 +35,6 @@ public class TemperatureOverlayRenderer
         if (event.getType() != RenderGuiEvent.Type.FOOD)
             return;
 
-        Gui gui = event.getGui();
         Minecraft minecraft = Minecraft.getInstance();
         if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
         {
@@ -56,8 +54,9 @@ public class TemperatureOverlayRenderer
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
 
-        if (TemperatureHelper.getTicksHyperthermic(player) > 0)
+        if (TemperatureHelper.getTicksHyperthermic(player) > 0) {
             gui.renderTextureOverlay(event.getGuiGraphics(), HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
+        }
     }
 
     public static void onClientTick(TickEvent.Client event)

@@ -25,7 +25,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
@@ -36,8 +35,8 @@ import toughasnails.block.WaterPurifierBlock;
 import toughasnails.container.WaterPurifierContainer;
 import toughasnails.crafting.WaterPurifierRecipe;
 
-import javax.annotation.Nullable;
 import java.util.Iterator;
+import javax.annotation.Nullable;
 
 public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {
@@ -148,11 +147,11 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         ItemStack filterStack = blockEntity.items.get(1);
         boolean hasFilter = !filterStack.isEmpty();
         if (blockEntity.isFiltering() || hasFilter && !blockEntity.items.get(0).isEmpty()) {
-            RecipeHolder<?> recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
+            var recipe = blockEntity.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, blockEntity, blockEntity.level).orElse(null);
 
             if (recipe != null)
             {
-                if (!blockEntity.isFiltering() && blockEntity.canFilter(recipe.value())) {
+                if (!blockEntity.isFiltering() && blockEntity.canFilter(recipe)) {
                     blockEntity.filterTimeRemaining = blockEntity.getFilterDuration(filterStack);
                     blockEntity.filterDuration = blockEntity.filterTimeRemaining;
 
@@ -173,13 +172,13 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                     }
                 }
 
-                if (blockEntity.isFiltering() && blockEntity.canFilter(recipe.value())) {
+                if (blockEntity.isFiltering() && blockEntity.canFilter(recipe)) {
                     ++blockEntity.purifyProgress;
 
                     if (blockEntity.purifyProgress == blockEntity.purifyTotalTime) {
                         blockEntity.purifyProgress = 0;
                         blockEntity.purifyTotalTime = blockEntity.getTotalPurifyTime();
-                        blockEntity.filter(recipe.value());
+                        blockEntity.filter(recipe);
                         changed = true;
                     }
                 } else {
@@ -367,7 +366,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     /** Get the time taken for an input item to be purified. */
     protected int getTotalPurifyTime()
     {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(r -> r.value().getPurifyTime()).orElse(200);
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<WaterPurifierRecipe>) TANRecipeTypes.WATER_PURIFYING, this, this.level).map(r -> r.getPurifyTime()).orElse(200);
     }
 
     private void filter(@Nullable Recipe<?> recipe)
@@ -409,7 +408,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     private static ImmutableMap<Item, Integer> getFilterDurations()
     {
         ImmutableMap.Builder<Item, Integer> builder = ImmutableMap.builder();
-        add(builder, Items.SHORT_GRASS, 100);
+        add(builder, Items.GRASS, 100);
         add(builder, Items.PAPER, 200);
         add(builder, Items.GRAVEL, 400);
         add(builder, ItemTags.SAND, 800);

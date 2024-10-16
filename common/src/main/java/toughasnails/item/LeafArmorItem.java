@@ -6,9 +6,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.Level;
-import toughasnails.core.ToughAsNails;
-
-import java.util.List;
 
 public class LeafArmorItem extends DyeableArmorItem
 {

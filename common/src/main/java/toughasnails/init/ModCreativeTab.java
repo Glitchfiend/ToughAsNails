@@ -10,9 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import toughasnails.api.TANAPI;
-import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 
 import java.lang.reflect.Field;

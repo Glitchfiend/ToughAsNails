@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import toughasnails.api.TANAPI;
 import toughasnails.container.ThermoregulatorContainer;
-import toughasnails.container.WaterPurifierContainer;
 
 public class ThermoregulatorScreen extends AbstractContainerScreen<ThermoregulatorContainer>
 {
@@ -32,7 +31,7 @@ public class ThermoregulatorScreen extends AbstractContainerScreen<Thermoregulat
     @Override
     public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks)
     {
-        this.renderBackground(gui, mouseX, mouseY, partialTicks);
+        this.renderBackground(gui);
         super.render(gui, mouseX, mouseY, partialTicks);
         this.renderTooltip(gui, mouseX, mouseY);
     }

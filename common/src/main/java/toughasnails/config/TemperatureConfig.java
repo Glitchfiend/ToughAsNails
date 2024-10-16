@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class TemperatureConfig extends Config
 {
     public boolean enableTemperature;
-    
+
     public int temperatureChangeDelay;
     public int armorTemperatureChangeDelay;
     public int handheldTemperatureChangeDelay;
