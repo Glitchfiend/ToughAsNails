@@ -30,20 +30,6 @@ public class ThirstHooks
 
         data.lastFoodLevel = data.foodLevel;
 
-        if (data.exhaustionLevel > 4.0F)
-        {
-            data.exhaustionLevel -= 4.0F;
-
-            if (data.saturationLevel > 0.0F)
-            {
-                data.saturationLevel = Math.max(data.saturationLevel - 1.0F, 0.0F);
-            }
-            else if (difficulty != Difficulty.PEACEFUL)
-            {
-                data.foodLevel = Math.max(data.foodLevel - 1, 0);
-            }
-        }
-
         boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 
         if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
