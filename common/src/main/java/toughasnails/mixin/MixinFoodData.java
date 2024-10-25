@@ -19,6 +19,5 @@ public abstract class MixinFoodData
     public void onTick(Player player, CallbackInfo ci)
     {
         ThirstHooks.doFoodDataTick((FoodData)(Object)this, player);
-        ci.cancel();
     }
 }
