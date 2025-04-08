@@ -16,6 +16,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -144,7 +145,7 @@ public class ModVillages
 
     public static void registerProfessions(BiConsumer<ResourceLocation, VillagerProfession> func)
     {
-        TANVillagerProfessions.CLIMATOLOGIST = register(func, "climatologist", TANPoiTypes.CLIMATOLOGIST, SoundEvents.VILLAGER_WORK_ARMORER);
+        register(func, TANVillagerProfessions.CLIMATOLOGIST, TANPoiTypes.CLIMATOLOGIST, SoundEvents.VILLAGER_WORK_ARMORER);
     }
 
     static class EmeraldForItems implements VillagerTrades.ItemListing {
@@ -228,27 +229,27 @@ public class ModVillages
         return type;
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, String name, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound)
+    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound)
     {
-        return register(func, name, (h) -> h.is(poi), (h) -> h.is(poi), workSound);
+        return register(func, key, (h) -> h.is(poi), (h) -> h.is(poi), workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, String name, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, @Nullable SoundEvent workSound)
+    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, @Nullable SoundEvent workSound)
     {
-        return register(func, name, heldJobSite, acquirableJobSite, ImmutableSet.of(), ImmutableSet.of(), workSound);
+        return register(func, key, heldJobSite, acquirableJobSite, ImmutableSet.of(), ImmutableSet.of(), workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, String name, ResourceKey<PoiType> poi, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
-        return register(func, name, ($$1x) -> $$1x.is(poi), ($$1x) -> $$1x.is(poi), requestedItems, secondaryPoi, workSound);
+    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
+        return register(func, key, ($$1x) -> $$1x.is(poi), ($$1x) -> $$1x.is(poi), requestedItems, secondaryPoi, workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, String name, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
-        return register(func, name, new VillagerProfession(ToughAsNails.MOD_ID + ":" + name, heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound));
+    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
+        return register(func, key, new VillagerProfession(Component.translatable("entity." + ToughAsNails.MOD_ID + ".villager." + key.location().getPath()), heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound));
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, String name, VillagerProfession profession)
+    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, VillagerProfession profession)
     {
-        func.accept(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), profession);
+        func.accept(key.location(), profession);
         return profession;
     }
 

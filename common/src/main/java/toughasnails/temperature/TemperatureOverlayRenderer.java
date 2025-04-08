@@ -41,7 +41,6 @@ public class TemperatureOverlayRenderer
         Minecraft minecraft = Minecraft.getInstance();
         if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
         {
-            GuiUtils.setupOverlayRenderState(true, false);
             renderTemperature(event.getGuiGraphics(), event.getDeltaTracker().getRealtimeDeltaTicks(), event.getScreenWidth(), event.getScreenHeight());
         }
     }
@@ -50,8 +49,6 @@ public class TemperatureOverlayRenderer
     {
         if (event.getType() != RenderGuiEvent.Type.FROSTBITE)
             return;
-
-        GuiUtils.setupOverlayRenderState(true, false);
 
         Gui gui = event.getGui();
         Minecraft minecraft = Minecraft.getInstance();

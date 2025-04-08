@@ -3,6 +3,6 @@
   "textures": {
     "layer0": "toughasnails:item/wool_chestplate",
     "layer1": "toughasnails:item/wool_chestplate_overlay",
-    "layer2": "minecraft:trims/items/chestplate_trim_lapis"
+    "layer2": "toughasnails:trims/items/chestplate_trim_lapis"
   }
 }

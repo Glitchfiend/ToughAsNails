@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
@@ -18,9 +17,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class TANTrimMaterialTagsProvider extends TagsProvider<TrimMaterial>
 {
-    public TANTrimMaterialTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper)
+    public TANTrimMaterialTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
     {
-        super(output, Registries.TRIM_MATERIAL, lookupProvider, ToughAsNails.MOD_ID, existingFileHelper);
+        super(output, Registries.TRIM_MATERIAL, lookupProvider, ToughAsNails.MOD_ID);
     }
 
     @Override

@@ -8,7 +8,7 @@ import glitchcore.data.ModelProviderBase;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
-import net.minecraft.client.data.models.blockstates.BlockStateGenerator;
+import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +25,7 @@ public class TANModelProvider extends ModelProviderBase
     }
 
     @Override
-    protected BlockModelGenerators createBlockModelGenerators(Consumer<BlockStateGenerator> consumer, ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> biConsumer) {
+    protected BlockModelGenerators createBlockModelGenerators(Consumer<BlockModelDefinitionGenerator> consumer, ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> biConsumer) {
         return null;
     }
 

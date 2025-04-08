@@ -85,22 +85,6 @@ public class WaterPurifierBlock extends BaseEntityBlock
     }
 
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
-    {
-        if (!state.is(newState.getBlock()))
-        {
-            BlockEntity tileentity = worldIn.getBlockEntity(pos);
-            if (tileentity instanceof WaterPurifierBlockEntity)
-            {
-                Containers.dropContents(worldIn, pos, (WaterPurifierBlockEntity)tileentity);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-
-            super.onRemove(state, worldIn, pos, newState, isMoving);
-        }
-    }
-
-    @Override
     public boolean hasAnalogOutputSignal(BlockState state)
     {
         return true;

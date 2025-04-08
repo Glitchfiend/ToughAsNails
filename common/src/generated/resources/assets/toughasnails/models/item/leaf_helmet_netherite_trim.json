@@ -3,6 +3,6 @@
   "textures": {
     "layer0": "toughasnails:item/leaf_helmet",
     "layer1": "toughasnails:item/leaf_helmet_overlay",
-    "layer2": "minecraft:trims/items/helmet_trim_netherite"
+    "layer2": "toughasnails:trims/items/helmet_trim_netherite"
   }
 }

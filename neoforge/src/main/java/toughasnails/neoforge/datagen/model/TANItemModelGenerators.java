@@ -18,9 +18,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.level.FoliageColor;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 import toughasnails.api.item.TANItems;
 import toughasnails.client.item.TemperatureProperty;
+import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModEquipmentAssets;
 
 import java.util.ArrayList;
@@ -29,8 +29,13 @@ import java.util.function.BiConsumer;
 
 public class TANItemModelGenerators extends ItemModelGenerators
 {
-    private final ItemModelOutput itemModelOutput;
-    private final BiConsumer<ResourceLocation, ModelInstance> modelOutput;
+    public static final ResourceLocation TRIM_PREFIX_HELMET = prefixForSlotTrim("helmet");
+    public static final ResourceLocation TRIM_PREFIX_CHESTPLATE = prefixForSlotTrim("chestplate");
+    public static final ResourceLocation TRIM_PREFIX_LEGGINGS = prefixForSlotTrim("leggings");
+    public static final ResourceLocation TRIM_PREFIX_BOOTS = prefixForSlotTrim("boots");
+
+    public final ItemModelOutput itemModelOutput;
+    public final BiConsumer<ResourceLocation, ModelInstance> modelOutput;
 
     public TANItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput)
     {
@@ -79,19 +84,19 @@ public class TANItemModelGenerators extends ItemModelGenerators
         this.generateFlatItem(TANItems.SWEET_BERRY_JUICE, ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(TANItems.TAN_ICON, ModelTemplates.FLAT_ITEM);
 
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_HELMET, ModEquipmentAssets.LEAF, "helmet", FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_CHESTPLATE, ModEquipmentAssets.LEAF, "chestplate", FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_LEGGINGS, ModEquipmentAssets.LEAF, "leggings", FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_BOOTS, ModEquipmentAssets.LEAF, "boots", FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItem(TANItems.WOOL_HELMET, ModEquipmentAssets.WOOL, "helmet", true);
-        this.generateTrimmableItem(TANItems.WOOL_CHESTPLATE, ModEquipmentAssets.WOOL, "chestplate", true);
-        this.generateTrimmableItem(TANItems.WOOL_LEGGINGS, ModEquipmentAssets.WOOL, "leggings", true);
-        this.generateTrimmableItem(TANItems.WOOL_BOOTS, ModEquipmentAssets.WOOL, "boots", true);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_HELMET, ModEquipmentAssets.LEAF, TRIM_PREFIX_HELMET, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_CHESTPLATE, ModEquipmentAssets.LEAF, TRIM_PREFIX_CHESTPLATE, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_LEGGINGS, ModEquipmentAssets.LEAF, TRIM_PREFIX_LEGGINGS, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_BOOTS, ModEquipmentAssets.LEAF, TRIM_PREFIX_BOOTS, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItem(TANItems.WOOL_HELMET, ModEquipmentAssets.WOOL, TRIM_PREFIX_HELMET, true);
+        this.generateTrimmableItem(TANItems.WOOL_CHESTPLATE, ModEquipmentAssets.WOOL, TRIM_PREFIX_CHESTPLATE, true);
+        this.generateTrimmableItem(TANItems.WOOL_LEGGINGS, ModEquipmentAssets.WOOL, TRIM_PREFIX_LEGGINGS, true);
+        this.generateTrimmableItem(TANItems.WOOL_BOOTS, ModEquipmentAssets.WOOL, TRIM_PREFIX_BOOTS, true);
 
         this.generateThermometerItem(TANItems.THERMOMETER);
     }
 
-    public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, String name, int defaultColor)
+    public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, ResourceLocation prefix, int defaultColor)
     {
         ResourceLocation modelLocation = ModelLocationUtils.getModelLocation(item);
         ResourceLocation textureLocation = TextureMapping.getItemTexture(item);
@@ -99,10 +104,8 @@ public class TANItemModelGenerators extends ItemModelGenerators
         List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIAL_MODELS.size());
 
         for (ItemModelGenerators.TrimMaterialData itemmodelgenerators$trimmaterialdata : TRIM_MATERIAL_MODELS) {
-            ResourceLocation resourcelocation3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.name() + "_trim");
-            ResourceLocation resourcelocation4 = ResourceLocation.withDefaultNamespace(
-                    "trims/items/" + name + "_trim_" + itemmodelgenerators$trimmaterialdata.textureName(key)
-            );
+            ResourceLocation resourcelocation3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().base().suffix() + "_trim");
+            ResourceLocation resourcelocation4 = prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix());
             ItemModel.Unbaked itemmodel$unbaked;
             this.generateLayeredItem(resourcelocation3, textureLocation, overlayTextureLocation, resourcelocation4);
             itemmodel$unbaked = ItemModelUtils.tintedModel(resourcelocation3, new Dye(defaultColor));
@@ -133,5 +136,9 @@ public class TANItemModelGenerators extends ItemModelGenerators
                         item,
                         ItemModelUtils.rangeSelect(new TemperatureProperty(), 1.0F, entries)
                 );
+    }
+
+    public static ResourceLocation prefixForSlotTrim(String p_399619_) {
+        return ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "trims/items/" + p_399619_ + "_trim");
     }
 }

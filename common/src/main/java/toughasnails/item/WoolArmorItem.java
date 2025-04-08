@@ -5,17 +5,15 @@
 package toughasnails.item;
 
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.ArmorType;
 
-public class WoolArmorItem extends ArmorItem
+public class WoolArmorItem extends Item
 {
-    public WoolArmorItem(ArmorMaterial $$0, ArmorType $$1, Properties $$2)
+    public WoolArmorItem(Properties properties)
     {
-        super($$0, $$1, $$2);
+        super(properties);
     }
 
     @Override
@@ -23,7 +21,7 @@ public class WoolArmorItem extends ArmorItem
     {
         if (!stack.has(DataComponents.DYED_COLOR))
         {
-            stack.set(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF, false));
+            stack.set(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF));
         }
     }
 }

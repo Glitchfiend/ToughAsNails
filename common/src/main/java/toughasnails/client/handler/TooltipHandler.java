@@ -48,7 +48,7 @@ public class TooltipHandler
         BlockState state = block.defaultBlockState();
         RegistryAccess registryAccess = Minecraft.getInstance().getConnection().registryAccess();
 
-        Optional<Holder.Reference<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
+        Optional<Holder<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
 
         // Heating/Cooling Blocks and Armor/Trimmed Armor
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS)))

@@ -41,14 +41,14 @@ public class ThirstData implements IThirst
 
     public void readAdditionalSaveData(CompoundTag nbt)
     {
-        if (nbt.contains("thirstLevel", 99))
+        if (nbt.contains("thirstLevel"))
         {
             if (ModConfig.thirst.enableThirst)
             {
-                this.setThirst(nbt.getInt("thirstLevel"));
-                this.setTickTimer(nbt.getInt("thirstTickTimer"));
-                this.setHydration(nbt.getFloat("thirstHydrationLevel"));
-                this.setExhaustion(nbt.getFloat("thirstExhaustionLevel"));
+                this.setThirst(nbt.getInt("thirstLevel").orElse(ThirstData.DEFAULT_THIRST));
+                this.setTickTimer(nbt.getInt("thirstTickTimer").orElse(0));
+                this.setHydration(nbt.getFloat("thirstHydrationLevel").orElse(ThirstData.DEFAULT_HYDRATION));
+                this.setExhaustion(nbt.getFloat("thirstExhaustionLevel").orElse(0.0F));
             }
             else
             {

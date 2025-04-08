@@ -57,7 +57,7 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
     {
         this.temperatureData.readAdditionalSaveData(nbt);
         this.thirstData.readAdditionalSaveData(nbt);
-        this.climateClemencyGranted = nbt.getBoolean("climateClemencyGranted");
+        this.climateClemencyGranted = nbt.getBoolean("climateClemencyGranted").orElse(false);
     }
 
     @Inject(method="addAdditionalSaveData", at=@At(value="TAIL"))

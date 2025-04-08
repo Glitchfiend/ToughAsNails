@@ -3,6 +3,6 @@
   "textures": {
     "layer0": "toughasnails:item/wool_boots",
     "layer1": "toughasnails:item/wool_boots_overlay",
-    "layer2": "minecraft:trims/items/boots_trim_quartz"
+    "layer2": "toughasnails:trims/items/boots_trim_quartz"
   }
 }

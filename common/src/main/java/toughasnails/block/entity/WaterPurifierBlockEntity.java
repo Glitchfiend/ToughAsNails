@@ -117,10 +117,10 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         super.loadAdditional(nbt, lookup);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(nbt, this.items, lookup);
-        this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining");
-        this.filterDuration = nbt.getInt("FilterDuration");
-        this.purifyProgress = nbt.getInt("PurifyProgress");
-        this.purifyTotalTime = nbt.getInt("PurifyTotalTime");
+        this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining").orElse(0);
+        this.filterDuration = nbt.getInt("FilterDuration").orElse(0);
+        this.purifyProgress = nbt.getInt("PurifyProgress").orElse(0);
+        this.purifyTotalTime = nbt.getInt("PurifyTotalTime").orElse(0);
     }
 
     @Override

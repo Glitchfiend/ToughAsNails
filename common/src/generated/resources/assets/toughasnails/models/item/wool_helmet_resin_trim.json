@@ -3,6 +3,6 @@
   "textures": {
     "layer0": "toughasnails:item/wool_helmet",
     "layer1": "toughasnails:item/wool_helmet_overlay",
-    "layer2": "minecraft:trims/items/helmet_trim_resin"
+    "layer2": "toughasnails:trims/items/helmet_trim_resin"
   }
 }

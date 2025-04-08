@@ -10,10 +10,7 @@
   ],
   "result": {
     "components": {
-      "minecraft:dyed_color": {
-        "rgb": 16777215,
-        "show_in_tooltip": false
-      }
+      "minecraft:dyed_color": 16777215
     },
     "count": 1,
     "id": "toughasnails:wool_helmet"

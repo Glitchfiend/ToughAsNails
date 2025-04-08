@@ -54,15 +54,15 @@ public class TemperatureData implements ITemperature
 
     public void readAdditionalSaveData(CompoundTag nbt)
     {
-        if (nbt.contains("temperatureLevel", 99))
+        if (nbt.contains("temperatureLevel"))
         {
             if (ModConfig.temperature.enableTemperature)
             {
-                this.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel")]);
-                this.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel")]);
-                this.setChangeDelayTicks(nbt.getInt("changeDelayTicks"));
-                this.setHyperthermiaTicks(nbt.getInt("hyperthermiaTicks"));
-                this.setExtremityDelayTicks(nbt.getInt("extremityDelayTicks"));
+                this.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
+                this.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
+                this.setChangeDelayTicks(nbt.getInt("changeDelayTicks").orElse(0));
+                this.setHyperthermiaTicks(nbt.getInt("hyperthermiaTicks").orElse(0));
+                this.setExtremityDelayTicks(nbt.getInt("extremityDelayTicks").orElse(0));
             }
             else
             {

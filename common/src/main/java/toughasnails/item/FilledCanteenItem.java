@@ -10,7 +10,9 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +22,7 @@ import net.minecraft.world.level.Level;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.thirst.ThirstHelper;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FilledCanteenItem extends EmptyCanteenItem
@@ -30,7 +33,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected)
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot)
     {
         if (!(entity instanceof Player player) || stack.getItem() == getPurifiedWaterCanteen() || stack.getEnchantments().isEmpty())
             return;
@@ -41,7 +44,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
         stack.getEnchantments().entrySet().forEach(e -> newStack.enchant(e.getKey(), e.getIntValue()));
 
         // Replace the current stack in the player's inventory
-        player.getInventory().setItem(slot, newStack);
+        player.getInventory().setItem(slot.getIndex(), newStack);
     }
 
     @Override

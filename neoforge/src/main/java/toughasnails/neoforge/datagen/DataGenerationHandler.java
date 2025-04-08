@@ -12,7 +12,6 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModEnchantments;
@@ -35,7 +34,6 @@ public class DataGenerationHandler
     public static void onGatherData(GatherDataEvent.Client event)
     {
         DataGenerator generator = event.getGenerator();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         PackOutput output = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
@@ -48,13 +46,13 @@ public class DataGenerationHandler
         generator.addProvider(true, TANLootTableProvider.create(output, event.getLookupProvider()));
 
         // Tags
-        var blocksTagProvider = generator.addProvider(true, new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
-        generator.addProvider(true, new TANItemTagsProvider(output, datapackProvider.getRegistryProvider(), blocksTagProvider.contentsGetter(), existingFileHelper));
-        generator.addProvider(true, new TANBiomeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
-        generator.addProvider(true, new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
-        generator.addProvider(true, new TANTrimMaterialTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
-        generator.addProvider(true, new TANPoiTypesTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
-        generator.addProvider(true, new TANEnchantmentTagsProvider(output, datapackProvider.getRegistryProvider(), existingFileHelper));
+        var blocksTagProvider = generator.addProvider(true, new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANItemTagsProvider(output, datapackProvider.getRegistryProvider(), blocksTagProvider.contentsGetter()));
+        generator.addProvider(true, new TANBiomeTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANTrimMaterialTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANPoiTypesTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANEnchantmentTagsProvider(output, datapackProvider.getRegistryProvider()));
 
         // Client
         generator.addProvider(true, new TANEquipmentAssetProvider(output));

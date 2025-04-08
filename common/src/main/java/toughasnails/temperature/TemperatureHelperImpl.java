@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -290,10 +292,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger coolingItems = new AtomicInteger();
         AtomicInteger heatingItems = new AtomicInteger();
 
-        player.getHandSlots().forEach((stack -> {
+        for (EquipmentSlot slot : EquipmentSlotGroup.HAND) {
+            var stack = player.getItemBySlot(slot);
             if (stack.is(ModTags.Items.COOLING_HELD_ITEMS)) coolingItems.getAndIncrement();
             if (stack.is(ModTags.Items.HEATING_HELD_ITEMS)) heatingItems.getAndIncrement();
-        }));
+        }
 
         return current.increment(heatingItems.get() - coolingItems.get());
     }
@@ -303,7 +306,8 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         AtomicInteger coolingPieces = new AtomicInteger();
         AtomicInteger heatingPieces = new AtomicInteger();
 
-        player.getArmorSlots().forEach((stack -> {
+        for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+            var stack = player.getItemBySlot(slot);
             // Prevent doubling of effects if armor were to be tagged as heating/cooling and also had a heating/cooling trim applied
             if (stack.is(ModTags.Items.COOLING_ARMOR) || stack.is(ModTags.Items.HEATING_ARMOR))
             {
@@ -317,7 +321,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
                     if (material.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();
                 });
             }
-        }));
+        }
 
         // Prevent armor from sending players over the edge into hot or icy temperature levels
         TemperatureLevel armorAdjTemp = current.increment(heatingPieces.get() / 2 - coolingPieces.get() / 2);

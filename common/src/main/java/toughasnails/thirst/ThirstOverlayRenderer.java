@@ -47,7 +47,6 @@ public class ThirstOverlayRenderer
         boolean isMounted = vehicle != null && vehicle.showVehicleHealth();
         if (!isMounted && !minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
         {
-            GuiUtils.setupOverlayRenderState(true, false);
             Player player = minecraft.player;
             IThirst thirst = ThirstHelper.getThirst(player);
 

@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "toughasnails:diamond_water_canteen",
   "result": {
-    "count": 1,
     "id": "toughasnails:netherite_water_canteen"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

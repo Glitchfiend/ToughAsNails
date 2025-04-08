@@ -119,13 +119,6 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean $$4)
-    {
-        Containers.dropContentsOnDestroy(state, newState, level, pos);
-        super.onRemove(state, level, pos, newState, $$4);
-    }
-
-    @Override
     public void onPlace(BlockState state, Level level, BlockPos $$2, BlockState $$3, boolean $$4)
     {
         if (!$$3.is(state.getBlock())) {

@@ -106,16 +106,16 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         super.loadAdditional(nbt, lookup);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(nbt, this.items, lookup);
-        this.coolingTimeRemaining = nbt.getInt("CoolingTimeRemaining");
-        this.heatingTimeRemaining = nbt.getInt("HeatingTimeRemaining");
-        this.fillTimer = nbt.getInt("FillTimer");
+        this.coolingTimeRemaining = nbt.getInt("CoolingTimeRemaining").orElse(0);
+        this.heatingTimeRemaining = nbt.getInt("HeatingTimeRemaining").orElse(0);
+        this.fillTimer = nbt.getInt("FillTimer").orElse(0);
 
-        ListTag list = nbt.getList("FilledBlocks", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getList("FilledBlocks").orElse(new ListTag());
         this.filledBlocks = new HashSet<>();
 
         for (int i = 0; i < list.size(); i++)
         {
-            int[] arr = list.getIntArray(i);
+            int[] arr = list.getIntArray(i).orElse(new int[]{});
             if (arr.length != 3)
                 continue;
             this.filledBlocks.add(new BlockPos(arr[0], arr[1], arr[2]));
@@ -131,7 +131,11 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
         nbt.putInt("FillTimer", this.fillTimer);
 
         ListTag list = new ListTag();
-        this.filledBlocks.stream().map(NbtUtils::writeBlockPos).forEach(list::add);
+        this.filledBlocks.stream().forEach(pos -> {
+            list.add(IntTag.valueOf(pos.getX()));
+            list.add(IntTag.valueOf(pos.getY()));
+            list.add(IntTag.valueOf(pos.getZ()));
+        });
         nbt.put("FilledBlocks", list);
 
         ContainerHelper.saveAllItems(nbt, this.items, lookup);
