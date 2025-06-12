@@ -12,7 +12,7 @@ import toughasnails.core.ToughAsNails;
 
 public class TANVillagerProfessions
 {
-    public static final ResourceKey<VillagerProfession> CLIMATOLOGIST = createKey("none");
+    public static final ResourceKey<VillagerProfession> CLIMATOLOGIST = createKey("climatologist");
 
     private static ResourceKey<VillagerProfession> createKey(String name)
     {
