@@ -18,13 +18,13 @@ public class MixinGui
     @Inject(method="renderSelectedItemName", at=@At(value="HEAD"))
     public void onRenderSelectedItemNameBegin(GuiGraphics guiGraphics, CallbackInfo ci)
     {
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         TemperatureHooksClient.adjustSelectedItemText(guiGraphics);
     }
 
     @Inject(method="renderSelectedItemName", at=@At(value="TAIL"))
     public void onRenderSelectedItemNameEnd(GuiGraphics guiGraphics, CallbackInfo ci)
     {
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

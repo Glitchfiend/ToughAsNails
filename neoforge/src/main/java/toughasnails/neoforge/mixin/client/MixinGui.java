@@ -18,13 +18,13 @@ public class MixinGui
     @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphics;I)V", at=@At(value="HEAD"), remap = false)
     public void onRenderSelectedItemNameBegin(GuiGraphics guiGraphics, int yShift, CallbackInfo ci)
     {
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         TemperatureHooksClient.adjustSelectedItemText(guiGraphics);
     }
 
     @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphics;I)V", at=@At(value="TAIL"), remap = false)
     public void onRenderSelectedItemNameEnd(GuiGraphics guiGraphics, int yShift, CallbackInfo ci)
     {
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

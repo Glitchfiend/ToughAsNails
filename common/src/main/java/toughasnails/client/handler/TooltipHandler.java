@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -129,7 +130,7 @@ public class TooltipHandler
         @Override
         public void renderImage(Font font, int x, int y, int width, int height, GuiGraphics gui)
         {
-            gui.pose().pushPose();
+            gui.pose().pushMatrix();
 
             for (int i = 0; i < Mth.ceil(this.amount / 2.0F); i++)
             {
@@ -142,15 +143,15 @@ public class TooltipHandler
                 // Draw a full droplet
                 if (this.amount > dropletHalf)
                 {
-                    gui.blit(RenderType::guiTextured, ThirstOverlayRenderer.OVERLAY, startX, startY, 0, 41, 8, 8, 256, 256);
+                    gui.blit(RenderPipelines.GUI_TEXTURED, ThirstOverlayRenderer.OVERLAY, startX, startY, 0, 41, 8, 8, 256, 256);
                 }
                 else if (this.amount == dropletHalf) // Draw a half droplet
                 {
-                    gui.blit(RenderType::guiTextured, ThirstOverlayRenderer.OVERLAY, startX, startY, 8, 41, 8, 8, 256, 256);
+                    gui.blit(RenderPipelines.GUI_TEXTURED, ThirstOverlayRenderer.OVERLAY, startX, startY, 8, 41, 8, 8, 256, 256);
                 }
             }
 
-            gui.pose().popPose();
+            gui.pose().popMatrix();
         }
     }
 }

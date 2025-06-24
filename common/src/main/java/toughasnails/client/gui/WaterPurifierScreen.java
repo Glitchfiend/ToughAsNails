@@ -6,6 +6,7 @@ package toughasnails.client.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,7 +43,7 @@ public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierMe
     {
         int leftPos = this.leftPos;
         int topPos = this.topPos;
-        gui.blit(RenderType::guiTextured, TEXTURE, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         if (this.menu.isFiltering())
         {
@@ -50,10 +51,10 @@ public class WaterPurifierScreen extends AbstractContainerScreen<WaterPurifierMe
 
             // NOTE: This is moved over right by 1 compared to the furnace
             // stack, x, y, u, v, width, height
-            gui.blit(RenderType::guiTextured, TEXTURE, leftPos + 56 + 1, topPos + 36 + 13 - filterProgress, 176, 13 - filterProgress, 14, filterProgress + 1, 256, 256);
+            gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos + 56 + 1, topPos + 36 + 13 - filterProgress, 176, 13 - filterProgress, 14, filterProgress + 1, 256, 256);
         }
 
         int purifyProgress = this.menu.getPurifyProgress();
-        gui.blit(RenderType::guiTextured, TEXTURE, leftPos + 79, topPos + 34, 176, 14, purifyProgress + 1, 16, 256, 256);
+        gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos + 79, topPos + 34, 176, 14, purifyProgress + 1, 16, 256, 256);
     }
 }

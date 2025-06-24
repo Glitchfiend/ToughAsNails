@@ -7,6 +7,7 @@ package toughasnails.neoforge.datagen.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +16,7 @@ import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TANTrimMaterialTagsProvider extends TagsProvider<TrimMaterial>
+public class TANTrimMaterialTagsProvider extends KeyTagProvider<TrimMaterial>
 {
     public TANTrimMaterialTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
     {

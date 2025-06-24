@@ -43,7 +43,7 @@ public class ThirstHooks
             }
         }
 
-        boolean naturalRegen = player.serverLevel().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
+        boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 
         if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
         {

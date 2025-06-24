@@ -25,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
@@ -101,44 +103,34 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
+    public void loadAdditional(ValueInput input)
     {
-        super.loadAdditional(nbt, lookup);
+        super.loadAdditional(input);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, this.items, lookup);
-        this.coolingTimeRemaining = nbt.getInt("CoolingTimeRemaining").orElse(0);
-        this.heatingTimeRemaining = nbt.getInt("HeatingTimeRemaining").orElse(0);
-        this.fillTimer = nbt.getInt("FillTimer").orElse(0);
+        ContainerHelper.loadAllItems(input, this.items);
+        this.coolingTimeRemaining = input.getInt("CoolingTimeRemaining").orElse(0);
+        this.heatingTimeRemaining = input.getInt("HeatingTimeRemaining").orElse(0);
+        this.fillTimer = input.getInt("FillTimer").orElse(0);
 
-        ListTag list = nbt.getList("FilledBlocks").orElse(new ListTag());
+        ValueInput.TypedInputList<BlockPos> list = input.listOrEmpty("FilledBlocks", BlockPos.CODEC);
+        list.forEach(pos -> this.filledBlocks.add(pos));
         this.filledBlocks = new HashSet<>();
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            int[] arr = list.getIntArray(i).orElse(new int[]{});
-            if (arr.length != 3)
-                continue;
-            this.filledBlocks.add(new BlockPos(arr[0], arr[1], arr[2]));
-        }
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
+    public void saveAdditional(ValueOutput output)
     {
-        super.saveAdditional(nbt, lookup);
-        nbt.putInt("CoolingTimeRemaining", this.coolingTimeRemaining);
-        nbt.putInt("HeatingTimeRemaining", this.heatingTimeRemaining);
-        nbt.putInt("FillTimer", this.fillTimer);
+        super.saveAdditional(output);
+        output.putInt("CoolingTimeRemaining", this.coolingTimeRemaining);
+        output.putInt("HeatingTimeRemaining", this.heatingTimeRemaining);
+        output.putInt("FillTimer", this.fillTimer);
 
-        ListTag list = new ListTag();
+        ValueOutput.TypedOutputList<BlockPos> list = output.list("FilledBlocks", BlockPos.CODEC);
         this.filledBlocks.stream().forEach(pos -> {
-            list.add(IntTag.valueOf(pos.getX()));
-            list.add(IntTag.valueOf(pos.getY()));
-            list.add(IntTag.valueOf(pos.getZ()));
+            list.add(pos);
         });
-        nbt.put("FilledBlocks", list);
 
-        ContainerHelper.saveAllItems(nbt, this.items, lookup);
+        ContainerHelper.saveAllItems(output, this.items);
     }
 
     @Override

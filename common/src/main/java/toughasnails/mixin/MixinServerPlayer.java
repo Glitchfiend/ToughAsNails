@@ -33,9 +33,8 @@ import static toughasnails.thirst.ThirstHandler.syncThirst;
 @Mixin(ServerPlayer.class)
 public abstract class MixinServerPlayer extends Player implements ITANPlayer
 {
-    public MixinServerPlayer(Level $$0, BlockPos $$1, float $$2, GameProfile $$3)
-    {
-        super($$0, $$1, $$2, $$3);
+    public MixinServerPlayer(Level $$0, GameProfile $$1) {
+        super($$0, $$1);
     }
 
     @Inject(method="doTick", at=@At(value="TAIL"))

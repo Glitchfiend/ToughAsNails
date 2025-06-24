@@ -15,6 +15,8 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -53,19 +55,19 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
     }
 
     @Inject(method="readAdditionalSaveData", at=@At(value="TAIL"))
-    public void onReadAdditionalSaveData(CompoundTag nbt, CallbackInfo ci)
+    public void onReadAdditionalSaveData(ValueInput input, CallbackInfo ci)
     {
-        this.temperatureData.readAdditionalSaveData(nbt);
-        this.thirstData.readAdditionalSaveData(nbt);
-        this.climateClemencyGranted = nbt.getBoolean("climateClemencyGranted").orElse(false);
+        this.temperatureData.readAdditionalSaveData(input);
+        this.thirstData.readAdditionalSaveData(input);
+        this.climateClemencyGranted = input.getBooleanOr("climateClemencyGranted", false);
     }
 
     @Inject(method="addAdditionalSaveData", at=@At(value="TAIL"))
-    public void onAddAdditionalSaveData(CompoundTag nbt, CallbackInfo ci)
+    public void onAddAdditionalSaveData(ValueOutput output, CallbackInfo ci)
     {
-        this.temperatureData.addAdditionalSaveData(nbt);
-        this.thirstData.addAdditionalSaveData(nbt);
-        nbt.putBoolean("climateClemencyGranted", this.climateClemencyGranted);
+        this.temperatureData.addAdditionalSaveData(output);
+        this.thirstData.addAdditionalSaveData(output);
+        output.putBoolean("climateClemencyGranted", this.climateClemencyGranted);
     }
 
     @Inject(method="causeFoodExhaustion", at=@At(value="HEAD"))

@@ -6,6 +6,7 @@ package toughasnails.client.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,18 +43,18 @@ public class ThermoregulatorScreen extends AbstractContainerScreen<Thermoregulat
     {
         int leftPos = this.leftPos;
         int topPos = this.topPos;
-        gui.blit(RenderType::guiTextured, TEXTURE, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         if (this.menu.isCooling())
         {
             int progress = this.menu.getCoolingFuelProgress();
-            gui.blit(RenderType::guiTextured, TEXTURE, leftPos + 44 + 1, topPos + 25 + 13 - progress, 176, 13 - progress, 14, progress + 1, 256, 256);
+            gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos + 44 + 1, topPos + 25 + 13 - progress, 176, 13 - progress, 14, progress + 1, 256, 256);
         }
 
         if (this.menu.isHeating())
         {
             int progress = this.menu.getHeatingFuelProgress();
-            gui.blit(RenderType::guiTextured, TEXTURE, leftPos + 116 + 1, topPos + 25 + 13 - progress, 176, 27 - progress, 14, progress + 1, 256, 256);
+            gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos + 116 + 1, topPos + 25 + 13 - progress, 176, 27 - progress, 14, progress + 1, 256, 256);
         }
     }
 }

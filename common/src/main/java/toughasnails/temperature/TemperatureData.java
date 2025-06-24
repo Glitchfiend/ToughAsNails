@@ -6,6 +6,8 @@ package toughasnails.temperature;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.init.ModConfig;
@@ -29,51 +31,48 @@ public class TemperatureData implements ITemperature
     private int lastHyperthermiaTicks;
     private Set<BlockPos> lastNearbyThermoregulators = new HashSet<>();
 
-    public void addAdditionalSaveData(CompoundTag nbt)
+    public void addAdditionalSaveData(ValueOutput output)
     {
         if (ModConfig.temperature.enableTemperature)
         {
-            nbt.putInt("temperatureLevel", this.getLevel().ordinal());
-            nbt.putInt("targetTemperatureLevel", this.getTargetLevel().ordinal());
-            nbt.putInt("changeDelayTicks", this.getChangeDelayTicks());
-            nbt.putInt("hyperthermiaTicks", this.getHyperthermiaTicks());
-            nbt.putInt("extremityDelayTicks", this.getExtremityDelayTicks());
-            nbt.putInt("dryTicks", this.getDryTicks());
+            output.putInt("temperatureLevel", this.getLevel().ordinal());
+            output.putInt("targetTemperatureLevel", this.getTargetLevel().ordinal());
+            output.putInt("changeDelayTicks", this.getChangeDelayTicks());
+            output.putInt("hyperthermiaTicks", this.getHyperthermiaTicks());
+            output.putInt("extremityDelayTicks", this.getExtremityDelayTicks());
+            output.putInt("dryTicks", this.getDryTicks());
         }
         else
         {
             // Save default values
-            nbt.putInt("temperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
-            nbt.putInt("targetTemperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
-            nbt.putInt("changeDelayTicks", 0);
-            nbt.putInt("hyperthermiaTicks", 0);
-            nbt.putInt("extremityDelayTicks", 0);
-            nbt.putInt("dryTicks", 0);
+            output.putInt("temperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            output.putInt("targetTemperatureLevel", TemperatureData.DEFAULT_LEVEL.ordinal());
+            output.putInt("changeDelayTicks", 0);
+            output.putInt("hyperthermiaTicks", 0);
+            output.putInt("extremityDelayTicks", 0);
+            output.putInt("dryTicks", 0);
         }
     }
 
-    public void readAdditionalSaveData(CompoundTag nbt)
+    public void readAdditionalSaveData(ValueInput input)
     {
-        if (nbt.contains("temperatureLevel"))
+        if (ModConfig.temperature.enableTemperature)
         {
-            if (ModConfig.temperature.enableTemperature)
-            {
-                this.setLevel(TemperatureLevel.values()[nbt.getInt("temperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
-                this.setTargetLevel(TemperatureLevel.values()[nbt.getInt("targetTemperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
-                this.setChangeDelayTicks(nbt.getInt("changeDelayTicks").orElse(0));
-                this.setHyperthermiaTicks(nbt.getInt("hyperthermiaTicks").orElse(0));
-                this.setExtremityDelayTicks(nbt.getInt("extremityDelayTicks").orElse(0));
-            }
-            else
-            {
-                // Use default values if temperature is disabled
-                this.setLevel(TemperatureData.DEFAULT_LEVEL);
-                this.setTargetLevel(TemperatureData.DEFAULT_LEVEL);
-                this.setChangeDelayTicks(0);
-                this.setHyperthermiaTicks(0);
-                this.setExtremityDelayTicks(0);
-                this.setDryTicks(0);
-            }
+            this.setLevel(TemperatureLevel.values()[input.getInt("temperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
+            this.setTargetLevel(TemperatureLevel.values()[input.getInt("targetTemperatureLevel").orElse(TemperatureData.DEFAULT_LEVEL.ordinal())]);
+            this.setChangeDelayTicks(input.getInt("changeDelayTicks").orElse(0));
+            this.setHyperthermiaTicks(input.getInt("hyperthermiaTicks").orElse(0));
+            this.setExtremityDelayTicks(input.getInt("extremityDelayTicks").orElse(0));
+        }
+        else
+        {
+            // Use default values if temperature is disabled
+            this.setLevel(TemperatureData.DEFAULT_LEVEL);
+            this.setTargetLevel(TemperatureData.DEFAULT_LEVEL);
+            this.setChangeDelayTicks(0);
+            this.setHyperthermiaTicks(0);
+            this.setExtremityDelayTicks(0);
+            this.setDryTicks(0);
         }
     }
 

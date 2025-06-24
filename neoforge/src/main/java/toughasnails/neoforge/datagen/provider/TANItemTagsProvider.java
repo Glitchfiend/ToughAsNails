@@ -5,23 +5,23 @@
 package toughasnails.neoforge.datagen.provider;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TANItemTagsProvider extends ItemTagsProvider
+public class TANItemTagsProvider extends IntrinsicHolderTagsProvider<Item>
 {
-    public TANItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockLookup)
+    public TANItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
     {
-        super(output, lookupProvider, blockLookup, ToughAsNails.MOD_ID);
+        super(output, Registries.ITEM, lookupProvider, p_421303_ -> p_421303_.builtInRegistryHolder().key(), ToughAsNails.MOD_ID);
     }
 
     @Override

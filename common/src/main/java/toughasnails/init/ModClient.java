@@ -8,6 +8,7 @@ import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.event.client.RegisterParticleSpritesEvent;
 import glitchcore.util.RenderHelper;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import toughasnails.api.particle.TANParticles;
 import toughasnails.client.particle.ThermoregulatorParticle;
 
@@ -31,11 +32,7 @@ public class ModClient
 
     public static void setupRenderTypes()
     {
-        RenderType transparentRenderType = RenderType.cutoutMipped();
-        RenderType cutoutRenderType = RenderType.cutout();
-        RenderType translucentRenderType = RenderType.translucent();
-
-        RenderHelper.setRenderType(RAIN_COLLECTOR, cutoutRenderType);
-        RenderHelper.setRenderType(WATER_PURIFIER, cutoutRenderType);
+        RenderHelper.setRenderType(RAIN_COLLECTOR, ChunkSectionLayer.CUTOUT);
+        RenderHelper.setRenderType(WATER_PURIFIER, ChunkSectionLayer.CUTOUT);
     }
 }

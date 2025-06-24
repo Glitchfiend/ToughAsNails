@@ -7,6 +7,7 @@ package toughasnails.neoforge.datagen.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
@@ -15,7 +16,7 @@ import toughasnails.core.ToughAsNails;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TANDamageTypeTagsProvider extends TagsProvider<DamageType>
+public class TANDamageTypeTagsProvider extends KeyTagProvider<DamageType>
 {
     public TANDamageTypeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
     {

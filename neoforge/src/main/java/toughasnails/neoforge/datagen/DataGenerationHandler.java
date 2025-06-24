@@ -23,7 +23,7 @@ import toughasnails.neoforge.datagen.provider.*;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ToughAsNails.MOD_ID)
+@EventBusSubscriber(modid = ToughAsNails.MOD_ID)
 public class DataGenerationHandler
 {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
@@ -47,7 +47,7 @@ public class DataGenerationHandler
 
         // Tags
         var blocksTagProvider = generator.addProvider(true, new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider()));
-        generator.addProvider(true, new TANItemTagsProvider(output, datapackProvider.getRegistryProvider(), blocksTagProvider.contentsGetter()));
+        generator.addProvider(true, new TANItemTagsProvider(output, datapackProvider.getRegistryProvider()));
         generator.addProvider(true, new TANBiomeTagsProvider(output, datapackProvider.getRegistryProvider()));
         generator.addProvider(true, new TANDamageTypeTagsProvider(output, datapackProvider.getRegistryProvider()));
         generator.addProvider(true, new TANTrimMaterialTagsProvider(output, datapackProvider.getRegistryProvider()));

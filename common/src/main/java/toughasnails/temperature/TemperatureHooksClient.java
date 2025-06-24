@@ -9,8 +9,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix3x2f;
 import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.init.ModConfig;
 
@@ -33,11 +35,11 @@ public class TemperatureHooksClient
         // Normal hearts
         if (heartType == Gui.HeartType.NORMAL && TemperatureHelper.isFullyHyperthermic(player))
         {
-            gui.blitSprite(RenderType::guiTextured, getOverheatedHeartSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
+            gui.blitSprite(RenderPipelines.GUI_TEXTURED, getOverheatedHeartSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
         }
         else
         {
-            gui.blitSprite(RenderType::guiTextured, heartType.getSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
+            gui.blitSprite(RenderPipelines.GUI_TEXTURED, heartType.getSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
         }
     }
 
@@ -48,7 +50,7 @@ public class TemperatureHooksClient
         // If temperature is enabled, move the selected item text up by 2 pixels. This is only done in survival mode.
         if (ModConfig.temperature.enableTemperature && GuiUtils.shouldDrawSurvivalElements())
         {
-            pose.translate(0F, -2F, 0F);
+            pose.translate(0F, -2F, new Matrix3x2f());
         }
     }
 

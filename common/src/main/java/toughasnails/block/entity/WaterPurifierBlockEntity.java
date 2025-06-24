@@ -26,6 +26,8 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import toughasnails.api.blockentity.TANBlockEntityTypes;
 import toughasnails.api.crafting.TANRecipeTypes;
 import toughasnails.block.WaterPurifierBlock;
@@ -112,26 +114,26 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookup)
+    protected void loadAdditional(ValueInput input)
     {
-        super.loadAdditional(nbt, lookup);
+        super.loadAdditional(input);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, this.items, lookup);
-        this.filterTimeRemaining = nbt.getInt("FilterTimeRemaining").orElse(0);
-        this.filterDuration = nbt.getInt("FilterDuration").orElse(0);
-        this.purifyProgress = nbt.getInt("PurifyProgress").orElse(0);
-        this.purifyTotalTime = nbt.getInt("PurifyTotalTime").orElse(0);
+        ContainerHelper.loadAllItems(input, this.items);
+        this.filterTimeRemaining = input.getInt("FilterTimeRemaining").orElse(0);
+        this.filterDuration = input.getInt("FilterDuration").orElse(0);
+        this.purifyProgress = input.getInt("PurifyProgress").orElse(0);
+        this.purifyTotalTime = input.getInt("PurifyTotalTime").orElse(0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider)
+    protected void saveAdditional(ValueOutput output)
     {
-        super.saveAdditional(nbt, provider);
-        nbt.putInt("FilterTimeRemaining", this.filterTimeRemaining);
-        nbt.putInt("FilterDuration", this.filterDuration);
-        nbt.putInt("PurifyProgress", this.purifyProgress);
-        nbt.putInt("PurifyTotalTime", this.purifyTotalTime);
-        ContainerHelper.saveAllItems(nbt, this.items, provider);
+        super.saveAdditional(output);
+        output.putInt("FilterTimeRemaining", this.filterTimeRemaining);
+        output.putInt("FilterDuration", this.filterDuration);
+        output.putInt("PurifyProgress", this.purifyProgress);
+        output.putInt("PurifyTotalTime", this.purifyTotalTime);
+        ContainerHelper.saveAllItems(output, this.items);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, WaterPurifierBlockEntity blockEntity)

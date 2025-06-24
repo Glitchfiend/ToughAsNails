@@ -9,6 +9,7 @@ import glitchcore.event.client.RenderGuiEvent;
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -89,16 +90,16 @@ public class ThirstOverlayRenderer
             }
 
             // Draw the background of each thirst droplet
-            guiGraphics.blit(RenderType::guiTextured, OVERLAY, startX, startY, backgroundU, 32, 9, 9, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, startX, startY, backgroundU, 32, 9, 9, 256, 256);
 
             // Draw a full droplet
             if (thirstLevel > dropletHalf)
             {
-                guiGraphics.blit(RenderType::guiTextured, OVERLAY, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 256, 256);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, startX, startY, (iconIndex + 4) * 9, 32, 9, 9, 256, 256);
             }
             else if (thirstLevel == dropletHalf) // Draw a half droplet
             {
-                guiGraphics.blit(RenderType::guiTextured, OVERLAY, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 256, 256);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, startX, startY, (iconIndex + 5) * 9, 32, 9, 9, 256, 256);
             }
         }
     }
