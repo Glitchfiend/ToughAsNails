@@ -57,7 +57,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult)
     {
-        if (level.isClientSide)
+        if (level.isClientSide())
         {
             return InteractionResult.SUCCESS;
         }
@@ -78,7 +78,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
     {
-        return level.isClientSide ? null : createTickerHelper(type, (BlockEntityType<ThermoregulatorBlockEntity>) TANBlockEntityTypes.THERMOREGULATOR, ThermoregulatorBlockEntity::serverTick);
+        return level.isClientSide() ? null : createTickerHelper(type, (BlockEntityType<ThermoregulatorBlockEntity>) TANBlockEntityTypes.THERMOREGULATOR, ThermoregulatorBlockEntity::serverTick);
     }
 
     public static ToIntFunction<BlockState> lightLevel(int level)
@@ -148,7 +148,7 @@ public class ThermoregulatorBlock extends BaseEntityBlock
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction)
     {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }

@@ -2,13 +2,15 @@ package toughasnails.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-public class ThermoregulatorParticle extends TextureSheetParticle
+public class ThermoregulatorParticle extends SingleQuadParticle
 {
-    ThermoregulatorParticle(ClientLevel p_105856_, double p_105857_, double p_105858_, double p_105859_, double p_105860_, double p_105861_, double p_105862_)
+    ThermoregulatorParticle(ClientLevel p_105856_, double p_105857_, double p_105858_, double p_105859_, double p_105860_, double p_105861_, double p_105862_, TextureAtlasSprite sprite)
     {
-        super(p_105856_, p_105857_, p_105858_, p_105859_);
+        super(p_105856_, p_105857_, p_105858_, p_105859_, sprite);
         this.lifetime = this.random.nextInt(8) + 8;
         this.gravity = 3.0E-6F;
         this.xd = p_105860_;
@@ -45,25 +47,21 @@ public class ThermoregulatorParticle extends TextureSheetParticle
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public SingleQuadParticle.Layer getLayer() {
+        return SingleQuadParticle.Layer.OPAQUE;
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType>
     {
-        private final SpriteSet sprites;
+        private final SpriteSet sprite;
 
-        public Provider(SpriteSet p_105899_) {
-            this.sprites = p_105899_;
+        public Provider(SpriteSet p_105793_) {
+            this.sprite = p_105793_;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType p_105910_, ClientLevel p_105911_, double p_105912_, double p_105913_, double p_105914_, double p_105915_, double p_105916_, double p_105917_)
-        {
-            ThermoregulatorParticle particle = new ThermoregulatorParticle(p_105911_, p_105912_, p_105913_, p_105914_, p_105915_, p_105916_, p_105917_);
-            particle.setAlpha(0.5F);
-            particle.pickSprite(this.sprites);
-            return particle;
+        public Particle createParticle(SimpleParticleType p_105804_, ClientLevel p_105805_, double p_105806_, double p_105807_, double p_105808_, double p_105809_, double p_105810_, double p_105811_, RandomSource p_445842_) {
+            return new ThermoregulatorParticle(p_105805_, p_105806_, p_105807_, p_105808_, p_105809_, p_105810_, p_105811_, this.sprite.get(p_445842_));
         }
     }
 }

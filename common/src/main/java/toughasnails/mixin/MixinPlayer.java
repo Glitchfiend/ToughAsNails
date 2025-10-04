@@ -75,7 +75,7 @@ public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
     {
         if (!this.abilities.invulnerable)
         {
-            if (!this.level().isClientSide)
+            if (!this.level().isClientSide())
             {
                 ThirstHooks.onCauseFoodExhaustion((Player)(Object)this, exhaustion);
             }

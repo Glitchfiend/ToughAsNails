@@ -17,7 +17,7 @@ public class KeyHandler
     public static void onKeyPress(InputEvent.Key event)
     {
         Minecraft minecraft = Minecraft.getInstance();
-        boolean isF3Down = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_F3);
+        boolean isF3Down = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), InputConstants.KEY_F3);
 
         if (minecraft.screen == null && event.getAction() != InputConstants.RELEASE && isF3Down)
         {

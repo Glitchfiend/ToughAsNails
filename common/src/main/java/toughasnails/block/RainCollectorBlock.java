@@ -5,6 +5,7 @@
 package toughasnails.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -54,7 +55,7 @@ public class RainCollectorBlock extends Block
 
         int waterLevel = state.getValue(LEVEL);
 
-        if (waterLevel > 0 && !worldIn.isClientSide)
+        if (waterLevel > 0 && !worldIn.isClientSide())
         {
             if (!player.getAbilities().instabuild)
             {
@@ -112,7 +113,7 @@ public class RainCollectorBlock extends Block
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction)
     {
         return state.getValue(LEVEL);
     }

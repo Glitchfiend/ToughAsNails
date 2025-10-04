@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemMode
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,14 +48,13 @@ public class TemperatureProperty implements RangeSelectItemModelProperty
     public TemperatureProperty() { this.deltas = new HashMap<>(); }
 
     @Override
-    public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i)
+    public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int i)
     {
-        Entity holder = entity != null ? entity : stack.getEntityRepresentation();
-
-        if (holder == null)
+        Entity holder = (Entity)(owner != null ? owner : stack.getEntityRepresentation());
+        if (owner == null)
             return 0.5F;
 
-        if (level == null && holder.level() instanceof ClientLevel)
+        if (level == null && owner.level() instanceof ClientLevel)
             level = (ClientLevel)holder.level();
 
         if (level == null)

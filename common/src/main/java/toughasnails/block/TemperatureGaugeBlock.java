@@ -59,7 +59,7 @@ public class TemperatureGaugeBlock extends BaseEntityBlock
     {
         if (player.mayBuild())
         {
-            if (level.isClientSide)
+            if (level.isClientSide())
             {
                 return InteractionResult.SUCCESS;
             }
@@ -117,7 +117,7 @@ public class TemperatureGaugeBlock extends BaseEntityBlock
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
     {
-        return !level.isClientSide
+        return !level.isClientSide()
                 ? createTickerHelper(type, (BlockEntityType<TemperatureGaugeBlockEntity>)TANBlockEntityTypes.TEMPERATURE_GAUGE, TemperatureGaugeBlock::tickEntity)
                 : null;
     }

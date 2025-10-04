@@ -102,7 +102,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
         player.awardStat(Stats.ITEM_USED.get(this));
 
         // Damage the item if we're on the server and the player isn't in creative mode
-        if (!worldIn.isClientSide && !player.getAbilities().instabuild)
+        if (!worldIn.isClientSide() && !player.getAbilities().instabuild)
         {
             ItemStack emptyStack = new ItemStack(getEmptyCanteen());
             stack.getEnchantments().entrySet().forEach(e -> emptyStack.enchant(e.getKey(), e.getIntValue()));

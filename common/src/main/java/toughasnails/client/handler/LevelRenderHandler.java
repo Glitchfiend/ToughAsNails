@@ -36,7 +36,7 @@ public class LevelRenderHandler
         if (!enableDebug || player == null)
             return;
 
-        Vec3 cameraPos = event.getCamera().getPosition();
+        Vec3 cameraPos = event.getCamera().pos;
         PoseStack poseStack = event.getPoseStack();
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
