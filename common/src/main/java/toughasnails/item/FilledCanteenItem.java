@@ -4,9 +4,13 @@
  ******************************************************************************/
 package toughasnails.item;
 
+import glitchcore.event.EventManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.level.Level;
 import toughasnails.api.item.TANItems;
 import toughasnails.api.thirst.ThirstHelper;
@@ -27,6 +32,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FilledCanteenItem extends EmptyCanteenItem
 {
+    private static final int CONSUME_TICKS = 32;
+
     public FilledCanteenItem(int tier, Properties properties)
     {
         super(tier, properties);
@@ -45,6 +52,23 @@ public class FilledCanteenItem extends EmptyCanteenItem
 
         // Replace the current stack in the player's inventory
         player.getInventory().setItem(slot.getIndex(), newStack);
+    }
+
+    @Override
+    public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int useItemRemainingTicks)
+    {
+        if (shouldEmitSounds(useItemRemainingTicks))
+        {
+            entity.playSound(SoundEvents.GENERIC_DRINK.value(), 0.5F, Mth.randomBetween(level.getRandom(), 0.9F, 1.0F));
+        }
+    }
+
+    private boolean shouldEmitSounds(int useItemRemainingTicks)
+    {
+        int elapsedTicks = CONSUME_TICKS - useItemRemainingTicks;
+        int delay = (int)(CONSUME_TICKS * 0.21875F);
+        boolean flag = elapsedTicks > delay;
+        return flag && useItemRemainingTicks % 4 == 0;
     }
 
     @Override
@@ -97,7 +121,7 @@ public class FilledCanteenItem extends EmptyCanteenItem
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity entity)
     {
-        return 32;
+        return CONSUME_TICKS;
     }
 
     @Override
