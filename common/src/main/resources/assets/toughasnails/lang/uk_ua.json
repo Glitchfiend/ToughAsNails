@@ -1,9 +1,9 @@
 {
   "itemGroup.toughasnails": "Tough As Nails",
-  
+
   "container.toughasnails.thermoregulator": "Терморегулятор",
   "container.toughasnails.water_purifier": "Водоочисник",
-  
+
   "death.attack.toughasnails.hyperthermia": "%1$s зазнав смертельного перегріву",
   "death.attack.toughasnails.hyperthermia.player": "%1$s зазнав смертельного перегріву під час спроби втекти від %2$s",
   "death.attack.toughasnails.thirst": "%1$s помер від спраги",
@@ -19,10 +19,10 @@
   "debug.temperature_fill.help": "F3 + 7 = Показати температурне заповнення",
   "debug.temperature_fill.off": "Температурне заповнення: Приховано",
   "debug.temperature_fill.on": "Температурне заповнення: Показано",
-  
+
   "effect.toughasnails.climate_clemency": "Кліматостійкість",
   "effect.toughasnails.climate_clemency.description": "Нейтралізує температуру тіла протягом часу. Отримується лише тимчасово при створенні нового світу (або при відродженні, якщо ввімкнено в налаштуваннях).",
-  "effect.toughasnails.ice_resistance": "Льдостійкість",
+  "effect.toughasnails.ice_resistance": "Льодостійкість",
   "effect.toughasnails.ice_resistance.description": "Надає імунітет до шкоди від холоду.",
   "effect.toughasnails.thirst": "Спрага",
   "effect.toughasnails.thirst.description": "Знижує спрагу швидше, ніж зазвичай.",
@@ -34,7 +34,7 @@
   "enchantment.toughasnails.water_cleansing": "Водоочищення",
   "enchantment.toughasnails.thermal_tuning.desc": "Нагрудник із терморегулюванням повністю нейтралізує температуру тіла гравця, незалежно від поточної температури навколишнього середовища.",
   "enchantment.toughasnails.water_cleansing.desc": "Фляга з функцією очищення води автоматично очищатиме будь-яку воду, яка в неї подається.",
-  
+
   "block.toughasnails.rain_collector": "Дощоприймач",
   "block.toughasnails.temperature_gauge": "Термодатчик",
   "block.toughasnails.thermoregulator": "Терморегулятор",
@@ -72,9 +72,9 @@
   "item.toughasnails.leather_dirty_water_canteen": "Шкіряна фляга брудної води",
   "item.toughasnails.leather_purified_water_canteen": "Шкіряна фляга очищеної води",
   "item.toughasnails.leather_water_canteen": "Шкіряна фляга води",
-  "item.toughasnails.melon_juice": "Melon Juice",
-  "item.toughasnails.netherite_dirty_water_canteen": "Незеритовий фляга брудної води",
-  "item.toughasnails.netherite_purified_water_canteen": "Незеритовий фляга очищеної води",
+  "item.toughasnails.melon_juice": "Кавуновий сік",
+  "item.toughasnails.netherite_dirty_water_canteen": "Незеритова фляга брудної води",
+  "item.toughasnails.netherite_purified_water_canteen": "Незеритова фляга очищеної води",
   "item.toughasnails.netherite_water_canteen": "Незеритова фляга води",
   "item.toughasnails.pumpkin_juice": "Гарбузовий сік",
   "item.toughasnails.purified_water_bottle": "Пляшка очищеної води",
@@ -85,7 +85,7 @@
   "item.toughasnails.wool_chestplate": "Вовняна парка",
   "item.toughasnails.wool_helmet": "Вовняний каптур",
   "item.toughasnails.wool_leggings": "Вовняні штани",
-  
+
   "item.minecraft.lingering_potion.effect.ice_resistance": "Осідальне зілля льодостікости",
   "item.minecraft.lingering_potion.effect.long_ice_resistance": "Осідальне зілля льодостікости",
   "item.minecraft.potion.effect.ice_resistance": "Зілля льодостікости",
@@ -94,7 +94,7 @@
   "item.minecraft.splash_potion.effect.long_ice_resistance": "Вибухове зілля льодостікости",
   "item.minecraft.tipped_arrow.effect.ice_resistance": "Стріла льодостікости",
   "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стріла льодостікости",
-  
+
   "entity.minecraft.villager.toughasnails.climatologist": "Кліматолог",
   "entity.minecraft.villager.climatologist": "Кліматолог",
 
