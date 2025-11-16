@@ -1,24 +1,45 @@
 plugins {
-    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
+    id 'java'
 }
 
-base.archivesName.set("${mod_name}-common")
+group = 'com.example'
+version = '1.0.0'
 
-minecraft {
-    version(minecraft_version)
-    if (file("src/main/resources/${mod_id}.accesswidener").exists()) {
-        accessWideners(project.file("src/main/resources/${mod_id}.accesswidener"))
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Sponge / Mixin'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
+        name = 'Forge'
+        url = "https://maven.minecraftforge.net"
+    }
+}
 
 dependencies {
-    compileOnly group:'org.spongepowered', name: 'mixin', version: '0.8.5'
-    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-    compileOnly("com.electronwill.night-config:toml:${nightconfig_version}")
-    compileOnly("com.electronwill.night-config:core:${nightconfig_version}")
-    compileOnly("net.jodah:typetools:0.6.3")
-    compileOnly 'com.github.glitchfiend:GlitchCore-common:' + minecraft_version + '-' + glitchcore_version
-    compileOnly 'com.github.glitchfiend:SereneSeasons-common:' + minecraft_version + '-' + serene_seasons_version
+    // Puntare ai jar dev scaricati
+    implementation files('../libs/toughasnails-1.21.1-dev.jar')
+    implementation files('../libs/origins-1.21.1-dev.jar')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release.set(21)
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Built-On-Java': "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})"
+        )
+    }
 }

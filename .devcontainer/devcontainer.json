@@ -1,0 +1,20 @@
+{
+    "name": "Java 21 Dev Container",
+
+    "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+
+    "features": {
+        "ghcr.io/devcontainers/features/gradle:1": {},
+        "ghcr.io/devcontainers/features/maven:1": {}
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "redhat.java",
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-gradle"
+            ]
+        }
+    }
+}
