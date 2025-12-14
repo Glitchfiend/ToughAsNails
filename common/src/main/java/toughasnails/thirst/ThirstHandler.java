@@ -28,9 +28,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import toughasnails.api.damagesource.TANDamageTypes;
@@ -96,7 +96,7 @@ public class ThirstHandler
         }
 
         // Increment thirst if on peaceful mode
-        if (difficulty == Difficulty.PEACEFUL && ((ServerLevel)player.level()).getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION))
+        if (difficulty == Difficulty.PEACEFUL && ((ServerLevel)player.level()).getGameRules().get(GameRules.NATURAL_HEALTH_REGENERATION))
         {
             if (thirst.isThirsty() && player.tickCount % 10 == 0)
             {

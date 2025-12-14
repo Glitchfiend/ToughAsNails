@@ -19,7 +19,7 @@ public class KeyHandler
         Minecraft minecraft = Minecraft.getInstance();
         boolean isF3Down = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), InputConstants.KEY_F3);
 
-        if (minecraft.screen == null && event.getAction() != InputConstants.RELEASE && isF3Down)
+        if (minecraft.screen == null && isF3Down)
         {
             boolean handledDebugKey = false;
 

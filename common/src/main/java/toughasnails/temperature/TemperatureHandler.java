@@ -6,7 +6,7 @@ package toughasnails.temperature;
 
 import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
@@ -33,7 +33,7 @@ import java.util.HashSet;
 
 public class TemperatureHandler
 {
-    protected static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "speed_modifier");
+    protected static final Identifier SPEED_MODIFIER_ID = Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "speed_modifier");
 
     public static void onPlayerTick(Player player)
     {

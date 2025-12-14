@@ -1,6 +1,6 @@
 package toughasnails.init;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;

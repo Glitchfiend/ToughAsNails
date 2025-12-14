@@ -9,9 +9,6 @@
     "X X"
   ],
   "result": {
-    "components": {
-      "minecraft:dyed_color": 16777215
-    },
     "count": 1,
     "id": "toughasnails:wool_helmet"
   }

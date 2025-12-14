@@ -2,7 +2,7 @@ package toughasnails.init;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,11 +27,11 @@ public class ModTags
     {
         private static void init() {}
 
-        public static final TagKey<Block> COOLING_BLOCKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_blocks"));
-        public static final TagKey<Block> HEATING_BLOCKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_blocks"));
-        public static final TagKey<Block> PASSABLE_BLOCKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "passable_blocks"));
+        public static final TagKey<Block> COOLING_BLOCKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_blocks"));
+        public static final TagKey<Block> HEATING_BLOCKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_blocks"));
+        public static final TagKey<Block> PASSABLE_BLOCKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "passable_blocks"));
 
-        public static TagKey<Block> create(ResourceLocation name) 
+        public static TagKey<Block> create(Identifier name) 
         {
             return TagKey.create(Registries.BLOCK, name);
         }
@@ -41,55 +41,55 @@ public class ModTags
     {
         private static void init() {}
 
-        public static final TagKey<Item> COOLING_ARMOR = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_armor"));
-        public static final TagKey<Item> HEATING_ARMOR = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_armor"));
-        public static final TagKey<Item> COOLING_HELD_ITEMS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_held_items"));
-        public static final TagKey<Item> HEATING_HELD_ITEMS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_held_items"));
-        public static final TagKey<Item> COOLING_CONSUMED_ITEMS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_consumed_items"));
-        public static final TagKey<Item> HEATING_CONSUMED_ITEMS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_consumed_items"));
+        public static final TagKey<Item> COOLING_ARMOR = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_armor"));
+        public static final TagKey<Item> HEATING_ARMOR = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_armor"));
+        public static final TagKey<Item> COOLING_HELD_ITEMS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_held_items"));
+        public static final TagKey<Item> HEATING_HELD_ITEMS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_held_items"));
+        public static final TagKey<Item> COOLING_CONSUMED_ITEMS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "cooling_consumed_items"));
+        public static final TagKey<Item> HEATING_CONSUMED_ITEMS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "heating_consumed_items"));
 
-        public static final TagKey<Item> THERMOREGULATOR_COOLING_FUEL = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thermoregulator_cooling_fuel"));
-        public static final TagKey<Item> THERMOREGULATOR_HEATING_FUEL = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thermoregulator_heating_fuel"));
+        public static final TagKey<Item> THERMOREGULATOR_COOLING_FUEL = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thermoregulator_cooling_fuel"));
+        public static final TagKey<Item> THERMOREGULATOR_HEATING_FUEL = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thermoregulator_heating_fuel"));
 
-        public static final TagKey<Item> ONE_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/1_thirst_drinks"));
-        public static final TagKey<Item> TWO_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/2_thirst_drinks"));
-        public static final TagKey<Item> THREE_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/3_thirst_drinks"));
-        public static final TagKey<Item> FOUR_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/4_thirst_drinks"));
-        public static final TagKey<Item> FIVE_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/5_thirst_drinks"));
-        public static final TagKey<Item> SIX_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/6_thirst_drinks"));
-        public static final TagKey<Item> SEVEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/7_thirst_drinks"));
-        public static final TagKey<Item> EIGHT_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/8_thirst_drinks"));
-        public static final TagKey<Item> NINE_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/9_thirst_drinks"));
-        public static final TagKey<Item> TEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/10_thirst_drinks"));
-        public static final TagKey<Item> ELEVEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/11_thirst_drinks"));
-        public static final TagKey<Item> TWELVE_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/12_thirst_drinks"));
-        public static final TagKey<Item> THIRTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/13_thirst_drinks"));
-        public static final TagKey<Item> FOURTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/14_thirst_drinks"));
-        public static final TagKey<Item> FIFTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/15_thirst_drinks"));
-        public static final TagKey<Item> SIXTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/16_thirst_drinks"));
-        public static final TagKey<Item> SEVENTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/17_thirst_drinks"));
-        public static final TagKey<Item> EIGHTEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/18_thirst_drinks"));
-        public static final TagKey<Item> NINETEEN_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/19_thirst_drinks"));
-        public static final TagKey<Item> TWENTY_THIRST_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/20_thirst_drinks"));
+        public static final TagKey<Item> ONE_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/1_thirst_drinks"));
+        public static final TagKey<Item> TWO_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/2_thirst_drinks"));
+        public static final TagKey<Item> THREE_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/3_thirst_drinks"));
+        public static final TagKey<Item> FOUR_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/4_thirst_drinks"));
+        public static final TagKey<Item> FIVE_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/5_thirst_drinks"));
+        public static final TagKey<Item> SIX_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/6_thirst_drinks"));
+        public static final TagKey<Item> SEVEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/7_thirst_drinks"));
+        public static final TagKey<Item> EIGHT_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/8_thirst_drinks"));
+        public static final TagKey<Item> NINE_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/9_thirst_drinks"));
+        public static final TagKey<Item> TEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/10_thirst_drinks"));
+        public static final TagKey<Item> ELEVEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/11_thirst_drinks"));
+        public static final TagKey<Item> TWELVE_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/12_thirst_drinks"));
+        public static final TagKey<Item> THIRTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/13_thirst_drinks"));
+        public static final TagKey<Item> FOURTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/14_thirst_drinks"));
+        public static final TagKey<Item> FIFTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/15_thirst_drinks"));
+        public static final TagKey<Item> SIXTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/16_thirst_drinks"));
+        public static final TagKey<Item> SEVENTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/17_thirst_drinks"));
+        public static final TagKey<Item> EIGHTEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/18_thirst_drinks"));
+        public static final TagKey<Item> NINETEEN_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/19_thirst_drinks"));
+        public static final TagKey<Item> TWENTY_THIRST_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "thirst/20_thirst_drinks"));
 
-        public static final TagKey<Item> TEN_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/10_hydration_drinks"));
-        public static final TagKey<Item> TWENTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/20_hydration_drinks"));
-        public static final TagKey<Item> THIRTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/30_hydration_drinks"));
-        public static final TagKey<Item> FOURTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/40_hydration_drinks"));
-        public static final TagKey<Item> FIFTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/50_hydration_drinks"));
-        public static final TagKey<Item> SIXTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/60_hydration_drinks"));
-        public static final TagKey<Item> SEVENTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/70_hydration_drinks"));
-        public static final TagKey<Item> EIGHTY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/80_hydration_drinks"));
-        public static final TagKey<Item> NINETY_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/90_hydration_drinks"));
-        public static final TagKey<Item> ONE_HUNDRED_HYDRATION_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/100_hydration_drinks"));
+        public static final TagKey<Item> TEN_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/10_hydration_drinks"));
+        public static final TagKey<Item> TWENTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/20_hydration_drinks"));
+        public static final TagKey<Item> THIRTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/30_hydration_drinks"));
+        public static final TagKey<Item> FOURTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/40_hydration_drinks"));
+        public static final TagKey<Item> FIFTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/50_hydration_drinks"));
+        public static final TagKey<Item> SIXTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/60_hydration_drinks"));
+        public static final TagKey<Item> SEVENTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/70_hydration_drinks"));
+        public static final TagKey<Item> EIGHTY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/80_hydration_drinks"));
+        public static final TagKey<Item> NINETY_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/90_hydration_drinks"));
+        public static final TagKey<Item> ONE_HUNDRED_HYDRATION_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hydration/100_hydration_drinks"));
 
-        public static final TagKey<Item> TWENTY_FIVE_POISON_CHANCE_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/25_poison_chance_drinks"));
-        public static final TagKey<Item> FIFTY_POISON_CHANCE_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/50_poison_chance_drinks"));
-        public static final TagKey<Item> SEVENTY_FIVE_POISON_CHANCE_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/75_poison_chance_drinks"));
-        public static final TagKey<Item> ONE_HUNDRED_POISON_CHANCE_DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/100_poison_chance_drinks"));
+        public static final TagKey<Item> TWENTY_FIVE_POISON_CHANCE_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/25_poison_chance_drinks"));
+        public static final TagKey<Item> FIFTY_POISON_CHANCE_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/50_poison_chance_drinks"));
+        public static final TagKey<Item> SEVENTY_FIVE_POISON_CHANCE_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/75_poison_chance_drinks"));
+        public static final TagKey<Item> ONE_HUNDRED_POISON_CHANCE_DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "poison_chance/100_poison_chance_drinks"));
 
-        public static final TagKey<Item> DRINKS = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "drinks"));
-        public static final TagKey<Item> CANTEEN = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "enchantable/canteen"));
+        public static final TagKey<Item> DRINKS = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "drinks"));
+        public static final TagKey<Item> CANTEEN = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "enchantable/canteen"));
         public static int getThirstRestored(ItemStack drink)
         {
             if (drink.is(ModTags.Items.ONE_THIRST_DRINKS)) { return 1; }
@@ -115,7 +115,7 @@ public class ModTags
             return 0;
         }
 
-        public static TagKey<Item> create(final ResourceLocation name) 
+        public static TagKey<Item> create(final Identifier name) 
         {
             return TagKey.create(Registries.ITEM, name);
         }
@@ -125,15 +125,15 @@ public class ModTags
     {
         private static void init() {}
 
-        public static final TagKey<Biome> ICY_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "icy_biomes"));
-        public static final TagKey<Biome> COLD_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "cold_biomes"));
-        public static final TagKey<Biome> NEUTRAL_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "neutral_biomes"));
-        public static final TagKey<Biome> WARM_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "warm_biomes"));
-        public static final TagKey<Biome> HOT_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "hot_biomes"));
-        public static final TagKey<Biome> DIRTY_WATER_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "dirty_water_biomes"));
-        public static final TagKey<Biome> PURIFIED_WATER_BIOMES = create(ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "purified_water_biomes"));
+        public static final TagKey<Biome> ICY_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "icy_biomes"));
+        public static final TagKey<Biome> COLD_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "cold_biomes"));
+        public static final TagKey<Biome> NEUTRAL_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "neutral_biomes"));
+        public static final TagKey<Biome> WARM_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "warm_biomes"));
+        public static final TagKey<Biome> HOT_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "hot_biomes"));
+        public static final TagKey<Biome> DIRTY_WATER_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "dirty_water_biomes"));
+        public static final TagKey<Biome> PURIFIED_WATER_BIOMES = create(Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "purified_water_biomes"));
 
-        private static TagKey<Biome> create(ResourceLocation loc)
+        private static TagKey<Biome> create(Identifier loc)
         {
             return TagKey.create(Registries.BIOME, loc);
         }
@@ -158,7 +158,7 @@ public class ModTags
 
         private static TagKey<TrimMaterial> create(String name)
         {
-            return TagKey.create(Registries.TRIM_MATERIAL, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
+            return TagKey.create(Registries.TRIM_MATERIAL, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
         }
     }
 }

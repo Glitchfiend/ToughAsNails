@@ -10,8 +10,7 @@ import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.potion.TANEffects;
@@ -24,7 +23,7 @@ import java.util.Random;
 public class ThirstOverlayRenderer
 {
     private static final Random RANDOM = new Random();
-    public static final ResourceLocation OVERLAY = ResourceLocation.parse("toughasnails:textures/gui/icons.png");
+    public static final Identifier OVERLAY = Identifier.parse("toughasnails:textures/gui/icons.png");
 
     private static int updateCounter;
 

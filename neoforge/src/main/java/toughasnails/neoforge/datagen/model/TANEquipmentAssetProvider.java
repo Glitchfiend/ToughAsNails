@@ -9,7 +9,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModEquipmentAssets;
@@ -33,15 +33,15 @@ public class TANEquipmentAssetProvider implements DataProvider
         output.accept(
                 ModEquipmentAssets.LEAF,
                 EquipmentClientInfo.builder()
-                        .addHumanoidLayers(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "leaf"), true)
-                        .addHumanoidLayers(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "leaf_overlay"), true)
+                        .addHumanoidLayers(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "leaf"), true)
+                        .addHumanoidLayers(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "leaf_overlay"), true)
                         .build()
         );
         output.accept(
                 ModEquipmentAssets.WOOL,
                 EquipmentClientInfo.builder()
-                        .addHumanoidLayers(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "wool"), true)
-                        .addHumanoidLayers(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "wool_overlay"), false)
+                        .addHumanoidLayers(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "wool"), true)
+                        .addHumanoidLayers(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "wool_overlay"), false)
                         .build()
         );
     }

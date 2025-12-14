@@ -10,10 +10,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
+import net.minecraft.world.attribute.EnvironmentAttribute;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.level.Level;
@@ -147,7 +150,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         Holder<Biome> biome = level.getBiome(pos);
         float biomeTemperature = biome.value().getBaseTemperature();
 
-        if (!level.dimensionType().natural() || (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
+        if ((pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (biome.is(ModTags.Biomes.ICY_BIOMES)) return TemperatureLevel.ICY;
             else if (biome.is(ModTags.Biomes.COLD_BIOMES)) return TemperatureLevel.COLD;
@@ -166,9 +169,6 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel altitudeModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
-        if (!level.dimensionType().natural())
-            return current;
-
         if (pos.getY() > ModConfig.temperature.temperatureDropAltitude) current = current.decrement(1);
         else if (pos.getY() < ModConfig.temperature.temperatureRiseAltitude) current = current.increment(1);
         return current;
@@ -191,12 +191,11 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
 
     private static TemperatureLevel nightModifier(Level level, BlockPos pos, TemperatureLevel current)
     {
-        // level.isNight is unavailable on the client, so we roughly approximate with level.getTimeOfDay()
-        float time = level.getTimeOfDay(1.0F);
+        float time = timeOfDay(level.getGameTime());
         boolean isNight = time >= 0.25F && time <= 0.75F;
 
         // Drop the temperature during the night
-        if (level.dimensionType().natural() && isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
+        if (isNight && (pos.getY() > ModConfig.temperature.environmentalModifierAltitude || pos.getY() >= level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).below().getY()))
         {
             if (current == TemperatureLevel.HOT)
                 current = current.increment(ModConfig.temperature.nightHotTemperatureChange);
@@ -205,6 +204,12 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         }
 
         return current;
+    }
+
+    public static float timeOfDay(long p_63905_) {
+        double d0 = Mth.frac(p_63905_ / 24000.0 - 0.25);
+        double d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0;
+        return (float)(d0 * 2.0 + d1) / 3.0F;
     }
 
     private static TemperatureLevel proximityModifier(Level level, BlockPos pos, TemperatureLevel current)

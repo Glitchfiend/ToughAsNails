@@ -9,7 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,7 +28,7 @@ import java.util.function.BiConsumer;
 
 public class ModPotions
 {
-    public static void registerEffects(BiConsumer<ResourceLocation, MobEffect> func)
+    public static void registerEffects(BiConsumer<Identifier, MobEffect> func)
     {
         TANEffects.THIRST = registerEffect(func, "thirst", new ThirstEffect(MobEffectCategory.HARMFUL, 0x76DB4C));
         TANEffects.ICE_RESISTANCE = registerEffect(func, "ice_resistance", new MobEffect(MobEffectCategory.BENEFICIAL, 0x77A9FF));
@@ -37,23 +37,23 @@ public class ModPotions
         TANEffects.INTERNAL_CHILL = registerEffect(func, "internal_chill", new MobEffect(MobEffectCategory.BENEFICIAL, 0xE1FCFF));
     }
 
-    public static void registerPotions(BiConsumer<ResourceLocation, Potion> func)
+    public static void registerPotions(BiConsumer<Identifier, Potion> func)
     {
         TANPotions.ICE_RESISTANCE = registerPotion(func, "ice_resistance", new Potion("ice_resistance", new MobEffectInstance(TANEffects.ICE_RESISTANCE, 3600)));
         TANPotions.LONG_ICE_RESISTANCE = registerPotion(func, "long_ice_resistance", new Potion("long_ice_resistance", new MobEffectInstance(TANEffects.ICE_RESISTANCE, 9600)));
     }
 
-    private static Holder<MobEffect> registerEffect(BiConsumer<ResourceLocation, MobEffect> func, String name, MobEffect effect)
+    private static Holder<MobEffect> registerEffect(BiConsumer<Identifier, MobEffect> func, String name, MobEffect effect)
     {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
+        Identifier location = Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
         ResourceKey<MobEffect> key = ResourceKey.create(Registries.MOB_EFFECT, location);
         func.accept(location, effect);
         return BuiltInRegistries.MOB_EFFECT.get(key).orElseThrow();
     }
 
-    private static Holder<Potion> registerPotion(BiConsumer<ResourceLocation, Potion> func, String name, Potion potion)
+    private static Holder<Potion> registerPotion(BiConsumer<Identifier, Potion> func, String name, Potion potion)
     {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
+        Identifier location = Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name);
         ResourceKey<Potion> key = ResourceKey.create(Registries.POTION, location);
         func.accept(location, potion);
         return BuiltInRegistries.POTION.get(key).orElseThrow();

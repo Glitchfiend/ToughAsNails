@@ -9,7 +9,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import glitchcore.event.client.LevelRenderEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +40,7 @@ public class LevelRenderHandler
         PoseStack poseStack = event.getPoseStack();
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.lines());
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderTypes.lines());
 
         poseStack.pushPose();
         poseStack.translate(-cameraPos.x(), -cameraPos.y(), -cameraPos.z());

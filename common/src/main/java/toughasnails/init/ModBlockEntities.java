@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.init;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,7 +20,7 @@ import java.util.function.BiConsumer;
 
 public class ModBlockEntities
 {
-    public static void registerBlockEntities(BiConsumer<ResourceLocation, BlockEntityType<?>> func)
+    public static void registerBlockEntities(BiConsumer<Identifier, BlockEntityType<?>> func)
     {
         TANBlockEntityTypes.WATER_PURIFIER = register(func, "water_purifier", WaterPurifierBlockEntity::new, Set.of(TANBlocks.WATER_PURIFIER));
         TANBlockEntityTypes.TEMPERATURE_GAUGE = register(func, "temperature_gauge", TemperatureGaugeBlockEntity::new, Set.of(TANBlocks.TEMPERATURE_GAUGE));
@@ -28,10 +28,10 @@ public class ModBlockEntities
     }
 
 
-    private static <T extends BlockEntity> BlockEntityType<?> register(BiConsumer<ResourceLocation, BlockEntityType<?>> func, String name, BlockEntityType.BlockEntitySupplier<T> supplier, Set<Block> blocks)
+    private static <T extends BlockEntity> BlockEntityType<?> register(BiConsumer<Identifier, BlockEntityType<?>> func, String name, BlockEntityType.BlockEntitySupplier<T> supplier, Set<Block> blocks)
     {
         var type = new BlockEntityType(supplier, blocks);
-        func.accept(ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), type);
+        func.accept(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name), type);
         return type;
     }
 }

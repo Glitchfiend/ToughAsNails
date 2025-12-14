@@ -3,7 +3,7 @@ package toughasnails.neoforge.datagen.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -97,7 +97,7 @@ public class TANRecipeProvider extends RecipeProvider
 
     public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
     {
-        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result.getItem())));
+        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result.getItem())));
     }
 
     public void netheriteSmithing(RecipeOutput output, Item input, RecipeCategory category, Item result)
@@ -106,7 +106,7 @@ public class TANRecipeProvider extends RecipeProvider
                 Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(input), Ingredient.of(Items.NETHERITE_INGOT), category, result
             )
             .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-            .save(output, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result)) + "_smithing");
+            .save(output, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result)) + "_smithing");
     }
 
 

@@ -37,6 +37,6 @@ public class TANBlockLoot extends BlockLootSubProvider
     @Override
     protected Iterable<Block> getKnownBlocks()
     {
-        return BuiltInRegistries.BLOCK.entrySet().stream().filter(e -> e.getKey().location().getNamespace().equals(ToughAsNails.MOD_ID)).map(Map.Entry::getValue).toList();
+        return BuiltInRegistries.BLOCK.entrySet().stream().filter(e -> e.getKey().identifier().getNamespace().equals(ToughAsNails.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 }

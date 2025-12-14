@@ -6,7 +6,7 @@ package toughasnails.api.enchantment;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import toughasnails.core.ToughAsNails;
 
@@ -17,6 +17,6 @@ public class TANEnchantments
 
     private static ResourceKey<Enchantment> key(String name)
     {
-        return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
+        return ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
     }
 }

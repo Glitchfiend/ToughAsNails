@@ -4,7 +4,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import toughasnails.api.damagesource.TANDamageTypes;
 import toughasnails.api.thirst.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
@@ -43,7 +43,7 @@ public class ThirstHooks
             }
         }
 
-        boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
+        boolean naturalRegen = player.level().getGameRules().get(GameRules.NATURAL_HEALTH_REGENERATION);
 
         if (naturalRegen && data.saturationLevel > 0.0F && player.isHurt() && data.foodLevel >= 20 && (!ModConfig.thirst.thirstPreventHealthRegen || (thirst.getHydration() > 0.0F && thirst.getThirst() >= 20)))
         {

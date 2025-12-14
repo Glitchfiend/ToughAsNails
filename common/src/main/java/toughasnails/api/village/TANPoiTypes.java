@@ -6,7 +6,7 @@ package toughasnails.api.village;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import toughasnails.api.TANAPI;
 
@@ -16,6 +16,6 @@ public class TANPoiTypes
 
     private static ResourceKey<PoiType> createKey(String name)
     {
-        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, name));
+        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, name));
     }
 }

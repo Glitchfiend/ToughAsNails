@@ -5,7 +5,7 @@
 package toughasnails.init;
 
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipePropertySet;
 import toughasnails.core.ToughAsNails;
 
@@ -15,6 +15,6 @@ public class ModRecipePropertySets
 
     private static ResourceKey<RecipePropertySet> register(String name)
     {
-        return ResourceKey.create(RecipePropertySet.TYPE_KEY, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
+        return ResourceKey.create(RecipePropertySet.TYPE_KEY, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
     }
 }

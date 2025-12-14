@@ -8,7 +8,7 @@ import glitchcore.util.Environment;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -29,7 +29,7 @@ import java.util.function.Function;
 
 public class ModItems
 {
-    public static void registerItems(BiConsumer<ResourceLocation, Item> func)
+    public static void registerItems(BiConsumer<Identifier, Item> func)
     {
         // Block Items
         TANItems.THERMOREGULATOR = registerBlock(func, TANBlocks.THERMOREGULATOR);
@@ -97,46 +97,46 @@ public class ModItems
         TANItems.TAN_ICON = registerItem(func, "tan_icon", Item::new, new Item.Properties());
     }
 
-    public static Item registerBlock(BiConsumer<ResourceLocation, Item> func, Block block)
+    public static Item registerBlock(BiConsumer<Identifier, Item> func, Block block)
     {
         return registerBlock(func, block, BlockItem::new);
     }
 
-    public static Item registerBlock(BiConsumer<ResourceLocation, Item> func, Block block, BiFunction<Block, Item.Properties, Item> factory)
+    public static Item registerBlock(BiConsumer<Identifier, Item> func, Block block, BiFunction<Block, Item.Properties, Item> factory)
     {
         return registerBlock(func, block, factory, new Item.Properties());
     }
 
-    public static Item registerBlock(BiConsumer<ResourceLocation, Item> func, Block block, BiFunction<Block, Item.Properties, Item> factory, Item.Properties properties)
+    public static Item registerBlock(BiConsumer<Identifier, Item> func, Block block, BiFunction<Block, Item.Properties, Item> factory, Item.Properties properties)
     {
         return registerItem(func, blockIdToItemId(block.builtInRegistryHolder().key()), p_370785_ -> factory.apply(block, p_370785_), properties.useBlockDescriptionPrefix()
         );
     }
 
-    private static Item registerItem(BiConsumer<ResourceLocation, Item> func, ResourceKey<Item> key, Function<Item.Properties, Item> factory, Item.Properties properties)
+    private static Item registerItem(BiConsumer<Identifier, Item> func, ResourceKey<Item> key, Function<Item.Properties, Item> factory, Item.Properties properties)
     {
         Item item = factory.apply(properties.setId(key));
-        func.accept(key.location(), item);
+        func.accept(key.identifier(), item);
         return item;
     }
 
-    private static Item registerItem(BiConsumer<ResourceLocation, Item> func, String name, Function<Item.Properties, Item> factory, Item.Properties properties)
+    private static Item registerItem(BiConsumer<Identifier, Item> func, String name, Function<Item.Properties, Item> factory, Item.Properties properties)
     {
         return registerItem(func, itemId(name), factory, properties);
     }
 
-    private static Item registerItem(BiConsumer<ResourceLocation, Item> func, String name, Item.Properties properties)
+    private static Item registerItem(BiConsumer<Identifier, Item> func, String name, Item.Properties properties)
     {
         return registerItem(func, itemId(name), Item::new, properties);
     }
 
     private static ResourceKey<Item> blockIdToItemId(ResourceKey<Block> key)
     {
-        return ResourceKey.create(Registries.ITEM, key.location());
+        return ResourceKey.create(Registries.ITEM, key.identifier());
     }
 
     private static ResourceKey<Item> itemId(String name)
     {
-        return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
     }
 }

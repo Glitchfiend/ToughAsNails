@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
@@ -29,15 +29,15 @@ import java.util.function.BiConsumer;
 
 public class TANItemModelGenerators extends ItemModelGenerators
 {
-    public static final ResourceLocation TRIM_PREFIX_HELMET = prefixForSlotTrim("helmet");
-    public static final ResourceLocation TRIM_PREFIX_CHESTPLATE = prefixForSlotTrim("chestplate");
-    public static final ResourceLocation TRIM_PREFIX_LEGGINGS = prefixForSlotTrim("leggings");
-    public static final ResourceLocation TRIM_PREFIX_BOOTS = prefixForSlotTrim("boots");
+    public static final Identifier TRIM_PREFIX_HELMET = prefixForSlotTrim("helmet");
+    public static final Identifier TRIM_PREFIX_CHESTPLATE = prefixForSlotTrim("chestplate");
+    public static final Identifier TRIM_PREFIX_LEGGINGS = prefixForSlotTrim("leggings");
+    public static final Identifier TRIM_PREFIX_BOOTS = prefixForSlotTrim("boots");
 
     public final ItemModelOutput itemModelOutput;
-    public final BiConsumer<ResourceLocation, ModelInstance> modelOutput;
+    public final BiConsumer<Identifier, ModelInstance> modelOutput;
 
-    public TANItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput)
+    public TANItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<Identifier, ModelInstance> modelOutput)
     {
         super(itemModelOutput, modelOutput);
         this.itemModelOutput = itemModelOutput;
@@ -96,19 +96,19 @@ public class TANItemModelGenerators extends ItemModelGenerators
         this.generateThermometerItem(TANItems.THERMOMETER);
     }
 
-    public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, ResourceLocation prefix, int defaultColor)
+    public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, Identifier prefix, int defaultColor)
     {
-        ResourceLocation modelLocation = ModelLocationUtils.getModelLocation(item);
-        ResourceLocation textureLocation = TextureMapping.getItemTexture(item);
-        ResourceLocation overlayTextureLocation = TextureMapping.getItemTexture(item, "_overlay");
+        Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
+        Identifier textureLocation = TextureMapping.getItemTexture(item);
+        Identifier overlayTextureLocation = TextureMapping.getItemTexture(item, "_overlay");
         List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIAL_MODELS.size());
 
         for (ItemModelGenerators.TrimMaterialData itemmodelgenerators$trimmaterialdata : TRIM_MATERIAL_MODELS) {
-            ResourceLocation resourcelocation3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().base().suffix() + "_trim");
-            ResourceLocation resourcelocation4 = prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix());
+            Identifier Identifier3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().base().suffix() + "_trim");
+            Identifier Identifier4 = prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix());
             ItemModel.Unbaked itemmodel$unbaked;
-            this.generateLayeredItem(resourcelocation3, textureLocation, overlayTextureLocation, resourcelocation4);
-            itemmodel$unbaked = ItemModelUtils.tintedModel(resourcelocation3, new Dye(defaultColor));
+            this.generateLayeredItem(Identifier3, textureLocation, overlayTextureLocation, Identifier4);
+            itemmodel$unbaked = ItemModelUtils.tintedModel(Identifier3, new Dye(defaultColor));
 
             list.add(ItemModelUtils.when(itemmodelgenerators$trimmaterialdata.materialKey(), itemmodel$unbaked));
         }
@@ -138,7 +138,7 @@ public class TANItemModelGenerators extends ItemModelGenerators
                 );
     }
 
-    public static ResourceLocation prefixForSlotTrim(String p_399619_) {
-        return ResourceLocation.fromNamespaceAndPath(ToughAsNails.MOD_ID, "trims/items/" + p_399619_ + "_trim");
+    public static Identifier prefixForSlotTrim(String p_399619_) {
+        return Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "trims/items/" + p_399619_ + "_trim");
     }
 }

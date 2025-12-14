@@ -11,7 +11,7 @@ import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import toughasnails.core.ToughAsNails;
 
 import java.util.function.BiConsumer;
@@ -25,12 +25,12 @@ public class TANModelProvider extends ModelProviderBase
     }
 
     @Override
-    protected BlockModelGenerators createBlockModelGenerators(Consumer<BlockModelDefinitionGenerator> consumer, ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> biConsumer) {
+    protected BlockModelGenerators createBlockModelGenerators(Consumer<BlockModelDefinitionGenerator> consumer, ItemModelOutput itemModelOutput, BiConsumer<Identifier, ModelInstance> biConsumer) {
         return null;
     }
 
     @Override
-    protected ItemModelGenerators createItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput) {
+    protected ItemModelGenerators createItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<Identifier, ModelInstance> modelOutput) {
         return new TANItemModelGenerators(itemModelOutput, modelOutput);
     }
 }

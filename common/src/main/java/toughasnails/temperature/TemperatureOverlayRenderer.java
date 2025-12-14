@@ -11,8 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.TANAPI;
 import toughasnails.api.temperature.TemperatureHelper;
@@ -25,8 +24,8 @@ import java.util.Random;
 public class TemperatureOverlayRenderer
 {
     private static final Random RANDOM = new Random();
-    public static final ResourceLocation OVERLAY = ResourceLocation.parse("toughasnails:textures/gui/icons.png");
-    private static final ResourceLocation HYPERTHERMIA_OUTLINE_LOCATION = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
+    public static final Identifier OVERLAY = Identifier.parse("toughasnails:textures/gui/icons.png");
+    private static final Identifier HYPERTHERMIA_OUTLINE_LOCATION = Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/misc/hyperthermia_outline.png");
     private static long updateCounter;
     private static long flashCounter;
     private static long arrowCounter;

@@ -7,7 +7,7 @@ package toughasnails.mixin.client;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,11 +22,11 @@ public class MixinRangeSelectItemModelProperties
 {
     @Shadow
     @Final
-    private static ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends RangeSelectItemModelProperty>> ID_MAPPER;
+    private static ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends RangeSelectItemModelProperty>> ID_MAPPER;
 
     @Inject(method = "bootstrap", at=@At("TAIL"))
     private static void onBootstrap(CallbackInfo ci)
     {
-        ID_MAPPER.put(ResourceLocation.withDefaultNamespace("temperature"), TemperatureProperty.CODEC);
+        ID_MAPPER.put(Identifier.withDefaultNamespace("temperature"), TemperatureProperty.CODEC);
     }
 }

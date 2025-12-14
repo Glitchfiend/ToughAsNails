@@ -13,7 +13,7 @@ accessible method net/minecraft/world/effect/MobEffect <init> (Lnet/minecraft/wo
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
 
 # Item property registration
-accessible method net/minecraft/client/renderer/item/ItemProperties register (Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/item/ClampedItemPropertyFunction;)V
+accessible method net/minecraft/client/renderer/item/ItemProperties register (Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/item/ClampedItemPropertyFunction;)V
 
 # Particle registration
 accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
@@ -28,7 +28,7 @@ accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/mine
 
 # Gui
 accessible class net/minecraft/client/gui/Gui$HeartType
-accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V
+accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/Identifier;F)V
 
 # Damage source
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;

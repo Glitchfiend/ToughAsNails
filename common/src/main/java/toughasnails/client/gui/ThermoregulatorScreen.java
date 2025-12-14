@@ -7,16 +7,15 @@ package toughasnails.client.gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import toughasnails.api.TANAPI;
 import toughasnails.container.ThermoregulatorContainer;
 
 public class ThermoregulatorScreen extends AbstractContainerScreen<ThermoregulatorContainer>
 {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/gui/container/thermoregulator.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(TANAPI.MOD_ID, "textures/gui/container/thermoregulator.png");
 
     public ThermoregulatorScreen(ThermoregulatorContainer screenContainer, Inventory inv, Component titleIn)
     {

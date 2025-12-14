@@ -18,15 +18,16 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -131,19 +132,19 @@ public class ModVillages
         Registry<StructureTemplatePool> templatePools = registryAccess.lookupOrThrow(Registries.TEMPLATE_POOL);
         Registry<StructureProcessorList> processorLists = registryAccess.lookupOrThrow(Registries.PROCESSOR_LIST);
 
-        addBuildingToPool(templatePools, processorLists, ResourceLocation.parse("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 1);
-        addBuildingToPool(templatePools, processorLists, ResourceLocation.parse("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 2);
-        addBuildingToPool(templatePools, processorLists, ResourceLocation.parse("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 2);
-        addBuildingToPool(templatePools, processorLists, ResourceLocation.parse("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 3);
-        addBuildingToPool(templatePools, processorLists, ResourceLocation.parse("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, Identifier.parse("minecraft:village/desert/houses"), ToughAsNails.MOD_ID + ":village/desert/houses/desert_climatologist_1", 1);
+        addBuildingToPool(templatePools, processorLists, Identifier.parse("minecraft:village/savanna/houses"), ToughAsNails.MOD_ID + ":village/savanna/houses/savanna_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, Identifier.parse("minecraft:village/plains/houses"), ToughAsNails.MOD_ID + ":village/plains/houses/plains_climatologist_1", 2);
+        addBuildingToPool(templatePools, processorLists, Identifier.parse("minecraft:village/taiga/houses"), ToughAsNails.MOD_ID + ":village/taiga/houses/taiga_climatologist_1", 3);
+        addBuildingToPool(templatePools, processorLists, Identifier.parse("minecraft:village/snowy/houses"), ToughAsNails.MOD_ID + ":village/snowy/houses/snowy_climatologist_1", 2);
     }
 
-    public static void registerPointsOfInterest(BiConsumer<ResourceLocation, PoiType> func)
+    public static void registerPointsOfInterest(BiConsumer<Identifier, PoiType> func)
     {
         register(func, TANPoiTypes.CLIMATOLOGIST, getBlockStates(TANBlocks.THERMOREGULATOR), 1, 1);
     }
 
-    public static void registerProfessions(BiConsumer<ResourceLocation, VillagerProfession> func)
+    public static void registerProfessions(BiConsumer<Identifier, VillagerProfession> func)
     {
         register(func, TANVillagerProfessions.CLIMATOLOGIST, TANPoiTypes.CLIMATOLOGIST, SoundEvents.VILLAGER_WORK_ARMORER);
     }
@@ -163,7 +164,8 @@ public class ModVillages
             this.priceMultiplier = 0.05F;
         }
 
-        public MerchantOffer getOffer(Entity p_219682_, RandomSource p_219683_) {
+        @Override
+        public MerchantOffer getOffer(ServerLevel level, Entity p_219682_, RandomSource p_219683_) {
             ItemCost cost = new ItemCost(this.item, this.cost);
             return new MerchantOffer(cost, new ItemStack(Items.EMERALD), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
@@ -194,7 +196,8 @@ public class ModVillages
             this.priceMultiplier = p_35763_;
         }
 
-        public MerchantOffer getOffer(Entity p_219699_, RandomSource p_219700_) {
+        @Override
+        public MerchantOffer getOffer(ServerLevel level, Entity p_219699_, RandomSource p_219700_) {
             return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
     }
@@ -203,10 +206,10 @@ public class ModVillages
         return new Int2ObjectOpenHashMap<>(p_221238_0_);
     }
 
-    public static void addBuildingToPool(Registry<StructureTemplatePool> templatePoolRegistry, Registry<StructureProcessorList> processorListRegistry, ResourceLocation poolRL, String nbtPieceRL, int weight)
+    public static void addBuildingToPool(Registry<StructureTemplatePool> templatePoolRegistry, Registry<StructureProcessorList> processorListRegistry, Identifier poolRL, String nbtPieceRL, int weight)
     {
         templatePoolRegistry.get(poolRL).ifPresent(pool -> {
-            ResourceLocation emptyProcessor = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
+            Identifier emptyProcessor = Identifier.fromNamespaceAndPath("minecraft", "empty");
             Holder<StructureProcessorList> processorHolder = processorListRegistry.getOrThrow(ResourceKey.create(Registries.PROCESSOR_LIST, emptyProcessor));
 
             SinglePoolElement piece = SinglePoolElement.single(nbtPieceRL, processorHolder).apply(StructureTemplatePool.Projection.RIGID);
@@ -221,35 +224,35 @@ public class ModVillages
         });
     }
 
-    private static PoiType register(BiConsumer<ResourceLocation, PoiType> func, ResourceKey<PoiType> key, Set<BlockState> states, int maxTickets, int validRange)
+    private static PoiType register(BiConsumer<Identifier, PoiType> func, ResourceKey<PoiType> key, Set<BlockState> states, int maxTickets, int validRange)
     {
         PoiType type = new PoiType(states, maxTickets, validRange);
-        func.accept(key.location(), type);
+        func.accept(key.identifier(), type);
         registerBlockStates(key, states);
         return type;
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound)
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound)
     {
         return register(func, key, (h) -> h.is(poi), (h) -> h.is(poi), workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, @Nullable SoundEvent workSound)
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, @Nullable SoundEvent workSound)
     {
         return register(func, key, heldJobSite, acquirableJobSite, ImmutableSet.of(), ImmutableSet.of(), workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
         return register(func, key, ($$1x) -> $$1x.is(poi), ($$1x) -> $$1x.is(poi), requestedItems, secondaryPoi, workSound);
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
-        return register(func, key, new VillagerProfession(Component.translatable("entity." + ToughAsNails.MOD_ID + ".villager." + key.location().getPath()), heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound));
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
+        return register(func, key, new VillagerProfession(Component.translatable("entity." + ToughAsNails.MOD_ID + ".villager." + key.identifier().getPath()), heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound));
     }
 
-    private static VillagerProfession register(BiConsumer<ResourceLocation, VillagerProfession> func, ResourceKey<VillagerProfession> key, VillagerProfession profession)
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, VillagerProfession profession)
     {
-        func.accept(key.location(), profession);
+        func.accept(key.identifier(), profession);
         return profession;
     }
 

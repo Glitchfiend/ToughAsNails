@@ -3,7 +3,7 @@ package toughasnails.neoforge.datagen.recipes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import toughasnails.crafting.WaterPurifierRecipe;
 
@@ -27,10 +27,10 @@ public class WaterPurifierRecipeBuilder
 
     public void save(RecipeOutput output, String name)
     {
-        this.save(output, ResourceLocation.parse(name));
+        this.save(output, Identifier.parse(name));
     }
 
-    public void save(RecipeOutput output, ResourceLocation location)
+    public void save(RecipeOutput output, Identifier location)
     {
         output.accept(ResourceKey.create(Registries.RECIPE, location), new WaterPurifierRecipe(this.input, this.result, this.purifyTime), null);
     }

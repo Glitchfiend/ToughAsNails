@@ -7,7 +7,6 @@ package toughasnails.init;
 import glitchcore.event.client.RegisterColorsEvent;
 import glitchcore.event.client.RegisterParticleSpritesEvent;
 import glitchcore.util.RenderHelper;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import toughasnails.api.particle.TANParticles;
 import toughasnails.client.particle.ThermoregulatorParticle;
