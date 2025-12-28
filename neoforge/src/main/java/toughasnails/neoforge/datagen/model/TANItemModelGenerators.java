@@ -139,6 +139,6 @@ public class TANItemModelGenerators extends ItemModelGenerators
     }
 
     public static Identifier prefixForSlotTrim(String p_399619_) {
-        return Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "trims/items/" + p_399619_ + "_trim");
+        return Identifier.withDefaultNamespace("trims/items/" + p_399619_ + "_trim");
     }
 }

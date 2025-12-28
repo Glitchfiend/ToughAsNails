@@ -3,6 +3,6 @@
   "textures": {
     "layer0": "toughasnails:item/wool_leggings",
     "layer1": "toughasnails:item/wool_leggings_overlay",
-    "layer2": "toughasnails:trims/items/leggings_trim_gold"
+    "layer2": "minecraft:trims/items/leggings_trim_gold"
   }
 }
