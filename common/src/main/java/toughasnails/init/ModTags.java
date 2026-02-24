@@ -4,6 +4,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
@@ -21,6 +23,7 @@ public class ModTags
         Items.init();
         Biomes.init();
         Trims.init();
+        EntityTypes.init();
     }
 
     public static class Blocks
@@ -159,6 +162,18 @@ public class ModTags
         private static TagKey<TrimMaterial> create(String name)
         {
             return TagKey.create(Registries.TRIM_MATERIAL, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, name));
+        }
+    }
+
+    public static class EntityTypes
+    {
+        private static void init() {}
+
+        public static final TagKey<EntityType<?>> NEUTRALISING_MOUNTS = create(Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, "neutralising_mounts"));
+
+        public static TagKey<EntityType<?>> create(Identifier name)
+        {
+            return TagKey.create(Registries.ENTITY_TYPE, name);
         }
     }
 }

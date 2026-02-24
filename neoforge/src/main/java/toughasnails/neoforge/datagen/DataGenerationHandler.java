@@ -53,6 +53,7 @@ public class DataGenerationHandler
         generator.addProvider(true, new TANTrimMaterialTagsProvider(output, datapackProvider.getRegistryProvider()));
         generator.addProvider(true, new TANPoiTypesTagsProvider(output, datapackProvider.getRegistryProvider()));
         generator.addProvider(true, new TANEnchantmentTagsProvider(output, datapackProvider.getRegistryProvider()));
+        generator.addProvider(true, new TANEntityTypeTagsProvider(output, datapackProvider.getRegistryProvider()));
 
         // Client
         generator.addProvider(true, new TANEquipmentAssetProvider(output));

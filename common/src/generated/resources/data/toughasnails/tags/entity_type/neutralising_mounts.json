@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#c:minecarts",
+    "#c:boats",
+    {
+      "id": "#mts:builder_seat",
+      "required": false
+    }
+  ]
+}

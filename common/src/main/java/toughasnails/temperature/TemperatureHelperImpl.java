@@ -343,6 +343,21 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         return current;
     }
 
+    protected static TemperatureLevel mountModifier(Player player, TemperatureLevel current)
+    {
+        var vehicle = player.getVehicle();
+
+        if (vehicle == null)
+            return current;
+
+        if (vehicle.getType().is(ModTags.EntityTypes.NEUTRALISING_MOUNTS))
+        {
+            current = TemperatureLevel.NEUTRAL;
+        }
+
+        return current;
+    }
+
     protected static TemperatureLevel internalModifier(Player player, TemperatureLevel current)
     {
         TemperatureLevel newTemperature = current;

@@ -22,6 +22,7 @@ public class TemperatureConfig extends Config
     
     public int temperatureChangeDelay;
     public int armorTemperatureChangeDelay;
+    public int mountTemperatureChangeDelay;
     public int handheldTemperatureChangeDelay;
     public int playerTemperatureChangeDelay;
     public int internalTemperatureChangeDelay;
@@ -53,7 +54,7 @@ public class TemperatureConfig extends Config
         super(Environment.getConfigPath().resolve(TANAPI.MOD_ID + "/temperature.toml"));
     }
 
-    private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER, BuiltInTemperatureModifier.INTERNAL_MODIFIER)
+    private static final List<String> DEFAULT_TEMPERATURE_MODIFIER_ORDER = ImmutableList.of(BuiltInTemperatureModifier.PLAYER_MODIFIERS, BuiltInTemperatureModifier.ITEM_MODIFIER, BuiltInTemperatureModifier.ARMOR_MODIFIER, BuiltInTemperatureModifier.MOUNT_MODIFIER, BuiltInTemperatureModifier.INTERNAL_MODIFIER)
         .stream().map(e -> e.toString().toLowerCase()).toList();
 
     private static final Predicate<List<String>> TEMPERATURE_MODIFIER_VALIDATOR = list -> {
@@ -71,6 +72,7 @@ public class TemperatureConfig extends Config
         // General options
         temperatureChangeDelay = addNumber("general.temperature_change_delay", 500, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes.");
         armorTemperatureChangeDelay = addNumber("general.armor_temperature_change_delay", 50, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when wearing armor.");
+        mountTemperatureChangeDelay = addNumber("general.mount_temperature_change_delay", 50, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when mounted.");
         handheldTemperatureChangeDelay = addNumber("general.handheld_temperature_change_delay", 375, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when holding an item.");
         playerTemperatureChangeDelay = addNumber("general.player_temperature_change_delay", 125, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes when affected by a player-based temperature modifier.");
         internalTemperatureChangeDelay = addNumber("general.internal_temperature_change_delay", 20, 0, Integer.MAX_VALUE, "Number of ticks to delay changing the player's temperature after their temperature changes from consuming a heating or cooling item.");

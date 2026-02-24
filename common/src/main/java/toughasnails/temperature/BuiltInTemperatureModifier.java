@@ -40,6 +40,12 @@ public enum BuiltInTemperatureModifier
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay);
         return new Tuple<>(newTarget, newChangeDelay);
     }),
+    MOUNT_MODIFIER((player, currentTarget, currentChangeDelay) -> {
+        int newChangeDelay = currentChangeDelay;
+        TemperatureLevel newTarget = TemperatureHelperImpl.mountModifier(player, currentTarget);
+        if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.mountTemperatureChangeDelay);
+        return new Tuple<>(newTarget, newChangeDelay);
+    }),
     INTERNAL_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.internalModifier(player, currentTarget);
