@@ -161,7 +161,7 @@ public class ThirstHandler
             // Based on FoodData's eat
             thirst.drink(drink_thirst, drink_hydration);
 
-            if (player.level().random.nextFloat() < drink_poison_chance)
+            if (player.level().getRandom().nextFloat() < drink_poison_chance)
             {
                 player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
             }

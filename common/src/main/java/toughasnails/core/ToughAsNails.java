@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
 import toughasnails.client.handler.KeyHandler;
-import toughasnails.client.handler.LevelRenderHandler;
 import toughasnails.client.handler.TooltipHandler;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
@@ -79,9 +78,6 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onUseBlock);
 
         // Misc handlers
-        EventManager.addListener(ModVillages::addVillagerTrades);
-        EventManager.addListener(ModVillages::addWanderingVillagerTrades);
-
         if (Environment.isClient())
         {
             addClientHandlers();
@@ -94,16 +90,12 @@ public class ToughAsNails
         EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
-        EventManager.addListener(LevelRenderHandler::onLevelRender);
 
         // Thirst
         EventManager.addListener(ThirstOverlayRenderer::onClientTick);
         EventManager.addListener(ThirstOverlayRenderer::onBeginRenderAir);
         EventManager.addListener(ThirstHandler::onUseEmpty);
         EventManager.addListener(ThirstHandler::onClientTick);
-
-        // Coloring
-        EventManager.addListener(ModClient::registerBlockColors);
 
         // Particles
         EventManager.addListener(ModClient::registerParticleSprites);

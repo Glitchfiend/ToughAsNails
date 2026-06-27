@@ -6,6 +6,13 @@ plugins {
 base.archivesName.set("${mod_name}-neoforge")
 
 def resources = project(':Common').file('src/generated/resources/').getAbsolutePath()
+def accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+minecraft {
+    accessTransformers {
+        file accessTransformer
+    }
+}
 
 runs {
     configureEach {

@@ -35,7 +35,7 @@ public class KeyHandler
                 }
                 case InputConstants.KEY_Q -> {
                     ChatComponent component = minecraft.gui.getChat();
-                    component.addMessage(Component.translatable("debug.temperature_fill.help"));
+                    component.addClientSystemMessage(Component.translatable("debug.temperature_fill.help"));
                     // Should already be marked as handled by Vanilla
                 }
             }
@@ -49,12 +49,10 @@ public class KeyHandler
         Minecraft.getInstance()
             .gui
             .getChat()
-            .addMessage(
-                    Component.empty()
-                            .append(Component.translatable("debug.prefix").withStyle(formatting, ChatFormatting.BOLD))
-                            .append(CommonComponents.SPACE)
-                            .append(component)
-            );
+            .addClientSystemMessage(Component.empty()
+                .append(Component.translatable("debug.prefix").withStyle(formatting, ChatFormatting.BOLD))
+                .append(CommonComponents.SPACE)
+                .append(component));
     }
 
     private static void debugFeedbackComponent(Component $$0) {

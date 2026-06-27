@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -99,13 +100,13 @@ public class TANItemModelGenerators extends ItemModelGenerators
     public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, Identifier prefix, int defaultColor)
     {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
-        Identifier textureLocation = TextureMapping.getItemTexture(item);
-        Identifier overlayTextureLocation = TextureMapping.getItemTexture(item, "_overlay");
+        Material textureLocation = TextureMapping.getItemTexture(item);
+        Material overlayTextureLocation = TextureMapping.getItemTexture(item, "_overlay");
         List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIAL_MODELS.size());
 
         for (ItemModelGenerators.TrimMaterialData itemmodelgenerators$trimmaterialdata : TRIM_MATERIAL_MODELS) {
             Identifier Identifier3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().base().suffix() + "_trim");
-            Identifier Identifier4 = prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix());
+            Material Identifier4 = new Material(prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix()));
             ItemModel.Unbaked itemmodel$unbaked;
             this.generateLayeredItem(Identifier3, textureLocation, overlayTextureLocation, Identifier4);
             itemmodel$unbaked = ItemModelUtils.tintedModel(Identifier3, new Dye(defaultColor));

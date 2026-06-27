@@ -5,6 +5,7 @@
 package toughasnails.mixin.client;
 
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
@@ -39,6 +40,6 @@ public abstract class MixinItemStack
         Item item = this.getItem();
 
         if (item == TANItems.LEAF_BOOTS || item == TANItems.LEAF_LEGGINGS || item == TANItems.LEAF_CHESTPLATE || item == TANItems.LEAF_HELMET)
-            this.set(DataComponents.DYED_COLOR, new DyedItemColor(BiomeColors.getAverageFoliageColor(entity.level(), entity.blockPosition())));
+            this.set(DataComponents.DYED_COLOR, new DyedItemColor(BiomeColors.getAverageFoliageColor((BlockAndTintGetter)entity.level(), entity.blockPosition())));
     }
 }

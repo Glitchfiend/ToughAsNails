@@ -8,11 +8,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -48,9 +45,21 @@ public class WaterPurifierRecipe implements Recipe<SingleRecipeInput>
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput var1, HolderLookup.Provider var2)
+    public ItemStack assemble(SingleRecipeInput var1)
     {
         return this.result.copy();
+    }
+
+    @Override
+    public boolean showNotification()
+    {
+        return true;
+    }
+
+    @Override
+    public String group()
+    {
+        return "";
     }
 
     public ItemStack input()
@@ -96,44 +105,30 @@ public class WaterPurifierRecipe implements Recipe<SingleRecipeInput>
         return this.purifyTime;
     }
 
-    public static class Serializer implements RecipeSerializer<WaterPurifierRecipe>
+    public static final MapCodec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.mapCodec((builder) -> {
+        return builder.group(ItemStack.CODEC.fieldOf("input").forGetter((p_296920_) -> {
+            return p_296920_.input;
+        }), ItemStack.CODEC.fieldOf("result").forGetter((p_296923_) -> {
+            return p_296923_.result;
+        }), Codec.INT.fieldOf("purifytime").orElse(200).forGetter((p_296919_) -> {
+            return p_296919_.purifyTime;
+        })).apply(builder, WaterPurifierRecipe::new);
+    });
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, WaterPurifierRecipe> STREAM_CODEC = StreamCodec.of(WaterPurifierRecipe::toNetwork, WaterPurifierRecipe::fromNetwork);
+
+    private static WaterPurifierRecipe fromNetwork(RegistryFriendlyByteBuf buffer)
     {
-        private static final MapCodec<WaterPurifierRecipe> CODEC = RecordCodecBuilder.mapCodec((builder) -> {
-            return builder.group(ItemStack.CODEC.fieldOf("input").forGetter((p_296920_) -> {
-                return p_296920_.input;
-            }), ItemStack.CODEC.fieldOf("result").forGetter((p_296923_) -> {
-                return p_296923_.result;
-            }), Codec.INT.fieldOf("purifytime").orElse(200).forGetter((p_296919_) -> {
-                return p_296919_.purifyTime;
-            })).apply(builder, WaterPurifierRecipe::new);
-        });
+        ItemStack input = ItemStack.STREAM_CODEC.decode(buffer);
+        ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
+        int purifyTime = buffer.readInt();
+        return new WaterPurifierRecipe(input, result, purifyTime);
+    }
 
-        private final StreamCodec<RegistryFriendlyByteBuf, WaterPurifierRecipe> streamCodec = StreamCodec.of(this::toNetwork, this::fromNetwork);
-
-        public WaterPurifierRecipe fromNetwork(RegistryFriendlyByteBuf buffer)
-        {
-            ItemStack input = ItemStack.STREAM_CODEC.decode(buffer);
-            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-            int purifyTime = buffer.readInt();
-            return new WaterPurifierRecipe(input, result, purifyTime);
-        }
-
-        public void toNetwork(RegistryFriendlyByteBuf buffer, WaterPurifierRecipe recipe)
-        {
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.input);
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-            buffer.writeInt(recipe.purifyTime);
-        }
-
-        @Override
-        public MapCodec<WaterPurifierRecipe> codec()
-        {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, WaterPurifierRecipe> streamCodec() {
-            return this.streamCodec;
-        }
+    private static void toNetwork(RegistryFriendlyByteBuf buffer, WaterPurifierRecipe recipe)
+    {
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.input);
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        buffer.writeInt(recipe.purifyTime);
     }
 }
