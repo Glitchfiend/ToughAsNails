@@ -79,6 +79,9 @@ subprojects {
             name = 'Forge'
             url = "https://maven.minecraftforge.net"
         }
+        flatDir {
+            dirs rootProject.file("..")
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {
