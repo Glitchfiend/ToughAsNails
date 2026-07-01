@@ -40,10 +40,10 @@ public class ModItems
         // Items
         TANItems.THERMOMETER = registerItem(func, "thermometer", Item::new, new Item.Properties().stacksTo(1));
 
-        TANItems.LEAF_HELMET = registerItem(func, "leaf_helmet", new Item.Properties().humanoidArmor(ModArmorMaterials.LEAF, ArmorType.HELMET).stacksTo(1));
-        TANItems.LEAF_CHESTPLATE = registerItem(func, "leaf_chestplate", new Item.Properties().humanoidArmor(ModArmorMaterials.LEAF, ArmorType.CHESTPLATE).stacksTo(1));
-        TANItems.LEAF_LEGGINGS = registerItem(func, "leaf_leggings", new Item.Properties().humanoidArmor(ModArmorMaterials.LEAF, ArmorType.LEGGINGS).stacksTo(1));
-        TANItems.LEAF_BOOTS = registerItem(func, "leaf_boots", new Item.Properties().humanoidArmor(ModArmorMaterials.LEAF, ArmorType.BOOTS).stacksTo(1));
+        TANItems.LEAF_HELMET = registerItem(func, "leaf_helmet", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.LEAF, ArmorType.HELMET).stacksTo(1));
+        TANItems.LEAF_CHESTPLATE = registerItem(func, "leaf_chestplate", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.LEAF, ArmorType.CHESTPLATE).stacksTo(1));
+        TANItems.LEAF_LEGGINGS = registerItem(func, "leaf_leggings", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.LEAF, ArmorType.LEGGINGS).stacksTo(1));
+        TANItems.LEAF_BOOTS = registerItem(func, "leaf_boots", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.LEAF, ArmorType.BOOTS).stacksTo(1));
 
         TANItems.WOOL_HELMET = registerItem(func, "wool_helmet", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.WOOL, ArmorType.HELMET).stacksTo(1));
         TANItems.WOOL_CHESTPLATE = registerItem(func, "wool_chestplate", new Item.Properties().component(DataComponents.DYED_COLOR, new DyedItemColor(0xFFFFFF)).humanoidArmor(ModArmorMaterials.WOOL, ArmorType.CHESTPLATE).stacksTo(1));
