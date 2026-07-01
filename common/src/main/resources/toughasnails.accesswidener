@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v2 official
 
 # MenuType registration
 accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
@@ -28,7 +28,10 @@ accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/mine
 
 # Gui
 accessible class net/minecraft/client/gui/Gui$HeartType
-accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/Identifier;F)V
+accessible method net/minecraft/client/gui/Gui extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
+
+# Creative tab output (protected inner interface in 26.1.2)
+accessible class net/minecraft/world/item/CreativeModeTab$Output
 
 # Damage source
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;
