@@ -1,5 +1,7 @@
 if (providers.gradleProperty("neoforgeOnly").isPresent()) {
     include("common", "neoforge")
+} else if (providers.gradleProperty("noForge").isPresent()) {
+    include("common", "neoforge", "fabric")
 } else {
     include("common", "forge", "neoforge", "fabric")
 }
@@ -30,6 +32,8 @@ rootProject.name = "ToughAsNails"
 project(":common").name = "Common"
 project(":neoforge").name = "NeoForge"
 if (!providers.gradleProperty("neoforgeOnly").isPresent()) {
-    project(":forge").name = "Forge"
+    if (!providers.gradleProperty("noForge").isPresent()) {
+        project(":forge").name = "Forge"
+    }
     project(":fabric").name = "Fabric"
 }
