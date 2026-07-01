@@ -126,7 +126,7 @@ subprojects {
                 versionNumber = mod_version
                 versionName = "${mod_version} for ${name} ${minecraft_version}"
                 versionType = release_channel
-                uploadFile = name.equals("Fabric") ? remapJar : jar
+                uploadFile = jar
                 gameVersions = [minecraft_version]
                 loaders = [name.toLowerCase()]
                 dependencies {

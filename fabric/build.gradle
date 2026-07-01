@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "1.13-SNAPSHOT"
+    id "net.fabricmc.fabric-loom" version "1.17.13"
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
@@ -7,12 +7,11 @@ base.archivesName.set("${mod_name}-fabric")
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
     compileOnly project(":Common")
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modImplementation "com.github.glitchfiend:GlitchCore-fabric:${minecraft_version}-${glitchcore_version}"
-    modImplementation "com.github.glitchfiend:SereneSeasons-fabric:${minecraft_version}-${serene_seasons_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    implementation "com.github.glitchfiend:GlitchCore-fabric:${minecraft_version}-${glitchcore_version}"
+    implementation "com.github.glitchfiend:SereneSeasons-fabric:${minecraft_version}-${serene_seasons_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
     // Dependencies embedded in final jar
@@ -63,7 +62,7 @@ curseforge {
         addGameVersion minecraft_version
         addGameVersion name
 
-        mainArtifact(remapJar) {
+        mainArtifact(jar) {
             displayName = "${mod_display_name} ${name} ${version}"
         }
 
