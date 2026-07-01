@@ -97,6 +97,9 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onUseEmpty);
         EventManager.addListener(ThirstHandler::onClientTick);
 
+        // Coloring
+        EventManager.addListener(ModClient::registerBlockColors);
+
         // Particles
         EventManager.addListener(ModClient::registerParticleSprites);
 
