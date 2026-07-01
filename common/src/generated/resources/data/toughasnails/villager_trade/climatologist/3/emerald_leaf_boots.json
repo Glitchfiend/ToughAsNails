@@ -1,0 +1,12 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 4.0
+  },
+  "gives": {
+    "id": "toughasnails:leaf_boots"
+  },
+  "max_uses": 12.0,
+  "xp": 3.0,
+  "reputation_discount": 0.2
+}
