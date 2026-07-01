@@ -33,6 +33,8 @@ import toughasnails.api.village.TANPoiTypes;
 import toughasnails.api.village.TANVillagerProfessions;
 import toughasnails.core.ToughAsNails;
 
+import static toughasnails.core.ToughAsNails.MOD_ID;
+
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,11 @@ public class ModVillages
 
     public static void registerProfessions(BiConsumer<Identifier, VillagerProfession> func)
     {
-        register(func, TANVillagerProfessions.CLIMATOLOGIST, TANPoiTypes.CLIMATOLOGIST, SoundEvents.VILLAGER_WORK_ARMORER);
+        var tradeMap = new Int2ObjectOpenHashMap<ResourceKey<TradeSet>>();
+        for (int level = 1; level <= 5; level++) {
+            tradeMap.put(level, ResourceKey.create(Registries.TRADE_SET, Identifier.fromNamespaceAndPath(MOD_ID, "climatologist/level_" + level)));
+        }
+        register(func, TANVillagerProfessions.CLIMATOLOGIST, TANPoiTypes.CLIMATOLOGIST, SoundEvents.VILLAGER_WORK_ARMORER, tradeMap);
     }
 
     public static void addBuildingToPool(Registry<StructureTemplatePool> templatePoolRegistry, Registry<StructureProcessorList> processorListRegistry, Identifier poolRL, String nbtPieceRL, int weight)
@@ -92,20 +98,25 @@ public class ModVillages
 
     private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound)
     {
-        return register(func, key, (h) -> h.is(poi), (h) -> h.is(poi), workSound);
+        return register(func, key, poi, workSound, new Int2ObjectOpenHashMap<>());
+    }
+
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, @Nullable SoundEvent workSound, Int2ObjectOpenHashMap<ResourceKey<TradeSet>> tradeMap)
+    {
+        return register(func, key, (h) -> h.is(poi), (h) -> h.is(poi), ImmutableSet.of(), ImmutableSet.of(), workSound, tradeMap);
     }
 
     private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, @Nullable SoundEvent workSound)
     {
-        return register(func, key, heldJobSite, acquirableJobSite, ImmutableSet.of(), ImmutableSet.of(), workSound);
+        return register(func, key, heldJobSite, acquirableJobSite, ImmutableSet.of(), ImmutableSet.of(), workSound, new Int2ObjectOpenHashMap<>());
     }
 
     private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, ResourceKey<PoiType> poi, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
-        return register(func, key, ($$1x) -> $$1x.is(poi), ($$1x) -> $$1x.is(poi), requestedItems, secondaryPoi, workSound);
+        return register(func, key, ($$1x) -> $$1x.is(poi), ($$1x) -> $$1x.is(poi), requestedItems, secondaryPoi, workSound, new Int2ObjectOpenHashMap<>());
     }
 
-    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound) {
-        return register(func, key, new VillagerProfession(Component.translatable("entity." + ToughAsNails.MOD_ID + ".villager." + key.identifier().getPath()), heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound, new Int2ObjectOpenHashMap<ResourceKey<TradeSet>>()));
+    private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldJobSite, Predicate<Holder<PoiType>> acquirableJobSite, ImmutableSet<Item> requestedItems, ImmutableSet<Block> secondaryPoi, @Nullable SoundEvent workSound, Int2ObjectOpenHashMap<ResourceKey<TradeSet>> tradeMap) {
+        return register(func, key, new VillagerProfession(Component.translatable("entity." + ToughAsNails.MOD_ID + ".villager." + key.identifier().getPath()), heldJobSite, acquirableJobSite, requestedItems, secondaryPoi, workSound, tradeMap));
     }
 
     private static VillagerProfession register(BiConsumer<Identifier, VillagerProfession> func, ResourceKey<VillagerProfession> key, VillagerProfession profession)
