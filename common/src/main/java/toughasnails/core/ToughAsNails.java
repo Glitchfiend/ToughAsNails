@@ -39,7 +39,6 @@ public class ToughAsNails
 
     public static void setupClient()
     {
-        ModClient.setupRenderTypes();
     }
 
     public static void onServerAboutToStart(MinecraftServer server)
