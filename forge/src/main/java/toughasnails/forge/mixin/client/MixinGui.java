@@ -15,14 +15,14 @@ import toughasnails.temperature.TemperatureHooksClient;
 @Mixin(Gui.class)
 public class MixinGui
 {
-    @Inject(method="extractSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="HEAD"), remap = false)
+    @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="HEAD"), remap = false)
     public void onRenderSelectedItemNameBegin(GuiGraphicsExtractor guiGraphics, int yShift, CallbackInfo ci)
     {
         guiGraphics.pose().pushMatrix();
         TemperatureHooksClient.adjustSelectedItemText(guiGraphics);
     }
 
-    @Inject(method="extractSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="TAIL"), remap = false)
+    @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="TAIL"), remap = false)
     public void onRenderSelectedItemNameEnd(GuiGraphicsExtractor guiGraphics, int yShift, CallbackInfo ci)
     {
         guiGraphics.pose().popMatrix();
