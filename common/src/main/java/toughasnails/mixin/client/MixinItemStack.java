@@ -23,7 +23,7 @@ import toughasnails.api.item.TANItems;
 
 import javax.annotation.Nullable;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, remap = false)
 public abstract class MixinItemStack
 {
     @Shadow public abstract Item getItem();

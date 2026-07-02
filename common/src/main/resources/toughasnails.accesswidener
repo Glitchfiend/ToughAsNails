@@ -12,12 +12,6 @@ accessible method net/minecraft/world/effect/MobEffect <init> (Lnet/minecraft/wo
 # Block entity registration
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
 
-# Item property registration
-accessible method net/minecraft/client/renderer/item/ItemProperties register (Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/item/ClampedItemPropertyFunction;)V
-
-# Particle registration
-accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
-accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 
 # Thirst
 accessible field net/minecraft/world/food/FoodData foodLevel I
@@ -43,6 +37,7 @@ accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTem
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
 
 # Particles
+accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible class net/minecraft/client/particle/ParticleResources$SpriteParticleRegistration
 
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V

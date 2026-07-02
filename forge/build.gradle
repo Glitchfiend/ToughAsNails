@@ -39,6 +39,7 @@ dependencies {
 
 tasks.withType(JavaCompile).configureEach {
     source(project(":Common").sourceSets.main.allSource)
+    options.compilerArgs += ['-AdefaultObfuscationEnv=official']
 }
 
 tasks.withType(Javadoc).configureEach {
@@ -47,6 +48,10 @@ tasks.withType(Javadoc).configureEach {
 
 tasks.named("sourcesJar", Jar) {
     from(project(":Common").sourceSets.main.allSource)
+}
+
+test {
+    failOnNoDiscoveredTests = false
 }
 
 processResources {

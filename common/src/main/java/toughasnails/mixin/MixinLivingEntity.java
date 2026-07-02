@@ -22,7 +22,7 @@ import toughasnails.api.temperature.TemperatureHelper;
 import toughasnails.api.temperature.TemperatureLevel;
 import toughasnails.core.ToughAsNails;
 
-@Mixin(LivingEntity.class)
+@Mixin(value = LivingEntity.class, remap = false)
 public abstract class MixinLivingEntity extends Entity implements Attackable
 {
     public MixinLivingEntity(EntityType<?> $$0, Level $$1) {

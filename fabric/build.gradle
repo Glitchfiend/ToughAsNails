@@ -41,6 +41,10 @@ loom {
     }
 }
 
+test {
+    failOnNoDiscoveredTests = false
+}
+
 processResources {
     from project(":Common").sourceSets.main.resources
 }

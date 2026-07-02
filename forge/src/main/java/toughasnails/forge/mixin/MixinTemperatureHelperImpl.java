@@ -20,7 +20,7 @@ public abstract class MixinTemperatureHelperImpl
     @Overwrite
     private static boolean coldEnoughToSnow(Level level, Holder<Biome> biome, BlockPos pos)
     {
-        if (ModList.get().isLoaded("sereneseasons"))
+        if (ModList.isLoaded("sereneseasons"))
         {
             return ModCompatibility.coldEnoughToSnowSeasonal(level, biome, pos);
         }

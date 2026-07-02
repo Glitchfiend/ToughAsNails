@@ -22,7 +22,7 @@ import toughasnails.init.ModRecipePropertySets;
 import java.util.Map;
 import java.util.Optional;
 
-@Mixin(RecipeManager.class)
+@Mixin(value = RecipeManager.class, remap = false)
 public class MixinRecipeManager
 {
     @Shadow private static Map<ResourceKey<RecipePropertySet>, RecipeManager.IngredientExtractor> RECIPE_PROPERTY_SETS;

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import toughasnails.thirst.ThirstHooksClient;
 
-@Mixin(LocalPlayer.class)
+@Mixin(value = LocalPlayer.class, remap = false)
 public class MixinLocalPlayer
 {
     @Redirect(method="aiStep", at=@At(value="INVOKE", target="Lnet/minecraft/client/player/LocalPlayer;setSprinting(Z)V"))

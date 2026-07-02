@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.temperature.TemperatureHooksClient;
 
-@Mixin(Gui.class)
+@Mixin(value = Gui.class, remap = false)
 public abstract class MixinGui
 {
     @Inject(method="extractHeart", at=@At(value="HEAD"), cancellable = true)

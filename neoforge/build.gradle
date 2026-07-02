@@ -55,6 +55,10 @@ tasks.named("sourcesJar", Jar) {
     from(project(":Common").sourceSets.main.allSource)
 }
 
+test {
+    failOnNoDiscoveredTests = false
+}
+
 tasks.withType(ProcessResources).excludingNeoTasks().configureEach {
     from project(":Common").sourceSets.main.resources
     filesMatching("${mod_id}.mixins.json") {
