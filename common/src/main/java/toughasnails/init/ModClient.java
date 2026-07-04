@@ -19,8 +19,8 @@ public class ModClient
 {
     public static void registerBlockColors(RegisterColorsEvent.Block event)
     {
-        event.register(List.of(BlockTintSources.constant(0x47DAFF)), RAIN_COLLECTOR);
-        event.register(List.of(BlockTintSources.constant(0x3F76E4)), WATER_PURIFIER);
+        event.register(List.of(BlockTintSources.constant(0xFF47DAFF)), RAIN_COLLECTOR);
+        event.register(List.of(BlockTintSources.constant(0xFF3F76E4)), WATER_PURIFIER);
     }
 
     public static void registerParticleSprites(RegisterParticleSpritesEvent event)
