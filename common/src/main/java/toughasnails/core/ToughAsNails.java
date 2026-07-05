@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import toughasnails.api.TANAPI;
 import toughasnails.client.handler.KeyHandler;
-import toughasnails.client.handler.LevelRenderHandler;
 import toughasnails.client.handler.TooltipHandler;
 import toughasnails.init.*;
 import toughasnails.temperature.TemperatureHandler;
@@ -40,7 +39,6 @@ public class ToughAsNails
 
     public static void setupClient()
     {
-        ModClient.setupRenderTypes();
     }
 
     public static void onServerAboutToStart(MinecraftServer server)
@@ -79,9 +77,6 @@ public class ToughAsNails
         EventManager.addListener(ThirstHandler::onUseBlock);
 
         // Misc handlers
-        EventManager.addListener(ModVillages::addVillagerTrades);
-        EventManager.addListener(ModVillages::addWanderingVillagerTrades);
-
         if (Environment.isClient())
         {
             addClientHandlers();
@@ -94,7 +89,6 @@ public class ToughAsNails
         EventManager.addListener(TemperatureOverlayRenderer::onClientTick);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFood);
         EventManager.addListener(TemperatureOverlayRenderer::onBeginRenderFrostbite);
-        EventManager.addListener(LevelRenderHandler::onLevelRender);
 
         // Thirst
         EventManager.addListener(ThirstOverlayRenderer::onClientTick);

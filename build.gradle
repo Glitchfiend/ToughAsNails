@@ -49,7 +49,7 @@ subprojects {
 
     version = "${minecraft_version}-${mod_version}"
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(25)
     java.withSourcesJar()
 
     jar {
@@ -83,7 +83,7 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.release.set(21)
+        it.options.release.set(25)
     }
 
     processResources {
@@ -123,7 +123,7 @@ subprojects {
                 versionNumber = mod_version
                 versionName = "${mod_version} for ${name} ${minecraft_version}"
                 versionType = release_channel
-                uploadFile = name.equals("Fabric") ? remapJar : jar
+                uploadFile = jar
                 gameVersions = [minecraft_version]
                 loaders = [name.toLowerCase()]
                 dependencies {
@@ -139,17 +139,17 @@ subprojects {
             }
         }
 
-        // archivesBaseName is not set until after initial evaluation
+        // archivesName is not set until after initial evaluation
         publishing {
             publications {
                 mavenJava(MavenPublication) {
-                    artifactId project.archivesBaseName
+                    artifactId project.base.archivesName.get()
                     groupId project.group
                     version project.version
                     from components.java
 
                     pom {
-                        name = project.archivesBaseName
+                        name = project.base.archivesName.get()
                         description = project.mod_description
                         url = project.mod_git_url
                         scm {

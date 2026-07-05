@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.client.gui;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -30,15 +30,7 @@ public class ThermoregulatorScreen extends AbstractContainerScreen<Thermoregulat
     }
 
     @Override
-    public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks)
-    {
-        this.renderBackground(gui, mouseX, mouseY, partialTicks);
-        super.render(gui, mouseX, mouseY, partialTicks);
-        this.renderTooltip(gui, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphics gui, float partialTicks, int mouseX, int mouseY)
+    public void extractContents(GuiGraphicsExtractor gui, int mouseX, int mouseY, float partialTicks)
     {
         int leftPos = this.leftPos;
         int topPos = this.topPos;
@@ -55,5 +47,6 @@ public class ThermoregulatorScreen extends AbstractContainerScreen<Thermoregulat
             int progress = this.menu.getHeatingFuelProgress();
             gui.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos + 116 + 1, topPos + 25 + 13 - progress, 176, 27 - progress, 14, progress + 1, 256, 256);
         }
+        super.extractContents(gui, mouseX, mouseY, partialTicks);
     }
 }

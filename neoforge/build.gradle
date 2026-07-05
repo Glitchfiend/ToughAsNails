@@ -1,44 +1,39 @@
 plugins {
-    id 'net.neoforged.moddev' version '2.0.124'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 base.archivesName.set("${mod_name}-neoforge")
 
-neoForge {
-    version = neoforge_version
-    // Automatically enable neoforge AccessTransformers if the file exists
-    def at = project(':Common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformers.from(at.absolutePath)
+def resources = project(':Common').file('src/generated/resources/').getAbsolutePath()
+def accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+minecraft {
+    accessTransformers {
+        file accessTransformer
     }
-    def resources = project(':Common').file('src/generated/resources/').getAbsolutePath()
-    runs {
-        configureEach {
-            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
-            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
-        }
-        client {
-            client()
-        }
-        data {
-            clientData()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', resources, '--existing', resources
-        }
-        server {
-            server()
-        }
+}
+
+runs {
+    configureEach {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+        modSource project.sourceSets.main
     }
-    mods {
-        "${mod_id}" {
-            sourceSet sourceSets.main
-        }
+
+    client {
+    }
+
+    clientData {
+        arguments.addAll '--mod', project.mod_id, '--all', '--output', resources, '--existing', resources
+    }
+
+    server {
     }
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
-    compileOnly project(":Common")
     implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + minecraft_version + '-' + glitchcore_version
     implementation "com.github.glitchfiend:SereneSeasons-neoforge:${minecraft_version}-${serene_seasons_version}"
 }
@@ -58,6 +53,10 @@ tasks.withType(Javadoc).excludingNeoTasks().configureEach {
 
 tasks.named("sourcesJar", Jar) {
     from(project(":Common").sourceSets.main.allSource)
+}
+
+test {
+    failOnNoDiscoveredTests = false
 }
 
 tasks.withType(ProcessResources).excludingNeoTasks().configureEach {

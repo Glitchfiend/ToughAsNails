@@ -15,7 +15,7 @@ import toughasnails.api.player.ITANPlayer;
 import toughasnails.api.potion.TANEffects;
 import toughasnails.init.ModConfig;
 
-@Mixin(ServerLevel.class)
+@Mixin(value = ServerLevel.class, remap = false)
 public class MixinServerLevel
 {
     @Inject(method="addPlayer", at=@At(value="HEAD"))

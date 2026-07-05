@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.thirst.ThirstHooks;
 
-@Mixin(FoodData.class)
+@Mixin(value = FoodData.class, remap = false)
 public abstract class MixinFoodData
 {
     @Inject(method="tick", at=@At(value="HEAD"), cancellable = true)

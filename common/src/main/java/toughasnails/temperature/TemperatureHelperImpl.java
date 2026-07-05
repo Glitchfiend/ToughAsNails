@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +36,7 @@ import toughasnails.init.ModTags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -321,7 +322,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
             }
             else
             {
-                TrimMaterials.getFromIngredient(player.level().registryAccess(), stack).ifPresent(material -> {
+                Optional.ofNullable(stack.get(DataComponents.PROVIDES_TRIM_MATERIAL)).ifPresent(material -> {
                     if (material.is(ModTags.Trims.COOLING_TRIMS)) coolingPieces.getAndIncrement();
                     if (material.is(ModTags.Trims.HEATING_TRIMS)) heatingPieces.getAndIncrement();
                 });
@@ -350,7 +351,7 @@ public class TemperatureHelperImpl implements TemperatureHelper.Impl.ITemperatur
         if (vehicle == null)
             return current;
 
-        if (vehicle.getType().is(ModTags.EntityTypes.NEUTRALISING_MOUNTS))
+        if (vehicle.getType().builtInRegistryHolder().is(ModTags.EntityTypes.NEUTRALISING_MOUNTS))
         {
             current = TemperatureLevel.NEUTRAL;
         }

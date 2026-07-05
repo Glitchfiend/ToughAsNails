@@ -30,7 +30,7 @@ import toughasnails.temperature.TemperatureHandler;
 import static toughasnails.temperature.TemperatureHandler.syncTemperature;
 import static toughasnails.thirst.ThirstHandler.syncThirst;
 
-@Mixin(ServerPlayer.class)
+@Mixin(value = ServerPlayer.class, remap = false)
 public abstract class MixinServerPlayer extends Player implements ITANPlayer
 {
     public MixinServerPlayer(Level $$0, GameProfile $$1) {
