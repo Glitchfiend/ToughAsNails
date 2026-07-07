@@ -29,13 +29,13 @@
   "effect.toughasnails.internal_warmth": "Унутрішнє тепло",
   "effect.toughasnails.internal_warmth.description": "Забезпечує невелике підвищення температури тіла протягом тривалого часу. Не викликає перегріву.",
   "effect.toughasnails.internal_chill": "Унутрішній холод",
-  "effect.toughasnails.internal_chill.description": "Забезпечує незначне зниження температури тіла на час. Не викликає переохолодження.",
+  "effect.toughasnails.internal_chill.description": "Забезпечує незначне зниження температури тіла на час. Не викликає гіпотермії.",
   "enchantment.toughasnails.thermal_tuning": "Теплоутримання",
   "enchantment.toughasnails.water_cleansing": "Водоочищення",
   "enchantment.toughasnails.thermal_tuning.desc": "Нагрудник із терморегулюванням повністю нейтралізує температуру тіла гравця, незалежно від поточної температури навколишнього середовища.",
   "enchantment.toughasnails.water_cleansing.desc": "Фляга з функцією очищення води автоматично очищатиме будь-яку воду, яка в неї подається.",
   
-  "block.toughasnails.rain_collector": "Дощоприймач",
+  "block.toughasnails.rain_collector": "Дощозбирач",
   "block.toughasnails.temperature_gauge": "Термодатчик",
   "block.toughasnails.thermoregulator": "Терморегулятор",
   "block.toughasnails.water_purifier": "Водоочисник",
@@ -86,17 +86,18 @@
   "item.toughasnails.wool_helmet": "Вовняний каптур",
   "item.toughasnails.wool_leggings": "Вовняні штани",
   
-  "item.minecraft.lingering_potion.effect.ice_resistance": "Осідальне зілля льодостікости",
-  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Осідальне зілля льодостікости",
-  "item.minecraft.potion.effect.ice_resistance": "Зілля льодостікости",
-  "item.minecraft.potion.effect.long_ice_resistance": "Зілля льодостікости",
-  "item.minecraft.splash_potion.effect.ice_resistance": "Вибухове зілля льодостікости",
-  "item.minecraft.splash_potion.effect.long_ice_resistance": "Вибухове зілля льодостікости",
-  "item.minecraft.tipped_arrow.effect.ice_resistance": "Стріла льодостікости",
-  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стріла льодостікости",
+  "item.minecraft.lingering_potion.effect.ice_resistance": "Осідальне зілля льодостійкости",
+  "item.minecraft.lingering_potion.effect.long_ice_resistance": "Осідальне зілля льодостійкости",
+  "item.minecraft.potion.effect.ice_resistance": "Зілля льодостійкости",
+  "item.minecraft.potion.effect.long_ice_resistance": "Зілля льодостійкости",
+  "item.minecraft.splash_potion.effect.ice_resistance": "Вибухове зілля льодостійкости",
+  "item.minecraft.splash_potion.effect.long_ice_resistance": "Вибухове зілля льодостійкости",
+  "item.minecraft.tipped_arrow.effect.ice_resistance": "Стріла льодостійкости",
+  "item.minecraft.tipped_arrow.effect.long_ice_resistance": "Стріла льодостійкости",
   
   "entity.minecraft.villager.toughasnails.climatologist": "Кліматолог",
   "entity.minecraft.villager.climatologist": "Кліматолог",
 
-  "modmenu.descriptionTranslation.toughasnails": "Додає функції для покращення режиму виживання та підвищення складности гри."
+  "modmenu.descriptionTranslation.toughasnails": "Додає функції для покращення режиму виживання та підвищення складности гри.",
+  "fml.menu.mods.info.description.toughasnails": "Додає функції для покращення режиму виживання та підвищення складности гри."
 }
