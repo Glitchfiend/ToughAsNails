@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.forge.mixin.client;
 
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,18 +12,18 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.temperature.TemperatureHooksClient;
 
-@Mixin(Gui.class)
+@Mixin(Hud.class)
 public class MixinGui
 {
-    @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="HEAD"), remap = false)
-    public void onRenderSelectedItemNameBegin(GuiGraphicsExtractor guiGraphics, int yShift, CallbackInfo ci)
+    @Inject(method="extractSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V", at=@At(value="HEAD"), remap = false)
+    public void onRenderSelectedItemNameBegin(GuiGraphicsExtractor guiGraphics, CallbackInfo ci)
     {
         guiGraphics.pose().pushMatrix();
         TemperatureHooksClient.adjustSelectedItemText(guiGraphics);
     }
 
-    @Inject(method="renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V", at=@At(value="TAIL"), remap = false)
-    public void onRenderSelectedItemNameEnd(GuiGraphicsExtractor guiGraphics, int yShift, CallbackInfo ci)
+    @Inject(method="extractSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V", at=@At(value="TAIL"), remap = false)
+    public void onRenderSelectedItemNameEnd(GuiGraphicsExtractor guiGraphics, CallbackInfo ci)
     {
         guiGraphics.pose().popMatrix();
     }
