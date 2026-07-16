@@ -21,8 +21,8 @@ accessible field net/minecraft/world/food/FoodData tickTimer I
 accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;
 
 # Gui
-accessible class net/minecraft/client/gui/Gui$HeartType
-accessible method net/minecraft/client/gui/Gui extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
+accessible class net/minecraft/client/gui/Hud$HeartType
+accessible method net/minecraft/client/gui/Hud extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
 
 # Creative tab output (protected inner interface in 26.1.2)
 accessible class net/minecraft/world/item/CreativeModeTab$Output

@@ -11,7 +11,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation "com.github.glitchfiend:GlitchCore-fabric:${minecraft_version}-${glitchcore_version}"
-    implementation "com.github.glitchfiend:SereneSeasons-fabric:${minecraft_version}-${serene_seasons_version}"
+    implementation "com.github.glitchfiend:SereneSeasons-fabric:${serene_seasons_mc_version}-${serene_seasons_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
     // Dependencies embedded in final jar

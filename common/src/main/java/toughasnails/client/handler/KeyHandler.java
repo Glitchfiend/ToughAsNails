@@ -19,7 +19,7 @@ public class KeyHandler
         Minecraft minecraft = Minecraft.getInstance();
         boolean isF3Down = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), InputConstants.KEY_F3);
 
-        if (minecraft.screen == null && isF3Down)
+        if (minecraft.gui.screen() == null && isF3Down)
         {
             boolean handledDebugKey = false;
 
@@ -34,7 +34,7 @@ public class KeyHandler
                     handledDebugKey = true;
                 }
                 case InputConstants.KEY_Q -> {
-                    ChatComponent component = minecraft.gui.getChat();
+                    ChatComponent component = minecraft.gui.hud.getChat();
                     component.addClientSystemMessage(Component.translatable("debug.temperature_fill.help"));
                     // Should already be marked as handled by Vanilla
                 }
@@ -48,6 +48,7 @@ public class KeyHandler
     private static void debugComponent(ChatFormatting formatting, Component component) {
         Minecraft.getInstance()
             .gui
+            .hud
             .getChat()
             .addClientSystemMessage(Component.empty()
                 .append(Component.translatable("debug.prefix").withStyle(formatting, ChatFormatting.BOLD))

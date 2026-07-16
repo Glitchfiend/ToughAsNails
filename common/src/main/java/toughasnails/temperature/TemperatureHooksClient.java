@@ -6,7 +6,7 @@ package toughasnails.temperature;
 
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -26,13 +26,13 @@ public class TemperatureHooksClient
     private static final Identifier OVERHEATED_HEART_HARDCORE_HALF = Identifier.parse("toughasnails:hud/heart/overheated_hardcore_half");
     private static final Identifier OVERHEATED_HEART_HARDCORE_HALF_BLINKING = Identifier.parse("toughasnails:hud/heart/overheated_hardcore_half_blinking");
 
-    public static void heartBlit(GuiGraphicsExtractor gui, Gui.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf)
+    public static void heartBlit(GuiGraphicsExtractor gui, Hud.HeartType heartType, int x, int y, boolean isHardcore, boolean isBlinking, boolean isHalf)
     {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
 
         // Normal hearts
-        if (heartType == Gui.HeartType.NORMAL && TemperatureHelper.isFullyHyperthermic(player))
+        if (heartType == Hud.HeartType.NORMAL && TemperatureHelper.isFullyHyperthermic(player))
         {
             gui.blitSprite(RenderPipelines.GUI_TEXTURED, getOverheatedHeartSprite(isHardcore, isHalf, isBlinking), x, y, 9, 9);
         }

@@ -24,12 +24,13 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
-include("common", "forge", "neoforge", "fabric")
+// Forge/NeoForge are excluded here: this port only targets Fabric (26.2), and their
+// forge_version/neoforge_version haven't been bumped to match, which would break
+// dependency resolution if those subprojects were evaluated.
+include("common", "fabric")
 
 rootProject.name = "ToughAsNails"
 
 // We want lowercase folder names but uppercase project names
 project(":common").name = "Common"
-project(":neoforge").name = "NeoForge"
-project(":forge").name = "Forge"
 project(":fabric").name = "Fabric"
