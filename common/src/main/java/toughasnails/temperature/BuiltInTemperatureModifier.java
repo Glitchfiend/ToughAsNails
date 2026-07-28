@@ -4,7 +4,7 @@
  ******************************************************************************/
 package toughasnails.temperature;
 
-import net.minecraft.util.Tuple;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.IPlayerTemperatureModifier;
 import toughasnails.api.temperature.TemperatureLevel;
@@ -26,31 +26,31 @@ public enum BuiltInTemperatureModifier
         }
 
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.playerTemperatureChangeDelay);
-        return new Tuple<>(newTarget, newChangeDelay);
+        return new Pair<>(newTarget, newChangeDelay);
     })),
     ITEM_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.handheldModifier(player, currentTarget);
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.handheldTemperatureChangeDelay);
-        return new Tuple<>(newTarget, newChangeDelay);
+        return new Pair<>(newTarget, newChangeDelay);
     }),
     ARMOR_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.armorModifier(player, currentTarget);
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.armorTemperatureChangeDelay);
-        return new Tuple<>(newTarget, newChangeDelay);
+        return new Pair<>(newTarget, newChangeDelay);
     }),
     MOUNT_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.mountModifier(player, currentTarget);
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.mountTemperatureChangeDelay);
-        return new Tuple<>(newTarget, newChangeDelay);
+        return new Pair<>(newTarget, newChangeDelay);
     }),
     INTERNAL_MODIFIER((player, currentTarget, currentChangeDelay) -> {
         int newChangeDelay = currentChangeDelay;
         TemperatureLevel newTarget = TemperatureHelperImpl.internalModifier(player, currentTarget);
         if (newTarget != currentTarget) newChangeDelay = Math.min(currentChangeDelay, ModConfig.temperature.internalTemperatureChangeDelay);
-        return new Tuple<>(newTarget, newChangeDelay);
+        return new Pair<>(newTarget, newChangeDelay);
     });
 
     private final Modifier modifier;
@@ -60,14 +60,14 @@ public enum BuiltInTemperatureModifier
         this.modifier = modifier;
     }
 
-    public Tuple<TemperatureLevel, Integer> apply(Player player, TemperatureLevel currentTarget, int currentChangeDelay)
+    public Pair<TemperatureLevel, Integer> apply(Player player, TemperatureLevel currentTarget, int currentChangeDelay)
     {
         return this.modifier.apply(player, currentTarget, currentChangeDelay);
     }
 
     private interface Modifier
     {
-        public Tuple<TemperatureLevel, Integer> apply(Player player, TemperatureLevel currentTarget, int currentChangeDelay);
+        public Pair<TemperatureLevel, Integer> apply(Player player, TemperatureLevel currentTarget, int currentChangeDelay);
     }
 
     private static List<BuiltInTemperatureModifier> temperatureModifierOrderCache;

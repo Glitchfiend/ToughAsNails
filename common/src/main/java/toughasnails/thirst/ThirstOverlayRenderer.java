@@ -5,7 +5,7 @@
 package toughasnails.thirst;
 
 import glitchcore.event.TickEvent;
-import glitchcore.event.client.RenderGuiEvent;
+import glitchcore.event.client.RenderHudEvent;
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -37,15 +37,15 @@ public class ThirstOverlayRenderer
         }
     }
 
-    public static void onBeginRenderAir(RenderGuiEvent.Pre event)
+    public static void onBeginRenderAir(RenderHudEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.AIR || !ModConfig.thirst.enableThirst)
+        if (event.getType() != RenderHudEvent.Type.AIR || !ModConfig.thirst.enableThirst)
             return;
 
         Minecraft minecraft = Minecraft.getInstance();
         Entity vehicle = minecraft.player.getVehicle();
         boolean isMounted = vehicle != null && vehicle.showVehicleHealth();
-        if (!isMounted && !minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
+        if (!isMounted && !minecraft.gui.hud.isHidden() && GuiUtils.shouldDrawSurvivalElements())
         {
             Player player = minecraft.player;
             IThirst thirst = ThirstHelper.getThirst(player);

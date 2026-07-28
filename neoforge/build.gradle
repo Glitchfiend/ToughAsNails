@@ -35,7 +35,7 @@ runs {
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
     implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + minecraft_version + '-' + glitchcore_version
-    implementation "com.github.glitchfiend:SereneSeasons-neoforge:${minecraft_version}-${serene_seasons_version}"
+    implementation "com.github.glitchfiend:SereneSeasons-neoforge:${serene_seasons_mc_version}-${serene_seasons_version}"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

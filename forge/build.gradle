@@ -34,7 +34,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
     compileOnly project(":Common")
     implementation "com.github.glitchfiend:GlitchCore-forge:${minecraft_version}-${glitchcore_version}"
-    implementation "com.github.glitchfiend:SereneSeasons-forge:${minecraft_version}-${serene_seasons_version}"
+    implementation "com.github.glitchfiend:SereneSeasons-forge:${serene_seasons_mc_version}-${serene_seasons_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {

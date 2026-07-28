@@ -5,10 +5,10 @@
 package toughasnails.temperature;
 
 import glitchcore.event.TickEvent;
-import glitchcore.event.client.RenderGuiEvent;
+import glitchcore.event.client.RenderHudEvent;
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -32,25 +32,25 @@ public class TemperatureOverlayRenderer
     private static ArrowDirection arrowDirection;
     private static TemperatureLevel prevTemperatureLevel;
 
-    public static void onBeginRenderFood(RenderGuiEvent.Pre event)
+    public static void onBeginRenderFood(RenderHudEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.FOOD)
+        if (event.getType() != RenderHudEvent.Type.FOOD)
             return;
 
-        Gui gui = event.getGui();
+        Hud gui = event.getHud();
         Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
+        if (!minecraft.gui.hud.isHidden() && GuiUtils.shouldDrawSurvivalElements())
         {
             renderTemperature(event.getGuiGraphics(), event.getDeltaTracker().getRealtimeDeltaTicks(), event.getScreenWidth(), event.getScreenHeight());
         }
     }
 
-    public static void onBeginRenderFrostbite(RenderGuiEvent.Pre event)
+    public static void onBeginRenderFrostbite(RenderHudEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.FROSTBITE)
+        if (event.getType() != RenderHudEvent.Type.FROSTBITE)
             return;
 
-        Gui gui = event.getGui();
+        Hud gui = event.getHud();
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
 
