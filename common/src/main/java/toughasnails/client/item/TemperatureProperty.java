@@ -50,9 +50,10 @@ public class TemperatureProperty implements RangeSelectItemModelProperty
     @Override
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int i)
     {
-        Entity holder = (Entity)(owner != null ? owner : stack.getEntityRepresentation());
         if (owner == null)
             return 0.5F;
+
+        Entity holder = (Entity)owner;
 
         if (level == null && owner.level() instanceof ClientLevel)
             level = (ClientLevel)holder.level();

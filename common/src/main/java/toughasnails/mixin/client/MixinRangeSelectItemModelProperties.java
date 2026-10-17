@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.client.item.TemperatureProperty;
 
-@Mixin(RangeSelectItemModelProperties.class)
+@Mixin(value = RangeSelectItemModelProperties.class, remap = false)
 public class MixinRangeSelectItemModelProperties
 {
     @Shadow

@@ -10,16 +10,15 @@ import glitchcore.util.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
-import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import toughasnails.init.ModConfig;
@@ -46,9 +45,7 @@ public class TooltipHandler
         ItemStack stack = event.getStack();
         Block block = Block.byItem(stack.getItem());
         BlockState state = block.defaultBlockState();
-        RegistryAccess registryAccess = Minecraft.getInstance().getConnection().registryAccess();
-
-        Optional<Holder<TrimMaterial>> trimMaterial = TrimMaterials.getFromIngredient(registryAccess, stack);
+        Optional<Holder<TrimMaterial>> trimMaterial = Optional.ofNullable(stack.get(DataComponents.PROVIDES_TRIM_MATERIAL));
 
         // Heating/Cooling Blocks and Armor/Trimmed Armor
         if (state.is(ModTags.Blocks.HEATING_BLOCKS) || stack.is(ModTags.Items.HEATING_ARMOR) || (trimMaterial.isPresent() && trimMaterial.get().is(ModTags.Trims.HEATING_TRIMS)))
@@ -127,7 +124,7 @@ public class TooltipHandler
         }
 
         @Override
-        public void renderImage(Font font, int x, int y, int width, int height, GuiGraphics gui)
+        public void extractImage(Font font, int x, int y, int width, int height, GuiGraphicsExtractor gui)
         {
             gui.pose().pushMatrix();
 

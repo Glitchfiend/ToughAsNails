@@ -9,7 +9,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.world.level.biome.Biomes;
 import org.jetbrains.annotations.Nullable;
-import toughasnails.core.ToughAsNails;
 import toughasnails.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +17,7 @@ public class TANBiomeTagsProvider extends BiomeTagsProvider
 {
     public TANBiomeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
     {
-        super(output, lookupProvider, ToughAsNails.MOD_ID);
+        super(output, lookupProvider);
     }
 
     @Override

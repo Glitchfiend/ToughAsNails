@@ -57,7 +57,7 @@ public class DrinkInWorldPacket implements CustomPacket<DrinkInWorldPacket>
 
                 Holder<Biome> biome = level.getBiome(packet.pos);
 
-                if (level.random.nextFloat() < ModTags.Biomes.getBiomeWaterType(biome).getPoisonChance())
+                if (level.getRandom().nextFloat() < ModTags.Biomes.getBiomeWaterType(biome).getPoisonChance())
                 {
                     player.addEffect(new MobEffectInstance(TANEffects.THIRST, 600));
                 }

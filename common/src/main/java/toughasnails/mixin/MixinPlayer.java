@@ -34,7 +34,7 @@ import toughasnails.thirst.ThirstData;
 import toughasnails.thirst.ThirstHandler;
 import toughasnails.thirst.ThirstHooks;
 
-@Mixin(Player.class)
+@Mixin(value = Player.class, remap = false)
 public abstract class MixinPlayer extends LivingEntity implements ITANPlayer
 {
     @Shadow

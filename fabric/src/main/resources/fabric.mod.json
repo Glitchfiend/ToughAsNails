@@ -26,7 +26,7 @@
   ],
   "depends": {
     "fabricloader": "*",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": "${minecraft_version}",
     "java": ">=17",
     "glitchcore": ">=${glitchcore_version}"

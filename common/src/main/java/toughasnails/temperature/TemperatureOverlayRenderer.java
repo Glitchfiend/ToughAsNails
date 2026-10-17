@@ -5,11 +5,11 @@
 package toughasnails.temperature;
 
 import glitchcore.event.TickEvent;
-import glitchcore.event.client.RenderGuiEvent;
+import glitchcore.event.client.RenderHudEvent;
 import glitchcore.util.GuiUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.Hud;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -32,30 +32,30 @@ public class TemperatureOverlayRenderer
     private static ArrowDirection arrowDirection;
     private static TemperatureLevel prevTemperatureLevel;
 
-    public static void onBeginRenderFood(RenderGuiEvent.Pre event)
+    public static void onBeginRenderFood(RenderHudEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.FOOD)
+        if (event.getType() != RenderHudEvent.Type.FOOD)
             return;
 
-        Gui gui = event.getGui();
+        Hud gui = event.getHud();
         Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && GuiUtils.shouldDrawSurvivalElements())
+        if (!minecraft.gui.hud.isHidden() && GuiUtils.shouldDrawSurvivalElements())
         {
             renderTemperature(event.getGuiGraphics(), event.getDeltaTracker().getRealtimeDeltaTicks(), event.getScreenWidth(), event.getScreenHeight());
         }
     }
 
-    public static void onBeginRenderFrostbite(RenderGuiEvent.Pre event)
+    public static void onBeginRenderFrostbite(RenderHudEvent.Pre event)
     {
-        if (event.getType() != RenderGuiEvent.Type.FROSTBITE)
+        if (event.getType() != RenderHudEvent.Type.FROSTBITE)
             return;
 
-        Gui gui = event.getGui();
+        Hud gui = event.getHud();
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
 
         if (TemperatureHelper.getTicksHyperthermic(player) > 0)
-            gui.renderTextureOverlay(event.getGuiGraphics(), HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
+            gui.extractTextureOverlay(event.getGuiGraphics(), HYPERTHERMIA_OUTLINE_LOCATION, TemperatureHelper.getPercentHyperthermic(player));
     }
 
     public static void onClientTick(TickEvent.Client event)
@@ -68,7 +68,7 @@ public class TemperatureOverlayRenderer
         }
     }
 
-    public static void renderTemperature(GuiGraphics guiGraphics, float partialTicks, int width, int height)
+    public static void renderTemperature(GuiGraphicsExtractor GuiGraphicsExtractor, float partialTicks, int width, int height)
     {
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -84,11 +84,11 @@ public class TemperatureOverlayRenderer
 
         if (minecraft.gameMode.getPlayerMode().isSurvival())
         {
-            drawTemperature(guiGraphics, width, height, temperature);
+            drawTemperature(GuiGraphicsExtractor, width, height, temperature);
         }
     }
 
-    private static void drawTemperature(GuiGraphics gui, int width, int height, TemperatureLevel temperature)
+    private static void drawTemperature(GuiGraphicsExtractor gui, int width, int height, TemperatureLevel temperature)
     {
         int left = width / 2 - 8 + ModConfig.client.temperatureLeftOffset;
         int top = height - 52 + ModConfig.client.temperatureTopOffset;

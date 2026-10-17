@@ -167,7 +167,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
                             filterStack.shrink(1);
                             if (filterStack.isEmpty())
                             {
-                                blockEntity.items.set(1, filter.getCraftingRemainder());
+                                blockEntity.items.set(1, filter.getCraftingRemainder() == null ? ItemStack.EMPTY : filter.getCraftingRemainder().create());
                             }
                         }
                     }
@@ -349,7 +349,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         if (!this.items.get(0).isEmpty() && recipe != null)
         {
             ItemStack input = this.items.get(0);
-            ItemStack recipeResult = recipe.assemble(new SingleRecipeInput(input), this.level.registryAccess());
+            ItemStack recipeResult = recipe.assemble(new SingleRecipeInput(input));
 
             // Invalid recipe result
             if (recipeResult.isEmpty())
@@ -389,7 +389,7 @@ public class WaterPurifierBlockEntity extends BaseContainerBlockEntity implement
         if (recipe != null && this.canFilter(recipe))
         {
             ItemStack input = this.items.get(0);
-            ItemStack recipeResult = recipe.assemble(new SingleRecipeInput(input), this.level.registryAccess());
+            ItemStack recipeResult = recipe.assemble(new SingleRecipeInput(input));
             ItemStack currentResult = this.items.get(2);
 
             // Update the result stuck

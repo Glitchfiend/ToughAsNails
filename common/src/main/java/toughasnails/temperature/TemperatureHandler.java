@@ -8,8 +8,8 @@ import glitchcore.event.entity.LivingEntityUseItemEvent;
 import glitchcore.event.player.PlayerEvent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -61,9 +61,9 @@ public class TemperatureHandler
             // Apply modifiers in the configured order
             for (BuiltInTemperatureModifier modifier : BuiltInTemperatureModifier.getTemperatureModifierOrder())
             {
-                Tuple<TemperatureLevel, Integer> output = modifier.apply(player, newTargetLevel, changeDelay);
-                newTargetLevel = output.getA();
-                changeDelay = output.getB();
+                Pair<TemperatureLevel, Integer> output = modifier.apply(player, newTargetLevel, changeDelay);
+                newTargetLevel = output.getFirst();
+                changeDelay = output.getSecond();
             }
 
             // If necessary, change the target level and reset the timer

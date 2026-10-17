@@ -181,7 +181,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
 
                 if (fuel.isEmpty())
                 {
-                    blockEntity.items.set(SLOT_COOLING, fuelItem.getCraftingRemainder());
+                    blockEntity.items.set(SLOT_COOLING, fuelItem.getCraftingRemainder() == null ? ItemStack.EMPTY : fuelItem.getCraftingRemainder().create());
                 }
             }
         }
@@ -199,7 +199,7 @@ public class ThermoregulatorBlockEntity extends BaseContainerBlockEntity impleme
 
                 if (fuel.isEmpty())
                 {
-                    blockEntity.items.set(SLOT_HEATING, fuelItem.getCraftingRemainder());
+                    blockEntity.items.set(SLOT_HEATING, fuelItem.getCraftingRemainder() == null ? ItemStack.EMPTY : fuelItem.getCraftingRemainder().create());
                 }
             }
         }

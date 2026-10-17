@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import toughasnails.api.potion.TANPotions;
 
-@Mixin(PotionBrewing.class)
+@Mixin(value = PotionBrewing.class, remap = false)
 public class MixinPotionBrewing
 {
     @Inject(method="addVanillaMixes", at=@At("TAIL"))

@@ -18,7 +18,7 @@ public class ModCrafting
 {
     public static void registerRecipeSerializers(BiConsumer<Identifier, RecipeSerializer<?>> func)
     {
-        TANRecipeSerializers.WATER_PURIFYING = (RecipeSerializer<? extends Recipe<SingleRecipeInput>>) registerSerializer(func, "water_purifying", new WaterPurifierRecipe.Serializer());
+        TANRecipeSerializers.WATER_PURIFYING = (RecipeSerializer<? extends Recipe<SingleRecipeInput>>) registerSerializer(func, "water_purifying", new RecipeSerializer<>(WaterPurifierRecipe.CODEC, WaterPurifierRecipe.STREAM_CODEC));
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> func)
