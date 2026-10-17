@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:thermometer"
+        "recipes": "toughasnails:thermometer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -26,24 +26,28 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = ToughAsNails.MOD_ID)
 public class DataGenerationHandler
 {
-    private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+    private static final RegistrySetBuilder WORLD_BUILDER = new RegistrySetBuilder()
         .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap)
         .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
+
+    private static final RegistrySetBuilder RELOADABLE_BUILDER = new RegistrySetBuilder()
+        .add(Registries.LOOT_TABLE, TANLootTableProvider.create())
+        .add(TANRecipeProvider.create());
 
     @SubscribeEvent
     public static void onGatherData(GatherDataEvent.Client event)
     {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getWorldLookupProvider();
 
-        var datapackProvider = generator.addProvider(true, new DatapackBuiltinEntriesProvider(output, lookupProvider, BUILDER, Set.of(ToughAsNails.MOD_ID)));
+        var datapackProvider = generator.addProvider(true, DatapackBuiltinEntriesProvider.forWorldLayer(
+                output, "TAN World Registries", lookupProvider, WORLD_BUILDER, Set.of(ToughAsNails.MOD_ID)));
 
-        // Recipes
-        generator.addProvider(true, new TANRecipeProvider.Runner(output, event.getLookupProvider()));
-
-        // Loot
-        generator.addProvider(true, TANLootTableProvider.create(output, event.getLookupProvider()));
+        // Loot tables and recipes
+        generator.addProvider(true, DatapackBuiltinEntriesProvider.forReloadableLayer(
+                output, "TAN Reloadable Registries", datapackProvider.getRegistryProvider(), event.getReloadableLookupProvider(),
+                RELOADABLE_BUILDER, Set.of(ToughAsNails.MOD_ID)));
 
         // Tags
         var blocksTagProvider = generator.addProvider(true, new TANBlockTagsProvider(output, datapackProvider.getRegistryProvider()));

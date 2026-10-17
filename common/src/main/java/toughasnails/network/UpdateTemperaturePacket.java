@@ -5,9 +5,12 @@
 package toughasnails.network;
 
 import glitchcore.network.CustomPacket;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import toughasnails.api.temperature.ITemperature;
 import toughasnails.api.temperature.TemperatureHelper;
@@ -18,6 +21,8 @@ import java.util.Set;
 
 public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePacket>
 {
+    private static final StreamCodec<ByteBuf, Set<BlockPos>> BLOCK_POS_SET_CODEC = ByteBufCodecs.collection(HashSet::new, BlockPos.STREAM_CODEC);
+
     private TemperatureLevel temperatureLevel;
     private int hyperthermiaTicks;
     private Set<BlockPos> nearbyThermoregulators;
@@ -36,13 +41,13 @@ public class UpdateTemperaturePacket implements CustomPacket<UpdateTemperaturePa
     {
         buf.writeEnum(this.temperatureLevel);
         buf.writeInt(this.hyperthermiaTicks);
-        buf.writeCollection(this.nearbyThermoregulators, (o, pos) -> o.writeBlockPos(pos));
+        BLOCK_POS_SET_CODEC.encode(buf, this.nearbyThermoregulators);
     }
 
     @Override
     public UpdateTemperaturePacket decode(FriendlyByteBuf buf)
     {
-        return new UpdateTemperaturePacket(buf.readEnum(TemperatureLevel.class), buf.readInt(), buf.readCollection(HashSet::new, (o) -> o.readBlockPos()));
+        return new UpdateTemperaturePacket(buf.readEnum(TemperatureLevel.class), buf.readInt(), BLOCK_POS_SET_CODEC.decode(buf));
     }
 
     @Override

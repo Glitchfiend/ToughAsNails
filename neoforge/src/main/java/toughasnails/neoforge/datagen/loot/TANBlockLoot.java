@@ -4,9 +4,9 @@
  ******************************************************************************/
 package toughasnails.neoforge.datagen.loot;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,9 +20,9 @@ public class TANBlockLoot extends BlockLootSubProvider
 {
     private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
 
-    public TANBlockLoot(HolderLookup.Provider provider)
+    public TANBlockLoot(LootTableSubProvider.Context context)
     {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), provider);
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), context);
     }
 
     @Override

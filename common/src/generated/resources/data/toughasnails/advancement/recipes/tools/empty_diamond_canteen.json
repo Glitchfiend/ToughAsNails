@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:empty_diamond_canteen"
+        "recipes": "toughasnails:empty_diamond_canteen"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

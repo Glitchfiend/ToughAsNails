@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Prediction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -64,7 +65,7 @@ public class RainCollectorBlock extends Block
                 stack.shrink(1);
 
                 if (stack.isEmpty()) player.setItemInHand(hand, newStack);
-                else if (!player.getInventory().add(newStack)) player.drop(newStack, false);
+                else if (!player.getInventory().add(newStack)) player.drop(newStack, false, Prediction.SERVER_ONLY);
                 else player.inventoryMenu.sendAllDataToRemote();
             }
 

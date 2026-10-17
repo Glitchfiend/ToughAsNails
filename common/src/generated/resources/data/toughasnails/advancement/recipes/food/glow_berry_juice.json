@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:glow_berry_juice"
+        "recipes": "toughasnails:glow_berry_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

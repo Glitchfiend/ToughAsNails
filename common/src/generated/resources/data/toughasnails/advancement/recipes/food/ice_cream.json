@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:ice_cream"
+        "recipes": "toughasnails:ice_cream"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

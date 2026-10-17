@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:leaf_helmet"
+        "recipes": "toughasnails:leaf_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

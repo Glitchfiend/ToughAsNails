@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "juice",
   "ingredients": [
     "toughasnails:purified_water_bottle",
@@ -8,7 +7,6 @@
     "minecraft:chorus_fruit"
   ],
   "result": {
-    "count": 1,
     "id": "toughasnails:chorus_fruit_juice"
   }
 }

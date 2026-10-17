@@ -16,16 +16,15 @@ import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.level.FoliageColor;
 import toughasnails.api.item.TANItems;
 import toughasnails.client.item.TemperatureProperty;
 import toughasnails.core.ToughAsNails;
-import toughasnails.init.ModEquipmentAssets;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class TANItemModelGenerators extends ItemModelGenerators
@@ -85,19 +84,19 @@ public class TANItemModelGenerators extends ItemModelGenerators
         this.generateFlatItem(TANItems.SWEET_BERRY_JUICE, ModelTemplates.FLAT_ITEM);
         this.generateFlatItem(TANItems.TAN_ICON, ModelTemplates.FLAT_ITEM);
 
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_HELMET, ModEquipmentAssets.LEAF, TRIM_PREFIX_HELMET, FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_CHESTPLATE, ModEquipmentAssets.LEAF, TRIM_PREFIX_CHESTPLATE, FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_LEGGINGS, ModEquipmentAssets.LEAF, TRIM_PREFIX_LEGGINGS, FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_BOOTS, ModEquipmentAssets.LEAF, TRIM_PREFIX_BOOTS, FoliageColor.FOLIAGE_DEFAULT);
-        this.generateTrimmableItem(TANItems.WOOL_HELMET, ModEquipmentAssets.WOOL, TRIM_PREFIX_HELMET, true);
-        this.generateTrimmableItem(TANItems.WOOL_CHESTPLATE, ModEquipmentAssets.WOOL, TRIM_PREFIX_CHESTPLATE, true);
-        this.generateTrimmableItem(TANItems.WOOL_LEGGINGS, ModEquipmentAssets.WOOL, TRIM_PREFIX_LEGGINGS, true);
-        this.generateTrimmableItem(TANItems.WOOL_BOOTS, ModEquipmentAssets.WOOL, TRIM_PREFIX_BOOTS, true);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_HELMET, TRIM_PREFIX_HELMET, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_CHESTPLATE, TRIM_PREFIX_CHESTPLATE, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_LEGGINGS, TRIM_PREFIX_LEGGINGS, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItemWithDefaultColor(TANItems.LEAF_BOOTS, TRIM_PREFIX_BOOTS, FoliageColor.FOLIAGE_DEFAULT);
+        this.generateTrimmableItem(TANItems.WOOL_HELMET, TRIM_PREFIX_HELMET, true, Map.of());
+        this.generateTrimmableItem(TANItems.WOOL_CHESTPLATE, TRIM_PREFIX_CHESTPLATE, true, Map.of());
+        this.generateTrimmableItem(TANItems.WOOL_LEGGINGS, TRIM_PREFIX_LEGGINGS, true, Map.of());
+        this.generateTrimmableItem(TANItems.WOOL_BOOTS, TRIM_PREFIX_BOOTS, true, Map.of());
 
         this.generateThermometerItem(TANItems.THERMOMETER);
     }
 
-    public void generateTrimmableItemWithDefaultColor(Item item, ResourceKey<EquipmentAsset> key, Identifier prefix, int defaultColor)
+    public void generateTrimmableItemWithDefaultColor(Item item, Identifier prefix, int defaultColor)
     {
         Identifier modelLocation = ModelLocationUtils.getModelLocation(item);
         Material textureLocation = TextureMapping.getItemTexture(item);
@@ -105,8 +104,8 @@ public class TANItemModelGenerators extends ItemModelGenerators
         List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIAL_MODELS.size());
 
         for (ItemModelGenerators.TrimMaterialData itemmodelgenerators$trimmaterialdata : TRIM_MATERIAL_MODELS) {
-            Identifier Identifier3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().base().suffix() + "_trim");
-            Material Identifier4 = new Material(prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.assets().assetId(key).suffix()));
+            Identifier Identifier3 = modelLocation.withSuffix("_" + itemmodelgenerators$trimmaterialdata.palette().suffix() + "_trim");
+            Material Identifier4 = new Material(prefix.withSuffix("_" + itemmodelgenerators$trimmaterialdata.palette().suffix()));
             ItemModel.Unbaked itemmodel$unbaked;
             this.generateLayeredItem(Identifier3, textureLocation, overlayTextureLocation, Identifier4);
             itemmodel$unbaked = ItemModelUtils.tintedModel(Identifier3, new Dye(defaultColor));

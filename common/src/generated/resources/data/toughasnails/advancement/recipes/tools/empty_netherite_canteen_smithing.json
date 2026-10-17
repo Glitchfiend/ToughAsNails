@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:empty_netherite_canteen_smithing"
+        "recipes": "toughasnails:empty_netherite_canteen_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

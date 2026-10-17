@@ -17,6 +17,7 @@ pluginManagement {
             name = "Sponge Snapshots"
             url = "https://repo.spongepowered.org/repository/maven-public/"
         }
+        maven { url = 'https://maven.maxhenkel.de/repository/public' }
     }
 }
 

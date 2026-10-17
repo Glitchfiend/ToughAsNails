@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:rain_collector"
+        "recipes": "toughasnails:rain_collector"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

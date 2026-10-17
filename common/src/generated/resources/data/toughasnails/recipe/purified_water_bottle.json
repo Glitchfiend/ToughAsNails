@@ -6,12 +6,10 @@
         "potion": "minecraft:water"
       }
     },
-    "count": 1,
     "id": "minecraft:potion"
   },
   "purifytime": 200,
   "result": {
-    "count": 1,
     "id": "toughasnails:purified_water_bottle"
   }
 }

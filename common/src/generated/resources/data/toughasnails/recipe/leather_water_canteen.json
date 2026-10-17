@@ -1,12 +1,10 @@
 {
   "type": "toughasnails:water_purifying",
   "input": {
-    "count": 1,
     "id": "toughasnails:leather_dirty_water_canteen"
   },
   "purifytime": 400,
   "result": {
-    "count": 1,
     "id": "toughasnails:leather_water_canteen"
   }
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:sweet_berry_juice"
+        "recipes": "toughasnails:sweet_berry_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

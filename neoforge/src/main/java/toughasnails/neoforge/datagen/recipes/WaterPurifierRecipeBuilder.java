@@ -4,23 +4,23 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import toughasnails.crafting.WaterPurifierRecipe;
 
 public class WaterPurifierRecipeBuilder
 {
-    private final ItemStack input;
-    private final ItemStack result;
+    private final ItemStackTemplate input;
+    private final ItemStackTemplate result;
     private final int purifyTime;
 
-    private WaterPurifierRecipeBuilder(ItemStack input, ItemStack result, int purifyTime)
+    private WaterPurifierRecipeBuilder(ItemStackTemplate input, ItemStackTemplate result, int purifyTime)
     {
         this.input = input;
         this.result = result;
         this.purifyTime = purifyTime;
     }
 
-    public static WaterPurifierRecipeBuilder waterPurifier(ItemStack input, ItemStack result, int purifyTime)
+    public static WaterPurifierRecipeBuilder waterPurifier(ItemStackTemplate input, ItemStackTemplate result, int purifyTime)
     {
         return new WaterPurifierRecipeBuilder(input, result, purifyTime);
     }

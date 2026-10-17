@@ -1,28 +1,53 @@
 package toughasnails.neoforge.datagen.provider;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.MultiRegistryBootstrap;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import toughasnails.api.block.TANBlocks;
 import toughasnails.api.item.TANItems;
 import toughasnails.core.ToughAsNails;
 import toughasnails.neoforge.datagen.recipes.WaterPurifierRecipeBuilder;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.Set;
 
 public class TANRecipeProvider extends RecipeProvider
 {
-    public TANRecipeProvider(HolderLookup.Provider provider, RecipeOutput output)
+    public TANRecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput)
     {
-        super(provider, output);
+        super(recipeOutput, advancementOutput);
+    }
+
+    public static MultiRegistryBootstrap create()
+    {
+        return new MultiRegistryBootstrap()
+        {
+            @Override
+            public Set<ResourceKey<? extends Registry<?>>> requestedRegistries()
+            {
+                return Set.of(Registries.RECIPE, Registries.ADVANCEMENT);
+            }
+
+            @Override
+            public void run(MultiRegistryBootstrap.BootstrapGetter registries)
+            {
+                new TANRecipeProvider(registries.get(Registries.RECIPE), registries.get(Registries.ADVANCEMENT)).buildRecipes();
+            }
+        };
     }
 
     @Override
@@ -71,33 +96,41 @@ public class TANRecipeProvider extends RecipeProvider
 
         this.shaped(RecipeCategory.TOOLS, TANItems.THERMOMETER).define('#', Items.COPPER_INGOT).define('X', Items.REDSTONE).pattern(" # ").pattern("#X#").pattern(" # ").unlockedBy("has_redstone", has(Items.REDSTONE)).save(output);
 
+        // Brewing
+        new TANBrewingProvider(output).buildRecipes();
+
         //
         // Water purification recipes
         //
 
         // Water bottle
-        waterPurifier(output, new ItemStack(TANItems.DIRTY_WATER_BOTTLE), PotionContents.createItemStack(Items.POTION, Potions.WATER), 400);
-        waterPurifier(output, PotionContents.createItemStack(Items.POTION, Potions.WATER), new ItemStack(TANItems.PURIFIED_WATER_BOTTLE), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.DIRTY_WATER_BOTTLE), waterBottle(), 400);
+        waterPurifier(output, waterBottle(), new ItemStackTemplate(TANItems.PURIFIED_WATER_BOTTLE), 200);
 
         // Canteens
-        waterPurifier(output, new ItemStack(TANItems.LEATHER_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.LEATHER_WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.COPPER_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.COPPER_WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.IRON_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.IRON_WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.GOLD_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.GOLD_WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.DIAMOND_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.DIAMOND_WATER_CANTEEN), 400);
-        waterPurifier(output, new ItemStack(TANItems.NETHERITE_DIRTY_WATER_CANTEEN), new ItemStack(TANItems.NETHERITE_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.LEATHER_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.LEATHER_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.COPPER_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.COPPER_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.IRON_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.IRON_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.GOLD_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.GOLD_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.DIAMOND_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.DIAMOND_WATER_CANTEEN), 400);
+        waterPurifier(output, new ItemStackTemplate(TANItems.NETHERITE_DIRTY_WATER_CANTEEN), new ItemStackTemplate(TANItems.NETHERITE_WATER_CANTEEN), 400);
 
-        waterPurifier(output, new ItemStack(TANItems.LEATHER_WATER_CANTEEN), new ItemStack(TANItems.LEATHER_PURIFIED_WATER_CANTEEN), 200);
-        waterPurifier(output, new ItemStack(TANItems.COPPER_WATER_CANTEEN), new ItemStack(TANItems.COPPER_PURIFIED_WATER_CANTEEN), 200);
-        waterPurifier(output, new ItemStack(TANItems.IRON_WATER_CANTEEN), new ItemStack(TANItems.IRON_PURIFIED_WATER_CANTEEN), 200);
-        waterPurifier(output, new ItemStack(TANItems.GOLD_WATER_CANTEEN), new ItemStack(TANItems.GOLD_PURIFIED_WATER_CANTEEN), 200);
-        waterPurifier(output, new ItemStack(TANItems.DIAMOND_WATER_CANTEEN), new ItemStack(TANItems.DIAMOND_PURIFIED_WATER_CANTEEN), 200);
-        waterPurifier(output, new ItemStack(TANItems.NETHERITE_WATER_CANTEEN), new ItemStack(TANItems.NETHERITE_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.LEATHER_WATER_CANTEEN), new ItemStackTemplate(TANItems.LEATHER_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.COPPER_WATER_CANTEEN), new ItemStackTemplate(TANItems.COPPER_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.IRON_WATER_CANTEEN), new ItemStackTemplate(TANItems.IRON_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.GOLD_WATER_CANTEEN), new ItemStackTemplate(TANItems.GOLD_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.DIAMOND_WATER_CANTEEN), new ItemStackTemplate(TANItems.DIAMOND_PURIFIED_WATER_CANTEEN), 200);
+        waterPurifier(output, new ItemStackTemplate(TANItems.NETHERITE_WATER_CANTEEN), new ItemStackTemplate(TANItems.NETHERITE_PURIFIED_WATER_CANTEEN), 200);
     }
 
-    public static void waterPurifier(RecipeOutput output, ItemStack input, ItemStack result, int purifyTime)
+    public static void waterPurifier(RecipeOutput output, ItemStackTemplate input, ItemStackTemplate result, int purifyTime)
     {
-        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result.getItem())));
+        WaterPurifierRecipeBuilder.waterPurifier(input, result, purifyTime).save(output, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result.item().value())));
+    }
+
+    private static ItemStackTemplate waterBottle()
+    {
+        return new ItemStackTemplate(Items.POTION, DataComponentPatch.builder().set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER)).build());
     }
 
     public void netheriteSmithing(RecipeOutput output, Item input, RecipeCategory category, Item result)
@@ -107,24 +140,5 @@ public class TANRecipeProvider extends RecipeProvider
             )
             .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
             .save(output, Identifier.fromNamespaceAndPath(ToughAsNails.MOD_ID, getItemName(result)) + "_smithing");
-    }
-
-
-    public static class Runner extends RecipeProvider.Runner
-    {
-        public Runner(PackOutput p_365442_, CompletableFuture<HolderLookup.Provider> p_362168_) {
-            super(p_365442_, p_362168_);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput output)
-        {
-            return new TANRecipeProvider(provider, output);
-        }
-
-        @Override
-        public String getName() {
-            return "TAN Recipes";
-        }
     }
 }

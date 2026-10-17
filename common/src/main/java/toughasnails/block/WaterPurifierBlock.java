@@ -4,7 +4,6 @@
  ******************************************************************************/
 package toughasnails.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -35,7 +34,6 @@ import javax.annotation.Nullable;
 
 public class WaterPurifierBlock extends BaseEntityBlock
 {
-    public static final MapCodec<WaterPurifierBlock> CODEC = simpleCodec(WaterPurifierBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty PURIFYING = BooleanProperty.create("filtering");
 
@@ -43,12 +41,6 @@ public class WaterPurifierBlock extends BaseEntityBlock
     {
         super(builderIn);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PURIFYING, Boolean.valueOf(false)));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec()
-    {
-        return CODEC;
     }
 
     @Override

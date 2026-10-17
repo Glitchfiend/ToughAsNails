@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:chorus_fruit_juice"
+        "recipes": "toughasnails:chorus_fruit_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

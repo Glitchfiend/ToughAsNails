@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:wool_helmet"
+        "recipes": "toughasnails:wool_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:apple_juice"
+        "recipes": "toughasnails:apple_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

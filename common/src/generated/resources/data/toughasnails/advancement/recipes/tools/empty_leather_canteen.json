@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:empty_leather_canteen"
+        "recipes": "toughasnails:empty_leather_canteen"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

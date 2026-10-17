@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:wool_boots"
+        "recipes": "toughasnails:wool_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

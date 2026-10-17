@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:temperature_gauge"
+        "recipes": "toughasnails:temperature_gauge"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

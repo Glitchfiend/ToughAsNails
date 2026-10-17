@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:netherite_water_canteen_smithing"
+        "recipes": "toughasnails:netherite_water_canteen_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

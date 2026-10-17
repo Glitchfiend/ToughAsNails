@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "toughasnails:water_purifier"
+        "recipes": "toughasnails:water_purifier"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

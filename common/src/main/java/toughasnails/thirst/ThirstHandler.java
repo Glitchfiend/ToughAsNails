@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -266,7 +267,7 @@ public class ThirstHandler
                 inWorldDrinkTimer = IN_WORLD_DRINK_COOLDOWN;
                 ModPackets.HANDLER.sendToServer(new DrinkInWorldPacket(pos));
                 player.playSound(SoundEvents.GENERIC_DRINK.value(), 0.5f, 1.0f);
-                player.swing(InteractionHand.MAIN_HAND);
+                player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
             }
         }
     }

@@ -1,53 +1,55 @@
 plugins {
-    id 'net.neoforged.gradle.userdev' version '7.1.38'
+    id 'net.neoforged.moddev' version '2.0.147'
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 base.archivesName.set("${mod_name}-neoforge")
 
 def resources = project(':Common').file('src/generated/resources/').getAbsolutePath()
-def accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-minecraft {
-    accessTransformers {
-        file accessTransformer
+neoForge {
+    version = neoforge_version
+    accessTransformers.from(file('src/main/resources/META-INF/accesstransformer.cfg').absolutePath)
+
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
+        }
+        client {
+            client()
+            gameDirectory = this.mkdir(this.file("run/client"))
+        }
+        data {
+            clientData()
+            gameDirectory = this.mkdir(this.file("run/data"))
+            // DataGen can be run by - "./gradlew :NeoForge:runData" in Terminal.
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', resources, '--existing', resources
+        }
+        server {
+            server()
+            gameDirectory = this.mkdir(this.file("run/server"))
+        }
     }
-}
 
-runs {
-    configureEach {
-        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
-        modSource project.sourceSets.main
-    }
-
-    client {
-    }
-
-    clientData {
-        arguments.addAll '--mod', project.mod_id, '--all', '--output', resources, '--existing', resources
-    }
-
-    server {
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
     }
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neoforge_version}"
+    compileOnly project(":Common")
     implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + minecraft_version + '-' + glitchcore_version
-    implementation "com.github.glitchfiend:SereneSeasons-neoforge:${serene_seasons_mc_version}-${serene_seasons_version}"
+    implementation "com.github.glitchfiend:SereneSeasons-neoforge:${minecraft_version}-${serene_seasons_version}"
 }
 
-// NeoGradle compiles the game, but we don't want to add our common code to the game's code
-TaskCollection.metaClass.excludingNeoTasks = { ->
-    delegate.matching { !it.name.startsWith("neo") }
-}
-
-tasks.withType(JavaCompile).excludingNeoTasks().configureEach {
+tasks.named("compileJava", JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
 
-tasks.withType(Javadoc).excludingNeoTasks().configureEach {
+tasks.withType(Javadoc).configureEach {
     source(project(":Common").sourceSets.main.allJava)
 }
 
@@ -59,7 +61,7 @@ test {
     failOnNoDiscoveredTests = false
 }
 
-tasks.withType(ProcessResources).excludingNeoTasks().configureEach {
+processResources {
     from project(":Common").sourceSets.main.resources
     filesMatching("${mod_id}.mixins.json") {
         expand "refmap_target": "${mod_id}."
